@@ -1,0 +1,55 @@
+site_name: ALCF User Guide
+nav:
+  - Home: README.md
+  - ThetaGPU:
+      - System Overview and Node Information: ThetaGPU/system_overview_and_node_information.md
+      - GPU Node Queues and Policy: ThetaGPU/gpu_node_queue_and_policy.md
+      - GPU Monitoring: ThetaGPU/GPU Monitoring.md
+      - Python Virtual Environments: ThetaGPU/python_venvs.md
+      - MPI: ThetaGPU/mpi.md
+      #- Dask-MPI: daskmpi/README.md
+      - Singularity Containers: ThetaGPU/Singularity Containers.md
+      - Building Python Packages in a Container: ThetaGPU/building_python_packages.md
+      - Jupyter: ThetaGPU/jupyter.md
+      - DL Frameworks:
+        - TensorFlow:
+          - Running with Singularity: ThetaGPU/ml_frameworks/tensorflow/nvidia_container_notes.md
+          - Running with Conda: ThetaGPU/ml_frameworks/tensorflow/running_with_conda.md
+          - Tensorboard: ThetaGPU/ml_frameworks/tensorflow/tensorboard_instructions.md
+        - PyTorch:
+          - Running with Conda: ThetaGPU/ml_frameworks/pytorch/running_with_conda.md
+        - Data Parallel Training: ThetaGPU/data_parallel_training.md
+      - Building and Compiling:
+        - Python/C++ code interoperability: ThetaGPU/Building_Compiling/README.md
+        - Compiling and Linking: ThetaGPU/Building_Compiling/compiling_and_linking.md
+      - Balsam: ThetaGPU/balsam.md
+      - DeepHyper: ThetaGPU/deephyper.md
+
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'indigo'
+    accent: 'amber'
+    scheme: 'preference'
+  features:
+    - tabs
+    - instant
+  logo: 'images/Argonne_wireframe_white_transparent.png'
+  favicon: 'images/alcf_favicon.ico'
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+
+repo_name: 'argonne-lcf/ThetaGPU-Docs'
+repo_url: 'https://github.com/argonne-lcf/ThetaGPU-Docs'
+
+extra:
+  social:
+    - icon: 'fontawesome/brands/github-alt'
+      link: 'https://github.com/argonne-lcf/ThetaGPU-Docs'
+
+plugins:
+  - search
