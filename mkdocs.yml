@@ -1,6 +1,8 @@
 site_name: ALCF User Guide
 nav:
   - Home: README.md
+  - Theta:
+      - System Overview and Node Information: Theta/system_overview_and_node_information.md
   - ThetaGPU:
       - System Overview and Node Information: ThetaGPU/system_overview_and_node_information.md
       - GPU Node Queues and Policy: ThetaGPU/gpu_node_queue_and_policy.md
@@ -24,6 +26,8 @@ nav:
         - Compiling and Linking: ThetaGPU/Building_Compiling/compiling_and_linking.md
       - Balsam: ThetaGPU/balsam.md
       - DeepHyper: ThetaGPU/deephyper.md
+  - Cooley:
+      - System Overview and Node Information: Cooley/system_overview_and_node_information.md
 
 theme:
   name: 'material'
