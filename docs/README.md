@@ -19,7 +19,7 @@ $ source env/bin/activate
 
 ### Git
 
-Using Git ssh
+Using Git ssh. Make sure you add ssh public key to your profile (https cloning to be deprecated soon)
 ```
 $ git clone git@github.com:argonne-lcf/alcf-userguide.git
 ```
@@ -29,6 +29,7 @@ $ git clone git@github.com:argonne-lcf/alcf-userguide.git
 To install `mkdocs` in the current environment: 
 
 ```
+$ cd alcf-userguide
 $ make install-dev
 ```
 
@@ -44,7 +45,7 @@ $ make serve
 * All commits must have the commit comment
 * Create your own branch from the main branch.  For this writing we are using YOURBRANCH as an example.
 ```
-$ cd alcf-gitlab
+$ cd alcf-userguide
 $ git fetch --all
 $ git checkout main
 $ git pull origin main
@@ -53,7 +54,7 @@ $ git push -u origin YOURBRANCH
 ```
 * Commit your changes to the remote repo
 ```
-$ cd alcf-gitlab
+$ cd alcf-userguide
 $ git status                         # check the status of the files you have editted
 $ git commit -a -m "Updated docs"    # preferably one issue per commit
 $ git status                         # should say working tree clean
