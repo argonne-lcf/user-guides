@@ -2,7 +2,19 @@ site_name: ALCF User Guide
 nav:
   - Home: README.md
   - Theta:
-      - System Overview and Node Information: Theta/system_overview_and_node_information.md
+    - Hardware Overview:
+      - Theta Machine Overview: Theta/HardwareOverview/MachineOverview.md
+      - Theta Memory Modes: Theta/HardwareOverview/ThetaMemoryModes.md
+      - Aries Network: Theta/HardwareOverview/AriesNetwork.md
+    - Compiling And Linking:
+      - Compiling and Linking Overview: Theta/CompilingAndLinking/CompilingAndLinkingOverview.md
+    - Queueing and Running Jobs on Theta:
+      - The Grounkulator (Job Status Display): Theta/QueueingandRunningJobsonTheta/TheGronkulator.md
+    - Data Management:
+        - Data Transfer:
+          - SFTP and SCP: Theta/DataManagement/DataTransfer/SFTPAndSCP.md
+        - File System & Storage:
+          - Theta Disk Quota: Theta/DataManagement/FileSystemAndStorage/ThetaDiskQuota.md
   - ThetaGPU:
       - System Overview and Node Information: ThetaGPU/system_overview_and_node_information.md
       - GPU Node Queues and Policy: ThetaGPU/gpu_node_queue_and_policy.md
