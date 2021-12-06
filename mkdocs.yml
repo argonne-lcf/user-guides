@@ -59,13 +59,13 @@ markdown_extensions:
   - codehilite
   - pymdownx.superfences
 
-repo_name: 'argonne-lcf/ThetaGPU-Docs'
-repo_url: 'https://github.com/argonne-lcf/ThetaGPU-Docs'
+repo_name: 'argonne-lcf/alcf-userguide'
+repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
 
 extra:
   social:
     - icon: 'fontawesome/brands/github-alt'
-      link: 'https://github.com/argonne-lcf/ThetaGPU-Docs'
+      link: 'https://github.com/argonne-lcf/alcf-userguide'
 
 plugins:
   - search
