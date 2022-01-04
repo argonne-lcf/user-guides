@@ -1,45 +1,85 @@
 site_name: ALCF User Guide
 nav:
   - Home: README.md
+  - Polaris:
+    - Hardware Overview:
+      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+      - Polaris Memory Modes: polaris/hardware-overview/polaris-memory-modes.md
+      - Aries Network: polaris/hardware-overview/slingshot-network.md
+    - Compiling And Linking:
+      - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
+      - Library and Compiler Tracking: polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
+      - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - Clang Compiler: polaris/compiling-and-linking/clang-compiler-polaris.md
+    - Queueing and Running Jobs on Polaris:
+      - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
+    - Data Management:
+        - ALCF Community Data Co-Op: polaris/data-management/acdc/acdc-overview.md
+        - Data Transfer:
+          - SFTP and SCP: polaris/data-management/data-transfer/sftp-scp.md
+        - File System & Storage:
+          - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
+    - Applications and Libraries:
+        - Applications:
+            - ELPA: polaris/applications-and-libraries/elpa.md
+    - Data Science Workflows:
+        - Balsam: polaris/data-science-workflows/balsam.md
+    - Programming Models: 
+        - OpenMP: polaris/programming-models/openmp-polaris.md
+    - Debugging Tools: polaris/debugging-tools/debugging-overview.md
+    - Performance Tools: polaris/performance-tools/performance-overview.md
   - Theta:
     - Hardware Overview:
-      - Theta Machine Overview: Theta/HardwareOverview/MachineOverview.md
-      - Theta Memory Modes: Theta/HardwareOverview/ThetaMemoryModes.md
-      - Aries Network: Theta/HardwareOverview/AriesNetwork.md
+      - Theta Machine Overview: theta/hardware-overview/machine-overview.md
+      - Theta Memory Modes: theta/hardware-overview/theta-memory-modes.md
+      - Aries Network: theta/hardware-overview/aries-network.md
     - Compiling And Linking:
-      - Compiling and Linking Overview: Theta/CompilingAndLinking/CompilingAndLinkingOverview.md
+      - Compiling and Linking Overview: theta/compiling-and-linking/compiling-and-linking-overview.md
+      - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
+      - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
+      - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
     - Queueing and Running Jobs on Theta:
-      - The Grounkulator (Job Status Display): Theta/QueueingandRunningJobsonTheta/TheGronkulator.md
+      - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
     - Data Management:
+        - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
         - Data Transfer:
-          - SFTP and SCP: Theta/DataManagement/DataTransfer/SFTPAndSCP.md
+          - SFTP and SCP: theta/data-management/data-transfer/sftp-scp.md
         - File System & Storage:
-          - Theta Disk Quota: Theta/DataManagement/FileSystemAndStorage/ThetaDiskQuota.md
+          - Theta Disk Quota: theta/data-management/filesystem-and-storage/theta-disk-quota.md
+    - Applications and Libraries:
+        - Applications:
+          - ELPA: theta/applications-and-libraries/elpa.md
+    - Data Science Workflows:
+          - Balsam: theta/data-science-workflows/balsam.md
+    - Programming Models: 
+          - OpenMP: theta/programming-models/openmp-theta.md
+    - Debugging Tools: theta/debugging-tools/debugging-overview.md
+    - Performance Tools: theta/performance-tools/performance-overview.md 
   - ThetaGPU:
-      - System Overview and Node Information: ThetaGPU/system_overview_and_node_information.md
-      - GPU Node Queues and Policy: ThetaGPU/gpu_node_queue_and_policy.md
-      - GPU Monitoring: ThetaGPU/GPU Monitoring.md
-      - Python Virtual Environments: ThetaGPU/python_venvs.md
-      - MPI: ThetaGPU/mpi.md
+      - System Overview and Node Information: theta-gpu/system-overview-and-node-information.md
+      - GPU Node Queues and Policy: theta-gpu/gpu-node-queue-and-policy.md
+      - GPU Monitoring: theta-gpu/gpu-monitoring.md
+      - Python Virtual Environments: theta-gpu/python-venvs.md
+      - MPI: theta-gpu/mpi.md
       #- Dask-MPI: daskmpi/README.md
-      - Singularity Containers: ThetaGPU/Singularity Containers.md
-      - Building Python Packages in a Container: ThetaGPU/building_python_packages.md
-      - Jupyter: ThetaGPU/jupyter.md
+      - Singularity Containers: theta-gpu/singularity-containers.md
+      - Building Python Packages in a Container: theta-gpu/building-python-packages.md
+      - Jupyter: theta-gpu/jupyter.md
       - DL Frameworks:
         - TensorFlow:
-          - Running with Singularity: ThetaGPU/ml_frameworks/tensorflow/nvidia_container_notes.md
-          - Running with Conda: ThetaGPU/ml_frameworks/tensorflow/running_with_conda.md
-          - Tensorboard: ThetaGPU/ml_frameworks/tensorflow/tensorboard_instructions.md
+          - Running with Singularity: theta-gpu/ml_frameworks/tensorflow/nvidia_container_notes.md
+          - Running with Conda: theta-gpu/ml_frameworks/tensorflow/running_with_conda.md
+          - Tensorboard: theta-gpu/ml_frameworks/tensorflow/tensorboard_instructions.md
         - PyTorch:
-          - Running with Conda: ThetaGPU/ml_frameworks/pytorch/running_with_conda.md
-        - Data Parallel Training: ThetaGPU/data_parallel_training.md
+          - Running with Conda: theta-gpu/ml_frameworks/pytorch/running-with-conda.md
+        - Data Parallel Training: theta-gpu/data-parallel-training.md
       - Building and Compiling:
-        - Python/C++ code interoperability: ThetaGPU/Building_Compiling/README.md
-        - Compiling and Linking: ThetaGPU/Building_Compiling/compiling_and_linking.md
-      - Balsam: ThetaGPU/balsam.md
-      - DeepHyper: ThetaGPU/deephyper.md
+        - Python/C++ code interoperability: theta-gpu/building-and-compiling/README.md
+        - Compiling and Linking: theta-gpu/building-and-compiling/compiling-and-linking.md
+      - Balsam: theta-gpu/balsam.md
+      - DeepHyper: theta-gpu/deephyper.md
   - Cooley:
-      - System Overview and Node Information: Cooley/system_overview_and_node_information.md
+      - System Overview and Node Information: cooley/system-overview-and-node-information.md
 
 theme:
   name: 'material'
