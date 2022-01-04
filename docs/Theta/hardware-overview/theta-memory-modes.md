@@ -7,7 +7,7 @@ The primary suggestion is to begin with the quadrant clustering mode and the cac
 ##Clustering Mode
 The clustering mode defines an infinity between the thread’s memory allocations and the memory domain in which the allocation is placed. This placement also influences which cache tag directory on the mesh is used. The clustering mode will never prevent memory from being read by any thread. The clustering mode only influences the performance. The possible clustering modes are All2All, Hemisphere, Quadrant, Sub-NUMA Clustering-2 (SNC-2), and Sub-NUMA Clustering-4 (SNC-4). These options can be selected during your Cobalt job submission using the --attrs option. Table 1 lists the clustering mode and the associated Cobalt selection.
 
-##Table 1 - Clustering Modes
+###Clustering Modes
 | Clustering Mode |	Cobalt Syntax       |
 |:--------------- | :------------------ |
 | All2All	      |  --attrs=numa=a2a  |

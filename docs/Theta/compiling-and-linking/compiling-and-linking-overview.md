@@ -1,13 +1,13 @@
-##Compiling and Linking Overview on Theta
+#Compiling and Linking Overview on Theta
 
 Note: ThetaGPU have very different programming environment. See webpages dedicated to ThetaGPU
 
-###Compiling and Linking on Theta
+##Compiling and Linking on Theta
 Due to hardware differences between login (non-KNL) and compute nodes (Intel Phi 2nd Generation [KNL]), compilation of application codes on XC40 systems normally involves cross-compiling. The module craype-mic-knl loaded by default defines the target architecture along with the appropriate compilation options that tune the compiler optimization to KNL hardware. For that reason, any compiler options preexisting in the application Makefile that auto-tune the code to the automatically recognized CPU architecture of the login node where the compilation proceeds have negative impact on performance of the compiled code, and should be removed.
 
 The default programming environment on Theta provides Intel compiler suite. Additional available compilers are Cray, GNU, and Clang, each arranged into a respective programming environment.
 
-###Wrapper Command Names
+##Wrapper Command Names
 Regardless of the choice of a particular compiler suite, compilation on Theta requires the use of standard Cray compiler wrappers, which automatically invoke the correct base compiler provided by the selected programming environment and include MPI and other dependencies:
 
 * cc – for C compiler
@@ -16,7 +16,7 @@ Regardless of the choice of a particular compiler suite, compilation on Theta re
 
 The mpicc, mpiCC, mpic++, mpif77, or mpif90 wrappers used outside Cray systems must be substituted by the corresponding cc, CC, or ftn wrappers in the Makefile in order to generate a working binary code on Theta.
 
-###Usage
+##Usage
 Following example illustrates compilation of a hello.c, hello.cpp, and hello.f, which are C, C++, and Fortran program codes, respectively into an executable hello:
 
 ```
@@ -63,7 +63,7 @@ module swap PrgEnv-intel PrgEnv-cray; module swap PrgEnv-cray PrgEnv-intel
 ```
 which unload and then put back Intel programming environment. The bug affects only interactive sessions and does not apply to regular offline Cobalt batch jobs.
 
-###Man Pages
+##Man Pages
 For additional information about Cray wrappers, see man pages:
 
 ```
@@ -74,13 +74,13 @@ man ftn
 
 Likewise, each base compiler comes with the respective man page.
 
-####Intel
+###Intel
 
 ```
 man icc (C/C++) 
 man ifort
 ```
-####Cray
+###Cray
 
 ```
 man craycc
@@ -88,7 +88,7 @@ man crayCC
 man crayftn
 ```
 
-####GNU
+###GNU
 
 ```
 man gcc 
@@ -96,14 +96,14 @@ man g++
 man gfortran
 ```
 
-####LLVM/Clang (Fortran is not yet available)
+###LLVM/Clang (Fortran is not yet available)
 
 ```
 clang --help
 clang++ --help
 ```
 
-###Changing a compiler suite
+##Changing a compiler suite
 Choosing a non-default compiler on Theta presumes changing the programming environment. Following commands accomplish that operation:
 
 ```
@@ -112,7 +112,7 @@ module swap PrgEnv-intel PrgEnv-gnu
 module swap PrgEnv-intel PrgEnv-llvm
 ```
 
-###Compiling for Login Nodes
+##Compiling for Login Nodes
 Login nodes are a shared resource, and are not meant for production computations.
 
 It is acceptable to compile tools or other similar utilities that will run on the login node. These cannot be MPI applications though. The following command executed on the login node:
