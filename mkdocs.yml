@@ -3,83 +3,83 @@ nav:
   - Home: README.md
   - Polaris:
     - Hardware Overview:
-      - Polaris Machine Overview: systems/polaris/hardware-overview/machine-overview.md
-      - Polaris Memory Modes: systems/polaris/hardware-overview/polaris-memory-modes.md
-      - Aries Network: systems/polaris/hardware-overview/slingshot-network.md
+      - Polaris Machine Overview: docs/polaris/hardware-overview/machine-overview.md
+      - Polaris Memory Modes: docs/polaris/hardware-overview/polaris-memory-modes.md
+      - Aries Network: docs/polaris/hardware-overview/slingshot-network.md
     - Compiling And Linking:
-      - Compiling and Linking Overview: systems/polaris/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: systems/polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
-      - Example Program and Makefile: systems/polaris/compiling-and-linking/polaris-example-program-makefile.md
-      - Clang Compiler: systems/polaris/compiling-and-linking/clang-compiler-polaris.md
+      - Compiling and Linking Overview: docs/polaris/compiling-and-linking/compiling-and-linking-overview.md
+      - Library and Compiler Tracking: docs/polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
+      - Example Program and Makefile: docs/polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - Clang Compiler: docs/polaris/compiling-and-linking/clang-compiler-polaris.md
     - Queueing and Running Jobs on Polaris:
-      - The Grounkulator (Job Status Display): systems/polaris/queueing-and-running-jobs/gronkulator.md
+      - The Grounkulator (Job Status Display): docs/polaris/queueing-and-running-jobs/gronkulator.md
     - Data Management:
-        - ALCF Community Data Co-Op: systems/polaris/data-management/acdc/acdc-overview.md
+        - ALCF Community Data Co-Op: docs/polaris/data-management/acdc/acdc-overview.md
         - Data Transfer:
-          - SFTP and SCP: systems/polaris/data-management/data-transfer/sftp-scp.md
+          - SFTP and SCP: docs/polaris/data-management/data-transfer/sftp-scp.md
         - File System & Storage:
-          - Polaris Disk Quota: systems/polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
+          - Polaris Disk Quota: docs/polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
         - Applications:
-            - ELPA: systems/polaris/applications-and-libraries/elpa.md
+            - ELPA: docs/polaris/applications-and-libraries/elpa.md
     - Data Science Workflows:
-        - Balsam: systems/polaris/data-science-workflows/balsam.md
+        - Balsam: docs/polaris/data-science-workflows/balsam.md
     - Programming Models: 
-        - OpenMP: systems/polaris/programming-models/openmp-polaris.md
-    - Debugging Tools: systems/polaris/debugging-tools/debugging-overview.md
-    - Performance Tools: systems/polaris/performance-tools/performance-overview.md
+        - OpenMP: docs/polaris/programming-models/openmp-polaris.md
+    - Debugging Tools: docs/polaris/debugging-tools/debugging-overview.md
+    - Performance Tools: docs/polaris/performance-tools/performance-overview.md
   - Theta:
     - Hardware Overview:
-      - Theta Machine Overview: systems/theta/hardware-overview/machine-overview.md
-      - Theta Memory Modes: systems/theta/hardware-overview/theta-memory-modes.md
-      - Aries Network: systems/theta/hardware-overview/aries-network.md
+      - Theta Machine Overview: docs/theta/hardware-overview/machine-overview.md
+      - Theta Memory Modes: docs/theta/hardware-overview/theta-memory-modes.md
+      - Aries Network: docs/theta/hardware-overview/aries-network.md
     - Compiling And Linking:
-      - Compiling and Linking Overview: systems/theta/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: systems/theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
-      - Example Program and Makefile: systems/theta/compiling-and-linking/theta-example-program-makefile.md
-      - Clang Compiler: systems/theta/compiling-and-linking/clang-compiler-theta.md
+      - Compiling and Linking Overview: docs/theta/compiling-and-linking/compiling-and-linking-overview.md
+      - Library and Compiler Tracking: docs/theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
+      - Example Program and Makefile: docs/theta/compiling-and-linking/theta-example-program-makefile.md
+      - Clang Compiler: docs/theta/compiling-and-linking/clang-compiler-theta.md
     - Queueing and Running Jobs on Theta:
-      - The Grounkulator (Job Status Display): systems/theta/queueing-and-running-jobs/gronkulator.md
+      - The Grounkulator (Job Status Display): docs/theta/queueing-and-running-jobs/gronkulator.md
     - Data Management:
-        - ALCF Community Data Co-Op: systems/theta/data-management/acdc/acdc-overview.md
+        - ALCF Community Data Co-Op: docs/theta/data-management/acdc/acdc-overview.md
         - Data Transfer:
-          - SFTP and SCP: systems/theta/data-management/data-transfer/sftp-scp.md
+          - SFTP and SCP: docs/theta/data-management/data-transfer/sftp-scp.md
         - File System & Storage:
-          - Theta Disk Quota: systems/theta/data-management/filesystem-and-storage/theta-disk-quota.md
+          - Theta Disk Quota: docs/theta/data-management/filesystem-and-storage/theta-disk-quota.md
     - Applications and Libraries:
         - Applications:
-          - ELPA: systems/theta/applications-and-libraries/elpa.md
+          - ELPA: docs/theta/applications-and-libraries/elpa.md
     - Data Science Workflows:
-          - Balsam: systems/theta/data-science-workflows/balsam.md
+          - Balsam: docs/theta/data-science-workflows/balsam.md
     - Programming Models: 
-          - OpenMP: systems/theta/programming-models/openmp-theta.md
-    - Debugging Tools: systems/theta/debugging-tools/debugging-overview.md
-    - Performance Tools: systems/theta/performance-tools/performance-overview.md 
+          - OpenMP: docs/theta/programming-models/openmp-theta.md
+    - Debugging Tools: docs/theta/debugging-tools/debugging-overview.md
+    - Performance Tools: docs/theta/performance-tools/performance-overview.md 
   - ThetaGPU:
-      - System Overview and Node Information: systems/theta-gpu/system-overview-and-node-information.md
-      - GPU Node Queues and Policy: systems/theta-gpu/gpu-node-queue-and-policy.md
-      - GPU Monitoring: systems/theta-gpu/gpu-monitoring.md
-      - Python Virtual Environments: systems/theta-gpu/python-venvs.md
-      - MPI: systems/theta-gpu/mpi.md
+      - System Overview and Node Information: docs/theta-gpu/system-overview-and-node-information.md
+      - GPU Node Queues and Policy: docs/theta-gpu/gpu-node-queue-and-policy.md
+      - GPU Monitoring: docs/theta-gpu/gpu-monitoring.md
+      - Python Virtual Environments: docs/theta-gpu/python-venvs.md
+      - MPI: docs/theta-gpu/mpi.md
       #- Dask-MPI: daskmpi/README.md
-      - Singularity Containers: systems/theta-gpu/singularity-containers.md
-      - Building Python Packages in a Container: systems/theta-gpu/building-python-packages.md
-      - Jupyter: systems/theta-gpu/jupyter.md
+      - Singularity Containers: docs/theta-gpu/singularity-containers.md
+      - Building Python Packages in a Container: docs/theta-gpu/building-python-packages.md
+      - Jupyter: docs/theta-gpu/jupyter.md
       - DL Frameworks:
         - TensorFlow:
-          - Running with Singularity: systems/theta-gpu/ml_frameworks/tensorflow/nvidia_container_notes.md
-          - Running with Conda: systems/theta-gpu/ml_frameworks/tensorflow/running_with_conda.md
-          - Tensorboard: systems/theta-gpu/ml_frameworks/tensorflow/tensorboard_instructions.md
+          - Running with Singularity: docs/theta-gpu/ml_frameworks/tensorflow/nvidia_container_notes.md
+          - Running with Conda: docs/theta-gpu/ml_frameworks/tensorflow/running_with_conda.md
+          - Tensorboard: docs/theta-gpu/ml_frameworks/tensorflow/tensorboard_instructions.md
         - PyTorch:
-          - Running with Conda: systems/theta-gpu/ml_frameworks/pytorch/running-with-conda.md
-        - Data Parallel Training: systems/theta-gpu/data-parallel-training.md
+          - Running with Conda: docs/theta-gpu/ml_frameworks/pytorch/running-with-conda.md
+        - Data Parallel Training: docs/theta-gpu/data-parallel-training.md
       - Building and Compiling:
-        - Python/C++ code interoperability: systems/theta-gpu/building-and-compiling/README.md
-        - Compiling and Linking: systems/theta-gpu/building-and-compiling/compiling-and-linking.md
-      - Balsam: systems/theta-gpu/balsam.md
-      - DeepHyper: systems/theta-gpu/deephyper.md
+        - Python/C++ code interoperability: docs/theta-gpu/building-and-compiling/README.md
+        - Compiling and Linking: docs/theta-gpu/building-and-compiling/compiling-and-linking.md
+      - Balsam: docs/theta-gpu/balsam.md
+      - DeepHyper: docs/theta-gpu/deephyper.md
   - Cooley:
-      - System Overview and Node Information: systems/cooley/system-overview-and-node-information.md
+      - System Overview and Node Information: docs/cooley/system-overview-and-node-information.md
 
 theme:
   name: 'material'
