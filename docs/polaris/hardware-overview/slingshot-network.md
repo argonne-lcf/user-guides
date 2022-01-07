@@ -1,1 +1,0 @@
-#Slingshot Network on Polaris

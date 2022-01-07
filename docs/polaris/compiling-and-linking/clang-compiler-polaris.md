@@ -1,2 +1,0 @@
-#Clang Compiler on Polaris
-
