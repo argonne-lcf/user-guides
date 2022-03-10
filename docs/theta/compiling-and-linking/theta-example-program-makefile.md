@@ -41,9 +41,10 @@ int main(int argc, char** argv)
   MPI_Finalize();
   return 0;
 }
-`
+```
 ##Makefile
-`# File makefile
+```
+# File makefile
 CC = cc
 
 OPTFLAGS = -O3
@@ -52,7 +53,7 @@ CFLAGS = $(OPTFLAGS) -g
 all: pi
 
 pi: pi.o
-	$(CC) $(CFLAGS) -o pi pi.o
+  $(CC) $(CFLAGS) -o pi pi.o
 
 pi.o: pi.o
 	$(CC) $(CFLAGS) -c pi.c
@@ -113,6 +114,7 @@ total 18240
 -rw-r--r-- 1 user1 users 816 Jun 27 22:20 pi.c
 
  thetalogin6(pi)> cat 106040.output 
+
 Starting Cobalt job script pi is approximately 3.1417259869152536, Error is 0.0001333333254605 
 Application 3373484 resources: utime ~6s, stime ~6s, Rss ~5036, inblocks ~0, outblocks ~8 
 thetalogin6(pi)>

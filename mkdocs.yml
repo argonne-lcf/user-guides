@@ -38,8 +38,10 @@ nav:
       - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
       - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
       - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
+      - Continuous Integration: theta/compiling-and-linking/continuous-integration-theta.md
     - Queueing and Running Jobs on Theta:
       - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
+      - Job and Queue Scheduling: polaris/job-and-queue-scheduling.md
     - Data Management:
         - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
         - Data Transfer:
@@ -99,6 +101,16 @@ markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'

@@ -1,13 +1,13 @@
 #Clang Compiler on Theta
 
 ##Using Clang Compiler
-The Clang compiler, which is part of the LLVM compiler infrastructure, is available as a programming environment on Theta. To use Clang, switch your current programming-environment module with the PrgEnv-llvm module. 
+The Clang compiler, which is part of the LLVM compiler infrastructure, is available as a programming environment on Theta. To use Clang, switch your current programming environment module with the `#! PrgEnv-llvm` module. 
 
 For example:
-module switch PrgEnv-intel PrgEnv-llvm
+`#! module switch PrgEnv-intel PrgEnv-llvm`
 
 ##Mailing List and Support
-For help with Clang-related questions, ALCF users may e-mail support@alcf.anl.gov.
+For help with Clang-related questions, ALCF users may e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
 
 ##General Usage
 Clang’s command-line argument handling is designed to be similar to gcc’s command-line argument handling, and where possible, Clang tries to support the same flags. For more information on Clang, see [Clang: a C language family frontend for LLVM](http://clang.llvm.org/).
@@ -27,7 +27,9 @@ The source code you're compiling probably assumes the GNU semantics for the inli
 
 **Linking code compiled with clang++ together with code compiled with clang++ -stdlib=libc++ does not work, why?**
 
-Code compiled using clang++ uses the same libstdc++ standard template library (STL) implementation as the GNU g++ compiler. This provides compatibility with C++ libraries, including some system libraries, compiled with the GNU programming environment. When using -stdlib=libc++, however, LLVM's libc++ is used as the STL implementation. This STL implementation is incompatible with libstdc++, and so linking errors will result for functions that use STL objects as part of their signatures (i.e., parameter or return types).
+Code compiled using clang++ uses the same libstdc++ standard template library (STL) implementation as the GNU g++ compiler. This provides compatibility with C++ libraries, including some system libraries, compiled with the GNU programming environment. 
+
+When using `#! -stdlib=libc++`, however, LLVM's libc++ is used as the STL implementation. This STL implementation is incompatible with libstdc++, and so linking errors will result for functions that use STL objects as part of their signatures (i.e., parameter or return types).
 
 **Is there a corresponding Fortran compiler available?**
 

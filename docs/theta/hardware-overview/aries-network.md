@@ -8,16 +8,19 @@ The Aries routing protocol uses adaptive routing to select the best path through
 The level of variability with respect to MPI performance can be significant when an interfering job produces a large burst of MPI traffic. The variable performance should be accounted for when analyzing MPI performance by running many data points to ensure statistical accuracy.
 
 ##Benchmarks
-The following is a set of basic benchmarks that characterize the Aries network performance using MPI. Figure 1 shows the latency for a 4k message size across several node counts for MPI_Bcast, MPI_Gather, and MPI_Allreduce. 
+The following is a set of basic benchmarks that characterize the Aries network performance using MPI. 
 
-![Figure 1 - MPI Collective Latency](files/Aries1.gif)
-*Figure 1 - MPI Collective Latency*
+Figure 1 shows the latency for a 4k message size across several node counts for MPI_Bcast, MPI_Gather, and MPI_Allreduce. Figure 2 is the point-to-point bandwidth for several different process counts and message sizes between two nodes that are located on the first level on the Dragonfly.
 
-Figure 2 is the point-to-point bandwidth for several different process counts and message sizes between two nodes that are located on the first level on the Dragonfly.
+<figure markdown>
+  ![Figure 1 - MPI Collective Latency](files/Aries1.gif){ width="640" }
+  <figcaption>Figure 1 - MPI Collective Latency</figcaption>
+</figure>
 
-
-![MPI Message Bandwidth](files/Aries2.gif)
-*Figure 2 - MPI Message Bandwidth*
+<figure markdown>
+  ![MPI Message Bandwidth](files/Aries2.gif){ width="640" }
+  <figcaption>Figure 2 - MPI Message Bandwidth</figcaption>
+</figure>
 
 ##References
-[Cray Aries](https://www.alcf.anl.gov/files/CrayXCNetwork.pdf)
+[Cray Aries](files/CrayXCNetwork.pdf)

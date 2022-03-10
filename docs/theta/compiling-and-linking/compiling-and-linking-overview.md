@@ -1,6 +1,7 @@
 #Compiling and Linking Overview on Theta
 
-Note: ThetaGPU have very different programming environment. See webpages dedicated to ThetaGPU
+{== Note: ThetaGPU have very different programming environment. See webpages dedicated to ThetaGPU
+==}
 
 ##Compiling and Linking on Theta
 Due to hardware differences between login (non-KNL) and compute nodes (Intel Phi 2nd Generation [KNL]), compilation of application codes on XC40 systems normally involves cross-compiling. The module craype-mic-knl loaded by default defines the target architecture along with the appropriate compilation options that tune the compiler optimization to KNL hardware. For that reason, any compiler options preexisting in the application Makefile that auto-tune the code to the automatically recognized CPU architecture of the login node where the compilation proceeds have negative impact on performance of the compiled code, and should be removed.
@@ -32,7 +33,7 @@ The compiler flags used by the Cray compiler wrappers can be displayed using the
 cc -craype-verbose test.c
 cc --cray-print-opts test.c
 
-*Note:* Application programming using C++14 standard requires the ability to link against recent GNU libraries. The command module load gcc adds the required version of GNU C and C++ libraries to the search path.
+**Note:** Application programming using C++14 standard requires the ability to link against recent GNU libraries. The command module load gcc adds the required version of GNU C and C++ libraries to the search path.
 
 ###Linking
 The standard mechanism of linking on Theta is to use compiler wrappers cc, CC, or ftn. The wrappers are aware of the required system libraries and include those automatically.
@@ -54,7 +55,7 @@ When opting for dynamic linking it is recommended to link the required dynamic l
 ```
 readelf -d a.out | grep RUNPATH
 ```
-where a.out is an application binary or a dynamically linked library.
+where `#!python a.out` is an application binary or a dynamically linked library.
 
 An existing bug in Intel programming environment on Theta leads to some environment variables not being property set, which prevents running dynamically linked codes in a Cobalt interactive session even when the application code is properly linked with RUNPATH. A simple workaround is to refresh the environment by reloading the PrgEnv-intel module after logging into the interactive session:
 
