@@ -41,7 +41,7 @@ nav:
       - Continuous Integration: theta/compiling-and-linking/continuous-integration-theta.md
     - Queueing and Running Jobs on Theta:
       - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
-      - Job and Queue Scheduling: polaris/job-and-queue-scheduling.md
+      - Job and Queue Scheduling: theta/job-and-queue-scheduling.md
     - Data Management:
         - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
         - Data Transfer:
