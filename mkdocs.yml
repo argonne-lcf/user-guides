@@ -42,6 +42,8 @@ nav:
     - Queueing and Running Jobs on Theta:
       - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
+      - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
     - Data Management:
         - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
         - Data Transfer:
@@ -111,6 +113,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
