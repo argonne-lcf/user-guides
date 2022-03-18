@@ -24,6 +24,7 @@ The following four examples show how the -j and -d aprun arguments can affect wh
 ```
 aprun -n 128 -N 64 -d 1 -j 1 --cc depth <app> <app_args>
 ```
+
 - The "-n 128" argument says to use 128 MPI ranks in total and "-N 64" places 64 ranks per node.
 - The "-d 1" argument says to use 1 hardware thread for each MPI rank.
 - The "-j 1" argument says to use only one hardware thread per physical core.
@@ -59,6 +60,7 @@ The example below shows the affinity flags in aprun to map MPI ranks and OpenMP 
 ```
 aprun -n 64 -N 32 -d 4 -j 2 --cc depth -e OMP_NUM_THREADS=4 <app> <app_args>
 ```
+
 - The "-n 64" argument says to use 64 MPI ranks in total and "-N 32" places 32 ranks per node.
 - The "-d 4" argument says to use 4 hardware threads for each MPI rank.
 - The "-j 2" argument says to use two hardware threads per physical core.
@@ -83,9 +85,9 @@ Assuming the job was allocated on node 0 and node 1:
 
 - MPI rank 32, OpenMP thread 0 → node 1, hardware thread 0
 
-- - MPI rank 32, OpenMP thread 1 → node 1, hardware thread 1
+- MPI rank 32, OpenMP thread 1 → node 1, hardware thread 1
 
-MPI rank 32, OpenMP thread 2 → node 1, hardware thread 64
+ - MPI rank 32, OpenMP thread 2 → node 1, hardware thread 64
 
 ...
 

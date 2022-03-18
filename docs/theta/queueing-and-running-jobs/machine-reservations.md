@@ -5,6 +5,7 @@ To get a reservation, you must first demonstrate a need to run outside of the no
 **Disclaimer:** Approval for reservation requests are subject to their appropriateness and machine availability. Not all requests will be approved. It is particularly difficult to accommodate reservation requests during busy times of the year, e.g. Supercomputing, end of the ALCC and INCITE allocation cycles.
 
 To request a reservation, e-mail support@alcf.anl.gov with the requested information below.
+
 1. RESERVATION REQUEST FOR ALL SYSTEMS (including vis clusters) AT ALCF Machine name:
 2. Project for reservation:
 3. User name(s) for reservation:
@@ -21,7 +22,7 @@ To request a reservation, e-mail support@alcf.anl.gov with the requested informa
     3. Please provide a detailed explanation of why this workload cannot be accomplished with the existing queues: (Requests omitting this response will be not be processed)
     4. After a reservation is granted, you will receive a reservation name by e-mail. Use the command “showres” to verify the reservation attributes.
 
-For example:
+**For example:**
 
 ```
 showres
