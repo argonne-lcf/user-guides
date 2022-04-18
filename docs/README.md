@@ -67,3 +67,6 @@ $ git merge main                     # merge the local develop into **YOURBRANCH
 $ git push origin YOURBRANCH         # push the changes from local branch up to your remote branch
 ```
 * Create merge request from https://github.com/argonne-lcf/alcf-userguide from YOURBRANCH to main branch.
+
+##GitHub Essential Tutorials
+https://www.linkedin.com/learning/git-essential-training-the-basics/move-and-rename-files?autoplay=true&u=74472898
