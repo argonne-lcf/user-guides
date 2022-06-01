@@ -20,9 +20,9 @@ source my_env/bin/activate
 
 ## Extending with conda
 If you prefer to use `conda` to manage your environment, refer to the [conda
-environments page](ml_frameworks/tensorflow/running_with_conda.md) for instructions on
+environments page](ml-frameworks/tensorflow/running-with-conda.md) for instructions on
 cloning the base environment.
 
 ## Combining virtualenvs with containers
 If you wish to extend the Python environment built into a Singularity container, refer
-to the notes on [building on top of a container](building_python_packages.md).
+to the notes on [building on top of a container](building-python-packages.md).
