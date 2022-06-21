@@ -8,7 +8,7 @@ nav:
       - Aries Network: polaris/hardware-overview/slingshot-network.md
     - Compiling And Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
+      - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
       - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
       - Clang Compiler: polaris/compiling-and-linking/clang-compiler-polaris.md
     - Queueing and Running Jobs on Polaris:
