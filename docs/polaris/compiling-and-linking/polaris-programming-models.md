@@ -26,6 +26,8 @@ A summary of available GPU programming models and relevant compiler flags is sho
 | OpenCL* | -- | -- | -- |
 | OpenMP | --| -mp=gpu | -fopenmp-targets=nvptx64 |
 
+[//]: # (ToDo: Add links to programming model pages)
+
 OpenCL is supported, but does not require specific compiler flags per-se as the offloaded kernels are just-in-time compiled. Abstraction programming models, such as Kokkos, can be built on top of some of these programming models (see below). 
 
 

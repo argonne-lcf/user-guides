@@ -1,6 +1,9 @@
-#Compiling and Linking Overview on Polaris
+# Compiling and Linking Overview on Polaris
 
-# Compiling and Linking on Polaris
+# Polaris Nodes
+## Login Nodes
+The login nodes do not currently have GPUs installed and thus compiling GPU-enabled applications may not be straightforward depending on build system and dependencies. Users are encourged to build their applications on Polaris compute nodes for the time being. Compilation of non-GPU codes will work well on the current Polaris login nodes. 
+## Interactive Jobs on Compute Nodes
 The present configuration of the Polaris login nodes do not contain GPUs. As such, users are more likely to run into fewer issues while building GPU-enabled applications if they instead use one of the Polaris compute nodes. This can easily be accomplished by submitting a short interactive job.
 ```
 qsub -I -l select=1 -l walltime=1:00:00
