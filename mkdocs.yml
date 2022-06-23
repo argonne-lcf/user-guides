@@ -8,8 +8,9 @@ nav:
       - Aries Network: polaris/hardware-overview/slingshot-network.md
     - Compiling And Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
+      - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
       - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - Clang Compiler: polaris/compiling-and-linking/clang-compiler-polaris.md
     - Queueing and Running Jobs on Polaris:
       - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
@@ -21,7 +22,7 @@ nav:
           - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
         - Applications:
-            - ELPA: polaris/applications-and-libraries/applications/elpa.md
+            - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
     - Data Science Workflows:
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
