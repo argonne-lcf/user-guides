@@ -276,7 +276,7 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
     * RR is the row {30, 31, 32}
     * PP is the position in the row {30 goes 1-16, 31 and 32 go 1-12}
     * c is chassis and is always 0
-    * s stands for slot, but in this case is the RU in the rack and values are {1,7,13,19,25,31}
+    * s stands for slot, but in this case is the RU in the rack and values are {1,7,13,19,25,31,37}
     * b is BMC controller and is 0 or 1 (each node has its own BMC)
     * n is node, but is always 0 since there is only one node per BMC 
 * So, 16+12+12 = 40 racks * 14 nodes per rack = 560 nodes.
