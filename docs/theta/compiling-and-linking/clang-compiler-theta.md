@@ -1,4 +1,4 @@
-#Clang Compiler on Theta
+# Clang Compiler on Theta
 
 ## Using Clang Compiler
 The Clang compiler, which is part of the LLVM compiler infrastructure, is available as a programming environment on Theta. To use Clang, switch your current programming environment module with the `#! PrgEnv-llvm` module. 
