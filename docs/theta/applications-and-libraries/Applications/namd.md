@@ -106,3 +106,15 @@ Scaling tests on Theta were run up to 3072 nodes using benchmarks of 210M atoms 
 Compared per node, Theta is slower than GPU-accelerated Titan, faster than Edison, and a factor of ten faster than Mira. Edison scales better due to faster cores that reduce the impact of serial bottlenecks.
 
 Compared per core to other CPU-only machines, Theta is slightly faster than Blue Waters (treated as 32 cores).
+
+<figure markdown>
+  ![Number of Nodes](files/namd1.png){ width="700" }
+  <figcaption>Performance on various systems</figcaption>
+</figure>
+
+<figure markdown>
+  ![Number of Cores](files/namd2.png){ width="700" }
+  <figcaption>Performance on various systems</figcaption>
+</figure>
+
+
