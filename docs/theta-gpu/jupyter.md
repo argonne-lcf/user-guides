@@ -24,4 +24,4 @@ $ ssh -L $PORT_NUM:localhost:8888 username@theta.alcf.anl.gov
 5. Navigating to `localhost:8889` (or whatever port number you chose above) on your local machine's browser should then establish a connection to the Jupyter backend!
 
 
-See [TensorBoard](ml_frameworks/tensorflow/tensorboard_instructions.md) for similar instructions for connecting to a TensorBoard process running on a ThetaGPU compute node from your local machine. 
+See [TensorBoard](ml-frameworks/tensorflow/tensorboard-instructions.md) for similar instructions for connecting to a TensorBoard process running on a ThetaGPU compute node from your local machine. 

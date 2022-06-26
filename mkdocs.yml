@@ -4,15 +4,19 @@ nav:
   - Polaris:
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
-      - Polaris Memory Modes: polaris/hardware-overview/polaris-memory-modes.md
-      - Aries Network: polaris/hardware-overview/slingshot-network.md
+      - Slingshot Network: polaris/hardware-overview/slingshot-network.md
     - Compiling And Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: polaris/compiling-and-linking/polaris-library-compiler-tracking-overview.md
+      - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
       - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - Clang Compiler: polaris/compiling-and-linking/clang-compiler-polaris.md
+      - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
     - Queueing and Running Jobs on Polaris:
+      - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
       - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
+      - PBS Admin Quick Start Guide: polaris/queueing-and-running-jobs/pbs-admin-quick-start-guide.md
     - Data Management:
         - ALCF Community Data Co-Op: polaris/data-management/acdc/acdc-overview.md
         - Data Transfer:
@@ -21,7 +25,7 @@ nav:
           - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
         - Applications:
-            - ELPA: polaris/applications-and-libraries/applications/elpa.md
+            - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
     - Data Science Workflows:
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
@@ -52,7 +56,7 @@ nav:
           - Theta Disk Quota: theta/data-management/filesystem-and-storage/theta-disk-quota.md
     - Applications and Libraries:
         - Applications:
-          - ELPA: theta/applications-and-libraries/elpa.md
+          - ELPA: theta/applications-and-libraries/Applications/elpa.md
     - Data Science Workflows:
           - Balsam: theta/data-science-workflows/balsam.md
     - Programming Models: 
@@ -64,14 +68,15 @@ nav:
       - GPU Node Queues and Policy: theta-gpu/gpu-node-queue-and-policy.md
       - GPU Monitoring: theta-gpu/gpu-monitoring.md
       - Python Virtual Environments: theta-gpu/python-venvs.md
-      - MPI: theta-gpu/mpi.md
-      #- Dask-MPI: daskmpi/README.md
+      - MPI:
+          - MPI: theta-gpu/mpi.md
+          - DaskMPI: theta-gpu/daskmpi/README.md
       - Singularity Containers: theta-gpu/singularity-containers.md
       - Building Python Packages in a Container: theta-gpu/building-python-packages.md
       - Jupyter: theta-gpu/jupyter.md
       - DL Frameworks:
         - TensorFlow:
-          - Running with Singularity: theta-gpu/ml-frameworks/tensorflow/nvidia-container_notes.md
+          - Running with Singularity: theta-gpu/ml-frameworks/tensorflow/nvidia-container-notes.md
           - Running with Conda: theta-gpu/ml-frameworks/tensorflow/running-with-conda.md
           - Tensorboard: theta-gpu/ml-frameworks/tensorflow/tensorboard-instructions.md
         - PyTorch:
@@ -79,11 +84,13 @@ nav:
         - Data Parallel Training: theta-gpu/data-parallel-training.md
       - Building and Compiling:
         - Python/C++ code interoperability: theta-gpu/building-and-compiling/README.md
-        - Compiling and Linking: theta-gpu/building-and-compiling/compiling-and-linking.md
+        - Compiling and Linking: theta-gpu/building-and-compiling/compiling_and_linking.md
       - Balsam: theta-gpu/balsam.md
       - DeepHyper: theta-gpu/deephyper.md
   - Cooley:
       - System Overview and Node Information: cooley/system-overview-and-node-information.md
+  - Edith (Edge Dev Testbed):
+      - Getting Started: polaris/queueing-and-running-jobs/edtb.md
 
 theme:
   name: 'material'

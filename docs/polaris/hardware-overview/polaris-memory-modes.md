@@ -1,2 +1,0 @@
-#Polaris Memory Modes
-
