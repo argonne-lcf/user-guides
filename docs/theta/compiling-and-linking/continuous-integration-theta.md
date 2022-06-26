@@ -66,7 +66,7 @@ To assign the node that the project will use to execute jobs, select the option 
 </figure>
 
 ## Common Jenkins Features
-###Version Control Features
+### Version Control Features
 Jenkins can connect to most common version control systems (VCS), including git/svn. The ALCF Jenkins instance can connect with local VCS hosted at at ANL as well as with external VCS, such as that hosted at Github.
 
 On the job configuration page, look for the section **Source Code Management (SCM)**. If it is there already, add it to the job. The required fields for SCM are **Repository URL** and **Credentials**. The example below shows a connection to the ALCF internal Gitlab VCS and uses previously setup credentials.
