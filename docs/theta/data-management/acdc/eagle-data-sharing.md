@@ -1,5 +1,5 @@
-#Sharing on Eagle Using Globus
-##Overview
+# Sharing on Eagle Using Globus
+## Overview
 
 Collaborators throughout the scientific community have the ability to write data to and read scientific data from the Eagle filesystem using Globus sharing capability. This capability provides PIs with a natural and convenient storage space for collaborative work.
 
@@ -14,7 +14,7 @@ Globus is a service that  provides research data management, including managed t
   <figcaption>Logging into Globus</figcaption>
 </figure>
 
-##Logging into Globus with your ALCF Login
+## Logging into Globus with your ALCF Login
 ALCF researchers can use their ALCF Login username and password to access Globus. Go to [Globus website](https://www.globus.org/){:target="_blank"} and click on Log In in the upper right corner of the page.
 
 Type or scroll down to "Argonne LCF" in the "Use your existing organizational login" box, and then click "Continue".
@@ -26,7 +26,7 @@ Type or scroll down to "Argonne LCF" in the "Use your existing organizational lo
 
 You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and password.
 
-##Accessing your Eagle Project Directory
+## Accessing your Eagle Project Directory
 There are two ways for a PI to access their project directory on Eagle. 
 
 1. **Web Interface:** By logging in to Globus interface directly and navigating to the ALCF Eagle endpoint.
@@ -47,7 +47,7 @@ There are two ways for a PI to access their project directory on Eagle.
   <figcaption>Terminal Window</figcaption>
 </figure> 
 
-##Creating a Guest Collection
+## Creating a Guest Collection
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections. 
 
 - If you have an "Inactive/Deleted" ALCF account, please click on the account re-activation link to begin the re-activation process: [Re-activation Link](https://accounts.alcf.anl.gov/accountReactivate){:target="_blank"}
@@ -61,7 +61,7 @@ In the Globus application in your browser:
     2. Click on 'Endpoints' located in the left panel of the Globus web app [or go to](https://app.globus.org/endpoints){:target="_blank"}. **Type "alcf#dtn_eagle" in the search box** located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" from the search results. Click on the  Collections tab. **OR**
     3. Clicking on 'File Manager' located in the left panel of the Globus web app. Search for 'alcf#dtn_Eagle' and select it in the Collection field. Select your project directory or a sub directory that you would like to share with collaborators as a Globus guest collection. Click on 'Share' on the right side of the panel, which will take you to the Collections tab.
 
-    **Note:** Shared endpoints always remain active. When you select an endpoint to transfer data to/from, you may be asked to authenticate  with  that endpoint. Follow the instructions on screen to activate the endpoint and to authenticate. You may also have to provide Authentication/Consent for the Globus web app to manage collections on this endpoint
+**Note:** Shared endpoints always remain active. When you select an endpoint to transfer data to/from, you may be asked to authenticate  with  that endpoint. Follow the instructions on screen to activate the endpoint and to authenticate. You may also have to provide Authentication/Consent for the Globus web app to manage collections on this endpoint
 
 2. In the Collections tab, click 'Add a Guest Collection' located at the top right hand corner
 
@@ -77,7 +77,7 @@ In the Globus application in your browser:
   <figcaption>Create New Guest Collection</figcaption>
 </figure>
 
-##Sharing Data with Collaborators Using Guest Collections
+## Sharing Data with Collaborators Using Guest Collections
 If your data is on the ALCF systems, you can easily share it with collaborators who are at ALCF or elsewhere. You have full control over which files your collaborator can access, and whether they have read-only or read-write permissions. 
 
 You can share with their institutional email. The collaborator can use the Globus web interface to download the data, or use Globus transfer to move the data to their machine.
@@ -110,7 +110,7 @@ You should then see the share and the people you have shared it with. You can re
   <figcaption>List of people that you have shared with</figcaption>
 </figure>
 
-##Additional information on Globus Guest Collections
+## Additional information on Globus Guest Collections
 - ONLY you (a project PI) can create guest collections and make them accessible to collaborators. Project Proxy (on the POSIX side) cannot create guest collections. 
 
 - You can only share directories, not individual files.
@@ -126,7 +126,7 @@ Globus supports setting permissions at a folder level, so there is no need to cr
 
 - All RW actions are performed as the PI, when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
 
-##Creating a group
+## Creating a group
 1. Go to Groups on the left panel
 2. Click on ‘Create a new group’ at the top
 3. Give the group a descriptive name and add Description for more information
@@ -138,7 +138,7 @@ Globus supports setting permissions at a folder level, so there is no need to cr
   <figcaption>Create new group</figcaption>
 </figure>
 
-##Transferring data from Eagle 
+## Transferring data from Eagle 
 Log in to [app.globus.org](https://accounts.alcf.anl.gov/#!/accountRequest) using your ALCF credentials. After authenticating, you will be taken to the Globus File Manager tab. In the 'Collection' box, type the name of Eagle managed endpoint (alcf#dtn_eagle). Navigate to the folder/file you want to transfer. HTTPS access (read-only) is enabled so you can download files by clicking the "Download" button.
 
 Click on 'Download' to download the required file. 
@@ -183,7 +183,7 @@ You will also receive an email when the transfer is complete.
   <figcaption>Email confirmation</figcaption>
 </figure>
 
-##Deleting a guest collection
+## Deleting a guest collection
 To see all guest collections you have shared, go to 'Endpoints' in the left hand navigation bar, then 'Administered by You'. Select the guest collection endpoint you wish to delete, and click on 'Delete endpoint'.
 
 <figure markdown>
@@ -191,7 +191,7 @@ To see all guest collections you have shared, go to 'Endpoints' in the left hand
   <figcaption>Deleting a guest collection</figcaption>
 </figure>
 
-##What to tell your Collaborators
+## What to tell your Collaborators
 If you set up a shared endpoint and want your collaborator to download the data, this is what you need to tell them.
 
 First, the collaborator needs to get a Globus account. The instructions for setting up a Globus account are as described above. This account is free. They may already have Globus access via their institution.
@@ -219,7 +219,7 @@ They should click on the files they want to transfer, then 'Transfer or Sync to'
   <figcaption>Chossing transfer path</figcaption>
 </figure>
 
-##Encryption and Security
+## Encryption and Security
 Data can be encrypted during Globus file transfers. In some cases encryption cannot be supported by an endpoint, and Globus Online will signal an error.
 
 For more information, see ==How does Globus Online ensure my data is secure?==
@@ -235,56 +235,67 @@ Alternatively, you can encrypt the files before transfer using any method on you
 
 **Note:** Encryption and verification will slow down the data transfer.
 
-##FAQs
-###General FAQs: 
+## FAQs
+### General FAQs: 
 **1. What is the Eagle File system?**
+
 It is a Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform also provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s. Primary use of Eagle is data sharing with the research community using ==Fix Link [Globus](https://www.alcf.anl.gov/support-center/theta/using-globus-theta){:target="_blank"}==.The file system is available on all ALCF compute systems. It allows sharing of data between users (ALCF and external collaborators).
  
 **2. What is the difference between Guest, Shared and a Mapped collection?**  
+
 - Guest collections: A Guest collection is a logical construct that a PI sets up on their project directory in Globus that makes it accessible to collaborators. The PI creates a guest collection at or below their project and shares it with the Globus account holders.
 - Shared collection: A guest collection becomes a shared collection when it is shared with a user/group.
 - Mapped Collections: Mapped Collections are created by the endpoint administrators. In the case of Eagle, these are created by ALCF.
  
 **3. Who can create Guest collections?**
+
 ONLY a project PI (or project owner) can create guest collections and make them accessible to collaborators. 
 
 Project Proxy (on the POSIX side) or Access Manager (on the Globus side) do not have the ability to create guest collections. 
  
 **4. Who is an Access Manager?** 
+
 Access Manager is someone who can act as a Proxy on behalf of the PI to manage the collection. The Access Manager has the ability to add users, remove users, grant or revoke read/write access privileges for those users on that particular guest collection. However, Access Managers DO NOT have permissions to create guest collections. 
 
 **5. What are Groups?** 
+
 Groups are constructs that enable multi-user data collaboration. A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. 
 
 **Note** Members of groups do not need to have an ALCF account.
 
 **6. What are some of the Common Errors you see and what do they mean?**
+
 ```
 - EndpointNotFound   -  Wrong endpoint name 
 - PermissionDenied    -  If you do not have permissions to view or modify the collection on <endpoint> (refer to the appropriate section for what this error could mean)
 - ServiceUnavailable  -  If the service is down for maintenance
 ```
  
-###PI FAQs:
+### PI FAQs:
 **1. How can a PI request for a data-only, Eagle storage allocation?** 
-A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form:[Request an allocation](https://accounts.alcf.anl.gov/allocationRequests){:target="_blank"}. The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email ==Check[support@alcf.anl.gov](https:mailto:support@alcf.anl.gov)== with your proposal.
+
+A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form:[Request an allocation](https://accounts.alcf.anl.gov/allocationRequests){:target="_blank"}. The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email == Check[support@alcf.anl.gov](https:mailto:support@alcf.anl.gov) == with your proposal.
 
 **2. Does a PI need to have an ALCF account to create a Globus guest collection?**
+
 Yes. The PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. 
 
 - If the PI has an 'Inactive/Deleted' ALCF account, they should click on the link here to start the account re-activation process: [Account re-activation link](https://accounts.alcf.anl.gov/accountReactivate){:target="_blank"} 
 - If they don't have an ALCF account, they request for one: [Account request link](https://accounts.alcf.anl.gov/#!/accountRequest){:target="_blank"}  
  
 **3. What endpoint should the PI use?**
+
 ```alcf#dtn_eagle```
 
 **4. What are the actions an Eagle PI can perform?**
+
 - Create and delete guest collections, groups
 - Create, delete and share the data with ALCF users and external collaborators
 - Specify someone as a Proxy (Access Manager) for the guest collections
 - Transfer data between the guest collection on Eagle and other Globus endpoints/collections
 
 **5. How can a PI specify someone as a Proxy on the Globus side?**
+
 Go to alcf#dtn_eagle -> collections -> shared collection -> roles -> select 'Access Manager'
 
 <figure markdown>
@@ -298,6 +309,7 @@ Go to alcf#dtn_eagle -> collections -> shared collection -> roles -> select 'Acc
 </figure>
 
 **6. What is the high-level workflow for setting up a guest collection?** 
+
 - PI requests an Eagle allocation project
 - The ALCF Allocations Committee reviews and approves requests
 - ALCF staff sets up a project, unixgroup, and project directory (on Eagle) 
@@ -311,53 +323,68 @@ Go to alcf#dtn_eagle -> collections -> shared collection -> roles -> select 'Acc
 - Added with Read only or Read-Write permissions
 
 **7. Should PI add their ALCF project members to Eagle separately to access guest collections?**
+
 ALCF project members already have access to the project directory that they can access by browsing the endpoint ```alcf#dtn_eagle```. Globus guest collections allows sharing of data with collaborators that don't have ALCF accounts.  
 
 **8. Who has the permissions to create a guest collection?**
+
 Only the PI has the ability to create a guest collection. The Access Manager, along with the PI, has permissions to share it with collaborators (R-only or R-W permissions as needed). 
 
 **9. I am the project PI. Why do I see a "Permission Denied" error when I try to CREATE a shared collection?**
+
 If you are a PI and you see this error, it could mean that a sharing policy might not have been created by ALCF. Please contact ==Check[support@alcf.anl.gov](https:mailto:support@alcf.anl.gov)== for assistance.
 
 **10. If a PI added someone as a project proxy on the POSIX-side, is it safe to assume that the Proxy can create guest collections?**
+
 No, project proxies cannot create guest collections, only the PI can.
 
 **11. Who can create groups?**
 A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. For more information, refer to: ==Creating a Group==
 
 **12. What happens when the PI of a project changes? What happens to the shared collection endpoint?**
+
 The new PI will need to create new shared collections and share it with collaborators again.
 
 **13. I notice that I am the owner of all the files that were transferred by external collaborators using the guest collection. Why is that?**
+
 When collaborators read files from or write files to the guest collection, they do so on behalf of the PI. All writes show up as having been carried by the PI. Also, if the PI does not have permission to read or write to a file or folder in the directory, then the collaborators will not have those permissions either. 
 
 **14. What happens to the guest collections when the PI's account goes inactive?**
+
 The collections will also become inactive until the PI's account is re-activated. 
 
 **15. How long does it take for the endpoint to become accessible to collaborators after PI's account is activated?**
+
 Right away. The page needs to be refreshed and sometimes you may have to log out and log back in.
 
-###Access Manager FAQs:
+### Access Manager FAQs:
 **1. What are the actions an Access Manager can perform?**
+
     1. Access Manager should be able to see the collection under "Shared with you" and "Shareable by you" tabs.
     2. Has permissions to add and/or delete collaborators on the shared collection and restrict their R-W access as needed.
 
 **2. Does an Access Manager need to have an ALCF account?**
+
 Not necessary. However, if they need to manage the membership on the POSIX side, they will need an ALCF account and be a Proxy on the project.
 
 **3. What is the difference between an ALCF project Proxy and a guest collection Access Manager?**
+
 ALCF Project Proxy has permissions to manage project membership on the POSIX side whereas guest collection Access Manager has permissions to manage the project membership specific to that guest collection shared by the PI on the Globus side.
  
 **4. I am an 'Access Manager' on the collection. Why do I see a 'Permission Denied' error when I try to SHARE a guest collection created by the PI?** 
+
 If you are a non-PI who is able to access the guest collection but unable to share it, it means that your role on this guest collection is limited to a "Member". If you want the ability to share folders and sub-folders from the collections that are shared with you, please talk to the PI. They will need to set your role to an "Access Manager" for the collection within Globus
 
 **5. Can an Access Manager give external collaborators access to the collections that are shared with them on Eagle?**
+
 Yes, an Access Manager will see "Permissions" tab at the top of the shared collection page and can share it with collaborators and/or a group.
 
 **6. Can an Access Manager create collections using the shared endpoint?**
+
 No. An access manager cannot create a collection, only a PI can do that. The access manager can however share folders and sub-folders from the collections that are shared with them.
 
 **7. Can an Access Manager leave a globus group or withdraw membership request for collaborators?**
+
 Yes.[Go to alcf#dtn_eagle-> Groups > group_name -> Members -> click on specific user -> Role & Status -> Set the appropriate status]
 
 <figure markdown>
@@ -374,7 +401,7 @@ Guest Collection Collaborators:
     2. Collaborators can write to a collection **
     3. Collaborators can delete files in a collection **
 
-*  *If the PI has read permissions for those files on the POSIX side and the collaborator is given read permissions in Globus for the guest collection.*
+** *If the PI has read permissions for those files on the POSIX side and the collaborator is given read permissions in Globus for the guest collection.*
 
 ** *If the PI has write permissions for those files on the POSIX side and the collaborator is given write permissions in Globus  for the guest collection.*
 
