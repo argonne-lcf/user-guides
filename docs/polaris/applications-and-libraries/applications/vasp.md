@@ -6,7 +6,7 @@ VASP is a commercial code for materials and solid state simulations. Users must 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` could be found in [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU)
 
-The follow `makefile.include` was tailore for Polaris, originally taken [from here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc)
+The follow `makefile.include` was tailored for Polaris, originally taken [from here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc)
 
 ```makefile
 # makefile.inclide
