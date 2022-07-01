@@ -1,4 +1,4 @@
-#Balsam
+# Balsam
 
 Balsam is a project run by the ALCF Data Science group, to optimize workflow execution on ALCF systems (and elsewhere). With Balsam, users can easily describe a large campaign of jobs to be run, with varying sizes and interdependencies, and let Balsam manage flowing the jobs out to the target systems. Balsam will stage in necessary inputs, submit jobs to the queues, and stage out specified output files. Users can also control the flow of jobs to prioritize particular workflows or jobs. 
 
