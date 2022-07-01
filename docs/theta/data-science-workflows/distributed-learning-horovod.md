@@ -34,9 +34,11 @@ aprun -n ... -N ... -e HOROVOD_TIMELINE=/path/to/timeline.json python train.py
 ```
 One can then open the timeline file using ```chrome://tracing``` facility of the Chrome browser. Users can use Horovod Timelines to view exactly what each node was doing at each time step throughout a training job. This helps identify bugs and debug performance issues. 
 
-We put examples of MNIST training using TensorFlow/PyTorch. 
+We put examples of MNIST training using TensorFlow/PyTorch. The folders contain the python scripts, datasets and COBALT submission script. 
 
 - TensorFlow + Horovod: /projects/SDL_Workshop/hzheng/examples/tensorflow/MNIST
-- PyTorch + Horovod: /projects/SDL_Workshop/hzheng/examples/pytorch/MNIST The folders contain the python scripts, datasets and COBALT submission script. 
+- PyTorch + Horovod: /projects/SDL_Workshop/hzheng/examples/pytorch/MNIST 
+
+== add video ==
 
 
