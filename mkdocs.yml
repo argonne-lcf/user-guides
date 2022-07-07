@@ -134,6 +134,7 @@ extra:
 
 plugins:
   - search
-  - mkdocs-video
+  - mkdocs-video:
+      is_video: True
 
 
