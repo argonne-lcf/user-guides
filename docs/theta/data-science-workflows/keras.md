@@ -58,7 +58,7 @@ callbacks.append(keras.callbacks.ModelCheckpoint('./checkpoint-{epoch}.h5'))
 Since we are using data parallel scheme. Different ranks shall process different data. One has to change the data loader part of the python script to ensure different ranks read different mini batches of data. 
 
 #### Example
-A simple example for doing linear regression using Keras + Horovod is put in teh follwoing directory on Theta:
+A simple example for doing linear regression using Keras + Horovod is put in the follwoing directory on Theta:
 ```
 /projects/SDL_Workshop/hzheng/examples/keras/linreg 
  
