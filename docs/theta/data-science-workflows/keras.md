@@ -65,4 +65,4 @@ A simple example for doing linear regression using Keras + Horovod is put in teh
 linreg_keras.py is the python script, and qsub.sc is the COBALT submission script. 
 ```
 
-![type:video](https://youtu.be/930yrXjNkgM)
+![type:video]([https://youtu.be/930yrXjNkgM](https://www.youtube.com/embed/930yrXjNkgM))
