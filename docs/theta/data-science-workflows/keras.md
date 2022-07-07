@@ -65,4 +65,4 @@ A simple example for doing linear regression using Keras + Horovod is put in the
 linreg_keras.py is the python script, and qsub.sc is the COBALT submission script. 
 ```
 
-[![Everything Is AWESOME](https://img.youtube.com/vi/StTqXEQ2l-Y/0.jpg)](https://www.youtube.com/watch?v=StTqXEQ2l-Y “Everything Is AWESOME”)
+<iframe width="709" height="399" src="https://www.youtube.com/embed/930yrXjNkgM" title="Deep Learning with Keras, Tensorflow, PyTorch, and Horovod on Theta" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
