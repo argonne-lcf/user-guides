@@ -94,16 +94,25 @@ nav:
 
 theme:
   name: 'material'
+  custom_dir: overrides
   language: 'en'
   palette:
-    primary: 'indigo'
-    accent: 'amber'
-    scheme: 'preference'
+    scheme: alcf
+  font:
+    text: proxima-nova
   features:
     - tabs
     - instant
-  #logo: 'images/Argonne_wireframe_white_transparent.png'
-  #favicon: 'images/alcf_favicon.ico'
+    - search.highlight
+    - search.suggest
+  logo: 'images/Argonne_wireframe_white_transparent.png'
+  favicon: 'images/alcf_favicon.ico'
+
+extra_css:
+  - stylesheets/alcf-extra.css
+
+extra_javascript:
+  - javascripts/alcf-extra.js
 
 markdown_extensions:
   - admonition
