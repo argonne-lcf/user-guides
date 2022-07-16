@@ -168,7 +168,7 @@ Report file moved to "/home/jkwack/BabelStream/build_polaris/JKreport-nsys-Bable
 ```
 
 #### Reviewing the Nsight Systems data via GUI
-![Nsys_screenshot](/Images/JK_Nsys_plot01.png)
+![Nsys_screenshot](Images/JK_Nsys_plot01.png)
 
 
 Screenshot of Nsight Systems GUI
@@ -298,7 +298,7 @@ Dot         850376.762  0.00063     0.00070     0.00065
 ```
 
 #### Reviewing the Nsight Compute data via GUI
-![Ncu_Details](/Images/JK_Ncu_Plots_Details.png)
-![Ncu_SOL](/Images/JK_Ncu_Plots_SOL.png)
-![Ncu_Roofline](/Images/JK_Ncu_Plots_Roofline.png)
-![Ncu_sources](/Images/JK_Ncu_Plots_sources.png)
+![Ncu_Details](Images/JK_Ncu_Plots_Details.png)
+![Ncu_SOL](Images/JK_Ncu_Plots_SOL.png)
+![Ncu_Roofline](Images/JK_Ncu_Plots_Roofline.png)
+![Ncu_sources](Images/JK_Ncu_Plots_sources.png)
