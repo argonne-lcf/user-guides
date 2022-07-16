@@ -1,8 +1,8 @@
 # NVIDIA Nsight tools
 
 ## References  
-NVIDIA Nsight Systems Documentation  
-NVIDIA Nsight Compute Documentation
+[NVIDIA Nsight Systems Documentation](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)  
+[NVIDIA Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html)
 
 ## Introduction
 NVIDIA® Nsight™ Systems provides developers a system-wide visualization of an applications performance. Developers can optimize bottlenecks to scale efficiently across any number or size of CPUs and GPUs on Polaris. For further optimizations to compute kernels developers should use Nsight Compute.
