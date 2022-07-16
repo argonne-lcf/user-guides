@@ -2,6 +2,7 @@ site_name: ALCF User Guide
 nav:
   - Home: README.md
   - Polaris:
+    - Known Issues: polaris/known_issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
       - Slingshot Network: polaris/hardware-overview/slingshot-network.md
