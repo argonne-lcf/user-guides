@@ -171,8 +171,6 @@ Report file moved to "/home/jkwack/BabelStream/build_polaris/JKreport-nsys-Bable
 ![Nsys_screenshot](Images/JK_Nsys_plot01.png)
 
 
-Screenshot of Nsight Systems GUI
-
 ### Nsight Compute
 #### Running a stream benchmark with Nsight Compute for triad_kernel
 ```
