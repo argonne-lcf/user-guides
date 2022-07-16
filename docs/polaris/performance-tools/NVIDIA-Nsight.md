@@ -1,18 +1,18 @@
-#NVIDIA Nsight tools
+# NVIDIA Nsight tools
 
-##References  
+## References  
 NVIDIA Nsight Systems Documentation  
 NVIDIA Nsight Compute Documentation
 
-##Introduction
+## Introduction
 NVIDIA® Nsight™ Systems provides developers a system-wide visualization of an applications performance. Developers can optimize bottlenecks to scale efficiently across any number or size of CPUs and GPUs on Polaris. For further optimizations to compute kernels developers should use Nsight Compute.
 
 The NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command line tool. 
 
 In addition, the baseline feature of this tool allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface,  metric collection, and can be extended with analysis scripts for post-processing results.
 
-##Step-by-step guide
-###Common part on Polaris
+## Step-by-step guide
+### Common part on Polaris
 Build your application for Polaris, and then submit your job script to Polaris or start an interactive job mode on Polaris as follows:  
 ```
 $ qsub -I -l select=1 -l walltime=1:00:00
@@ -27,13 +27,13 @@ Version 2021.2.1.0 (build 30182073) (public-release)
 ```
 
 
-###Nsight Systems
+### Nsight Systems
 Run your application with Nsight Systems as follows:  
 ```
 $ nsys profile -o {output_filename} --stats=true ./{your_application}
 ```
 
-###Nsight Compute
+### Nsight Compute
 Run your application with Nsight Compute.  
 ```
 $ ncu --set detailed -k {kernel_name} -o {output_filename} ./{your_application}
@@ -41,29 +41,29 @@ $ ncu --set detailed -k {kernel_name} -o {output_filename} ./{your_application}
 
 Remark: Without -o option, Nsight Compute provides performance data as a standard output
 
-###Post-processing the profiled data
-####Post-processing via CLI
+### Post-processing the profiled data
+#### Post-processing via CLI
 ```
 $ nsys stats {output_filename}.qdrep
 $ ncu -i {output_filename}.ncu-rep  
 ```
 
-####Post-processing on your local system via GUI
+#### Post-processing on your local system via GUI
 * Install NVIDIA Nsight Systems and NVIDIA Nsight Compute after downloading both of them from the  [NVIDIA Developer Zone](https://developer.nvidia.com/).   
 Remark: Local client version should be the same as or newer than NVIDIA Nsight tools on Polaris. 
 * Download nsys output files (i.e., ending with .qdrep and . sqlite) to your local system, and then open them with NVIDIA Nsight Systems on your local system.  
 * Download ncu output files (i.e., ending with .ncu-rep) to your local system, and then open them with NVIDIA Nsight Compute on your local system.  
 
-###More options for performance analysis with Nsight Systems and Nsight Compute
+### More options for performance analysis with Nsight Systems and Nsight Compute
 ```
 $ nsys --help
 $ ncu --help
 ```
 
-##A quick example
+## A quick example
 
-###Nsight Systems
-###Running a stream benchmark with Nsight Systems
+### Nsight Systems
+#### Running a stream benchmark with Nsight Systems
 ```
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris> nsys profile -o JKreport-nsys-BableStream --stats=true ./cuda-stream
 Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
@@ -167,14 +167,14 @@ Report file moved to "/home/jkwack/BabelStream/build_polaris/JKreport-nsys-Bable
 Report file moved to "/home/jkwack/BabelStream/build_polaris/JKreport-nsys-BableStream.sqlite"
 ```
 
-####Reviewing the Nsight Systems data via GUI
+#### Reviewing the Nsight Systems data via GUI
 ![Nsys_screenshot](/Images/JK_Nsys_plot01.png)
 
 
 Screenshot of Nsight Systems GUI
 
-###Nsight Compute
-####Running a stream benchmark with Nsight Compute for triad_kernel
+### Nsight Compute
+#### Running a stream benchmark with Nsight Compute for triad_kernel
 ```
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris> ncu --set detailed -k triad_kernel -o JKreport-ncu_detailed-triad_kernel-BableStream ./cuda-stream
 BabelStream
@@ -297,7 +297,7 @@ Dot         850376.762  0.00063     0.00070     0.00065
 ==PROF== Report: /home/jkwack/BabelStream/build_polaris/JKreport-ncu_detailed-triad_kernel-BableStream.ncu-rep
 ```
 
-####Reviewing the Nsight Compute data via GUI
+#### Reviewing the Nsight Compute data via GUI
 ![Ncu_Details](/Images/JK_Ncu_Plots_Details.png)
 ![Ncu_SOL](/Images/JK_Ncu_Plots_SOL.png)
 ![Ncu_Roofline](/Images/JK_Ncu_Plots_Roofline.png)
