@@ -121,9 +121,6 @@ Here is a heavily commented sample PBS submission script:
 ## -v a=10, "var2='A,B'", c=20, HOME=/home/zzz
 ##PBS -V exports all the environment variables in your environnment to the compute node
 
-# While not PBS, the following modules are required for correct functionality on ALCF systems
-module load cray-pals
-module load cray-libpals
 
 # The rest is an example of how an MPI job might be set up
 echo Working directory is $PBS_O_WORKDIR
@@ -308,9 +305,6 @@ A sample submission script with directives is below for a 4-node job with 32 MPI
 #PBS -l select=4:ncpus=256
 #PBS -l walltime=0:10:00
 
-module load cray-pals
-module load cray-libpals
-
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=32 # Number of MPI ranks to spawn per node
 NDEPTH=8 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
@@ -330,7 +324,23 @@ GPU-enabled applications will similarly run on the compute nodes using the above
 
 * If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
+### Binding MPI ranks to GPUs
+The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
 
+A example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
+```
+#!/bin/bash
+num_gpus=4
+gpu=$((${PMI_LOCAL_RANK} % ${num_gpus}))
+export CUDA_VISIBLE_DEVICES=$gpu
+echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
+exec "$@"
+```
+This script can be placed just before the executable in the `mpiexec` command like so.
+```
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
+```
+Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
 
 ### Need help from applications people for this section
 
