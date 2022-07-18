@@ -20,19 +20,25 @@ nav:
       - PBS Admin Quick Start Guide: polaris/queueing-and-running-jobs/pbs-admin-quick-start-guide.md
     - Data Management:
         - ALCF Community Data Co-Op: polaris/data-management/acdc/acdc-overview.md
+        - Sharing on Eagle: polaris/data-management/acdc/eagle-data-sharing.md
         - Data Transfer:
           - SFTP and SCP: polaris/data-management/data-transfer/sftp-scp.md
+          - Using Globus: using-globus.md
         - File System & Storage:
           - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
         - Applications:
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
     - Data Science Workflows:
+        - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
         - OpenMP: polaris/programming-models/openmp-polaris.md
+        - SYCL: polaris/programming-models/sycl-polaris.md
     - Debugging Tools: polaris/debugging-tools/debugging-overview.md
+        - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools: polaris/performance-tools/performance-overview.md
+        - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
@@ -144,7 +150,6 @@ extra:
 
 plugins:
   - search
-#  - mkdocs-video:
-#      is_video: True
+
 
 
