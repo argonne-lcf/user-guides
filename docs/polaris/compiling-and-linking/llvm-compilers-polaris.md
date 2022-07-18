@@ -1,4 +1,4 @@
-# Clang Compiler on Polaris
+# LLVM Compilers on Polaris
 Cray Programming Environment does not offer LLVM compiler support.
 Thus cc/CC compiler wrappers with LLVM compilers are not available.
 
@@ -7,7 +7,7 @@ When OpenMP offload or CUDA features are needed in the LLVM compilers, load `cud
 
 To use Clang with MPI, load `mpiwrappers/cray-mpich-llvm` module
 which loads the following modules
-`cray-mpich`, MPI compiler wrappers mpicc/mpicxx/mpif90. mpif90 uses gfortran.
+`cray-mpich`, MPI compiler wrappers mpicc/mpicxx/mpif90. mpif90 uses gfortran because flang is not ready for production use.
 `cray-pals`, MPI launchers mpiexec/aprun/mpirun
 **Limitation** There is no GPU-aware MPI support by default. If needed, manually add the GTL (GPU Transport Layer) library to the link line.
 
