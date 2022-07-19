@@ -88,7 +88,7 @@ Rank 3 running on GPU 3!
 
 Result is CORRECT!! :)
 ```
-If the application instead relies on the job launcher to bind MPI ranks to available GPUs, then a small helper script can be used to explicitly set `CUDA_VISIBLE_DEVICES` appropriately for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment. The binding of MPI ranks to GPUs is discussed in more detail here.
+If the application instead relies on the job launcher to bind MPI ranks to available GPUs, then a small helper script can be used to explicitly set `CUDA_VISIBLE_DEVICES` appropriately for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment. The binding of MPI ranks to GPUs is discussed in more detail [here](../queueing-and-running-jobs/job-and-queue-scheduling.md#binding-mpi-ranks-to-gpus).
 
 [//]: # (ToDo: Add link to running jobs page)
 
