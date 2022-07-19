@@ -11,7 +11,7 @@ nav:
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
       - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
-      - Clang Compiler: polaris/compiling-and-linking/clang-compiler-polaris.md
+      - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
       - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
     - Queueing and Running Jobs on Polaris:
       - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
