@@ -6,6 +6,12 @@
 
 The login nodes do not currently have GPUs installed. It is still possible to compile GPU-enabled applications on the login nodes depending on the requirements of your applications build system. If a GPU is required for compilation, then users are encouraged for the time being to build their applications on a Polaris compute node. This can be readily accomplished by submitting an interactive single-node job. Compilation of non-GPU codes is expected to work well on the current Polaris login nodes.
 
+### Home File System
+
+Is it helpful to realize that there is a single `HOME` filesystem for users that can be accessed from the login and computes of each production resource at ALCF. Thus, users should be mindful of modifications to their environments (e.g. `.bashrc`) that may cause issues to arise due to differences between the systems. 
+
+An example is creating an alias for the `qstat` command to, for example, change the order of columns printed to screen. Users with such an alias that works well on Theta may run into issues using `qstat` on Polaris as the two system use different schedulers: Cobalt (Theta) and PBS (Polaris). Users with such modifications to their environments are encouraged to modify their scripts appropriately depending on `$hostname`.
+
 ### Interactive Jobs on Compute Nodes
 
 Submitting a single-node interactive job to, for example, build and test applications on a Polaris compute node can be accomplished using the `qsub` command.
@@ -35,16 +41,14 @@ CRAY_LIB=$(cc --cray-print-opts=libs)
 ```
 Further documentation and options are available via `man cc` and similar. 
 
-## Compilers
+## Compilers provided by Cray Programming Environments
 
-The default programming environment on Polaris is currently `NVHPC`. The `GNU` compilers are available. In the current early user environment, the following sequence of `module` commands can be used to switch to the `GNU` programming environment (gcc, g++, gfortran) and also have `NVIDIA` compilers available in your path.
+The default programming environment on Polaris is currently `NVHPC`. The `GNU` compilers are available via another programming environment. The following sequence of `module` commands can be used to switch to the `GNU` programming environment (gcc, g++, gfortran) and also have `NVIDIA` compilers available in your path.
 
 ```
 module swap PrgEnv-nvhpc PrgEnv-gnu
-module load nvhpc
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module load nvhpc-mixed
 ```
-This process of switching to the `GNU` programming environment is expected to be streamlined during the early user phase. 
 
 The compilers invoked by the Cray MPI wrappers are listed for each programming environment in the following table.
 
@@ -57,6 +61,14 @@ The compilers invoked by the Cray MPI wrappers are listed for each programming e
 Note, while gcc and g++ may be available in the default environment, the `PrgEnv-gnu` module is needed to provide gfortran.
 
 [//]: # (ToDo: do the gnu compilers loaded by PrgEnv-gnu have non-zero support for GPUs?)
+[//]: # (ToDo: should there be a GNU compilers page? Even if they don't support GPUs?)
+
+
+## Additional Compilers Provided by ALCF
+
+The ALCF additionally provides compilers to enable the OpenMP and SYCL programming models for GPUs via` LLVM` as documented [here](llvm-compilers-polaris.md)
+
+Additional documentation for using compilers is available on the respective programming model pages: [OpenMP](../programming-models/openmp-polaris.md) and [SYCL](../programming-models/sycl-polaris.md).
 
 ## Linking
 
@@ -70,7 +82,7 @@ For applications consisting of a mix of C/C++ and Fortran that also uses MPI, it
 
 ## Compiling for GPUs
 
-It is assumed the majority of applications to be built on Polaris will make use of the GPUs. As such, the `craype-accel-nvidia80` module is in the default environment. This has the effect of adding `-gpu` to the compiler invocation along with additional include paths and libraries. Additional compilers flags may be needed depending on the compiler and GPU programming model used (e.g. `-cuda`, `-acc`, or `-mp=gpu`). 
+It is assumed the majority of applications to be built on Polaris will make use of the GPUs. As such, the `craype-accel-nvidia80` module is in the default environment. This has the effect of the Cray compiler wrappers adding `-gpu` to the compiler invocation along with additional include paths and libraries. Additional compilers flags may be needed depending on the compiler and GPU programming model used (e.g. `-cuda`, `-acc`, or `-mp=gpu`).
 
 This module also adds GPU Transport Layer (GTL) libraries to the link-line to support GPU-aware MPI applications. Note, there is currently an issue in the early Polaris software environment that may prevent applications from using GPU-enabled MPI.
 
