@@ -1,4 +1,4 @@
-#Known Issues
+# Known Issues
 
 This is a collection of known issues that have been encountered during Polaris' early user phase. Documentation will be updated as issues are resolved.
 
