@@ -7,8 +7,8 @@
 - ALCF Tutorial: https://github.com/argonne-lcf/sycltrain
 
 ```
-module use TODO
-module avail intel-llvm
+module use /soft/compilers
+module load llvm-sycl/2022-06 
 ```
 
 # Example (memory intilization)
@@ -31,8 +31,8 @@ int main(){
     std::cout << "A[ " << i << " ] = " << A[i] << std::endl;
   return 0;
 }
-$ module use TODO
-$ module load intel-llvm/sycl-nightly/latest
+module use /soft/compilers
+module load llvm-sycl/2022-06 
 $ clang++ -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' main.cpp
 $ ./a.out
 ```
