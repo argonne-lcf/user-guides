@@ -35,9 +35,11 @@ nav:
     - Programming Models: 
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
-    - Debugging Tools: polaris/debugging-tools/debugging-overview.md
+    - Debugging Tools:
+        - Debugging Tools Overview: polaris/debugging-tools/debugging-overview.md
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
-    - Performance Tools: polaris/performance-tools/performance-overview.md
+    - Performance Tools:
+        - Performance Tools Overview: polaris/performance-tools/performance-overview.md
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
   - Theta:
     - Hardware Overview:
