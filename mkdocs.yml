@@ -24,7 +24,7 @@ nav:
         - Sharing on Eagle: polaris/data-management/acdc/eagle-data-sharing.md
         - Data Transfer:
           - SFTP and SCP: polaris/data-management/data-transfer/sftp-scp.md
-          - Using Globus: using-globus.md
+          - Using Globus: polaris/data-management/data-transfer/using-globus.md
         - File System & Storage:
           - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
