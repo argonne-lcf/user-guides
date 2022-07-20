@@ -2,8 +2,8 @@ site_name: ALCF User Guide
 nav:
   - Home: README.md
   - Polaris:
+    - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
-    - How to Log In: polaris/login-info.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
       - Slingshot Network: polaris/hardware-overview/slingshot-network.md
