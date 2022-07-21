@@ -1,6 +1,8 @@
 # LLVM Compilers on Polaris
 
-The Cray Programming Environment does not currently offer LLVM compiler support for the NVIDIA A100 GPUs. There is the `PrgEnv-cray` set of LLVM compilers, but they do not currently support the GPUs on Polaris. Thus cc/CC compiler wrappers with LLVM compilers are thus not currently available.
+This page is not LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but open source LLVM compilers.
+Cray Programming Environment does not offer LLVM compiler support.
+Thus cc/CC compiler wrappers using LLVM compilers are not currently available.
 
 [//]: # (ToDo: Lack of support for PrgEnv-cray is based on man page; should confirm)
 
