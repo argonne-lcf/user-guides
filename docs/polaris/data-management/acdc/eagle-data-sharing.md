@@ -1,4 +1,4 @@
-# Sharing on Eagle
+# Sharing on Eagle Using Globus
 ## Overview
 
 Collaborators throughout the scientific community have the ability to write data to and read scientific data from the Eagle filesystem using Globus sharing capability. This capability provides PIs with a natural and convenient storage space for collaborative work.
