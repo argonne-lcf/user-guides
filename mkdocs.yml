@@ -11,6 +11,8 @@ nav:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
       - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
+      - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
       - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
@@ -30,6 +32,8 @@ nav:
     - Applications and Libraries:
         - Applications:
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+        - Libraries:
+            - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
     - Data Science Workflows:
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
