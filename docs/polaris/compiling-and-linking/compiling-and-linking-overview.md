@@ -76,6 +76,12 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 [//]: # (ToDo: first attempt at using CRAYPE_LINK_TYPE=static didn't go well; couldn't find libpthread and lrt)
 
+## Notes on Default Modules
+
+* `craype-x86-rome`: While the Polaris compute nodes currently have Milan CPUs, this module is loaded by default to avoid the `craype-x86-milan` module from adding a `zen3` target not supported in the default `nvhpc/21.9` compilers. The `craype-x86-milan` module is expected to be made default once a newer `nvhpc` version (e.g. 22.5) is made the default.
+
+* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with gpu-enabled MPI libraries as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building cpu-only applications may find it useful to unload this module to silence "gpu code generation" warnings.
+
 ## Mixed C/C++ & Fortran Applications
 
 For applications consisting of a mix of C/C++ and Fortran that also uses MPI, it is suggested that the programming environment chosen for Fortran be used to build the full application because of mpi.mod (and similar) incompatibilities. 
