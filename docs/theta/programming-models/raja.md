@@ -28,4 +28,4 @@ cd build_alcf-theta-intel18.0/
 make -j 4
 ```
 
-The build script makes use of a CMake configuration file raja/host-configs/alcf-builds/theta_intel18_0.cmake. The RAJA and compiler options can be adjusted in this configuration file.
+The build script makes use of a CMake configuration file ```raja/host-configs/alcf-builds/theta_intel18_0.cmake```. The RAJA and compiler options can be adjusted in this configuration file.
