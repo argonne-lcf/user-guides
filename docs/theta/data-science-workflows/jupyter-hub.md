@@ -12,6 +12,7 @@ Cooley Jupyter Hub instances have access to the user's home folder (```/home/$US
 You can submit jobs to run on Theta/Cooley with ```!qsub myjob.sh```.
 You can customize your environment and add new kernels. To do so, you could run shell commands on a notebook cell by prepending them with ! (```i.e., !pwd```). However, it would be much easier to use the Jupyter terminal. You can open a terminal on the Jupyter Hub home page under Files/new menu. Using the terminal, you can create a new conda environment and a new Jupyter kernel with the commands below.
 For more information on how to manage conda environments, refer to this [page](https://conda.io/docs/user-guide/tasks/manage-environments.html).
+
 ```
 From terminal:
 conda create -n jhub_myenv
@@ -25,8 +26,9 @@ From notebook:
 !source activate jhub_myenv; conda install -y jupyter nb_conda ipykernel
 !source activate jhub_myenv; conda install -y any_module_you_need
 ```
-This will complete the installation of a new environment. To create a Jupyter kernel, additional work is necessary:
 
+This will complete the installation of a new environment. To create a Jupyter kernel, additional work is necessary:
+```
 **From terminal:**
 source activate jhub_myenv
 python -m ipykernel install --user --name jhub_myenv
@@ -35,6 +37,7 @@ source deactivate
 **From notebook:**
 !source activate;python -m ipykernel install --user --name jhub_myenv
 ```
+
 After completing these steps, you will see jhub_myenv kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.
 
 - Use a name identifier (such as jhub_ prefix used above) on your Jupyter Hub conda environment to make sure you don’t mix them with conda environments you create on Cooley/Theta nodes.
@@ -43,6 +46,7 @@ After completing these steps, you will see jhub_myenv kernel when you click new 
 Jupyterhub limits to a user home directory the user's ability to browse the file system. To access a given project directory, the user must create a symbolic link in their home directory to the project directory:
 
 If a user is connected to the Cooley instances and wants to access Mira project ABC and Theta project EFG, the user should execute the following commands to create the links:
+
 ```
 **From terminal:**
 ln -s /project/ABC ABC_project
