@@ -29,12 +29,12 @@ From notebook:
 
 This will complete the installation of a new environment. To create a Jupyter kernel, additional work is necessary:
 ```
-**From terminal:**
+From terminal:
 source activate jhub_myenv
 python -m ipykernel install --user --name jhub_myenv
 source deactivate
  
-**From notebook:**
+From notebook:
 !source activate;python -m ipykernel install --user --name jhub_myenv
 ```
 
@@ -48,11 +48,11 @@ Jupyterhub limits to a user home directory the user's ability to browse the file
 If a user is connected to the Cooley instances and wants to access Mira project ABC and Theta project EFG, the user should execute the following commands to create the links:
 
 ```
-**From terminal:**
+From terminal:
 ln -s /project/ABC ABC_project
 ln -s /lus/theta-fs0/projects/EFG EFG_project
  
-**From notebook:**
+From notebook:
 !ln -s /project/ABC ABC_project
 !ln -s /lus/theta-fs0/projects/EFG EFG_project
 ```
