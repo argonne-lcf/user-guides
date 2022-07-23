@@ -52,6 +52,7 @@ ln -s /lus/theta-fs0/projects/EFG EFG_project
 !ln -s /project/ABC ABC_project
 !ln -s /lus/theta-fs0/projects/EFG EFG_project
 ```
+
 ## Running a Notebook on a compute node
 The following guide gives direction for running a Jupyter Notebook on a compute node.  The default behavior for Jupyter in the ALCF environment is for Cobalt job submission to happen as part of user scripting.  The ability to run a Notebook on a compute node current exists on ThetaGPU, as of October 1, 2021.  Other ALCF resources will be added in the following months.
 
