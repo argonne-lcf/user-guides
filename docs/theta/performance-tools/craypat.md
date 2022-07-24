@@ -821,4 +821,8 @@ jkwack@thetalogin5:~> app2
   ![Example image](files/CrayPat-09.png){ width="700" }
 </figure>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QUf9hVop8Kw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LhI6-egykl0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
