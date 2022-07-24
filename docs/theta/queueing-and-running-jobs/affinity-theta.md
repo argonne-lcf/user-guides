@@ -1,5 +1,5 @@
-#Affinity on Theta
-##Introduction
+# Affinity on Theta
+## Introduction
 
 Each KNL node on Theta has 32 tiles, each with 2 physical cores. Each physical core has 4 hardware threads, for a total of 64 physical cores and 256 hardware threads per KNL node. When a parallel job is run, the job must have some way of mapping specific ranks or threads to each of the 256 hardware threads. Mapping is typically done by an “affinity mask”, which assigns hardware threads to each MPI rank or thread to use.
 
@@ -16,9 +16,9 @@ Using the -j, -d, and --cc arguments to aprun and environment variables, MPI ran
 
 **Note:** Logical core and hardware thread are used interchangeably below.
 
-##Examples of Thread Affinity
+## Examples of Thread Affinity
 
-###Example 1: 2 nodes, 64 ranks/node, 1 thread/rank, 1 rank/core
+### Example 1: 2 nodes, 64 ranks/node, 1 thread/rank, 1 rank/core
 The following four examples show how the -j and -d aprun arguments can affect where the MPI ranks and OpenMP threads are mapped.
 
 ```
@@ -29,7 +29,7 @@ aprun -n 128 -N 64 -d 1 -j 1 --cc depth <app> <app_args>
 - The "-d 1" argument says to use 1 hardware thread for each MPI rank.
 - The "-j 1" argument says to use only one hardware thread per physical core.
 
-####Resulting mapping
+#### Resulting mapping
 MPI ranks 0,1,2,..63 map to hardware threads 0,1,2,...63 on each of the two nodes. Assuming the job was allocated on node 0 and node 1:
 
 - MPI rank 0 → node 0, hardware thread 0
@@ -55,7 +55,7 @@ This is shown below, where the presence of an MPI rank on a hardware thread is s
   <figcaption>MPI rank on a hardware thread is shown in blue, and the active hardware threads are numbered.</figcaption>
 </figure>
 
-###Example 2: 2 nodes, 32 ranks/node, 4 threads/rank, 2 threads/core
+### Example 2: 2 nodes, 32 ranks/node, 4 threads/rank, 2 threads/core
 The example below shows the affinity flags in aprun to map MPI ranks and OpenMP threads for an MPI/OpenMP job.
 ```
 aprun -n 64 -N 32 -d 4 -j 2 --cc depth -e OMP_NUM_THREADS=4 <app> <app_args>
@@ -66,7 +66,7 @@ aprun -n 64 -N 32 -d 4 -j 2 --cc depth -e OMP_NUM_THREADS=4 <app> <app_args>
 - The "-j 2" argument says to use two hardware threads per physical core.
 - The "-e OMP_NUM_THREADS=4" arguments tells the application to spawn 4 OpenMP threads per MPI rank.
 
-####Resulting mapping
+#### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
 
 - MPI rank 0, OpenMP thread 0 → node 0, hardware thread 0
@@ -98,7 +98,7 @@ The mapping is shown below, where the presence of the master thread (thread id 0
   <figcaption>Master thread (thread id 0) associated with an MPI rank on a hardware thread is shown in blue, other active threads are shown in purple, and active hardware threads are numbered.</figcaption>
 </figure>
 
-###Example 3: 1 node, 1 rank/node, 64 threads/rank, 1 thread/core
+### Example 3: 1 node, 1 rank/node, 64 threads/rank, 1 thread/core
 The example below shows the affinity flags in aprun to map MPI ranks and OpenMP threads for an MPI/OpenMP job.
 
 ```
@@ -110,7 +110,7 @@ aprun -n 1 -N 1 -d 64 -j 1 -cc depth -e OMP_NUM_THREADS=64 <app> <app_args>
 - The "-j 1" argument says to use one hardware thread per physical core.
 - The "-e OMP_NUM_THREADS=64" arguments tells the application to spawn 64 OpenMP threads per MPI rank.
 
-####Resulting mapping
+#### Resulting mapping
 64 OpenMP threads are allocated on one node. All 64 physical cores are used and each OpenMP thread is placed on its own physical core, since "-j 1" specifies using one hardware thread per core.
 
 - OpenMP threads 0 to 63 map to hardware threads 0 through 63:
@@ -129,7 +129,7 @@ aprun -n 1 -N 1 -d 64 -j 1 -cc depth -e OMP_NUM_THREADS=64 <app> <app_args>
 
 ...
 
-###Example 4: 1 node, 1 rank/node, 64 threads/rank, 4 threads/core
+### Example 4: 1 node, 1 rank/node, 64 threads/rank, 4 threads/core
 The example below shows the affinity flags in aprun to map MPI ranks and OpenMP threads for an MPI/OpenMP job.
 
 ```
@@ -141,7 +141,7 @@ aprun -n 1 -N 1 -d 64 -j 4 -cc depth -e OMP_NUM_THREADS=64 <app> <app_args>
 - The "-j 4" argument says to use four hardware threads per physical core.
 - The "-e OMP_NUM_THREADS=64" arguments tells the application to spawn 64 OpenMP threads per MPI rank.
 
-####Resulting mapping
+#### Resulting mapping
 64 OpenMP threads are allocated on one node. Only 16 phyiscal cores are used and all OpenMP threads are packed into the first 16 physical cores, since "-j 4" specifies using all 4 hardware threads per core.
 
 The mapping is shown below where the OpenMP threads given in ranges map to hardware threads given in ranges sequentially:
