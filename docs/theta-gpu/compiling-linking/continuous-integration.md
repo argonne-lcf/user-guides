@@ -57,8 +57,8 @@ When creating jobs, enable project-based security, set the inheritance strategy,
 To assign the node that the project will use to execute jobs, select the option **Restrict where this project can be run** and enter the project’s assigned node. The example below has assigned the jobs to node: TestFromJanet2-Theta so that any time the job is executed, it runs on host: thetalogin1.
 
 <figure markdown>
-  ![CI folders screenshot](files/04-ci-005.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Execute](files/04-ci-005.png){width="700"}
+  <figcaption>Execute</figcaption>
 </figure>
 
 ### Common Jenkins Features
@@ -68,37 +68,37 @@ Jenkins can connect to most common version control systems (VCS), including git/
 On the job configuration page, look for the section **Source Code Management (SCM)**. If it is there already, add it to the job. The required fields for SCM are **Repository URL** and **Credentials**. The example below shows a connection to the ALCF internal Gitlab VCS and uses previously setup credentials.
 
 <figure markdown>
-  ![CI folders screenshot](files/05-ci-006.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Repository access](files/05-ci-006.png){width="700"}
+  <figcaption>Repository access</figcaption>
 </figure>
 
 To use the new connection to the Git repository interactively, configure the job to be parameterized and add a a Git Parameter to the job. The example below shows the configuration to select a branch at build time.
 
 <figure markdown>
-  ![CI folders screenshot](files/06-ci-007.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Git Parameter](files/06-ci-007.png){width="700"}
+  <figcaption>Git Parameter</figcaption>
 </figure>
 
 On the build screen, select from the drop-down menu the branch to be referenced during this job execution. The example below shows the list of available branches from the configured repository. It is automatically populated duing the Git connector configuration of the preceding steps. If a new branch is added to the Git repository, it will display in the populated list of avialable branches when the job runs in Jenkins.
 
 <figure markdown>
-  ![CI folders screenshot](files/07-ci-008.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Select branch](files/07-ci-008.png){width="700"}
+  <figcaption>Select branch</figcaption>
 </figure>
 
 #### Build Steps
 Build steps are where users define executable tasks and jobs do something interesting within an envionment. A core component of Jenkens, build steps can take a few different forms and are morst commonly configured to call remote scripts for code building and deployment. A build step can even contain the shell script contents to execute on the remote machine.
 
 <figure markdown>
-  ![CI folders screenshot](files/08-ci-009.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Select branch](files/08-ci-009.png){width="700"}
+  <figcaption>Select branch</figcaption>
 </figure>
 
 The example below uses the Execute Shell build step type and codes the shell logic within the Jenkins portal.
 
 <figure markdown>
-  ![CI folders screenshot](files/09-ci-010.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Execute shell](files/09-ci-010.png){width="700"}
+  <figcaption>Execute shell</figcaption>
 </figure>
 
 #### Pipelines
@@ -107,22 +107,22 @@ Pipelines in Jenkins allow for more advanced execution logic and are written in 
 To add a pipeline manually, select **Pipeline** from the new **New Item** dialog box.
 
 <figure markdown>
-  ![CI folders screenshot](files/10-ci-011.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![New Item dialog box](files/10-ci-011.png){width="700"}
+  <figcaption>New Item dialog box</figcaption>
 </figure>
 
 The pipeline can then be configured and edited from the project folder in the same way as jobs, as shown in the example below.
 
 <figure markdown>
-  ![CI folders screenshot](files/11-ci-012.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Pipeline configuration](files/11-ci-012.png){width="700"}
+  <figcaption>Pipeline configuration</figcaption>
 </figure>
 
 To add a pipeline using a Jenkinsfile in SCM, add the pipeline object as shown below. On the pipeline configuration page, select **Pipeline script from SCM** and provide the SCM connection details along with the Script Path. The **Script Path** is the path-to and filename where the Jenkinsfile is located within the SCM repository. The example below uses a Jenkinsfile stored in the project source code from the ALCF Git repository, and the Jenkinsfile containing the Groovy code pipeline definition is located at scripts/Jenkinsfile from the repository root.
 
 <figure markdown>
-  ![CI folders screenshot](files/12-ci-013.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Pipeline script path](files/12-ci-013.png){width="700"}
+  <figcaption>Pipeline script path</figcaption>
 </figure>
 
 #### Triggers
@@ -131,16 +131,16 @@ Triggers are events that intitiate tasks in Jenkins. Triggers can be called a fe
 The example below shows a time-based configuration to run the job on a regular schedule. Details on the scheduling syntax can be found by clicking the blue question mark to the right of the **Schedule** field.
 
 <figure markdown>
-  ![CI folders screenshot](files/13-ci-014.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Build Triggers](files/13-ci-014.png){width="700"}
+  <figcaption>Build Triggers</figcaption>
 </figure>
 
 #### Console Output
 Jenkins provides console output and saves this history for each job run. During job execution you can view the live output from the tasks in a display similar to what would be seen if the commands were run directly in an interactive console.
 
 <figure markdown>
-  ![CI folders screenshot](files/14-ci-015.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Console output](files/14-ci-015.png){width="700"}
+  <figcaption>Console output</figcaption>
 </figure>
 
 #### Credentials
@@ -149,15 +149,15 @@ Credentials are stored in Jenkins and used when connecting to remote resources t
 To add a set of credentials, click on **Credentials** from the available options on the left-hand navigation menu. Then select **System** and click on the link for **Global credentials**.
 
 <figure markdown>
-  ![CI folders screenshot](files/15-ci-016.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Credentials](files/15-ci-016.png){width="700"}
+  <figcaption>Credentials</figcaption>
 </figure>
 
 Click **Add Credentials** from the left-hand navigation menu and provide the required information. The example below configures a new credential set of type "SSH Username with private key." Make sure **Scope** is set to "Global." Provide the username, private key (copy and paste), and key passphrase, and then give a pertinent ID and detailed description to help identify and organize stored credentials in the system.
 
 <figure markdown>
-  ![CI folders screenshot](files/16-ci-017.png){width="700"}
-  <figcaption>CI folders screenshot</figcaption>
+  ![Add credentials](files/16-ci-017.png){width="700"}
+  <figcaption>Add credentials</figcaption>
 </figure>
 
 ## FAQS
