@@ -26,9 +26,9 @@ With the conda environment setup, one can install common Python modules using ``
 ### Using Conda Environments
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via ```conda install <module>``` or ``` pip install <module>```.
 
-#### 1.Setup the conda environment you want to use as instructed above.
+1.Setup the conda environment you want to use as instructed above.
 
-#### 2. Create/edit your ```$HOME/.condarc``` file to include this these lines, replacing ```<project-name>``` with your project name. ```<path-to-your-project>``` is the path to the file system your project is on (eg:/lus/theta-fs0 or /grand or /eagle). By default, Conda will your ```$HOME/.conda/*``` area for caching files. 
+2. Create/edit your ```$HOME/.condarc``` file to include this these lines, replacing ```<project-name>``` with your project name. ```<path-to-your-project>``` is the path to the file system your project is on (eg:/lus/theta-fs0 or /grand or /eagle). By default, Conda will your ```$HOME/.conda/*``` area for caching files. 
 
 **Note:** Since home directories are limited to 100GB, this fills up quickly. This addition tells Conda to use your project space for cache storage instead.
 
@@ -39,11 +39,11 @@ envs_dirs:
   - <path-to-your-project>/<project-name>/conda/envs
 ```
 
-#### 3. Clone the environment into a local path to which you have write access
+3. Clone the environment into a local path to which you have write access
 ```
 conda create --clone $CONDA_PREFIX -p <path/to/env>
 ```
-#### 4. Activate that environment:
+4. Activate that environment:
 ```
 conda activate <path/to/env>
 ```
