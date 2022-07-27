@@ -18,6 +18,7 @@ nav:
       - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
     - Queueing and Running Jobs on Polaris:
       - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
       - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
       - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
       - PBS Admin Quick Start Guide: polaris/queueing-and-running-jobs/pbs-admin-quick-start-guide.md
