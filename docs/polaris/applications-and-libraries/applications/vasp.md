@@ -131,7 +131,7 @@ NTHREADS=1
 NGPUS=4
 NTOTRANKS=$(( NNODES * NRANKS ))
 
-aprin -n ${NTOTRANKS} -N ${NRANKS} -d ${NDEPTH} -e OMP_NUM_THREADS=${NTHREADS} /bin/vasp_std
+aprun -n ${NTOTRANKS} -N ${NRANKS} -d ${NDEPTH} -e OMP_NUM_THREADS=${NTHREADS} /bin/vasp_std
 ```
 
 Submission script should have executable attibutes to be used with `qsub` script mode.
