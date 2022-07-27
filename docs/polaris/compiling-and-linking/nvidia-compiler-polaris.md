@@ -26,7 +26,7 @@ While `nvcc` is the traditional CUDA C and CUDA C++ compiler for NVIDIA GPUs, th
 
 ### NVHPC SDK Directory Structure
 
-Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the hpc-sdk directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvhpc` module loaded, the `NVIDIA_ROOT` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
+Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the hpc-sdk directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvhpc` module loaded, the `NVIDIA_PATH` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
 
 - compiler/bin - cuda-gdb, ncu, nsys, ...
 - examples - CUDA-Fortran, OpenMP, ...
