@@ -49,7 +49,7 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 
 ## GPU MPI Example
 
-Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), a total of 8 MPI ranks will be launched on each node assigning 2 MPI ranks to each GPU in a round-robin fashion. A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
+Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
 
 
 ```
@@ -68,8 +68,8 @@ cd ${PBS_O_WORKDIR}
 
 # MPI and OpenMP settings
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=8
-NDEPTH=4
+NRANKS_PER_NODE=4
+NDEPTH=8
 NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
@@ -103,7 +103,7 @@ export CUDA_VISIBLE_DEVICES=$gpu
 echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
 exec "$@"
 ```
-The script is hard-coded for 4 GPUs on a Polaris node and simply pairs MPI ranks to GPUs in a round-robin fastion setting `CUDA_VISIBLE_DEVICES` appropriately. The `echo` command prints a helpful message for the user to confirm the desired mapping is achieved. Users are encouraged to edit this file as necessary for their particular needs. 
+The script is hard-coded for 4 GPUs on a Polaris node and simply pairs MPI ranks to GPUs in a round-robin fashion setting `CUDA_VISIBLE_DEVICES` appropriately. The `echo` command prints a helpful message for the user to confirm the desired mapping is achieved. Users are encouraged to edit this file as necessary for their particular needs. 
 
 * IMPORTANT: If planning large-scale runs with many thousands of MPI ranks, then it is advised to comment out the `echo` command so as not to have thousands of lines of output written to stdout. 
 
