@@ -1,6 +1,6 @@
 # Example Job Scripts
 
-This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md).
+This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md). A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
 ## CPU MPI-OpenMP Example
 
@@ -49,7 +49,8 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 
 ## GPU MPI Example
 
-Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), a total of 8 MPI ranks will be launched on each node assigning 2 MPI ranks to each GPU in a round-robin fashion. 
+Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), a total of 8 MPI ranks will be launched on each node assigning 2 MPI ranks to each GPU in a round-robin fashion. A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
+
 
 ```
 #!/bin/sh
