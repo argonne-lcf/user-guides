@@ -1,6 +1,6 @@
 # Singularity on ThetaGPU
 ## Containers on Theta(GPU)
-On Theta(GPU), container creation can be achieved by following the upstream [README](https://github.com/argonne-lcf/CompPerfWorkshop/blob/main/03_containers/README.md) using Docker on your local machine, or using a Singularity recipe file and building on a Theta(GPU) worker node.
+On Theta(GPU), container creation can be achieved by following the [README](https://github.com/argonne-lcf/CompPerfWorkshop/blob/main/03_containers/README.md) using Docker on your local machine, or using a Singularity recipe file and building on a Theta(GPU) worker node.
 
 ## Docker on ThetaGPU
 If you already have a Docker image you can build a singularity image as follows:
