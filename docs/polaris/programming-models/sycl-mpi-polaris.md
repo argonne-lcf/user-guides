@@ -19,14 +19,14 @@ export MPICH_GPU_SUPPORT_ENABLED=1
 
 ```
 $ cat main.cpp
-int main(){
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <mpi.h>
 
 #include <CL/sycl.hpp>
 
+// Modified from NERSC website: 
+// https://docs.nersc.gov/development/programming-models/mpi
 int main(int argc, char *argv[]) {
 
     int myrank, num_ranks;
