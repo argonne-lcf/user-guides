@@ -38,7 +38,7 @@ This method is best for remote use of DDT because the GUI client runs directly o
 
 <figure markdown>
   ![Choose remote launch](files/DDT_Screenshot-03.png){ width="700" }
-  <figcaption>hoose remote launch</figcaption>
+  <figcaption>Choose remote launch</figcaption>
 </figure>
 
 On an interactive job mode, run your application with ddt --connect.
