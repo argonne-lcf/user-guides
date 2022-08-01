@@ -65,6 +65,7 @@ nav:
       - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
     - Data Management:
         - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
+        - Sharing on Eagle Using Globus: theta/data-management/acdc/eagle-data-sharing.md
         - Data Transfer:
           - SFTP and SCP: theta/data-management/data-transfer/sftp-scp.md
         - File System & Storage:
