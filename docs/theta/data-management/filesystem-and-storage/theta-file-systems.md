@@ -49,10 +49,10 @@ Model SM961 drives [specifications](http://www.samsung.com/semiconductor/ssd/cli
 | Sequential | Write	700 MB/s |
 
 
-Model SM951 drives [specifications](https://s3.ap-northeast-2.amazonaws.com/global.semi.static/0_sm951-prodoverview-0615-v1-0.pdf))
+Model SM951 drives [specifications](https://s3.ap-northeast-2.amazonaws.com/global.semi.static/0_sm951-prodoverview-0615-v1-0.pdf)
 
 | Model SM951 drives |   ------   |
-| ======= | ========|
+| ------ | ------|
 | Capacity	| 128 GB |
 | Sequential | Read	2150 MB/s |
 | Sequential | Write	1550 MB/s |
