@@ -1,11 +1,12 @@
 # LLVM Compilers on Polaris
 
-This page is not LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but open source LLVM compilers.
-If LLVM compilers are needed without MPI support, simply load the `llvm` module. 
+This page is not about LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but about open source LLVM compilers.
+If LLVM compilers are needed without MPI support, simply load the `llvm` or `llvm-sycl` module. 
 
 Cray Programming Environment does not offer LLVM compiler support.
 Thus cc/CC/ftn compiler wrappers using LLVM compilers currently are not available.
 To use Clang with MPI, one can load the `mpiwrappers/cray-mpich-llvm` module which loads the following modules.
+* `llvm`, upstream llvm compilers
 * `cray-mpich`, MPI compiler wrappers mpicc/mpicxx/mpif90. mpif90 uses gfortran because flang is not ready for production use.
 * `cray-pals`, MPI launchers mpiexec/aprun/mpirun
 
