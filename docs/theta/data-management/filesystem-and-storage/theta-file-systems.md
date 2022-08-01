@@ -42,16 +42,16 @@ Access to SSDs is disabled by default. Project PIs may request access by emailin
 
 Model SM961 drives [specifications](http://www.samsung.com/semiconductor/ssd/client-ssd/MZVPV128HEGM/)
 
-| Model SM961 drives |      |
-| ======= | ========|
+| Model SM961 drives | -------  |
+| ------ | ------|
 | Capacity	| 128 GB |
 | Sequential | Read	3100 MB/s |
 | Sequential | Write	700 MB/s |
 
 
-Model SM951 drives [specifications]([http://www.samsung.com/semiconductor/ssd/client-ssd/MZVPV128HEGM/](https://s3.ap-northeast-2.amazonaws.com/global.semi.static/0_sm951-prodoverview-0615-v1-0.pdf))
+Model SM951 drives [specifications](https://s3.ap-northeast-2.amazonaws.com/global.semi.static/0_sm951-prodoverview-0615-v1-0.pdf))
 
-| Model SM951 drives |      |
+| Model SM951 drives |   ------   |
 | ======= | ========|
 | Capacity	| 128 GB |
 | Sequential | Read	2150 MB/s |
