@@ -29,8 +29,8 @@ This module loads the environment required to run [PyTorch](http://pytorch.org/)
 
 ## Additional Resources
 
-- [ALCF Data Science Program Overview](/files/2019-07/Jennings_ADSP_4.pdf)
-- [ALCF Data and Learning Frameworks](h/files/2019-07/Childers_DataLearning_4.pdf)
+- [ALCF Data Science Program Overview](https://www.alcf.anl.gov/sites/default/files/2019-07/Jennings_ADSP_4.pdf)
+- [ALCF Data and Learning Frameworks]([https://www.alcf.anl.gov/asset/alcf-data-and-learning-frameworks](https://www.alcf.anl.gov/sites/default/files/2019-07/Childers_DataLearning_4.pdf))
 
-==add video==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/we7bcTW--5w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
