@@ -43,7 +43,7 @@ There are two ways for a PI to access their project directory on Eagle.
 **Note:** For Eagle Data and Allocation projects, the PI will have access to the required ALCF systems (besides the Globus Web Interface) to login and access their Eagle project directory. 
 
 <figure markdown>
-  ![Terminal Window](files/terminal window.png){ width="700" }
+  ![Terminal Window](files/terminal-window.png){ width="700" }
   <figcaption>Terminal Window</figcaption>
 </figure> 
 
@@ -111,20 +111,20 @@ You should then see the share and the people you have shared it with. You can re
 </figure>
 
 ## Additional information on Globus Guest Collections
-- ONLY you (a project PI) can create guest collections and make them accessible to collaborators. Project Proxy (on the POSIX side) cannot create guest collections. 
+* ONLY you (a project PI) can create guest collections and make them accessible to collaborators. Project Proxy (on the POSIX side) cannot create guest collections. 
 
-- You can only share directories, not individual files.
+* You can only share directories, not individual files.
 
-- Globus allows directory trees to be shared as either read or read/write. This means that any subdirectories within that tree also have the same permissions.
+* Globus allows directory trees to be shared as either read or read/write. This means that any subdirectories within that tree also have the same permissions.
 Globus supports setting permissions at a folder level, so there is no need to create multiple guest collections for a project. You can create a guest collection at the top level and share sub-directories with the collaborators by assigning the appropriate permissions.
 
-- When you create a guest collection endpoint and give access to one or more Globus users, you can select whether each person has read or read/write access. If they have write access, they can also delete files within that directory tree, so you should be careful about providing write access.
+* When you create a guest collection endpoint and give access to one or more Globus users, you can select whether each person has read or read/write access. If they have write access, they can also delete files within that directory tree, so you should be careful about providing write access.
 
-- Globus guest collections are created and managed by project PIs. If the PI of a project changes, the new PI will have to create a new guest collection and share them with the users. Globus guest collections' ownership cannot be transferred.
+* Globus guest collections are created and managed by project PIs. If the PI of a project changes, the new PI will have to create a new guest collection and share them with the users. Globus guest collections' ownership cannot be transferred.
 
-- Guest collections are active as long as the project directory is available and the PI's ALCF account is active. If the account goes inactive, the collections become inaccessible to all the users. Access is restored once the PI's account is reactivated.
+* Guest collections are active as long as the project directory is available and the PI's ALCF account is active. If the account goes inactive, the collections become inaccessible to all the users. Access is restored once the PI's account is reactivated.
 
-- All RW actions are performed as the PI, when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
+* All RW actions are performed as the PI, when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
 
 ## Creating a group
 1. Go to Groups on the left panel
@@ -151,14 +151,14 @@ Click on 'Download' to download the required file.
 To transfer files to another Globus endpoint, in the "collection" search box in the RHS panel, enter the destination endpoint (which could also be your Globus Connect Personal endpoint). 
 
 <figure markdown>
-  ![Endpoint transfer](files/lalitha-laptop.png){ width="700" }
+  ![Endpoint transfer](files/Source_Destination_Endpoints.png){ width="700" }
   <figcaption>Transferring files to another Globus endpoint</figcaption>
 </figure>
 
 To transfer files, select a file or directory on one endpoint, and click the blue 'Start' button.
 
 <figure markdown>
-  ![Transfer files](files/transfer.png){ width="700" }
+  ![Transfer files](files/Source_Destination_Endpoint_Transfer.png){ width="700" }
   <figcaption>Transferring files</figcaption>
 </figure>
 
