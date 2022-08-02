@@ -32,7 +32,7 @@ This method is best for remote use of MAP because the GUI client runs directly o
     - map --offline aprun -n 48 ./example
     - map --connect aprun -n 48 ./example
 
-## Resources
+## References
 - [Debugging and Profiling with DDT and Map (SDL Workshop 2019)](https://www.alcf.anl.gov/sites/default/files/2020-03/Hulguin_SDL_10_2019_Arm_DDT_Map.pdf)
 
 <figure markdown>
