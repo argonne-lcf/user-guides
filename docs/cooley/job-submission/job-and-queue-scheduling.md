@@ -101,7 +101,7 @@ If required, the above job attributes may be combined as a colon-separated list,
 
 While we currently continue to maintain special-purpose queues for the above functions (the queues named **pubnet**, **pubnet-debug**, **nox11**, and **pubnet-nox11**) in order to maintain compatibility for submission scripts that use them, these queues have been deprecated in favor of using the above job attributes, which provide more flexbility and can be used within reservations.
 
-If you have needs not addressed by the standard queues, please send mail to [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) requesting a reservation.
+If you have needs not addressed by the standard queues, please send mail to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) requesting a reservation.
 
 We will monitor Cooley's queues and evaluate the above policies as needed. Your [feedback](mailto:support@alcf.anl.gov) is appreciated.
   
