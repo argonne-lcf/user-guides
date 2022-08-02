@@ -147,7 +147,7 @@ Jenkins provides console output and saves this history for each job run. During 
   <figcaption>Console output</figcaption>
 </figure>
 
-###C redentials
+### Credentials
 Credentials are stored in Jenkins and used when connecting to remote resources that require authentication in a non-interactive manner. Once defined, credentials can be used throughout the Jenkins system when configuring jobs, SCM connections, SSH connections, etc.
 
 To add a set of credentials, click on Credentials from the available options on the left-hand navigation menu. Then select System and click on the link for Global credentials.
