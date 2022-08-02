@@ -32,8 +32,9 @@ INCITE and ALCC projects needing additional overburn hours should e-mail [suppor
 To be clear, this policy does not constitute a guarantee of extra time, and we reserve the right to prioritize the scheduling of jobs submitted by projects that have not yet used 100% of their allocations, so the earlier that an INCITE or ALCC project exhausts its allocation, the more likely it is to be able to take full advantage of this policy.
 
 ### Queues
-For information on ThetaGPU Queues, see: {== Add link ==}
-####Theta (KNL) Queues
+[Information on ThetaGPU Queues](/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md)
+
+#### Theta (KNL) Queues
 **Debugging Queues**
 
 - There are two 16-node debugging queues:
@@ -143,7 +144,7 @@ sbank allocations
 ```
 If an account is associated with more than one project, a job must be submitted by using a specific project name using -A or by setting the environment variable COBALT_PROJ.
 
-###Submitted Job with the Wrong Arguments
+### Submitted Job with the Wrong Arguments
 If you submit a job with the wrong arguments, you can modify without deleting it and resubmitting it. Most settings can be changed using qalter.
 
 **For Example:**
