@@ -2,7 +2,7 @@
 ## References
 In addition to the content below, here is a [getting started video](https://youtu.be/N0Xip1mUZY8) covering the basics of using ThetaGPU and a  related video on Lustre File Striping Basics. This should help you get up and running quickly on the GPU nodes.
 - [Video on Getting Started on ThetaGPU](https://youtu.be/N0Xip1mUZY8) 
-- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/theta-gpu-nodes/%3C/https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 ## Login to ThetaGPU
 ```
