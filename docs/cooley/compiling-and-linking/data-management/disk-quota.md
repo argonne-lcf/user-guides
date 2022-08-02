@@ -33,6 +33,6 @@ projectX                  Project      eagle                 1.87T             1
 ## Quota Increases
 Use our [allocations request form](https://accounts.alcf.anl.gov/allocationRequests) to ask for a quota increase.
 
-If you need a quota increase for your INCITE/ALCC/ALCC/ESP project directory, please send an email to [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) with the machine, project name, new quota amount and reason for the increase.
+If you need a quota increase for your INCITE/ALCC/ALCC/ESP project directory, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the machine, project name, new quota amount and reason for the increase.
 
 
