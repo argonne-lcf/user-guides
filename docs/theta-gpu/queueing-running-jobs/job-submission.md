@@ -218,7 +218,7 @@ As a convenience, all users belonging to the project under which a job was submi
 Users who have been added to the list can run any command that the job-submitter could run on a job. This includes qhold, qrls, qalter, and qdel.
 
 ### Group Running and File System Groups
-While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](https://mailto:support@alcf.anl.gov).
+While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](mailto:support@alcf.anl.gov).
 
 ## More Information
 For more information on Cobalt commands, their options, consult the manpages on the system. The same information may be found online in the [Cobalt Command Reference](http://trac.mcs.anl.gov/projects/cobalt/wiki/CommandReference).
