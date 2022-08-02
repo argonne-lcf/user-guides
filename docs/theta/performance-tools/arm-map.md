@@ -36,16 +36,18 @@ This method is best for remote use of MAP because the GUI client runs directly o
 - [Debugging and Profiling with DDT and Map (SDL Workshop 2019)](https://www.alcf.anl.gov/sites/default/files/2020-03/Hulguin_SDL_10_2019_Arm_DDT_Map.pdf)
 
 <figure markdown>
-  ![example](files/MAP_Screenshot-01.png){ width="700" }
+  ![MAP remote launch configure](files/MAP_Screenshot-01.png){ width="700" }
+    <figcaption>MAP remote launch configure</figcaption>
 </figure>
 
 <figure markdown>
-  ![example](files/MAP_Screenshot-02.png){ width="700" }
-  <figcaption>hoose remote launch</figcaption>
+  ![MAP remote launch settings](files/MAP_Screenshot-02.png){ width="700" }
+  <figcaption>MAP remote launch settings</figcaption>
 </figure>
 
 <figure markdown>
-  ![example](files/MAP_Screenshot-03.png){ width="700" }
+  ![MAP accepting the connect request](files/MAP_Screenshot-03.png){ width="700" }
+    <figcaption>MAP accepting the connect request</figcaption>
 </figure>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rcOmqnhP_X4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
