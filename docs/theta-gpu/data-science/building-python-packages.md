@@ -4,7 +4,7 @@ To build Python packages for ThetaGPU, there are two options: build on top of a 
 ## Build on ThetaGPU compute using Conda
 To build on ThetaGPU compute and install your own packages, login to theta and then submit an interactive job to log on to ThetaGPU compute node. 
 
-Please see [Running Pytorch with Conda](/docs/theta-gpu/data-science/dl-frameworks/running-pytorch-conda.md) or ==Running Tensorflow with Conda== for more information.
+Please see [Running Pytorch with Conda](/docs/theta-gpu/data-science/dl-frameworks/running-pytorch-conda.md) or [Running Tensorflow with Conda](/docs/theta-gpu/data-science/dl-frameworks/running-tensorflow-conda.md) for more information.
 
 ## Building on top of a container
 At the moment, you will need two shells to do this: have one open on a login node (for example, ```thetaloginN```, and one open on a compute node (```thetagpuN```). First, start the container in interactive mode:
