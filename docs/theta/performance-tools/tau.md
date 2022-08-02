@@ -144,7 +144,7 @@ To analyze a trace file (from TAU_TRACE=1), see the Jumpshot instructions at htt
 ### Selective Instrumentation
 Selective instrumentation is enabled by appending -optTauSelectFile=<filename> to TAU_OPTIONS. Note that this is incompatible with the compiler-based instrumentation, e.g., -optCompInst. The syntax of the select instrumentation file can be found here:
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch01s03.htm
+https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s03.html
 
 It is also possible to generate a selective instrumentation file using Paraprof and a full flat profile obtained through automatic instrumentation.
 
