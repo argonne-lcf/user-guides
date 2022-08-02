@@ -129,6 +129,6 @@ Application 19165962 resources: utime ~0s, stime ~1s, Rss ~6284, inblocks ~0, ou
 ```
 
 ## Performance Notes
-Affinity of OpenMP threads to hardware threads can have a large impact on performance. Please see [Affinity](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/queueing-and-running-jobs/affinity-theta.md)) for more information.
+Affinity of OpenMP threads to hardware threads can have a large impact on performance. Please see [Affinity](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/queueing-and-running-jobs/affinity-theta.md) for more information.
 
 
