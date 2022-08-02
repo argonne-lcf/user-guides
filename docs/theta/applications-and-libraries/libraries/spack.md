@@ -4,7 +4,7 @@ Spack is a package manager developed for HPC which supports combinatorial versio
 
 The learning curve for spack can be steep and new users are encouraged to experiment with their own installation of spack (easily available for cloning at [https://github.com/spack/spack](https://github.com/spack/spack)) and to look at configuration settings used in the ALCF installation for hints as to what settings may be appropriate and useful. 
 
-Example settings for theta are available at /soft/spack/alcf/theta. Not all of these settings will be useful for all builds and some may foil spack’s concretization process, and it is not recommended to adopt these wholesale as global settings. The recommended method is to include these settings ad hoc in a spack environment to more tightly control what information spack’s concretizer uses for its builds.
+Example settings for Theta are available at /soft/spack/alcf/theta. Not all of these settings will be useful for all builds and some may foil spack’s concretization process, and it is not recommended to adopt these wholesale as global settings. The recommended method is to include these settings ad hoc in a spack environment to more tightly control what information spack’s concretizer uses for its builds.
 
 There are a growing number of packages installed to the ALCF spack instance at /soft/spack/root, and this instance can be used as a spack upstream resource as described here:
 
