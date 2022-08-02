@@ -3,7 +3,7 @@ Darshan is a lightweight I/O instrumentation library that can be used to investi
 
 ## References
 - [Darshan Project Site](http://www.mcs.anl.gov/research/projects/darshan/)
-- Guide to Darshan-util Usage
+- [Guide to Darshan-util Usage](http://www.mcs.anl.gov/research/projects/darshan/docs/darshan-util.html)
 
 ## Overview
 The Theta environment includes the Darshan module by default.
@@ -54,7 +54,7 @@ Darshan will not produce output files in the following scenarios:
 - Abnormal termination
 - The executable is not an MPI program
 
-In such cases, contact [ALCF Support](https://mailto:support@alcf.anl.gov) for help. Depending on your situation, it may still be possible to use Darshan.
+In such cases, contact [ALCF Support](mailto:support@alcf.anl.gov) for help. Depending on your situation, it may still be possible to use Darshan.
 
 ## Disabling Darshan
 We do not recommend disabling Darshan unless you have a specific problem or have been instructed by the ALCF support team to do so. Disabling Darshan limits the ALCF’s ability to assist in supporting your application, and Darshan instrumentation does not add significant overhead to execution time.
