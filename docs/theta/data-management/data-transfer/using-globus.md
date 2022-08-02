@@ -21,7 +21,7 @@ After [registering](https://app.globus.org/), simply use the appropriate ALCF en
 
 [Globus Connect Personal](https://www.globus.org/globus-connect-personal) allows users to add laptops or desktops as an endpoint to Globus, in just a few steps. After you set up Globus Connect Personal, Globus can be used to transfer files to and from your computer.
 
-## Additional Resources
+## References
 [Research Data Management with Globus](https://www.alcf.anl.gov/support-center/training-assets/research-data-management-globus)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1nCfWslDrf8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   
