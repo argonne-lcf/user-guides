@@ -1,6 +1,6 @@
 # QMCPACK on Theta
 ## Overview
-QMCPACK, is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code. Its main applications are electronic structure calculations of molecular, quasi-2D and solid-state systems.
+QMCPACK is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code. Its main applications are electronic structure calculations of molecular, quasi-2D and solid-state systems.
 
 ## How to access QMCPACK
 Prebuilt QMCPACK binaries are provided on Theta under /soft/applications/qmcpack in folder latest-release and current-develop. latest-release uses the latest release of QMCPACK and is recommended for production runs. current-develop uses the development branch which contains new features and bug fixes before the next release. As latest-release and current-develop are updated, all the old binaries are still accessible to users under the folder of year (2017,2018,2019). All the binaries are dynamically linked and require certain version of libraries to function properly. Please read the README file and load necessary modules. QMCPACK is heavily optimized for Xeon Phi processors by using the Structure-of-Array data layout and new algorithms. Please use the SoA binary whenever possible.
