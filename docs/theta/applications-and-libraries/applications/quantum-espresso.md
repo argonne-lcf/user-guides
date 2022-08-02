@@ -8,7 +8,7 @@ Prebuilt QE binaries are provided on Theta under /soft/applications/quantum_espr
 ## Using Quantum ESPRESSO at ALCF
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at support@alcf.anl.gov.
 
-If building your own QE is necessary, follow the instruction below.
+If building your own QE is necessary, follow the instructions below.
 
 ## Building on Theta
 This recipe is verified on Oct 12th 2018 with QE-6.3.
