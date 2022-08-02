@@ -253,7 +253,7 @@ To delete a job from the queue, use the qdel command. For example for job with I
 ```
 qdel 34586
 ```
-Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
+Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
 
 ### Query Partition Availability
 To determine which partitions are currently available to the scheduler, use the nodelist command. This command provides a list of node ids, names, queue, and state as well as any backfill windows. This command can only be run on the service nodes (thetagpusn1-2), it cannot be run on the compute nodes. 
@@ -306,6 +306,6 @@ To release user hold:
 qrls <jobid>
 ```
 
-## Resources on Job Submissions at the ALCF
+## References
 <iframe width="560" height="315" src="https://www.youtube.com/embed/s2U18IO88-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
