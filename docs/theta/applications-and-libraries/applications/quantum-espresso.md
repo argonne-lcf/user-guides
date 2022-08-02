@@ -30,14 +30,14 @@ Inside the source code directory, QE can be configured with the follow command i
  --with-elpa-include=/soft/applications/elpa/elpa-2017.11.001/include/elpa-2017.11.001/modules \
  --with-elpa-lib=/soft/applications/elpa/elpa-2017.11.001/lib/libelpa.a
  ```
- Now precceed to build the code, use "make" and install it with "make install".
+ Now proceed to build the code. Use "make" and install it with "make install".
 
-If statically linked binaries are needed, do the following before hitting "make"
+If statically linked binaries are needed, do the following before hitting "make":
 
 ```
 export CRAYPE_LINK_TYPE=static
 ```
-edit make.inc by replacing
+Edit make.inc by replacing
 ```
 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
 ```
