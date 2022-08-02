@@ -1,8 +1,8 @@
 # Building Python Packages
-To build python packages for Theta GPU, there are two options: build on top of a bare-metal build or build on top of (and within) a singularity container. Additionally, you can build a new container from nvidia's docker images.
+To build Python packages for ThetaGPU, there are two options: build on top of a bare-metal build or build on top of (and within) a singularity container. Additionally, you can build a new container from NVIDIA's docker images.
 
 ## Build on ThetaGPU compute using Conda
-To build on thetagpu compute and install your own packages, login to theta and then submit an interactive job to log on to Theta GPU compute node. 
+To build on ThetaGPU compute and install your own packages, login to theta and then submit an interactive job to log on to ThetaGPU compute node. 
 
 Please see ==Running Pytorch with Conda== or ==Running Tensorflow with Conda== for more information.
 
