@@ -33,16 +33,16 @@ export HTTPS_PROXY=https://theta-proxy.tmi.alcf.anl.gov:3128
 Now, you can pip install your favorite packages: ```pip install mpi4py```
 
 ## Building custom packages
-Most packages (hdf5, for example, or python packages) can be built and installed into your virtual env. Here are two common examples that aren't currently part of the pytorch container that may be useful.
+Most packages (HDF5, for example, or python packages) can be built and installed into your virtual env. Here are two common examples that aren't currently part of the pytorch container that may be useful.
 
 ### HDF5
-You can find the source code for hdf5 on their website https://www.hdfgroup.org/downloads/hdf5/source-code. When downloaded and un-tarred, cdto the directory and run:
+You can find the source code for HDF5 on their website https://www.hdfgroup.org/downloads/hdf5/source-code. When downloaded and un-tarred, cdto the directory and run:
 ```
 ./configure --prefix=$VENV_LOCATION # Add any other configuration arguments 
 make -j 64 
 make install
 ```
-This should get you hdf5! For example, after this:
+This should get you HDF5! For example, after this:
 ```
 (pytorch_20.08) Singularity> which h5cc 
 /home/cadams/ThetaGPU/venvs/pytorch_20.08/bin/h5cc # This is my virtualenv, success!
@@ -56,7 +56,7 @@ git submodule update --init
 python setup.py build 
 python setup.py install
 ```
-This should install horovod within your container.
+This should install Horovod within your container.
 
 
 
