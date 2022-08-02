@@ -28,7 +28,7 @@ config.inter_op_parallelism_threads = FLAGS.num_inter_threads
 tf.session(config=config)
 ```
 ## Tensorflow via Conda Environment
-We've installed a [Conda environment](https://www.alcf.anl.gov/user-guides/conda) which has the latest [Tensorflow Wheel](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-installation-guide) from Intel installed. We've also installed the [Horovod tool](https://github.com/uber/horovod) which uses MPI to run Tensorflow in a distributed way. This enables the training of Tensorflow models on Theta at large scales. Horovod provides examples for running [Tensorflow](https://github.com/uber/horovod/blob/master/examples/tensorflow_mnist.py) natively or [Tensorflow using Keras](https://github.com/uber/horovod/blob/master/examples/keras_mnist.py). This can be run using:
+We've installed a [Conda environment](https://www.alcf.anl.gov/user-guides/conda) which has the latest [Tensorflow Wheel](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-installation-guide) from Intel installed. We've also installed the [Horovod tool](https://github.com/uber/horovod) which uses MPI to run Tensorflow in a distributed way. This enables the training of Tensorflow models on Theta at large scales. Horovod provides examples for running [Tensorflow](https://github.com/horovod/horovod/blob/master/examples/tensorflow/tensorflow_mnist.py) natively or [Tensorflow using Keras](https://github.com/horovod/horovod/blob/master/examples/keras/keras_mnist.py). This can be run using:
 ```
 #!/bin/bash
 #COBALT -n <num-nodes>
