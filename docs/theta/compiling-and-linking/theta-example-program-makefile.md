@@ -2,7 +2,7 @@
 
 Here is a simple example program and makefile for building on the ALCF's Theta system. When you compile your code for Theta, you are normally cross-compiling for the compute nodes (Intel Xeon Phi 2nd Generation [KNL]), rather than directly compiling for the login nodes (non-KNL). The default, you are using the Intel compiler suite. We also provide the Cray, GNU, and Clang compiler suites via modules.
 
-## ##C Program
+## C Program
 ```
 /* File pi.c */
 #include <mpi.h>
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
   return 0;
 }
 ```
-##Makefile
+## Makefile
 ```
 # File makefile
 CC = cc
@@ -62,7 +62,7 @@ pi.o: pi.o
 clean:
 	rm pi pi.o
 ```
-##Usage
+## Usage
 Session screenshot shows building and running, using an example job script:
 ```
 thetalogin6(pi)> ls
