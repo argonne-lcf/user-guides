@@ -53,7 +53,7 @@ Please use the project folder when building and running on ThetaGPUcompute nodes
 
 /home is on an FDR network which is up-linked to the HDR network via a straw, heavy use of this file system will result in Bad Things™ again.
 
-For more information on all available file systems visit: [Theta File Systems](https://www.alcf.anl.gov/support-center/theta/theta-file-systems)  
+For more information on all available file systems visit: [Theta File Systems](/docs/theta/data-management/filesystem-and-storage/theta-file-systems.md)  
 
 ## Software
 ThetaGPU is new, so it has limited ALCF provided software. ThetaGPU compute nodes are setup with CUDA11
