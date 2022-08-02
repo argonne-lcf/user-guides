@@ -239,7 +239,7 @@ Alternatively, you can encrypt the files before transfer using any method on you
 ### General FAQs: 
 **1. What is the Eagle File system?**
 
-It is a Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform also provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s. Primary use of Eagle is data sharing with the research community using ==Fix Link [Globus](https://www.alcf.anl.gov/support-center/theta/using-globus-theta){:target="_blank"}==.The file system is available on all ALCF compute systems. It allows sharing of data between users (ALCF and external collaborators).
+It is a Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform also provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s. Primary use of Eagle is data sharing with the research community using [Globus](https://www.alcf.anl.gov/support-center/theta/using-globus-theta).The file system is available on all ALCF compute systems. It allows sharing of data between users (ALCF and external collaborators).
  
 **2. What is the difference between Guest, Shared and a Mapped collection?**  
 
