@@ -18,7 +18,7 @@ Clang supports a number of fast-math optimizations, enabled by passing -ffast-ma
 ## Link-Time Optimization (LTO)
 LTO is a powerful feature of Clang and its associated toolchain, which enables the compiler to perform additional global optimizations, such as function inlining as part of the final linking process. This can be expensive in terms of compile time, but can yield significant runtime performance gains.
 
-To use LTO, you must pass the -flto flag to Clang, both when compiling and also when linking.
+To use LTO, you must pass the -flto flag to Clang, both when compiling and when linking.
 
 ## FAQ
 **Why do I receive linking errors complaining about multiple definitions of inline functions?**
