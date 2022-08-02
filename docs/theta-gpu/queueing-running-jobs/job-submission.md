@@ -57,7 +57,7 @@ To run an “interactive mode” job on ALCF Cray resources, add the “-I” (u
 Users may run an “ensemble job” and combine runs into a single script. This can provide major enhancements to throughput, especially for large ensemble jobs. Users may run multiple jobs in sequence or may use multiple backgrounded apruns to subset their resources among multiple backend executables. There is a system limitation of 1000 simultaneous apruns per Cobalt script job.
 
 ## Queue Names and Scheduling Policy
-Queue names and operations are described on the [Job and Queue Scheduling](/job-and-queue-scheduling/) on ThetaGPU page.
+Queue names and operations are described on the [Job and Queue Scheduling](/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md) on ThetaGPU page.
 
 Queue and scheduling policies can be found on the Queue and Scheduling Policy page.
 
