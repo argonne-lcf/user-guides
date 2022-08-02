@@ -49,4 +49,4 @@ aprun -n $COBALT_PARTSIZE -N 1 -cc depth -d $NTHREADS -j $HT $exe $file_prefix.x
 
 ## References
 - [https://qmcpack.org](https://qmcpack.org)
-- [https://docs.qmcpack.org/qmcpack_manual.pdf](https://docs.qmcpack.org/qmcpack_manual.pdf)
+- [https://qmcpack.readthedocs.io/en/develop/](https://qmcpack.readthedocs.io/en/develop/))
