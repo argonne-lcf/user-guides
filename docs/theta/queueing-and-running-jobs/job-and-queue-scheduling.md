@@ -14,7 +14,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 * job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
 
 ### Reservations and Scheduling Policy
-Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular {== Add link ==}form no fewer than five (5) business days in advance.
+Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the [regular form](machine-reservations.md) no fewer than five (5) business days in advance.
 
 ### Monday Maintenance
 When the ALCF is on a regular business schedule, preventitive maintenance is typically scheduled on alternate Mondays. The showres command may be used to view pending and active maintenance reservations.
