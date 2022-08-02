@@ -11,7 +11,7 @@ ALCF provides assistance with build instructions, compiling executables, submitt
 If building your own QMCPACK is necessary, follow the instruction described below.
 
 ## Building on Theta
-This recipe is verified on Feb 20th 2019 with QMCPACK v3.6.0.
+This recipe was verified on February 20, 2019, with QMCPACK v3.6.0.
 
 ```
 export CRAYPE_LINK_TYPE=dynamic
