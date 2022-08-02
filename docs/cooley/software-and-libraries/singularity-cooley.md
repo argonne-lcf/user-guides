@@ -28,7 +28,7 @@ For a full list of available runtime flags, you can look at the output of "singu
 singularity exec -B /lus:/lus /path/to/singularity_container.img command_to_execute
 ```
 ## Using Singularity with MPI
-Singularity has builtin support to use MPI and run MPI applications, as long as MPI is built into your container (more on how to do that below).  You can see details of the design on the singularity [docs for HPC](https://singularity.lbl.gov/docs-hpc).
+Singularity has builtin support to use MPI and run MPI applications, as long as MPI is built into your container (more on how to do that below).  You can see details of the design on the singularity [docs for HPC](https://apptainer.org/docs-legacy).
 
 In general, singularity must have MPI installed within the container.  When you execute an MPI program with singularity, each rank of your program runs singularity:
 ```
