@@ -6,8 +6,7 @@ PAPI details are provided on the [PAPI Website](http://icl.cs.utk.edu/papi/).
 
 ## References
 - [PAPI Website](http://icl.cs.utk.edu/papi/)
-- [PAPI Programmer Reference](http://icl.cs.utk.edu/projects/papi/wiki/PAPIC:PAPI.3)
-- [PAPI User Guide](http://icl.cs.utk.edu/projects/papi/wiki/User_Guide)
+- [PAPI Documentation](https://bitbucket.org/icl/papi/wiki/Home)
 
 ## PAPI on Theta
 PAPI is available on Theta through the “papi” or “perftools-base” modules.
