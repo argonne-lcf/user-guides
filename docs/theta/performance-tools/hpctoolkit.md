@@ -4,6 +4,7 @@ HPCToolkit is an open-source suite of tools for profile-based performance analys
 
 ## References
 [HPCToolkit Website](http://hpctoolkit.org)
+
 [HPCT Documentation Page](http://hpctoolkit.org/documentation.html)
 
 ## Installation on the ALCF Theta System
