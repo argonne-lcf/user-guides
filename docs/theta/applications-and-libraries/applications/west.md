@@ -3,7 +3,7 @@
 WEST is a Fortran/MPI scalable parallel implementation of large-scale electronic structure calculations within many-body perturbation theory. WEST is currently interfaced with Quantum Espresso planewave DFT software. As described on the WEST website [http://west-code.org](http://west-code.org/), WEST is highly scalable and is used for calculations of solids, liquids, nanostructures, molecules, and interfaces, including samples with ~2000 electrons.
 
 ## Using WEST at ALCF
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. Some provided executables on Theta are available here: /soft/applications/qe_west/qe_v6.1.0-west_3.1.0. For questions, contact us at [support@alcf.anl.gov](support@alcf.anl.gov).
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. Some provided executables on Theta are available here: /soft/applications/qe_west/qe_v6.1.0-west_3.1.0. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to Obtain the Code
 WEST is an open-source code that can be downloaded at [http://west-code.org](http://west-code.org/). Similarly, the Quantum Espresso code can be downloaded at [https://www.quantum-espresso.org](https://www.quantum-espresso.org/). Check the WEST website for current information on supported algorithms.
@@ -42,6 +42,5 @@ aprun -n 128 -N 64 -d 1 --cc depth -e OMP_NUM_THREADS=1 -j 1 ./wstat wstat.i
 > qsub run_west.sh
 ```
   
-
 ## Running WEST Jobs on Theta
 The following is an example executable script “run_west.sh” to run the wstat WEST executable on two nodes of Theta with 64 MPI ranks per node. The job can be submitted with command “qsub run_west.sh” where <project_name> is replaced with an active project allocation.  
