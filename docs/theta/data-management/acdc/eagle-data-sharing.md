@@ -274,7 +274,7 @@ Groups are constructs that enable multi-user data collaboration. A PI (and an Ac
 ### PI FAQs:
 **1. How can a PI request for a data-only, Eagle storage allocation?** 
 
-A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form:[Request an allocation](https://accounts.alcf.anl.gov/allocationRequests). The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with your proposal.
+A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form: [Request an allocation](https://accounts.alcf.anl.gov/allocationRequests). The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with your proposal.
 
 **2. Does a PI need to have an ALCF account to create a Globus guest collection?**
 
