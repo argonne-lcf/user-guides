@@ -3,7 +3,7 @@
 The OpenMP API is an open standard for parallel programming. The specification document can be found here: https://www.openmp.org/. The specification describes directives, runtime routines, and environment variables that allow an application developer to express parallelism (e.g. shared memory multiprocessing and device offloading). Many compiler vendors provide implementations of the OpenMP specification (https://www.openmp.org/specifications/).
 
 ## Using OpenMP at ALCF
-OpenMP support for CPUs on Cooley is provided through the GNU, Intel, and LLVM Clang compilers available on Cooley. Guidance on updating your environment to use one of these compilers is available [here](/docs/compiling-and-linking/compiling-and-linking.md).
+OpenMP support for CPUs on Cooley is provided through the GNU, Intel, and LLVM Clang compilers available on Cooley. Guidance on updating your environment to use one of these compilers is available [here](/docs/cooley/compiling-and-linking/compiling-and-linking.md).
 
 OpenMP offload support for GPUs on Cooley is provided via community compilers. The LLVM Clang compiler is installed on Cooley to support OpenMP 4.5+ offload features. The compiler is in rapid development and ALCF staff build it frequently from the master branch. 
 
