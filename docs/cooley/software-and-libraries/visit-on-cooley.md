@@ -27,4 +27,4 @@ On your local machine:
 
 ## Additional Information
 - Visit user manual: https://wci.llnl.gov/codes/visit/manuals.html
-- Visit wiki: http://www.visitusers.or
+- Visit wiki: http://www.visitusers.org
