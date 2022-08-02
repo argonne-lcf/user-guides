@@ -36,6 +36,6 @@ The top-level directory (/soft/applications/vasp) contains example scripts for r
 
 ## References
 
-Please encourage your group to do some tests to determine which binary better suites there needs. Here are some presentations and papers that may be useful in making a decision:
+Please encourage your group to do some tests to determine which binary better suits their needs. Here are some presentations and papers that may be useful in making a decision:
 - [Using VASP at NERSC](https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf)
 - [Performance of Hybrid MPI/OpenMP VASP on Cray XC40 Based on KNL](https://cug.org/proceedings/cug2017_proceedings/includes/files/pap134s2-file1.pdf)
