@@ -2,7 +2,7 @@
 
 ## What is ELPA?
 
-ELPA is a Fortran/C/MPI library to solve dense hermitian (real or complex) matrices. ELPA is conceived to compute the eigen vectors and eigen values of large matrices in petascale computers. ELPA uses BLACS framework and some SCALAPACK functions to distribute and solve the eigen problem. Computationally intensive kernels in ELPA are optimized using intrinsic code for SSE, AVX, AVX2, AVX512, and QPX architectures. This code is popular in electronic structure codes, but it can be used for machine learning and other approaches that require full or partial spectrum solution of a matrix eigen problem.  ELPA scales efficiently in Theta solving matrices of 1 million by 1 million in less than 3 hours in 3000 KNL nodes.
+ELPA is a Fortran/C/MPI library to solve dense hermitian (real or complex) matrices. ELPA is conceived to compute the eigenvectors and eigenvalues of large matrices in petascale computers. ELPA uses BLACS framework and some SCALAPACK functions to distribute and solve the eigen problem. Computationally intensive kernels in ELPA are optimized using intrinsic code for SSE, AVX, AVX2, AVX512, and QPX architectures. This code is popular in electronic structure codes, but it can be used for machine learning and other approaches that require full or partial spectrum solution of a matrix eigen problem.  ELPA scales efficiently in Theta solving matrices of 1 million by 1 million in less than 3 hours in 3000 KNL nodes.
 
 ## Using ELPA at ALCF
 
