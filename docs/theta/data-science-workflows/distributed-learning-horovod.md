@@ -28,7 +28,7 @@ The followings are the list of changes that one has to make changes to a Python 
 Specific instructions on how to make changes for different packages are shown on the respective documentations: [TensorFlow](https://anl.box.com/s/8dxu1eqnnpqfxw1602hwk4qm54jz1r3g), [PyTorch](https://anl.box.com/s/adxknsprih7cs62r8500bdyy3ed4nizn). 
 
 ### Profiling with Horovod timeline
-Horovod has the ability to record the timeline of its activity, called Horovod Timeline [https://github.com/horovod/horovod/blob/master/horovod/common/timeline.h](https://github.com/horovod/horovod/blob/master/horovod/common/timeline.h).To record a Horovod Timeline, set the HOROVOD_TIMELINE environment variable to the location of the timeline file to be created. This file is only recorded on rank 0, but it contains information about activity of all workers.
+Horovod has the ability to record the timeline of its activity, called [Horovod Timeline](https://github.com/horovod/horovod/blob/master/horovod/common/timeline.h). To record a Horovod Timeline, set the HOROVOD_TIMELINE environment variable to the location of the timeline file to be created. This file is only recorded on rank 0, but it contains information about activity of all workers.
 ```
 aprun -n ... -N ... -e HOROVOD_TIMELINE=/path/to/timeline.json python train.py 
 ```
