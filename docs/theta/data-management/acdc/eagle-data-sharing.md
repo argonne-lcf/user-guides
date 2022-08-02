@@ -57,7 +57,7 @@ A project PI needs to have an 'active' ALCF account in place to create and share
 In the Globus application in your browser:
 
 1. There are multiple ways to Navigate to the Collections tab in "Endpoints":
-    1. [Click on link to get started](https://app.globus.org/file-manager/collections/05d2c76a-e867-4f67-aa57-76edeb0beda0/shares). It will take you to the Collections tab for Eagle. **OR**
+    1. [Click the link to get started](https://app.globus.org/file-manager/collections/05d2c76a-e867-4f67-aa57-76edeb0beda0/shares). It will take you to the Collections tab for Eagle. **OR**
     2. Click on 'Endpoints' located in the left panel of the [Globus web app](https://app.globus.org/endpoints). **Type "alcf#dtn_eagle" in the search box** located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" from the search results. Click on the  Collections tab. **OR**
     3. Click on 'File Manager' located in the left panel of the Globus web app. Search for 'alcf#dtn_Eagle' and select it in the Collection field. Select your project directory or a sub directory that you would like to share with collaborators as a Globus guest collection. Click on 'Share' on the right side of the panel, which will take you to the Collections tab.
 
