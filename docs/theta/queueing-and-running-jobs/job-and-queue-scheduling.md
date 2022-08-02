@@ -17,7 +17,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular {== Add link ==}form no fewer than five (5) business days in advance.
 
 ### Monday Maintenance
-{== When the ALCF is on a regular business schedule, preventitive maintenance is typically scheduled on alternate Mondays. The showres command may be used to view pending and active maintenance reservations. Check this ==}
+When the ALCF is on a regular business schedule, preventitive maintenance is typically scheduled on alternate Mondays. The showres command may be used to view pending and active maintenance reservations.
 
 ### Big Run Mondays
 As part of our regular maintenance procedures on Mondays, we will promote to the highest priority any jobs in the queued state requesting 802 nodes or more (.ie. capability jobs). Promotion is subject to operational discretion.
