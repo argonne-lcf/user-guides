@@ -1,11 +1,11 @@
-#Job Scheduling and Submission on Theta 
+# Job Scheduling and Submission on Theta 
 
-##Job and Queue Scheduling for Theta
+## Job and Queue Scheduling for Theta
 
-###General Policy
+### General Policy
 We ask that all users follow good etiquette and be kind to one another.
 
-###Job Priority
+### Job Priority
 As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
 
 * positive balance of your project
@@ -13,25 +13,25 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 * the type of project (e.g. INCITE, ALCC, or discretionary)
 * job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
 
-###Reservations and Scheduling Policy
+### Reservations and Scheduling Policy
 Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular {== Add link ==}form no fewer than five (5) business days in advance.
 
-###Monday Maintenance
+### Monday Maintenance
 {== When the ALCF is on a regular business schedule, preventitive maintenance is typically scheduled on alternate Mondays. The showres command may be used to view pending and active maintenance reservations. Check this ==}
 
-###Big Run Mondays
+### Big Run Mondays
 As part of our regular maintenance procedures on Mondays, we will promote to the highest priority any jobs in the queued state requesting 802 nodes or more (.ie. capability jobs). Promotion is subject to operational discretion.
 
 We may also, at our discretion, take the opportunity to promote the priority of capability jobs if the system has been drained of jobs for any other reason.
 
-###INCITE/ALCC Overburn Policy
+### INCITE/ALCC Overburn Policy
 If an INCITE or ALCC project has exhausted its allocation in the first 11 months of its allocation year, it is eligible for overburn running. At this point, **capability jobs** submitted by INCITE and ALCC projects will run in the default queue (instead of backfill) for the first 11 months of the allocation year until 125% of the project allocation has been consumed. Note that non-capability jobs will be routed to backfill queue.
 
 INCITE and ALCC projects needing additional overburn hours should e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with a short description of what they plan to do with the additional hours, highlighting specific goals or milestones and the time expected to accomplish them. This will be reviewed by the scheduling committee, allocations committee, and ALCF management. Requests should be submitted 15 days before the start of the next quarter of the allocation year for full consideration. Non-capability jobs from projects that have exhausted their allocation will continue to run in backfill. 
 
 To be clear, this policy does not constitute a guarantee of extra time, and we reserve the right to prioritize the scheduling of jobs submitted by projects that have not yet used 100% of their allocations, so the earlier that an INCITE or ALCC project exhausts its allocation, the more likely it is to be able to take full advantage of this policy.
 
-###Queues
+### Queues
 For information on ThetaGPU Queues, see: {== Add link ==}
 ####Theta (KNL) Queues
 **Debugging Queues**
@@ -68,30 +68,30 @@ For information on ThetaGPU Queues, see: {== Add link ==}
 
 ALCF has 260 nodes in the production queue for a research project. The maximum job size is 4,100 nodes.
 
-####Running With Less Than 128 Nodes in Default Queue
+#### Running With Less Than 128 Nodes in Default Queue
 
 It is important to remember that jobs are charged by the number of nodes allocated, not the number of nodes used. For instance, a job requesting 14 nodes, below the minimum of 128, will be allocated 128 nodes and charged for 128 even though only 14 nodes are used.
 
 We strongly encourage you to bundle smaller jobs into ensembles, either using {== Cobalt ensemble scripting - add the link after page is added ==} or using a workflow system such as [Balsam](https://balsam.alcf.anl.gov/).
 
-###Theta (KNL) Mode Selection and Charging
+### Theta (KNL) Mode Selection and Charging
 Time spent booting or rebooting nodes to obtain requested modes will not be charged to projects and neither will it count against requested walltime, although it will be included in the total runtime. Please allow up to thirty (30) minutes for rebooting of nodes when submitting jobs.
 
 Failure to specify a mode will result in the selection of cache-quad, the equivalent of listing `#!--attrs mcdram=cache:numa=quad` in your qsub or job script.
 
-##Submit a Job
+## Submit a Job
 The queuing system used at ALCF is [Cobalt](https://xgitlab.cels.anl.gov/aig-public/cobalt). On Theta, Cobalt jobs may run either as script jobs or interactive mode jobs.
 
-###Script Method
+### Script Method
 In the script method, Cobalt will execute a user-supplied script when running a user’s job. All scripts on Theta must have their execute bit set, and must be able to run on a standard x86_64 architecture. Following are the required flags to qsub, as well as some of the more common options. A complete list of options may be found as a part of the qsub manpage, available on any login node.
 
-####Required Flags
+#### Required Flags
 ```
 -n NN - number of nodes (-n 64 for 64 nodes) 
 -t time - running time (-t 5 for 5 minutes, -t 01:10:20 for 1 hr 10 min 20 sec) 
 -A Project - project (-A YourProject)
 ```
-###Common Options
+### Common Options
 ```
 --attrs - you may specify additional attributes for your job. 
           Multiple attribute key-value pairs are colon-delimited. 
@@ -125,18 +125,18 @@ qsub -A YourProject -n 256  -t 30  \
 ```
 The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://xgitlab.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
 
-###Interactive Method
+### Interactive Method
 To run an “interactive mode” job on ALCF Cray resources, add the “-I” flag or “--mode interactive” to your qsub line and omit any executable. Your qsub submission will then wait until nodes are allocated to your job and Cobalt will start a shell on a job-launch node on your behalf. You may aprun against your assigned resources and run other interactive commands from this node. It is important to note that your shell is executed from a launch node and not from your compute head-node. Once your allocation ends, all apruns will be terminated, but your shell will remain for any cleanup actions that you choose to take.
 
-####Ensemble Jobs
+#### Ensemble Jobs
 Users may run an “ensemble job” and combine runs into a single script. This can provide major enhancements to throughput, especially for large ensemble jobs. Users may run multiple jobs in sequence or may use multiple backgrounded apruns to subset their resources among multiple backend executables. There is a system limitation of 1000 simultaneous apruns per Cobalt script job.
 
-###Queue Names and Scheduling Policy
+### Queue Names and Scheduling Policy
 {== add links Queue names and operations are described on the Job and Queue Scheduling for Theta page.
 
 Queue and scheduling policies can be found on the Queue and Scheduling Policy page. ==}
 
-###Project Names
+### Project Names
 You can find active project names that your account is associated with by running the command:
 ```
 sbank allocations
@@ -159,11 +159,11 @@ If you submit a job with the wrong arguments, you can modify without deleting it
 Usage: qmove <queue name> <jobid> <jobid>
 ```
 
-###Changing Executable after Job Submission
+### Changing Executable after Job Submission
 When a job is submitted via qsub, Cobalt records the path to the executable or script, but it does not make a copy. As a result, if the executable or script is modified when there is a deletion or modification, it will affect any jobs already submitted that use that executable. To avoid confusion, it is generally best to avoid making changes after job submission.
 
-###Holding and Releasing Jobs
-####User Holds
+### Holding and Releasing Jobs
+#### User Holds
 To hold a job (prevent from running), use qhold. This will put the job in the "user_hold" state.
 ```
 qhold <jobid>
@@ -177,16 +177,16 @@ A job may also be put into a user hold immediately upon submission by passing qs
 ```
 qsub -n 512 -t 120 -A MyProject -h myExe
 ```
-####Dependency Holds
+#### Dependency Holds
 For jobs in the dep_hold or dep_fail state, see the section on job dependencies.
 
-####Admin Holds
+#### Admin Holds
 Jobs in the state admin_hold may be released only by a system administrator.
 
-####MaxRun Holds
+#### MaxRun Holds
 Jobs may temporarily enter the state maxrun_hold if the user has reached the limit of per-user running jobs in a particular queue. No action is required; as running jobs complete, jobs in the maxrun_hold state will be automatically changed back to queued and eligible to run.
 
-###Job Dependencies
+### Job Dependencies
 To submit a job that waits until another job or jobs have completed, use the dependencies argument to qsub. For example, to submit a job that depends on job 12345:
 ```
 qsub -n 512 -t 10 -A yourproject --dependencies 12345 a.out
@@ -205,7 +205,7 @@ or alternatively change the job's dependencies setting to “none”:
 ```
 qalter --dependencies none <jobid>
 ```
-###Customizing the Output of Qstat
+### Customizing the Output of Qstat
 Default fields displayed by the qstat command may be changed by setting the QSTAT_HEADER environment variable.
 ```
 export QSTAT_HEADER="JobID:JobName:User:WallTime:RunTime:Nodes:State:attrs:Queue""
@@ -226,7 +226,7 @@ One may specify column headers via the --header flag to qstat.
 
 Available field names can be seen by entering "qstat -fl <jobid>" for any current jobid.
 
-###Redirecting Standard Input
+### Redirecting Standard Input
 To redirect the standard input to a job, do not use the '<' redirection operator on the qsub command line. This simply redirects standard input to qsub, not the job itself. Instead, use the qsub option "-i".
 ```
 # WRONG
@@ -236,10 +236,10 @@ qsub -t 10 -n 64 a.out < my_input_file.dat
 qsub -t 10 -n 64 -i my_input_file.dat a.out
 ```
 
-###Sbank
+### Sbank
 The sbank database is updated hourly. This means transactions against your account can take up to an hour before they show up.
 
-###Submitting into Backfill Nodes
+### Submitting into Backfill Nodes
 Sometimes the scheduler will try to clear up room for a large job. During these times, although not many jobs may be running, new jobs are not being scheduled as expected.
 
 At such times, backfill nodes may be available. While nodes are being drained for a larger job, other user jobs may be backfilled onto these resources, provided that their requested wall time is less than the remaining drain time of the set of resources. For instance, suppose that 16 nodes are being drained to allow a 16-node job to run. Of the 16 nodes, perhaps eight are empty and the other eight are running an eight-node job that has 2 hours of wall time left. This allows the opportunity to run a 2-hour, eight-node job in the backfill here.
@@ -271,7 +271,7 @@ Node_id  Name         Queues     Status                 MCDRAM  NUMA    Backfill
 ```
 In this example, a four-node job with a maximum wall time of 4 hours and 59 minutes can be run during this backfill. The backfill times will not always be identical and will depend on the mix of jobs on the partitions that are being drained.
 
-###Submitting to Specific Nodes
+### Submitting to Specific Nodes
 In rare cases, there may be a need to target specific hardware. This may be accomplished using "--attrs location=".
 
 **For example:**
@@ -281,7 +281,7 @@ qsub -t 10 -n 16 --attrs location=0-7,100-107 myprogram.exe
 ```
 This will force the job to run on those specific nodes. Should that location become unschedulable, for instance, due to a failed node, the job will not be allowed to run anywhere else, without resetting the location attribute. If more nodes are specified in the location field than are required to fill a job’s requested node count, then the first n nodes available in the location set will be used.
 
-###Running with a Group of Users
+### Running with a Group of Users
 Sometimes it is useful to allow other users to run Cobalt commands on a given job such as qhold, qrls, or qdel. A list of users can be allowed to run commands on your job by submitting a list of users to qsub, cqsub, or qalter using the flag --run_users. Specified users need not be in the same project under which the job was submitted.
 
 **For example:**
@@ -292,16 +292,16 @@ As a convenience, all users belonging to the project under which a job was submi
 
 Users who have been added to the list can run any command that the job-submitter could run on a job. This includes qhold, qrls, qalter, and qdel.
 
-###Group Running and File System Groups
+### Group Running and File System Groups
 While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](mailto:support@alcf.anl.gov).
 
-####More Information
+#### More Information
 For more information on Cobalt commands, their options, consult the manpages on the system. The same information may be found online in the [Cobalt Command Reference](http://trac.mcs.anl.gov/projects/cobalt/wiki/CommandReference).
 
-###Using the Job Resource Manager: Commands, Options, and Examples
+### Using the Job Resource Manager: Commands, Options, and Examples
 This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. For an introduction to using the job resource manager and running jobs on Theta, see {== add link Running Jobs on Theta ==}. 
 
-####Submit a Job Request
+#### Submit a Job Request
 Use qsub to submit a job. (Unlike jobs on the ALCF BlueGene systems, all jobs on Theta are either script or interactive.)
 
 Run the script jobscript.sh with 10 nodes for a maximum of 15 minutes:
@@ -314,7 +314,7 @@ To run jobscript.sh with 10 nodes for a maximum of 30 minutes in the debug queue
 ```
 qsub -q debug-flat-quad -n 10 -t 30 jobscript.sh
 ```
-####Charge a Job to a Project
+#### Charge a Job to a Project
 Use qsub -A <project_name> to charge a job to a particular project.
 
 To run jobscript.sh with 10 nodes for a maximum of 15 minutes and charge the job to MyProject:
@@ -329,7 +329,7 @@ projects
 
 You can use the environment variable “COBALT_PROJ” to set your default project. qsub -A takes precedence over COBALT_PROJ.
 
-####Delete a Job from the Queue
+#### Delete a Job from the Queue
 To delete a job from the queue, use the qdel command. For example for job with ID of 34586
 ```
 qdel 34586
@@ -337,7 +337,7 @@ qdel 34586
 
 Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact support@alcf.anl.gov with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
 
-####Query Partition Availability
+#### Query Partition Availability
 To determine which partitions are currently available to the scheduler, use the nodelist command. This command provides a list of node ids, names, queue, and state as well as any backfill windows.
 
 **For example:**
