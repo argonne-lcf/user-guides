@@ -1,13 +1,13 @@
 # NWChem
 NWCHEM is a parallel quantum chemistry mainly written in Fortran77 and uses MPI and OpenMP for distributed and multicore computing. NWCHEM was designed to solve large-scale  electronic structure calculations with Hartree-Fock, Density Functional Theory and other wavefunction correlated methods, see full features in nwchem-sw.org.
 
-## Using NWCHEM at ALCF
-ALCF provides binaries and compiling instructions for NWCHEM. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+## Using NWChem at ALCF
+ALCF provides binaries and compiling instructions for NWChem. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to Obtain the Code
-NWCHEM is an open-source code the official web site is [http://www.nwchem-sw.org](http://www.nwchem-sw.org). Change log and release announcements could be found here [http://www.nwchem-sw.org/index.php/Download](http://www.nwchem-sw.org/index.php/Download).
+NWChem is an open-source code the official web site is [http://www.nwchem-sw.org](http://www.nwchem-sw.org). Change log and release announcements could be found here [http://www.nwchem-sw.org/index.php/Download](http://www.nwchem-sw.org/index.php/Download).
 
-Official Nwchem source could be downloaded from the project’s github.com repository [https://github.com/nwchemgit/nwchem/releases](https://github.com/nwchemgit/nwchem/releases). For detailed compiling options, please visit the wiki page of Nwchem, [https://github.com/nwchemgit/nwchem/wiki/Compiling-NWChem](https://github.com/nwchemgit/nwchem/wiki/Compiling-NWChem). The follow instructions were tested in for the version 6.8.1.
+Official NWChem source could be downloaded from the project’s github.com repository [https://github.com/nwchemgit/nwchem/releases](https://github.com/nwchemgit/nwchem/releases). For detailed compiling options, please visit the wiki page of Nwchem, [https://github.com/nwchemgit/nwchem/wiki/Compiling-NWChem](https://github.com/nwchemgit/nwchem/wiki/Compiling-NWChem). The follow instructions were tested in for the version 6.8.1.
 
 ```
 cat nwchem_envs_681.sh
