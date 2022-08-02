@@ -74,4 +74,4 @@ When you are all done, be sure to clean up:
 - You may need to cntrl C to exit the ssh command in the shell used to create the tunnel 
 - Then exit that shell to close the tunnel
   
-==Add Video of Visualizing your data==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/x834vjl51kA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
