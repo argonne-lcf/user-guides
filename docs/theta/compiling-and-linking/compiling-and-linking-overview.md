@@ -63,7 +63,7 @@ module swap PrgEnv-intel PrgEnv-cray; module swap PrgEnv-cray PrgEnv-intel
 ```
 which unload and then put back Intel programming environment. The bug affects only interactive sessions and does not apply to regular offline Cobalt batch jobs.
 
-##Man Pages
+## Man Pages
 For additional information about Cray wrappers, see man pages:
 
 ```
