@@ -57,7 +57,7 @@ To run an “interactive mode” job on ALCF Cray resources, add the “-I” (u
 Users may run an “ensemble job” and combine runs into a single script. This can provide major enhancements to throughput, especially for large ensemble jobs. Users may run multiple jobs in sequence or may use multiple backgrounded apruns to subset their resources among multiple backend executables. There is a system limitation of 1000 simultaneous apruns per Cobalt script job.
 
 ## Queue Names and Scheduling Policy
-Queue names and operations are described on the [Job and Queue Scheduling](/job-and-queue-scheduling/) on ThetaGPU page.
+Queue names and operations are described on the [Job and Queue Scheduling](/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md) on ThetaGPU page.
 
 Queue and scheduling policies can be found on the Queue and Scheduling Policy page.
 
@@ -218,7 +218,7 @@ As a convenience, all users belonging to the project under which a job was submi
 Users who have been added to the list can run any command that the job-submitter could run on a job. This includes qhold, qrls, qalter, and qdel.
 
 ### Group Running and File System Groups
-While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](https://mailto:support@alcf.anl.gov).
+While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](mailto:support@alcf.anl.gov).
 
 ## More Information
 For more information on Cobalt commands, their options, consult the manpages on the system. The same information may be found online in the [Cobalt Command Reference](http://trac.mcs.anl.gov/projects/cobalt/wiki/CommandReference).
@@ -253,7 +253,7 @@ To delete a job from the queue, use the qdel command. For example for job with I
 ```
 qdel 34586
 ```
-Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
+Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
 
 ### Query Partition Availability
 To determine which partitions are currently available to the scheduler, use the nodelist command. This command provides a list of node ids, names, queue, and state as well as any backfill windows. This command can only be run on the service nodes (thetagpusn1-2), it cannot be run on the compute nodes. 
@@ -306,6 +306,6 @@ To release user hold:
 qrls <jobid>
 ```
 
-## Resources on Job Submissions at the ALCF
+## References
 <iframe width="560" height="315" src="https://www.youtube.com/embed/s2U18IO88-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
