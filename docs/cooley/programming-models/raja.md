@@ -6,7 +6,7 @@ Make existing (production) applications portable with minimal disruption
 Provide a model for new applications so that they are portable from inception.
 RAJA targets portable, parallel loop execution by providing building blocks that extend the generally-accepted parallel for idiom.
 
-Additional information can be found at [RAJA User Guide](https://raja.readthedocs.io/en/master/index.html).
+Additional information can be found at [RAJA User Guide](https://raja.readthedocs.io/en/develop/sphinx/user_guide/index.html).
 
 ## Using RAJA
 RAJA provides a project template for how to use RAJA in an application project that uses CMake or Make. This is located at [RAJA Project Template](https://github.com/LLNL/RAJA-project-template).
