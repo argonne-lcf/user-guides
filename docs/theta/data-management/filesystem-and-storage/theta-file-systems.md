@@ -26,7 +26,7 @@ The swift-home file system is regularly backed up to tape. The data file system 
     - Grand: /grand or /lus/grand/projects
     - Eagle: /eagle or /lus/eagle/projects
 
-These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](https://www.alcf.anl.gov/user-guides/disk-quota).
+These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](theta-disk-quota.md).
 
 ## Local Node SSD
 Access to SSDs is disabled by default. Project PIs may request access by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). A use case will need to be provided.
