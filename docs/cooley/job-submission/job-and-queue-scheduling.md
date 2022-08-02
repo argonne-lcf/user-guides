@@ -103,7 +103,7 @@ While we currently continue to maintain special-purpose queues for the above fun
 
 If you have needs not addressed by the standard queues, please send mail to [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) requesting a reservation.
 
-We will monitor Cooley's queues and evaluate the above policies as needed. Your [feedback](https://mailto:support@alcf.anl.gov) is appreciated.
+We will monitor Cooley's queues and evaluate the above policies as needed. Your [feedback](mailto:support@alcf.anl.gov) is appreciated.
   
   
 
