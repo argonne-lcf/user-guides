@@ -22,5 +22,5 @@ Figure 1 shows the latency for a 4k message size across several node counts for 
   <figcaption>Figure 2 - MPI Message Bandwidth</figcaption>
 </figure>
 
-##References
+## References
 [Cray Aries](files/CrayXCNetwork.pdf)
