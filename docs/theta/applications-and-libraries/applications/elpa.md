@@ -6,7 +6,7 @@ ELPA is a Fortran/C/MPI library to solve dense hermitian (real or complex) matri
 
 ## Using ELPA at ALCF
 
-ALCF  provides assistance with compiling the library. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov){target=blank}.
+ALCF  provides assistance with compiling the library. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to obtain the code
 
