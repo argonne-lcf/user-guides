@@ -14,7 +14,7 @@ ELPA can be downloaded free of charge from [https://elpa.mpcdf.mpg.de/software](
 
 ## Building ELPA on Theta
 
-ELPA must be compiled with AVX512 support in Theta. ELPA has OpenMP support, but it has shown lower performance for large number of MPI ranks. The interface of ELPA subroutines may change among versions 2016, 2017 and 2018, we strongly suggest to visit   [https://elpa.mpcdf.mpg.de/software](https://elpa.mpcdf.mpg.de/software) for further information.
+ELPA must be compiled with AVX512 support in Theta. ELPA has OpenMP support, but it has shown lower performance for large number of MPI ranks. Because the interface of ELPA subroutines may change among versions 2016, 2017 and 2018, we strongly suggest that users visit [https://elpa.mpcdf.mpg.de/software](https://elpa.mpcdf.mpg.de/software) for further information.
 
 This is an example for the compilation of ELPA in Theta.
 
