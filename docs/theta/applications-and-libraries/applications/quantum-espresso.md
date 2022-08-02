@@ -69,5 +69,5 @@ aprun -n $PROCS -N $PROCS_PERNODE -cc depth -d $NTHREADS -j $HT $pw -in ./test.i
 This script file can be submitted as ‘qsub script.sh’, assuming you have a ‘test.in’ file in place.
 
 ## References
-[QE User Manual](http://www.quantum-espresso.org/resources/users-manual)
+-[QE User Manual](http://www.quantum-espresso.org/resources/users-manual)
 
