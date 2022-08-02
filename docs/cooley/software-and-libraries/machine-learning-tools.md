@@ -17,7 +17,7 @@ Because singularity is setting up a containerized system, there are several impo
 Running the mpi containers with both GPUs per node has been demonstrated to scale to many nodes on Cooley, so distributed learning is feasible on Cooley.
 
 ## Extending Available Software in Containers
-If you start with an existing Singularity container, it is possible to add additional software.  The most straightforward path is to install it via pip while in the container, using the `--user` flag if you can.  In this way, you can add extensions to tensorflow/pytorch, or IO frameworks, etc. Email [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov) for questions concerning these techniques.
+If you start with an existing Singularity container, it is possible to add additional software.  The most straightforward path is to install it via pip while in the container, using the `--user` flag if you can.  In this way, you can add extensions to tensorflow/pytorch, or IO frameworks, etc. Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) for questions concerning these techniques.
 
 ## Non-container software solutions
 It is perfectly possible to run tensorflow, pytorch, etc outside of a container on Cooley.  We don't support official builds or distributions of this, but because Nvidia GPUs are very common for ML and DL software, there are many excellent tools available for getting GPU optimized tensorflow, pytorch, etc.  Solutions that can work on Cooley are pip, conda, and virtualenv, and possibly others.  Note that you will need to add Cuda libraries from softenv to use these tools.
