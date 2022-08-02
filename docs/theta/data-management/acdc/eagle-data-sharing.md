@@ -7,7 +7,7 @@ Collaborators throughout the scientific community have the ability to write data
 
 Globus is a service that  provides research data management, including managed transfer and sharing. It makes it easy to move, sync, and share large amounts of data. Globus will manage file transfers, monitor performance, retry failures, recover from faults automatically when possible, and report the status of your data transfer. Globus supports GridFTP for bulk and high-performance file transfer, and direct HTTPS for download. The service allows the user to submit a data transfer request, and performs the transfer asynchronously in the background. For more information, see Globus data transfer and Globus data sharing.
 
-**Note:** If you are migrating your data from Petrel, please see the migration instructions on the webpage == (add link) Transferring Data to Eagle==
+**Note:** If you are migrating your data from Petrel, please see the migration instructions on the webpage [Transferring Data to Eagle](transferring-data-eagle.md).
 
 <figure markdown>
   ![Logging into Globus](files/login-screen.png){ width="700" }
@@ -58,7 +58,7 @@ In the Globus application in your browser:
 
 1. There are multiple ways to Navigate to the Collections tab in "Endpoints":
     1. [Click on link to get started](https://app.globus.org/file-manager/collections/05d2c76a-e867-4f67-aa57-76edeb0beda0/shares){:target="_blank"}. It will take you to the Collections tab for Eagle. **OR**
-    2. Click on 'Endpoints' located in the left panel of the Globus web app [or go to](https://app.globus.org/endpoints){:target="_blank"}. **Type "alcf#dtn_eagle" in the search box** located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" from the search results. Click on the  Collections tab. **OR**
+    2. Click on 'Endpoints' located in the left panel of the Globus web app [or go to](https://app.globus.org/endpoints). **Type "alcf#dtn_eagle" in the search box** located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" from the search results. Click on the  Collections tab. **OR**
     3. Clicking on 'File Manager' located in the left panel of the Globus web app. Search for 'alcf#dtn_Eagle' and select it in the Collection field. Select your project directory or a sub directory that you would like to share with collaborators as a Globus guest collection. Click on 'Share' on the right side of the panel, which will take you to the Collections tab.
 
 **Note:** Shared endpoints always remain active. When you select an endpoint to transfer data to/from, you may be asked to authenticate  with  that endpoint. Follow the instructions on screen to activate the endpoint and to authenticate. You may also have to provide Authentication/Consent for the Globus web app to manage collections on this endpoint
