@@ -8,7 +8,7 @@ We support two installations of Tensorflow, one via the [Conda environment]([htt
 
 First we'll mention some generic settings to play with while doing Tensorflow training on Theta.
 
-The Google Tensorflow describes these variables here: [https://www.tensorflow.org/performance/performance_guide](https://www.tensorflow.org/performance/performance_guide)
+The Google Tensorflow guide describes these variables here: [https://www.tensorflow.org/performance/performance_guide](https://www.tensorflow.org/tfx/serving/performance)
 
 In your batch submit script use the following:
 - ```export OMP_NUM_THREADS=62``` This setting should be set to the number of physical cores, although, our local Cray expert suggested using 62.
