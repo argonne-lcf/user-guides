@@ -9,5 +9,5 @@ Balsam was originally developed to support ATLAS workflows on ALCF systems, link
 
 **Note:** All users of the Theta Balsam module with a database created before February 17, 2021, must take action to continue using the module. See this page for details. No action is needed if you have been using your own installation of Balsam in a virtual environment.
 
-==add video==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8ytBHq-6MRU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
