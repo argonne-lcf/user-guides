@@ -81,6 +81,7 @@ nav:
           - NAMD: theta/applications-and-libraries/applications/namd.md
           - NwChem: theta/applications-and-libraries/applications/nwchem.md
           - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
+          - QBox: theta/applications-and-libraries/applications/qbox.md
           - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
           - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
           - VASP: theta/applications-and-libraries/applications/vasp.md
