@@ -280,7 +280,7 @@ A project PI can request an allocation by filling out the Director’s Discretio
 
 Yes. The PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. 
 
-- If the PI has an 'Inactive/Deleted' ALCF account, they should click on the link here to start the account re-activation process: [Account re-activation link](https://accounts.alcf.anl.gov/accountReactivate){:target="_blank"} 
+- If the PI has an 'Inactive/Deleted' ALCF account, they should click on the link here to start the account re-activation process: [Account re-activation link](https://accounts.alcf.anl.gov/accountReactivate)
 - If they don't have an ALCF account, they request for one: [Account request link](https://accounts.alcf.anl.gov/#!/accountRequest)  
  
 **3. What endpoint should the PI use?**
@@ -396,6 +396,7 @@ Yes.[Go to alcf#dtn_eagle-> Groups > group_name -> Members -> click on specific 
 No. Access managers cannot delete guest collections.
 
 Guest Collection Collaborators: 
+
 **1. What actions can collaborators perform?**
     1. Collaborators can read files from a collection *
     2. Collaborators can write to a collection **
