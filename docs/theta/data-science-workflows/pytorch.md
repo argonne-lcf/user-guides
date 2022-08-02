@@ -58,9 +58,9 @@ hvd.broadcast_parameters(model.stat_dict(), root_rank=0)
 ```
 5. Loading data according to rank ID: Torch has some functions for parallel distribution of data. But for specific applications, the user might have to write their own data loader.
 
-## Profiling/postprocessing with TensorboardX
+## Profiling/post-processing with TensorboardX
 
-TensorboardX is for creating events in PyTorch, which can be process by Tensorboard. One could check [tensorboardX](https://github.com/lanpa/tensorboardX)for details on how to use it. Tensorboard events, including scalar, image, figure, histogram, audio, text, graph, onnx_graph, embedding, pr_curve and video summaries, could be created with a simple function call "writer.add_XXX(...)" as follows: 
+TensorboardX is for creating events in PyTorch, which can be process by Tensorboard. One could check [tensorboardX](https://github.com/lanpa/tensorboardX) for details on how to use it. Tensorboard events, including scalar, image, figure, histogram, audio, text, graph, onnx_graph, embedding, pr_curve and video summaries, could be created with a simple function call "writer.add_XXX(...)" as follows: 
 ```
 from tensorboardX 
 import SummaryWriter
