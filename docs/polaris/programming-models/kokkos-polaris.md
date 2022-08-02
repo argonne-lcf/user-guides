@@ -25,6 +25,3 @@ execution and CUDA for GPU execution. To use it, run
 module use /soft/programming-models
 module load kokkos
 ```
-
-
-
