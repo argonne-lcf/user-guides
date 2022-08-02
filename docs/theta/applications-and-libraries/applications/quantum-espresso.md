@@ -70,5 +70,4 @@ This script file can be submitted as ‘qsub script.sh’, assuming you have a �
 
 ## References
 [QE User Manual](http://www.quantum-espresso.org/resources/users-manual)
-[Alternative Compilations of the Code](https://software.intel.com/en-us/articles/quantum-espresso-for-the-intel-xeon-phi-processor)
 
