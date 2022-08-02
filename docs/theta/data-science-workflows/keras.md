@@ -1,7 +1,7 @@
 # Keras
 
 ## Introduction
-[Keras] (https://keras.io) is a high-level neural networks API, written in Python and capable of running on top of [TensorFlow](https://github.com/tensorflow/tensorflow), [CNTK](https://github.com/Microsoft/cntk), or [Theano](https://github.com/Theano/Theano). It was developed with a focus on enabling fast experimentation. It allows for easy and fast prototyping, and support both convolutional networks and recurrent networks and the combination of the two. It runs seamlessly on CPU and GPU.
+[Keras](https://keras.io) is a high-level neural networks API, written in Python and capable of running on top of [TensorFlow](https://github.com/tensorflow/tensorflow), [CNTK](https://github.com/Microsoft/cntk), or [Theano](https://github.com/Theano/Theano). It was developed with a focus on enabling fast experimentation. It allows for easy and fast prototyping, and support both convolutional networks and recurrent networks and the combination of the two. It runs seamlessly on CPU and GPU.
 
 ## Datascience module
 On Theta, we support Tensorflow backend for Keras. To use the datascience Keras module on Theta, please load the following two modules:
