@@ -18,7 +18,7 @@ On Theta, for the latest version load the module forge/19.1.2.
 
 On the systems managed with softenv (Cooley), use the soft key "+forge" for the latest version available.  When using the Allinea Remote Client, specfiy remote installation directory "/soft/debuggers/forge".
 
-## Profiling with MAT
+## Profiling with MAP
 MAP may be started in two ways.
 
 - Via Remote Client from your laptop or workstation (Recommended)
