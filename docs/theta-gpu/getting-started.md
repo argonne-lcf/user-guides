@@ -2,7 +2,7 @@
 ## References
 In addition to the content below, here is a [getting started video](https://youtu.be/N0Xip1mUZY8) covering the basics of using ThetaGPU and a  related video on Lustre File Striping Basics. This should help you get up and running quickly on the GPU nodes.
 - [Video on Getting Started on ThetaGPU](https://youtu.be/N0Xip1mUZY8) 
-- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/theta-gpu-nodes/%3C/https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 ## Login to ThetaGPU
 ```
@@ -36,8 +36,8 @@ For all the build and development please use ThetaGPU compute nodes. Please avoi
 
 Using "qstat -Q" to see all available queues. You can submit your job to a specific queue (as long as you are part of that queue) using "qsub -q queue_name".
 
-- For more information on all ThetaGPU queues visit: [Queue Policy on ThetaGPU](https://www.alcf.anl.gov/support-center/theta-gpu-nodes/queue-policy-thetagpu)
-- For more information on submitting a job visit: [Submit a job on ThetaGPU](https://www.alcf.anl.gov/support-center/theta/submit-job-theta)
+- For more information on all ThetaGPU queues visit: [Queue Policy on ThetaGPU](/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md)
+- For more information on submitting a job visit: [Submit a job on ThetaGPU](/docs/theta-gpu/queueing-running-jobs/job-submission.md)
   
 ## Project Space and Home: 
 Every user has a home directory located at /home/username.
@@ -53,7 +53,7 @@ Please use the project folder when building and running on ThetaGPUcompute nodes
 
 /home is on an FDR network which is up-linked to the HDR network via a straw, heavy use of this file system will result in Bad Things™ again.
 
-For more information on all available file systems visit: [Theta File Systems](https://www.alcf.anl.gov/support-center/theta/theta-file-systems)  
+For more information on all available file systems visit: [Theta File Systems](/docs/theta/data-management/filesystem-and-storage/theta-file-systems.md)  
 
 ## Software
 ThetaGPU is new, so it has limited ALCF provided software. ThetaGPU compute nodes are setup with CUDA11
@@ -74,7 +74,7 @@ Theta software can be found in  ```/soft```
   – Anything that is not compute specific will be useable on the AMD host CPUs
   – cmake is good example of something that can be used
 
-For more information on compiling and linking on ThetaGPU visit: [Compiling and Linking on ThetaGPU](https://www.alcf.anl.gov/support-center/theta-gpu-nodes/compiling-and-linking-thetagpu)
+For more information on compiling and linking on ThetaGPU visit: [Compiling and Linking on ThetaGPU](/docs/theta-gpu/compiling-linking/compiling-and-linking-overview.md)
   
 ## NVIDIA HPC SDK
   
