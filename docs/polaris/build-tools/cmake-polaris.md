@@ -14,6 +14,6 @@ to automatically generate Makefiles.
 To use CMake on Polaris, run
 
 ```
-module use /soft/build-tools
+module use /soft/modulefiles
 module load cmake
 ```

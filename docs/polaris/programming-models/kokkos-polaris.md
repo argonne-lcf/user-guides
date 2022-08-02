@@ -22,6 +22,6 @@ The prebuilt Kokkos on polaris includes 3 backends: Serial and OpenMP for CPU
 execution and CUDA for GPU execution. To use it, run
 
 ```
-module use /soft/programming-models
+module use /soft/modulefiles
 module load kokkos
 ```
