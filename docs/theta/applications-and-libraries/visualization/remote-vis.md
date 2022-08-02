@@ -31,7 +31,7 @@ vncserver --NeverShared=1 -geometry 1920x1080
 x0vncserver --display=:0.0 --NeverShared=1 --geometry=2400x1500+0+0 --PasswordFile=/home/<username>/.vnc/passwd --MaxProcessorUsage=100
 ```
 
-** Notes:**
+**Notes:**
 
 - Take note of the hostname where your job is running (in the form cc###).  You will need this in the next steps.
 - We use x0vncserver so that we can leverage the existing X server running on the node, which uses the GPU.  
