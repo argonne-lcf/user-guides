@@ -36,8 +36,8 @@ For all the build and development please use ThetaGPU compute nodes. Please avoi
 
 Using "qstat -Q" to see all available queues. You can submit your job to a specific queue (as long as you are part of that queue) using "qsub -q queue_name".
 
-- For more information on all ThetaGPU queues visit: [Queue Policy on ThetaGPU](https://www.alcf.anl.gov/support-center/theta-gpu-nodes/queue-policy-thetagpu)
-- For more information on submitting a job visit: [Submit a job on ThetaGPU](https://www.alcf.anl.gov/support-center/theta/submit-job-theta)
+- For more information on all ThetaGPU queues visit: [Queue Policy on ThetaGPU](docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md)
+- For more information on submitting a job visit: [Submit a job on ThetaGPU](/docs/theta-gpu/queueing-running-jobs/job-submission.md)
   
 ## Project Space and Home: 
 Every user has a home directory located at /home/username.
