@@ -15,7 +15,7 @@ Globus is a service that  provides research data management, including managed t
 </figure>
 
 ## Logging into Globus with your ALCF Login
-ALCF researchers can use their ALCF Login username and password to access Globus. Go to [Globus website](https://www.globus.org/){:target="_blank"} and click on Log In in the upper right corner of the page.
+ALCF researchers can use their ALCF Login username and password to access Globus. Go to [Globus website](https://www.globus.org/) and click on Log In in the upper right corner of the page.
 
 Type or scroll down to "Argonne LCF" in the "Use your existing organizational login" box, and then click "Continue".
 
@@ -50,9 +50,9 @@ There are two ways for a PI to access their project directory on Eagle.
 ## Creating a Guest Collection
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections. 
 
-- If you have an "Inactive/Deleted" ALCF account, please click on the account re-activation link to begin the re-activation process: [Re-activation Link](https://accounts.alcf.anl.gov/accountReactivate){:target="_blank"}
+- If you have an "Inactive/Deleted" ALCF account, please click on the account re-activation link to begin the re-activation process: [Re-activation Link](https://accounts.alcf.anl.gov/accountReactivate)
 
-- If you DO NOT have an ALCF account, click on the account request link to begin the application process: [Account Request Link](https://accounts.alcf.anl.gov/#!/accountRequest){:target="_blank"} 
+- If you DO NOT have an ALCF account, click on the account request link to begin the application process: [Account Request Link](https://accounts.alcf.anl.gov/#!/accountRequest) 
 
 In the Globus application in your browser:
 
