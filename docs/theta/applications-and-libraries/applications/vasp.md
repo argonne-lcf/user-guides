@@ -7,7 +7,7 @@ The Vienna Ab initio Simulation Package (VASP) is a software package for perform
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
 
-To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business to verify a VASP license. These waiting times are longer than usual due to the impact of COVID19.
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license. These waiting times are longer than usual due to the impact of COVID19.
 
 Information to provide:
 - User’s Full Name:
