@@ -274,14 +274,14 @@ Groups are constructs that enable multi-user data collaboration. A PI (and an Ac
 ### PI FAQs:
 **1. How can a PI request for a data-only, Eagle storage allocation?** 
 
-A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form:[Request an allocation](https://accounts.alcf.anl.gov/allocationRequests){:target="_blank"}. The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email == Check[support@alcf.anl.gov](https:mailto:support@alcf.anl.gov) == with your proposal.
+A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form:[Request an allocation](https://accounts.alcf.anl.gov/allocationRequests). The allocations committee reviews the proposals and provides its decision in 1-2 weeks. To request a storage allocation on Eagle for an existing project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with your proposal.
 
 **2. Does a PI need to have an ALCF account to create a Globus guest collection?**
 
 Yes. The PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. 
 
 - If the PI has an 'Inactive/Deleted' ALCF account, they should click on the link here to start the account re-activation process: [Account re-activation link](https://accounts.alcf.anl.gov/accountReactivate){:target="_blank"} 
-- If they don't have an ALCF account, they request for one: [Account request link](https://accounts.alcf.anl.gov/#!/accountRequest){:target="_blank"}  
+- If they don't have an ALCF account, they request for one: [Account request link](https://accounts.alcf.anl.gov/#!/accountRequest)  
  
 **3. What endpoint should the PI use?**
 
@@ -332,14 +332,14 @@ Only the PI has the ability to create a guest collection. The Access Manager, al
 
 **9. I am the project PI. Why do I see a "Permission Denied" error when I try to CREATE a shared collection?**
 
-If you are a PI and you see this error, it could mean that a sharing policy might not have been created by ALCF. Please contact ==Check[support@alcf.anl.gov](https:mailto:support@alcf.anl.gov)== for assistance.
+If you are a PI and you see this error, it could mean that a sharing policy might not have been created by ALCF. Please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov) for assistance.
 
 **10. If a PI added someone as a project proxy on the POSIX-side, is it safe to assume that the Proxy can create guest collections?**
 
 No, project proxies cannot create guest collections, only the PI can.
 
 **11. Who can create groups?**
-A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. For more information, refer to: ==Creating a Group==
+A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. For more information, refer to: [Creating a Group](#Creating a Group)
 
 **12. What happens when the PI of a project changes? What happens to the shared collection endpoint?**
 
