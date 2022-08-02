@@ -7,7 +7,7 @@ For example:
 `#! module switch PrgEnv-intel PrgEnv-llvm`
 
 ## Mailing List and Support
-For help with Clang-related questions, ALCF users may e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
+For help with Clang-related questions, ALCF users can e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
 
 ## General Usage
 Clang’s command-line argument handling is designed to be similar to gcc’s command-line argument handling, and where possible, Clang tries to support the same flags. For more information on Clang, see [Clang: a C language family frontend for LLVM](http://clang.llvm.org/).
