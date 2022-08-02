@@ -69,8 +69,8 @@ This should open a vnc viewer with an xterm running in it, where you can launch 
   
 ## Cleaning Up
 When you are all done, be sure to clean up:
-- Exit the vnc viewer
-- Kill the vnc server (cntrl C), and exit the cc### shell
+- Exit the VNC viewer
+- Kill the VNC server (cntrl C), and exit the cc### shell
 - You may need to cntrl C to exit the ssh command in the shell used to create the tunnel 
 - Then exit that shell to close the tunnel
   
