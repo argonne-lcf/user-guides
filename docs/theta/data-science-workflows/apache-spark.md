@@ -42,7 +42,7 @@ The required options, `-A`, `-t`, `-n`, `-q`, correspond to their counterparts f
 
 The option `-o OUTPUTDIR` instructs the script to use `OUTPUTDIR` to save all the files.  By default, Cobalt will save files, `$COBALT_JOBID.{cobaltlog,error,output}`, under this directory.
 
-You can find a list of relevant environment variables in the file, `$COBALT_JOBID/env'.  In addition, under this `OUTPUTDIR`, Spark will use `$COBALT_JOBID/conf` as `SPARK_CONF_DIR`, `$COBALT_JOBID/logs` for logs, and `$COBALT_JOBID/workers` for Spark temporaries.
+You can find a list of relevant environment variables in the file, `$COBALT_JOBID/env`.  In addition, under this `OUTPUTDIR`, Spark will use `$COBALT_JOBID/conf` as `SPARK_CONF_DIR`, `$COBALT_JOBID/logs` for logs, and `$COBALT_JOBID/workers` for Spark temporaries.
 
 The option `-s` instructs the script to run the JOBFILE as a generic executable scripts, within which you may call, o launch, YOURFILE, which is a Spark jar file or a PySpark script.
 
