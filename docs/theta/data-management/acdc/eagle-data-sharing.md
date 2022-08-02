@@ -139,7 +139,7 @@ Globus supports setting permissions at a folder level, so there is no need to cr
 </figure>
 
 ## Transferring data from Eagle 
-Log in to [app.globus.org](https://accounts.alcf.anl.gov/#!/accountRequest) using your ALCF credentials. After authenticating, you will be taken to the Globus File Manager tab. In the 'Collection' box, type the name of Eagle managed endpoint (alcf#dtn_eagle). Navigate to the folder/file you want to transfer. HTTPS access (read-only) is enabled so you can download files by clicking the "Download" button.
+Log in to [Globus](https://app.globus.org) using your ALCF credentials. After authenticating, you will be taken to the Globus File Manager tab. In the 'Collection' box, type the name of Eagle managed endpoint (alcf#dtn_eagle). Navigate to the folder/file you want to transfer. HTTPS access (read-only) is enabled so you can download files by clicking the "Download" button.
 
 Click on 'Download' to download the required file. 
 
