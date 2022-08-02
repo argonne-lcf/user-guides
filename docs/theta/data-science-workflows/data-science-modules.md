@@ -20,7 +20,7 @@ This module loads the environment required to run [Horovod](https://github.com/h
 ## datascience/keras-X
 This module loads the environment required to run [Keras](http://keras.io/), which is a high-level Python API to run Tensorflow, CNTK, or Theano. Currently, only version 2.2.2 is available on Theta and it automatically loads TensorFlow 1.10.
 
-Note: This module loads intelpython35, gcc/7.3.0, and datascience/tensorflow-1.10 modules. 
+**Note:** This module loads intelpython35, gcc/7.3.0, and datascience/tensorflow-1.10 modules. 
 
 ## datascience/pytorch-X
 This module loads the environment required to run [PyTorch](http://pytorch.org/), a deep learning platform with Python and C++ API. Available versions are 0.5 and 1.0. 
