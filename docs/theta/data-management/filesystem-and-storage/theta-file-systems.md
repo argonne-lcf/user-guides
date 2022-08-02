@@ -40,7 +40,7 @@ Access to SSDs is disabled by default. Project PIs may request access by emailin
 - Refer to [this page](add link) for requesting SSDs in Cobalt.
 - Information on the current SSD drives in use is below:
 
-Model SM961 drives [specifications](http://www.samsung.com/semiconductor/ssd/client-ssd/MZVPV128HEGM/)
+Model SM961 drives
 
 | Model SM961 drives | -------  |
 | ------ | ------|
