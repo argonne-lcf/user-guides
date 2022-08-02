@@ -8,7 +8,7 @@ To learn more about TensorFlow, check TensorFlow [tutorials](https://www.tensorf
 ## Datascience TensorFlow module
 The datascience module on Theta contains: TensorFlow, PyTorch, Horovod, MPI4Py. The modules are built with GCC/7.3.0 and Intel Python 3.5 (intelpython35 module on Theta). All these packages were built with KNL specific optimizations for example (AVX512 instruction). They are linked to high performance math libraries, such as MKL, MKL-DNN (home built with AVX512). The dependent libraries, such as NumPy, SciPy are also built with AVX512.Because the TensorFlow package is built with AVX512. It only runs on KNL nodes on Theta. Since the login node, and mom nodes are not KNL, one has to create a script, and run it through "aprun ... python script.py".  
 
-For TensorFlow, we currently support 1.4, 1.6, 1.10, 1.12 versions. We are always keeping it updated to the most recent version on [TensorFlow GitHub](https://github.com/tensorflow/tensorflow). If for some reason, your application depends on certain version this is not on Theta, please email [datascience@alcf.anl.gov](https://mailto:datascience@alcf.anl.gov) or [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov)
+For TensorFlow, we currently support 1.4, 1.6, 1.10, 1.12 versions. We are always keeping it updated to the most recent version on [TensorFlow GitHub](https://github.com/tensorflow/tensorflow). If for some reason, your application depends on certain version this is not on Theta, please email [datascience@alcf.anl.gov](mailto:datascience@alcf.anl.gov) or [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
 
 ## Running TensorFlow on Theta
 #### Loading modules
