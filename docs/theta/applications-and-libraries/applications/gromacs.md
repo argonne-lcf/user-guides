@@ -48,7 +48,7 @@ aprun -n64-N64--envOMP_NUM_THREADS=2-ccdepth -d2-j2
 /lus/theta-fs0/home/user_name/gromacs-2018.5/build/bin/gmx_mpi\
  mdrun -dlbyes-resethway-pinon -v-deffnmstep5_1 -gtest.log
  ```
-User is strongly suggested to try combinations of number of nodes, number of MPI ranks per node and number of Number of OMP threads per rank to find the optimal throughput for the application.
+We strongly suggest that users try combinations of different numbers of nodes, MPI ranks per node, and OMP threads per rank to find the optimal throughput for the application.
 
 This is a benchmark for a 30,000 atoms system generated on 1 single Theta node with above qprun:
 
