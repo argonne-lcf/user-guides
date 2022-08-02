@@ -1,4 +1,4 @@
-# gpu-monitoring
+# GPU Monitoring
 Each GPU on ThetaGPU hosts 8 A100 GPUs. You can see information about these GPUs via the command ```nvidia-smi```.
 
 Each GPU has 40Gb of on-GPU memory. When you run applications, you will know the GPU is in use when you see the memory increase and the GPU Utilization will be non-zero.
