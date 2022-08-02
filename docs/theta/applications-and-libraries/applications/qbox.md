@@ -1,9 +1,9 @@
-# QBox on Theta
+# Qbox on Theta
 ## What is Qbox?
 Qbox is a C++/MPI scalable parallel implementation of first-principles molecular dynamics based on the plane-wave, pseudopotential formalism. As described on the Qbox website http://qboxcode.org/index.htm, Qbox is designed for operation on large parallel computers.
 
 ## Using Qbox at ALCF
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. Some provided executables on Theta are available here: /soft/applications/qbox. For questions, contact us at support@alcf.anl.gov.
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. Some provided executables on Theta are available here: /soft/applications/qbox. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to Obtain the Code
 Qbox is an open-source code that can be downloaded at http://qboxcode.org/. Check the Qbox website for current information and latest releases.
