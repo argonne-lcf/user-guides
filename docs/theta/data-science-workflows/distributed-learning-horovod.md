@@ -36,9 +36,9 @@ One can then open the timeline file using ```chrome://tracing``` facility of the
 
 We put examples of MNIST training using TensorFlow/PyTorch. The folders contain the python scripts, datasets and COBALT submission script. 
 
-- TensorFlow + Horovod: /projects/SDL_Workshop/hzheng/examples/tensorflow/MNIST
-- PyTorch + Horovod: /projects/SDL_Workshop/hzheng/examples/pytorch/MNIST 
+- TensorFlow + Horovod: `/projects/SDL_Workshop/hzheng/examples/tensorflow/MNIST`
+- PyTorch + Horovod: `/projects/SDL_Workshop/hzheng/examples/pytorch/MNIST`
 
-== add video ==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/930yrXjNkgM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
