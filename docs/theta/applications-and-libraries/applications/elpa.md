@@ -6,13 +6,13 @@ ELPA is a Fortran/C/MPI library to solve dense hermitian (real or complex) matri
 
 ## Using ELPA at ALCF
 
-ALCF  provides assistance with compiling the library. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+ALCF  provides assistance with compiling the library. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov){target=blank}.
 
-##How to obtain the code
+## How to obtain the code
 
 ELPA can be downloaded free of charge from [https://elpa.mpcdf.mpg.de/software](https://elpa.mpcdf.mpg.de/software). 
 
-##Building ELPA on Theta
+## Building ELPA on Theta
 
 ELPA must be compiled with AVX512 support in Theta. ELPA has OpenMP support, but it has shown lower performance for large number of MPI ranks. The interface of ELPA subroutines may change among versions 2016, 2017 and 2018, we strongly suggest to visit   [https://elpa.mpcdf.mpg.de/software](https://elpa.mpcdf.mpg.de/software) for further information.
 
