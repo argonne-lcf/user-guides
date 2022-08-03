@@ -105,11 +105,11 @@ nav:
       - Jupyter: theta-gpu/jupyter.md
       - DL Frameworks:
         - TensorFlow:
-          - Running with Singularity: theta-gpu/ml-frameworks/tensorflow/nvidia-container-notes.md
-          - Running with Conda: theta-gpu/ml-frameworks/tensorflow/running-with-conda.md
-          - Tensorboard: theta-gpu/ml-frameworks/tensorflow/tensorboard-instructions.md
+          - Running with Singularity: theta-gpu/dl-frameworks/tensorflow/nvidia-container-notes.md
+          - Running with Conda: theta-gpu/dl-frameworks/tensorflow/running-with-conda.md
+          - Tensorboard: theta-gpu/dl-frameworks/tensorflow/tensorboard-instructions.md
         - PyTorch:
-          - Running with Conda: theta-gpu/ml-frameworks/pytorch/running-with-conda.md
+          - Running with Conda: theta-gpu/dl-frameworks/pytorch/running-with-conda.md
         - Data Parallel Training: theta-gpu/data-parallel-training.md
       - Building and Compiling:
         - Python/C++ code interoperability: theta-gpu/building-and-compiling/README.md
