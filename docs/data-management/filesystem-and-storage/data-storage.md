@@ -12,7 +12,7 @@ A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with
 Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
 ### Eagle
-A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s.  The primary use of eagle is data sharing with the research community.  Eagle has community sharing community capabilities which allow PIs to [share their project data with external collabortors](eagle-data-sharing.md) using Globus.  Eagle can also be used for compute campaign storage.
+A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s.  The primary use of eagle is data sharing with the research community.  Eagle has community sharing community capabilities which allow PIs to [share their project data with external collabortors](../acdc/eagle-data-sharing.md) using Globus.  Eagle can also be used for compute campaign storage.
 
 Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
