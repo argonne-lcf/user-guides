@@ -29,6 +29,8 @@ nav:
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
       - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
+    - Build Tools:
+        - CMake: polaris/build-tools/cmake-polaris.md
     - Queueing and Running Jobs on Polaris:
       - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
@@ -48,12 +50,14 @@ nav:
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
+            - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science Workflows:
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
+        - Kokkos: polaris/programming-models/kokkos-polaris.md
     - Debugging Tools:
         - Debugging Tools Overview: polaris/debugging-tools/debugging-overview.md
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
