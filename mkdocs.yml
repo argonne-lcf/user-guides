@@ -122,7 +122,24 @@ nav:
       - Darshan: theta-gpu/programming-models/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
   - Cooley:
-      - System Overview and Node Information: cooley/system-overview-and-node-information.md
+    - Hardware Overview:
+      - Cooley Machine Overview: cooley/cooley-overview.md
+    - Compiling And Linking:
+      - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
+    - Queueing and Running Jobs:
+      - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
+    - Data Science:
+      - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
+    - Software and Libraries: 
+      - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
+      - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
+      - ParaView: cooley/software-and-libraries/paraview.md
+      - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
+      - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
+      - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
+    - Performance Tools: 
+      - Darshan: cooley/programming-models/darshan.md
+      - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Edith (Edge Dev Testbed):
       - Getting Started: polaris/queueing-and-running-jobs/edtb.md
 
