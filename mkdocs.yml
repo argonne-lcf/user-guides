@@ -1,6 +1,19 @@
 site_name: ALCF User Guide
 nav:
   - Home: README.md
+  - Data Management:
+    - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
+    - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+    - Data Transfer:
+      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
+      - Using Globus: data-management/data-transfer/using-globus.md
+    - File System & Storage:
+      - Data Storage: data-management/filesystem-and-storage/data-storage.md
+      - Theta File Systems: data-management/filesystem-and-storage/theta-file-systems.md
+      - HPSS: data-management/filesystem-and-storage/hpss.md
+      - Theta Disk Quota: data-management/filesystem-and-storage/theta-disk-quota.md
+      - Polaris Disk Quota: data-management/filesystem-and-storage/polaris-disk-quota.md
+      - Cooley Disk Quota: data-management/filesystem-and-storage/cooley-disk-quota.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
