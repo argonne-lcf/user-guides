@@ -9,22 +9,22 @@ A Luste file system residing on a DDN AI-400X NVMe SSD platform.  It has ?? ?? T
 ### Grand
 A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s.  The primary use of grand is compute campaign storage.
 
-Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](data-transfer/using-globus.md)
+Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
 ### Eagle
 A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s.  The primary use of eagle is data sharing with the research community.  Eagle has community sharing community capabilities which allow PIs to [share their project data with external collabortors](eagle-data-sharing.md) using Globus.  Eagle can also be used for compute campaign storage.
 
-Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](data-transfer/using-globus.md)
+Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
 ### theta-fs0
 A Lustre file system residing on an HPE Sonexion 3000 storage array with a usable capacity of 9.2PB and an aggregate data transfer rate of 240GB/s.  This is a legacy file system.  No new allocations are granted on theta-fs0.
 
-Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](data-transfer/using-globus.md)
+Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
 ### theta-fs1
 A GPFS file system that resides on an IBM Elastic Storage System (ESS) cluster with a usable capacity of 7.9PB and an aggregate data transfer rate of 400GB/s.  This is a legacy file system.  No new allocations are granted on theta-fs1.
 
-Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](data-transfer/using-globus.md)
+Also see [ALCF Data Policies](https://www.alcf.anl.gov/support-center/facility-policies/data-policy) and [Data Transfer](../data-transfer/using-globus.md)
 
 ## Tape Storage
 ALCF operates three 10,000 slot Spectralogic tape libraries.  We are currently running a combination of LTO6 and LTO8 tape technology.  The LTO tape drives have built-in hardware compression which typically achieve compression ratios between 1.25:1 and 2:1 depending on the data yielding an effective capacity of approximately 65PB.
