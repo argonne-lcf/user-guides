@@ -91,24 +91,57 @@ nav:
           - HPSS: theta/data-management/filesystem-and-storage/hpss.md
           - Theta Disk Quota: theta/data-management/filesystem-and-storage/theta-disk-quota.md
     - Applications and Libraries:
-        - Applications:
-          - ELPA: theta/applications-and-libraries/applications/elpa.md
-          - Grommacs: theta/applications-and-libraries/applications/grommacs.md
-          - LAMMPS: theta/applications-and-libraries/applications/lammps.md
-          - NAMD: theta/applications-and-libraries/applications/namd.md
-          - NwChem: theta/applications-and-libraries/applications/nwchem.md
-          - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
-          - QBox: theta/applications-and-libraries/applications/qbox.md
-          - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
-          - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
-          - VASP: theta/applications-and-libraries/applications/vasp.md
-          - WEST: theta/applications-and-libraries/applications/west.md
+      - Applications:
+        - ELPA: theta/applications-and-libraries/applications/elpa.md
+        - Gromacs: theta/applications-and-libraries/applications/gromacs.md
+        - LAMMPS: theta/applications-and-libraries/applications/lammps.md
+        - NAMD: theta/applications-and-libraries/applications/namd.md
+        - NwChem: theta/applications-and-libraries/applications/nwchem.md
+        - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
+        - QBox: theta/applications-and-libraries/applications/qbox.md
+        - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
+        - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
+        - VASP: theta/applications-and-libraries/applications/vasp.md
+        - WEST: theta/applications-and-libraries/applications/west.md
+      - Libraries:
+        - Boost: theta/applications-and-libraries/libraries/boost.md
+        - Spack: theta/applications-and-libraries/libraries/spack.md
+      - Visualization:
+        - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
     - Data Science Workflows:
-          - Balsam: theta/data-science-workflows/balsam.md
+      - Maching Learning Tools: theta/data-science-workflows/machine-learning-tools.md
+      - Data Science Modules: theta/data-science-workflows/data-science-modules.md
+      - Apache Spark: theta/data-science-workflows/apache-spark.md
+      - Balsam: theta/data-science-workflows/balsam.md
+      - Conda: theta/data-science-workflows/conda.md
+      - DeepHyper: theta/data-science-workflows/deephyper.md
+      - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
+      - HDF5: theta/data-science-workflows/hdf5.md
+      - JupyterHub: theta/data-science-workflows/jupyter-hub.md
+      - Keras: theta/data-science-workflows/keras.md
+      - MongoDB: theta/data-science-workflows/mongo-db.md
+      - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
+      - PyTorch: theta/data-science-workflows/pytorch.md
+      - Singularity: theta/data-science-workflows/singularity.md
+      - TensorFlow: theta/data-science-workflows/tensorflow.md
     - Programming Models: 
-          - OpenMP: theta/programming-models/openmp-theta.md
-    - Debugging Tools: theta/debugging-tools/debugging-overview.md
-    - Performance Tools: theta/performance-tools/performance-overview.md 
+      - Kokkos: theta/programming-models/kokkos.md
+      - MPI: theta/programming-models/mpi-on-theta.md
+      - OpenMP: theta/programming-models/openmp-theta.md
+      - Raja: theta/programming-models/raja.md
+    - Debugging Tools: 
+      - Arm DDT: theta/programming-models/arm-ddt.md
+      - ATP and STAT: theta/programming-models/atp-and-stat.md
+      - GDB: theta/programming-models/gdb.md
+    - Performance Tools: 
+      - Arm MAP: theta/programming-models/arm-map.md
+      - CrayPat: theta/programming-models/craypat.md
+      - Darshan: theta/programming-models/darshan.md
+      - HPCToolkit: theta/programming-models/hpctoolkit.md
+      - Intel Advisor: theta/programming-models/intel-advisor.md
+      - Intel Vtune: theta/programming-models/intel-vtune.md
+      - PAPI: theta/programming-models/papi.md
+      - TAU: theta/programming-models/tau.md
   - ThetaGPU:
     - Hardware Overview:
       - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
