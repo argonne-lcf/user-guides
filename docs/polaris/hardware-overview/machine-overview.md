@@ -51,4 +51,4 @@ There are 50 gateway nodes.  These nodes are not user accessible, but are used t
 
 
 ## Storage
-Polaris has access to the ALCF global file systems.  Details on storage can be found [here](/data-management/filesystem-and-storage/data-storage.md).
+Polaris has access to the ALCF global file systems.  Details on storage can be found [here](../../data-management/filesystem-and-storage/data-storage.md).
