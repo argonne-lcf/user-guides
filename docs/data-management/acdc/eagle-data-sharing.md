@@ -7,8 +7,6 @@ Collaborators throughout the scientific community have the ability to write data
 
 Globus is a service that  provides research data management, including managed transfer and sharing. It makes it easy to move, sync, and share large amounts of data. Globus will manage file transfers, monitor performance, retry failures, recover from faults automatically when possible, and report the status of your data transfer. Globus supports GridFTP for bulk and high-performance file transfer, and direct HTTPS for download. The service allows the user to submit a data transfer request, and performs the transfer asynchronously in the background. For more information, see Globus data transfer and Globus data sharing.
 
-**Note:** If you are migrating your data from Petrel, please see the migration instructions on the webpage [Transferring Data to Eagle](transferring-data-eagle.md).
-
 <figure markdown>
   ![Logging into Globus](files/login-screen.png){ width="700" }
   <figcaption>Logging into Globus</figcaption>
