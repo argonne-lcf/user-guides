@@ -2,7 +2,7 @@
 
 The ALCF is working to support scalable machine learning on Theta. Our focus has been supporting Tensorflow on Theta as it has broad support from Cray & Intel giving large performance boosts on the Intel KNL architecture versus other frameworks. 
 
-We support two installations of Tensorflow, one via the [Conda environment]([https://www.alcf.anl.gov/user-guides/conda.md](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/data-science-workflows/conda.md)) and one via a custom Cray plugin environment. We also provide easy to use datascience modules for mpi4py, TensorFlow, Keras, PyTorch, and Horovod.
+We support two installations of Tensorflow, one via the [Conda environment](conda.md) and one via a custom Cray plugin environment. We also provide easy to use datascience modules for mpi4py, TensorFlow, Keras, PyTorch, and Horovod.
 
 ## Generic Environment Settings
 
