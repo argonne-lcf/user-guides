@@ -130,18 +130,18 @@ nav:
       - OpenMP: theta/programming-models/openmp-theta.md
       - Raja: theta/programming-models/raja.md
     - Debugging Tools: 
-      - Arm DDT: theta/programming-models/arm-ddt.md
-      - ATP and STAT: theta/programming-models/atp-and-stat.md
-      - GDB: theta/programming-models/gdb.md
+      - Arm DDT: theta/debugging-tools/arm-ddt.md
+      - ATP and STAT: theta/debugging-tools/atp-and-stat.md
+      - GDB: theta/debugging-tools/gdb.md
     - Performance Tools: 
-      - Arm MAP: theta/programming-models/arm-map.md
-      - CrayPat: theta/programming-models/craypat.md
-      - Darshan: theta/programming-models/darshan.md
-      - HPCToolkit: theta/programming-models/hpctoolkit.md
-      - Intel Advisor: theta/programming-models/intel-advisor.md
-      - Intel Vtune: theta/programming-models/intel-vtune.md
-      - PAPI: theta/programming-models/papi.md
-      - TAU: theta/programming-models/tau.md
+      - Arm MAP: theta/performance-tools/arm-map.md
+      - CrayPat: theta/performance-tools/craypat.md
+      - Darshan: theta/performance-tools/darshan.md
+      - HPCToolkit: theta/performance-tools/hpctoolkit.md
+      - Intel Advisor: theta/performance-tools/intel-advisor.md
+      - Intel Vtune: theta/performance-tools/intel-vtune.md
+      - PAPI: theta/performance-tools/papi.md
+      - TAU: theta/performance-tools/tau.md
   - ThetaGPU:
     - Hardware Overview:
       - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
@@ -160,7 +160,7 @@ nav:
       - Python/C++ Code Interoperability: theta-gpu/data-science/pythonc-code-interoperability.md
       - Singularity on ThetaGPU: theta-gpu/data-science/singularity.md
       - Deep Learning Frameworks:
-        - Distributed Training on ThetaGPU Using Data Parallelism: heta-gpu/data-science/dl-frameworks/distributed-training-using-data-parallelism.md
+        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science/dl-frameworks/distributed-training-using-data-parallelism.md
         - Running PyTorch with Conda: theta-gpu/data-science/dl-frameworks/running-pytorch-conda.md
         - Running Tensorflow with Conda: theta-gpu/data-science/dl-frameworks/running-tensorflow-conda.md
         - Tensorboard Instructions: theta-gpu/data-science/dl-frameworks/tensorboard-instructions.md
@@ -169,7 +169,7 @@ nav:
       - OpenMP: theta-gpu/programming-models/openmp.md
       - Raja: theta-gpu/programming-models/raja.md
     - Performance Tools: 
-      - Darshan: theta-gpu/programming-models/darshan.md
+      - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
   - Cooley:
     - Hardware Overview:
