@@ -93,7 +93,7 @@ You can use the Globus web app to transfer data or the CLI. See [Using CLI](#Usi
 #### Migrating permissions from Petrel to Eagle:
 For PIs who had previously stored data on Petrel, and are migrating to Eagle, the following tool automates the step of copying the permissions set on Petrel to Eagle. The tool, migrate_permissions.py at https://github.com/globus/globus-tool-examples takes the source endpoint (your shared endpoint on Petrel in this case), and destination endpoint (the guest collection on Eagle that has the data), and copies over all the permissions. The tool assumes the data was coped over as is from source to destination.
 
-If you have any questions on the tool, or need further support, please contact [support@globus.org](support@globus.org).
+If you have any questions on the tool, or need further support, please contact [support@globus.org](mailto:support@globus.org).
 
 ### 4. Share your data on Eagle using Globus Guest Collections
 Your data on the Eagle file system can easily be shared with collaborators who are at ALCF or elsewhere. You have full control over which files your collaborator can access, and whether they have read-only or read-write permissions.
@@ -109,7 +109,7 @@ To copy data and permissions from a source collection, PIs can use a Globus CLI 
 
 The tool, migrate_permissions.py in the github repo takes the source endpoint (the shared endpoint on Petrel for example), and destination endpoint (the guest collection on Eagle that has the data), and copies over all the permissions. The tool assumes the data was coped over as is from source to destination. Note that you need to have a guest collection set up for your project on Eagle to use the CLI command and tool. See this page for instructions on [how to set up guest collections](eagle-data-sharing.md#Creating a Guest Collection).
 
-If you have any questions on the tool, or need further support, please contact [support@globus.org](support@globus.org).
+If you have any questions on the tool, or need further support, please contact [support@globus.org](mailto:support@globus.org).
 
 **Existing data portals:**
 To reconfigure and update your existing data portals to point to your guest collections on Eagle, please work directly with developer/maintainer of the portal.
