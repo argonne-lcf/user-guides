@@ -129,14 +129,14 @@ nav:
       - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
     - Compiling And Linking:
       - Compiling and Linking Overview: theta-gpu/compiling-and-linking/compiling-and-linking-overview.md
-      - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration-theta.md
+      - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration.md
     - Queueing and Running Jobs on ThetaGPU:
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
     - Data Science:
       - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
       - Building Python Packages: theta-gpu/data-science/building-python-packages.md
-      - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
+      - GPU Monitoring: theta-gpu/data-science/gpu-monitoring.md
       - GPU Node Queue and Policy: theta-gpu/data-science/gpu-node-queue-and-policy.md
       - Jupyter Hub: theta-gpu/data-science/jupyter-hub.md
       - Python/C++ Code Interoperability: theta-gpu/data-science/pythonc-code-interoperability.md
@@ -170,7 +170,7 @@ nav:
       - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
       - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
     - Performance Tools: 
-      - Darshan: cooley/programming-models/darshan.md
+      - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Edith (Edge Dev Testbed):
       - Getting Started: polaris/queueing-and-running-jobs/edtb.md
