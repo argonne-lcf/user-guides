@@ -21,5 +21,5 @@ Support requests and feedback for ALCF-specific issues should be directed to [su
 - Spack development website: [https://github.com/spack/spack](https://github.com/spack/spack)
 - Spack documentation: [https://spack.readthedocs.io/en/latest/index.html](ttps://spack.readthedocs.io/en/latest/index.html)
 - Spack tutorial: [https://spack.readthedocs.io/en/latest/tutorial.html](https://spack.readthedocs.io/en/latest/tutorial.html])
-- Spack slack: [spackpm.slack.com](spackpm.slack.com)
+- Spack slack: [spackpm.slack.com](https://slack.spack.io))
 
