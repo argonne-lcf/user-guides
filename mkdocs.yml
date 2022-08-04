@@ -8,13 +8,11 @@ nav:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
     - File System & Storage:
+      - File Systems: data-management/filesystem-and-storage/file-systems.md
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
-      - Theta File Systems: data-management/filesystem-and-storage/theta-file-systems.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
-      - Theta Disk Quota: data-management/filesystem-and-storage/theta-disk-quota.md
-      - Polaris Disk Quota: data-management/filesystem-and-storage/polaris-disk-quota.md
-      - Cooley Disk Quota: data-management/filesystem-and-storage/cooley-disk-quota.md
-  - Polaris:
+      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+  - Polaris: 
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
@@ -36,14 +34,13 @@ nav:
       - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
       - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
       - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
-      - PBS Admin Quick Start Guide: polaris/queueing-and-running-jobs/pbs-admin-quick-start-guide.md
     - Applications and Libraries:
         - Applications:
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
-    - Data Science Workflows:
+    - Data Science:
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
@@ -90,7 +87,7 @@ nav:
         - Spack: theta/applications-and-libraries/libraries/spack.md
       - Visualization:
         - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
-    - Data Science Workflows:
+    - Data Science:
       - Maching Learning Tools: theta/data-science-workflows/machine-learning-tools.md
       - Data Science Modules: theta/data-science-workflows/data-science-modules.md
       - Apache Spark: theta/data-science-workflows/apache-spark.md
@@ -172,8 +169,6 @@ nav:
     - Performance Tools: 
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
-  - Edith (Edge Dev Testbed):
-      - Getting Started: polaris/queueing-and-running-jobs/edtb.md
 
 theme:
   name: 'material'
