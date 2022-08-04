@@ -131,7 +131,7 @@ nav:
       - Compiling and Linking Overview: theta-gpu/compiling-and-linking/compiling-and-linking-overview.md
       - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration.md
     - Queueing and Running Jobs on ThetaGPU:
-      - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
     - Data Science:
       - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
