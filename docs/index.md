@@ -24,4 +24,4 @@ If you have an account and an award for Polaris, we suggest visiting on [Getting
 
 If you'd like to user our AI accelerators, visit our [Getting Started on AI Testbed webpage](https://argonne-lcf.github.io/ai-testbed-userdocs/#getting-started).
 
-Please send feedback to [support@alcf.anl.gov](support@alcf.anl.gov).
+Please send feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
