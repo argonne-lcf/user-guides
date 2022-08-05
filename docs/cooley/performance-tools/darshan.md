@@ -11,8 +11,9 @@ Then add the following to the mpirun command line in your job script:
  ```
  
 Example:
+
 ```
-# within Cooley job script
+within Cooley job script
 mpirun --env LD_PRELOAD=$DARSHAN_PRELOAD -np <number of processes> -f $COBALT_NODEFILE ./app.exe <arguments>
 ```
 
