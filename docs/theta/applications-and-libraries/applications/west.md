@@ -10,9 +10,10 @@ WEST is an open-source code that can be downloaded at [http://west-code.org](htt
 
 ## Building on Theta
 WEST currently requires a working PW executable from Quantum Espresso. Current information on installation details for both WEST and PW can be found at [http://west-code.org/documentation.php](http://west-code.org/documentation.php). After Quantum Espresso and WEST codes have been downloaded and unpacked, the PW and WEST executables can be compiled using the following script in the qe-<version> directory.
+
   
-  ```
-  cat build_theta.sh
+```
+cat build_theta.sh
 #!/bin/bash
 
 export BLAS_LIBS="-L$MKLROOT/intel64/lib -Wl,--start-group -lmkl_intel_lp64 -lmkl_core -lmkl_intel_thread -Wl,--end-group"
@@ -33,6 +34,7 @@ make
   
 As newer versions of Quantum Espresso and WEST are released, check the corresponding websites for current information.
 
+  
 ```
 > cat run_west.sh
 #!/bin/bash
