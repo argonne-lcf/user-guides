@@ -1,17 +1,19 @@
 # ALCF File Systems
-Our systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively.
+Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively.
 
-Our systems also share a Lustre home file system with Cooley, called swift-home. The home file system is mounted as /home, and should generally be used for small files and any binaries to be run on Theta. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
+For information on the AI Testbed storage systems, refer to the AI Testbed storage page: https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/
+
+Our HPC systems also share a Lustre home file system with Cooley, called swift-home. The home file system is mounted as /home, and should generally be used for small files and any binaries to be run on Theta. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
 
 The swift-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
-| Name      | Accessible |  From     |  Type  |  Path      | Production |  Backed-up      | Usage |
-| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
-| swift-home	 | Theta | Cooley | Lustre	| /home or /lus/swift/home	| Yes  | 	Yes	|  general use |
+| Name      | Accessible From  |  Type  |  Path      | Production |  Backed-up      | Usage |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | 
+| swift-home | Theta Cooley | Lustre	| /home or /lus/swift/home	| Yes  | 	Yes	|  general use |
 | lus-projects	| Theta	 | Lustre	| /projects or /lus-projects or /lus/theta-fs0/projects	| Yes	| No	| intensive job output, large files |
 | Grand | Theta	|  Lustre	 | /grand or /lus/grand/projects	| Yes	| No	| intensive job output, large files |
 | Eagle	| Theta	| Lustre	| /eagle or /lus/eagle/projects	| Yes	| No	| community sharing via Globus; intensive job output, large files | 
-| Node SSD	| Theta and thetagpu - compute node only	| ext3	 | /local/scratch (theta)/raid/scratch (thetagpu) | Yes - By Request Only	| No	|local node scratch during run|
+| Node SSD	| Theta and ThetaGPU - compute node only	| ext3	 | /local/scratch (theta)/raid/scratch (thetagpu) | Yes - By Request Only	| No	|local node scratch during run|
 
 ## Available Directories
 ### Home Directories
