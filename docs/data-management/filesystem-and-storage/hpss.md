@@ -1,4 +1,4 @@
-# Using HPSS with Theta
+# Using HPSS
 ## Overview
 
 HPSS is a data archive and retrieval system that manages large amounts of data on disk and robotic tape libraries. It provides hierarchical storage management services that allow it to migrate data between those storage platforms.
