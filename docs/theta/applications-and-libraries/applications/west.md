@@ -11,7 +11,6 @@ WEST is an open-source code that can be downloaded at [http://west-code.org](htt
 ## Building on Theta
 WEST currently requires a working PW executable from Quantum Espresso. Current information on installation details for both WEST and PW can be found at [http://west-code.org/documentation.php](http://west-code.org/documentation.php). After Quantum Espresso and WEST codes have been downloaded and unpacked, the PW and WEST executables can be compiled using the following script in the qe-<version> directory.
 
-  
 ```
 cat build_theta.sh
 #!/bin/bash
@@ -33,7 +32,6 @@ make
 ```
   
 As newer versions of Quantum Espresso and WEST are released, check the corresponding websites for current information.
-
   
 ```
 > cat run_west.sh
@@ -43,6 +41,6 @@ As newer versions of Quantum Espresso and WEST are released, check the correspon
 aprun -n 128 -N 64 -d 1 --cc depth -e OMP_NUM_THREADS=1 -j 1 ./wstat wstat.i
 > qsub run_west.sh
 ```
-  
+
 ## Running WEST Jobs on Theta
 The following is an example executable script “run_west.sh” to run the wstat WEST executable on two nodes of Theta with 64 MPI ranks per node. The job can be submitted with command “qsub run_west.sh” where <project_name> is replaced with an active project allocation.  
