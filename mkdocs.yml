@@ -1,9 +1,12 @@
-site_name: ALCF User Guide
+site_name: ALCF User Guides
 nav:
-  - Home: README.md
+  - Home: index.md
+  - Account and Project Management: 
+    - Account and Project Management Overview: https://www.alcf.anl.gov/support-center/account-and-project-management
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
     - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+    - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
     - Data Transfer:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
@@ -122,6 +125,7 @@ nav:
       - PAPI: theta/performance-tools/papi.md
       - TAU: theta/performance-tools/tau.md
   - ThetaGPU:
+    - Getting Started: theta-gpu/getting-started.md
     - Hardware Overview:
       - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
     - Compiling And Linking:
@@ -150,6 +154,7 @@ nav:
     - Performance Tools: 
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
+  - AI Testbed: https://argonne-lcf.github.io/ai-testbed-userdocs/
   - Cooley:
     - Hardware Overview:
       - Cooley Machine Overview: cooley/cooley-overview.md
@@ -166,9 +171,16 @@ nav:
       - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
       - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
       - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
+    - Programming Models: 
+      - Kokkos: cooley/programming-models/kokkos.md
+      - OpenCL: cooley/programming-models/opencl.md
+      - OpenMP: cooley/programming-models/openmp.md
+      - Raja: cooley/programming-models/raja.md
     - Performance Tools: 
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
+  - Aurora: https://www.alcf.anl.gov/support-center/aurora
+  - Facility Policies: https://www.alcf.anl.gov/support-center/facility-policies
 
 theme:
   name: 'material'
