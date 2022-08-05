@@ -73,7 +73,7 @@ ALCF has 260 nodes in the production queue for a research project. The maximum j
 
 It is important to remember that jobs are charged by the number of nodes allocated, not the number of nodes used. For instance, a job requesting 14 nodes, below the minimum of 128, will be allocated 128 nodes and charged for 128 even though only 14 nodes are used.
 
-We strongly encourage you to bundle smaller jobs into ensembles, either using {== Cobalt ensemble scripting - add the link after page is added ==} or using a workflow system such as [Balsam](https://balsam.alcf.anl.gov/).
+We strongly encourage you to bundle smaller jobs into ensembles, either using Cobalt ensemble scripting or using a workflow system such as [Balsam](https://balsam.alcf.anl.gov/).
 
 ### Theta (KNL) Mode Selection and Charging
 Time spent booting or rebooting nodes to obtain requested modes will not be charged to projects and neither will it count against requested walltime, although it will be included in the total runtime. Please allow up to thirty (30) minutes for rebooting of nodes when submitting jobs.
@@ -105,7 +105,7 @@ In the script method, Cobalt will execute a user-supplied script when running a 
           - location: a comma-separated list of node names (not IDs). Ranges may NOT be hyphenated on the GPU nodes. 
           - mig-mode: Should the GPUs be put in Multi Instance GPU (MIG) mode (default: False) 
         
-See: https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html
+See: [https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html)
 
 
 --env VAR1=1:VAR2=2:… - specify required environment variables
