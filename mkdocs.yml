@@ -49,7 +49,6 @@ nav:
         - SYCL: polaris/programming-models/sycl-polaris.md
         - Kokkos: polaris/programming-models/kokkos-polaris.md
     - Debugging Tools:
-        - Debugging Tools Overview: polaris/debugging-tools/debugging-overview.md
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
         - Performance Tools Overview: polaris/performance-tools/performance-overview.md
