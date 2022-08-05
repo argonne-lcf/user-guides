@@ -21,15 +21,4 @@ Users are encouraged to read through the [Job Scheduling and Execution](./queuei
 
 ## Getting Assistance
 
-Note: Our Polaris documentation is still under development.
-
-### GPU Hackathon Attendees
-
-Please direct questions/issues to your mentor and/or post in the #cluster_support channel in the Hackathon Slack workspace.
-
-
-### ESP/ECP Users and ALCF Staff
-
-Please direct all questions, requests, and feedback to support@alcf.anl.gov.
-
-Please don't submit PRs against this repository.
+Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
