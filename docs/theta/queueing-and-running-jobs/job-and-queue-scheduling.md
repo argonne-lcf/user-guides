@@ -31,10 +31,10 @@ INCITE and ALCC projects needing additional overburn hours should e-mail [suppor
 
 To be clear, this policy does not constitute a guarantee of extra time, and we reserve the right to prioritize the scheduling of jobs submitted by projects that have not yet used 100% of their allocations, so the earlier that an INCITE or ALCC project exhausts its allocation, the more likely it is to be able to take full advantage of this policy.
 
-### Queues
+## Queues
 [Information on ThetaGPU Queues](/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md)
 
-#### Theta (KNL) Queues
+### Theta (KNL) Queues
 **Debugging Queues**
 
 - There are two 16-node debugging queues:
@@ -73,7 +73,7 @@ ALCF has 260 nodes in the production queue for a research project. The maximum j
 
 It is important to remember that jobs are charged by the number of nodes allocated, not the number of nodes used. For instance, a job requesting 14 nodes, below the minimum of 128, will be allocated 128 nodes and charged for 128 even though only 14 nodes are used.
 
-We strongly encourage you to bundle smaller jobs into ensembles, either using Cobalt ensemble scripting or using a workflow system such as [Balsam](https://balsam.alcf.anl.gov/).
+We strongly encourage you to bundle smaller jobs into ensembles, either using [Cobalt ensemble scripting](#ensemble-jobs) or using a workflow system such as [Balsam](https://balsam.alcf.anl.gov/).
 
 ### Theta (KNL) Mode Selection and Charging
 Time spent booting or rebooting nodes to obtain requested modes will not be charged to projects and neither will it count against requested walltime, although it will be included in the total runtime. Please allow up to thirty (30) minutes for rebooting of nodes when submitting jobs.
@@ -92,6 +92,7 @@ In the script method, Cobalt will execute a user-supplied script when running a 
 -t time - running time (-t 5 for 5 minutes, -t 01:10:20 for 1 hr 10 min 20 sec) 
 -A Project - project (-A YourProject)
 ```
+
 ### Common Options
 ```
 --attrs - you may specify additional attributes for your job. 
@@ -131,11 +132,6 @@ To run an “interactive mode” job on ALCF Cray resources, add the “-I” fl
 
 #### Ensemble Jobs
 Users may run an “ensemble job” and combine runs into a single script. This can provide major enhancements to throughput, especially for large ensemble jobs. Users may run multiple jobs in sequence or may use multiple backgrounded apruns to subset their resources among multiple backend executables. There is a system limitation of 1000 simultaneous apruns per Cobalt script job.
-
-### Queue Names and Scheduling Policy
-{== add links Queue names and operations are described on the Job and Queue Scheduling for Theta page.
-
-Queue and scheduling policies can be found on the Queue and Scheduling Policy page. ==}
 
 ### Project Names
 You can find active project names that your account is associated with by running the command:
@@ -300,7 +296,7 @@ While setting this list of users allows any of the listed users to run Cobalt co
 For more information on Cobalt commands, their options, consult the manpages on the system. The same information may be found online in the [Cobalt Command Reference](http://trac.mcs.anl.gov/projects/cobalt/wiki/CommandReference).
 
 ### Using the Job Resource Manager: Commands, Options, and Examples
-This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. For an introduction to using the job resource manager and running jobs on Theta, see {== add link Running Jobs on Theta ==}. 
+This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. 
 
 #### Submit a Job Request
 Use qsub to submit a job. (Unlike jobs on the ALCF BlueGene systems, all jobs on Theta are either script or interactive.)
