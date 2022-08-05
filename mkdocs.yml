@@ -51,7 +51,6 @@ nav:
     - Debugging Tools:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
-        - Performance Tools Overview: polaris/performance-tools/performance-overview.md
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
   - Theta:
     - Hardware Overview:
