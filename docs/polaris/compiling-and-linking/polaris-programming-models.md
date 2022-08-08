@@ -12,7 +12,7 @@ The Cray compiler wrappers `cc`, `CC`, and `ftn` are recommended for MPI applica
 | OpenACC | -- | -acc=multicore | -- | 
 
 Higher-level programming models such as
-[Kokkos](/polaris/programming-models/kokkos-polaris) and Raja may also be used
+[Kokkos](../programming-models/kokkos-polaris.md) and Raja may also be used
 for CPU programming.
 
 [//]: # (ToDo: Fill-in and test Cray compiler flags)
@@ -35,7 +35,7 @@ A summary of available GPU programming models and relevant compiler flags is sho
 Note, the `llvm` and `llvm-sycl` modules are provided by ALCF to complement the compilers provided by the Cray PE on Polaris.
 
 Higher-level programming models such as
-[Kokkos](/polaris/programming-models/kokkos-polaris) and Raja may also be used
+[Kokkos](../programming-models/kokkos-polaris.md) and Raja may also be used
 for GPU programming.
 
 [//]: # (ToDo: Add links to programming model pages)
