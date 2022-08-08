@@ -40,7 +40,7 @@ The data is available for download here (~27MB compressed, ~39MB uncompressed):
 **Note:** The "..." in the name, and the arrow in the file browser, indicates that there are multiple time steps for each of these files
 
 <figure markdown>
-  ![Default settings](files/files/img-02.jpg){ width="700" }
+  ![Default settings](files/img-02.jpg){ width="700" }
   <figcaption>With all of the default settings, you should see something like this</figcaption>
 </figure>
 
@@ -141,7 +141,7 @@ Even with the continuum data represented as wireframe, there is still considerab
 - Set Opacity to 0.2
 
 <figure markdown>
-  ![Data Representation: Opacity](files/img-10.jpg){ width="700" }
+  ![Data Representation: Opacity](files/img-10.png){ width="700" }
   <figcaption>Data Representation: Opacity</figcaption>
 </figure>
 
@@ -153,7 +153,7 @@ Since our data has multiple time steps, we can easily animate through them to se
 - Loop: With this button toggled on, animation will repeat until stopped
 
 <figure markdown>
-  ![Animating Simulation Data](files/img-11.jpg){ width="700" }
+  ![Animating Simulation Data](files/img-11.png){ width="700" }
   <figcaption>Animating Simulation Data</figcaption>
 </figure>
 
@@ -168,7 +168,7 @@ Animations can be saved to disk as a movie file, to be played back later.
 - Movie can be played back with standard media players (Windows Media Player, QuickTime, VLC, etc.)
 
 <figure markdown>
-  ![Animations](files/img-12.jpg){ width="700" }
+  ![Animations](files/img-12.png){ width="700" }
   <figcaption>Animations</figcaption>
 </figure>
 
@@ -257,7 +257,7 @@ Add glyphs to illustrate the position of the vertices of one of the RBC data set
 - **Note:** that this time, we want to show all of the vertices of the RBC, so we should uncheckthe Mask Points option
 
 <figure markdown>
-  ![Further Exploration: Highlight the Vertices](files/img-17.jpg){ width="700" }
+  ![Further Exploration: Highlight the Vertices](files/img-17.png){ width="700" }
   <figcaption>Further Exploration: Highlight the Vertices</figcaption>
 </figure>
 
@@ -271,7 +271,7 @@ Change the:
 - Etc.
 
 <figure markdown>
-  ![Further Exploration: Color by Variable](files/img-18.jpg){ width="700" }
+  ![Further Exploration: Color by Variable](files/img-18.png){ width="700" }
   <figcaption>Further Exploration: Color by Variable</figcaption>
 </figure>
 

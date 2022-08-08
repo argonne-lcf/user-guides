@@ -1,7 +1,21 @@
-site_name: ALCF User Guide
+site_name: ALCF User Guides
 nav:
-  - Home: README.md
-  - Polaris:
+  - Home: index.md
+  - Account and Project Management: 
+    - Account and Project Management Overview: https://www.alcf.anl.gov/support-center/account-and-project-management
+  - Data Management:
+    - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
+    - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+    - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
+    - Data Transfer:
+      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
+      - Using Globus: data-management/data-transfer/using-globus.md
+    - File System & Storage:
+      - File Systems: data-management/filesystem-and-storage/file-systems.md
+      - Data Storage: data-management/filesystem-and-storage/data-storage.md
+      - HPSS: data-management/filesystem-and-storage/hpss.md
+      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+  - Polaris: 
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
@@ -15,30 +29,19 @@ nav:
       - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
-      - Continuous Integration: polaris/compiling-and-linking/continuous-integration-polaris.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
     - Queueing and Running Jobs on Polaris:
       - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
       - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
-      - The Grounkulator (Job Status Display): polaris/queueing-and-running-jobs/gronkulator.md
-      - PBS Admin Quick Start Guide: polaris/queueing-and-running-jobs/pbs-admin-quick-start-guide.md
-    - Data Management:
-        - ALCF Community Data Co-Op: polaris/data-management/acdc/acdc-overview.md
-        - Sharing on Eagle: polaris/data-management/acdc/eagle-data-sharing.md
-        - Data Transfer:
-          - SFTP and SCP: polaris/data-management/data-transfer/sftp-scp.md
-          - Using Globus: polaris/data-management/data-transfer/using-globus.md
-        - File System & Storage:
-          - Polaris Disk Quota: polaris/data-management/filesystem-and-storage/polaris-disk-quota.md
     - Applications and Libraries:
         - Applications:
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
-    - Data Science Workflows:
+    - Data Science:
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
     - Programming Models: 
@@ -46,10 +49,8 @@ nav:
         - SYCL: polaris/programming-models/sycl-polaris.md
         - Kokkos: polaris/programming-models/kokkos-polaris.md
     - Debugging Tools:
-        - Debugging Tools Overview: polaris/debugging-tools/debugging-overview.md
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
-        - Performance Tools Overview: polaris/performance-tools/performance-overview.md
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
   - Theta:
     - Hardware Overview:
@@ -67,63 +68,115 @@ nav:
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
       - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
-    - Data Management:
-        - ALCF Community Data Co-Op: theta/data-management/acdc/acdc-overview.md
-        - Sharing on Eagle Using Globus: theta/data-management/acdc/eagle-data-sharing.md
-        - Data Transfer:
-          - SFTP and SCP: theta/data-management/data-transfer/sftp-scp.md
-          - Using Globus: theta/data-management/data-transfer/using-globus.md
-        - File System & Storage:
-          - Theta File Systems: theta/data-management/filesystem-and-storage/theta-file-systems.md
-          - HPSS: theta/data-management/filesystem-and-storage/hpss.md
-          - Theta Disk Quota: theta/data-management/filesystem-and-storage/theta-disk-quota.md
     - Applications and Libraries:
-        - Applications:
-          - ELPA: theta/applications-and-libraries/applications/elpa.md
-          - Grommacs: theta/applications-and-libraries/applications/grommacs.md
-          - LAMMPS: theta/applications-and-libraries/applications/lammps.md
-          - NAMD: theta/applications-and-libraries/applications/namd.md
-          - NwChem: theta/applications-and-libraries/applications/nwchem.md
-          - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
-          - QBox: theta/applications-and-libraries/applications/qbox.md
-          - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
-          - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
-          - VASP: theta/applications-and-libraries/applications/vasp.md
-          - WEST: theta/applications-and-libraries/applications/west.md
-    - Data Science Workflows:
-          - Balsam: theta/data-science-workflows/balsam.md
+      - Applications:
+        - ELPA: theta/applications-and-libraries/applications/elpa.md
+        - Gromacs: theta/applications-and-libraries/applications/gromacs.md
+        - LAMMPS: theta/applications-and-libraries/applications/lammps.md
+        - NAMD: theta/applications-and-libraries/applications/namd.md
+        - NwChem: theta/applications-and-libraries/applications/nwchem.md
+        - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
+        - QBox: theta/applications-and-libraries/applications/qbox.md
+        - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
+        - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
+        - VASP: theta/applications-and-libraries/applications/vasp.md
+        - WEST: theta/applications-and-libraries/applications/west.md
+      - Libraries:
+        - Boost: theta/applications-and-libraries/libraries/boost.md
+        - Spack: theta/applications-and-libraries/libraries/spack.md
+      - Visualization:
+        - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
+    - Data Science:
+      - Maching Learning Tools: theta/data-science-workflows/machine-learning-tools.md
+      - Data Science Modules: theta/data-science-workflows/data-science-modules.md
+      - Apache Spark: theta/data-science-workflows/apache-spark.md
+      - Balsam: theta/data-science-workflows/balsam.md
+      - Conda: theta/data-science-workflows/conda.md
+      - DeepHyper: theta/data-science-workflows/deephyper.md
+      - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
+      - HDF5: theta/data-science-workflows/hdf5.md
+      - JupyterHub: theta/data-science-workflows/jupyter-hub.md
+      - Keras: theta/data-science-workflows/keras.md
+      - MongoDB: theta/data-science-workflows/mongo-db.md
+      - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
+      - PyTorch: theta/data-science-workflows/pytorch.md
+      - Singularity: theta/data-science-workflows/singularity.md
+      - TensorFlow: theta/data-science-workflows/tensorflow.md
     - Programming Models: 
-          - OpenMP: theta/programming-models/openmp-theta.md
-    - Debugging Tools: theta/debugging-tools/debugging-overview.md
-    - Performance Tools: theta/performance-tools/performance-overview.md 
+      - Kokkos: theta/programming-models/kokkos.md
+      - MPI: theta/programming-models/mpi-on-theta.md
+      - OpenMP: theta/programming-models/openmp-theta.md
+      - Raja: theta/programming-models/raja.md
+    - Debugging Tools: 
+      - Arm DDT: theta/debugging-tools/arm-ddt.md
+      - ATP and STAT: theta/debugging-tools/atp-and-stat.md
+      - GDB: theta/debugging-tools/gdb.md
+    - Performance Tools: 
+      - Arm MAP: theta/performance-tools/arm-map.md
+      - CrayPat: theta/performance-tools/craypat.md
+      - Darshan: theta/performance-tools/darshan.md
+      - HPCToolkit: theta/performance-tools/hpctoolkit.md
+      - Intel Advisor: theta/performance-tools/intel-advisor.md
+      - Intel Vtune: theta/performance-tools/intel-vtune.md
+      - PAPI: theta/performance-tools/papi.md
+      - TAU: theta/performance-tools/tau.md
   - ThetaGPU:
-      - System Overview and Node Information: theta-gpu/system-overview-and-node-information.md
-      - GPU Node Queues and Policy: theta-gpu/gpu-node-queue-and-policy.md
-      - GPU Monitoring: theta-gpu/gpu-monitoring.md
-      - Python Virtual Environments: theta-gpu/python-venvs.md
-      - MPI:
-          - MPI: theta-gpu/mpi.md
-          - DaskMPI: theta-gpu/daskmpi/README.md
-      - Singularity Containers: theta-gpu/singularity-containers.md
-      - Building Python Packages in a Container: theta-gpu/building-python-packages.md
-      - Jupyter: theta-gpu/jupyter.md
-      - DL Frameworks:
-        - TensorFlow:
-          - Running with Singularity: theta-gpu/ml-frameworks/tensorflow/nvidia-container-notes.md
-          - Running with Conda: theta-gpu/ml-frameworks/tensorflow/running-with-conda.md
-          - Tensorboard: theta-gpu/ml-frameworks/tensorflow/tensorboard-instructions.md
-        - PyTorch:
-          - Running with Conda: theta-gpu/ml-frameworks/pytorch/running-with-conda.md
-        - Data Parallel Training: theta-gpu/data-parallel-training.md
-      - Building and Compiling:
-        - Python/C++ code interoperability: theta-gpu/building-and-compiling/README.md
-        - Compiling and Linking: theta-gpu/building-and-compiling/compiling_and_linking.md
-      - Balsam: theta-gpu/balsam.md
-      - DeepHyper: theta-gpu/deephyper.md
+    - Getting Started: theta-gpu/getting-started.md
+    - Hardware Overview:
+      - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
+    - Compiling And Linking:
+      - Compiling and Linking Overview: theta-gpu/compiling-and-linking/compiling-and-linking-overview.md
+      - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration.md
+    - Queueing and Running Jobs on ThetaGPU:
+      - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
+    - Data Science:
+      - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
+      - Building Python Packages: theta-gpu/data-science/building-python-packages.md
+      - GPU Monitoring: theta-gpu/data-science/gpu-monitoring.md
+      - GPU Node Queue and Policy: theta-gpu/data-science/gpu-node-queue-and-policy.md
+      - Jupyter Hub: theta-gpu/data-science/jupyter-hub.md
+      - Python/C++ Code Interoperability: theta-gpu/data-science/pythonc-code-interoperability.md
+      - Singularity on ThetaGPU: theta-gpu/data-science/singularity.md
+      - Deep Learning Frameworks:
+        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science/dl-frameworks/distributed-training-using-data-parallelism.md
+        - Running PyTorch with Conda: theta-gpu/data-science/dl-frameworks/running-pytorch-conda.md
+        - Running Tensorflow with Conda: theta-gpu/data-science/dl-frameworks/running-tensorflow-conda.md
+        - Tensorboard Instructions: theta-gpu/data-science/dl-frameworks/tensorboard-instructions.md
+    - Programming Models: 
+      - Kokkos: theta-gpu/programming-models/kokkos.md
+      - OpenMP: theta-gpu/programming-models/openmp.md
+      - Raja: theta-gpu/programming-models/raja.md
+    - Performance Tools: 
+      - Darshan: theta-gpu/performance-tools/darshan.md
+      - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
+  - AI Testbed: https://argonne-lcf.github.io/ai-testbed-userdocs/
   - Cooley:
-      - System Overview and Node Information: cooley/system-overview-and-node-information.md
-  - Edith (Edge Dev Testbed):
-      - Getting Started: polaris/queueing-and-running-jobs/edtb.md
+    - Hardware Overview:
+      - Cooley Machine Overview: cooley/cooley-overview.md
+    - Compiling And Linking:
+      - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
+    - Queueing and Running Jobs:
+      - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
+    - Data Science:
+      - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
+    - Software and Libraries: 
+      - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
+      - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
+      - ParaView: cooley/software-and-libraries/paraview.md
+      - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
+      - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
+      - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
+    - Programming Models: 
+      - Kokkos: cooley/programming-models/kokkos.md
+      - OpenCL: cooley/programming-models/opencl.md
+      - OpenMP: cooley/programming-models/openmp.md
+      - Raja: cooley/programming-models/raja.md
+    - Performance Tools: 
+      - Darshan: cooley/performance-tools/darshan.md
+      - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
+  - Aurora: https://www.alcf.anl.gov/support-center/aurora
+  - Facility Policies: https://www.alcf.anl.gov/support-center/facility-policies
 
 theme:
   name: 'material'

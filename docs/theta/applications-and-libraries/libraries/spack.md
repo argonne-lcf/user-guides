@@ -18,8 +18,8 @@ upstreams:
 ```
 Support requests and feedback for ALCF-specific issues should be directed to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For general spack questions, users are encouraged to consult the following resources:
 
-- Spack development website: [https://github.com/spack/spack](https://github.com/spack/spack)
-- Spack documentation: [https://spack.readthedocs.io/en/latest/index.html](ttps://spack.readthedocs.io/en/latest/index.html)
-- Spack tutorial: [https://spack.readthedocs.io/en/latest/tutorial.html](https://spack.readthedocs.io/en/latest/tutorial.html])
-- Spack slack: [spackpm.slack.com](spackpm.slack.com)
+- [Spack development website](https://github.com/spack/spack)
+- [Spack documentation](https://spack.readthedocs.io/en/latest/index.html)
+- [Spack tutorial](https://spack.readthedocs.io/en/latest/tutorial.html)
+- [Spack Slack channel](https://slack.spack.io)
 

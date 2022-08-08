@@ -2,7 +2,7 @@
 
 The ALCF is working to support scalable machine learning on Theta. Our focus has been supporting Tensorflow on Theta as it has broad support from Cray & Intel giving large performance boosts on the Intel KNL architecture versus other frameworks. 
 
-We support two installations of Tensorflow, one via the [Conda environment]([https://www.alcf.anl.gov/user-guides/conda.md](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/data-science-workflows/conda.md)) and one via a custom Cray plugin environment. We also provide easy to use datascience modules for mpi4py, TensorFlow, Keras, PyTorch, and Horovod.
+We support two installations of Tensorflow, one via the [Conda environment](conda.md) and one via a custom Cray plugin environment. We also provide easy to use datascience modules for mpi4py, TensorFlow, Keras, PyTorch, and Horovod.
 
 ## Generic Environment Settings
 
@@ -28,7 +28,7 @@ config.inter_op_parallelism_threads = FLAGS.num_inter_threads
 tf.session(config=config)
 ```
 ## Tensorflow via Conda Environment
-We've installed a [Conda environment](https://www.alcf.anl.gov/user-guides/conda) which has the latest [Tensorflow Wheel](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-installation-guide) from Intel installed. We've also installed the [Horovod tool](https://github.com/uber/horovod) which uses MPI to run Tensorflow in a distributed way. This enables the training of Tensorflow models on Theta at large scales. Horovod provides examples for running [Tensorflow](https://github.com/horovod/horovod/blob/master/examples/tensorflow/tensorflow_mnist.py) natively or [Tensorflow using Keras](https://github.com/horovod/horovod/blob/master/examples/keras/keras_mnist.py). This can be run using:
+We've installed a [Conda environment](conda.md) which has the latest [Tensorflow Wheel](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-installation-guide) from Intel installed. We've also installed the [Horovod tool](https://github.com/uber/horovod) which uses MPI to run Tensorflow in a distributed way. This enables the training of Tensorflow models on Theta at large scales. Horovod provides examples for running [Tensorflow](https://github.com/horovod/horovod/blob/master/examples/tensorflow/tensorflow_mnist.py) natively or [Tensorflow using Keras](https://github.com/horovod/horovod/blob/master/examples/keras/keras_mnist.py). This can be run using:
 ```
 #!/bin/bash
 #COBALT -n <num-nodes>
