@@ -3,7 +3,61 @@
 * [Cobalt qsub options to PBS qsub options](https://anl.box.com/s/qdxqrprgiejcuz2m0cmcmde1mobhj81v) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
 * `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
 
+##  Queues
+There is one primary submission production queue and two debug queues on Polaris.
+We ask that all users follow good etiquette and be kind to one another.
 
+### Debugging Queues
+There are two execution debug queues.
+1. debug
+   * 1 <= node count <= 2
+   * 10 mins. <= walltime <= 1 hr
+   * limit of one (1) job running <strong>per-user</strong>
+   * limit of one (1) job queued <strong>per-user</strong>
+   * total of 8 nodes available in the queue
+2. debug-scaling
+   * 1 <= node count <= 10
+   * 10 mins. <= walltime <= 1 hr
+   * limit of one (1) job running/accruing/queued <strong>per-user</strong>
+### Production Queues
+There is a single submission queue for the entire system called <strong>"prod"</strong>. This is a routing queue that routes jobs to one of the following 6 execution queues based on the project allocation balance, job size, and duration. The following limits apply to all the execution queues:
+
+* limit of ten (10) jobs running/accruing <strong>per-project</strong>
+* limit of hundred (100) jobs queued (not accruing score) <strong>per-project</strong>
+
+#### Execution Queues
+* small
+    * 10 <= node count <= 24
+    * 30 mins. <= walltime <= 6 hrs.
+* medium
+    * 25 <= node count <= 49
+    * 30 mins. <= walltime <= 12 hrs.
+* large
+    * 50 <= node count <= 496
+    * 30 mins. <= walltime <= 24 hrs.
+* backfill-small
+    * low priority, negative project balance
+    * 10 <= node count <= 24
+    * 30 mins. <= walltime <= 6 hrs. 
+* backfill-medium
+    * low priority, negative project balance
+    * 25 <= node count <= 49
+    * 30 mins. <= walltime <= 12 hrs.
+* backfill-large
+    * low priority, negative project balance
+    * 50 <= node count <= 496
+    * 30 mins. <= walltime <= 24 hrs.
+ 
+<strong>Note</strong>: You cannot submit to the execution queues directly, you can only submit to the routing queue "prod".
+
+### Job Priority
+As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
+
+1. positive balance of your project
+2. size (in nodes) of the job, larger jobs receive higher priority
+3. the type of project (e.g. INCITE, ALCC, or discretionary)
+job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
+ 
 ## Introduction
 At a high level, getting computational tasks run on systems at ALCF  is a two step process:
 
@@ -17,7 +71,8 @@ Our documentation is organized in two sections aligned with the two steps descri
 ### Definitions and notes
 `chunk`: *A set of resources allocated as a unit to a job. Specified inside a selection directive. All parts of a chunk come from the same host.  In a typical MPI (Message-Passing Interface) job, there is one chunk per MPI process.*
 
-`vnode`: *A virtual node, or vnode, is an abstract object representing a host or a set of resources which form a usable part of an execution host. This could be an entire host,or a nodeboard or a blade. A single host can be made up of multiple vnodes. Each vnode can be managed and scheduled independently. Each vnode in a complex must have a unique name. Vnodes on a host can share resources, such as node-locked licenses.*  PBS operates on vnodes.  A vnode can, and in ALCF often will, represent an entire host, but it doesn't have to.  For instance, there is a mode on Polaris where we could have each physical host look like four vnodes, each with 16 threads, 1/4 of the RAM and one A100.
+`vnode`: *A virtual node, or vnode, is an abstract object representing a host or a set of resources which form a usable part of an execution host. This could be an entire host,
+or a nodeboard or a blade. A single host can be made up of multiple vnodes. Each vnode can be managed and scheduled independently. Each vnode in a complex must have a unique name. Vnodes on a host can share resources, such as node-locked licenses.*  PBS operates on vnodes.  A vnode can, and in ALCF often will, represent an entire host, but it doesn't have to.  For instance, there is a mode on Polaris where we could have each physical host look like four vnodes, each with 16 threads, 1/4 of the RAM and one A100.
 
 `ncpus`: In ALCF, given the way we configure PBS, this equates to a hardware thread.  For example, Polaris has a single socket with a 32 core CPU, each with two threads, so PBS reports that as ncpus=64.
 
@@ -142,14 +197,14 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
 
-### qsub examples - WE NEED MORE EXAMPLES ###
+### qsub examples ###
 
 * `qsub -A my_allocation -l select=4:system=polaris -l walltime=30:00 -- a.out`
 	* run a.out on 4 chunks on polaris with a walltime of 30 minutes; charge my_allocation;
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 cores.
 	* use the -- (dash dash) syntax when directly running an executable.
-* `qsub -A my_allocation -l place=scatter -l select=32:ncpus=32 -q workq -l walltime=30:00 mpi_mm_64.sh`
-	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named workq.
+* `qsub -A my_allocation -l place=scatter -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
+	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
 #### `qstat` - Query Job/Queue Status 
 * Users Guide Sec. 10.2, page UG-177; Reference Guide Sec. 2.57, page RG-198 
@@ -157,13 +212,14 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 * The most basic: `qstat` - will show all jobs queued and running in the system
 * Only a specific users jobs: `qstat -u <my username>`
 * Detailed information about a specific job: `qstat -f <jobid> [<jobid> <jobid>...]`
-	* The comment field with the `-f` output can often tell you why your job isn't running or why it failed.
+    * The comment field with the `-f` output can often tell you why your job isn't running or why it failed.
 * Display status of a queue: `qstat -Q <queue name>`
+* Display details of a queue: `qstat -Qf <queue name>` 
 * Display status of a completed job: `qstat -x <jobid> [<jobid> <jobid>...]`
-	* This has to be turned on (we have);  It is configured to keep 2 weeks of history.
-*  Get estimated start time: `qstat -T <jobid>`
-*  Make output parseable: `qstat -F [json | dsv]`
-	* That is `dsv` (delimeter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
+    * This has to be turned on (we have);  It is configured to keep 2 weeks of history.
+* Get estimated start time: `qstat -T <jobid>`
+* Make output parseable: `qstat -F [json | dsv]`
+    * That is `dsv` (delimeter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
 
 #### `qalter` - Alter a job submission 
 * Users Guide Sec. 9.2, page UG-164; Reference Guide Sec. 2.42, page RG-128
@@ -342,10 +398,10 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 ```
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
 
-### Need help from applications people for this section
+<!--### Need help from applications people for this section
 
 * Thinking of things like:
   * How do you set affinity
   * Nvidia specific stuff
   * There is a PALS specific thing to tell you what rank you are in a node?
-  * Should Chris cook up example running four mpiexec on different GPUs and separate CPUs or just rely on PBS's vnode (discussion at very top here)?
+  * Should Chris cook up example running four mpiexec on different GPUs and separate CPUs or just rely on PBS's vnode (discussion at very top here)?-->
