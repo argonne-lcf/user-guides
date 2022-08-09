@@ -13,7 +13,7 @@ module load datascience/tensorflow-1.12
 
 Notice that the datascience/tensorflow-* modules were compiled with AVX512 extension on Theta. Therefore, it could not run on login node, otherwise it will issue an “illegal instruction” fault. One has to submit the job to KNL nodes (see Tensorflow documentation for details). 
 
-Since we use Tensorflow as the backend, all the optimal environmental setups (Threading + affinity) are applicable here. Please follow the ==add link Tensorflow documentation page== for the optimal setting.  
+Since we use Tensorflow as the backend, all the optimal environmental setups (Threading + affinity) are applicable here. Please visit the [Tensorflow documentation page](tensorflow) for the optimal setting.  
 
 We do not see any incompatibility issues in using different versions of keras and tensorflow as those specified above. Feel free to change other versions of keras or Tensorflow. Currently, we support version 2.2.2 and 2.2.4.  
 
@@ -59,10 +59,8 @@ Since we are using data parallel scheme. Different ranks shall process different
 
 #### Example
 A simple example for doing linear regression using Keras + Horovod is put in the follwoing directory on Theta:
-```
 /projects/SDL_Workshop/hzheng/examples/keras/linreg 
  
 linreg_keras.py is the python script, and qsub.sc is the COBALT submission script. 
-```
 
 <iframe width="709" height="399" src="https://www.youtube.com/embed/930yrXjNkgM" title="Deep Learning with Keras, Tensorflow, PyTorch, and Horovod on Theta" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

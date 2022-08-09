@@ -169,7 +169,7 @@ TAU_STOP("dgemm");
   
 **Note:** External libraries such as BLAS or LAPACK are not automatically instrumented. This must be performed manually or a TAU wrapper library must be created:
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html
+[http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html)
   
 ## Resources
 - [TAU Performance Analysis](https://www.alcf.anl.gov/sites/default/files/2019-07/Chaimov_TAU_Performance_Analysis_4.pdf)

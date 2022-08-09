@@ -4,10 +4,12 @@ On Theta, the best method for container creation is to follow the Docker instruc
 
 ### Build Singularity image from DockerHub
 Now that we have a docker image on Docker Hub, we can build our singularity container using the docker image as a source using
+
 ```
 singularity build <image_name> docker://<username>/<repository_name>:<tag>
  ```
- Here ```image_name``` is user defined & usually ends with ```.sif or .simg```.
+ 
+Here ```image_name``` is user defined & usually ends with ```.sif or .simg```.
 
 ### Run Singularity container on Theta
 ```qsub -A <project-name> /path/to/CompPerfWorkshop/03_containers/Theta/job_submission_theta.sh </path/to/image_name>```
@@ -25,8 +27,8 @@ First we define the job submission parameters (number of nodes -n, queue name -q
 RANKS_PER_NODE=4
 CONTAINER=$1
 
-# Next we load the proper Cray MPICH module for MPI support on Theta. ABI (Application Binary Independent) simply means, we can build our application inside the image using the MPICH we installed there. Then, at run-time, we will use the LD_LIBRARY_PATH to point our application at Cray's MPICH libraries instead. ABI enforces the use of a common interface to enable this swapping in and out. Otherwise, this would fail.
-# Use Cray's Application Binary Independent MPI build
+#Next we load the proper Cray MPICH module for MPI support on Theta. ABI (Application Binary Independent) simply means, we can build our application inside the image using the MPICH we installed there. Then, at run-time, we will use the LD_LIBRARY_PATH to point our application at Cray's MPICH libraries instead. ABI enforces the use of a common interface to enable this swapping in and out. Otherwise, this would fail.
+#Use Cray's Application Binary Independent MPI build
 
 module swap cray-mpich cray-mpich-abi
 
@@ -54,6 +56,7 @@ TOTAL_RANKS=$(( $COBALT_JOBSIZE * $RANKS_PER_NODE ))
 aprun -n $TOTAL_RANKS -N $RANKS_PER_NODE singularity exec $BINDINGS $CONTAINER /usr/source/mpi_hello_world
 aprun -n $TOTAL_RANKS -N $RANKS_PER_NODE singularity exec $BINDINGS $CONTAINER python3 /usr/source/mpi_hello_world.py
 ```
+
 ## References
 [Using Containers on Theta](https://www.alcf.anl.gov/asset/using-containers-theta)
 

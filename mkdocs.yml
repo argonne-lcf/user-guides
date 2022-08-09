@@ -159,8 +159,6 @@ nav:
       - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
     - Queueing and Running Jobs:
       - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
-    - Data Science:
-      - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
     - Software and Libraries: 
       - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
       - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
