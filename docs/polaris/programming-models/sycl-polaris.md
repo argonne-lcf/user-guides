@@ -62,9 +62,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &num_ranks);
     MPI_Get_processor_name(machine_name, &name_len);
 
-    sycl::device d{sycl::default_selector()};
-    sycl::context c{d};
-    sycl::queue q{c,d};
+    sycl::queue q{sycl::default_selector()};
 
     std::cout << "Rank #" << myrank << " runs on: " << machine_name
               << ", uses device: "
