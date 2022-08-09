@@ -9,16 +9,18 @@ We ask that all users follow good etiquette and be kind to one another.
 
 ### Debugging Queues
 There are two execution debug queues.
-1. debug
-   * 1 <= node count <= 2
-   * 10 mins. <= walltime <= 1 hr
-   * limit of one (1) job running <strong>per-user</strong>
-   * limit of one (1) job queued <strong>per-user</strong>
-   * total of 8 nodes available in the queue
-2. debug-scaling
-   * 1 <= node count <= 10
-   * 10 mins. <= walltime <= 1 hr
-   * limit of one (1) job running/accruing/queued <strong>per-user</strong>
+
+* debug
+    * 1 <= node count <= 2
+    * 10 mins. <= walltime <= 1 hr
+    * limit of one (1) job running <strong>per-user</strong>
+    * limit of one (1) job queued <strong>per-user</strong>
+    * maximum of 8 nodes in use by this queue at any given time
+* debug-scaling
+    * 1 <= node count <= 10
+    * 10 mins. <= walltime <= 1 hr
+    * limit of one (1) job running/accruing/queued <strong>per-user</strong>
+   
 ### Production Queues
 There is a single submission queue for the entire system called <strong>"prod"</strong>. This is a routing queue that routes jobs to one of the following 6 execution queues based on the project allocation balance, job size, and duration. The following limits apply to all the execution queues:
 
@@ -56,7 +58,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 1. positive balance of your project
 2. size (in nodes) of the job, larger jobs receive higher priority
 3. the type of project (e.g. INCITE, ALCC, or discretionary)
-job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
+4. job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
  
 ## Introduction
 At a high level, getting computational tasks run on systems at ALCF  is a two step process:
