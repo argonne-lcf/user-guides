@@ -71,40 +71,45 @@ int main(int argc, char *argv[]) {
     MPI_Barrier(MPI_COMM_WORLD);
     int one=1;
     val_host = (double *)malloc(one*sizeof(double));
-    val_device = sycl::malloc_device<double>(one,d,c);
+    val_device = sycl::malloc_device<double>(one,q);
 
     const size_t size_of_double = sizeof(double);
     *val_host = -1.0;
     if (myrank != 0) {
-      printf("%s %d %s %f\n", "I am rank ", myrank, " and my initial value is: ", *val_host);
+        std::cout << "I am rank " << myrank
+                  << " and my initial value is: " << *val_host << "\n";
     }
 
     if (myrank == 0) {
         *val_host = 42.0;
         q.memcpy(val_device,val_host,size_of_double).wait();
-        printf("%s %d %s %f\n", "I am rank", myrank, "and will broadcast value:", *val_host);
+        std::cout << "I am rank " << myrank
+                  << " and will broadcast value: " << *val_host << "\n";
     }
 
     MPI_Bcast(val_device, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+    double check = 42.0;
     if (myrank != 0) {
         //Device to Host    
         q.memcpy(val_host,val_device,size_of_double).wait();
-        printf("%s %d %s %f\n", "I am rank", myrank, "and received broadcasted value:", *val_host);
+        assert(*val_host == check);
+        std::cout << "I am rank " << myrank
+                  << " and received broadcast value: " << *val_host << "\n";
     }
 
-    sycl::free(val_device,c);
+    sycl::free(val_device,q);
     free(val_host);
 
     MPI_Finalize();
-    return 0;
 
+    return 0;
 }
 
 
 module use /soft/compilers
 module load mpiwrappers/cray-mpich-llvm
-module load llvm-sycl/2022-06
+module load llvm-sycl
 module load nvhpc/21.9
 export MPICH_GPU_SUPPORT_ENABLED=1
 
