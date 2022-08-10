@@ -18,7 +18,7 @@ MPI is a library specification for message-passing, proposed as a standard by a 
 - Highly tunable through environment variables
 - Integrated within the Cray programming environment
 
-## Resources
-- MPI Tutorials: [Programming Models and Languages track at ATPESC](https://extremecomputingtraining.anl.gov/sessions/presentation-mpi-for-scalable-computing/)
+## References
+- MPI Tutorials: [Programming Models and Languages track at ATPESC](https://extremecomputingtraining.anl.gov/session-track/programming-models-and-languages/)
 
-- Talks: [Using MPI effectively on Theta](https://www.alcf.anl.gov/asset/using-mpi-effectively-theta)
+- Talks: [Using MPI effectively on Theta](https://www.alcf.anl.gov/support-center/training-assets/using-mpi-effectively-theta)

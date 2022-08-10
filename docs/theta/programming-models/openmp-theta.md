@@ -7,7 +7,7 @@ The specification describes directives, runtime routines, and environment variab
 ## Using OpenMP at ALCF
 On Theta, all of the standard programming environments (PrgEnv-cray, PrgEnv-intel, PrgEnv-gnu, PrgEnv-llvm modules) support OpenMP. An application can be compiled with OpenMP support using the flags listed below in the “Building on Theta” section for each vendor. At runtime, how OpenMP threads are mapped to physical cores can be controlled with environment variables and the aprun command, as discussed below in the “Running Jobs with OpenMP on Theta” section.
 
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov).
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Building on Theta
 To enable OpenMP, use the following flags in your compile line, depending on the programming environment you have loaded:
@@ -21,7 +21,7 @@ To enable OpenMP, use the following flags in your compile line, depending on the
 | LLVM | PrgEnv-llvm | “-fopenmp" |
 
 ## Running Jobs with OpenMP on Theta
-To run jobs on Theta with OpenMP threads, the OpenMP environment variable OMP_NUM_THREADS will need to be set to the desired number of threads per MPI rank, and certain flags in the aprun command will need to be set. Some examples are given below, and more information about running is here: [https://www.alcf.anl.gov/support-center/theta/affinity-theta](https://www.alcf.anl.gov/support-center/theta/affinity-theta).
+To run jobs on Theta with OpenMP threads, the OpenMP environment variable OMP_NUM_THREADS will need to be set to the desired number of threads per MPI rank, and certain flags in the aprun command will need to be set. Some examples are given below, and more information about running is here: [Affinity on Theta](/docs/theta/queueing-and-running-jobs/affinity-theta.md).
 
 ### Source code for xthi.c:
 ```
@@ -94,11 +94,11 @@ int main(int argc, char *argv[])
 $ cc -qopenmp xthi.c -o xthi # PrgEnv-intel
 ```
 
-2. Run with aprun (either in a batch script that is submitted to the job scheduler a or on the command line as part of an interactive session. See [https://www.alcf.anl.gov/support-center/theta/running-jobs-and-submission-scripts](https://www.alcf.anl.gov/support-center/theta/running-jobs-and-submission-scripts) for more details about how to run.
+2. Run with aprun (either in a batch script that is submitted to the job scheduler a or on the command line as part of an interactive session. See [job scheduling](/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md) for more details about how to run.
 
 Mapping of OpenMP threads to hardware threads on a KNL node can be achieved with the “--cc” option in aprun.
 
-One common option (described in more detail here: [https://www.alcf.anl.gov/support-center/theta/affinity-theta](https://www.alcf.anl.gov/support-center/theta/affinity-theta) is to use --cc depth with the -d and -j flags:
+One common option described in more detail on [Affinity on Theta](/docs/theta/queueing-and-running-jobs/affinity-theta.md)  is to use --cc depth with the -d and -j flags:
 
 ```
 $ aprun -n 1 -N 1 -d 8 -j 1 -cc depth -e OMP_NUM_THREADS=8 ./a.out
@@ -129,6 +129,6 @@ Application 19165962 resources: utime ~0s, stime ~1s, Rss ~6284, inblocks ~0, ou
 ```
 
 ## Performance Notes
-Affinity of OpenMP threads to hardware threads can have a large impact on performance. Please see [Affinity](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/queueing-and-running-jobs/affinity-theta.md)) for more information.
+Affinity of OpenMP threads to hardware threads can have a large impact on performance. Please see [Affinity](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta/queueing-and-running-jobs/affinity-theta.md) for more information.
 
 

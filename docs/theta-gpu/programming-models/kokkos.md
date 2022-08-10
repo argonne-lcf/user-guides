@@ -7,7 +7,7 @@ The Kokkos shared memory programming model is a C++ library, that provides the n
 The purpose of this document is to provide guidance on using Kokkos on Cooley. Please see the following pages for tutorials and more information on Kokkos: Kokkos GitHub and Kokkos Tutorials. 
 
 ## Using Kokkos at ALCF
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](https://mailto:support@alcf.anl.gov).
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Building Kokkos on ThetaGPU
 Please follow the steps below to build Kokks on ThetaGPU.

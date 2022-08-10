@@ -13,9 +13,7 @@ DeepHyper adopts asynchronous model based search (AMBS) that relies on fitting a
 DeepHyper is already installed on Theta and can be directly loaded as a module using the following command:
 ``` module load deephyper ```
 
-To create a new hyperparameter search problem, please see the please follow the instructions form official DeepHyper documentation: [https://deephyper.readthedocs.io/en/latest/tutorials/hps.html](https://deephyper.readthedocs.io/en/latest/tutorials/hps.html)
-
-To run the hyperparameter search problem on Theta, please see the please follow the instructions form official DeepHyper documentation: [https://deephyper.readthedocs.io/en/latest/run/theta.html](https://deephyper.readthedocs.io/en/latest/run/theta.html)
+To create a new hyperparameter search problem, please see the please follow the instructions from the official DeepHyper documentation: [https://deephyper.readthedocs.io/en/latest/tutorials/index.html](https://deephyper.readthedocs.io/en/latest/tutorials/index.html)
 
 ## References
 

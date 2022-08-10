@@ -7,7 +7,8 @@ The Vienna Ab initio Simulation Package (VASP) is a software package for perform
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
 
-To access the VASP binary at ALCF, please submit the ==info== below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business to verify a VASP license. These waiting times are longer than usual due to the impact of COVID19.
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license. These waiting times are longer than usual due to the impact of COVID-19.
+
 Information to provide:
 - User’s Full Name:
 - User’s ALCF username:
@@ -18,7 +19,7 @@ Information to provide:
 - ALCF resource which you plan to run VASP on: [Theta, other]
 
 ## VASP Support Policy
-ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized version of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
+ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
 
 ## How to Obtain the Code
 The VASP souce can only be obtained by an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
@@ -33,6 +34,8 @@ The binaries are available here:
 ```
 The top-level directory (/soft/applications/vasp) contains example scripts for running VASP as well as step-by-step instructions.
 
-Please encourage your group to do some tests to determine which binary better suites there needs. Here are some presentations and papers that may be useful in making a decision:
+## References
+
+Please encourage your group to do some tests to determine which binary better suits their needs. Here are some presentations and papers that may be useful in making a decision:
 - [Using VASP at NERSC](https://www.nersc.gov/assets/Uploads/Using-VASP-at-NERSC-20180629.pdf)
 - [Performance of Hybrid MPI/OpenMP VASP on Cray XC40 Based on KNL](https://cug.org/proceedings/cug2017_proceedings/includes/files/pap134s2-file1.pdf)

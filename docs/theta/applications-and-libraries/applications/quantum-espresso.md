@@ -8,7 +8,7 @@ Prebuilt QE binaries are provided on Theta under /soft/applications/quantum_espr
 ## Using Quantum ESPRESSO at ALCF
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at support@alcf.anl.gov.
 
-If building your own QE is necessary, follow the instruction below.
+If building your own QE is necessary, follow the instructions below.
 
 ## Building on Theta
 This recipe is verified on Oct 12th 2018 with QE-6.3.
@@ -30,14 +30,14 @@ Inside the source code directory, QE can be configured with the follow command i
  --with-elpa-include=/soft/applications/elpa/elpa-2017.11.001/include/elpa-2017.11.001/modules \
  --with-elpa-lib=/soft/applications/elpa/elpa-2017.11.001/lib/libelpa.a
  ```
- Now precceed to build the code, use "make" and install it with "make install".
+ Now proceed to build the code. Use "make" and install it with "make install".
 
-If statically linked binaries are needed, do the following before hitting "make"
+If statically linked binaries are needed, do the following before hitting "make":
 
 ```
 export CRAYPE_LINK_TYPE=static
 ```
-edit make.inc by replacing
+Edit make.inc by replacing
 ```
 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64
 ```
@@ -70,5 +70,4 @@ This script file can be submitted as ‘qsub script.sh’, assuming you have a �
 
 ## References
 [QE User Manual](http://www.quantum-espresso.org/resources/users-manual)
-[Alternative Compilations of the Code](https://software.intel.com/en-us/articles/quantum-espresso-for-the-intel-xeon-phi-processor)
 

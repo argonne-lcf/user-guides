@@ -1,9 +1,9 @@
-#The Gronkulator: Job Status Display
+# The Gronkulator: Job Status Display
 
-##Overview 
+## Overview 
 The Gronkulator, or “The Gronk” is a web-based tool that provides a pictorial depiction of the jobs running on ALCF supercomputers. The tool also provides information about the job queue and machine reservations. The tool can be accessed via [status.alcf.anl.gov](https://status.alcf.anl.gov).
 
-**Note:** If you are logged into the system, all of the information contained on the Gronkulator is available via the “qstat” command. There are more options in the qstat command that are not available on the Gronkulator. {== Link to qstat options. ==} 
+**Note:** If you are logged into the system, all of the information contained on the Gronkulator is available via the “qstat” command. There are more options in the qstat command that are not available on the Gronkulator. 
 
 To view machine activity, click on the name of one of our supercomputers. Upon clicking, you will see all the jobs running on the resource. The running jobs are color-coded by the name of the project allocation that the job is being charged to. 
 

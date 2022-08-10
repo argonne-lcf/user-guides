@@ -4,8 +4,10 @@
 
 To log into Polaris:
 
-1. ssh <username\>@polaris.alcf.anl.gov; log in using the ALCF mobilepass token
-2. ssh <username\>@polaris-login-02
+ssh <username\>@polaris.alcf.anl.gov
+
+Then, type in the password from your cryptocard/mobilepass token.
+
 
 ## Hardware Overview
 
@@ -17,19 +19,8 @@ Users are encouraged to read through the [Compiling and Linking Overview](./comp
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Job Scheduling and Execution](./queuing-and-running-jobs/job-and-queue-scheduling.md) page for information on using the Cobalt schedule and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](./queueing-and-running-jobs/example-job-scripts.md) page as well.
+Users are encouraged to read through the [Job Scheduling and Execution](./queueing-and-running-jobs/job-and-queue-scheduling.md) page for information on using the Cobalt schedule and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](./queueing-and-running-jobs/example-job-scripts.md) page as well.
 
 ## Getting Assistance
 
-Note: Our Polaris documentation is still under development.
-
-### GPU Hackathon Attendees
-
-Please direct questions/issues to your mentor and/or post in the #cluster_support channel in the Hackathon Slack workspace.
-
-
-### ESP/ECP Users and ALCF Staff
-
-Please direct all questions, requests, and feedback to support@alcf.anl.gov.
-
-Please don't submit PRs against this repository.
+Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).

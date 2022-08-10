@@ -7,7 +7,7 @@ A 15-terabyte solid-state drive offers up to 25 gigabits per second in bandwidth
 
 ## Table 1 summarizes the capabilities of a ThetaGPU compute node.
 | COMPONENT | COMPONENT | AGGREGATE |
-| --- | ----------- |
+| --- | ----------- | ----------- |
 | AMD Rome 64-core CPU | 2 | 48 |
 | DDR4 Memory | 1 TB on 320 GB & 2 TB on 640 GB | 26 TB |
 | NVIDIA A100 GPU | 8 | 192 |

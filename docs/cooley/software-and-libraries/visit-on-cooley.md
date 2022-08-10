@@ -26,5 +26,5 @@ On your local machine:
   If you need a different version, you can specify this as a command line option using "-v <version number>" (versions 2.10.2 and 2.9.1 are also supported) 
 
 ## Additional Information
-- Visit user manual: https://wci.llnl.gov/codes/visit/manuals.html
-- Visit wiki: http://www.visitusers.or
+- Visit user manual: [https://wci.llnl.gov/codes/visit/manuals.html](https://wci.llnl.gov/codes/visit/manuals.html)
+- Visit wiki: [http://www.visitusers.org](http://www.visitusers.org)
