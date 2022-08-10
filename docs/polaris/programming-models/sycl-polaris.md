@@ -105,16 +105,25 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+```
 
+Load Modules
 
+```
 module use /soft/compilers
 module load mpiwrappers/cray-mpich-llvm
 module load llvm-sycl
 module load nvhpc/21.9
 export MPICH_GPU_SUPPORT_ENABLED=1
+```
 
+Compile and Run
+
+```
 LIBS=/opt/cray/pe/mpich/8.1.16/gtl/lib
 
 $ mpicxx -L$(LIBS) -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' main.cpp
-$ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_aff_gpu_polaris.sh ./a.out
+$ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
 ```
+
+
