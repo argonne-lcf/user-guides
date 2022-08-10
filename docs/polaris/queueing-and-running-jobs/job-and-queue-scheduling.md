@@ -345,7 +345,9 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 |x3002-g0	|x3006-g1	|x3010-g2	|x3014-g3	|x3102-g4 |x3106-g5 |x3110-g6 |x3202-g7 |x3206-g8 |x3210-g9|
 |x3003-g0	|x3007-g1	|x3011-g2	|x3015-g3	|x3103-g4 |x3107-g5 |x3111-g6 |x3203-g7 |x3207-g8 |x3211-g9 |
 |x3004-g0	|x3008-g1	|x3012-g2	|x3016-g3	|x3104-g4 |x3108-g5 |x3112-g6 |x3204-g7 |x3208-g8 |x3212-g9
+
 ## Controlling the execution on your allocated resources
+
 ### Running MPI+OpenMP Applications
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 * `-n` total number of MPI ranks
