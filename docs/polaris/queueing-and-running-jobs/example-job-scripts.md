@@ -135,9 +135,13 @@ exec "$@"
 
 !!! note
 
-    The `echo` command prints a helpful message for the user to confirm the desired mapping is achieved. Users are encouraged to edit this file as necessary for their particular needs.
+    The `echo` command prints a helpful message for the user to confirm the
+    desired mapping is achieved. Users are encouraged to edit this file as
+    necessary for their particular needs.
 
 !!! warning
 
-    If planning large-scale runs with many thousands of MPI ranks, it is advised to comment out the `echo` command above so as not to have thousands of lines of output written to `stdout`.
+    If planning large-scale runs with many thousands of MPI ranks, it is
+    advised to comment out the `echo` command above so as not to have thousands
+    of lines of output written to `stdout`.
 
