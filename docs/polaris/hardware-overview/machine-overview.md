@@ -25,7 +25,11 @@ Note 2: 8 memory channels rated at 204.8 GiB/s
 | BF16 Tensor Core | 312 TF | 1.3 PF |
 | FP16 Tensor Core | 312 TF | 1.3 PF |
 | INT8 Tensor Core | 624 TOPS | 2496 TOPS |
-| Max TDP Power | 250 W | 400 W |
+| Max TDP Power | 250 W | 400 W |  
+
+Links to detailed Nvidia A100 documentation:  
+    - [NVIDIA A100 Tensor Core GPU Architecture](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf)  
+    - [NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/)  
 
 
 ## Login nodes
