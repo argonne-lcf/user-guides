@@ -1,0 +1,75 @@
+# Instructions for `gpt-neox`:
+
+1. Clone base environment from `conda/2022-07-19`:
+  ```shell
+  module load conda/2022-07-19
+  conda activate base
+  # NOTE: The path should be replaced in the --prefix flag below ⤵
+  conda create --clone base --prefix /path/to/conda/envs/gpt-neox-2022-07-19
+  conda activate /path/to/conda/envs/gpt-neox-2022-07-19
+  ```
+
+2. Clone the `EleutherAI/gpt-neox` repository:
+  ```shell
+  git clone https://github.com/EleutherAI/gpt-neox
+  cd gpt-neox
+  ```
+
+3. Modify the `requirements/requirements.txt` file to contain:
+  ```txt
+  git+https://github.com/EleutherAI/DeeperSpeed.git@eb7f5cff36678625d23db8a8fe78b4a93e5d2c75#egg=deepspeed  
+  einops>=0.3.0  
+  ftfy>=6.0.1
+  lm_dataformat>=0.0.20
+  lm_eval>=0.2.0
+  mpi4py
+  numpy
+  pybind11
+  regex
+  sentencepiece
+  six
+  tokenizers>=0.10.2
+  transformers~=4.16.0
+  wandb>=0.10.28
+  ```
+
+4. Install requirements from (modified) `requirements/requirements.txt`:
+  ```shell
+  $ conda run python3 -m pip install -r requirements/requirements.txt
+  ```
+
+5. Create a modified `hostfile`:
+  ```shell
+  cat $PBS_NODEFILE > hostfile
+  sed -e 's/$/slots=4' -i hostfile
+  export DLTS_HOSTFILE=hostfile 
+  ```
+
+4. Prepare data:
+  ```shell
+  python prepare_data.py -d ./data
+  ```
+
+5. Train:
+  ```shell
+  python3 ./deepy.py train.py -d configs small.yml local_setup.yml
+  ```
+
+---
+
+!!! warning
+
+    You may need to create / modify your `.deepspeed_env` if one does not exist.
+
+    This file should contain lines of the form `{KEY}={VAL}`, which will be set
+    as environment variables on all active ranks.
+
+To ensure all of our workers have the same `$PATH`, `$LD_LIBRARY_PATH`, we can:
+
+```shell
+$ echo $PATH >> .deepspeed_env
+$ echo $LD_LIBRARY_PATH >> .deepspeed_env
+$ echo OFFLOAD_INIT=on_start >> .deepspeed_env
+$ echo MPICH_DIR=/opt/cray/pe/mpich/8.1.16/ofi/gnu/9.1 >> .deepspeed_env
+$ echo CUDA_HOME=/soft/datascience/cuda/cuda_11.5.2_495.29.05_linux >> .deepspeed_env
+```

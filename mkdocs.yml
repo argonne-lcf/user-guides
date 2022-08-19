@@ -45,6 +45,8 @@ nav:
         - Python: polaris/data-science-workflows/python.md
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
+        - Applications:
+            - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models: 
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
