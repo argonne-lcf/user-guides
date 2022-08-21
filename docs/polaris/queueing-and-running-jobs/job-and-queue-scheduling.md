@@ -350,10 +350,11 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 
 ### Running MPI+OpenMP Applications
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
+
 * `-n` total number of MPI ranks
 * `-ppn` number of MPI ranks per node
 * `--cpu-bind` CPU binding for application
-* `--depth` number of cpus per rank (useful with `--cpu-bind depth`)
+* `--depth` number of cpus per rank (useful with `--cpu-bind`)
 * `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
 * `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
 
