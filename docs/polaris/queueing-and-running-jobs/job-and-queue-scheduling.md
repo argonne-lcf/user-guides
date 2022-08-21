@@ -402,6 +402,11 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 ```
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
 
+### Using Fakeroot with Singularity
+The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:
+
+`-l singularity_fakeroot=true`
+
 <!--### Need help from applications people for this section
 
 * Thinking of things like:
