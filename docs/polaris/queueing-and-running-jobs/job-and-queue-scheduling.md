@@ -3,63 +3,6 @@
 * [Cobalt qsub options to PBS qsub options](https://anl.box.com/s/qdxqrprgiejcuz2m0cmcmde1mobhj81v) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
 * `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
 
-##  Queues
-There is one primary submission production queue and two debug queues on Polaris.
-We ask that all users follow good etiquette and be kind to one another.
-
-### Debugging Queues
-There are two execution debug queues.
-
-* debug
-    * 1 <= node count <= 2
-    * 10 mins. <= walltime <= 1 hr
-    * limit of one (1) job running <strong>per-user</strong>
-    * limit of one (1) job queued <strong>per-user</strong>
-    * maximum of 8 nodes in use by this queue at any given time
-* debug-scaling
-    * 1 <= node count <= 10
-    * 10 mins. <= walltime <= 1 hr
-    * limit of one (1) job running/accruing/queued <strong>per-user</strong>
-   
-### Production Queues
-There is a single submission queue for the entire system called <strong>"prod"</strong>. This is a routing queue that routes jobs to one of the following 6 execution queues based on the project allocation balance, job size, and duration. The following limits apply to all the execution queues:
-
-* limit of ten (10) jobs running/accruing <strong>per-project</strong>
-* limit of hundred (100) jobs queued (not accruing score) <strong>per-project</strong>
-
-#### Execution Queues
-* small
-    * 10 <= node count <= 24
-    * 30 mins. <= walltime <= 6 hrs.
-* medium
-    * 25 <= node count <= 49
-    * 30 mins. <= walltime <= 12 hrs.
-* large
-    * 50 <= node count <= 496
-    * 30 mins. <= walltime <= 24 hrs.
-* backfill-small
-    * low priority, negative project balance
-    * 10 <= node count <= 24
-    * 30 mins. <= walltime <= 6 hrs. 
-* backfill-medium
-    * low priority, negative project balance
-    * 25 <= node count <= 49
-    * 30 mins. <= walltime <= 12 hrs.
-* backfill-large
-    * low priority, negative project balance
-    * 50 <= node count <= 496
-    * 30 mins. <= walltime <= 24 hrs.
- 
-<strong>Note</strong>: You cannot submit to the execution queues directly, you can only submit to the routing queue "prod".
-
-### Job Priority
-As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
-
-1. positive balance of your project
-2. size (in nodes) of the job, larger jobs receive higher priority
-3. the type of project (e.g. INCITE, ALCC, or discretionary)
-4. job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
- 
 ## Introduction
 At a high level, getting computational tasks run on systems at ALCF  is a two step process:
 
@@ -324,6 +267,38 @@ x3014c0s19b0n0       offline,resv-exclusive Xid 74 -- GPUs need reseat
 x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 ```
 
+##  Queues
+There are three production queues you can target in your qsub (`-q <queue name>`):  
+
+|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
+|----|----|----|----|----|----|
+|debug|1|2|10 min|1 hr|max 8 nodes in use by this queue ay any given time|
+|debug-scaling|1|10|10 min|1 hr|max 1 job running/accruing/queued **per-user** |
+|prod|10|496|30 min|24 hrs|Routing queue; See below|
+
+`prod` is routing queue and routes your job to one of the following six execution queues:  
+
+|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
+|----|----|----|----|----|----|
+|small|10|24|30 min|6 hrs||
+|medium|25|49|30 min|12 hrs||
+|large|50|496|30 min|24 hrs||
+|backfill-small|10|24|30 min|6 hrs|low priority, negative project balance|
+|backfill-medium|25|49|30 min|12 hrs|low priority, negative project balance|
+|backfill-large|50|496|30 min|24 hrs|low priority, negative project balance|  
+
+**Note 1:**: You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
+**Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
+**Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**  
+
+### Job Priority
+As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
+
+1. positive balance of your project
+2. size (in nodes) of the job, larger jobs receive higher priority
+3. the type of project (e.g. INCITE, ALCC, or discretionary)
+4. job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
+ 
 ## Polaris specific stuff
 ### Polaris Rack and Dragonfly group mappings
 * Racks contain (7) 6U chassis; Each chassis has 2 nodes for 14 nodes per rack
