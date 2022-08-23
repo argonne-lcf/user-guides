@@ -41,7 +41,7 @@
 5. Create a modified `hostfile`:
   ```shell
   cat $PBS_NODEFILE > hostfile
-  sed -e 's/$/slots=4/' -i hostfile
+  sed -e 's/$/ slots=4/' -i hostfile
   export DLTS_HOSTFILE=hostfile 
   ```
 
