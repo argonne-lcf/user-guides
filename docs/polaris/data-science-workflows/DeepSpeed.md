@@ -39,9 +39,11 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
         Each of these variables will then be set on each available worker specified in our `hostfile`.
 
 5. We can then run the `cifar10_deepspeed.py` module using DeepSpeed:
-  ```shell
-  $ deepspeed --hostfile=hostfile cifar10_deepspeed.py --deepspeed --deepspeed_config ds_config.json
-  ```
+    ```shell
+    $ deepspeed --hostfile=hostfile cifar10_deepspeed.py \
+        --deepspeed \
+        --deepspeed_config ds_config.json
+    ```
 
 !!! note
 
