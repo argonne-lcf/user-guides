@@ -125,6 +125,6 @@ LIBS=/opt/cray/pe/mpich/8.1.16/gtl/lib
 $ mpicxx -L$(LIBS) -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' main.cpp
 $ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
 ```
-For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](./job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
+For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](./job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
 
 Note: By default, there is no GPU-aware MPI library linking support.  The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.   
