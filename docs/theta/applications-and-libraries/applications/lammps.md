@@ -148,7 +148,7 @@ After the appropriate command is uncommented, the job can be submitted with “q
 #env OMP_NUM_THREADS=2 mpirun -np 64 ~/bin/lammps/lammps-git/src/lmp_thetagpu -in in.rhodo -pk gpu 8 -pk omp 0 -sf hybrid gpu omp
  
 # KOKKOS package: submit job to run on 1 GPU w/ 1 MPI ranks per GPU and 2 OpenMP threads per rank
-```
+
 #!/bin/sh
 #COBALT -n 1 -t 15 -q full-node -A Catalyst
  

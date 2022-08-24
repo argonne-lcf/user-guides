@@ -31,7 +31,7 @@ vncserver --NeverShared=1 -geometry 1920x1080
 x0vncserver --display=:0.0 --NeverShared=1 --geometry=2400x1500+0+0 --PasswordFile=/home/<username>/.vnc/passwd --MaxProcessorUsage=100
 ```
 
-** Notes:**
+**Notes:**
 
 - Take note of the hostname where your job is running (in the form cc###).  You will need this in the next steps.
 - We use x0vncserver so that we can leverage the existing X server running on the node, which uses the GPU.  
@@ -69,9 +69,9 @@ This should open a vnc viewer with an xterm running in it, where you can launch 
   
 ## Cleaning Up
 When you are all done, be sure to clean up:
-- Exit the vnc viewer
-- Kill the vnc server (cntrl C), and exit the cc### shell
+- Exit the VNC viewer
+- Kill the VNC server (cntrl C), and exit the cc### shell
 - You may need to cntrl C to exit the ssh command in the shell used to create the tunnel 
 - Then exit that shell to close the tunnel
   
-==Add Video of Visualizing your data==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/x834vjl51kA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

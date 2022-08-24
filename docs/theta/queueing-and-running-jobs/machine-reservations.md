@@ -1,4 +1,4 @@
-#Machine Reservations on Theta
+# Machine Reservations on Theta
 
 To get a reservation, you must first demonstrate a need to run outside of the normal queueing policies. Reservations are available only to projects with a positive allocation. Lead time for approval is 5 business days. If approved, scheduling is contingent on machine availability.
 

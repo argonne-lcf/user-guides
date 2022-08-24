@@ -144,7 +144,7 @@ To analyze a trace file (from TAU_TRACE=1), see the Jumpshot instructions at htt
 ### Selective Instrumentation
 Selective instrumentation is enabled by appending -optTauSelectFile=<filename> to TAU_OPTIONS. Note that this is incompatible with the compiler-based instrumentation, e.g., -optCompInst. The syntax of the select instrumentation file can be found here:
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch01s03.htm
+https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s03.html
 
 It is also possible to generate a selective instrumentation file using Paraprof and a full flat profile obtained through automatic instrumentation.
 
@@ -169,7 +169,7 @@ TAU_STOP("dgemm");
   
 **Note:** External libraries such as BLAS or LAPACK are not automatically instrumented. This must be performed manually or a TAU wrapper library must be created:
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html
+[http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/re32.html)
   
 ## Resources
 - [TAU Performance Analysis](https://www.alcf.anl.gov/sites/default/files/2019-07/Chaimov_TAU_Performance_Analysis_4.pdf)

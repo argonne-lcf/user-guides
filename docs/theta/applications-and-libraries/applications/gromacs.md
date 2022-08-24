@@ -1,10 +1,10 @@
 # Gromacs on Theta
 
 ## What is Gromacs?
-GROMACS is a versatile package to perform molecular dynamics, i.e. simulate the Newtonian equations of motion for systems with hundreds to millions of particles. It is primarily designed for biochemical molecules like proteins, lipids and nucleic acids that have a lot of complicated bonded interactions, but since GROMACS is extremely fast at calculating the nonbonded interactions (that usually dominate simulations) many groups are also using it for research on non-biological systems, e.g. polymers.
+GROMACS is a versatile package to perform molecular dynamics, i.e. simulate the Newtonian equations of motion for systems with hundreds to millions of particles. It is primarily designed for biochemical molecules like proteins, lipids, and nucleic acids that have a lot of complicated bonded interactions, but since GROMACS is extremely fast at calculating the nonbonded interactions (that usually dominate simulations) many groups are also using it for research on non-biological systems, e.g. polymers.
 
 ## Using GROMACS at ALCF
-ALCF offer assistance with building binaries and compiling instructions for GROMACS. For questions, contact us at support@alcf.anl.gov.
+ALCF offers assistance with building binaries and compiling instructions for GROMACS. For questions, contact us at support@alcf.anl.gov.
 
 ## Building Gromacs
 
@@ -31,6 +31,7 @@ ALCF offer assistance with building binaries and compiling instructions for GROM
 A prebuilt Gromacs binary can be found in directory /soft/applications/gromacs
 
 A sample qsub script:
+
 ```
 #!/bin/bash
 #COBALT -t 30 
@@ -48,7 +49,8 @@ aprun -n64-N64--envOMP_NUM_THREADS=2-ccdepth -d2-j2
 /lus/theta-fs0/home/user_name/gromacs-2018.5/build/bin/gmx_mpi\
  mdrun -dlbyes-resethway-pinon -v-deffnmstep5_1 -gtest.log
  ```
-User is strongly suggested to try combinations of number of nodes, number of MPI ranks per node and number of Number of OMP threads per rank to find the optimal throughput for the application.
+ 
+We strongly suggest that users try combinations of different numbers of nodes, MPI ranks per node, and OMP threads per rank to find the optimal throughput for the application.
 
 This is a benchmark for a 30,000 atoms system generated on 1 single Theta node with above qprun:
 

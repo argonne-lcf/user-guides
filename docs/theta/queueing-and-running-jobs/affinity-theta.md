@@ -12,7 +12,7 @@ The numbers inside the quadrants identify the specific hardware threads in the c
   <figcaption>Visual representation of two tiles in a KNL</figcaption>
 </figure>
 
-Using the -j, -d, and --cc arguments to aprun and environment variables, MPI ranks and threads can be assigned to run on specific hardware threads. For more information about the flags to aprun, {== see  [Running Jobs on Theta](https://about.gitlab.com/). Fix link ==} Four examples of using aprun are given below followed by descriptions of two methods for displaying the mapping produced.
+Using the -j, -d, and --cc arguments to aprun and environment variables, MPI ranks and threads can be assigned to run on specific hardware threads. For more information about the flags to aprun, see  [Running Jobs on Theta](/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md). Four examples of using aprun are given below followed by descriptions of two methods for displaying the mapping produced.
 
 **Note:** Logical core and hardware thread are used interchangeably below.
 
@@ -156,11 +156,11 @@ The mapping is shown below where the OpenMP threads given in ranges map to hardw
 
 Since hardware threads 0, 64, 128, and 192 are on same physical core, this means that 4 OpenMP threads (OpenMP threads 0, 16, 32, and 48) share a physical core.
 
-####Methods to display thread affinity:
+#### Methods to display thread affinity:
 
 In the examples below, two methods to display the mapping between MPI rank (or OpenMP thread) to hardware threads are shown. Note that "logical core" and "hardware thread" are used interchangably below.
 
-#####1. sched_getaffinity in the hello_affinity program
+##### 1. sched_getaffinity in the hello_affinity program
 One way to display the mapping of ranks to cores is with the "hello_affinity" program on Theta, see: [https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/theta/affinity/submit.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/theta/affinity/submit.sh). For each OpenMP thread on each rank, "hello_affinity" prints which hardware thread (or logical core) the OpenMP threads map to for the given aprun settings (or environment variables in some cases). One can compare the output for different aprun settings and see how the affinity changes.
 
 As an example, 8 MPI ranks are launched on a single node, with each rank on its own physical core. The output shows that rank 0 maps to hardware thread 0, and rank 1 maps to hardware thread 1, and so on. This means that all 8 ranks are on separate physical cores.
@@ -203,7 +203,7 @@ Application 9888541 resources: utime ~0s, stime ~1s, Rss ~6648, inblocks ~0, out
 
 Some other examples are in comments in the submission script on Theta, see [https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/theta/affinity/submit.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/theta/affinity/submit.sh).
 
-####2. MPICH_CPUMASK_DISPLAY
+#### 2. MPICH_CPUMASK_DISPLAY
 Another way to display the mapping of ranks to cores is to set the environment variable MPICH_CPUMASK_DISPLAY to true in your submission script. An example that corresponds to the hello_affinity example above is shown below. 
 
 As above, 8 MPI ranks are launched on a single node. For each rank, a cpumask is printed out, showing the mapping of the ranks to logical cores. For each cpumask, the rightmost 64 values correspond to logical cores 0 to 63, the next rightmost are logical cores 64 to 127, the next are 128 to 191, and then 192 to 255. A "1" in a spot within the cpumask list means the MPI rank is allowed to use that logical core/hardware thread.

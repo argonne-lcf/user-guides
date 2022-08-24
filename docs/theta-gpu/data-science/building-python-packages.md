@@ -1,10 +1,10 @@
 # Building Python Packages
-To build python packages for Theta GPU, there are two options: build on top of a bare-metal build or build on top of (and within) a singularity container. Additionally, you can build a new container from nvidia's docker images.
+To build Python packages for ThetaGPU, there are two options: build on top of a bare-metal build or build on top of (and within) a singularity container. Additionally, you can build a new container from NVIDIA's docker images.
 
 ## Build on ThetaGPU compute using Conda
-To build on thetagpu compute and install your own packages, login to theta and then submit an interactive job to log on to Theta GPU compute node. 
+To build on ThetaGPU compute and install your own packages, login to theta and then submit an interactive job to log on to ThetaGPU compute node. 
 
-Please see ==Running Pytorch with Conda== or ==Running Tensorflow with Conda== for more information.
+Please see [Running Pytorch with Conda](https://www.alcf.anl.gov/support/user-guides/theta-gpu/data-science/dl-frameworks/running-pytorch-conda/index.html) or [Running Tensorflow with Conda](https://www.alcf.anl.gov/support/user-guides/theta-gpu/data-science/dl-frameworks/running-tensorflow-conda/index.html) for more information.
 
 ## Building on top of a container
 At the moment, you will need two shells to do this: have one open on a login node (for example, ```thetaloginN```, and one open on a compute node (```thetagpuN```). First, start the container in interactive mode:
@@ -33,16 +33,16 @@ export HTTPS_PROXY=https://theta-proxy.tmi.alcf.anl.gov:3128
 Now, you can pip install your favorite packages: ```pip install mpi4py```
 
 ## Building custom packages
-Most packages (hdf5, for example, or python packages) can be built and installed into your virtual env. Here are two common examples that aren't currently part of the pytorch container that may be useful.
+Most packages (HDF5, for example, or python packages) can be built and installed into your virtual env. Here are two common examples that aren't currently part of the pytorch container that may be useful.
 
 ### HDF5
-You can find the source code for hdf5 on their website https://www.hdfgroup.org/downloads/hdf5/source-code. When downloaded and un-tarred, cdto the directory and run:
+You can find the source code for HDF5 on their website https://www.hdfgroup.org/downloads/hdf5/source-code. When downloaded and un-tarred, cdto the directory and run:
 ```
 ./configure --prefix=$VENV_LOCATION # Add any other configuration arguments 
 make -j 64 
 make install
 ```
-This should get you hdf5! For example, after this:
+This should get you HDF5! For example, after this:
 ```
 (pytorch_20.08) Singularity> which h5cc 
 /home/cadams/ThetaGPU/venvs/pytorch_20.08/bin/h5cc # This is my virtualenv, success!
@@ -56,7 +56,7 @@ git submodule update --init
 python setup.py build 
 python setup.py install
 ```
-This should install horovod within your container.
+This should install Horovod within your container.
 
 
 

@@ -3,9 +3,8 @@
 The Cray Performance Measurement and Analysis Tools (or CrayPat) are a suite of utilities that enable the user to capture and analyze performance data generated during the execution of a program on a Cray system. It includes CrayPat, CrayPat-lite, Cray Apprentices2, Reveal and the Cray PAPI components. 
 
 ## References
-- [Performance Profiling on KNL with Cray Perftools-lite]([https://www.alcf.anl.gov/sites/default/files/2019-07/slides%25202018-01-31%2520ALCF%2520Dev%2520Session%2520-%2520Heidi%2520Poxon%2520-%2520Cray%2520Performance%2520Tools_4.pdf](https://www.alcf.anl.gov/events/performance-profiling-knl-cray-perftools-lite-0))
+- [Performance Profiling on KNL with Cray Perftools-lite](https://www.alcf.anl.gov/events/performance-profiling-knl-cray-perftools-lite-0)
 - [CrayPAT User Guide Webpage on Cray Documentation Portal](https://pubs.cray.com/content/S-2376/7.0.0/cray-performance-measurement-and-analysis-tools-user-guide/about-the-cray-performance-measurement-and-analysis-tools-user-guide)
-- [CrayPAT User Guide PDF Download from Cray Documentation Portal](https://pubs.cray.com/pdf-attachments/attachment?pubId=00505504-DA&attachmentId=pub_00505504-DA.pdf)
 - Manual pages (after module is loaded): ```$ man perftools-lite```
 - Detailed information about the output report: ```$ man pat_report```
 
