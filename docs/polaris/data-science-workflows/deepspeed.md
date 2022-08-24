@@ -1,5 +1,5 @@
 # DeepSpeed
-The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed.
+The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](https://argonne-lcf.github.io/user-guides/polaris/data-science-workflows/python).
 
 We describe below the steps needed to get started with DeepSpeed on Polaris.
 

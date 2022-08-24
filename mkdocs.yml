@@ -43,7 +43,7 @@ nav:
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science:
         - Python: polaris/data-science-workflows/python.md
-        - DeepSpeed: polaris/data-science-workflows/DeepSpeed.md
+        - DeepSpeed: polaris/data-science-workflows/deepspeed.md
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
         - Applications:
