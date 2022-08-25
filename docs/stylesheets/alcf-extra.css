@@ -887,6 +887,13 @@ footer a:hover {
 }
 
 
+
+/* sidebar */
+/* ------------------------------------------------------------------------- */
+
+.md-sidebar { height: auto !important; }
+
+
 /*remove edit buttton by titles*/
 .md-typeset .md-content__button {
 	display: none;
