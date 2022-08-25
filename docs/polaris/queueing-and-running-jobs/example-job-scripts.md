@@ -111,7 +111,7 @@ The script is hard-coded for 4 GPUs on a Polaris node and simply pairs MPI ranks
 
 Documentation for the Nvidia Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
 
-In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute ndoe and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY`do not "collide" and end up with all the nodes writing to the same place.  The local SSDs or /dev/shm or incorporation of the node name into the path would all be possible ways of dealing with that issue.
+In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY`do not "collide" and end up with all the nodes writing to the same place.  The local SSDs or /dev/shm or incorporation of the node name into the path would all be possible ways of dealing with that issue.
 ```
 #!/bin/bash
 export CUDA_MPS_PIPE_DIRECTORY=</path/writeable/by/you>
