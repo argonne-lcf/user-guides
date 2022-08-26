@@ -77,7 +77,7 @@ Theta software can be found in  ```/soft```
   – Anything that is not compute specific will be useable on the AMD host CPUs
   – cmake is good example of something that can be used
 
-For more information on compiling and linking on ThetaGPU visit: [Compiling and Linking on ThetaGPU](/docs/theta-gpu/compiling-linking/compiling-and-linking-overview.md)
+For more information on compiling and linking on ThetaGPU visit: [Compiling and Linking on ThetaGPU](https://www.alcf.anl.gov/support/user-guides/theta-gpu/compiling-and-linking/compiling-and-linking-overview/index.html)
   
 ## NVIDIA HPC SDK
   
