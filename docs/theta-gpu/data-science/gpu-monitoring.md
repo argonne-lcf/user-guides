@@ -20,6 +20,7 @@ export CUDA_VISIBLE_DEVICES="0,1,7"
 In these cases, the GPU orderings will appear as a consecutive list starting with 0.
 
 From inside an application, many software frameworks have ability to let you target specific GPUs, including tensorflow and pytorch:
+
 - [Tensorflow](https://www.tensorflow.org/guide/gpu)
 - [PyTorch](https://pytorch.org/docs/stable/cuda.html)
 
