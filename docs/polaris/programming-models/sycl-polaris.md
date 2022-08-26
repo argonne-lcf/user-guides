@@ -2,9 +2,9 @@
 
 >SYCL (pronounced ‘sickle’) is a royalty-free, cross-platform abstraction layer that enables code for heterogeneous processors to be written using standard ISO C++ with the host and kernel code for an application contained in the same source file. 
 
-- Specification: https://www.khronos.org/sycl/
-- Source code of the compiler: https://github.com/intel/llvm
-- ALCF Tutorial: https://github.com/argonne-lcf/sycltrain
+- Specification: [https://www.khronos.org/sycl/](https://www.khronos.org/sycl/)
+- Source code of the compiler: [https://github.com/intel/llvm](https://github.com/intel/llvm)
+- ALCF Tutorial: [https://github.com/argonne-lcf/sycltrain](https://github.com/argonne-lcf/sycltrain)
 
 ```
 module use /soft/compilers
@@ -125,6 +125,6 @@ LIBS=/opt/cray/pe/mpich/8.1.16/gtl/lib
 $ mpicxx -L$(LIBS) -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' main.cpp
 $ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
 ```
-For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](./job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
+For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](./queueing-and-running-jobs/job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
 
 Note: By default, there is no GPU-aware MPI library linking support.  The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.   
