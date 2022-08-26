@@ -144,8 +144,8 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 
 ### qsub examples ###
 
-* `qsub -A my_allocation -l select=4:system=polaris -l walltime=30:00 -- a.out`
-	* run a.out on 4 chunks on polaris with a walltime of 30 minutes; charge my_allocation;
+* `qsub -A my_allocation -l select=4:system=polaris -l walltime=30:00 -q debug-scaling -- a.out`
+	* run a.out on 4 chunks on polaris with a walltime of 30 minutes in debug-scaling queue; charge my_allocation;
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 cores.
 	* use the -- (dash dash) syntax when directly running an executable.
 * `qsub -A my_allocation -l place=scatter -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
@@ -340,6 +340,8 @@ A sample submission script with directives is below for a 4-node job with 32 MPI
 #PBS -N AFFINITY
 #PBS -l select=4:ncpus=256
 #PBS -l walltime=0:10:00
+#PBS -q debug-scaling
+#PBS -A Catalyst
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=32 # Number of MPI ranks to spawn per node

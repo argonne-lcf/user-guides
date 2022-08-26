@@ -65,7 +65,7 @@ Note that `latest` here mean when these docs were written, summer 2022.  It may 
 
 #### Running the new container
 
-Let's take an interactive node to test the container (`qsub -I -l walltime=1:00:00 -l select=1:system=polaris` for example).
+Let's take an interactive node to test the container (`qsub -I -l walltime=1:00:00 -l select=1:system=polaris -q debug` for example).
 
 When on the interactive node, re-load the modules you need:
 ```bash
