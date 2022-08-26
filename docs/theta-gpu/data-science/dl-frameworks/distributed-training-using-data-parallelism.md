@@ -146,4 +146,4 @@ The useful information here is the message size distribution.
 
   2. Horovod Timeline To perform Horovod timeline analysis, one has to set the environment variable HOROVOD_TIMELINE which specifies the file for the output. export HOROVOD_TIMELINE=timeline.json This file is only recorded on rank 0, but it contains information about activity of all workers. You can then open the timeline file using the chrome://tracing facility of the Chrome browser.
 
-More details: https://horovod.readthedocs.io/en/stable/timeline_include.html
+More details: [https://horovod.readthedocs.io/en/stable/timeline_include.html](https://horovod.readthedocs.io/en/stable/timeline_include.html)
