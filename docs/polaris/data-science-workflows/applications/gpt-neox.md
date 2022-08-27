@@ -1,5 +1,18 @@
 # Instructions for `gpt-neox`:
 
+We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://github.com/EleutherAI/gpt-neox) running on Polaris.
+
+!!! note
+
+    The instructions below should be **ran directly from a compute node**.
+
+    Explicitly, to request an interactive job (from `polaris-login`):
+    ```shell
+    $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
+    ```
+
+    Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+
 1. Clone base environment from `conda/2022-07-19`:
   ```shell
   module load conda/2022-07-19
@@ -61,8 +74,11 @@
 
     You may need to create / modify your `.deepspeed_env` if one does not exist.
 
-    This file should contain lines of the form `{KEY}={VAL}`, which will be set
-    as environment variables on all active ranks.
+    The `.deepspeed_env` file expects each line to be of the form `KEY=VALUE`.
+
+    Each of these will then be set as environment variables on each available
+    worker specified in our `hostfile`.
+
 
 To ensure all of our workers have the same `$PATH`, `$LD_LIBRARY_PATH`, we can:
 
