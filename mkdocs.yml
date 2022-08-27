@@ -230,7 +230,8 @@ extra:
       link: 'https://github.com/argonne-lcf/alcf-userguide'
 
 plugins:
-  - search
+  - search:
+      lang: en
 
 
 
