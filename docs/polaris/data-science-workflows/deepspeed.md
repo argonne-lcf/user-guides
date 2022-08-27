@@ -1,9 +1,24 @@
 # DeepSpeed
-The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](https://argonne-lcf.github.io/user-guides/polaris/data-science-workflows/python).
+The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](./python.md).
 
 We describe below the steps needed to get started with DeepSpeed on Polaris.
 
 We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
+
+
+!!! note
+
+    The instructions below should be **ran directly from a compute node**.
+
+    Explicitly, to request an interactive job (from `polaris-login`):
+    ```shell
+    $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
+    ```
+
+    Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+
+
+## Running DeepSpeed on Polaris
 
 1. Clone [microsoft/DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) and navigate into the directory:
     ```shell
@@ -36,7 +51,7 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
     !!! warning
 
         The `.deepspeed_env` file expects each line to be of the form KEY=VALUE.
-        Each of these variables will then be set on each available worker specified in our `hostfile`.
+        Each of these will then be set as environment variables on each available worker specified in our `hostfile`.
 
 5. We can then run the `cifar10_deepspeed.py` module using DeepSpeed:
     ```shell
