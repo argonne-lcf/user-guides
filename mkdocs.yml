@@ -43,8 +43,11 @@ nav:
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science:
         - Python: polaris/data-science-workflows/python.md
+        - DeepSpeed: polaris/data-science-workflows/deepspeed.md
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Balsam: polaris/data-science-workflows/balsam.md
+        - Applications:
+            - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models: 
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
