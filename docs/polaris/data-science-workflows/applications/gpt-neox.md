@@ -13,6 +13,7 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
 
     Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
 
+
 1. Clone base environment from `conda/2022-07-19`:
   ```shell
   module load conda/2022-07-19
@@ -54,7 +55,7 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
 5. Create a modified `hostfile`:
   ```shell
   cat $PBS_NODEFILE > hostfile
-  sed -e 's/$/ slots=4/' -i hostfile
+  sed -e 's/$/slots=4/' -i hostfile
   export DLTS_HOSTFILE=hostfile 
   ```
 
@@ -73,12 +74,8 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
 !!! warning
 
     You may need to create / modify your `.deepspeed_env` if one does not exist.
-
-    The `.deepspeed_env` file expects each line to be of the form `KEY=VALUE`.
-
-    Each of these will then be set as environment variables on each available
-    worker specified in our `hostfile`.
-
+    This file should contain lines of the form `{KEY}={VAL}`, which will be set
+    as environment variables on all active ranks.
 
 To ensure all of our workers have the same `$PATH`, `$LD_LIBRARY_PATH`, we can:
 
