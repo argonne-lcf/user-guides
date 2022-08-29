@@ -12,9 +12,15 @@ We will not repeat the detailed instructions for building docker containers, but
 
 The trickiest parts of building containers for ALCF systems is ensuring proper MPI support and GPU driver compatibility.
 
+## Building your first container
+
+The easiest way to build a container is from your laptop. [First, install Docker.](https://docs.docker.com/get-docker/) Then follow these steps.
+
+We have an example installation in the [Container](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/Containers) directory, which contains an `Dockerfile`. This is a container recipe file that we will use to tell Docker how to install our software.
+
 ## Example `Dockerfile`
 
-We include example build source code here: [Local Example Source](Local/source). This includes an example [Dockerfile](Local/Dockerfile) which we will describe line-by-line below.
+We include example build source code here: [Local Example Source](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/Containers/source). This includes an example [Dockerfile](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Dockerfile) which we will describe line-by-line below.
 
 ```Dockerfile
 FROM ubuntu:20.04
@@ -63,7 +69,7 @@ RUN chmod +x /usr/submit.sh
 RUN mpicc -o /usr/source/mpi_hello_world /usr/source/mpi_hello_world.c
 ```
 
-Next we copy the [source/](/03_containers/Local/source) code examples from our repo (paths are with respect to the location of the `Dockerfile`) into our containers filesystem and build the C-file into a binary we can later execute on Theta.
+Next we copy the [source/](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/Containers/source) code examples from our repo (paths are with respect to the location of the `Dockerfile`) into our containers filesystem and build the C-file into a binary we can later execute on Theta.
 
 ```Dockerfile
 ENTRYPOINT ["/usr/submit.sh"]
@@ -80,7 +86,7 @@ The first step is to create Docker Hub account here: [DockerHub Hub](https://hub
 
 Create a Docker Hub Repository:
 
-![docker_hub_repo](README_media/docker_hub_repo.gif)
+![docker_hub_repo](files/docker_hub_repo.gif)
 
 Then build your Image:
 
@@ -118,11 +124,8 @@ singularity build <image_name> docker://<username>/<repository_name>:<tag>
 ```
 
 Example:
-
-<figure markdown>
-  ![Singularity build](files/singularity_build.gif){ width="700" }
-  <figcaption>Singularity Build</figcaption>
-</figure>
+  
+![Singularity build](files/singularity_build.gif)
 
 ## Run Singularity container on Theta
 

@@ -1,7 +1,7 @@
 # Singularity on ThetaGPU
 
 ## Containers on Theta(GPU)
-On Theta(GPU), container creation can be achieved by using Docker on your local machine, or using a Singularity recipe file and building on a Theta(GPU) worker node.
+On Theta(GPU), container creation can be achieved by using Docker on your local machine as mentioned [here](https://www.alcf.anl.gov/support/user-guides/theta/data-science-workflows/singularity/index.html) , or using a Singularity recipe file and building on a Theta(GPU) worker node.
 
 ## Docker on ThetaGPU
 If you followed the `Dockerfile` instructions, using the Theta(GPU) specific `Dockerfile_thetagpu` you can build your container for theta using:
@@ -59,7 +59,7 @@ Hello world from processor thetagpu12, rank 3 out of 16 processors
 
 ## Building using Singularity Recipes
 
-While building using Docker on your local machine tends to be the easier method. There are sometimes reasons to build in the environment of the supercomputer. In this case, one can build a singularity container on ThetaGPU in an interactive session on a compute (or worker) node. First a recipe file is needed, below is an example singularity definition file. 
+While building using Docker on your local machine tends to be the easier method. There are sometimes reasons to build in the environment of the supercomputer. In this case, one can build a singularity container on ThetaGPU in an interactive session on a compute (or worker) node. First a recipe file is needed, below is an example singularity definition file which can also be found [here](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def). 
 
 Detailed directions for recipe construction are available on the [Singularity Recipe Page](https://sylabs.io/guides/2.6/user-guide/container_recipes.html).
 
@@ -174,7 +174,7 @@ singularity build --fakeroot <image_name>.sif <def_filename>.def
 
 ## Run Singularity container on ThetaGPU compute
 
-An example job submission script is here: [job_submission_thetagpu.sh](./job_submission_thetagpu.sh).
+An example job submission script is here: [job_submission_thetagpu.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpu.sh).
 
 First we define our job and our script takes the container name as an input parameter.
 
@@ -264,7 +264,7 @@ Hello world from processor thetagpu01, rank 2 out of 16 processors
 
 There are several containers on ThetaGPU that will help you get started with deep learning experiments that can efficiently use the A100 GPUs. We have different optimized container for DL here `ls /lus/theta-fs0/software/thetagpu/nvidia-containers/`
 
-The [bootstap.def](./bootstrap.def) gives an example of how these containers were created.
+The [bootstap.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/bootstrap.def) gives an example of how these containers were created.
 
 The image is bootstrapped from an NVidia image, in this case from a [PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch) build. One can also use the [Tensorflow](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) build. At the time of this writing, the latest tag for the PyTorch image was `22.04-py3`, but users should select the version that best suits their needs.
 
@@ -283,7 +283,7 @@ Next we need to install MPI support for cross-node parallel training.
     # Install horovod
     CC=$(which mpicc) CXX=$(which mpicxx) HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod
 ```
-Next build the container on a ThetaGPU compute node, following the instructions in the previous section. Then an example job submission script is here: [job_submission_thetagpudl.sh](./job_submission_thetagpudl.sh).
+Next build the container on a ThetaGPU compute node, following the instructions in the previous section. Then an example job submission script is here: [job_submission_thetagpudl.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpudl.sh).
     
     
 
