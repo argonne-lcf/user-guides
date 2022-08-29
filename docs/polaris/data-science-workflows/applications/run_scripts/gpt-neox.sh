@@ -1,46 +1,17 @@
 #!/bin/bash -l
-# UG Section 2.5, page UG-24 Job Submission Options
-# Add another # at the beginning of the line to comment out a line
-# NOTE: adding a switch to the command line will override values in this file.
-
 # Highly recommended 
 # The first 15 characters of the job name are displayed in the qstat output:
 #PBS -N gpt-neox
-
-# If you need a queue other than the default (uncomment to use)
-##PBS -q <queue name>
-# Controlling the output of your application
-# UG Sec 3.3 page UG-40 Managing Output and Error Files
-# By default, PBS spools your output on the compute node and then uses scp to move it the
-# destination directory after the job finishes.  Since we have globally mounted file systems
-# it is highly recommended that you use the -k option to write directly to the destination
-# the doe stands for direct, output, error
-##PBS -o <path for stdout>
-##PBS -k doe
-##PBS -e <path for stderr>
-# Setting job dependencies
-# UG Section 6.2, page UG-107 Using Job Dependencies
-# There are many options for how to set up dependancies;  afterok will give behavior similar
-# to Cobalt (uncomment to use)
-##PBS depend=afterok:<jobid>:<jobid>
-
-# Environment variables (uncomment to use)
-# Section 6.12, page UG-126 Using Environment Variables
-# Sect 2.59.7, page RG-231 Enviornment variables PBS puts in the job environment
-##PBS -v <variable list>
-## -v a=10, "var2='A,B'", c=20, HOME=/home/zzz
-#PBS -V
-# The rest is an example of how an MPI job might be set up
+# ------------------------------------------------------------------------------------
+# To submit this script on Polaris:
+# qsub -A <PROJECT> -V -q debug-scaling -l select=2 -l walltime=01:00:00 gpt-neox.sh
+# ------------------------------------------------------------------------------------
 echo Working directory is $PBS_O_WORKDIR
 cd $PBS_O_WORKDIR
 
 TSTAMP=$(date "+%Y-%m-%d-%H%M%S")
 echo "Job ID: ${PBS_JOBID}"
 echo "Job started at: ${TSTAMP}"
-
-# ---- Specify directories and executable for experiment ------------------
-# DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -LP)
-# echo "DIR:$DIR"
 
 if [[ ! -d "${PBS_O_WORKDIR}" ]]; then
   echo "Creating directory: ${PBS_O_WORKDIR}"
@@ -80,16 +51,10 @@ echo "CUDA_HOME=${CUDA_HOME}" >> "${DSENV_FILE}"
 echo "https_proxy=${https_proxy}" >> "${DSENV_FILE}"
 echo "http_proxy=${http_proxy}" >> "${DSENV_FILE}"
 
-# echo "Preparing data"
-# python3 prepare_data.py -d data
-# echo "done."
+echo "Preparing data"
+python3 prepare_data.py -d data
+echo "done."
 
 echo "Starting training"
 python3 ./deepy.py train.py -d configs small.yml local_setup.yml
 echo "done"
-
-
-
-
-
-
