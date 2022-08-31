@@ -7,11 +7,11 @@ Tensorflow is a popular, open source deep learning framework developed and relea
 Tensorflow is installed on Polaris already, available in the `conda` module.  To use it from a compute node, please do:
 
 ```bash
-module load conda/2022-07-19
+module load conda
 conda activate
 ```
 
-Then, you can load tensorflow in `python` as usual:
+Then, you can load tensorflow in `python` as usual (below showing results from the `conda/2022-07-19` module):
 
 ```python
 >>> import tensorflow as tf
@@ -20,7 +20,7 @@ Then, you can load tensorflow in `python` as usual:
 >>>
 ```
 
-This installation of tensorflow was built from source and the cuda libraries it uses (11.5) are found via the `CUDA_HOME` environment variable:
+This installation of tensorflow was built from source and the cuda libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2022-07-19` module):
 
 ```bash
 $ echo $CUDA_HOME
