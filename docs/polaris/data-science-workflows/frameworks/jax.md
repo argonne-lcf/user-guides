@@ -13,8 +13,8 @@ conda activate
 Then, you can load JAX in `python` as usual (below showing results from the `conda/2022-07-19` module):
 
 ```python
->>> import torch
->>> torch.__version__
+>>> import jax
+>>> jax.__version__
 '0.3.15'
 >>>
 ```
