@@ -28,7 +28,7 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
 
 2. Load `conda` module and activate base environment:
     ```shell
-    $ module load conda/2022-07-19
+    $ module load conda
     $ conda activate base
     $ which python3
     /soft/datascience/conda/2022-07-19/mconda3/bin/python3

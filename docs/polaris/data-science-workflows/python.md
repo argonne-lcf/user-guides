@@ -8,7 +8,7 @@ Users can activate this environment by first loading the `conda` module, and the
 Explicitly (either from an interactive job, or inside a job script):
 
 ```bash
-$ module load conda/2022-07-19
+$ module load conda
 $ conda activate base
 (base) $ which python3
 /soft/datascience/conda/2022-07-19/mconda3/bin/python3
@@ -21,7 +21,7 @@ To extend this environment (e.g. install additional packages), users can create 
 This can be done by:
 
 ```bash
-$ module load conda/2022-07-19
+$ module load conda
 $ conda activate base
 (base) $ conda create --clone base --prefix /path/to/envs/base-clone
 (base) $ conda activate /path/to/envs/base-clone
