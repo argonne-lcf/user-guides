@@ -14,13 +14,13 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
     Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
-1. Clone base environment from `conda/2022-07-19`:
+1. Clone base environment from `conda`:
   ```shell
-  module load conda/2022-07-19
+  module load conda
   conda activate base
   # NOTE: The path should be replaced in the --prefix flag below ⤵
-  conda create --clone base --prefix /path/to/conda/envs/gpt-neox-2022-07-19
-  conda activate /path/to/conda/envs/gpt-neox-2022-07-19
+  conda create --clone base --prefix /path/to/conda/envs/gpt-neox
+  conda activate /path/to/conda/envs/gpt-neox
   ```
 
 2. Clone the `EleutherAI/gpt-neox` repository:
