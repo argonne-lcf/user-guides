@@ -54,8 +54,13 @@ PyTorch is compatible with scaling up to multiple GPUs per node, and across mult
 
 2. Horovod and DDP work best when you limit the visible devices to only one GPU.  Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work!  You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`.   On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
 
+### DeepSpeed
+
+DeepSpeed is also available and usable on Polaris.  For more information, please see the [DeepSpeed](../deepspeed.md) documentation directly.
+
 ## PyTorch Dataloaders
 
 ## TODO
 
+More information about PyTorch Dataloaders is coming soon.  Meanwhile, please note there is a bug that causes a hang when using pytorch data loaders + distributed training (horovod, DDP, etc).  To workaround this, Nvidia recommends setting `num_workers=0` in the dataloader configuration.
 
