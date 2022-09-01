@@ -1,7 +1,7 @@
 site_name: ALCF User Guides
 nav:
   - Home: index.md
-  - Account and Project Management: 
+  - Account and Project Management:
     - Account and Project Management Overview: https://www.alcf.anl.gov/support-center/account-and-project-management
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
@@ -15,7 +15,7 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-  - Polaris: 
+  - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
@@ -43,12 +43,16 @@ nav:
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science:
         - Python: polaris/data-science-workflows/python.md
-        - DeepSpeed: polaris/data-science-workflows/deepspeed.md
         - Containers: polaris/data-science-workflows/containers/containers.md
-        - Balsam: polaris/data-science-workflows/balsam.md
+        - Frameworks:
+            - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
+            - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
+            - Jax: polaris/data-science-workflows/frameworks/jax.md
+            - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
         - Applications:
+            - Balsam: polaris/data-science-workflows/applications/balsam.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
-    - Programming Models: 
+    - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
         - Kokkos: polaris/programming-models/kokkos-polaris.md
@@ -106,16 +110,16 @@ nav:
       - PyTorch: theta/data-science-workflows/pytorch.md
       - Containers: theta/data-science-workflows/containers/containers.md
       - TensorFlow: theta/data-science-workflows/tensorflow.md
-    - Programming Models: 
+    - Programming Models:
       - Kokkos: theta/programming-models/kokkos.md
       - MPI: theta/programming-models/mpi-on-theta.md
       - OpenMP: theta/programming-models/openmp-theta.md
       - Raja: theta/programming-models/raja.md
-    - Debugging Tools: 
+    - Debugging Tools:
       - Arm DDT: theta/debugging-tools/arm-ddt.md
       - ATP and STAT: theta/debugging-tools/atp-and-stat.md
       - GDB: theta/debugging-tools/gdb.md
-    - Performance Tools: 
+    - Performance Tools:
       - Arm MAP: theta/performance-tools/arm-map.md
       - CrayPat: theta/performance-tools/craypat.md
       - Darshan: theta/performance-tools/darshan.md
@@ -147,11 +151,11 @@ nav:
         - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
         - Running Tensorflow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
         - Tensorboard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
-    - Programming Models: 
+    - Programming Models:
       - Kokkos: theta-gpu/programming-models/kokkos.md
       - OpenMP: theta-gpu/programming-models/openmp.md
       - Raja: theta-gpu/programming-models/raja.md
-    - Performance Tools: 
+    - Performance Tools:
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
   - AI Testbed: https://argonne-lcf.github.io/ai-testbed-userdocs/
@@ -162,19 +166,19 @@ nav:
       - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
     - Queueing and Running Jobs:
       - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
-    - Software and Libraries: 
+    - Software and Libraries:
       - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
       - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
       - ParaView: cooley/software-and-libraries/paraview.md
       - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
       - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
       - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
-    - Programming Models: 
+    - Programming Models:
       - Kokkos: cooley/programming-models/kokkos.md
       - OpenCL: cooley/programming-models/opencl.md
       - OpenMP: cooley/programming-models/openmp.md
       - Raja: cooley/programming-models/raja.md
-    - Performance Tools: 
+    - Performance Tools:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
@@ -232,6 +236,3 @@ extra:
 plugins:
   - search:
       lang: en
-
-
-

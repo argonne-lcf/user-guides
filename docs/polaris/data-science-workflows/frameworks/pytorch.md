@@ -56,7 +56,7 @@ PyTorch is compatible with scaling up to multiple GPUs per node, and across mult
 
 ### DeepSpeed
 
-DeepSpeed is also available and usable on Polaris.  For more information, please see the [DeepSpeed](../deepspeed.md) documentation directly.
+DeepSpeed is also available and usable on Polaris.  For more information, please see the [DeepSpeed](./deepspeed.md) documentation directly.
 
 ## PyTorch Dataloaders
 
