@@ -1,8 +1,6 @@
-# Singularity on Theta
-
-## Containers on Theta(KNL)
+# Containers on Theta(KNL)
 Containers are a method for shipping software that is pre-built inside a pre-defined static software environment. 
-At ALCF, users must run [Singularity](https://sylabs.io/guides/3.8/user-guide/index.html) containers. Singularity is a container technology built for supercomputers with securtiy in mind. 
+At ALCF, users must run [Singularity](https://sylabs.io/guides/3.8/user-guide/index.html) containers. Singularity is a container technology built for supercomputers with security in mind. 
 Typically we recommend users build [Docker](https://docs.docker.com/) containers first, which can then be easily converted to Singularity containers.
 
 We will not repeat the detailed instructions for building docker containers, but do provide system specific examples of what a `Dockerfile` should look like below.
@@ -12,13 +10,13 @@ We will not repeat the detailed instructions for building docker containers, but
 
 The trickiest parts of building containers for ALCF systems is ensuring proper MPI support and GPU driver compatibility.
 
-## Building your first container
+## Docker
 
 The easiest way to build a container is from your laptop. [First, install Docker.](https://docs.docker.com/get-docker/) Then follow these steps.
 
 We have an example installation in the [Container](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/Containers) directory, which contains an `Dockerfile`. This is a container recipe file that we will use to tell Docker how to install our software.
 
-## Example `Dockerfile`
+### Example `Dockerfile`
 
 We include example build source code here: [Local Example Source](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/Containers/source). This includes an example [Dockerfile](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Dockerfile) which we will describe line-by-line below.
 
@@ -77,7 +75,7 @@ ENTRYPOINT ["/usr/submit.sh"]
 
 In Docker (and Singularity) you can simply "run" a container if an entry point is defined, so calling `docker run <container-name>` in this recipe executes our `submit.sh` script. Otherwise we can be more explicit can call any binary in our container using `docker exec <container-name> <command>`.
 
-## Building the Docker Image and Upload to Docker Hub
+### Building the Docker Image and Upload to Docker Hub
 
 Side Note: 
 Docker uses the terms "image" and "contianer" this way: 'images' are a static software environment from which 'containers' can be launched and created. For instance, I would have one image named `my_analysis_app` which contains my applications. However, this application can be run on multiple input data files in parallel. I can therefore use this image to launch multiple concurrent 'containers' and provide each one with different input data. Each 'container' is an isolated application running. They can be 'started' and 'stopped' or 'restarted'. I can 'enter' these containers interactively and do things to the running environment, e.g. `apt install python`, but when my container stops running all these changes are gone. Only changes to the base image last (though you can create a new image from a running container).
@@ -86,7 +84,7 @@ The first step is to create Docker Hub account here: [DockerHub Hub](https://hub
 
 Create a Docker Hub Repository:
 
-![docker_hub_repo](files/docker_hub_repo.gif)
+![docker_hub_repo](../files/docker_hub_repo.gif)
 
 Then build your Image:
 
@@ -113,9 +111,11 @@ docker push jtchilders/alcf_cwp_example:thetagpu
 
 Quick demo:
 
-![docker_hub_repo_build](files/docker_hub_repo_build.gif)
+![docker_hub_repo_build](../files/docker_hub_repo_build.gif)
 
-## Building Singularity images from Docker images
+## Singularity
+
+### Building Singularity images from Docker images on Theta
 
 Anywhere singularity is installed, for instance on the Theta login nodes, you can run a build command based off a docker image using:
 
@@ -125,15 +125,15 @@ singularity build <image_name> docker://<username>/<repository_name>:<tag>
 
 Example:
   
-![Singularity build](files/singularity_build.gif)
+![Singularity build](../files/singularity_build.gif)
 
-## Run Singularity container on Theta
+### Run Singularity container on Theta
 
 ```bash
 qsub -A <project-name> /path/to/job_submission_theta.sh </path/to/image_name>
 ```
 
-## Example `job_submission_theta.sh`
+### Example `job_submission_theta.sh`
 
 First we define the job submission parameters (number of nodes `-n`, queue name `-q`, wall time `-t`, etc.) that are needed to submit a job on Theta(KNL), the number of ranks per node, and the container is passed as an argument to the submission script.
 

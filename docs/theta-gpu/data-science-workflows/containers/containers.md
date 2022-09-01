@@ -1,19 +1,19 @@
-# Singularity on ThetaGPU
+# Containers on Theta(GPU)
 
-## Containers on Theta(GPU)
-On Theta(GPU), container creation can be achieved by using Docker on your local machine as mentioned [here](https://www.alcf.anl.gov/support/user-guides/theta/data-science-workflows/singularity/index.html) , or using a Singularity recipe file and building on a Theta(GPU) worker node.
+On Theta(GPU), container creation can be achieved by using Docker on your local machine as mentioned in [Example `Dockerfile`](../../../theta/data-science-workflows/containers/containers.md#example-dockerfile), or using a Singularity recipe file and building on a Theta(GPU) worker node.
 
-## Docker on ThetaGPU
-If you followed the `Dockerfile` instructions, using the Theta(GPU) specific `Dockerfile_thetagpu` you can build your container for theta using:
+## Building using Docker
+If you followed the `Dockerfile` instructions, using the Theta(GPU) specific [`Dockerfile_thetagpu`](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Dockerfile_thetagpu) you can build your container for theta gpu using:
 ```bash
 singularity build <image_name> docker://<username>/<repo_name>:<tag>
 # using tutorial example
 singularity build my_image.simg docker://jtchilders/alcf_cwp_example:thetagpu
 ```
 
-![singularity_build_thetagpu](files/singularity_build_thetagpu.gif)
+![singularity_build_thetagpu](../files/singularity_build_thetagpu.gif)
 
-Then you can submit a job to Theta(GPU) using
+Then you can submit a job to Theta(GPU) using the [job submission script](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpu.sh)
+
 ```bash
 module load cobalt/cobalt-gpu
 qsub -A <project-name> job_submission_thetagpu.sh ./my_image.simg
@@ -164,11 +164,11 @@ export https_proxy=http://proxy.tmi.alcf.anl.gov:3128
 ```
 
 Now build the container using `--fakeroot` where `<def_filename>.def` is the definition file we have defined in the example above and `<image_name>.sif` is the user defined image file name
-
+Using [mpi.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def) example
 ```bash
 # important you run this in the proper path because the file copies in
 # the `%files` section of the recipe uses relative paths on the host.
-cd /path/to/CompPerWorkshop/03_containers/ThetaGPU
+cd 
 singularity build --fakeroot <image_name>.sif <def_filename>.def 
 ```
 
@@ -217,10 +217,10 @@ Finally the exectuable is launched. Notice on NVidia systems that the `singulari
 ```bash
 mpirun -hostfile $COBALT_NODEFILE -n $PROCS -npernode $PPN singularity exec --nv -B $MPI_BASE $CONTAINER /usr/source/mpi_hello_world
 ```
-
 The job can be submitted using:
 ```bash
 qsub -A <project-name> job_submission_thetagpu.sh /path/to/my_image.sif
+```
 
 The output should look like this:
 ```bash
@@ -284,6 +284,3 @@ Next we need to install MPI support for cross-node parallel training.
     CC=$(which mpicc) CXX=$(which mpicxx) HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod
 ```
 Next build the container on a ThetaGPU compute node, following the instructions in the previous section. Then an example job submission script is here: [job_submission_thetagpudl.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpudl.sh).
-    
-    
-
