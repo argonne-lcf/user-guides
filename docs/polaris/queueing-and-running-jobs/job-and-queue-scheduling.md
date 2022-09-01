@@ -1,10 +1,10 @@
 ## Documentation / Tools
-* [The PBS "BigBook"](https://anl.box.com/s/rj7ac90tv6wxeu20lvfqf5j0cga76owc) - This is really excellent.  I highly suggest you download it and search through it when you have questions.  Can be found at the link above or online.
-* [Cobalt qsub options to PBS qsub options](https://anl.box.com/s/qdxqrprgiejcuz2m0cmcmde1mobhj81v) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
+* [The PBS "BigBook"](https://2021.help.altair.com/2021.1.2/PBS%20Professional/PBSAdminGuide2021.1.2.pdf) - This is really excellent.  I highly suggest you download it and search through it when you have questions.  Can be found at the link above or online.
+* [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
 * `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
 
 ## Introduction
-At a high level, getting computational tasks run on systems at ALCF  is a two step process:
+At a high level, getting computational tasks run on systems at ALCF is a two step process:
 
 1. You request and get allocated resources (compute nodes) on one or more of the systems.  This is accomplished by interacting with the job scheduler / workload manager.  In the ALCF we use PBS Professional.
 2. You execute your tasks on those resources.  This is accomplished in your job script by interacting with various system services (MPI, OpenMP, the HPE PALS job launch system, etc.)
