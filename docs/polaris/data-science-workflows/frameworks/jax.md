@@ -6,8 +6,7 @@ JAX is another popular python package for accelerated computing.  JAX is built o
 
 JAX is installed on Polaris via the `conda` module, available with:
 ```bash
-module load conda
-conda activate
+module load conda; conda activate
 ```
 
 Then, you can load JAX in `python` as usual (below showing results from the `conda/2022-07-19` module):
@@ -40,7 +39,7 @@ export XLA_FLAGS="--xla_gpu_force_compilation_parallelism=1"
 
 Jax has intrinsic scaling tools to use multiple GPUs on a single node, via the `pmap` function.  If this is sufficient for your needs, excellent.  If not, another alternative is to use the newer package [mpi4jax](https://github.com/mpi4jax/mpi4jax).
 
-MPI4JAX is still new and requires setting some environment variables for good performance and usability:
+mpi4Jax is a relatively new project and requires setting some environment variables for good performance and usability:
 - Set `MPI4JAX_USE_CUDA_MPI=1` to use CUDA-Aware MPI, supported in the `conda` module, to do operations directly from the GPU.
 - Set `CUDA_ROOT=$CUDA_HOMEMPICH_GPU_SUPPORT_ENABLED=1`
 
@@ -88,4 +87,4 @@ if rank == 0:
 ```
 
 
-JAX and MPI4JAX are both still somewhat early in their software lifecycles.  Updates are frequent, and if you require assistance please contact support@alcf.anl.gov
+JAX and mpi4jax are both still somewhat early in their software lifecycles.  Updates are frequent, and if you require assistance please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
