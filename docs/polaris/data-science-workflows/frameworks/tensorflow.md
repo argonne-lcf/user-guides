@@ -1,10 +1,10 @@
 # TensorFlow on Polaris
 
-TensorFlow is a popular, open source deep learning framework developed and released by Google.  The [TensorFlow home page](https://www.tensorflow.org/) has more information about TensorFlow, which you can refer to.  For trouble shooting on Polaris, please contact support@alcf.anl.gov.
+TensorFlow is a popular, open-source deep learning framework developed and released by Google.  The [TensorFlow home page](https://www.tensorflow.org/) has more information about TensorFlow, which you can refer to.  For trouble shooting on Polaris, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Installation on Polaris
 
-TensorFlow is installed on Polaris already, available in the `conda` module.  To use it from a compute node, please do:
+TensorFlow is already pre-installed on Polaris, available in the `conda` module.  To use it from a compute node, please do:
 
 ```bash
 module load conda
@@ -20,7 +20,7 @@ Then, you can load TensorFlow in `python` as usual (below showing results from t
 >>>
 ```
 
-This installation of TensorFlow was built from source and the cuda libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2022-07-19` module):
+This installation of TensorFlow was built from source and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2022-07-19` module):
 
 ```bash
 $ echo $CUDA_HOME
@@ -29,7 +29,7 @@ $ echo $CUDA_HOME
 
 If you need to build applications that use this version of TensorFlow and CUDA, we recommend using these cuda libraries to ensure compatibility.  We periodically update the TensorFlow release, though updates will come in the form of new versions of the `conda` module.
 
-TensorFlow is also available through nvidia containers that have been translated to Singularity containers.  For more information about containers, please see the [containers](../containers/containers.md) documentation page.
+TensorFlow is also available through NVIDIA containers that have been translated to Singularity containers.  For more information about containers, please see the [Containers](../containers/containers.md) documentation page.
 
 ## TensorFlow Best Practices on Polaris
 
@@ -45,7 +45,7 @@ When running TensorFlow applications, we have found the following practices to b
 
 ## Multi-GPU / Multi-Node Scale up
 
-TensorFlow is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with tensorFlow has been seen with horovod in particular.  For details, please see the [horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).  Some polaris specific details that may be helpful to you:
+TensorFlow is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with tensorFlow has been seen with horovod in particular.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).  Some polaris specific details that may be helpful to you:
 
 1. CPU affinity and NCCL settings can improve scaling performance, particularly at the largest scales.  In particular, we encourage users to try their scaling measurements with the following settings:
  - Set the environment variable `NCCL_COLLNET_ENABLE=1`

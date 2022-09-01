@@ -11,7 +11,7 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
     $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
     ```
 
-    Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
 1. Clone base environment from `conda/2022-07-19`:

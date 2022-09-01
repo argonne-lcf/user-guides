@@ -1,5 +1,5 @@
 # DeepSpeed
-The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](./python.md).
+The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](../python.md).
 
 We describe below the steps needed to get started with DeepSpeed on Polaris.
 
@@ -15,7 +15,7 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
     $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
     ```
 
-    Refer to [job scheduling and execution](../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
 ## Running DeepSpeed on Polaris
