@@ -12,8 +12,8 @@ module load conda; conda activate
 Then, you can load JAX in `python` as usual (below showing results from the `conda/2022-07-19` module):
 
 ```python
->>> import torch
->>> torch.__version__
+>>> import jax
+>>> jax.__version__
 '0.3.15'
 >>>
 ```
@@ -41,7 +41,7 @@ Jax has intrinsic scaling tools to use multiple GPUs on a single node, via the `
 
 mpi4Jax is a relatively new project and requires setting some environment variables for good performance and usability:
 - Set `MPI4JAX_USE_CUDA_MPI=1` to use CUDA-Aware MPI, supported in the `conda` module, to do operations directly from the GPU.
-- Set `CUDA_ROOT=$CUDA_HOMEMPICH_GPU_SUPPORT_ENABLED=1`
+- Set `MPICH_GPU_SUPPORT_ENABLED=1` to use CUDA-Aware MPI.
 
 The following code, based off of a test script from the mpi4jax repository, can help you verify you are using mpi4jax properly:
 
@@ -85,6 +85,5 @@ if rank == 0:
    print(result)
 
 ```
-
 
 JAX and mpi4jax are both still somewhat early in their software lifecycles.  Updates are frequent, and if you require assistance please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
