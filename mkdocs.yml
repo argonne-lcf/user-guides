@@ -104,7 +104,7 @@ nav:
       - MongoDB: theta/data-science-workflows/mongo-db.md
       - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
       - PyTorch: theta/data-science-workflows/pytorch.md
-      - Singularity: theta/data-science-workflows/singularity.md
+      - Containers: theta/data-science-workflows/containers/containers.md
       - TensorFlow: theta/data-science-workflows/tensorflow.md
     - Programming Models: 
       - Kokkos: theta/programming-models/kokkos.md
@@ -135,18 +135,18 @@ nav:
       - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
     - Data Science:
-      - Data Science Software Availability: theta-gpu/data-science/data-science-software-availability.md
-      - Building Python Packages: theta-gpu/data-science/building-python-packages.md
-      - GPU Monitoring: theta-gpu/data-science/gpu-monitoring.md
-      - GPU Node Queue and Policy: theta-gpu/data-science/gpu-node-queue-and-policy.md
-      - Jupyter Hub: theta-gpu/data-science/jupyter-hub.md
-      - Python/C++ Code Interoperability: theta-gpu/data-science/pythonc-code-interoperability.md
-      - Singularity on ThetaGPU: theta-gpu/data-science/singularity.md
+      - Data Science Software Availability: theta-gpu/data-science-workflows/data-science-software-availability.md
+      - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
+      - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
+      - GPU Node Queue and Policy: theta-gpu/data-science-workflows/gpu-node-queue-and-policy.md
+      - Jupyter Hub: theta-gpu/data-science-workflows/jupyter-hub.md
+      - Python/C++ Code Interoperability: theta-gpu/data-science-workflows/pythonc-code-interoperability.md
+      - Containers: theta-gpu/data-science-workflows/containers/containers.md
       - Deep Learning Frameworks:
-        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science/dl-frameworks/distributed-training-using-data-parallelism.md
-        - Running PyTorch with Conda: theta-gpu/data-science/dl-frameworks/running-pytorch-conda.md
-        - Running Tensorflow with Conda: theta-gpu/data-science/dl-frameworks/running-tensorflow-conda.md
-        - Tensorboard Instructions: theta-gpu/data-science/dl-frameworks/tensorboard-instructions.md
+        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md
+        - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
+        - Running Tensorflow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
+        - Tensorboard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
     - Programming Models: 
       - Kokkos: theta-gpu/programming-models/kokkos.md
       - OpenMP: theta-gpu/programming-models/openmp.md
