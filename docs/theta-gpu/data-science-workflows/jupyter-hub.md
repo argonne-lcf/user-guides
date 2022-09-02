@@ -35,7 +35,7 @@ python -m ipykernel install --user --name jhub_myenv
 source deactivate
  
 From notebook:
-!source activate;python -m ipykernel install --user --name jhub_myenv
+!source activate jhub_myenv; python -m ipykernel install --user --name jhub_myenv
 ```
 
 After completing these steps, you will see jhub_myenv kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.
