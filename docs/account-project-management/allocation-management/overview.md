@@ -1,26 +1,25 @@
-# Allocation Management Overview
-Allocations require management – balance checks, resource allocation, requesting more time, etc.
+# Allocations on ALCF Computing Resources
 
-## Checking for an Active Allocation
-To determine if there is an active allocation, check [Job Submision](https://www.alcf.anl.gov/support/user-guides/theta/queueing-and-running-jobs/job-and-queue-scheduling/index.html#submit-a-job).
+## Getting an Allocation Award
+### INCITE, ALCC, and ADSP
+Researchers gain access to ALCF systems for computational science and engineering projects—typically with awards of millions of core-hours—through competitive, peer-reviewed allocation programs supported by the DOE and Argonne. Our peer-reviewed award programs consist of the [INCITE](https://www.alcf.anl.gov/science/incite-allocation-program), [ALCC](https://www.alcf.anl.gov/science/alcc-allocation-program), and [ADSP](https://www.alcf.anl.gov/science/adsp-allocation-program) programs. More information about the programs, including dates for our CFPs, can be found on their web pages.
 
-For information how how to run the query, look at our documentation on our [sbank Allocations Accounting System](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-allocation-accounting-system) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
+### Director's Discretionary 
+Alternatively, ALCF offers a Director's Discretionary allocation award program to leadership computing preparation, INCITE and ALCC scaling, and application performance to maximize scientific application efficiency and productivity on leadership computing platforms. See the [Director's Discretionary (DD) Program page](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program) for more information.
 
-## Determining the Balance of an Allocation
-To determine which platforms have an active balance, check our allocation accounting system [sbank](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-allocation-accounting-system).
+## Initializing Your Awarded Allocation 
+Projects with INCITE, ALCC, and ADSP awards will be contacted directly by the ALCF staff with information on creating accounts.
 
-- To obtain the allocation balance, check the sbank command [sbank-list-allocations](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-list-allocations).
-- DD projects with a negative balance will not be able to run jobs until they have requested additional time, see Getting more time below.
-- INCITE and ALCC PIs automatically email a summary of project usage.  If this is a DD project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+Director's Discretionary awards will receive information in the award confirmation email. 
 
-## Allocation Expiration
-Projects and allocations at the ALCF are different.  A particular project might have multiple allocations of time. For example, a discretionary project that has been approved for more than 3 times will have 3 allocations (2 are probably expired) but just one project. Projects will not expire, allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Use the two bullets above (Checking for an active allocation and Determining the balance of an allocation) to determine active allocations.
+## Allocation Resources
+While requesting an allocation, users can choose from:
+Computes: Theta (KNL Node), ThetaGPU (GPU Node), and Cooley
+File System: Grand and Eagle
 
-## Getting More Time
-To request an extension of your existing discretionary allocation or to request additional hours, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with answers to the following:
+## Policy Information Related to Allocations
+Pullback Policy
 
-- What you have accomplished with your original allocation?
--   Please include a brief description of any publications or major presentations that were (or will be) generated in full or in part because of this allocation.
-- What you will do with the extra time?
-- What you are requesting as your new expiration date?
-- How many additional hours you are requesting?
+## Requesting an Allocation Extension
+If you would like to request a Director's Discretionary (DD) allocation, or if you are already a PI of a project that has one, you can request additional time using the request form (located on the page of the selected project).
+
