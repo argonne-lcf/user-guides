@@ -2,6 +2,8 @@
 
 We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://github.com/EleutherAI/gpt-neox) running on Polaris.
 
+A batch submission script for the following example is available [here](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/DeepSpeed/gpt-neox/README.md).
+
 !!! note
 
     The instructions below should be **ran directly from a compute node**.
