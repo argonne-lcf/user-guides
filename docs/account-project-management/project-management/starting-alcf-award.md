@@ -1,16 +1,17 @@
 # Starting Your ALCF Award
 
-The following guide is for PIs and Proxies to prepare for the start of their INCITE project.
+The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit for questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Get Started with ALCF’s Systems
-To get your project up and running, please view our documentation on Theta and ThetaGPU at: https://www.alcf.anl.gov/support-center/theta-and-thetagpu
+To get familiar with our resources, please view our user guides: 
+[https://www.alcf.anl.gov/support/user-guides/index.html](https://www.alcf.anl.gov/support/user-guides/index.html)
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
-- Theta and Cooley Overview : http://bit.ly/Getting_Started_On_Theta
-- Running on Theta: https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…
-- ThetaGPU Overview: https://www.youtube.com/watch?v=N0Xip1mUZY8
-- Lustre File Striping Basics: https://www.alcf.anl.gov/support-center/training-assets/file-systems-an…
-- ACDC (using Eagle): https://www.alcf.anl.gov/support-center/theta-and-thetagpu/eagle-data-s…
+- [Theta and Cooley Overview](http://bit.ly/Getting_Started_On_Theta)
+- [Running on Theta](https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…) 
+- [ThetaGPU Overview](https://www.youtube.com/watch?v=N0Xip1mUZY8)
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-an…)
+- [Community Data Sharing with ACDC (using Eagle)](https://www.alcf.anl.gov/support/user-guides/data-management/acdc/acdc-overview/index.html)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
@@ -25,20 +26,24 @@ Before your project begins, you will receive an email with the following project
 
 Once your project has been created, you can view and manage your project details. See Managing Your Team Members.
 
-## Project Status Reports
-After your allocation begins, you will receive a weekly project status report via support@alcf.anl.gov.
+## Project Status Reports for INCITE, ALCC, and ADSP
+**Note:** PIs that are awarded a Director's Discretionary will not receive weekly status project reports.
 
-**Example subject for email**: ALCF INCITE-2022 Project Status Report for [PROJECT SHORT NAME]
+Shortly after your allocation begins, we will begin sending you a weekly project status report via [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to keep you informed or your award progress.
 
-## Reporting Requirements
-Projects are required to submit quarterly reports to inform DOE of your INCITE 2022 progress. We will send you a report template at the end of each quarter.
+Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Project Status Report for [PROJECT SHORT NAME]
 
-Please complete the report promptly and submit it via email to support@alcf.anl.gov. For due dates and penalties, see INCITE Quarterly Report Policy.
+**Reporting Requirements for INCITE, ALCC, and ADSP**
+**Note:** PIs that are awarded a Director's Discretionary allocations are not required to submit project reports.
+
+If you receieved INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation. 
+
+The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](support@alcf.anl.gov). For more information see the Quarterly Report webpage.
 
 ## Account Setup
-If you do not have an ALCF account, you will need to request one at https://accounts.alcf.anl.gov/accountRequest.  When prompted for project name, please select the INCITE project name.
+If you do not have an ALCF account, you will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](support@alcf.anl.gov).
 
-If you have an active ALCF account, submit a request to join the INCITE project at https://accounts.alcf.anl.gov/#!/joinProject
+If you have an active ALCF account, submit a request to join the newly awarded project at https://accounts.alcf.anl.gov/#!/joinProject
 
 ## User Agreement
 If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne’s user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
