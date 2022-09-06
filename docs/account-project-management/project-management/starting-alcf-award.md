@@ -24,49 +24,37 @@ Before your project begins, you will receive an email with the following project
 - **Allocation Start Date**: The start date of your award.
 - **Allocation End Date**: The end date of your award.
 
-Once your project has been created, you can view and manage your project details. See Managing Your Team Members.
-
-## Project Status Reports for INCITE, ALCC, and ADSP
-**Note:** PIs that are awarded a Director's Discretionary will not receive weekly status project reports.
-
-Shortly after your allocation begins, we will begin sending you a weekly project status report via [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to keep you informed or your award progress.
-
-Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Project Status Report for [PROJECT SHORT NAME]
-
-**Reporting Requirements for INCITE, ALCC, and ADSP**
-**Note:** PIs that are awarded a Director's Discretionary allocations are not required to submit project reports.
-
-If you receieved INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation. 
-
-The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](support@alcf.anl.gov). For more information see the Quarterly Report webpage.
-
 ## Account Setup
-If you do not have an ALCF account, you will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](support@alcf.anl.gov).
+**If you do not have an ALCF account:** You will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](support@alcf.anl.gov).
 
-If you have an active ALCF account, submit a request to join the newly awarded project at https://accounts.alcf.anl.gov/#!/joinProject
+**If you have an active ALCF account:** Submit a request to join the newly awarded project at https://accounts.alcf.anl.gov/#!/joinProject
 
-## User Agreement
+### Information for Foreign National Access 
+The U.S. Department of Energy has guidelines and requirements for foreign nationals who access its facilities and sites. This guidance is issued in DOE Order 142.3, which is part of Argonne's contract; therefore, all foreign nationals (non-U.S. Citizens) must obtain authorization prior to using ALCF resources.
+
+If you are a foreign national and do not have current authorization credentials, you are required to submit a ANL-593 (Foreign National Access Request) form. It is critical that identity documentation requests sent by ALCF staff are completed as early as possible to facilitate timely processing for your account approval.
+
+### User Agreement for INCITE, ALCC, and ADSP
+**Note:** This does not apply to Director's Discretionary awards.
+
 If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne’s user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
 
 A list of home institutions that have master agreements in place is located on this webpage:  https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-…
 
-### ALCF Acknowledgement Form
+### ALCF Acknowledgement Form for INCITE, ALCC, and ADSP
+**Note:** This does not apply to Director's Discretionary awards.
+
 Every project team member who requests an ALCF account must sign and return an acknowledgment form, stating that they agree to the terms in the user agreement.
 
 The form is located at: https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf. Please print, sign, scan and email it to accounts@alcf.anl.gov.
-
-### Foreign National Access Request Form
-The U.S. Department of Energy has guidelines and requirements for foreign visitors who access its facilities and sites. This guidance is issued in DOE Order 142.3, which is part of Argonne's contract; therefore, all foreign visitors (non-U.S. Citizens) must obtain authorization prior to using ALCF resources.
-
-If you are a foreign national and do not have current authorization credentials, you will require an ANL-593 (Foreign National Access Request) form. It is critical that documentation requests sent by ALCF staff are completed as early as possible to facilitate timely processing for your account approval.
 
 ## Managing Project Team Membership
 As a PI, you can add members to your project. You can assign proxies who are project members authorized to add or renew project members on your behalf.
 
 A project PI or proxy has the authority to:
-- Approve and renew accounts.
-- Add and delete users to/from the project.
-- Approve Foreign Assignment/Visit Request form renewals for project members who are foreign nationals.
+- Approve and renew accounts
+- Add and delete users to/from the project
+- Approve Foreign Assignment/Visit Request form renewals for project members who are foreign nationals
 
 During your project setup, the ALCF Support Team will request the following information to establish your project members:
 - The names, email addresses, and/or ALCF usernames (if already existing) of up to two proxies and all project members.
@@ -89,6 +77,20 @@ If you project members have active ALCF accounts but have not been added to your
 
 ## Moving Your Data
 We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see Using Globus on Theta.
+
+## Project Status Reports for INCITE, ALCC, and ADSP
+**Note:** PIs that are awarded a Director's Discretionary will not receive weekly status project reports.
+
+Shortly after your allocation begins, we will begin sending you a weekly project status report via [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to keep you informed or your award progress.
+
+Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Project Status Report for [PROJECT SHORT NAME]
+
+## Reporting Requirements for INCITE, ALCC, and ADSP ##
+**Note:** PIs that are awarded a Director's Discretionary allocations are not required to submit project reports.
+
+If you receieved INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation. 
+
+The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](support@alcf.anl.gov). For more information see the Quarterly Report webpage.
 
 ## Policies
 ### Pullback Policy
