@@ -1,6 +1,8 @@
 # DeepSpeed
 The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using / cloning the base environment can be found [here](../python.md).
 
+A batch submission script for the following example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/DeepSpeed).
+
 We describe below the steps needed to get started with DeepSpeed on Polaris.
 
 We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
