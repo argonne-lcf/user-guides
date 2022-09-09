@@ -119,6 +119,8 @@ make -j1
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:15:00
+#PBS -q debug
+#PBS -A Catalyst
 
 module purge
 module add PrgEnv-nvhpc cray-fftw cray-libsci

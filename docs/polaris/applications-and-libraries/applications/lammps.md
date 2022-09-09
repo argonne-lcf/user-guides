@@ -71,6 +71,8 @@ An example submission script for running a KOKKOS-enabled LAMMPS executable is b
 #PBS -l select=64:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:15:00
+#PBS -q prod
+#PBS -A Catalyst
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 

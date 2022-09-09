@@ -165,7 +165,7 @@ The script will submit a COBALT job using the `datascience` allocation, for a ma
 Paths or environment variables containing quotes may break the scripts.
 Current JVM on Theta is not aware of NUMA, and we recommend the use of cache mode (`--attrs=mcdram=cache`).
 
-==add video link ==
+<iframe width="560" height="315" src="https://www.youtube.com/embed/P1yJMKbVYWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
  

@@ -1,5 +1,5 @@
 # Polaris
-Polaris is a 560 node HPE Apollo 6500 Gen 10+ based system.  Each node has a single 2.8 Ghz AMD EPYC Milan 7543P 32 core CPU with 512 GB of DDR4 RAM and four Nvidia A100 GPUs, a pair of local 1.6TB of SSDs in RAID0 for the users use, and a pair of slingshot network adapters.  They are currently slingshot 10, but are scheduled to be upgraded to slingshot 11 in the fall of 2022.  There are two nodes per chassis, seven chassis per rack, and 40 racks for a total of 560 nodes.  More detailed specifications are as follows:
+Polaris is a 560 node HPE Apollo 6500 Gen 10+ based system.  Each node has a single 2.8 Ghz AMD EPYC Milan 7543P 32 core CPU with 512 GB of DDR4 RAM and four Nvidia A100 GPUs connected via NVLink, a pair of local 1.6TB of SSDs in RAID0 for the users use, and a pair of slingshot network adapters.  They are currently slingshot 10, but are scheduled to be upgraded to slingshot 11 in late 2022 or early 2023.  There are two nodes per chassis, seven chassis per rack, and 40 racks for a total of 560 nodes.  More detailed specifications are as follows:
 
 ## Polaris Compute Nodes
 | POLARIS COMPUTE | DESCRIPTION | PER NODE | AGGREGATE |
@@ -25,11 +25,36 @@ Note 2: 8 memory channels rated at 204.8 GiB/s
 | BF16 Tensor Core | 312 TF | 1.3 PF |
 | FP16 Tensor Core | 312 TF | 1.3 PF |
 | INT8 Tensor Core | 624 TOPS | 2496 TOPS |
-| Max TDP Power | 250 W | 400 W |
+| Max TDP Power | 250 W | 400 W |  
+
+## Polaris Device Affinity Information
+|	CPU Affinity |	NUMA Affinity  |        | GPU0 |	GPU1  |	GPU2 |	GPU3  |	mlx5\_0|mlx5\_1|
+|----------------|-----------------|--------|------|----------|------|--------|--------|-------|
+|	24-31,56-63  |	3              |GPU0    | X    |	NV4   |	NV4  | 	NV4   |	SYS   |	 SYS   |
+|	16-23,48-55  |	2              |GPU1    |NV4   |     X    |	NV4  |	NV4   |	SYS   |	 PHB   |
+|	8-15,40-47   |	1              |GPU2    |NV4   |	NV4   |	 X   |	NV4   |	SYS   |	 SYS   |
+|	0-7,32-39    |	0              |GPU3    |NV4   |	NV4   |	NV4  |	 X    |	PHB   |	 SYS   |
+|                |                 |mlx5\_0 |SYS   |	SYS   |	SYS  |	PHB   |	 X    |	 SYS   |
+|                |                 |mlx5\_1 |SYS   |	PHB   |	SYS  |	SYS   |	SYS   |	  X    |  
+
+###Legend:  
+
+**X**    = Self  
+**SYS**  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)  
+**NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node  
+**PHB**  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)  
+**PXB**  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)  
+**PIX**  = Connection traversing at most a single PCIe bridge  
+**NV#**  = Connection traversing a bonded set of # NVLinks  
+
+
+Links to detailed Nvidia A100 documentation:  
+    - [NVIDIA A100 Tensor Core GPU Architecture](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf)  
+    - [NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/)  
 
 
 ## Login nodes
-There are six login nodes for editing code, building code, submitting / monitoring jobs, checking usage (sbank), etc..  The various compilers and libraries are present on the logins, so most users should be able to build their code.  However, if your build requires the physical presence of the GPU, you will need to build on a compute node.  
+There are four login nodes for editing code, building code, submitting / monitoring jobs, checking usage (sbank), etc..  The various compilers and libraries are present on the logins, so most users should be able to build their code.  However, if your build requires the physical presence of the GPU, you will need to build on a compute node.  
 
 All users share the same login nodes so please be courteous and respectful of your fellow users.  For example, please do not run computationally or IO intensive pre- or post-processing on the logins and keep the parallelism of your builds to a reasonable level.
 
