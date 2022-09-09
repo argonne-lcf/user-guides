@@ -39,6 +39,32 @@ Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to re
 
 For users that want to continue using `nvcc` it is important to be mindful of differences with the newer `nvc` and `nvc++` compilers. For example, the `-cuda` flag instructs `nvcc` to compile `.cu` input files to `.cu.cpp.ii` output files which are to be separately compiled, whereas the same `-cuda` flag instructs `nvc`, `nvc++`, and `nvfortran` to enable CUDA C/C++ or CUDA Fortran code generation. The resulting output file in each case is different (text vs. object) and one may see `unrecognized format error` when `-cuda` is incorrectly passed to `nvcc`.
 
+### Known Issues and Workarounds
+
+If you are using nvcc to invoke nvc++ and compiling C++17 code, and are seeing the following warning and unable to compile C++17 constructs:
+
+```
+polaris-login-01(~)> nvcc --std=c++17 -ccbin nvc++ ~/smalltests/bool_constant.cpp
+nvcc warning : The -std=c++17 flag is not supported with the configured host compiler. Flag will be ignored.
+"/home/zippy/smalltests/bool_constant.cpp", line 10: error: namespace "std" has no member class "bool_constant"
+      : std::bool_constant<(UnaryPred<Ts>::value || ...)> {};
+             ^
+
+"/home/zippy/smalltests/bool_constant.cpp", line 10: error: class or struct definition is missing
+      : std::bool_constant<(UnaryPred<Ts>::value || ...)> {};
+                          ^
+
+2 errors detected in the compilation of "/home/zippy/smalltests/bool_constant.cpp".
+polaris-login-01(~)>
+```
+
+you will need to work around it by loading the latest cudatoolkit module atop PrgEnv-nvhpc:
+
+```
+module load cudatoolkit-standalone/11.6.2
+```
+
+
 
 [//]: # (ToDo: repeat here some of the nvidia-specific items from general compiling page??)
 [//]: # (ToDo: do we want separate pages for each compiler or a single compiler page with brief info on each of them with links to further info??)
