@@ -21,6 +21,40 @@ The swift-home file system is regularly backed up to tape. The data file system 
 - Located under /home
 - Each home directory is subject to a quota based on user file ownership. The default quota is 50 GB
 
+#### Sharing Home Directory Files or Subdirectories with Others
+
+If you need to share files or subdirectories (folders) under your home directory with collaborators (other ALCF users), you need to change file permissions from their defaults. You must change permissions of your top-level /home/username directory, even if you only want to share certain files/directories within it. Using normal linux file permissions control is good enough to give access to *all* other users, and is simple. For more fine-grained control over specific users, you need to use linux access control list (ACL) commands.
+
+##### Simple Method: Permission to All Users
+
+First, a one-time-only change to your top-level /home/username directory.
+
+```
+chmod o+x /home/username
+```
+
+Then you may permission individual files and/or subdirectories with read access. For example, to recursively change permissions on /home/username/subdirectoryname so that all files in that subdirectory and any subdirectory trees within it are world-readable, you would use
+
+```
+chmod -R o+Xr /home/username/subdirectoryname
+```
+
+##### Refined Method: Use ACL to Give Permission to Specific Users
+
+First, a one-time-only change to your top-level /home/username directory. To share files/directories with user gilgamesh, for example:
+
+```
+setfacl u:gilgamesh:--x /home/username
+```
+
+Then you may permission individual files and/or subdirectories with read access. For example, to recursively change permissions on /home/username/subdirectoryname so that all files in that subdirectory and any subdirectory trees within it are readable to user gilgamesh, you would use
+
+```
+setfacl -R -u gilgamesh:m:r-X,d:u:gilgamesh:r-X /home/username/subdirectoryname
+```
+
+
+
 ### Project Directories
 - Directories on Grand or Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests) to submit requests for an allocation on Eagle. Note that project directories are no longer created on theta-fs0.
 - Directory paths:
