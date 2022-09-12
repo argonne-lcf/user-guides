@@ -289,9 +289,22 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 |backfill-medium|25|49|30 min|12 hrs|low priority, negative project balance|
 |backfill-large|50|496|30 min|24 hrs|low priority, negative project balance|  
 
-**Note 1:**: You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
+**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
 **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
 **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**  
+
+### Scheduling Errors
+
+If you receive a "qsub: Job rejected by all possible destinations" error, then check your submission parameters.
+The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues.
+Please see the table above for limits on production queue job sizes.
+
+**NOTE:** For batch submissions, if the parameters within your submission script do not meet the parameters of any of the above queues you might not receive the "Job submission" error on the command line at all.
+This can happen because your job is in waiting in a routing queue and has not yet reached the execution queues.
+In this case you will receive a jobid back and qsub will exit, however when the proposed job is routed, it will be rejected from the execution queues.
+In that case, the job will be deleted from the system and will not show up in the job history for that system.
+If you run a qstat on the jobid, it will return "qstat: Unknown Job Id <jobid>".
+
 
 ### Job Priority
 As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
