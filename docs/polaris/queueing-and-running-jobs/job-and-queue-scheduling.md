@@ -1,6 +1,6 @@
 ## Documentation / Tools
-* [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf) - This is really excellent.  I highly suggest you download it and search through it when you have questions.
-* [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) - The Big Book is, well, big and it contains a lot of material that isn't relative to general users.  If you prefer, you can download just the users guide.
+* [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf) - This is really excellent.  We highly suggest you download it and search through it when you have questions.
+* [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) - This is the users guide.
 * [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) - If you don't download the Big Book, the Reference Guide is also useful.  It shows every option and gives you details on how to format various elements on the command line.
 * [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
 * `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
@@ -34,12 +34,12 @@ If you are an existing ALCF user and are familiar with Cobalt, you will find the
 4. `qdel` - cancel an uneeded request for resources
 
 #### `qsub` - submit a job to run
-* Users Guide, Section 2, page UG-11 and Reference Guide Sec 2.57, page RG-216
+* Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
 
 The single biggest difference between Cobalt and PBS is the way you select resources when submitting a job.  In Cobalt, every system had its own Cobalt server and you just specified the number of nodes you wanted (-n).  With PBS, we are planning on running a single "PBS Complex" which means there will be a single PBS server for all systems in the ALCF and you need to specify enough constraints to get your job to run on the resources you want/need.  One advantage of this is that getting resources from two different systems or "co-scheduling" is trivially possible.
 
 ##### Resource Selection and Job Placement #####
-Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs
+Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs in the Reference Guide.
 
 Resources come in two flavors:
 
@@ -86,7 +86,7 @@ Here is a heavily commented sample PBS submission script:
 # The first 15 characters of the job name are displayed in the qstat output:
 #PBS -N <name>
 
-# If you need a queue other than the default (uncomment to use)
+# If you need a queue other than the default, which is prod (uncomment to use)
 ##PBS -q <queue name>
 
 # Controlling the output of your application
@@ -272,22 +272,22 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 ##  Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
-|----|----|----|----|----|----|
-|debug|1|2|10 min|1 hr|max 8 nodes in use by this queue ay any given time|
-|debug-scaling|1|10|10 min|1 hr|max 1 job running/accruing/queued **per-user** |
-|prod|10|496|30 min|24 hrs|Routing queue; See below|
+|Queue Name |Node Min |Node Max	|Time Min |Time Max | Notes                                              |
+|----|----|----|----|----|----------------------------------------------------|
+|debug|1|2|10 min|1 hr| max 8 nodes in use by this queue ay any given time |
+|debug-scaling|1|10|10 min|1 hr| max 1 job running/accruing/queued **per-user**     |
+|prod|10|496|30 min|24 hrs| Routing queue; See below                           |
 
 `prod` is routing queue and routes your job to one of the following six execution queues:  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
-|----|----|----|----|----|----|
+|Queue Name |Node Min |Node Max	|Time Min |Time Max | Notes                                  |
+|----|----|----|----|----|----------------------------------------|
 |small|10|24|30 min|6 hrs||
 |medium|25|49|30 min|12 hrs||
 |large|50|496|30 min|24 hrs||
-|backfill-small|10|24|30 min|6 hrs|low priority, negative project balance|
-|backfill-medium|25|49|30 min|12 hrs|low priority, negative project balance|
-|backfill-large|50|496|30 min|24 hrs|low priority, negative project balance|  
+|backfill-small|10|24|30 min|6 hrs| low priority, negative project balance |
+|backfill-medium|25|49|30 min|12 hrs| low priority, negative project balance |
+|backfill-large|50|496|30 min|24 hrs| low priority, negative project balance |  
 
 **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
 **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
@@ -295,7 +295,7 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 
 ### Scheduling Errors
 
-If you receive a "qsub: Job rejected by all possible destinations" error, then check your submission parameters.
+If you receive a `qsub: Job rejected by all possible destinations` error, then check your submission parameters.
 The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues.
 Please see the table above for limits on production queue job sizes.
 
@@ -303,7 +303,7 @@ Please see the table above for limits on production queue job sizes.
 This can happen because your job is in waiting in a routing queue and has not yet reached the execution queues.
 In this case you will receive a jobid back and qsub will exit, however when the proposed job is routed, it will be rejected from the execution queues.
 In that case, the job will be deleted from the system and will not show up in the job history for that system.
-If you run a qstat on the jobid, it will return "qstat: Unknown Job Id <jobid>".
+If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
 
 ### Job Priority
