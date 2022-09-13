@@ -1,12 +1,14 @@
 
 ## VASP 6.x.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
 
-VASP is a commercial code for materials and solid state simulations. Users must have a license to use this code in ALCF systems. More information on how to get access to VASP binaries can be found [here](https://www.alcf.anl.gov/support-center/theta/vasp).
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found [here](https://www.vasp.at).
+
+Users must have a license to use this code on ALCF systems. More information on how to get access to VASP binaries can be found [here](https://www.alcf.anl.gov/support-center/theta/vasp).
 
 ### General compiling/installing instructions provided by VASP support 
-Instructions and samples of `makefile.include` could be found in [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU)
+Instructions and samples of `makefile.include` could be found in the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
 
-The follow `makefile.include` was tailored for Polaris, originally taken [from here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc)
+The follow `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
 ```makefile
 # makefile.inclide
@@ -29,7 +31,7 @@ CPP_OPTIONS = -DHOST=\"LinuxNV\" \
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
 
 FC         = ftn  -acc -target-accel=nvidia80 -mp
-FCL        = ftn   -acc -target-accel=nvidia80 -mp    -c++libs
+FCL        = ftn  -acc -target-accel=nvidia80 -mp    -c++libs
 
 FREE       = -Mfree
 
@@ -54,8 +56,8 @@ CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
 LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
 
 # Software emulation of quadruple precsion
-#NVROOT = /opt/nvidia/hpc_sdk/Linux_x86_64/21.
-NVROOT = /opt/nvidia/hpc_sdk/Linux_x86_64/22.3
+#NVROOT = /opt/nvidia/hpc_sdk/Linux_x86_64/22.3
+NVROOT = ${NVIDIA_PATH}
 QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
@@ -94,17 +96,16 @@ BINDIR     = ../../bin
 
 #### Setting up compiler and libraries with `module`
 
-The follow modules would integrate into `ftn` compiler the libraries and path to headers provided by Cray.
-```
-module purge
-module add PrgEnv-nvhpc
-module add cray-libsci/21.08.1.2
-module add cray-fftw/3.3.8.13
+The follow modules will update the include and libraries paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
+```
+module add cray-libsci
+module add cray-fftw
 ```
 
 ### Compiling vasp
-Once the `modules` are loaded and a `makefile.include` is in `vasp` folder, compiling all the object files and binaries is done with:
+Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
+
 ```
 make -j1
 ```
@@ -118,25 +119,24 @@ make -j1
 #!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
-#PBS -l walltime=0:15:00
+#PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A Catalyst
 
-module purge
-module add PrgEnv-nvhpc cray-fftw cray-libsci
+module add cray-fftw cray-libsci
 
 export MPICH_GPU_SUPPORT_ENABLED=1
-NNODES=1
+NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=4
 NDEPTH=8
 NTHREADS=1
 NGPUS=4
 NTOTRANKS=$(( NNODES * NRANKS ))
 
-aprun -n ${NTOTRANKS} -N ${NRANKS} -d ${NDEPTH} -e OMP_NUM_THREADS=${NTHREADS} /bin/vasp_std
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /path_to_vasp/bin/vasp_std
 ```
 
-Submission script should have executable attibutes to be used with `qsub` script mode.
+Submission scripts should have executable attibutes to be used with `qsub` script mode.
 ```
 chmod +x example-script.sh
 qsub  example-script.sh
@@ -145,8 +145,7 @@ qsub  example-script.sh
 ### Known issues
 ---
 
-* Undefined `MPIX_Query_cuda_support` function at linking binary* 
-This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One turn around to this
+* Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this
 issue is to comment this function call.
 See the follow suggested changes marked by `!!!!!CHANGE HERE ` in the `file:src/openacc.F`
 
