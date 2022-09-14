@@ -67,10 +67,15 @@ The archive space is intended for offline storage of results you wish to retain 
 
 #### Disk Capacity and Retention Policies
 
-|---| /home  | /lus/theta-fs0  or /projects  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
+|---- | /home  | /lus/theta-fs0  or /projects ^*^  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
 | ----------- | ---------------------- | -------------- | -------------- | -------------- |
-| Default Quota (1)  | :material-check:  | :material-check:  |:material-check: |
-| `PUT`       | :material-check-all: U| :material-check-all: U| :material-check-all: U|
-| `DELETE`    | :material-close:     |:material-check-all: U| :material-check-all: U| :material-check-all: U|
+| Default Quota ^1^  | 50 GB  | 1 TB / 1 million files |1 TB / 1 million files | 1 TB / 1 million files |
+| Quota Enforcement ^2^  | hard/soft | hard/soft | hard/soft | hard/soft |
+| Disk Redundancy ^3^    | dual parity |dual parity| dual parity| dual parity|
+|File Server Snapshots ^6^ (frequency/retained)    | none    |none| none| none|
+| File Server Metadata Redundancy   | yes    |yes| yes| yes|
+| File Server Metadata Replication ^4^    | yes |yes| yes|yes|
+| File Server Data Replication ^5^   | yes|yes| no| no|
+| Data Purged from Disk   | n/a  |6 months after project completion ^8^| 6 months after project completion ^8^| After 6 months of inactivity (see Eagle Access termination policy listed in the Eagle section above)|
 
-
+^*^ /lus/theta-fs0 does not apply to Polaris
