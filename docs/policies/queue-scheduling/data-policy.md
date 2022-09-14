@@ -65,3 +65,12 @@ The file system Eagle, a Lustre global parallel file system, has community shari
 ### Archive Space
 The archive space is intended for offline storage of results you wish to retain but either have no immediate need to access or no room in your parallel file system space. Archiving capabilities are available via HPSS. The primary HPSS access is via HSI. HTAR is available, but its path length and file size limitations often cause it to fail. Globus Online and GridFTP are clients that can also be used with HPSS.  Due to the possibility of data corruption or loss due to a bad tape, users can request dual writes for particularly critical data. Such requests will be handled on a case-by-case basis.
 
+#### Disk Capacity and Retention Policies
+
+|---| /home  | /lus/theta-fs0  or /projects  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
+| ----------- | ---------------------- | -------------- | -------------- | -------------- |
+| Default Quota (1)  | :material-check:  | :material-check:  |:material-check: |
+| `PUT`       | :material-check-all: U| :material-check-all: U| :material-check-all: U|
+| `DELETE`    | :material-close:     |:material-check-all: U| :material-check-all: U| :material-check-all: U|
+
+
