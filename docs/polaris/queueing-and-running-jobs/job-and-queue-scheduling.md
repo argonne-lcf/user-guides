@@ -82,9 +82,12 @@ Here is a heavily commented sample PBS submission script:
 #PBS -A <short project name>
 #PBS -l walltime=HH:MM:SS
 
+
 # Highly recommended 
 # The first 15 characters of the job name are displayed in the qstat output:
 #PBS -N <name>
+#file systems used by the job
+#PBS -l filesystems=home:eagle
 
 # If you need a queue other than the default, which is prod (uncomment to use)
 ##PBS -q <queue name>
@@ -143,14 +146,29 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
+### Specifying Filesystems (available after 9/19/22) ###
+**Note: The `filesystems` attribute will be available after 9/19/22. PBS will throw an error if you use `filesystems` in your qsub command before 9/19/22.**
+
+Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified
+all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
+
+If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailabe, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
+
+If a job requesting a filesystem that is marked down is already in the queue, the job will be not run until all of it's requested filesystems are available.
+
+An example of a job requesting filesystems:
+
+`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
+
+To update the filesystems list for your job, use `qalter`. 
 
 ### qsub examples ###
 
-* `qsub -A my_allocation -l select=4:system=polaris -l walltime=30:00 -q debug-scaling -- a.out`
+* `qsub -A my_allocation -l select=4:system=polaris -l filesystems=home:eagle -l walltime=30:00 -q debug-scaling -- a.out`
 	* run a.out on 4 chunks on polaris with a walltime of 30 minutes in debug-scaling queue; charge my_allocation;
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 cores.
 	* use the -- (dash dash) syntax when directly running an executable.
-* `qsub -A my_allocation -l place=scatter -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
+* `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
 #### `qstat` - Query Job/Queue Status 
