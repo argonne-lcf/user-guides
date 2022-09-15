@@ -146,8 +146,9 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
-### Specifying Filesystems (available after 9/19/22) ###
-**Note: The `filesystems` attribute will be available after 9/19/22. PBS will throw an error if you use `filesystems` in your qsub command before 9/19/22.**
+### Specifying Filesystems 
+
+**Note:** The `filesystems` attribute will be **available after 9/19/22**. PBS will throw an error if you use `filesystems` in your qsub command before 9/19/22.
 
 Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified
 all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
