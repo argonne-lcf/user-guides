@@ -127,6 +127,32 @@ qsub -A YourProject -n 256  -t 30  \
 ```
 The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://xgitlab.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
 
+### Specifying Filesystems
+
+On Theta and other systems running Cobalt at the ALCF, your job submission should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. 
+
+You may specify your filesystem by adding filesystems=<list of filesystems> to the --attrs argument of qsub in Cobalt. Valid filesystems are home, eagle, grand, and theta-fs0. The list is comma-delimited. For example, to request the home and eagle filesystems for your job you would add filesystems=home,eagle to your qsub command. If this is not specified, a warning will be printed and then **the job will be tagged as requesting all filesystems and may be held unnecessarily** if a filesystem is not currently available. The warnings are written to stderr of qsub and qalter commands that change the value of the --attrs flag.  Scripts that are parsing stderr from these utilities may encounter errors from the additional warnings if filesystems are not specified in these commands.
+
+If a job is submitted while a filesystem it requested is marked down, the job will automatically be placed into a user_hold and a warning message will be printed, but the job will be otherwise queued. The job is also placed into admin_hold by a sysadmin script. Once the affected filesystem has been returned to normal operation, the admin_hold is released. **You are responsible for releasing the user_hold** once you receive the message that the affected filesystem has been returned to normal operation. The job cannot run until both the holds are released.
+
+If a job requesting a filesystem that is marked down is already in the queue, it will be placed on admin_hold and will be released once the filesystem is operational.
+
+An example of a job requesting filesystems:
+```
+qsub -n 128 -t 30 -q default --attrs filesystems=home,grand -A Project ./my_job.sh
+```
+          
+To update the filesystems list for your job, use qalter. Note that qalter --attrs is a replace and not an update operation. This means that you should once again specify all the attributes that you had in the original qsub command.
+          
+```
+qalter --attr filesystems=home,eagle:mcdram=cache:numa=quad <jobid>
+```
+
+To release user hold:
+```
+qrls <jobid>
+```
+
 ### Interactive Method
 To run an “interactive mode” job on ALCF Cray resources, add the “-I” flag or “--mode interactive” to your qsub line and omit any executable. Your qsub submission will then wait until nodes are allocated to your job and Cobalt will start a shell on a job-launch node on your behalf. You may aprun against your assigned resources and run other interactive commands from this node. It is important to note that your shell is executed from a launch node and not from your compute head-node. Once your allocation ends, all apruns will be terminated, but your shell will remain for any cleanup actions that you choose to take.
 
