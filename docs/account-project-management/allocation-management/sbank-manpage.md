@@ -36,131 +36,135 @@ HPC Accounting System Command Line Interface
   * users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...]
 
 ### OPTIONS
-**-a --allocation**
+#### **-a --allocation**
 enter allocation id
 
-**-c --comment**
+#### **-c --comment**
 enter comment for new or edit commands, display comment for list commands
 
-**-e --event-id**
+#### **-e --event-id**
 enter event db id; event db id is an internal id created by the charging system
 
-**-f --field**
+#### **-f --field**
 enter <field>[:<width>], width is optional; enter -f? or -f "?" for available fields, + to add fields
 
-**-h --help**
+#### **-h --help**
 command line help
 
-**-j --jobid**
+#### **-j --jobid**
 enter jobid; jobid is created by the scheduler and is not unique
 
-**-n --num-field**
+#### **-n --num-field**
 enter number of fields to display
 
-**-p --project**
+#### **-p --project**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed, but only on names
 
-**-r --resource**
+#### **-r --resource**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed, but only on names
 
-**-s --suballocation**
+#### **-s --suballocation**
 enter suballocation id
 
-**-t --transaction**
+#### **-t --transaction**
 enter transaction id
 
-**-u --user**
+#### **-u --user**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed, but only on names
 
-**-w --field-width**
+#### **-w --field-width**
 enter the field width as follows: <field>:<width>, enter -w? or -w "?" for available fields
 
-**-E --end**
+#### **-E --end**
 enter end datetime filter
 
-**-H --human-readable**
+#### **-H --human-readable**
 abbreviate numbers and use unit suffixes: K (thousands), M (millions), G (billions), T (trillions) ...
 
-**-I --get-inactive**
+#### **-I --get-inactive**
 include inactive allocations
 
-**-O --get-only-inactive**
+#### **-O --get-only-inactive**
 get only inactive allocations
 
-**-S --start**
+#### **-S --start**
 enter start datetime filter
 
-**-T --Type**
+#### **-T --Type**
 enter type of transaction
 
-**--all-charges**
+#### **--all-charges**
 for list allocations | projects | users, only show info with charges
 
-**--at**
+#### **--at**
 enter transaction-created datetime filter
 
-**--award-category**
+#### **--award-category**
 enter allocation award category
 
-**--award-type-name**
+#### **--award-type-name**
 enter allocation award-type name
 
-**--created**
+#### **--created**
 enter created datetime filter
 
-**--debug**
+#### **--debug**
 enter debug level
 
-**--get-deleted**
+#### **--get-deleted**
 get deleted objects
 
-**--get-not-charged**
+#### **--get-not-charged**
 get jobs that have not been charged
 
-**--get-only-deleted**
+#### **--get-only-deleted**
 get only deleted objects
 
-**--history-date-range**
+#### **--history-date-range**
 enter history datetime filter
 
-**--home-dir**
+#### **--home-dir**
 enter the directory to store the pbs meta file
 
-**--ignore-pbs-files**
+#### **--ignore-pbs-files**
 all new pbs files will be ignored and marked as processed
 
-**--last-updated**
+#### **--last-updated**
 enter last updated datetime filter
 
-**--no-commas**
+#### **--no-commas**
 remove commas from comma-separated thousands
 
-**--no-header**
+#### **--no-header**
 do not display header
 
-**--no-history**
+#### **--no-history**
 do not display history information
 
-**--no-rows**
+#### **--no-rows**
 do not display rows
 
-**--no-sys-msg**
+#### **--no-sys-msg**
 do not display system message
 
-**--no-totals**
+#### **--no-totals**
 do not display totals
 
-**--queued**
+#### **--queued**
 enter queued datetime filter
 
 ### MORE OPTION EXPLANATIONS
 **For -a, -e, -f, -w, -j, -p, -r, -t, -u, -T, --award-categories, --award_type_names, --cbank_refs options:**
+
 These options can be entered multiple times for different values or entered once for multiple values. 
+
 Examples: 
+
   1. > sbank-list-allocation -u "pershey rojas allcock" or > sbank-list-allocation -u pershey -u rojas -u allcock 
   2. > sbank-list-allocation -f "id p avail" or > sbank-list-allocation -f id -f p -f avail For -u, -p and -r the use of wild card "*" is allowed, but only on names, not ids: 
   
 Examples: 
+
   1. The following command will find allocations for users whose names start with "pers" and also users rojas and allcock. > sbank-list-allocation -u "pers* rojas allcock" 
   2. The following command will find allocations for projects that contain "ratio" in the name. > sbank-list-allocation -p *ratio* 
   3. The following command will find allocations for projects that end with "tion" in the name. > sbank-list-allocation -p *tion 
@@ -184,11 +188,13 @@ If you wish to add fields to the default fields, enter one + symbol anywhere in 
 The fields will be displayed in table format and in the order entered in the command line. You can specify the field width, where WIDTH can be positive or negative value. Left alignment use -, right alignment use + or nothing.
 
 **For -w option:**
+
 FIELD:WIDTH, if the field is displayed it will change the width for the specified field. 
   
 **NOTE:** This will not add the field as in -f option, only change the width. To get available fields you can also use -w? or -w "?" as in -f option.
 
 **For -S, -E, --created, --queued, --last-updated, --history-date-range options:**
+
 These are the date filter options. All dates are treated as UTC. 
   
 You can use any reasonable date string that resembles a date Ambiguous dates will be parsed with the following parsing precedence: **YEAR then MONTH then DAY **
@@ -212,51 +218,66 @@ KEY SYNTAX DEFINITIONS ---------- ----------- n[ow] now, where "now" is current-
 ```
 
 **For -T option:**
+
 Transaction type option. The following are the valid transaction types and their explanation: CHARGE filter on job charges PULLBACK filter on allocation pullbacks DEPOSIT filter on allocation deposits REFUND filter on job refunds VOID filter on void transactions
 
 ### INVOCATION
+
 sbank sbank sbank sbank-detail sbank detail sbank d sbank-detail-allocations sbank detail allocations sbank d a sbank-detail-jobs sbank detail jobs sbank d j sbank-detail-projects sbank detail project sbank d p sbank-detail-transactions sbank detail transactions sbank d t sbank-detail-users sbank detail users sbank d u sbank-list sbank list sbank l sbank-list-allocations sbank list allocations sbank l a sbank-list-jobs sbank list jobs sbank l j sbank-list-projects sbank list projects sbank l p sbank-list-transactions sbank list transactions sbank l t sbank-list-users sbank list users sbank l u
 
 ### ENVIRONMENT VARIABLES
 Command line default options: Define the following environment variables as you would in the command line. Once the environment variable is defined, it will be used as the default options and arguments for the specific command. Command line options will take precedence.
 
 **sbank_DETAIL_ALLOCATIONS_ARGS**
+
 Default arguments and options for sbank-detail-allocations.
 
 **sbank_DETAIL_CATEGORIES_ARGS**
+
 Default arguments and options for sbank-detail-categories.
 
 **sbank_DETAIL_NAMES_ARGS**
+
 Default arguments and options for sbank-detail-names.
 
 **sbank_DETAIL_MESSAGES_ARGS**
+
 Default arguments and options for sbank-detail-messages.
 
 **sbank_DETAIL_JOBS_ARGS**
+
 Default arguments and options for sbank-detail-jobs.
 
 **sbank_DETAIL_PROJECTS_ARGS**
+
 Default arguments and options for sbank-detail-projects.
 
 **sbank_DETAIL_TRANSACTIONS_ARGS**
+
 Default arguments and options for sbank-detail-transactions.
 
 **sbank_DETAIL_USERS_ARGS**
+
 Default arguments and options for sbank-detail-users.
 
 **sbank_LIST_ALLOCATIONS_ARGS**
+
 Default arguments and options for sbank-list-allocations.
 
 **sbank_LIST_JOBS_ARGS**
+
 Default arguments and options for sbank-list-jobs.
 
 **sbank_LIST_PROJECTS_ARGS**
+
 Default arguments and options for sbank-list-projects.
 
 **sbank_LIST_TRANSACTIONS_ARGS**
+
 Default arguments and options for sbank-list-transactions.
 
 **sbank_LIST_USERS_ARGS**
+
 Default arguments and options for sbank-list-users.
 
 #### EXAMPLES
@@ -267,7 +288,9 @@ Default arguments and options for sbank-list-users.
 **Explanation:** Fields will be displayed in order of appearance, where field1:-20 means 20 characters long, left align; where field2:20 means 20 characters long, right align; where field3 uses default sizes. Number fields default to right aligned. Text fields default to left aligned.
 
 **Example 2: -S, -E, --created, --queued, --last-updated, --history-start, --history-end**
+
 Single date-string examples: 
+
 - > sbank-list-allocations -S ">=Oct 11, 2014" start dates that are >= "2014-10-11 00:00:00" 
 - > sbank-list-allocations -S "<=2014-11-10" start dates that are <= "2014-11-10 00:00:00" 
 - > sbank-list-allocations -E "<20141110" end dates that are < "2014-11-10 00:00:00" 
@@ -282,12 +305,14 @@ Single date-string examples:
 - > sbank-list-allocations -S ">2012" start dates that are > "2012-<curr-month>-<curr-day> 00:00:00" 
   
 Range date-string examples: 
+
 - > sbank-list-allocations -S "2013-01-01...2014-01-01" "2013-01-01" <= DATES < "2014-01-01" 
 - > sbank-list-allocations -S "-1y...t" "today -1 year" <= DATES < "today" 
 - > sbank-list-allocations -E "2013...t"" "2013-<curr-month>-<curr-day>" <= DATES < "today" 
 - > sbank-list-allocations -E ">2013...<=t"" "2013-<curr-month>-<curr-day>" < DATES <= "today"
 
 **Example 3: Command invocation examples**
+
 - > sbank-list-projects list projects full command invocation 
 - > sbank list projects list projects meta command invocation
 - > sbank s p list projects partial meta command invocation 
@@ -297,6 +322,7 @@ Range date-string examples:
 - > sbank s a list allocations partial meta command invocation
 
 **Example 4: -h, --help**
+
 - > sbank -h will give you help summary on all of sbank 
 - > sbank list --help will give you help on all the "list" commands 
 - > sbank list allocations -h will give you help on the "list allocations" command
