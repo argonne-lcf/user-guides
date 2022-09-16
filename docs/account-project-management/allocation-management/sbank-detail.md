@@ -1,4 +1,4 @@
-# sbank-detail
+# Manpage for sbank-detail
 
 ## sbank-detail <entity> [options]
 Detail Meta Command
