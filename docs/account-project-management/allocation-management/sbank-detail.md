@@ -13,115 +13,115 @@ Detail Meta Command
   * users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...]
 
 ### OPTIONS
-**-a --allocation**
+#### **-a --allocation**
 enter allocation id
 
-**-c --comment**
+#### **-c --comment**
 enter comment for new or edit commands, display comment for list commands
 
-**-e --event-id**
+#### **-e --event-id**
 enter event db id; event db id is an internal id created by the charging system
 
-**-f --field**
+#### **-f --field**
 enter <field>[:<width>], width is optional; enter -f? or -f "?" for available fields, + to add fields
 
-**-h --help**
+#### **-h --help**
 command line help
 
-**-j --jobid**
+#### **-j --jobid**
 enter jobid; jobid is created by the scheduler and is not unique
 
-**-n --num-field**
+#### **-n --num-field**
 enter number of fields to display
 
-**-p --project**
+#### **-p --project**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed, but only on names
 
-**-r --resource**
+#### **-r --resource**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed but only on names
 
-**-s --suballocation**
+#### **-s --suballocation**
 enter suballocation id
 
-**-t --transaction**
+#### **-t --transaction**
 enter transaction id
 
-**-u --user**
+#### **-u --user**
 enter name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allowed, but only on names
 
-**-w --field-width**
+#### **-w --field-width**
 enter the field width as follows: <field>:<width>, enter -w? or -w "?" for available fields
 
-**-E --end**
+#### **-E --end**
 enter end datetime filter
 
-**-H --human-readable**
+#### **-H --human-readable**
 abbreviate numbers and use unit suffixes: K (thousands), M (millions), G (billions), T (trillions) ...
 
-**-I --get-inactive**
+#### **-I --get-inactive**
 include inactive allocations
 
-**-O --get-only-inactive**
+#### **-O --get-only-inactive**
 get only inactive allocations
 
-**-S --start**
+#### **-S --start**
 enter start datetime filter
 
-**-T --Type**
+#### **-T --Type**
 enter type of transaction
 
-**--all-charges**
+#### **--all-charges**
 for list allocations | projects | users, only show info with charges
 
-**--at**
+#### **--at**
 enter transaction created datetime filter
 
-**--award-category**
+#### **--award-category**
 enter allocation award category
 
-**--award-type-name**
+#### **--award-type-name**
 enter allocation award-type name
 
-**--created**
+#### **--created**
 enter created datetime filter
 
-**--debug**
+#### **--debug**
 enter debug level
 
-**--get-deleted**
+#### **--get-deleted**
 get deleted objects
 
-**--get-not-charged**
+#### **--get-not-charged**
 get jobs that have not been charged
 
-**--get-only-deleted**
+#### **--get-only-deleted**
 get only deleted objects
 
-**--history-date-range**
+#### **--history-date-range**
 enter history datetime filter
 
-**--last-updated**
+#### **--last-updated**
 enter last updated datetime filter
 
-**--no-commas**
+#### **--no-commas**
 remove commas from comma-separated thousands
 
-**--no-header**
+#### **--no-header**
 do not display header
 
-**--no-history**
+#### **--no-history**
 do not display history information
 
-**--no-rows**
+#### **--no-rows**
 do not display rows
 
-**--no-sys-msg**
+#### **--no-sys-msg**
 do not display system message
 
-**--no-totals**
+#### **--no-totals**
 do not display totals
 
-**--queued**
+#### **--queued**
 enter queued datetime filter
   
   
