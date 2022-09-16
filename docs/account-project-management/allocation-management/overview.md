@@ -27,6 +27,10 @@ While requesting an allocation, users can choose from:
 ## Policy Information Related to Allocations
 Pullback Policy
 
-## Requesting an Allocation Extension
-If you would like to request a Director's Discretionary (DD) allocation, or if you are already a PI of a project that has one, you can request additional time using the request form (located on the page of the selected project).
+## Requesting Additional Allocation Hours
+If you are a PI of a Director's Discretionary project that has an active allocation, you can request additional time or an extension using the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests).
 
+<figure markdown>
+  ![Project Management](files/request-allocation.png){ width="700" }
+  <figcaption>To request more hours, renew your project using the allocation request form.</figcaption>
+</figure>
