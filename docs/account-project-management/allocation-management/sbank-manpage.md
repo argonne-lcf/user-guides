@@ -23,14 +23,17 @@ HPC Accounting System Command Line Interface
 #### - list <command> [options] (DEFAULT)
 
 **DETAIL COMMANDS**
-```
-allocations [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-I|-O|-S|-T|...] [<allocation_id> ... <allocation_id>] (DEFAULT) jobs [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] [<jobid|event_id> ... <jobid|event_id>] projects [-a|-f|-n|-p|-r|-u|-w|-E|-H|-I|-S|...] [<project name or id> ... <project name or id>] transactions [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] [<transaction_id> ... <transaction_id>] users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...] [<user name or id> ... <user name or id>]
-```
+  * allocations [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-I|-O|-S|-T|...] [<allocation_id> ... <allocation_id>] (DEFAULT) 
+  * jobs [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] [<jobid|event_id> ... <jobid|event_id>] 
+  * projects [-a|-f|-n|-p|-r|-u|-w|-E|-H|-I|-S|...] [<project name or id> ... <project name or id>] 
+  * transactions [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] [<transaction_id> ... <transaction_id>] 
+  * users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...] [<user name or id> ... <user name or id>]
 
 **LIST COMMANDS**
-```
-allocations [-a|-c|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-I|-O|-S|-T|...] (DEFAULT) jobs [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] projects [-a|-f|-n|-p|-r|-u|-w|-E|-H|-I|-S|...] transactions [-a|-c|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...]
-```
+  * allocations [-a|-c|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-I|-O|-S|-T|...] (DEFAULT) 
+  * jobs [-a|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] projects [-a|-f|-n|-p|-r|-u|-w|-E|-H|-I|-S|...] 
+  * transactions [-a|-c|-e|-f|-j|-n|-p|-r|-t|-u|-w|-E|-H|-S|-T|...] 
+  * users [-a|-f|-n|-p|-r|-u|-w|-E|-H|-S|...]
 
 ### OPTIONS
 **-a --allocation**
