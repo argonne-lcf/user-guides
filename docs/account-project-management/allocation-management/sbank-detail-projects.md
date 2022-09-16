@@ -1,4 +1,4 @@
-# sbank-detail-projects
+# Manpage for sbank-detail-projects
 ## sbank-detail-projects [options] [<project> ... <project>]
 Detail project information. NOTE: 1. The list of <project> arguments are optional; 2. you can also enter <project> list by using the -p option multiple times; 3. regardless, both are optional, and you can get detail project info using the option filters below.
 
