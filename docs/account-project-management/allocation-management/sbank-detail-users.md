@@ -1,4 +1,4 @@
-# sbank-detail-users
+# Manpage for sbank-detail-users
 ## sbank-detail-users [options] [<user> ... <user>]
 Detail user information. 
 
