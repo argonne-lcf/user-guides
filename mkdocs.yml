@@ -51,7 +51,6 @@ nav:
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
         - Applications:
-            - Balsam: polaris/data-science-workflows/applications/balsam.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
@@ -61,6 +60,7 @@ nav:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+    - Workflows: polaris/workflows.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
