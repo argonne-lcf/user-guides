@@ -20,6 +20,7 @@ The executable `hello_affinity` can then be launched in a job script (or directl
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
+#PBS -l filesystems=home
 
 # MPI example w/ 16 MPI ranks per node spread evenly across cores
 NNODES=`wc -l < $PBS_NODEFILE`
