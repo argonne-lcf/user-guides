@@ -75,6 +75,7 @@ nav:
     - Queueing and Running Jobs on Theta:
       - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
+      - Example Job Scripts: theta/queueing-and-running-jobs/example-job-scripts.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
       - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
     - Applications and Libraries:
