@@ -2,7 +2,7 @@ site_name: ALCF User Guides
 nav:
   - Home: index.md
   - Account and Project Management:
-    - Account and Project Management Overview: https://www.alcf.anl.gov/support-center/account-and-project-management
+    - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
     - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
@@ -184,7 +184,7 @@ nav:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
-  - Facility Policies: https://www.alcf.anl.gov/support-center/facility-policies
+  - Facility Policies: policies/alcf-acknowledgement-policy.md
 
 theme:
   name: 'material'
