@@ -4,12 +4,12 @@ Allocations require management – balance checks, resource allocation, requesti
 ## Checking for an Active Allocation
 To determine if there is an active allocation, check [Job Submision](https://www.alcf.anl.gov/support/user-guides/theta/queueing-and-running-jobs/job-and-queue-scheduling/index.html#submit-a-job).
 
-For information how how to run the query, look at our documentation on our [sbank Allocations Accounting System](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-allocation-accounting-system) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
+For information how how to run the query, look at our documentation on our [sbank Allocations Accounting System](sbank-allocation-accounting-system.md) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
 
 ## Using sbank to Determine the Balance of an Allocation
-To determine which platforms have an active balance, check our allocation accounting system [sbank](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-allocation-accounting-system).
+To determine which platforms have an active balance, check our allocation accounting system [sbank](sbank-allocation-accounting-system.md).
 
-- To obtain the allocation balance, check the sbank command [sbank-list-allocations](https://www.alcf.anl.gov/support-center/account-and-project-management/sbank-list-allocations).
+- To obtain the allocation balance, check the sbank command [sbank-list-allocations](sbank-list-allocations.md).
 - DD projects with a negative balance will not be able to run jobs until they have requested additional time, see Getting more time below.
 - INCITE and ALCC PIs automatically email a summary of project usage.  If this is a DD project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
