@@ -113,7 +113,7 @@ We have an allocation management tool called sbank, and below are a few helpful 
 You can use the following command to check your project balance on Theta:
 - sbank-list-allocations -p <Project Shortname> -r <system name>
 
-For more command examples and details, see [sbank](#).
+For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).
 
 ## How Can We Help?
 We can also help resolve any issues or needs that may be delaying the start of your scientific campaign.
