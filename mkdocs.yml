@@ -3,6 +3,16 @@ nav:
   - Home: index.md
   - Account and Project Management:
     - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
+    - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+    - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+    - Project Management: 
+      - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
+      - Managing Your Team Members: account-project-management/project-management/team-management.md
+      - Reporting: account-project-management/project-management/project-reports.md
+    - Allocations: 
+      - Allocations on ALCF Computing Resources: account-project-management/allocation-management/overview.md
+      - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
+      - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
     - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
@@ -184,7 +194,19 @@ nav:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
-  - Facility Policies: policies/alcf-acknowledgement-policy.md
+  - Facility Policies: 
+    - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
+    - Account Policies:
+      - Accounts Policy: policies/accounts/accounts-policy.md
+      - Account Sponsorship & Retention Policy: policies/accounts/account-sponsorship-retention-policy.md
+      - User Authentication Policy: policies/accounts/user-authentication-policy.md
+    - Queue and Scheduling Policies:
+      - Queue and Scheduling Policy: policies/queue-scheduling/queue-and-scheduling-policy.md
+      - Refund Policy: policies/queue-scheduling/refund-policy.md
+      - Pullback Policy: policies/queue-scheduling/pullback-policy.md
+    - Data and Software Policies:
+      - Data Policy: policies/data-and-software-policies/data-policy.md
+      - Software Policy: policies/data-and-software-policies/software-policy.md
 
 theme:
   name: 'material'
