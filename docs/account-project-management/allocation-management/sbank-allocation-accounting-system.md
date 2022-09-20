@@ -5,13 +5,13 @@ The sbank accounting system helps users manage their allocations and usage per j
 
 ## Getting Started with sbank
 
-sbank Examples provides a set of example commands on how to use the most common commands. 
+[sbank Example Commands](sbank-examples.md) provides a set of example commands on how to use the most common commands. 
 
 ## sbank Man Pages
 
 Use these sbank man pages to get information on how to use the commands.
 
-- [sbank](sbank.md)
+- [sbank](sbank-manpage.md)
 - [sbank-detail](sbank-detail.md)
 - [sbank-detail-allocations](sbank-detail-allocations.md)
 - [sbank-detail-jobs](sbank-detail-jobs.md)
