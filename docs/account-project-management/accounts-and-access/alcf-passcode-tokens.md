@@ -51,7 +51,7 @@ ssh <ALCF username>@<system_name>.alcf.anl.gov
 ## Troubleshooting your Mobile Token
 **Case 1:** Forgotten PIN: If you enter a PIN for your mobile Token and you get an invalid PIN, you will be asked to re-enter your PIN. After 6 failed attempts your token will be deleted and you will need to call the ALCF help desk or send an email to ALCF support to have a new mobile token provisioned.
 
-**Case 2: **Account Lockout: If you fail to enter the correct password 6 times, you will get a permission denied error on the SSH screen. Upon 4 more failed attempts, your IP will be blocked. You will need to call the ALCF help desk and submit a ticket to have the IP unblocked.
+**Case 2:** Account Lockout: If you fail to enter the correct password 6 times, you will get a permission denied error on the SSH screen. Upon 4 more failed attempts, your IP will be blocked. You will need to call the ALCF help desk and submit a ticket to have the IP unblocked.
 
 **Case 3:** PIN Change: While logged in to the mobile token, click on token settings then tap change PIN. Enter the current PIN followed by the new PIN and confirm.
 
@@ -150,9 +150,13 @@ If it is found to be defective we will promptly replace it. Physical tokens are 
 Please return them to us at:
 
 ALCF Help Desk
+
 Argonne National Laboratory
+
 9700 S. Cass Ave.
+
 Bldg. 240, Rm. 2129
+
 Lemont, IL 60439
 
 ## Resetting the Physical Token PIN
@@ -162,8 +166,12 @@ Please email us at support at alcf.anl.gov for PIN resets. Once your identity ha
 If you no longer need your physical token, please return it to this address:
 
 ALCF Help Desk
+
 Argonne National Laboratory
+
 9700 S. Cass Ave.
+
 Bldg. 240, Rm. 2129
+
 Lemont, IL 60439
 
