@@ -95,4 +95,3 @@ The archive space is intended for offline storage of results you wish to retain 
 7. “Yes” denotes that ALCF does regular backups without intervention from the user. In case of project data, data is backed up to tape   after a stipulated period (see point 8 below) and is retained for 2 years (subject to change). In all other cases, user is responsible for archiving the data to HPSS or copying it to another facility as desired.
 8. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following project end date (except Eagle). Access to the directory will be removed after 90 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis.
 9. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information.
-
