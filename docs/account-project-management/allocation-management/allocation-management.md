@@ -1,4 +1,4 @@
-# Allocation Management Overview
+# Managing Your Allocations
 Allocations require management – balance checks, resource allocation, requesting more time, etc.
 
 ## Checking for an Active Allocation
