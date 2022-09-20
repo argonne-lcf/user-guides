@@ -25,7 +25,7 @@ Before your project begins, you will receive an email with the following project
 - **Allocation End Date**: The end date of your award.
 
 ## Account Setup
-**If you do not have an ALCF account:** You will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](support@alcf.anl.gov).
+**If you do not have an ALCF account:** You will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 **If you have an active ALCF account:** Submit a request to join the newly awarded project at https://accounts.alcf.anl.gov/#!/joinProject
 
@@ -46,7 +46,7 @@ A list of home institutions that have master agreements in place is located on t
 
 Every project team member who requests an ALCF account must sign and return an acknowledgment form, stating that they agree to the terms in the user agreement.
 
-The form is located at: https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf. Please print, sign, scan and email it to accounts@alcf.anl.gov.
+The form is located at: https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf. Please print, sign, scan and email it to [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov).
 
 ## Managing Project Team Membership
 As a PI, you can add members to your project. You can assign proxies who are project members authorized to add or renew project members on your behalf.
@@ -90,7 +90,7 @@ Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Proje
 
 If you receieved INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation. 
 
-The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](support@alcf.anl.gov). For more information see the Quarterly Report webpage.
+The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For more information see the Quarterly Report webpage.
 
 ## Policies
 ### Pullback Policy
@@ -121,6 +121,6 @@ We can also help resolve any issues or needs that may be delaying the start of y
 - Are you having difficulty compiling your application?
 - Does your code have limited restart capabilities?
   
-If your project allocation usage is being held back for reasons due to one of our systems, please contact us for assistance by emailing [support@alcf.anl.gov](support@alcf.anl.gov).
+If your project allocation usage is being held back for reasons due to one of our systems, please contact us for assistance by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
   
   
