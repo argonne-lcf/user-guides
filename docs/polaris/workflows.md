@@ -98,12 +98,13 @@ config = Config(
                 heartbeat_threshold=120,
                 worker_debug=True,
                 max_workers=user_opts["cpus_per_node"],
-                cores_per_worker=1,
+                cores_per_worker=1, # How many workers per core dictacts total workers per node
                 address=address_by_hostname(),
                 cpu_affinity="alternating",
                 prefetch_capacity=0,
                 provider=PBSProProvider(
                     launcher=MpiExecLauncher(),
+                    # Which launcher to use?  Check out the note below for some details.  Try MPI first!
                     # launcher=GnuParallelLauncher(),
                     account=user_opts["account"],
                     queue=user_opts["queue"],
