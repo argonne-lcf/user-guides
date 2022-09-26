@@ -60,7 +60,5 @@ DeepSpeed is also available and usable on Polaris.  For more information, please
 
 ## PyTorch Dataloaders
 
-## TODO
-
-More information about PyTorch Dataloaders is coming soon.  Meanwhile, please note there is a bug that causes a hang when using pytorch data loaders + distributed training (horovod, DDP, etc).  To workaround this, Nvidia recommends setting `num_workers=0` in the dataloader configuration.
+Please note there is a bug that causes a hang when using pytorch data loaders + distributed training (horovod, DDP, etc).  To workaround this, Nvidia recommends setting `num_workers=0` in the dataloader configuration.
 
