@@ -120,6 +120,7 @@ make -j1
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
+#PBS -l filesystems=home:grand:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
