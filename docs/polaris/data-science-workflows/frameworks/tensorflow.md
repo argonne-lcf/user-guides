@@ -57,5 +57,3 @@ TensorFlow is compatible with scaling up to multiple GPUs per node, and across m
 
 # TensorFlow Dataloaders
 
-## TODO
-
