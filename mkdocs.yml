@@ -30,7 +30,6 @@ nav:
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
-#      - Slingshot Network: polaris/hardware-overview/slingshot-network.md
     - Compiling and Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
@@ -61,7 +60,6 @@ nav:
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
         - Applications:
-#            - Balsam: polaris/data-science-workflows/applications/balsam.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
