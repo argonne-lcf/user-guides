@@ -148,9 +148,9 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 ```
 ### Specifying Filesystems 
 
-**Note:** The `filesystems` attribute will be **available after 9/19/22**. PBS will throw an error if you use `filesystems` in your qsub command before 9/19/22.
+**Note: The `filesystems` attribute will be mandatory after October 10, 2022**. 
 
-Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified
+Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified (prior to 10/10/22)
 all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
 
 If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailabe, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
@@ -291,22 +291,22 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 ##  Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max | Notes                                              |
-|----|----|----|----|----|----------------------------------------------------|
-|debug|1|2|10 min|1 hr| max 8 nodes in use by this queue ay any given time |
-|debug-scaling|1|10|10 min|1 hr| max 1 job running/accruing/queued **per-user**     |
-|prod|10|496|30 min|24 hrs| Routing queue; See below                           |
+|Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
+|----|----|----|-----------------------------|----|----------------------------------------------------|
+|debug|1|2| 10 min (5 min from 10/3/22) |1 hr| max 8 nodes in use by this queue ay any given time |
+|debug-scaling|1|10| 10 min (5 min from 10/3/22)|1 hr| max 1 job running/accruing/queued **per-user**     |
+|prod|10|496| 30 min (5 min from 10/3/22)|24 hrs| Routing queue; See below                           |
 
 `prod` is routing queue and routes your job to one of the following six execution queues:  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max | Notes                                  |
-|----|----|----|----|----|----------------------------------------|
-|small|10|24|30 min|6 hrs||
-|medium|25|49|30 min|12 hrs||
-|large|50|496|30 min|24 hrs||
-|backfill-small|10|24|30 min|6 hrs| low priority, negative project balance |
-|backfill-medium|25|49|30 min|12 hrs| low priority, negative project balance |
-|backfill-large|50|496|30 min|24 hrs| low priority, negative project balance |  
+|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
+|----|----|----|------------------------------|----|----------------------------------------|
+|small|10|24| 30 min (5 min from 10/3/22)  |6 hrs||
+|medium|25|49| 30 min (5 min from 10/3/22)  |12 hrs||
+|large|50|496| 30 min (5 min from 10/3/22)  |24 hrs||
+|backfill-small|10|24| 30 min (5 min from 10/3/22)  |6 hrs| low priority, negative project balance |
+|backfill-medium|25|49| 30 min (5 min from 10/3/22)  |12 hrs| low priority, negative project balance |
+|backfill-large|50|496| 30 min (5 min from 10/3/22)                      |24 hrs| low priority, negative project balance |  
 
 **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
 **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
