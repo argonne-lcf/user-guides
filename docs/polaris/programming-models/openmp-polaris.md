@@ -4,6 +4,132 @@
 
 The OpenMP API is an open standard for parallel programming. The specification document can be found here: https://www.openmp.org. The specification describes directives, runtime routines, and environment variables that allow an application developer to express parallelism (e.g. shared memory multiprocessing and device offloading). Many compiler vendors provide implementations of the OpenMP specification (https://www.openmp.org/specifications).
 
+## Using OpenMP on Polaris
+
+Many of the programming environments available on Polaris have OpenMP support.
+
+
+|module| OpenMP CPU support? | OpenMP GPU support? |
+| --- | --- | --- |
+| PrgEnv-nvhpc | yes | yes | 
+| llvm | yes | yes |
+| PrgEnv-gnu | yes | no |
+| PrgEnv-cray | yes | yes* |
+
+*Currently PrgEnv-cray is not recommended for OpenMP offload.
+
+By default, the PrgEnv-nvhpc module is loaded. To switch to other modules, you can use `module switch`.
+
+### Using PrgEnv-nvhpc
+
+This is loaded by default, so there's no need to load additional modules. You can confirm that it is loaded by running `module list` to check that PrgEnv-nvhpc is in the list.
+
+### Using LLVM:
+
+To use the LLVM modules, load the following.
+```
+module load mpiwrappers/cray-mpich-llvm
+module load cudatoolkit-standalone
+```
+
+See the the LLVM compiling page (here)[../compiling-and-linking/llvm-compilers-polaris.md] for more information.
+
+### Using PrgEnv-gnu
+
+To switch from PrgEnv-nvhpc to PrgEnv-gnu you can run:
+
+```
+module switch PrgEnv-nvhpc PrgEnv-gnu
+```
+
+The gcc/gfortran on Polaris was not built with GPU support. To use OpenMP on the CPU, you need to unload craype-accel-nvidia80:
+
+```
+module unload craype-accel-nvidia80
+```
+
+### Using PrgEnv-cray
+
+To switch from PrgEnv-nvhpc to PrgEnv-cray you can run:
+
+```
+module switch PrgEnv-nvhpc PrgEnv-cray
+```
+
+To use OpenMP on the CPU only, also unload craype-accel-nvidia80:
+
+```
+module unload craype-accel-nvidia80
+```
+
+To use OpenMP on the GPU, load cudatoolkit-standalone, although this is not recommended at the moment.
+```
+module load cudatoolkit-standalone
+```
+
+
+## Building on Polaris
+
+The following table shows what compiler and flags to use with which PrgEnv:
+
+|module | compiler | flags
+| --- | --- | --- |
+| PrgEnv-nvhpc | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
+| llvm | cc/CC (clang/clang++ or mpicc/mpicxx) | -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda | 
+| PrgEnv-gnu | cc/CC/ftn (gcc/g++/gfortran) | -fopenmp |
+| PrgEnv-cray | cc/CC/ftn | -fopenmp |
+
+For example to compile a simple code hello.cpp:
+
+### For PrgEnv-nvhpc, after loading the modules as discussed above we would use:
+
+```
+CC -mp=gpu -gpu=cc80 hello.cpp
+```
+
+### For LLVM, after loading the modules as discussed above:
+
+```
+mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda hello.cpp 
+```
+
+### For PrgEnv-gnu, after loading the modules as discussed above we would use:
+
+```
+CC -fopenmp hello.cpp
+```
+
+### For PrgEnv-cray, after loading the modules as discussed above we would use:
+
+```
+CC -fopenmp hello.cpp
+```
+
+
+## Running on Polaris
+
+To run, you can run the produced executable or with mpiexec in a job script, and then submit the script to the Polaris queue, like:
+
+```
+$ cat submit.sh
+#!/bin/sh
+#PBS -l select=1:system=polaris
+#PBS -l walltime=0:30:00
+#PBS -q debug 
+#PBS -A Catalyst
+#PBS -l filesystems=home:eagle
+
+cd ${PBS_O_WORKDIR}
+ mpiexec -n 1 ./executable
+$ # submit to the queue:
+$ qsub -l select=1:system=polaris -l walltime=0:30:00 -l filesystems=home:eagle -q debug -A Catalyst ./submit.sh
+```
+
+In the above, having the PBS options in the script and on the command line is redundant, but we put it there to show both ways of launching. This submits the script to one node in the debug queue on Polaris, requesting 30 min and the eagle and home filesystems. It will charge project Catalyst for the time.
+
+More details for setting up the job script are in [Job Scheduling and Execution section](../queueing-and-running-jobs/job-and-queue-scheduling.md).
+
+
 ## Example
 
 ```
@@ -29,16 +155,36 @@ $ cat hello.F90
 program  main
   use omp_lib
   implicit none
-
+  integer flag
+  
   write(*,*) "Number of devices:", omp_get_num_devices()
 
-  !$omp target 
+  !$omp target map(from:flag)
     if( .not. omp_is_initial_device() ) then
-      write(*,*) "Hello world from accelerator"
+      flag = 1
     else
-      write(*,*) "Hello world from host"
+      flag = 0
    endif
   !$omp end target
 
-end program main
+   if( flag == 1 ) then
+      print *, "Hello world from accelerator"
+   else
+      print *, "Hello world from host"
+   endif
+
+ end program main
+
+$ # To compile
+$ CC -mp=gpu -gpu=cc80 hello.cpp -o c_test
+$ ftn -mp=gpu -gpu=cc80 hello.F90 -o f_test
+
+$ # To run 
+$ ./c_test
+Number of devices: 4
+Hello world from accelerator.
+$ ./f_test
+ Number of devices:            4
+ Hello world from accelerator
+
 ```
