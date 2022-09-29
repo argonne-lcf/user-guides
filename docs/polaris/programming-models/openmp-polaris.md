@@ -24,15 +24,15 @@ By default, the PrgEnv-nvhpc module is loaded. To switch to other modules, you c
 
 This is loaded by default, so there's no need to load additional modules. You can confirm that it is loaded by running `module list` to check that PrgEnv-nvhpc is in the list.
 
-### Using LLVM:
+### Using LLVM
 
-To use the LLVM modules, load the following.
+To use the LLVM module, load the following.
 ```
 module load mpiwrappers/cray-mpich-llvm
 module load cudatoolkit-standalone
 ```
 
-See the the LLVM compiling page (here)[../compiling-and-linking/llvm-compilers-polaris.md] for more information.
+See the the LLVM compiling page [here](../compiling-and-linking/llvm-compilers-polaris.md) for more information.
 
 ### Using PrgEnv-gnu
 
@@ -85,6 +85,7 @@ For example to compile a simple code hello.cpp:
 
 ```
 CC -mp=gpu -gpu=cc80 hello.cpp
+ftn -mp=gpu -gpu=cc80 hello.F90
 ```
 
 ### For LLVM, after loading the modules as discussed above:
@@ -97,12 +98,14 @@ mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda hello.cpp
 
 ```
 CC -fopenmp hello.cpp
+ftn -fopenmp hello.F90
 ```
 
 ### For PrgEnv-cray, after loading the modules as discussed above we would use:
 
 ```
 CC -fopenmp hello.cpp
+ftn -fopenmp hello.F90
 ```
 
 
