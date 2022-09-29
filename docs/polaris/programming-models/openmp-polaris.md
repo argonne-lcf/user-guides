@@ -183,10 +183,10 @@ $ CC -mp=gpu -gpu=cc80 hello.cpp -o c_test
 $ ftn -mp=gpu -gpu=cc80 hello.F90 -o f_test
 
 $ # To run 
-$ ./c_test
+$ mpiexec -n 1 ./c_test
 Number of devices: 4
 Hello world from accelerator.
-$ ./f_test
+$ mpiexec -n 1 ./f_test
  Number of devices:            4
  Hello world from accelerator
 
