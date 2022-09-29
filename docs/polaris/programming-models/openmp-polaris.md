@@ -4,7 +4,7 @@
 
 The OpenMP API is an open standard for parallel programming. The specification document can be found here: https://www.openmp.org. The specification describes directives, runtime routines, and environment variables that allow an application developer to express parallelism (e.g. shared memory multiprocessing and device offloading). Many compiler vendors provide implementations of the OpenMP specification (https://www.openmp.org/specifications).
 
-## Using OpenMP on Polaris
+## Setting the environment to use OpenMP on Polaris
 
 Many of the programming environments available on Polaris have OpenMP support.
 
