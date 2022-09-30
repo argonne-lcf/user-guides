@@ -11,6 +11,7 @@ Our user guides contain information for:
 - [Cooley](https://www.alcf.anl.gov/support/user-guides/cooley/cooley-overview/index.html): Information on how to use our visualization cluster.
 - [AI Testbed](https://www.alcf.anl.gov/support-center/ai-testbed): Information on how to use our AI Accelerators.
 - [Aurora](https://www.alcf.anl.gov/support-center/aurora): Information on getting your code ready for our upcoming exacale supercomputer.
+- [Services](services/index.html): Information on how to use provided services across clusters.
 - [Facility Policies](https://www.alcf.anl.gov/support-center/facility-policies): Information on our policies and procedures.
 
 ## How to Get Access
