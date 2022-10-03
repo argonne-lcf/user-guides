@@ -43,8 +43,8 @@ For example, for a project with PI 'Joe Smith' that is submitting the quarterly 
 For an EOY report, replace YEARS with the years associated with your allocation. For example, an ADSP 2021-2022 project with PI 'Joe Smith' would have a filename of Smith_ADSP_2021-2022_EOY.docx.
 
 ### Templates for INCITE and ALCC:
-- [Quarterly Report Template](/files/PINAME_ALLOCATION_YEAR_QX.docx)
-- [End of Project Report Template](/files/PINAME_ALLOCATION_YEAR_EOP.docx)
-- [End of Year Report Template](/files/PINAME_ALLOCATION_YEARS_EOY.docx)
+- [Quarterly Report Template](files/PINAME_ALLOCATION_YEAR_QX.docx)
+- [End of Project Report Template](files/PINAME_ALLOCATION_YEAR_EOP.docx)
+- [End of Year Report Template](files/PINAME_ALLOCATION_YEARS_EOY.docx)
 
 
