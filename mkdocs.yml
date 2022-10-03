@@ -46,6 +46,7 @@ nav:
       - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
     - Applications and Libraries:
         - Applications:
+            - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
@@ -148,6 +149,9 @@ nav:
     - Queueing and Running Jobs on ThetaGPU:
       - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
+    - Applications and Libraries:
+      - Applications:
+        - Gromacs: theta-gpu/applications-and-libraries/applications/gromacs.md
     - Data Science:
       - Data Science Software Availability: theta-gpu/data-science-workflows/data-science-software-availability.md
       - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
