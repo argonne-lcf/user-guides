@@ -1,31 +1,4 @@
-# Workflows
-
-## Balsam
-[Balsam](https://balsam.readthedocs.io/en/latest/) is a python-based workflow manager that helps users execute large numbers of jobs, track job outcomes, and manage postprocessing analysis.
-
-Balsam requires Python 3.7+.  To install Balsam, first set up a [virtual python environment](data-science-workflows/python.md):
-
-```shell
-module load conda
-conda activate base
-python -m venv env
-source env/bin/activate
-pip install --upgrade pip
-pip install --pre balsam
-```
-
-To use Balsam, users need an account on the Balsam server.  Users can get an account by contacting the [ALCF Help Desk](mailto:support@alcf.anl.gov).  Once a user has an account, they can login and make a new site.  A Balsam site is a project space for your workflow. You will be prompted to select what machine (Polaris) you are working on when creating a new site:
-
-```shell
-balsam login
-balsam site init -n new-site new-site
-cd new-site
-balsam site start
-```
-
-The [Balsam docs](https://balsam.readthedocs.io/en/latest/) give information on how to set up a workflow in your new site.  One helpful feature is Balsam's command line tool.  To get information on how to use the command line tool, you can type `balsam --help` in your shell.
-
-## Parsl on Polaris
+# Parsl on Polaris
 
 > Parsl is a flexible and scalable parallel programming library for Python.
 > 
@@ -33,7 +6,7 @@ The [Balsam docs](https://balsam.readthedocs.io/en/latest/) give information on 
 
 For many applications, managing an ensemble of jobs into a workflow is a critical step that can easily become a performance bottleneck.  Many tools exist to address this, of which `parsl` is just one.  On this page, we'll highlight some of the key pieces of information about `parsl` that are relevant to Polaris.  `Parsl` is also [extensively documented](https://parsl.readthedocs.io/en/stable/), has a dedicated Slack Channel, and a large community of users and developers beyond ALCF.  We encourage you to engage with the `parsl` community for support with `parsl` specific questions, and for Polaris-specific questions or problems, please contact support@alcf.anl.gov.
 
-### Getting Parsl on Polaris
+## Getting Parsl on Polaris
 
 Polaris is newer than ``parsl``, and some changes to the source code were required to correctly use ``parsl`` on Polaris.  For that reason, on Polaris, a minimum parsl version of ``1.3.0-dev`` or higher is required on Polaris.
 
@@ -56,7 +29,7 @@ pip install parsl==1.3.0.dev0
 
 ```
 
-### Using Parsl on Polaris
+## Using Parsl on Polaris
 
 Parsl has a variety of system configurations available already, though as a new system, Polaris has not been included as of Fall 2022.  As an example, we provide the configuration below:
 
@@ -133,7 +106,7 @@ config = Config(
 
 ```
 
-### Special notes for Polaris
+## Special notes for Polaris
 
 On Polaris, we are currently investigating a hang that occurs in some parallel applications.  The hang occurs under these circumstances, as far as we can tell at this time:
 - The application is launched on multiple nodes using `mpi`.
