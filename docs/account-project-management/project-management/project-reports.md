@@ -36,11 +36,11 @@ A PI or user may appeal a project or account suspension to the ALCF Director by 
 ## Report Templates
 Templates for the quarterly and the EOY reports can be found at the links on the bottom of this page.
 
-Please modify the filename to replace PINAME with the last name of the PI of the ADSP project, ALLOCATION to ADSP, and YEAR to the corresponding calendar year.  For quarterly reports, please replace the X in the filename with the quarter number.
+Please modify the filename to replace PINAME with the last name of the PI of the INCITE/ALCC project, ALLOCATION to INCITE/ALCC, and YEAR to the corresponding calendar year.  For quarterly reports, please replace the X in the filename with the quarter number.
 
-For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in 2021-2022 cycle for ADSP, the filename will be Smith_ADSP_Q1.docx.
+For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in 2021-2022 cycle for ALCC, the filename will be Smith_ALCC_Q1.docx.
 
-For an EOY report, replace YEARS with the years associated with your allocation. For example, an ADSP 2021-2022 project with PI 'Joe Smith' would have a filename of Smith_ADSP_2021-2022_EOY.docx.
+For an EOY report, replace YEARS with the years associated with your allocation. For example, an ALCC 2021-2022 project with PI 'Joe Smith' would have a filename of Smith_ALCC_2021-2022_EOY.docx.
 
 ### Templates for INCITE and ALCC:
 - [Quarterly Report Template](files/PINAME_ALLOCATION_YEAR_QX.docx)
