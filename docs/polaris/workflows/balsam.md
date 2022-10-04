@@ -2,7 +2,7 @@
 
 [Balsam](https://balsam.readthedocs.io/en/latest/) is a python-based workflow manager that helps users execute large numbers of jobs, track job outcomes, and manage postprocessing analysis.
 
-Balsam requires Python 3.7+.  To install Balsam, first set up a [virtual python environment](data-science-workflows/python.md):
+Balsam requires Python 3.7+.  To install Balsam, first set up a [virtual python environment](../data-science-workflows/python.md):
 
 ```shell
 module load conda
