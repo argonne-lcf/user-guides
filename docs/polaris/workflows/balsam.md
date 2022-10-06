@@ -1,8 +1,10 @@
 # Balsam
 
-[Balsam](https://balsam.readthedocs.io/en/latest/) is a python-based workflow manager that helps users execute large numbers of jobs, track job outcomes, and manage postprocessing analysis.
+[Balsam](https://balsam.readthedocs.io/en/latest/) is a Python-based workflow manager that helps users execute large numbers of jobs, potentially with interjob dependencies, track job outcomes, and manage postprocessing analysis. A Balsam Site runs on a node with access to the job scheduler, where it can submit and monitor jobs. Overall job state is aggregated on the Balsam Server, making job data from all Sites accessible from any individual site (or the user's laptop), via the command-line interface or the Python API. To get information on how to use the command line tool, you can type `balsam --help` in your shell.
 
-Balsam requires Python 3.7+.  To install Balsam, first set up a [virtual python environment](../data-science-workflows/python.md):
+Full documentation for Balsam is available [online](https://balsam.readthedocs.io/en/latest/).
+
+Balsam requires Python 3.7+. To install Balsam on Polaris, first set up a [virtual Python environment](../data-science-workflows/python.md):
 
 ```shell
 module load conda
@@ -22,4 +24,4 @@ cd new-site
 balsam site start
 ```
 
-The [Balsam docs](https://balsam.readthedocs.io/en/latest/) give information on how to set up a workflow in your new site.  One helpful feature is Balsam's command line tool.  To get information on how to use the command line tool, you can type `balsam --help` in your shell.
+See the Balsam documentation for full details.
