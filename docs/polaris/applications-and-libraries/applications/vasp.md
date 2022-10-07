@@ -119,7 +119,7 @@ module add cray-libsci
 ### Compiling vasp
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
-```
+```cray-fftw 
 make -j1
 ```
 
@@ -130,14 +130,15 @@ make -j1
 
 ```
 #!/bin/sh
-#PBS -l select=1:system=polaris
+#PBS -l select=1:system=polariscray-fftwcray-fftw  
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=home:grand:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
-module add cray-fftw cray-libsci
+module load PrgEnv-nvhpc
+module add cray-libsci
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
