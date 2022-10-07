@@ -199,6 +199,9 @@ nav:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
+  - Services:
+    - JupyterHub: services/jupyter-hub.md
+    - Continuous Integration: services/continuous-integration.md
   - Facility Policies: 
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
