@@ -51,7 +51,7 @@ A batch submission script for the following example is available [here](https://
 
 4. Install requirements from (modified) `requirements/requirements.txt`:
   ```shell
-  $ conda run python3 -m pip install -r requirements/requirements.txt
+  conda run python3 -m pip install -r requirements/requirements.txt
   ```
 
 5. Create a modified `hostfile`:
