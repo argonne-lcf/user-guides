@@ -82,9 +82,9 @@ A batch submission script for the following example is available [here](https://
 To ensure all of our workers have the same `$PATH`, `$LD_LIBRARY_PATH`, we can:
 
 ```shell
-$ echo "PATH=$PATH" >> .deepspeed_env
-$ echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> .deepspeed_env
-$ echo "OFFLOAD_INIT=on_start" >> .deepspeed_env
-$ echo "MPICH_DIR=$MPICH_DIR" >> .deepspeed_env
-$ echo "CUDA_HOME=$CUDA_HOME" >> .deepspeed_env
+echo "PATH=$PATH" >> .deepspeed_env
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> .deepspeed_env
+echo "OFFLOAD_INIT=on_start" >> .deepspeed_env
+echo "MPICH_DIR=$MPICH_DIR" >> .deepspeed_env
+echo "CUDA_HOME=$CUDA_HOME" >> .deepspeed_env
 ```
