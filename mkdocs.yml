@@ -48,6 +48,7 @@ nav:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - OpenMM: polaris/applications-and-libraries/applications/openmm.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
