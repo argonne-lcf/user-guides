@@ -11,9 +11,7 @@ Instructions and samples of `makefile.include` could be found in the [`vasp.at` 
 The follow `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
 ```makefile
-# makefile.inclide
 # Precompiler options
-
 CPP_OPTIONS = -DHOST=\"LinuxNV\" \
               -DMPI -DMPI_BLOCK=8000 -Duse_collective \
               -DscaLAPACK \
@@ -26,12 +24,12 @@ CPP_OPTIONS = -DHOST=\"LinuxNV\" \
               -Dfock_dblbuf \
               -D_OPENMP \
               -D_OPENACC \
-              -DUSENCCL -DUSENCCLP2P
+              -DUSENCCL -DUSENCCLP2P\
 
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
 
-FC         = ftn  -acc -target-accel=nvidia80 -mp
-FCL        = ftn  -acc -target-accel=nvidia80 -mp    -c++libs
+FC         = ftn -acc -gpu=cc80 -mp
+FCL        = ftn -acc -gpu=cc80 -c++libs
 
 FREE       = -Mfree
 
@@ -41,34 +39,43 @@ OFLAG      = -fast
 
 DEBUG      = -Mfree -O0 -traceback
 
+# Specify your NV HPC-SDK installation, try to set NVROOT automatically
+NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $$1 }')
+# ...or set NVROOT manually
+NVHPC      ?= /opt/nvidia/hpc_sdk
+NVVERSION  = 20.9
+#NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
 
 # Use NV HPC-SDK provided BLAS and LAPACK libraries
-BLAS       = -lblas
-LAPACK     = -llapack
+LIBAOCL=/soft/libraries/aocl/3.2.0
+BLAS       = ${LIBAOCL}/lib/libblis-mt.a
+LAPACK     = ${LIBAOCL}/lib/libflame.a
 
-# provided by cray-scilib
 BLACS      =
+SCALAPACK  =
 #SCALAPACK  = -Mscalapack
+#SCALAPACK  = ${LIBAOCL}/lib/libscalapack.a
 
 CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
-
 
 LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
 
 # Software emulation of quadruple precsion
-#NVROOT = /opt/nvidia/hpc_sdk/Linux_x86_64/22.3
-NVROOT = ${NVIDIA_PATH}
 QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
 
+#INCS       += -I/usr/include/linux 
+#INCS       += -I/usr/include/c++/7/tr1 
+#INCS       += -I/usr/include/c++/7 
+#INCS       += -I/usr/include/x86_64-linux-gnu/c++/7
+#INCS       += -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/
 
 # Use the FFTs from fftw
-# provided by cray-fftw
-#FFTW       ?= 
-#LLIBS      += 
-#INCS       += 
-
+FFTW       ?= ${LIBAOCL}
+LLIBS      += -L$(FFTW)/lib -lfftw3 -lfftw3_omp -lomp
+#INCS       += -I/soft/libraries/aocl/3.2.0/include_LP64/
+INCS       += -I$(FFTW)/include
 
 OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
 
@@ -79,15 +86,19 @@ SOURCE_O2  := pead.o
 # For what used to be vasp.5.lib
 CPP_LIB    = $(CPP)
 FC_LIB     = nvfortran
-CC_LIB     = nvc
-CFLAGS_LIB = -O
+CC_LIB     = cc
+CFLAGS_LIB = -O 
+CFLAGS_LIB = -O $(INCS) -c++libs
 FFLAGS_LIB = -O1 -Mfixed
 FREE_LIB   = $(FREE)
 
 OBJECTS_LIB= linpack_double.o getshmem.o
 
 # For the parser library
-CXX_PARS   = nvc++ --no_warnings
+#CXX_PARS   = nvc++ --no_warnings -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/ -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-s
+les15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc
+/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
+CXX_PARS   = nvc++ --no_warnings 
 
 # Normally no need to change this
 SRCDIR     = ../../src
@@ -99,14 +110,16 @@ BINDIR     = ../../bin
 The follow modules will update the include and libraries paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
 ```
+module purge
+module load PrgEnv-nvhpc
 module add cray-libsci
-module add cray-fftw
+
 ```
 
 ### Compiling vasp
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
-```
+```cray-fftw 
 make -j1
 ```
 
@@ -117,14 +130,15 @@ make -j1
 
 ```
 #!/bin/sh
-#PBS -l select=1:system=polaris
+#PBS -l select=1:system=polaris  
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=home:grand:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
-module add cray-fftw cray-libsci
+module load PrgEnv-nvhpc
+module add cray-libsci
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
@@ -151,19 +165,19 @@ issue is to comment this function call.
 See the follow suggested changes marked by `!!!!!CHANGE HERE ` in the `file:src/openacc.F`
 
 ```fortran
-!!!!!CHANGE HERE 
-!      INTERFACE
-!        INTEGER(c_int) FUNCTION MPIX_Query_cuda_support() BIND(C, name="MPIX_Query_cuda_support")
-!        END FUNCTION
-!      END INTERFACE
++!!!!!CHANGE HERE 
+-      INTERFACE
+-        INTEGER(c_int) FUNCTION MPIX_Query_cuda_support() BIND(C, name="MPIX_Query_cuda_support")
+-        END FUNCTION
+-      END INTERFACE
 
        CHARACTER(LEN=1) :: ENVVAR_VALUE
        INTEGER :: ENVVAR_STAT
 
        ! This should tell us if MPI is CUDA-aware
-!!!!!CHANGE HERE 
-       !CUDA_AWARE_SUPPORT = MPIX_Query_cuda_support() == 1
-       CUDA_AWARE_SUPPORT = .TRUE.
++!!!!!CHANGE HERE 
+-       CUDA_AWARE_SUPPORT = MPIX_Query_cuda_support() == 1
++       CUDA_AWARE_SUPPORT = .TRUE.
        ! However, for OpenMPI some env variables can still deactivate it even though the previous
        ! check was positive
        CALL GET_ENVIRONMENT_VARIABLE("OMPI_MCA_mpi_cuda_support", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
@@ -177,8 +191,8 @@ See the follow suggested changes marked by `!!!!!CHANGE HERE ` in the `file:src/
        IF (ENVVAR_STAT==0 .AND. ENVVAR_VALUE=='0') CUDA_AWARE_SUPPORT = .FALSE.
        CALL GET_ENVIRONMENT_VARIABLE("PMPI_GPU_AWARE", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
        IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
-!!!!!CHANGE HERE 
-       CALL GET_ENVIRONMENT_VARIABLE("MPICH_GPU_SUPPORT_ENABLED", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
++!!!!!CHANGE HERE 
++       CALL GET_ENVIRONMENT_VARIABLE("MPICH_GPU_SUPPORT_ENABLED", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
++       IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
 ```
 
