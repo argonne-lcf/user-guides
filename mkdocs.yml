@@ -25,6 +25,9 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+  - Services:
+    - Jupyter Hub: jupyter-hub.md
+    - Continuous Integration on Theta: continuous-integration.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
@@ -84,7 +87,6 @@ nav:
       - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
       - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
       - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
-      - Continuous Integration: theta/compiling-and-linking/continuous-integration-theta.md
     - Queueing and Running Jobs on Theta:
       - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
@@ -118,7 +120,6 @@ nav:
       - DeepHyper: theta/data-science-workflows/deephyper.md
       - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
       - HDF5: theta/data-science-workflows/hdf5.md
-      - JupyterHub: theta/data-science-workflows/jupyter-hub.md
       - Keras: theta/data-science-workflows/keras.md
       - MongoDB: theta/data-science-workflows/mongo-db.md
       - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
@@ -161,7 +162,6 @@ nav:
       - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
       - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
       - GPU Node Queue and Policy: theta-gpu/data-science-workflows/gpu-node-queue-and-policy.md
-      - Jupyter Hub: theta-gpu/data-science-workflows/jupyter-hub.md
       - Python/C++ Code Interoperability: theta-gpu/data-science-workflows/pythonc-code-interoperability.md
       - Containers: theta-gpu/data-science-workflows/containers/containers.md
       - Deep Learning Frameworks:
@@ -204,6 +204,7 @@ nav:
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration: services/continuous-integration.md
   - Facility Policies: 
+    - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
       - Accounts Policy: policies/accounts/accounts-policy.md
