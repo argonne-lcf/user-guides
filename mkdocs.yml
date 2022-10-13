@@ -26,8 +26,8 @@ nav:
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
   - Services:
-    - Jupyter Hub: jupyter-hub.md
-    - Continuous Integration on Theta: continuous-integration.md
+    - JupyterHub: services/jupyter-hub.md
+    - Continuous Integration: services/continuous-integration.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
@@ -200,9 +200,6 @@ nav:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
-  - Services:
-    - JupyterHub: services/jupyter-hub.md
-    - Continuous Integration: services/continuous-integration.md
   - Facility Policies: 
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
