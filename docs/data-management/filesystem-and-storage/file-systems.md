@@ -1,5 +1,10 @@
 # ALCF File Systems
-Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. Theta-fs0 is an Intel Enterprise Edition [Lustre parallel file system](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance) mounted as /lus-projects or /projects. Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively.
+Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. 
+Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. 
+Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively. 
+For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
+
+* [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 For information on the AI Testbed storage systems, refer to the AI Testbed storage page: [https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/](https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/)
 
