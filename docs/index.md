@@ -20,7 +20,7 @@ Researchers interested in using the ALCF systems (including Polaris and the AI T
 Submit your proposal requests at: [Allocation Request Page](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program)
 
 ## Getting Started
-If you'd like to to get started using our ALCF resources, our [Getting Started webpage](https://www.alcf.anl.gov/support-center/get-started) provides information on what you need to do in order to get time on our systems, get an account, and how to start running jobs.
+If you'd like to get started using our ALCF resources, our [Getting Started webpage](https://www.alcf.anl.gov/support-center/get-started) provides information on what you need to do in order to get time on our systems, get an account, and how to start running jobs.
 
 If you have an account and an award for Polaris, we suggest visiting on [Getting on Polaris webpage](https://www.alcf.anl.gov/support/user-guides/polaris/getting-started/index.html).
 
