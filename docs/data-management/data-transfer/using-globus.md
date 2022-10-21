@@ -19,6 +19,7 @@ The Globus endpoint and the path to use depends on where your data resides. If y
 * Eagle filesystem: alcf#dtn_eagle for accessing /lus/eagle/projects or /eagle (.i.e project directories on Eagle filesystem). Use the path /eagle/<project name\>
 
 **NOTE:** alcf#dtn_theta will remain available for the near future, but we encourage you to begin using the new endpoints listed above.
+
 =======
 * /home which is where your home directory resides: alcf#dtn_home. Use the path /<username\>
 * theta-fs0 filesystem: alcf#dtn_theta-fs0. Use /projects/<project name\>
