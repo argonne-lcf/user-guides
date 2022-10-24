@@ -8,56 +8,54 @@ ALCF offers assistance with building binaries and compiling instructions for GRO
 
 ## Building Gromacs
 
-1. Download latest source code: http://manual.gromacs.org/documentation/2018.5/download.html
-2. Tar xzf&amp;nbsp;gromacs-2018.5.tar.gz
-3. cd gromacs-2018.5
-4. Mkdir build
-5. cd ../
-6. Make sure use Intel compiler suite
-7. ```CmakeCC=cc CXX=CC CFLAGS=” -xMIC-AVX512 -g -static-intel” 
-   CXXFLAGS=” -xMIC-AVX512 -g -static-intel” -
-   DBUILD_SHARED_LIBS=OFF -DGMX_FFT_LIBRARY=mkl
-   DCMAKE_INSTALL_PREFIX=/PATH-to-Gromacs-Build-directory/ -
-   DGMX_MPI=ON DGMX_OPENMP=ON -DGMX_CYCLE_SUBCOUNTERS=ON -DGMX_GPU=OFF 
-   DGMX_BUILD_HELP=OFF -DGMX_HWLOC=OFF 
-   -DGMX_SIMD=AVX_512_KNL 
-   DGMX_OPENMP_MAX_THREADS=256```
-8. Make –j 16
-9. Make install
-10. cd build
-11. The Gromacs binary is exe/gmx_mpi
+1. Download latest source code: http://manual.gromacs.org/documentation/2022.1/download.html
+2. tar -xzf gromacs-2022.1.tar.gz
+3. cd gromacs-2022.1
+4. mkdir build
+5. module load cmake
+6. module swap PrgEnv-intel PrgEnv-gnu/6.0.10
+7. 
+```
+cmake -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC \
+      -DBUILD_SHARED_LIBS=OFF -DGMX_BUILD_OWN_FFTW=ON \
+      -DCMAKE_INSTALL_PREFIX=/path-to/gromacs-2022.1/build \
+      -DGMX_MPI=ON -DGMX_OPENMP=ON -DGMX_CYCLE_SUBCOUNTERS=ON -DGMX_GPU=OFF \
+      -DGMX_BUILD_HELP=OFF -DGMX_HWLOC=OFF -DGMX_SIMD=AVX_512_KNL \
+      -DGMX_OPENMP_MAX_THREADS=256
+```
+8. make –j 16
+9. make install
+10. The installed binary is `build/bin/gmx_mpi`.
 
-## Running Gromacs
-A prebuilt Gromacs binary can be found in directory /soft/applications/gromacs
+## Running Gromacs on Theta
+Prebuilt Gromacs binaries can be found in the directory `/soft/applications/gromacs/gromacs_theta`.
 
-A sample qsub script:
+A sample qsub script follows.
 
 ```
 #!/bin/bash
+#COBALT -n 1
 #COBALT -t 30 
-#COBALT --project catalyst 
-#COBALT --attrs mcdram=cache:numa=quad 
-#COBALT -n 1& 
 #COBALT -q debug-cache-quad 
-#export  I_MPI_DEBUG=5 
-#export I_MPI_FABRICS=shm 
-#export I_MPI_PIN_MODE=lib 
-#export KMP_AFFINITY=verbose,compact,1 
-exportGMX_MAXBACKUP=-1 
+#COBALT -project catalyst 
+#COBALT --attrs mcdram=cache:numa=quad
+#COBALT --attrs filesystems=home,theta-fs0
 
-aprun -n64-N64--envOMP_NUM_THREADS=2-ccdepth -d2-j2
-/lus/theta-fs0/home/user_name/gromacs-2018.5/build/bin/gmx_mpi\
- mdrun -dlbyes-resethway-pinon -v-deffnmstep5_1 -gtest.log
- ```
+export GMX_MAXBACKUP=-1 
+
+aprun -n64 -N64 --env OMP_NUM_THREADS=2 --cc depth -d 2 -j 2 \
+      /soft/applications/gromacs/gromacs_theta/gmx_mpi.2022.1 mdrun \
+      -dlb yes -resethway -pin on -v deffnm step5_1 -g test.log
+```
  
-We strongly suggest that users try combinations of different numbers of nodes, MPI ranks per node, and OMP threads per rank to find the optimal throughput for the application.
+We strongly suggest that users try combinations of different numbers of nodes, MPI ranks per node, and OMP threads per rank to find the optimal throughput for their particular workload.
 
-This is a benchmark for a 30,000 atoms system generated on 1 single Theta node with above qprun:
+The following is a representative benchmark for a system with 30,000 atoms generated on a single Theta node with above aprun command.
 
-|   | Core time(sec)| Wall time(sec) |
-| ----------- | ----------- | ----------- |
-| Time | 8497.278(ns/day) | 12800.0(hour/ns) |
-| Performance | 65.078 | 0.369	 |
+| | Core time(sec)| Wall time(sec) | (%) | 
+| ----------- | ----------- | ----------- | -- |
+| Time | 9016.068 | 70.441 | 12799.4 |
 
- 
- 
+| | ns/day | hour/ns |
+| -- | -- | -- |
+| Performance | 61.330 | 0.391  |

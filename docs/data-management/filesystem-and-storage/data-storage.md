@@ -4,7 +4,7 @@
 The ALCF operates a number of file systems that are mounted globally across all of our production systems.
 
 ### Home
-A Luste file system residing on a DDN AI-400X NVMe SSD platform.  It has ?? ?? TB drives with 123 TB of usable space.  It provides 8 Object Storage Targets and 4 Metadata Targets.
+A Lustre file system residing on a DDN AI-400X NVMe Flash platform. It has 24 NVMe drives with 7 TB each with 123 TB of usable space. It provides 8 Object Storage Targets and 4 Metadata Targets.
 
 ### Grand
 A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s.  The primary use of grand is compute campaign storage.

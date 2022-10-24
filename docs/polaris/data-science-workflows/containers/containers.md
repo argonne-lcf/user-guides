@@ -94,6 +94,7 @@ First we define our job and our script takes the container name as an input para
 #PBS -q debug
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
+#PBS -l filesystems=home:grand:eagle
 #PBS -A Datascience
 ```
 

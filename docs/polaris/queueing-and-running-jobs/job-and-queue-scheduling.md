@@ -1,5 +1,7 @@
 ## Documentation / Tools
-* [The PBS "BigBook"](https://2021.help.altair.com/2021.1.2/PBS%20Professional/PBSAdminGuide2021.1.2.pdf) - This is really excellent.  I highly suggest you download it and search through it when you have questions.  Can be found at the link above or online.
+* [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf) - This is really excellent.  We highly suggest you download it and search through it when you have questions.
+* [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) - This is the users guide.
+* [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) - If you don't download the Big Book, the Reference Guide is also useful.  It shows every option and gives you details on how to format various elements on the command line.
 * [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
 * `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
 
@@ -32,12 +34,12 @@ If you are an existing ALCF user and are familiar with Cobalt, you will find the
 4. `qdel` - cancel an uneeded request for resources
 
 #### `qsub` - submit a job to run
-* Users Guide, Section 2, page UG-11 and Reference Guide Sec 2.59, page RG-214
+* Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
 
 The single biggest difference between Cobalt and PBS is the way you select resources when submitting a job.  In Cobalt, every system had its own Cobalt server and you just specified the number of nodes you wanted (-n).  With PBS, we are planning on running a single "PBS Complex" which means there will be a single PBS server for all systems in the ALCF and you need to specify enough constraints to get your job to run on the resources you want/need.  One advantage of this is that getting resources from two different systems or "co-scheduling" is trivially possible.
 
 ##### Resource Selection and Job Placement #####
-Section 2.59.2.6 RG-217 Requesting Resources and Placing jobs
+Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs in the Reference Guide.
 
 Resources come in two flavors:
 
@@ -80,15 +82,18 @@ Here is a heavily commented sample PBS submission script:
 #PBS -A <short project name>
 #PBS -l walltime=HH:MM:SS
 
+
 # Highly recommended 
 # The first 15 characters of the job name are displayed in the qstat output:
 #PBS -N <name>
+#file systems used by the job
+#PBS -l filesystems=home:eagle
 
-# If you need a queue other than the default (uncomment to use)
+# If you need a queue other than the default, which is prod (uncomment to use)
 ##PBS -q <queue name>
 
 # Controlling the output of your application
-# UG Sec 3.3 page UG-40 Managing Output and Error Files
+# UG Sec 3.3 page UG-42 Managing Output and Error Files
 # By default, PBS spools your output on the compute node and then uses scp to move it the
 # destination directory after the job finishes.  Since we have globally mounted file systems
 # it is highly recommended that you use the -k option to write directly to the destination
@@ -109,14 +114,14 @@ Here is a heavily commented sample PBS submission script:
 ##PBS -M <email addresses>
 
 # Setting job dependencies
-# UG Section 6.2, page UG-107 Using Job Dependencies
+# UG Section 6.2, page UG-109 Using Job Dependencies
 # There are many options for how to set up dependancies;  afterok will give behavior similar
 # to Cobalt (uncomment to use)
 ##PBS depend=afterok:<jobid>:<jobid>
 
 # Environment variables (uncomment to use)
-# Section 6.12, page UG-126 Using Environment Variables
-# Sect 2.59.7, page RG-231 Enviornment variables PBS puts in the job environment
+# UG Section 6.12, page UG-126 Using Environment Variables
+# RG Sect 2.57.7, page RG-233 Enviornment variables PBS puts in the job environment
 ##PBS -v <variable list>
 ## -v a=10, "var2='A,B'", c=20, HOME=/home/zzz
 ##PBS -V exports all the environment variables in your environnment to the compute node
@@ -141,18 +146,36 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
+### Specifying Filesystems 
+
+**Note: The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:**
+
+`qsub: Resource: filesystems is required to be set.` 
+
+Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified (prior to 10/10/22)
+all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
+
+If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailabe, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
+
+If a job requesting a filesystem that is marked down is already in the queue, the job will be not run until all of it's requested filesystems are available.
+
+An example of a job requesting filesystems:
+
+`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
+
+To update the filesystems list for your job, use `qalter`. 
 
 ### qsub examples ###
 
-* `qsub -A my_allocation -l select=4:system=polaris -l walltime=30:00 -q debug-scaling -- a.out`
+* `qsub -A my_allocation -l select=4:system=polaris -l filesystems=home:eagle -l walltime=30:00 -q debug-scaling -- a.out`
 	* run a.out on 4 chunks on polaris with a walltime of 30 minutes in debug-scaling queue; charge my_allocation;
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 cores.
 	* use the -- (dash dash) syntax when directly running an executable.
-* `qsub -A my_allocation -l place=scatter -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
+* `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
 #### `qstat` - Query Job/Queue Status 
-* Users Guide Sec. 10.2, page UG-177; Reference Guide Sec. 2.57, page RG-198 
+* Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200 
 * NOTE: By default, the columns are fixed width and will truncate information.
 * The most basic: `qstat` - will show all jobs queued and running in the system
 * Only a specific users jobs: `qstat -u <my username>`
@@ -167,48 +190,48 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
     * That is `dsv` (delimeter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
 
 #### `qalter` - Alter a job submission 
-* Users Guide Sec. 9.2, page UG-164; Reference Guide Sec. 2.42, page RG-128
+* Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
 * Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]` 
 * The new value overwrites any previous value.
 
 #### `qdel` - Delete a job: 
-*  Users Guide Sec. 9.3, page UG-166; Reference Guide Sec. 2.43, page RG-141
+*  Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 *  `qdel <jobid> [<jobid> <jobid>...]`
 
 #### `qmove` - Move a job to a different queue
-* Users Guide Sec. 9.7, page UG-169; Reference Guide Sec. 2.48, page RG-173
+* Users Guide Sec. 9.7, page UG-173; Reference Guide Sec. 2.46, page RG-175
 * `qmove <new queue> <jobid> [<jobid> <jobid>...]`
 * Only works before a job starts running
 
 #### `qhold, qrls` - Place / release a user hold on a job
-* Reference Guide Sec 2.46, page RG-148 and Sec 2.52, page RG-181
+* Reference Guide Sec 2.44, page RG-150 and Sec 2.50, page RG-183
 * `[qhold | qrls] <jobid> [<jobid> <jobid>...]`
 
 #### `qselect` - Query jobids for use in commands
-* Users Guide Sec. 10.1, page UG-171; Reference Guide Sec. 2.54, page RG-187
+* Users Guide Sec. 10.1, page UG-175; Reference Guide Sec. 2.52, page RG-189
 * ```qdel `qselect -N test1` ``` will delete all the jobs that had the job name set to `test1`.
 
 #### `qmsg` Write a message string into one or more output files of the job
-* Users Guide Sec. 9.4, page UG-167; Reference Guide Sec. 2.49, page RG-175
+* Users Guide Sec. 9.4, page UG-171; Reference Guide Sec. 2.47, page RG-177
 * `qmsg -E -O "This is the message" <jobid> [<jobid> <jobid>...]`
 * `-E` writes it to standard error, `-O` writes it to standard out
 
 #### `qsig` Send a signal to a job
-* Users Guide Sec. 9.5, page UG-168; Reference Guide Sec. 2.55, page RG-193
+* Users Guide Sec. 9.5, page UG-172; Reference Guide Sec. 2.53, page RG-195
 * `qsig -s <signal> <jobid> [<jobid> <jobid>...]`
 * If you don't specify a signal, `SIGTERM` is sent.
 
 #### `tracejob` Get log information about your job
-* Reference Guide Sec 2.61, page RG-236
+* Reference Guide Sec 2.59, page RG-238
 *  `tracejob <jobid>`
 
 ## Getting information about the state of the resources ##
 
 ### `qstat` Get information about the server or queues ###
-* Users Guide Sec. 10.3 & 10.4, page UG-184 - UG-187
+* Users Guide Sec. 10.3 & 10.4, page UG-188 - UG-189
 * `qstat -B[f]` - Check the server status
 * `qstat -Q[f] <queue name>` - Check the queue status 
-* **TODO:** Add qmgr commands for checking queue and server status
+
 
 ### `pbsnodes` Get information about the current state of nodes ###
 * Reference Guide Sec 2.7 page RG-36
@@ -270,26 +293,39 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 ##  Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
-|----|----|----|----|----|----|
-|debug|1|2|10 min|1 hr|max 8 nodes in use by this queue ay any given time|
-|debug-scaling|1|10|10 min|1 hr|max 1 job running/accruing/queued **per-user** |
-|prod|10|496|30 min|24 hrs|Routing queue; See below|
+|Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
+|----|----|----|-----------------------------|----|----------------------------------------------------|
+|debug|1|2| 10 min (5 min from 10/3/22) |1 hr| max 8 nodes in use by this queue ay any given time |
+|debug-scaling|1|10| 10 min (5 min from 10/3/22)|1 hr| max 1 job running/accruing/queued **per-user**     |
+|prod|10|496| 30 min (5 min from 10/3/22)|24 hrs| Routing queue; See below                           |
 
 `prod` is routing queue and routes your job to one of the following six execution queues:  
 
-|Queue Name |Node Min |Node Max	|Time Min |Time Max |Motes |
-|----|----|----|----|----|----|
-|small|10|24|30 min|6 hrs||
-|medium|25|49|30 min|12 hrs||
-|large|50|496|30 min|24 hrs||
-|backfill-small|10|24|30 min|6 hrs|low priority, negative project balance|
-|backfill-medium|25|49|30 min|12 hrs|low priority, negative project balance|
-|backfill-large|50|496|30 min|24 hrs|low priority, negative project balance|  
+|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
+|----|----|----|------------------------------|----|----------------------------------------|
+|small|10|24| 30 min (5 min from 10/3/22)  |6 hrs||
+|medium|25|49| 30 min (5 min from 10/3/22)  |12 hrs||
+|large|50|496| 30 min (5 min from 10/3/22)  |24 hrs||
+|backfill-small|10|24| 30 min (5 min from 10/3/22)  |6 hrs| low priority, negative project balance |
+|backfill-medium|25|49| 30 min (5 min from 10/3/22)  |12 hrs| low priority, negative project balance |
+|backfill-large|50|496| 30 min (5 min from 10/3/22)                      |24 hrs| low priority, negative project balance |  
 
-**Note 1:**: You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
+**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
 **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
 **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**  
+
+### Scheduling Errors
+
+If you receive a `qsub: Job rejected by all possible destinations` error, then check your submission parameters.
+The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues.
+Please see the table above for limits on production queue job sizes.
+
+**NOTE:** For batch submissions, if the parameters within your submission script do not meet the parameters of any of the above queues you might not receive the "Job submission" error on the command line at all.
+This can happen because your job is in waiting in a routing queue and has not yet reached the execution queues.
+In this case you will receive a jobid back and qsub will exit, however when the proposed job is routed, it will be rejected from the execution queues.
+In that case, the job will be deleted from the system and will not show up in the job history for that system.
+If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
+
 
 ### Job Priority
 As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:

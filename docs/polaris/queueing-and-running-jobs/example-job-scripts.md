@@ -11,6 +11,7 @@ The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ra
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
+#PBS -l filesystems=home:grand
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -57,6 +58,7 @@ Using the CPU job submission example above as a baseline, there are not many add
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
