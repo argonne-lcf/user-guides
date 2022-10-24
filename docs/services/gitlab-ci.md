@@ -1,0 +1,309 @@
+# Continuous Integration via Gitlab-CI
+
+## Gitlab-CI
+  Gitlab is an application that offers combined functionality as git repository, issue tracker, and CI/CD platform.  The ALCF implementation of the Gitlab-CI environment leverages upstream gitlab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into Gitlab, it can allow for tighter devops processes.
+
+ Gitlab-CI is meant to provide CI/CD services for projects using Gitlab-CI to store their git repositories and executing code on our HPC clusters. ALCF does not allow users to join their own private runners to our existing Gitlab CI/CD environment and provides dedicated runners for our supported systems.
+
+Additional information, technical and user documentation, and community support can be found on the [Gitlab's Runner website](https://docs.gitlab.com/runner/).
+
+ALCF's Gitlab-CI environment can be accessed by logging into the [ALCF Gitlab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
+
+## Quickstart
+* Email [ALCF Support](mailto:help@alcf.anl.gov) requesting access for your ALCF Project to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov)
+* Create a `Gitlab Project` in your assigned `Gitlab Group`
+* Create a `.gitlab-ci.yml` file with the ANL specific requirements in your `Gitlab Project(s)`
+  * You will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables)
+
+_Example: A `.gitlab-ci.yml` file for a Theta project_
+```
+variables:
+  # This variable will no longer needed pending December 1st 2022
+  ANL_THETA_PROJECT_SERVICE_USER: "ThetaCISerivceUser"
+  ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
+stages:
+  - stage1
+  - stage2
+  - stage3
+shell_test1:
+  stage: stage1
+  tags:
+    - ecp-theta
+    - shell
+  script:
+    - echo "Shell Job 1"
+batch_test:
+  stage: stage2
+  tags:
+    - ecp-theta
+    - batch
+  script:
+    - echo "Job 2 start"
+    - aprun -n 1 id
+    - aprun -n 1 hostname
+    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - echo "Job end"
+```
+
+## Glossary
+* **Group** - A collection of projects.  Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`.  When a ALCF Project is allocated resources on the Gitlab-CI environment we will create a Gitlab `Group` that will map to your ALCF Project allocation.
+* **Job** - An individual set of commands that are ran.  This is the lowest unit of Gitlab-CI abstraction.
+* **Pipeline** - Gitlab organizes your jobs for each run into a `pipeline`.
+* **Project** - Gitlab Projects can be thought of as an individual  git repository plus all services and features Gitlab layers on top.  This term is unrelated to the ALCF Project concept.  That often maps to ldap groups and/or quotas and allocations.
+* **Stage** - A collection of jobs in a pipeline.  Jobs in the next stage will not start till the jobs in the current stage complete.  If a job fails, the pipeline will not run the following stages by default.
+
+## Projects Using CI/CD
+Any project with a git repository on the gitlab-ci environment has access to the CI/CD environment by default.  In order to launch a shell job on a system you must already have access to that system.
+
+### On-Boarding with CI/CD
+To gain access to the Gitlab-CI environment, send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) requesting access for your project(s).
+Include with the request :
+
+* That you are requesting access to the Gitlab-CI environment at https://gitlab-ci.alcf.anl.gov
+* The ALCF Project shortname
+* The PI’s name 
+
+<b>Change effective Dec 1st</b>
+
+Prior to this date, gitlab-ci jobs ran as a per project service account with a storage quota independent from the triggering user.  Effective the above date Gitlab-CI will switch to running all jobs as the triggering user. That user's home directory will be used by Jacamar-CI to copy the repo and cache files into `~/.jacamar-ci`. This job will run out of your home directory and consume filesystem quota.
+
+### Gitlab Groups (Folders)
+Gitlab calls git repositories `Projects`, and folders containing `Projects` are called `Groups` or `SubGroups`.  When an ALCF Project is granted access to gitlab-ci a Gitlab `Group` will be created with access for all members of that ALCF Project.  Users will then be able to create arbitrary Gitlab `Projects`.  New `Projects` will needed to be created under your `Group` via the Web GUI.
+
+Each ALCF Project will have a top-level `Group` or `SubGroup` created with the ALCF Project’s name.  It is used for organization in the multi-project environment and is required for implementing the needed level of security. The `Group` folder is where all of the git `Projects` are stored, you can additionally create any `SubGroups`, `Projects`, group variables, etc within your `Groups` settings to meet your CI/CD needs.
+
+<figure markdown>
+  ![Gitlab CI/CD Groups and Projects](files/gitlab-ci/GitlabCreateGroupAndProject.png){ width="700" }
+  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+</figure>
+
+### Gitlab Projects
+
+### Gitlab Runner Nodes
+  Each system is assigned one or more Gitlab runner node(s) that are shared by all users in gitlab-ci.  Each runner is only capable of running one users pipeline at a time.  While multiple jobs in that pipeline may run in parallel.
+
+  Each node will have two runners available, `shell` and `batch`.  `shell` will run shell jobs directly on the runner node as the user.  `batch` will submit the job to the HPC cluster's scheduler that is paired to that node.  You will need to select the appropriate runner in your `.gitlab-ci.yml` file for the job to be executed properly.  For more details on the `.gitlab-ci.yml` file, please see upstream [docs](https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html).
+
+### .gitlab-ci.yml Configuration Sections
+  Gitlab uses a per repository `.gitlab-ci.yml` file.  On any commit, merge request, or merge gitlab will attempt to trigger a CI/CD pipeline based on the contents of this file. Within the `.gitlab-ci.yml` file you can limit jobs to only run under certain conditions.  A common workflow is to have linting and validation to happen on every commit to a non-master/non-main branch.  And then preforming larger more complex tasks when that branch is merged back into master/main.  All jobs launched on a given event are organized into a `Pipeline` and you can watch the progress of your pipeline via the CI/CD pipeline page for your `Project`.
+
+<figure markdown>
+  ![Gitlab CI/CD Pipeline Overview](files/gitlab-ci/GitlabPipelineOverview.png){ width="700" }
+  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+</figure>
+
+<figure markdown>
+  ![Gitlab CI/CD Pipeline Detailed](files/gitlab-ci/GitlabPipelineDetailed.png){ width="700" }
+  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+</figure>
+
+#### variables
+Variables can be stored two ways, inline in the `.gitlab-ci.yml` file or as a setting in the gitlab `Group` or `Project` itself.  Variables are exported as environment variables by the gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
+
+To set a variable directly in the `.gitlab-ci.yml` file declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line.  `variables:` can be declared globally or in individual jobs.
+
+_Example: Declaring variables_
+```
+variables:
+  GlobalVariable1: "Global Value 1"
+  GlobalVariable2: "Global Value 2"
+
+job:
+  variables:
+    LocalVariable: 'This is a local variable'
+  script:
+    - 'echo $LocalVariable'
+```
+
+To store it in the `Group` or `Project` settings.  On the left side menu, click `Settings>CI/CD`. Expand the Variables option on the right side frame.  You can add variables by clicking `Add variable`.
+
+For for more details please set please see upstream [docs](https://docs.gitlab.com/ee/ci/variables/#create-a-custom-cicd-variable-in-the-gitlab-ciyml-file)
+
+<figure markdown>
+  ![Gitlab CI/CD Variable settings ](files/gitlab-ci/GitlabVariables.png){ width="700" }
+  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+</figure>
+
+<figure markdown>
+  ![Gitlab CI/CD Add Variable](files/gitlab-ci/GitlabAddVariable.png){ width="700" }
+  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+</figure>
+
+##### ALCF Specific Variables
+If you are planning to submit jobs to a scheduler then you will need to specify a per system variable `ANL_${CLUSTER}_SCHEDULER_PARAMETERS`; where `${CLUSTER}` is the name of the cluster.  This variable will contain any command line flags you would need to submit jobs as if you were on the command line / scripting.  Please consult the below table for more info.
+
+***Note: The service account will no longer be needed on Theta starting December 1, 2022 and is not needed on any other available cluster***
+
+If running a CI/CD job on theta cluster you will also need to provide a `ANL_THETA_PROJECT_SERVICE_USER` variable.  This service account username will be given to you when the ALCF project is setup in gitlab-ci.alcf.anl.gov.  
+
+| Cluster | Scheduler | Variable Name | Support docs |
+|:--------|:---------:|:-------------:|:------------:|
+| Theta   | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS | [Theta Job Queue and Scheduling](../../../user-guides/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
+| Theta   | Cobalt    | ANL_THETA_PROJECT_SERVICE_USER | This variable will be provided to you once your project is setup in gitlab. |
+
+_Example: Running a batch job on Theta HPC_
+```
+variables:
+ ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q myQueue --attrs filesystems=home"
+
+batch_test:
+  tags:
+    - ecp-theta
+    - batch
+  script:
+    - echo "Job start"
+    - aprun -n 1 id
+    - aprun -n 1 hostname
+    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - echo "Job end"
+```
+
+#### Stages
+Jobs can be organized into `stages`.  Jobs in the next stage wont start til any dependencies in the previous stage have completed.  This is often used if you need to build and test your code before attempting to run or package it.  These stages are assembled in a directed graph called a `Pipeline`.  By default gitlab has the following default stages executed in order :
+```
+.pre
+build
+test
+deploy
+.post
+```
+
+You can declare your own stages by declaring a `stages:`  array near the top of your `.gitlab-ci.yml` file.  Stages will be processed in order.
+
+_Example: Declaring Stages_
+```
+stages:
+  - stage1
+  - stage2
+  - stage3
+```
+
+_Example: Theta pipeline with custom stages_
+```
+variables:
+  ANL_THETA_PROJECT_SERVICE_USER: "ecpcisvc"
+  ANL_THETA_SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q build --attrs filesystems=home"
+
+stages:
+  - stage1
+  - stage2
+
+test1:
+  stage: stage1
+  tags:
+    - ecp-theta
+    - shell
+  script:
+    - export
+    - id
+    - hostname
+    - echo "Running on theta with setuid shell runner" 
+    - echo test > test.txt
+test2:
+  stage: stage2
+  tags:
+    - ecp-theta
+    - batch
+  script:
+    - echo "Job 2 start"
+    - aprun -n 1 id
+    - aprun -n 1 hostname
+    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - echo "Job 2 end"
+```
+
+#### Rules
+  Gitlab allows CI/CD jobs to only be launched if certain conditions are met.  Gitlab sets a series of variables in addition to any the user explicitly sets when a job launches.  A job can check these variables and choose to run or not based on the results.  Often times this is used to ensure certain jobs only run on commits, merge requests, and/or merges.  By default if any rule matches it will run.  You can override this behavior with commands like `when: never` when a conditional matches.
+
+For more details please set please see upstream [docs](https://docs.gitlab.com/ee/ci/yaml/index.html#rules)
+
+Rules can use the following conditional checks:
+```
+if
+changes
+exists
+allow_failure
+variables
+when
+```
+
+_Example: Gitlab job designed to only run on merge requests_
+```
+test1:
+  rules:
+    - if: $CI_COMMIT_TAG                    # Do not execute jobs for tag context
+      when: never
+    - if: $CI_COMMIT_BRANCH == "master"     # Do not run on master, since will run on the merge request just prior
+      when: never
+    - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
+  stage: stage1
+  tags:
+    - ecp-theta
+    - shell
+  script:
+    - echo "Run test 1"
+```
+
+#### Template Jobs
+  Gitlab allows you to create `template jobs` which can then be applied to later jobs.  `Template jobs` won't themselves run.  Each `template job` name must begin with a period (.) and follow the same syntax as normal jobs.  To instantiate a job based on the `template job` use the keyword `extends`.  If your specific job declares a key/value already in the template, the specific job will overwrite it.
+
+Example: Uses a job template so two tests will only run on merge requests
+```
+.MR_rules:
+  rules:
+    - if: $CI_COMMIT_TAG                    # Do not execute jobs for tag context
+      when: never
+    - if: $CI_COMMIT_BRANCH == "master"     # Do not run on master, otherwise runs everything from scratch on merge
+      when: never
+    - if: $CI_MERGE_REQUEST_IID
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'    
+
+test1:
+  extends: .MR_rules
+  stage: stage1
+  tags:
+    - ecp-theta
+    - shell
+  script:
+    - echo "Run test 1"
+test2:
+  extends: .MR_rules
+  stage: stage2
+  tags:
+    - ecp-theta
+    - shell
+  script:
+    - echo "Run test 2"
+```   
+
+### Console Output
+  To see the output of a job click on it in the GUI and it will show the STDOUT and STDERR from the job run.  If the job can not launch successfully it will have error messages from the gitlab-runner and/or executor Jacamar-ci.
+  Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords.
+  Please do not output large amounts of data from your jobs to the stdout.  If your CI/CD job outputs lots of text to STDOUT or STDERR please consider redirecting it into a job log.
+
+<figure markdown>
+  ![Gitlab CI/CD Add Variable](files/gitlab-ci/GitlabJobConsole.png){ width="700" }
+  <figcaption>Gitlab Group Job Console</figcaption>
+</figure>
+
+
+***Effective December 1 2022***
+## Storage Use and Policy 
+### Gitlab Project Quota
+  Each repository will be have a default quota of 1GB in Gitlab.  Quota increases may be requested by emailing [Support](mailto:support@alcf.anl.gov).  This quota is separate from the storage quotas allocated to ALCF Projects and ALCF Users on the HPC clusters and shared filesystems.
+
+### CI/CD Filesystem usage
+  CI/CD jobs will run out of your home directory by default.  Each job will begin by cloning the repository into a path under `~/.jacamar-ci` and will continue to write there unless you reference other destinations in your CI/CD job.  You will need to ensure that you have the minimum amount of space for this runner operation.  If you do not, the job will fail to run.  Each gitlab runner will create a new sub directory under `~/.jacamar-ci` for itself, however it will reuse space for subsequent pipelines launched for that project on that runner.
+
+  It is recommended that if you need more space then your home directory can provide, that you leverage any ALCF Project space you may have been allocated on a shared filesystem.
+
+***Effective December 1 2022***
+## Gitlab-CI Access Termination Policy
+  Projects that have exhibited a period of inactivity for at least 6 months will have their access disabled and their repositories deleted.  Notification will be sent to the PI 30 days prior to the day of the action.  
+
+Inactivity is defined as, but not limited to:
+
+  * No new projects created
+  * No new commits to an existing project
+  * Prolonged period of continuously failing CI/CD jobs (In the case of re-occurring scheduled jobs)
+
