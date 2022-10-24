@@ -21,6 +21,11 @@ Users are encouraged to read through the [Compiling and Linking Overview](./comp
 
 Users are encouraged to read through the [Job Scheduling and Execution](./queueing-and-running-jobs/job-and-queue-scheduling.md) page for information on using the Cobalt schedule and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](./queueing-and-running-jobs/example-job-scripts.md) page as well.
 
+## Lustre File Striping
+In addition to the content above, here is a document on Lustre File Striping Basics. 
+
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
+
 ## Getting Assistance
 
 Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).

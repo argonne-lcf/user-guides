@@ -21,6 +21,6 @@ Accounts are classified in one of the following categories:
 - **Deleted:** An account that existed on the system and is thus in the records and backups, but whose user no longer has access to the systems or files on disk.
 
 ## More Information
-- [Account Policy](https://www.alcf.anl.gov/support-center/facility-policies/accounts-policy)
-- [User Authentication Policy](https://www.alcf.anl.gov/support-center/facility-policies/user-authentication-policy)
-- [Account Sponsorship and Retention Policy](https://www.alcf.anl.gov/support-center/facility-policies/account-sponsorship-retention-policy)
+- [Account Policy](../../policies/accounts/accounts-policy.md)
+- [User Authentication Policy](../../policies/accounts/user-authentication-policy.md)
+- [Account Sponsorship and Retention Policy](../../policies/accounts/account-sponsorship-retention-policy.md)
