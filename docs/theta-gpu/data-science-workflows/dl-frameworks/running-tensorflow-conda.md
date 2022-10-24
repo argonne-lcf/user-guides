@@ -1,8 +1,8 @@
-# Running Tensorflow with Conda
+# Running TensorFlow with Conda
 Beware that these builds use CUDA and will not work on login nodes, which does not have CUDA installed as there are no GPUs.
 
-## Tensorflow (master build)
-Given A100 and CUDA 11 are very new, we have a build of the master branch of Tensorflow which includes better performance and support for these architectures.
+## TensorFlow (master build)
+Given A100 and CUDA 11 are very new, we have a build of the master branch of TensorFlow which includes better performance and support for these architectures.
 
 Users can find the latest builds via the ```module avail conda``` command, which will list available builds such as ```conda/2021-06-26``` which is a module that was built on 2021-06-26. Use ```module show conda/2021-06-26``` or ```module help conda/2021-06-26``` to get high level info on which versions of the key packages and libraries that this particular module contains. 
 

@@ -143,7 +143,7 @@ python setup.py install --prefix=/path_to_install/
 ```
 
 **TensorFlow & Horovod timeline**
-Tensorflow has its built in functionality, timeline tracing,  for profiling the code and understand which kernels are taking majority of the runtime. This could be done as follows: 
+TensorFlow has its built in functionality, timeline tracing,  for profiling the code and understand which kernels are taking majority of the runtime. This could be done as follows: 
 
 **Instrument training code to generate "timelines"**
 
@@ -192,8 +192,8 @@ tensorboard --logdir DIR
 
 3. Open browser from local machine: https://localhost:16006
 
-**Uncertainty Quantification & Tensorflow probability**
-TensorFlow Probability (TFP) is a library for probabilistic reasoning and statistical analysis in TensorFlow and is available as part of the Tensorflow 1.10 module on Theta. TFP provides several layers for statistical analysis, model building and probabilistic inference. See [https://github.com/tensorflow/probability](https://github.com/tensorflow/probability) for end-to-end examples. On Theta TFP is scalability to large datasets and modelsusing Horovod for distributed computing.
+**Uncertainty Quantification & TensorFlow probability**
+TensorFlow Probability (TFP) is a library for probabilistic reasoning and statistical analysis in TensorFlow and is available as part of the TensorFlow 1.10 module on Theta. TFP provides several layers for statistical analysis, model building and probabilistic inference. See [https://github.com/tensorflow/probability](https://github.com/tensorflow/probability) for end-to-end examples. On Theta TFP is scalability to large datasets and modelsusing Horovod for distributed computing.
 
 ## FAQ and common issues
 **"Illegal instruction" or "AVX512F" error**

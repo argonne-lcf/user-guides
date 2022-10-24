@@ -39,7 +39,7 @@ When running PyTorch applications, we have found the following practices to be g
 
 1. Use Reduced Precision. Reduced Precision is available on A100 via tensorcores and is supported with PyTorch operations.  In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as descibed in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html).  In Pytorch, users generally need to manage casting and loss scaling manually,  though context managers and function decorators can provide easy tools to do this.
 
-2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to Tensorflow's `tf.function` tools.  However, PyTorch JIT capabilities are newer and may not yield performance improvements.  Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
+2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools.  However, PyTorch JIT capabilities are newer and may not yield performance improvements.  Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
 
 
 ## Multi-GPU / Multi-Node Scale up

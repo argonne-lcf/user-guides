@@ -34,7 +34,7 @@ conda install <python-module>
 ```
 
 ## Installing Horovod for Distributed Deep Learning
-If you install conda manually, or find your conda environment does not have Horovod. We provide a [Conda Channel alcf-theta](https://anaconda.org/alcf-theta) which contains pre-compiled Horovod packages that work with most of the latest PyTorch and Tensorflow versions. In principle you can install Horovod using pip install horovod however this can be a painful process to get the environment correctly lined up to work on Theta. Thus, we provide the precompiled versions. Therefore we suggest using the following on Theta:
+If you install conda manually, or find your conda environment does not have Horovod. We provide a [Conda Channel alcf-theta](https://anaconda.org/alcf-theta) which contains pre-compiled Horovod packages that work with most of the latest PyTorch and TensorFlow versions. In principle you can install Horovod using pip install horovod however this can be a painful process to get the environment correctly lined up to work on Theta. Thus, we provide the precompiled versions. Therefore we suggest using the following on Theta:
 
 ```
 conda install -c alcf-theta horovod
