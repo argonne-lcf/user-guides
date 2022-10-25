@@ -1,35 +1,24 @@
-# Continuous Integration on Theta
+# Jenkins on Theta
 
-## Continuous Integration
-Continuous Integration (CI) in software development is the practice of committing code changes regularly to a version control system and having automated processes perform build, test, package, and deploy activities. 
-
-The key concepts of CI include high frequency, repeatability, and automation in order to realize increased quality and ease of delivery. The main goal CI aims to achieve is the elimination of build and deployment issues, which in turn improves development cycles, provides a timely feedback loop with developers, and results in higher quality deliverables with reduced development time.
-
-CI usually describes the work that is done by a deployment or operations team to build and deploy code throughout an environment and make it available to the different interested teams involved in the SDLC. The steps that make up this process are referred to as a workflow or pipeline, which, when combined with automation, provides the mechanism for Continuous Integration.
-
-Today it is a common practice to use a CI tool for defining pipelines and executing the tasks required to take code from a source stored in a version control system to compiled and packaged artifacts executing in production. Two excellent examples of CI tools are [Jenkins](https://jenkins.io/) and [GitLab](https://about.gitlab.com/).
-
-## CI Tools at ALCF
+## Jenkins at ALCF
 The ALCF provides a tool for implementing CI processes named Jenkins. Using the Jenkins tool, ALCF projects can make use of CI functionality. The Jenkins CI tool enables projects to auto-compile their custom software code, automate testing cycles, provide a feedback loop, and submit jobs to HPC resources. The custom pipelines needed for each project can be defined in Jenkins by project users, and execution can be controlled through triggers.
 
-### Jenkins
-Jenkins "is a self-contained, open-source automation server which can be used to automate all sorts of tasks relating to building, testing, and delivering or deploying software." Jenkins is the tool that provides CI/CD functionality for ALCF resources. Most importantly, it provides the mechanisms required for DevOps automation.
-
 Additional information, technical and user documentation, and community support can be found on the [Jenkin's project website](https://jenkins.io/).
+
+## Projects Using Jenkins
+Enabling a project to use Jenkins requires some additional steps and configuration to get started. Once enabled for a project, users can access the Jenkins CI environment and configure jobs or pipelines for building and testing their project code.
+
+### On-Boarding with Jenkins
+To enable Jenkins for your project, send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) requesting Jenkins access for your project and include the ALCF project shortname and the PI’s name with the request.
+
+The project’s PI will get an email with details and a new Jenkins account associated with the project. This is a service account that the Jenkins CI tool will use when executing tasks associated with your project. The CI account will be listed as a project member and added to the project’s group for access controls.
 
 ### ALCF Jenkins
 Log in to the [ALCF Jenkins web portal](https://ci.alcf.anl.gov/jenkins) using your ALCF credentials (ALCF username and cryptocard token password).
 
-## Projects Using CI
-Enabling a project to use CI requires some additional steps and configuration to get started. Once enabled for a project, users can access the Jenkins CI environment and configure CI jobs or pipelines for building and testing their project code.
-
-### On-Boarding with CI
-To enable CI for your project, send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) requesting CI functionality for your project and include the ALCF project shortname and the PI’s name with the request.
-
-The project’s PI will get an email with details and a new CI account associated with the project. This is a service account that the Jenkins CI tool will use when executing tasks associated with your project. The CI account will be listed as a project member and added to the project’s group for access controls.
 
 ### Folders
-Each CI project will have a top-level "folder" created with the project’s name. Please do not delete the project folder: it is used for organization in the multi-project environment and is required for implementing the needed level of security. The project folder is where all of the project objects are stored, you can additionally create any subfolders, jobs, pipelines, etc. within your project folder to meet your CI needs.
+Each Jenkins project will have a top-level "folder" created with the project’s name. Please do not delete the project folder: it is used for organization in the multi-project environment and is required for implementing the needed level of security. The project folder is where all of the project objects are stored, you can additionally create any subfolders, jobs, pipelines, etc. within your project folder to meet your CI needs.
 
 In the example below, we have a project named "TestFromJanet2" with an associated folder.
 
@@ -39,9 +28,9 @@ In the example below, we have a project named "TestFromJanet2" with an associate
 </figure>
 
 ### Nodes
-Each CI project will have an assigned node for execution. Nodes execute jobs defined within a project, typically on the target system’s login node. Currently there are CI nodes configured for HPC systems Theta and Cooley, as well as non-HPC nodes with 32 cores (Intel Xeon Processor E5-2683 v4) and 128 GB RAM for generic x86 processing with access to the Mira shared filesystems.
+Each Jenkins project will have an assigned node for execution. Nodes execute jobs defined within a project, typically on the target system’s login node. Currently there are Jenkins nodes configured for HPC systems Theta and Cooley, as well as non-HPC nodes with 32 cores (Intel Xeon Processor E5-2683 v4) and 128 GB RAM for generic x86 processing with access to the Mira shared filesystems.
 
-In the example below, the node for this project is named ‘TestFromJanet2-Theta. Jobs and pipeline steps triggered from Jenkins will execute on the TestFromJanet2-Theta node which has been configured to use host: thetalogin1 and will use the project’s CI user ID (provided during on-boarding) to execute scripts or code just as if the end user had logged into the thetalogin1 node and executed the same set of actions manually from the command line.
+In the example below, the node for this project is named ‘TestFromJanet2-Theta. Jobs and pipeline steps triggered from Jenkins will execute on the TestFromJanet2-Theta node which has been configured to use host: thetalogin1 and will use the project’s Jenkin's user ID (provided during on-boarding) to execute scripts or code just as if the end user had logged into the thetalogin1 node and executed the same set of actions manually from the command line.
 
 <figure markdown>
   ![CI slaves screenshot](files/02-ci-003.png){ width="700" }
@@ -76,14 +65,14 @@ On the job configuration page, look for the section **Source Code Management (SC
   <figcaption>Repository access</figcaption>
 </figure>
 
-To use the new connection to the Git repository interactively, configure the job to be parameterized and add a a Git Parameter to the job. The example below shows the configuration to select a branch at build time.
+To use the new connection to the Git repository interactively, configure the job to be parameterized and add a Git Parameter to the job. The example below shows the configuration to select a branch at build time.
 
 <figure markdown>
   ![Git parameter](files/06-ci-007.png){ width="700" }
   <figcaption>Git parameter</figcaption>
 </figure>
 
-On the build screen, select from the drop-down menu the branch to be referenced during this job execution. The example below shows the list of available branches from the configured repository. It is automatically populated duing the Git connector configuration of the preceding steps. If a new branch is added to the Git repository, it will display in the populated list of avialable branches when the job runs in Jenkins.
+On the build screen, select from the drop-down menu the branch to be referenced during this job execution. The example below shows the list of available branches from the configured repository. It is automatically populated during the Git connector configuration of the preceding steps. If a new branch is added to the Git repository, it will display in the populated list of available branches when the job runs in Jenkins.
 
 <figure markdown>
   ![Select branch](files/07-ci-008.png){ width="700" }
@@ -91,7 +80,7 @@ On the build screen, select from the drop-down menu the branch to be referenced 
 </figure>
 
 ### Build Steps
-Build steps are where users define executable tasks and jobs do something interesting within an envionment. A core component of Jenkens, build steps can take a few different forms and are morst commonly configured to call remote scripts for code building and deployment. A build step can even contain the shell script contents to execute on the remote machine.
+Build steps are where users define executable tasks and jobs do something interesting within an environment. A core component of Jenkins, build steps can take a few different forms and are most commonly configured to call remote scripts for code building and deployment. A build step can even contain the shell script contents to execute on the remote machine.
 
 <figure markdown>
   ![Add build step](files/08-ci-009.png){ width="700" }
@@ -130,7 +119,7 @@ To add a pipeline using a Jenkinsfile in SCM, add the pipeline object as shown b
 </figure>
 
 ### Triggers
-Triggers are events that intitiate tasks in Jenkins. Triggers can be called a few different ways, including directly by a user via the Build Now action (a time-based trigger similar to a Cron system), or based on commits made to source control.
+Triggers are events that initiate tasks in Jenkins. Triggers can be called a few different ways, including directly by a user via the Build Now action (a time-based trigger similar to a Cron system), or based on commits made to source control.
 
 The example below shows a time-based configuration to run the job on a regular schedule. Details on the scheduling syntax can be found by clicking the blue question mark to the right of the Schedule field.
 
@@ -167,7 +156,7 @@ Click **Add Credentials** from the left-hand navigation menu and provide the req
 
 ## FAQS
 **Why does my project's execution node say it is offline?**
-Node services for executing project tasks are inititated when there is demand for the node. The process of starting the node services acan take up to one minute; the status change is displayed in the Jenkins web portal. When there is no longer demand for the node, the services will stop again after one minute of idle time.
+Node services for executing project tasks are initiated when there is demand for the node. The process of starting the node services can take up to one minute; the status change is displayed in the Jenkins web portal. When there is no longer demand for the node, the services will stop again after one minute of idle time.
 
 **Why is my shell environment different when executing tasks on a Jenkins node?**
 Since Jenkins uses SSH with no tty, any shell scripts need to have this at the top so that login scripts are run against the session:
@@ -181,11 +170,11 @@ Since Jenkins uses SSH with no tty, any shell scripts need to have this at the t
 
 **Source Control Management (SCM)** - A term used in Jenkins to describe objects related to version control.
 
-**Version Control System (VCS)** - Software that manages access, storage, and revision history for a code respository.
+**Version Control System (VCS)** - Software that manages access, storage, and revision history for a code repository.
 
 ## Appendix
 ### Abbreviated Setup
-- Request CI capabilities for your project by emailing the ALCF Service Desk.
+- Request Jenkins access for your project by emailing the ALCF Service Desk.
 - Add jobs and pipelines to the project folder space to handle code compiling and testing.
 - Configure jobs with credentials, SCM integrations, and trigger components depending on the intended behavior for your project.
 - Execute jobs and pipelines by invoking the configured triggers.
