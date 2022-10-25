@@ -92,18 +92,61 @@ Gitlab-ci jobs run as the triggering user on relevant systems. The triggering us
     * Give it a descriptive title such as the where the key resides, by default it will extract the name from the end of the public key if possible.
   * Click the `Add Key` button.  It will be greyed out until you paste a key
 
+### Gitlab Projects (repositories)
+  Gitlab takes a git repository, layers additional functionality on top of them, and then calls it a `Gitlab Project`.  This is the most common level you will be interacting with Gitlab at.  Please do not confuse ALCF Projects with `Gitlab Projects` as they are two separate things.  ALCF Projects more closely map to the `Gitlab Group/SubGroup` concept; which we explain in the next section.  
+  Once you are assigned access to a `Gitlab Group/SubGroup` you will be able to create arbitrary `Gitlab Projects` underneath.  Configuring CI/CD jobs for each independently.
 
-### Gitlab Groups (Folders)
-Gitlab calls git repositories `Projects`, and folders containing `Projects` are called `Groups` or `SubGroups`.  When an ALCF Project is granted access to gitlab-ci a Gitlab `Group` will be created with access for all members of that ALCF Project.  Users will then be able to create arbitrary Gitlab `Projects`.  New `Projects` will needed to be created under your `Group` via the Web GUI.
+To create a new `Gitlab Project`:
 
-Each ALCF Project will have a top-level `Group` or `SubGroup` created with the ALCF Project’s name.  It is used for organization in the multi-project environment and is required for implementing the needed level of security. The `Group` folder is where all of the git `Projects` are stored, you can additionally create any `SubGroups`, `Projects`, group variables, etc within your `Groups` settings to meet your CI/CD needs.
-
+* On the Upper left, click `Menu`, select `Groups`,and then choose `Your Groups` towards the bottom.
 <figure markdown>
-  ![Gitlab CI/CD Groups and Projects](files/gitlab-ci/GitlabCreateGroupAndProject.png){ width="700" }
-  <figcaption>Gitlab Group and Projects screenshot</figcaption>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="500" }
+  <figcaption>Gitlab Your Groups Menu screenshot</figcaption>
 </figure>
 
-### Gitlab Projects
+* From the list of `Gitlab Groups` click the group you were informed corresponds to your `ALCF Project`
+* Click the `New project` button near the upper right.  If this is the first project you are creating you will have two large square buttons near the middle of the screen to create `Gitlab SubGroups` or `Gitlab Projects`
+<figure markdown>
+  ![Gitlab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }
+  <figcaption>Gitlab Empty Group Page screenshot</figcaption>
+</figure>
+* On the `Create new project` page, click `Create blank project`
+<figure markdown>
+  ![Gitlab Create New Project](files/gitlab-ci/GitlabNewProject1.png){ width="700" }
+  <figcaption>Gitlab Create New Project screenshot</figcaption>
+</figure>
+* Fill in the `Project Name` field. The `Project slug` field will auto populate based on the `Project Name`, do not change it.  If you are pushing an existing repository, you *MUST* uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
+<figure markdown>
+  ![Gitlab Create New Project](files/gitlab-ci/GitlabNewProject2.png){ width="700" }
+  <figcaption>Gitlab Create New Project screenshot</figcaption>
+</figure>
+* Click `Create project` button near the bottom
+
+### Gitlab Groups/SubGroups (Folders)
+  Gitlab organizes `Gitlab Projects` into "folders" called `Groups` or `SubGroups`.  When an ALCF Project is granted access to gitlab-ci a Gitlab `Group` will be created with access for all members of that ALCF Project.  Users will then be able to create arbitrary Gitlab `Projects`. 
+
+  Each ALCF Project will have a top-level `Group` or `SubGroup` created with the ALCF Project’s name.  It is used for organization in the multi-project environment and is required for implementing the needed level of security. The `Group` folder is where all of the your `Gitlab Projects` are to be stored, you can additionally create new `SubGroups`, `Projects`, group variables, etc within your designated `Group`, `SubGroups`, and/or `Projects`.
+
+To create a new `Gitlab SubGroup`:
+
+* On the Upper left, click `Menu`, select `Groups`,and then choose `Your Groups` towards the bottom.
+<figure markdown>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="500" }
+  <figcaption>Gitlab Your Groups Menu screenshot</figcaption>
+</figure>
+
+* From the list of `Gitlab Groups` click the group you were informed corresponds to your ALCF Project
+* Click the `New subgroup` button near the upper right.  If this is the first project you are creating you will have two large square buttons near the middle of the screen to create `Gitlab SubGroups` or `Gitlab Projects`
+<figure markdown>
+  ![Gitlab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }
+  <figcaption>Gitlab Empty Group Page screenshot</figcaption>
+</figure>
+* On the `Create subgroup` page, enter the `Subgroup name`.  `Subgroup slug` will auto populate, do not change it.
+<figure markdown>
+  ![Gitlab Create New Group](files/gitlab-ci/GitlabNewSubGroup.png){ width="700" }
+  <figcaption>Gitlab Create New SubGroup screenshot</figcaption>
+</figure>
+* Click `Create subgroup` button near the bottom
 
 ### Gitlab Runner Nodes
   Each system is assigned one or more Gitlab runner node(s) that are shared by all users in gitlab-ci.  Each runner is only capable of running one users pipeline at a time.  While multiple jobs in that pipeline may run in parallel.
