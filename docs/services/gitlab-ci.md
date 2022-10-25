@@ -3,17 +3,21 @@
 ## Gitlab-CI
   Gitlab is an application that offers combined functionality as git repository, issue tracker, and CI/CD platform.  The ALCF implementation of the Gitlab-CI environment leverages upstream gitlab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into Gitlab, it can allow for tighter devops processes.
 
- Gitlab-CI is meant to provide CI/CD services for projects using Gitlab-CI to store their git repositories and executing code on our HPC clusters. ALCF does not allow users to join their own private runners to our existing Gitlab CI/CD environment and provides dedicated runners for our supported systems.
+ Gitlab-CI is meant to provide CI/CD services for projects using Gitlab-CI to store your git repositories and executing code on our HPC clusters. ALCF does not allow users to join your own private runners to our existing Gitlab CI/CD environment and provides dedicated runners for our supported systems.
 
 Additional information, technical and user documentation, and community support can be found on the [Gitlab's Runner website](https://docs.gitlab.com/runner/).
 
 ALCF's Gitlab-CI environment can be accessed by logging into the [ALCF Gitlab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
 ## Quickstart
-* Email [ALCF Support](mailto:help@alcf.anl.gov) requesting access for your ALCF Project to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov)
-* Create a `Gitlab Project` in your assigned `Gitlab Group`
-* Create a `.gitlab-ci.yml` file with the ANL specific requirements in your `Gitlab Project(s)`
-  * You will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables)
+* A user Emails [ALCF Support](mailto:help@alcf.anl.gov) requesting access for your ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) .
+* ALCF Support will add the ALFC Project to the appropriate system(s) in UB3.
+* ALCF will create a `Gitlab Group/SubGroup` for the ALCF Project and map it to the appropriate ldap group that maps to the ALCF Project
+* ALCF Support will reply back to the user and inform them that the project is created.
+* User(s) will need to login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure your initial Gitlab profile.  Adding a SSH key so you can pull/push code to the gitlab server.
+* User will then need to create a `Gitlab Project` in your assigned `Gitlab Group/SubGroup`.
+* When ready to run CI/CD jobs, add a `.gitlab-ci.yml` file to your git repositories.
+  * You will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
 _Example: A `.gitlab-ci.yml` file for a Theta project_
 ```
@@ -47,10 +51,12 @@ batch_test:
 
 ## Glossary
 * **Group** - A collection of projects.  Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`.  When a ALCF Project is allocated resources on the Gitlab-CI environment we will create a Gitlab `Group` that will map to your ALCF Project allocation.
+* **Jacamar-CI** - A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers like Cobalt and PBS.
 * **Job** - An individual set of commands that are ran.  This is the lowest unit of Gitlab-CI abstraction.
 * **Pipeline** - Gitlab organizes your jobs for each run into a `pipeline`.
 * **Project** - Gitlab Projects can be thought of as an individual  git repository plus all services and features Gitlab layers on top.  This term is unrelated to the ALCF Project concept.  That often maps to ldap groups and/or quotas and allocations.
 * **Stage** - A collection of jobs in a pipeline.  Jobs in the next stage will not start till the jobs in the current stage complete.  If a job fails, the pipeline will not run the following stages by default.
+* **Triggering User** - The user whose actions causes a CI/CD job to run and who the Jacamar-CI executor will run the jobs as. Examples include pushing commits up to the server, creating a merge request, and/or merging one branch into another branch.
 
 ## Projects Using CI/CD
 Any project with a git repository on the gitlab-ci environment has access to the CI/CD environment by default.  In order to launch a shell job on a system you must already have access to that system.
@@ -64,8 +70,28 @@ Include with the request :
 * The PI’s name 
 
 <b>Change effective Dec 1st</b>
+Gitlab-ci jobs run as the triggering user on relevant systems. The triggering user's home directory will be used by Jacamar-CI to copy the git repository and cache files into `~/.jacamar-ci`. This job will run out of their home directory and consume filesystem quota.  If you need more space you should try to reference files in any ALCF Project allocations you have on shared filesystems.  Unfortunately the initial git clone must run out of `~/.jacamar-ci` in your home directory.
 
-Prior to this date, gitlab-ci jobs ran as a per project service account with a storage quota independent from the triggering user.  Effective the above date Gitlab-CI will switch to running all jobs as the triggering user. That user's home directory will be used by Jacamar-CI to copy the repo and cache files into `~/.jacamar-ci`. This job will run out of your home directory and consume filesystem quota.
+  The triggering user is defined as the user account who caused the CI/CD pipeline to execute.  Via scheduling a re-occurring job, pushing commits up to the server, creating a merge request, and/or merging a branch.  When the CI/CD jobs run they will run as that user on the relevant systems. For a job to succeed the `triggering user` must have appropriate permissions and access to all relevant systems and files.
+
+### Initial Login and Profile setup of Gitlab-CI
+* Login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
+* Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
+  * Click Profile icon on the upper right hand corner, then select Profile
+    <figure markdown>
+    ![Gitlab Profile Dropdown](files/gitlab-ci/GitlabProfileDropDown.png){ width="200" }
+    <figcaption>Gitlab Profile Dropdown screenshot</figcaption>
+    </figure>
+  * Click SSH Keys on the left hand menu.
+    <figure markdown>
+    ![Gitlab Profile Add SSH Key](files/gitlab-ci/GitlabAddSSHKey.png){ width="700" }
+    <figcaption>Gitlab Profile Add SSH Key screenshot</figcaption>
+    </figure>
+  * Copy/Paste in your  SSH public key into the large text box under the word Key
+    * On Linux, Unix, and OSX based systems using OpenSSH your SSH public key is commonly found at `~/.ssh/id_rsa.pub`. If using windows you will need to consult your applications documentation on the location of your public key.
+    * Give it a descriptive title such as the where the key resides, by default it will extract the name from the end of the public key if possible.
+  * Click the `Add Key` button.  It will be greyed out until you paste a key
+
 
 ### Gitlab Groups (Folders)
 Gitlab calls git repositories `Projects`, and folders containing `Projects` are called `Groups` or `SubGroups`.  When an ALCF Project is granted access to gitlab-ci a Gitlab `Group` will be created with access for all members of that ALCF Project.  Users will then be able to create arbitrary Gitlab `Projects`.  New `Projects` will needed to be created under your `Group` via the Web GUI.
