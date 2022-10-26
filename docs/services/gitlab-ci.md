@@ -166,8 +166,28 @@ To create a new `Gitlab SubGroup`:
   <figcaption>Gitlab Group and Projects screenshot</figcaption>
 </figure>
 
+#### tags
+  Tags are used to select which runner a job will be sent to. Improper tags can prevent your job from running and result in a failed job.
+
+##### ALCF Specific tags
+  Currently we have two sets of tags necessary to run on our systems. One tag will select which cluster the jobs are sent to.  The other tag will determine if the job is ran locally on the gitlab runner, or submitted to a job scheduler on a HPC cluster.
+
+_Cluster Tag(s)_
+
+| Cluster | tag | Description |
+|:--------|:---------:|:-------------:|
+| Theta   | ecp-theta | This tag will send jobs to the Theta HPC runners |
+
+_Job Type Tag(s)_
+
+| tag | Description |
+|:---------:|:------------:|
+| shell | This tag will execute the job locally on the gitlab-runner node. |
+| batch | This tag will submit the job to the HPC clusters job scheduler. |
+
+
 #### variables
-Variables can be stored two ways, inline in the `.gitlab-ci.yml` file or as a setting in the gitlab `Group` or `Project` itself.  Variables are exported as environment variables by the gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
+  Variables can be stored two ways, inline in the `.gitlab-ci.yml` file or as a setting in the gitlab `Group` or `Project` itself.  Variables are exported as environment variables by the gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
 
 To set a variable directly in the `.gitlab-ci.yml` file declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line.  `variables:` can be declared globally or in individual jobs.
 
