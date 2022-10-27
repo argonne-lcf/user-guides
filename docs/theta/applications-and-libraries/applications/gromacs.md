@@ -8,7 +8,7 @@ ALCF offers assistance with building binaries and compiling instructions for GRO
 
 ## Building Gromacs
 
-1. Download latest source code: http://manual.gromacs.org/documentation/2022.1/download.html
+1. Download latest source code: [http://manual.gromacs.org/documentation/2022.1/download.html](http://manual.gromacs.org/documentation/2022.1/download.html)
 2. tar -xzf gromacs-2022.1.tar.gz
 3. cd gromacs-2022.1
 4. mkdir build

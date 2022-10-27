@@ -4,7 +4,8 @@
 ## Getting Started
 Adding Conda to your environment
 
-```module load miniconda-3
+```
+module load miniconda-3
 ```
 
 This will load Python 3. The installed modules are listed at the bottom of this page.
@@ -41,7 +42,7 @@ conda install -c alcf-theta horovod
 ```
 
 ## Installed Modules
-miniconda-3/latest
+```miniconda-3/latest```
 
 ```
 # packages in environment at /soft/datascience/conda/miniconda3/latest:
