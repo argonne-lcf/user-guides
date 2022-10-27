@@ -11,7 +11,7 @@ ALCF's Gitlab-CI environment can be accessed by logging into the [ALCF Gitlab-CI
 
 ## Quickstart
 * A user Emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for your ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) .
-* ALCF Support will add the ALFC Project to the appropriate system(s) via the Account and Project management system.
+* ALCF Support will add the ALCF Project to the appropriate system(s) via the Account and Project management system.
 * ALCF will create a `Gitlab Group/SubGroup` for the ALCF Project and map it to the appropriate ldap group that maps to the ALCF Project
 * ALCF Support will reply back to the user and inform them that the project is created.
 * User(s) will need to login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure your initial Gitlab profile.  Adding a SSH key so you can pull/push code to the gitlab server.
