@@ -1,5 +1,5 @@
-# Tensorboard Instructions
-After you have logged into ThetaGPU, and have a Tensorflow run going, you'll need to know one of your worker nodes so you can SSH to it.
+# TensorBoard Instructions
+After you have logged into ThetaGPU, and have a TensorFlow run going, you'll need to know one of your worker nodes so you can SSH to it.
 ```
 PORT0=9991 
 PORT1=9992 

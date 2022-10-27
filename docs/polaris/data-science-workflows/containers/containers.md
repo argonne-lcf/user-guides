@@ -19,17 +19,17 @@ module load singularity/3.8.7 # the default at the time of writing these docs.
 
 ```
 
-### Which singularity?
+### Which Singularity?
 
 There used to be a single `singularity` tool, which in 2021 split after some turmoil.  There are now two `singularity`s: one developed by Sylabs, and the other as part of the Linux Foundation.  Both are open source, and the split happened around version 3.10.  The version on Polaris is from [Sylabs](https://sylabs.io/docs/) but for completeness, here is the [Linux Foundation's version](https://github.com/apptainer/apptainer).  Note that the Linux Foundation version is renamed to `apptainer` - different name, roughly the same thing though divergence may happen after 2021's split.
 
-### Additional Settings to store cache
+### Additional settings to store cache
 
 If you aren't interested in any of that, just skip to the bottom to see the available containers.
+```
 export SINGULARITY_TMPDIR=/tmp/singularity-tmpdir
 mkdir $SINGULARITY_TMPDIR
 
-```
 SINGULARITY_CACHEDIR=/tmp/singularity-cachedir/
 mkdir $SINGULARITY_CACHEDIR
 ```
@@ -143,5 +143,5 @@ qsub -v CONTAINER=bootstrap.sif job_submission_dl.sh
 ## Available containers
 
 If you just want to know what containers are available, here you go. 
-Containers are stored at `/soft/containers/`, with a subfolder for pytorch and tensorflow.  The default nvidia containers "as-is" are available, and soon we will also distribute containers with mpi4p and horovod capabilities that work on Polaris.
-The latest containers are updated periodically.  If you have trouble with them, or a new container is available that you need (or want something outside to torch/tensorflow) please contact ALCF support at `support@alcf.anl.gov`.
+Containers are stored at `/soft/containers/`, with a subfolder for pytorch and tensorflow.  The default nvidia containers "as-is" are available, and soon we will also distribute containers with mpi4py and Horovod capabilities that work on Polaris.
+The latest containers are updated periodically.  If you have trouble with them, or a new container is available that you need (or want something outside to Torch/TensorFlow) please contact ALCF support at `support@alcf.anl.gov`.

@@ -1,6 +1,6 @@
 # PyTorch on Polaris
 
-PyTorch is a popular, open source deep learning framework developed and released by Facebook.  The [PyTorch home page](https://pytorch.org/) has more information about Pytorch, which you can refer to.  For trouble shooting on Polaris, please contact support@alcf.anl.gov.
+PyTorch is a popular, open source deep learning framework developed and released by Facebook.  The [PyTorch home page](https://pytorch.org/) has more information about PyTorch, which you can refer to.  For trouble shooting on Polaris, please contact support@alcf.anl.gov.
 
 ## Installation on Polaris
 
@@ -37,14 +37,14 @@ PyTorch is also available through nvidia containers that have been translated to
 
 When running PyTorch applications, we have found the following practices to be generally, if not universally, useful and encourage you to try some of these techniques to boost performance of your own applications.
 
-1. Use Reduced Precision. Reduced Precision is available on A100 via tensorcores and is supported with PyTorch operations.  In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as descibed in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html).  In Pytorch, users generally need to manage casting and loss scaling manually,  though context managers and function decorators can provide easy tools to do this.
+1. Use Reduced Precision. Reduced Precision is available on A100 via tensorcores and is supported with PyTorch operations.  In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as descibed in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html).  In PyTorch, users generally need to manage casting and loss scaling manually,  though context managers and function decorators can provide easy tools to do this.
 
-2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to Tensorflow's `tf.function` tools.  However, PyTorch JIT capabilities are newer and may not yield performance improvements.  Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
+2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools.  However, PyTorch JIT capabilities are newer and may not yield performance improvements.  Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
 
 
 ## Multi-GPU / Multi-Node Scale up
 
-PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with PyTorch has been seen with both DDP and horovod.  For details, please see the [horovod documentation](https://horovod.readthedocs.io/en/stable/Pytorch.html) or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).  Some polaris specific details that may be helpful to you:
+PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with PyTorch has been seen with both DDP and Horovod.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).  Some Polaris-specific details that may be helpful to you:
 
 1. CPU affinity and NCCL settings can improve scaling performance, particularly at the largest scales.  In particular, we encourage users to try their scaling measurements with the following settings:
  - Set the environment variable `NCCL_COLLNET_ENABLE=1`
@@ -60,5 +60,5 @@ DeepSpeed is also available and usable on Polaris.  For more information, please
 
 ## PyTorch Dataloaders
 
-Please note there is a bug that causes a hang when using pytorch data loaders + distributed training (horovod, DDP, etc).  To workaround this, Nvidia recommends setting `num_workers=0` in the dataloader configuration.
+Please note there is a bug that causes a hang when using pytorch data loaders + distributed training (Horovod, DDP, etc).  To workaround this, NVIDIA recommends setting `num_workers=0` in the dataloader configuration.
 
