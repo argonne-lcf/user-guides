@@ -27,7 +27,10 @@ nav:
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
   - Services:
     - JupyterHub: services/jupyter-hub.md
-    - Continuous Integration: services/continuous-integration.md
+    - Continuous Integration: 
+      - General: services/continuous-integration.md
+      - Jenkins: services/jenkins.md
+      - Gitlab-CI: services/gitlab-ci.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
