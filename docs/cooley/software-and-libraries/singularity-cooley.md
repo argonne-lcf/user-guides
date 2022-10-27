@@ -47,7 +47,7 @@ within the container execution (or pass it into the container with a singularity
 
 Additionally, running with both GPUs on a node can cause a crash with CUDA code if there are X processes running.  You can use the nox11 queue, or pass the attribute nox11 to any cobalt job to turn off X processes for your job.
 
-## Building a Singularity Container with Tensorflow or Pytorch for GPU
+## Building a Singularity Container with TensorFlow or PyTorch for GPU
 Building a container for singularity requires either root priveleges on a machine with singularity installed, or the use of [singularity hub](https://singularity-hub.org/) to build your images.  This guide won't go in to the details of how to build your singularity image, but rather contain recipes and snippets that are useful for builds targeted towards Cooley using common packages.
 
 ## Bootstrapping a Basic Image

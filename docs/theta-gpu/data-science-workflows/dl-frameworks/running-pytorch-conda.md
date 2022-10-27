@@ -20,8 +20,16 @@ This will setup a conda environment with the "from scratch" build of PyTorch.
 This package will also include builds of TensorFlow and Horovod tagged releases.
 
 ## Installing Packages
-### Using pip install --user
-With the conda environment setup, one can install common Python modules using ```pip install --users <module-name>``` which will install packages in ```$HOME/.local/lib/pythonX.Y/site-packages```.
+### Using `pip install --user` (not recommended)
+With the conda environment setup, one can install common Python modules using `pip install --users <module-name>` which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` environment variable is automatically set when you load the base conda module, and is typically equal to `/home/$USER/.local/conda/YYYY-MM-DD` or  `/home/$USER/.local/thetagpu/conda/YYYY-MM-DD`, depending on the date of the module. 
+
+Note, Python modules installed this way that contain command line binaries will not have those binaries automatically added to the shell's `$PATH`. To manually add the path:
+```
+export PATH=$PYTHONUSERBASE/bin:$PATH"
+```
+Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module. 
+
+Cloning the Anaconda environment, or using `venv` are both more flexible and transparent when compared to `--user` installs. 
 
 ### Using Conda Environments
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via ```conda install <module>``` or ``` pip install <module>```.
@@ -48,8 +56,3 @@ conda activate <path/to/env>
 ```
 
 One should then be able to install modules natively.
-
-
-
-
-
