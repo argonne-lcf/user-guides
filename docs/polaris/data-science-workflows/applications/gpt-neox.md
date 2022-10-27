@@ -28,11 +28,20 @@ A batch submission script for the following example is available [here](https://
   source /soft/datascience/venvs/polaris/2022-09-08/bin/activate
   ```
 
-2. Clone the `EleutherAI/gpt-neox` repository if it doesn't already exist:
+3. Clone the `EleutherAI/gpt-neox` repository if it doesn't already exist:
   ```bash
   git clone https://github.com/EleutherAI/gpt-neox
+  ```
+
+4. Navigate into the `gpt-neox` directory:
+  ```bash
   cd gpt-neox
   ```
+  <div class="admonition note" style="display:inline-block;margin-top:auto;">
+  <p class="admonition-title">Note</p>
+  <p>The remaining instructions assume you're inside the <code>gpt-neox</code> directory
+  </p>
+  </div>
 
 5. Create a DeepSpeed compliant `hostfile` (each line is formatted as `hostname, slots=N`):
   ```bash
@@ -50,12 +59,12 @@ A batch submission script for the following example is available [here](https://
    echo "https_proxy=${https_proxy} >> .deepspeed_env"
    ```
 
-4. Prepare data:
+7. Prepare data:
   ```bash
   python3 prepare_data.py -d ./data
   ```
 
-5. Train:
+8. Train:
   ```bash
   python3 ./deepy.py train.py -d configs small.yml local_setup.yml
   ```
