@@ -22,17 +22,17 @@ $ conda deactivate /path-to/conda/openmm_env
 ```
 3. Validate installation: if successful, then info on code version, platform types, CUDA initialization, and force error tolerance will be shown.
 
-```
-$ cd /path-to/conda/openmm_env/share/openmm/examples
-$ python -m openmm.testInstallation
-```
+    ```
+    $ cd /path-to/conda/openmm_env/share/openmm/examples
+    $ python -m openmm.testInstallation
+    ```
 
 4. Benchmark testing using PBS job script below.
 
-```
-$ cd /path-to/conda/openmm_env/share/openmm/examples
-$ qsub ./submit.sh
-```
+    ```
+    $ cd /path-to/conda/openmm_env/share/openmm/examples
+    $ qsub ./submit.sh
+    ```
 
 ## Running OpenMM Benchmark on Polaris
 A sample pbs script follows that will run OpenMM benchmark on one node.
@@ -53,7 +53,7 @@ module load cudatoolkit-standalone/11.4.4
 python benchmark.py --platform=CUDA --test=pme --precision=mixed --seconds=30 --heavy-hydrogens > test.output
 ```
  
-# Building OpenMM from Source
+## Building OpenMM from Source
 
 1. Update environment
 ```
@@ -87,16 +87,16 @@ $ cmake -DDOXYGEN_EXECUTABLE=/path-to/openmm/doxygen/bin/doxygen \
 $ make -j 8
 $ make install
 ```
-6. Validate installation: if successful, then info on code version, platform types, CUDA initialization, and force error tolerance will be shown.
+6. Validate installation: if successful, then info on code version, platform types, CUDA initialization, and force error tolerance will be shown. <br />
 
-```
-$ cd /path-to/openmm/examples
-$ python -m openmm.testInstallation
-```
+    ```
+    $ cd /path-to/openmm/examples
+    $ python -m openmm.testInstallation
+    ```
 
 7. Benchmark testing using the PBS job script above.
 
-```
-$ cd /path-to/openmm/examples
-$ qsub ./submit.sh
-```
+    ```
+    $ cd /path-to/openmm/examples
+    $ qsub ./submit.sh
+    ```

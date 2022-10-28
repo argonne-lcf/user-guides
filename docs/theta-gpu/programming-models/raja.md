@@ -17,7 +17,9 @@ The RAJA source code lives at [RAJA github](https://github.com/LLNL/RAJA).
 It can be cloned with git clone ```--recursive https://github.com/llnl/raja.git```. The recursive clone will also clone RAJA's dependencies in the proper locations.
 
 ### Add a cmake configuration for ThetaGPU
-```raja/host-configs/alcf-builds/thetagpu.cmake```
+```
+raja/host-configs/alcf-builds/thetagpu.cmake
+```
 
 ```
 set(RAJA_COMPILER "RAJA_COMPILER_GNU" CACHE STRING "")
@@ -50,6 +52,7 @@ set(RAJA_HOST_CONFIG_LOADED On CACHE Bool "")
 ```
 
 ### Now build on the ThetaGPU compute node
+
 ```
 git clone --recursive https://github.com/llnl/raja.git
 
@@ -65,4 +68,4 @@ cmake \
   "$@" \
 
   ..
-  ```
+```

@@ -5,7 +5,7 @@ There are two schemes for distributed learning:
 
 2. Data parallelization: in this scheme, all the workers own a replica of the model. The global batch of data is split into multiple minibatches, and processed by different workers. Each worker computes the corresponding loss and gradients with respect to the data it posseses. Before the updating of the parameters at each epoch, the loss and gradients are averaged among all the workers through a collective operation. This scheme is relatively simple to implement. MPI_Allreduce is the only commu
 
-Our recent presentation about the data parallel training can be found here: https://youtu.be/930yrXjNkgM
+Our recent presentation about the data parallel training can be found here: [https://youtu.be/930yrXjNkgM](https://youtu.be/930yrXjNkgM)
 
 In this documentation, we would like to show how to do data parallel training on ThetaGPU. 
 
@@ -16,14 +16,14 @@ source /lus/theta-fs0/software/datascience/thetagpu/anaconda3/setup.sh
 ```
 
 ## TensorFlow with Horovod
-   ### 1. Initialize Horovod
+### 1. Initialize Horovod
 ```
 import horovod.tensorflow as hvd hvd.init()
 ```
 After this initialization, the rank ID and the number of processes can be refered as ```hvd.rank()``` and ```hvd.size()```. Besides, one can also call ```hvd.local_rank()``` to get the local rank ID within a node. This is useful when we are trying to assign GPUs to each rank.
 
-  ### 2. Assign GPU to each rank
-  ```
+### 2. Assign GPU to each rank
+```
 gpus = tf.config.experimental.list_physical_devices('GPU') 
 for gpu in gpus: 
     tf.config.experimental.set_memory_growth(gpu, True) 
@@ -76,17 +76,17 @@ def tensor_average(val, name):
          avg_tensor = tensor 
    return avg_tensor.item()
 ```
-We provided some examples in: https://github.com/argonne-lcf/sdl_ai_workshop/blob/master/01_distributedDeepLearning/Horovod/tensorflow2_mnist.py
+We provided some examples in: [https://github.com/argonne-lcf/sdl_ai_workshop/blob/master/01_distributedDeepLearning/Horovod/tensorflow2_mnist.py](https://github.com/argonne-lcf/sdl_ai_workshop/blob/master/01_distributedDeepLearning/Horovod/tensorflow2_mnist.py)
 
 ### PyTorch with DDP
-PyTorch has its own native parallelization library called DDP. We will provide omre details on how to run this on ThetaGPU. The current PyTorch on ThetaGPU does not have DDP built in. We will update to our users once we have DDP. 
+PyTorch has its own native parallelization library called DDP. We will provide more details on how to run this on ThetaGPU. The current PyTorch on ThetaGPU does not have DDP built in. We will update to our users once we have DDP. 
 
-For now, please refer to https://pytorch.org/tutorials/intermediate/ddp_tutorial.html
+For now, please refer to [https://pytorch.org/tutorials/intermediate/ddp_tutorial.html]([https://pytorch.org/tutorials/intermediate/ddp_tutorial.html])
 
 ### MPI Profiling for data parallel training
 We support two ways for profling the performance of data parallel training. 
 
-  1. mpitrace library MPI trace allows us to get a flat profling of all the MPI function calls involved during the training. To enable this, one can set the environment variable
+  1. mpitrace library MPI trace allows us to get a flat profiling of all the MPI function calls involved during the training. To enable this, one can set the environment variable
 ```
 export LD_PRELOAD=/lus/theta-fs0/software/datascience/thetagpu/hpctw/lib/libmpitrace.so
 ```

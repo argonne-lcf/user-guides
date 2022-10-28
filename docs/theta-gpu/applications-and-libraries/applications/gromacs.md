@@ -8,8 +8,8 @@ ALCF offers assistance with building binaries and compiling instructions for GRO
 
 ## Building Gromacs
 
-1. Download latest source code: http://manual.gromacs.org/documentation/2022.1/download.html
-2. tar -xzf gromacs-2022.1.tar.gz
+1. Download latest source code: [http://manual.gromacs.org/documentation/2022.1/download.html](http://manual.gromacs.org/documentation/2022.1/download.html)
+2. ```tar -xzf gromacs-2022.1.tar.gz```
 3. Submit an interactive job to a ThetaGPU compute node from Theta login node:
 ```
 user@thetalogin4:~>module load cobalt/cobalt-gpu
@@ -20,9 +20,9 @@ Opening interactive session to thetagpu06-gpu0
 ...
 user@thetagpu06:~$ 
 ```
-4. cd gromacs-2022.1
-5. mkdir build
-6. module load cmake
+4. ```cd gromacs-2022.1```
+5. ```mkdir build```
+6. ```module load cmake```
 7. 
 ```
 cmake -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx \
@@ -31,8 +31,8 @@ cmake -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx \
       -DGMX_MPI=ON -DGMX_OPENMP=ON -DGMX_GPU=CUDA \
       -DCUDA_TOOLKIT_ROOT_DIR=/user/local/cuda-11.4
 ```
-8. make –j 16
-9. make install
+8. ```make –j 16```
+9. ```make install```
 10. The installed binary is `build/bin/gmx_mpi`.
 
 ## Running Gromacs on ThetaGPU

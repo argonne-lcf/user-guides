@@ -42,6 +42,7 @@ If you install conda manually, or find your conda environment does not have Horo
 conda install -c alcf-theta horovod
 ```
 
+
 ## References
 [Python for HPC: Best Practices](https://www.alcf.anl.gov/support-center/training-assets/python-hpc-best-practices)
 

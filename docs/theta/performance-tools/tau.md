@@ -8,7 +8,7 @@ The TAU (Tuning and Analysis Utilities) Performance System is a portable profili
 - Dynamically using DyninstAPI
 - At runtime in the Java virtual machine
 
-For more information on TAU instrumentation options, see: http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch01.html.
+For more information on TAU instrumentation options, see: [http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch01.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch01.html)
 
 ## References
 - [TAU Project Site](http://www.cs.uoregon.edu/Research/tau/home.php)
@@ -56,7 +56,7 @@ The Makefile extension is a descriptive name for the configuration. Selecting a 
 - Compiler: For GNU, look for those containing ‘gnu.’ For Intel, look for those containing ‘intel’
 - Parallelism: MPI is well supported. 
 - PAPI: Interfaces with the PAPI hardware counters.
-- Scalasca: Interfaces with Scalasca, http://www.scalasca.org. **Note:** Dynamic linking is not available (e.g., it will not work with Python).
+- Scalasca: Interfaces with Scalasca, [http://www.scalasca.org](http://www.scalasca.org). **Note:** Dynamic linking is not available (e.g., it will not work with Python).
 
 ### TAU_OPTIONS
 The TAU_OPTIONS affect how TAU inserts the instrumentation and various options are [documented](http://www.cs.uoregon.edu/Research/tau/docs/newguide/re01.html). Here is a list of commonly used TAU_OPTIONS.
@@ -138,22 +138,22 @@ paraprof --pack filename.ppk
 ```
 SCP filename.ppk to your desktop and open it up in the ParaProf viewer.
 
-To analyze a trace file (from TAU_TRACE=1), see the Jumpshot instructions at http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch04s03.html.
+To analyze a trace file (from TAU_TRACE=1), see the Jumpshot instructions at [http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch04s03.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk01ch04s03.html)
 
 ## Advanced Users
 ### Selective Instrumentation
 Selective instrumentation is enabled by appending -optTauSelectFile=<filename> to TAU_OPTIONS. Note that this is incompatible with the compiler-based instrumentation, e.g., -optCompInst. The syntax of the select instrumentation file can be found here:
 
-https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s03.html
+[https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s03.html](https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s03.html)
 
 It is also possible to generate a selective instrumentation file using Paraprof and a full flat profile obtained through automatic instrumentation.
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03pt02ch16s03.html
+[http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03pt02ch16s03.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03pt02ch16s03.html)
 
 ### Manual Instrumentation
 If automatic instrumentation has too much overhead or too fine-grained details, an option to consider is performing light-weight/coarse-grained instrumentation by adding functional calls to the TAU timers directly in the source code. See the TAU API: 
 
-http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03rn01.html
+[http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03rn01.html](http://www.cs.uoregon.edu/Research/tau/docs/newguide/bk03rn01.html)
 
 The most useful TAU API routines are those for starting and stopping timers. A text token needs to be provided for the timer:
 ```
