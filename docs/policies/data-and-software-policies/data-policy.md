@@ -44,17 +44,17 @@ The team project/campaign file system is intended primarily for results output f
 
 This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Theta-fs0 and Grand are Lustre global parallel file systems. All new projects will be given storage allocations on either Grand or Eagle. Continuing projects (renewals) will have access to theta-fs0. More information on Lustre File Striping Basics: Lustre File Striping Basics  
 
-**Pullback Policy:** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+**_Pullback Policy:_** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-#### AI Testbed projects file system
+**AI Testbed projects file system**
 The team project/campaign file system /projects mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. /projects on the AI Testbed is different from /projects on Theta, ThetaGPU, and Cooley. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
 
 ### Shared Community Project or Campaign File System (Eagle)
 The file system Eagle, a Lustre global parallel file system, has community sharing-abilities and is useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota on Eagle is 1 TB and the default period is 1 year. More information on Lustre File Striping Basics: Lustre File Striping Basics  
 
-**Eagle Data Pullback Policy:** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+**_Eagle Data Pullback Policy:_** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-**Eagle Access Termination Policy:** Project endpoints that have exhibited no activity* for a period of 6 months will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+**_Eagle Access Termination Policy:_** Project endpoints that have exhibited no activity* for a period of 6 months will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
 Activity is defined as, but not limited to:
 - Creation of the Globus endpoint
@@ -65,7 +65,7 @@ Activity is defined as, but not limited to:
 ### Archive Space
 The archive space is intended for offline storage of results you wish to retain but either have no immediate need to access or no room in your parallel file system space. Archiving capabilities are available via HPSS. The primary HPSS access is via HSI. HTAR is available, but its path length and file size limitations often cause it to fail. Globus Online and GridFTP are clients that can also be used with HPSS.  Due to the possibility of data corruption or loss due to a bad tape, users can request dual writes for particularly critical data. Such requests will be handled on a case-by-case basis.
 
-#### Disk Capacity and Retention Policies
+## Disk Capacity and Retention Policies
 
 |---- | /home  | /lus/theta-fs0  or /projects ^*^  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
 | ----------- | ---------------------- | -------------- | -------------- | -------------- |
@@ -80,7 +80,7 @@ The archive space is intended for offline storage of results you wish to retain 
 
 ^*^ /lus/theta-fs0 does not apply to Polaris
 
-#### Tape Capacity and Retention Policies
+## Tape Capacity and Retention Policies
 |---- | /home  | /lus/theta-fs0  or /projects ^*^  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
 | ----------- | ---------------------- | -------------- | -------------- | -------------- |
 | Automatic Backup to Tape? ^7^  | yes|yes| no| no|
