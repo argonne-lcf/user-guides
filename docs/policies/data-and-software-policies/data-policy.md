@@ -65,7 +65,9 @@ Activity is defined as, but not limited to:
 ### Archive Space
 The archive space is intended for offline storage of results you wish to retain but either have no immediate need to access or no room in your parallel file system space. Archiving capabilities are available via HPSS. The primary HPSS access is via HSI. HTAR is available, but its path length and file size limitations often cause it to fail. Globus Online and GridFTP are clients that can also be used with HPSS.  Due to the possibility of data corruption or loss due to a bad tape, users can request dual writes for particularly critical data. Such requests will be handled on a case-by-case basis.
 
-## Disk Capacity and Retention Policies
+## Data Storage Policies
+
+### Disk Capacity and Retention Policies
 
 |---- | /home  | /lus/theta-fs0  or /projects ^*^  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
 | ----------- | ---------------------- | -------------- | -------------- | -------------- |
@@ -80,7 +82,7 @@ The archive space is intended for offline storage of results you wish to retain 
 
 ^*^ /lus/theta-fs0 does not apply to Polaris
 
-## Tape Capacity and Retention Policies
+### Tape Capacity and Retention Policies
 |---- | /home  | /lus/theta-fs0  or /projects ^*^  | /lus/grand/projects or /grand  | lus/eagle/projects or /eagle |
 | ----------- | ---------------------- | -------------- | -------------- | -------------- |
 | Automatic Backup to Tape? ^7^  | yes|yes| no| no|
