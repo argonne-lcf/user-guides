@@ -266,7 +266,7 @@ There are several containers on ThetaGPU that will help you get started with dee
 
 The [bootstap.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/bootstrap.def) gives an example of how these containers were created.
 
-The image is bootstrapped from an NVidia image, in this case from a [PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch) build. One can also use the [Tensorflow](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) build. At the time of this writing, the latest tag for the PyTorch image was `22.04-py3`, but users should select the version that best suits their needs.
+The image is bootstrapped from an NVidia image, in this case from a [PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch) build. One can also use the [TensorFlow](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) build. At the time of this writing, the latest tag for the PyTorch image was `22.04-py3`, but users should select the version that best suits their needs.
 
 ```singularity
 Bootstrap: docker

@@ -1,8 +1,8 @@
-# Running Tensorflow with Conda
+# Running TensorFlow with Conda
 Beware that these builds use CUDA and will not work on login nodes, which does not have CUDA installed as there are no GPUs.
 
-## Tensorflow (master build)
-Given A100 and CUDA 11 are very new, we have a build of the master branch of Tensorflow which includes better performance and support for these architectures.
+## TensorFlow (master build)
+Given A100 and CUDA 11 are very new, we have a build of the master branch of TensorFlow which includes better performance and support for these architectures.
 
 Users can find the latest builds via the ```module avail conda``` command, which will list available builds such as ```conda/2021-06-26``` which is a module that was built on 2021-06-26. Use ```module show conda/2021-06-26``` or ```module help conda/2021-06-26``` to get high level info on which versions of the key packages and libraries that this particular module contains. 
 
@@ -16,8 +16,16 @@ This will setup a conda environment with the "from scratch" build of TensorFlow.
 This package will also include builds of PyTorch and Horovod tagged releases.
 
 ## Installing Packages
-### Using pip install --user
-With the conda environment setup, one can install common Python modules using ```pip install --users <module-name>``` which will install packages in ```$HOME/.local/lib/pythonX.Y/site-packages```.
+### Using `pip install --user` (not recommended)
+With the conda environment setup, one can install common Python modules using `pip install --users <module-name>` which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` environment variable is automatically set when you load the base conda module, and is typically equal to `/home/$USER/.local/conda/YYYY-MM-DD` or  `/home/$USER/.local/thetagpu/conda/YYYY-MM-DD`, depending on the date of the module. 
+
+Note, Python modules installed this way that contain command line binaries will not have those binaries automatically added to the shell's `$PATH`. To manually add the path:
+```
+export PATH=$PYTHONUSERBASE/bin:$PATH"
+```
+Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module. 
+
+Cloning the Anaconda environment, or using `venv` are both more flexible and transparent when compared to `--user` installs. 
 
 ### Using Conda Environments
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via ```conda install <module>``` or ```pip install <module>```.

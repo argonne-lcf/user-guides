@@ -56,7 +56,7 @@ The file system Eagle, a Lustre global parallel file system, has community shari
 
 **Eagle Access Termination Policy:** Project endpoints that have exhibited no activity* for a period of 6 months will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
-* Activity is defined as, but not limited to:
+Activity is defined as, but not limited to:
 - Creation of the Globus endpoint
 - Globus transfers to and from the endpoint
 - atime audits of data files indicating access
