@@ -63,6 +63,10 @@ A project PI or proxy has the authority to:
 During your project setup, the ALCF Support Team will request the following information to establish your project members:
 - The names, email addresses, and/or ALCF usernames (if already existing) of up to two proxies and all project members.
 
+## About Project and UNIX Group Membership
+All project members have the ability to run jobs against your allocation. There is no limit to the number of project members you may authorize.
+Project members are automatically added to the project UNIX group giving them the ability to write to the project directory and to access project data. When a project member is added or removed from a project, this automatically be reflected in the project UNIX group membership. 
+
 ### Adding Project Members
 The PI or a proxy must approve each team member to access ALCF resources and run jobs on their project. PI/proxies can respond to emails from ALCF for account access approval with a "yes" or "no".
 
