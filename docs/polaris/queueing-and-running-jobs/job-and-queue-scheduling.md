@@ -391,12 +391,32 @@ echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NR
 cd /home/knight/affinity
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
 ```
+
 ### Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script. 
 
 * The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and recieves data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
 
 * If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
+
+### Running Multiple MPI Applications on a node
+Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
+
+```
+export CUDA_VISIBLE_DEVICES=0
+mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=1
+mpiexec -n 8 --ppn 8 --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=2
+mpiexec -n 8 --ppn 8 --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=3
+mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity & 
+
+wait
+```
 
 ### Binding MPI ranks to GPUs
 The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
@@ -415,6 +435,32 @@ This script can be placed just before the executable in the `mpiexec` command li
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
+
+### Running Multiple Multi-node Applications
+With some minimal processing of `$PBS_NODEFILE`, one is able to launch multiple applications simultaneously in a job on separate sets of nodes by providing separate hostfiles to each `mpiexec` command. The `split` unix command is one convenient way in which the `$PBS_NODEFILE` file can be split into several files containing distinct sets of fewer nodes. In the example below, each application is expected to run on a single node. For example, a 4-node job would result in four instances of the application running each on a single node. The `split` command creates several `local_hostfile.*` hostfiles that can then be passed as arguments to each `mpiexec` command.
+
+```
+# Settings for each run: 1 nodes, 4 MPI ranks per node spread evenly across cores
+# User must ensure there are enough nodes in job to support all concurrent runs
+NUM_NODES_PER_MPI=1
+NRANKS_PER_NODE=4
+NDEPTH=8
+NTHREADS=1
+
+NTOTRANKS=$(( NUM_NODES_PER_MPI * NRANKS_PER_NODE ))
+
+# Increase value of suffix-length if more than 99 jobs
+split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_NODEFILE local_hostfile.
+
+for lh in local_hostfile*
+do
+  echo "Launching mpiexec w/ ${lh}"
+  mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --hostfile ${lh} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity & 
+  sleep 1s
+done
+
+wait
+```
 
 ### Using Fakeroot with Singularity
 The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:

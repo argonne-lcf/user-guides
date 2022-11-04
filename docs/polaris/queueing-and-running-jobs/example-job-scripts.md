@@ -151,7 +151,7 @@ exec "$@"
 
 Documentation for the Nvidia Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
 
-In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY`do not "collide" and end up with all the nodes writing to the same place.  The local SSDs or /dev/shm or incorporation of the node name into the path would all be possible ways of dealing with that issue.
+In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY`do not "collide" and end up with all the nodes writing to the same place.  An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps) and discussed below. The local SSDs or /dev/shm or incorporation of the node name into the path would all be possible ways of dealing with that issue.
 ```
 #!/bin/bash
 export CUDA_MPS_PIPE_DIRECTORY=</path/writeable/by/you>
@@ -198,4 +198,135 @@ and the output should look like this:
 +-----------------------------------------------------------------------------+
 ```
 
+### Using MPS in Multi-node Jobs
+
+As stated earlier, it is important to start the MPS control service on each node in a job that requires it.  An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps). The helper script `enable_mps_polaris.sh` can be used to start the MPS on a node.
+
+```
+#!/bin/bash
+
+export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps
+export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-log
+CUDA_VISIBLE_DEVICES=0,1,2,3 nvidia-cuda-mps-control -d
+echo "start_server -uid $( id -u )" | nvidia-cuda-mps-control
+```
+The helper script `disable_mps_polaris.sh` can be used to disable MPS at appropriate points during a job script, if needed.
+
+```
+#!/bin/bash
+
+echo quit | nvidia-cuda-mps-control
+```
+In the example job script `submit.sh` below, MPS is first enabled on all nodes in the job using `mpiexec -n ${NNODES} --ppn 1` to launch the enablement script using a single MPI rank on each compute node. The application is then run as normally. If desired, a similar one-rank-per-node `mpiexec` command can be used to disable MPS on all the nodes in a job.
+
+```
+#!/bin/sh
+#PBS -l select=1:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:30:00
+#PBS -q debug 
+#PBS -A Catalyst
+#PBS -l filesystems=home:grand:eagle
+
+cd ${PBS_O_WORKDIR}
+
+# MPI example w/ 8 MPI ranks per node spread evenly across cores
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS_PER_NODE=8
+NDEPTH=8
+NTHREADS=1
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+# Enable MPS on each node allocated to job
+mpiexec -n ${NNODES} --ppn 1 ./enable_mps_polaris.sh
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
+
+# Disable MPS on each node allocated to job
+mpiexec -n ${NNODES} --ppn 1 ./disable_mps_polaris.sh
+```
+
+## Single-node Ensemble Calculations Example
+
+In the script below, a set of four applications are launched simultaneously on a single node. Each application runs on 8 MPI ranks and targets a specific GPU using the `CUDA_VISIBLE_DEVICES` environment variable. In the first instance, MPI ranks 0-7 will spawn on CPUs 24-31 and GPU 0 is used. This pairing of CPUs and GPU is based on output of the `nvidia-smi topo-m` command showing which CPUs share a NUMA domain with each GPU. It is important to background processes using `&` and to `wait` for all runs to complete before exiting the script or continuing on with additional work. Note, multiple applications can run on the same set of CPU resources, but it may not be optimal depending on the workload. An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/ensemble/submit_4x8.sh).
+
+```
+#!/bin/sh
+#PBS -l select=1:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:30:00
+#PBS -q debug 
+#PBS -A Catalyst
+#PBS -l filesystems=home:grand:eagle
+
+#cd ${PBS_O_WORKDIR}
+
+# MPI example w/ 8 MPI ranks per node spread evenly across cores
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS_PER_NODE=8
+NTHREADS=1
+
+nvidia-smi topo -m
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+export CUDA_VISIBLE_DEVICES=0
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=1
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=2
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity & 
+
+export CUDA_VISIBLE_DEVICES=3
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity & 
+
+wait
+```
+
+## Multi-node Ensemble Calculations Example
+To run multiple concurrent applications on distinct sets of nodes, one simply needs to provide appropriate hostfiles to the `mpiexec` command. The `split` unix command is one convenient way to create several unique hostfiles, each containing a subset of nodes available to the job. In the 8-node example below, a total of four applications will be launched on separate sets of nodes. The `$PBS_NODEFILE` file will be split into several hostfiles, each containing two lines (nodes). These smaller hostfiles are then used as the argument to the `--hostfile` argument of `mpiexec` to the launch applications. It is important to background processes using `&` and to `wait` for applications to finish running before leaving the script or continuing on with additional work. Note, multiple applications can run on the same set of CPU resources, but it may not be optimal depending on the workload. An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/ensemble/submit_multinode.sh).
+
+```
+#!/bin/sh
+#PBS -l select=8:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:30:00
+#PBS -q debug-scaling 
+#PBS -A Catalyst
+#PBS -l filesystems=home:grand:eagle
+
+cd ${PBS_O_WORKDIR}
+
+# MPI example w/ multiple runs per batch job
+NNODES=`wc -l < $PBS_NODEFILE`
+
+# Settings for each run: 2 nodes, 4 MPI ranks per node spread evenly across cores
+# User must ensure there are enough nodes in job to support all concurrent runs
+NUM_NODES_PER_MPI=2
+NRANKS_PER_NODE=4
+NDEPTH=8
+NTHREADS=1
+
+NTOTRANKS=$(( NUM_NODES_PER_MPI * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} NUM_NODES_PER_MPI= ${NUM_NODES_PER_MPI} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+# Increase value of suffix-length if more than 99 jobs
+split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_NODEFILE local_hostfile.
+
+for lh in local_hostfile*
+do
+  echo "Launching mpiexec w/ ${lh}"
+  mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --hostfile ${lh} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity & 
+  sleep 1s
+done
+
+wait
+```
 
