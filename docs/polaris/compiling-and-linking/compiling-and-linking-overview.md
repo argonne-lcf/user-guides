@@ -90,7 +90,7 @@ For applications consisting of a mix of C/C++ and Fortran that also uses MPI, it
 
 It is assumed the majority of applications to be built on Polaris will make use of the GPUs. As such, the `craype-accel-nvidia80` module is in the default environment. This has the effect of the Cray compiler wrappers adding `-gpu` to the compiler invocation along with additional include paths and libraries. Additional compilers flags may be needed depending on the compiler and GPU programming model used (e.g. `-cuda`, `-acc`, or `-mp=gpu`).
 
-This module also adds GPU Transport Layer (GTL) libraries to the link-line to support GPU-aware MPI applications. Note, there is currently an issue in the early Polaris software environment that may prevent applications from using GPU-enabled MPI.
+This module also adds GPU Transport Layer (GTL) libraries to the link-line to support GPU-aware MPI applications.
 
 ## Man Pages
 For additional information on the Cray wrappers, please refer to the man pages.
