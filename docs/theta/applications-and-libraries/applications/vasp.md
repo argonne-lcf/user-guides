@@ -15,8 +15,8 @@ Information to provide:
 - Name of Organization that purchased the VASP license:
 - Principal Investigator who is the POC for the VASP license:
 - VASP license number:
-- Version of VASP requested: 
-- ALCF resource which you plan to run VASP on: [Theta, other]
+- Version of VASP requested (VASP5, VASP6): 
+- ALCF resource which you plan to run VASP on: [Theta, ThetaGPU, Polaris other]
 
 ## VASP Support Policy
 ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
@@ -25,12 +25,12 @@ ALCF compiles the latest release of VASP on a per request basis. We do not offer
 The VASP souce can only be obtained by an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
 ## Running Jobs on Theta
-We have two versions of VASP available: a) 5.4.4. with April 2018 patch b) 6.1.x. Please note that we are no longer providing access to VASP 6-dev (pre-release) per instructions from VASP headquarters.
+We have two versions of VASP available: a) 5.4.4. with April 2017 patch b) 6.3.2. Please note that we are no longer providing access to VASP 6-dev (pre-release) per instructions from VASP headquarters.
 
 The binaries are available here:
 ```
 /soft/applications/vasp/vasp.5.4.4.18Apr17/bin/
-/soft/applications/vasp/vasp.6.1.x/bin/
+/soft/applications/vasp/vasp.6.3.2/bin/
 ```
 The top-level directory (/soft/applications/vasp) contains example scripts for running VASP as well as step-by-step instructions.
 
