@@ -85,7 +85,7 @@ The archive space is intended for offline storage of results you wish to retain 
 | File Server Metadata Redundancy   | yes    |yes| yes| yes|
 | File Server Metadata Replication ^4^    | yes |yes| yes|yes|
 | File Server Data Replication ^5^   | yes|yes| no| no|
-| Data Purged from Disk   | n/a  |6 months after project completion ^8^| 6 months after project completion ^8^| After 6 months of inactivity (see Eagle Access termination policy listed in the Eagle section above)|
+| Data Purged from Disk   | n/a  |6 months after project completion ^8^| 6 months after project completion ^8^| After 6 months of inactivity (see Eagle Access termination policy listed in the Eagle section above) ^8^|
 
 ^*^ /lus/theta-fs0 does not apply to Polaris
 
