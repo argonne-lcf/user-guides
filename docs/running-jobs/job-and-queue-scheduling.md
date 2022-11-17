@@ -61,7 +61,7 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
 
 1. `qsub` - request resources (generally compute nodes) to run your job and start your script/executable on the head node.  Here is the minimal qsub allowed at the ALCF:
     * `qsub -A <project> -l select=<# of nodes>,walltime=HH:MM:SS,filesystems=fs1:fs2 <your job script>`
-    * The -A, walltime, and filesystems are mandatory.  You will receive errors if they are not specified.
+    * The `-A`, `walltime`, and `filesystems` are mandatory.  You will receive errors if they are not specified.
     * We automatically add `-k doe` for you, but specifying it explicitly probably wouldn't hurt (streams your output back rather than spooling it and copying it back at the end of the job)
     * It is highly likely you will also want to add `-l place=scatter` so that each of your chunks (`<# of nodes>`) gets its own vnode. 
     * If you want to run an executable rather than a script replace `<your jobs script>` in the example above with `-- <your executable>` (that is dash dash)
@@ -81,12 +81,11 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
 **Note: The page numbers in the PBS guides are unique.  If you search for the specified page number it will take you directly to the relevant page.**
 
 ## <a name="qsub"></a>`qsub` - submit a job to run
-* Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
+Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
 
-### Likely form for use at ALCF:
+At the ALCF, your qsub will likely use the following parameters:
 
-`qsub -A <project> -k doe -l select=<#>:system=<name>,walltime=HH:MM:SS,filesystems=fs1:fs2:,`
- `-l place=scatter <your job script>`
+`qsub -A <project> -k doe -l select=<#>:system=<name>, walltime=HH:MM:SS, filesystems=fs1:fs2, place=scatter <your job script>`
 
 Where:
 
@@ -122,7 +121,8 @@ Resources come in two flavors:
   * `-l select=[<N>:]<chunk>[+[<N>:]<chunk> ...]` where N specifies how many of that chunk and a chunk is of the form:
   * `<resource name>=<value>[:<resource name>=<value> ...]`
   * Here is a hypothetical example that would select resources with A100s and other resources with A40 GPUs.  PBS takes care of co-scheduling the nodes on the two systems for you transparently.  Note that in this case since we did not specify `system=` if there were multiple systems that could satisfy a chunk you wouldn't know ahead of time which system you would get.
-     * `-l select=128:ncpus=64:ngpus=4:gputype=A100+32:ncpus=64:ngpus=2:gputype=A40` 
+
+ `-l select=128:ncpus=64:ngpus=4:gputype=A100+32:ncpus=64:ngpus=2:gputype=A40`
 
 You also have to tell PBS how you want the chunks distributed across the physical hardware.  You do that via the `-l place` option:
 
@@ -248,7 +248,7 @@ To update the filesystems list for your job, use `qalter`.
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
 ## <a name="qstat"></a>`qstat` - Query the status of jobs/queues
-* Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200 
+Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200
 
 ### Jobs
 At it's most basic, you just type `qstat` and it will list all the jobs currently running, queued, or held on the system.  If you are interested in a specific job or jobs, you can provide a space separated list on the command line: `qstat job1 job2...`.
@@ -261,7 +261,7 @@ Job id            Name             User              Time Use S Queue
 353205.polaris-p* 3d-2.sub         user3             2044:14* R large
 ```
 
-One of the annoying things about `qstat` is that the output fields are fixed with and it will truncate the output.  This is indicated by an asterisk as the last character.  The `-w` doesn't prevent truncation, but makes the fields wider, making it less likely.  A useful variant is `qstat -was1`.  It shows the number of nodes, tasks, the requested walltime, and the comment.  If you want an estimate of when the job will start, add the `-T` option.  Note that start time is not available for all jobs, just the next N jobs that are expected to run.  If you want to know the nodes a job ran on, add the `-n` option.  If you want to know everything there is to know about the job, add the `-f` flag.
+One of the annoying things about `qstat` is that the output fields are fixed with and it will truncate the output.  This is indicated by an asterisk as the last character.  You can add `-w` for wide.  It doesn't prevent truncation, but makes it less likely.  A useful variant is `qstat -was1`.  It shows the number of nodes, tasks, the requested walltime, and the comment, all on one line.  `qstat -wan` will give you the node list you ran on, just remember that can be long.  If you want an estimate of when the job will start, add the `-T` option.  Note that start time is not available for all jobs, just the next N jobs that are expected to run.  If you want to know everything there is to know about the job, add the `-f` flag.
 
 ```
                                                             Req'd  Req'd   Elap
@@ -272,7 +272,7 @@ Job ID          Username Queue    Jobname    SessID NDS TSK Memory Time  S Time
 353411.polaris* user3    large    1310W60       --   64  64    --  06:00 Q   --     Not Running: Not enough free nodes available
 336990.polaris* user4    large    inf_clDB      --  464 29*    --  01:00 H   --     Job held by user4 on Mon Oct  3 20:16:26 2022
 ```
-The `comment` field is your friend.  Wondering why your job isn't running?  Check the comment.  Wondering about the fate of a finished job? Add the `-x` option to see finished jobs (our history retention is currently set at two weeks) and check the comment. This can not be stressed enough.  Half the time, when a user ticket comes in about PBS, we answer it by looking at the comment. 
+The `comment` field is your friend.  Wondering why your job isn't running?  Check the comment.  Wondering about the fate of a finished job? Add the `-x` option to see finished jobs (our history retention is currently set at two weeks) and check the comment. This cannot be stressed enough.  Often, when a user ticket comes in about PBS, we answer it by looking at the comment.
 
 If you are familiar with `jq` or some other command line JSON tool, the `-F JSON` option can be quite handy. `grep` is great, but when you grep the `-f` output for something, you probably want to know which node the found lines belong to.  With the JSON output that is trivial. 
 
@@ -294,46 +294,52 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 ```
 
 ### Queues
- `qstat -Q <queue name>` Will show you the names of all the queues and tell you their status.  If they are enabled (Ena column), you can queue jobs into them.  If they are started (Str column) then the scheduler will try and run jobs from it.  There is a `-f` (full) option but that is mostly for admins, though you can find the min and max node count `(resources_[min|max].nodect)` and min and max walltime `(resources_[min|max]walltime)` from the output.  Those values are also available in this documentation.
+ `qstat -Q` Will show you the names of all the queues and tell you their status.  If they are enabled (Ena column), you can queue jobs into them.  If they are started (Str column) then the scheduler will try and run jobs from it.  There is a `-f` (full) option but that is mostly for admins, though you can find the min and max node count `(resources_[min|max].nodect)` and min and max walltime `(resources_[min|max]walltime)` from the output.  Those values are also available in this documentation.
 
 
 ## <a name="qalter"></a>`qalter` - Alter a queued job
-* Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
+Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
 
 Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]` 
-* The new value overwrites any previous value.
+ The new value overwrites any previous value.
 
 ## <a name="qdel"></a>`qdel` - Delete a queued or running job: 
-*  Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
+Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
 `qdel <jobid> [<jobid> <jobid>...]`
 
 ## <a name="qmove"></a>`qmove` - Move a job to a different queue
-* Users Guide Sec. 9.7, page UG-173; Reference Guide Sec. 2.46, page RG-175
+Users Guide Sec. 9.7, page UG-173; Reference Guide Sec. 2.46, page RG-175
+
 * `qmove <new queue> <jobid> [<jobid> <jobid>...]`
 * Only works before a job starts running
 
 ## <a name="qhold,qrls"></a>`qhold,qrls` - Place / release a user hold on a job
-* Reference Guide Sec 2.44, page RG-150 and Sec 2.50, page RG-183
+Reference Guide Sec 2.44, page RG-150 and Sec 2.50, page RG-183
+
 * `[qhold | qrls] <jobid> [<jobid> <jobid>...]`
 
 ## <a name="qselect"></a>`qselect` - Query jobids for use in commands
-* Users Guide Sec. 10.1, page UG-175; Reference Guide Sec. 2.52, page RG-189
+Users Guide Sec. 10.1, page UG-175; Reference Guide Sec. 2.52, page RG-189
+
 * ```qdel `qselect -N test1` ``` will delete all the jobs that had the job name set to `test1`.
 
 ## <a name="qmsg"></a>`qmsg` Write a message into a jobs output file
-* Users Guide Sec. 9.4, page UG-171; Reference Guide Sec. 2.47, page RG-177
+Users Guide Sec. 9.4, page UG-171; Reference Guide Sec. 2.47, page RG-177
+
 * `qmsg -E -O "This is the message" <jobid> [<jobid> <jobid>...]`
 * `-E` writes it to standard error, `-O` writes it to standard out
 
 ## <a name="qsig"></a>`qsig` Send a signal to a job
-* Users Guide Sec. 9.5, page UG-172; Reference Guide Sec. 2.53, page RG-195
+Users Guide Sec. 9.5, page UG-172; Reference Guide Sec. 2.53, page RG-195
+
 * `qsig -s <signal> <jobid> [<jobid> <jobid>...]`
 * If you don't specify a signal, `SIGTERM` is sent.
 
 ## <a name="pbsnodes"></a>`pbsnodes` Get information about the current state of nodes ###
-* Reference Guide Sec 2.7 page RG-36
-* This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
+Reference Guide Sec 2.7 page RG-36
+
+This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with some GPUs like Nvidia A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
 
 `pbsnodes <node name>` - Everything there is to know about a node
 
