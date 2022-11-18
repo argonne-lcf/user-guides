@@ -35,6 +35,7 @@ Our documentation is organized in two sections aligned with the two steps descri
          - [Network: Rack and Dragonfly Group Mappings](#Rack-and-Dragonfly-Group-Mappings)
          - [Compute Node Access to the Internet](#Compute-Node-Access-to-the-Internet)
  - **Controlling task execution on your allocated resources**
+    - [Controlling Where Your Jobs Runs](#Controlling-Where-Your-Jobs-Runs)
     - [Running MPI+OpenMP Applications](#Running-MPI+OpenMP-Applications)
     - [Running GPU-enabled Applications](#Running-GPU-enabled-Applications)
     - [Running Multiple MPI Applications on a node](#Running-Multiple-MPI-Applications-on-a-node)
@@ -56,13 +57,17 @@ or a nodeboard or a blade. A single host can be made up of multiple vnodes. Each
 
 `ngpus`: The number of allocable GPUs on the vnode.  For an Nvidia A100, this could be one, however, if we enable *Multi Instance GPU (MIG)* mode and use cgroups it could be as high as 7.
 
+`job`: A job equates to a qsub.  A set of resources allocated to you for a period of time.  Your will execute one or more `tasks` on those resources during your job.
+
+`task`: A single execution on the resources of your job, often an `mpiexec` invocation launched by PALS or PMIx.  You may run one task or many tasks during your job.  You may run tasks sequentially or divide your resources up and run several tasks concurrently.  Also sometimes referred to as *job steps*.
+
 ## <a name="Quick-Start"></a>Quick Start
 If you are an ALCF user and are familiar with Cobalt, you will find the PBS commands very similar though the options to qsub are quite different.  Here are the "Big Four" commands you will use:
 
 1. `qsub` - request resources (generally compute nodes) to run your job and start your script/executable on the head node.  Here is the minimal qsub allowed at the ALCF:
     * `qsub -A <project> -l select=<# of nodes>,walltime=HH:MM:SS,filesystems=fs1:fs2 <your job script>`
     * The `-A`, `walltime`, and `filesystems` are mandatory.  You will receive errors if they are not specified.
-    * We automatically add `-k doe` for you, but specifying it explicitly probably wouldn't hurt (streams your output back rather than spooling it and copying it back at the end of the job)
+    * We automatically add `-k doe` for you.  This streams your output back rather than spooling it and copying it back at the end of the job.  It probably isn't a bad idea to specify it in your script, but we enforce that option, so if you try and change it, you will get an error. 
     * It is highly likely you will also want to add `-l place=scatter` so that each of your chunks (`<# of nodes>`) gets its own vnode. 
     * If you want to run an executable rather than a script replace `<your jobs script>` in the example above with `-- <your executable>` (that is dash dash)
     * PBS Documentation: Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
@@ -90,7 +95,7 @@ At the ALCF, your qsub will likely use the following parameters:
 Where:
 
 * project is the project name associated with your allocation.  What you check the balance of with the `sbank` command.  This is a mandatory option at the ALCF.  If you don't include it you will get `qsub: Account_Name is required to be set.`
-* -k doe is telling pbs to stream your output rather than buffer it on the compute nodes and then scp it at the end of the job.
+* -k doe is telling pbs to stream your output rather than buffer it on the compute nodes and then scp it at the end of the job.  Note we will automatically add this if you don't specify it.  We enforce this option, so if  you try and specify any other output handling you will get an error.
 *  \# of chunks (typically nodes). Each of our systems has a PBS "*resource*" called `system` defined and set to the system name (polaris, sunspot, etc)
 *  `walltime=HH:MM:SS` specifying a wall time is mandatory at the ALCF.  Valid wall times depend on the queue you are using.  There is a table with the queues for each machine at the end of this section and in the machine specific documentation.
 *  `filesystems=fs1:fs2:...` Specifying which filesystems your application uses is mandatory at ALCF.  The reason for this is if a filesystem goes down, we have a way of making PBS aware of that and it won't run jobs that need that filesystem.  If you don't specify filesystems you will receive the following error: `qsub: Resource: filesystems is required to be set.` 
@@ -482,6 +487,12 @@ In the future, though we don't have a timeline on this because it depends on fut
 
 # Controlling task execution on your allocated resources
 
+## <a name="Controlling-Where-Your-Job-Runs"></a>Controlling Where Your Jobs Runs
+If you wish to have your job run on specific nodes form your select like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>...` . Obviously, that gets tedious for large jobs.
+
+If you want to control the location of a few nodes, for example 2 out of 64, but the rest don't matter, you can do something like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>+62:system=foo`
+
+Every node has a PBS resource called `tier0` with a rack identifier and `tier1` with a dragonfly group identifieer.  If you want all your nodes grouped in a rack, you can add the group specifier `-l select=8:system=foo,place=scatter:group=tier0`.  If you wanted everything in the same dragonfly group, replace `tier0` with `tier1`.  Note that you have to also explicitly specify the place when you use group.  If you wanted a specific rack or dragonfly group instead of any of them, you are back to the select: `-l select 10:tier0=x3001-g0`.
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
@@ -601,3 +612,6 @@ The fakeroot feature (commonly referred as rootless mode) allows an unprivileged
   * Nvidia specific stuff
   * There is a PALS specific thing to tell you what rank you are in a node?
   * Should Chris cook up example running four mpiexec on different GPUs and separate CPUs or just rely on PBS's vnode (discussion at very top here)?-->
+
+
+[def]: #Controlling-Where-Your-Job-Runs
