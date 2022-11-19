@@ -25,3 +25,47 @@ execution and CUDA for GPU execution. To use it, run
 module use /soft/modulefiles
 module load kokkos
 ```
+### Configuring Your Own Kokkos Build on Polaris
+
+Here are recommended environment settings and configuration to build your own
+kokkos libraries on Polaris:
+
+#### Environment
+
+Use the default programming environment `PrgEnv-nvhpc`, and use the Cray wrapper
+`CC` as the C++ compiler. To build Kokkos, you'll need cmake. To use C++17,
+you'll need to work around a bug with the current `PrgEnv-nvhpc/8.3.3`
+environment by loading a cudatoolkit-standalone module.
+
+```
+module load cmake cudatoolkit-standalone/11.6.2
+```
+
+#### CMake Configuration
+
+This example builds three backends: OpenMP, Serial, and Cuda.
+
+```
+git clone git@github.com:kokkos/kokkos.git
+cd kokkos
+mkdir build
+cd build
+
+cmake\
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo\
+ -DCMAKE_INSTALL_PREFIX="./install"\
+ -DCMAKE_CXX_COMPILER=CC\
+ -DKokkos_ENABLE_OPENMP=ON\
+ -DKokkos_ENABLE_SERIAL=ON\
+ -DKokkos_ARCH_ZEN2=ON\
+ -DKokkos_ARCH_AMPERE80=ON\
+ -DKokkos_ENABLE_CUDA=ON\
+ -DKokkos_ENABLE_AGGRESSIVE_VECTORIZATION=ON\
+ -DKokkos_ENABLE_TESTS=OFF\
+ -DBUILD_TESTING=OFF\
+ -DKokkos_ENABLE_CUDA_LAMBDA=ON\
+ -DCMAKE_CXX_STANDARD=17\
+ ..
+
+make -j16 -l16 install
+```
