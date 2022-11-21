@@ -32,10 +32,14 @@ kokkos libraries on Polaris:
 
 #### Environment
 
-Use the default programming environment `PrgEnv-nvhpc`, and use the Cray wrapper
-`CC` as the C++ compiler. To build Kokkos, you'll need cmake. To use C++17,
-you'll need to work around a bug with the current `PrgEnv-nvhpc/8.3.3`
-environment by loading a cudatoolkit-standalone module.
+To match what was done in the centrally-built kokkos associated with the
+modules discussed above, use the default programming environment
+`PrgEnv-nvhpc`, and use the Cray wrapper `CC` as the C++ compiler. To build
+Kokkos, you'll need cmake. You may also use `PrgEnv-gnu` to build kokkos (also
+using the Cray wrapper `CC` as the C++ compiler).
+
+To use C++17, you'll need to work around a bug with the current
+`PrgEnv-nvhpc/8.3.3` environment by loading a cudatoolkit-standalone module:
 
 ```
 module load cmake cudatoolkit-standalone/11.6.2
@@ -64,6 +68,7 @@ cmake\
  -DKokkos_ENABLE_TESTS=OFF\
  -DBUILD_TESTING=OFF\
  -DKokkos_ENABLE_CUDA_LAMBDA=ON\
+ -DKokkos_ENABLE_IMPL_DESUL_ATOMICS=OFF\
  -DCMAKE_CXX_STANDARD=17\
  ..
 
