@@ -59,28 +59,34 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 singularity build --fakeroot <image_name>.sif <def_filename>.def 
 ```
 
-For example, let's use the definition file from [the tutorial example](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Polaris/bootstrap.def):
+For example, let's use the definition file from [the tutorial example](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Polaris/mpi.def):
 
 ```bash
-wget https://raw.githubusercontent.com/argonne-lcf/GettingStarted/master/DataScience/Containers/Polaris/bootstrap.def
-singularity build --fakeroot bootstrap.sif bootstrap.def
+wget https://raw.githubusercontent.com/argonne-lcf/GettingStarted/master/DataScience/Containers/Polaris/mpi.def
+singularity build --fakeroot mpi.sif mpi.def
 ```
-You can find more details about the `bootstrap.def` file, [here](../../../theta-gpu/data-science-workflows/containers/containers.md#pre-existing-images-for-deep-learning).
+You can find more details about the `mpi.def` file, [here](../../../theta-gpu/data-science-workflows/containers/containers.md#example-singularity-definition-file). 
+
+<div class="admonition note" style="display:inline-block;margin-top:auto;">
+  <p class="admonition-title">Note</p>
+  <p>The key compilation option is the --disable-wrapper-rpath which makes it possible to build applications inside the container using this MPI library, but then replace those libraries with the Polaris-specific libraries during runtime simply using the LD_LIBRARY_PATH environment variable. This is important since Polaris uses high-speed network interfaces that require custom drivers and interface libraries to use.
+  </p>
+</div>
 
 ## Running Singularity container on Polaris
 
-`bootstrap.def` extends existing NVIDIA containers by installing `mpi4py` and `horovod` in it. Now to run the `bootstrap.sif` file on Polaris compute, you can use the [submission script](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Polaris/job_submission_dl.sh).
+Now to run the `mpi.sif` file on Polaris compute, you can use the [submission script](https://raw.githubusercontent.com/argonne-lcf/GettingStarted/master/DataScience/Containers/Polaris/job_submission.sh).
 
 ### Example submission script on Polaris
 
 First we define our job and our script takes the container name as an input parameter.
 ```bash
 #!/bin/sh
-#PBS -l select=1
-#PBS -q debug
+#PBS -l select=2:system=polaris
+#PBS -q debug-scaling
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:grand
 #PBS -A Datascience
 ```
 
@@ -88,6 +94,8 @@ We move to current working directory and enable network access at run time by se
 
 ```bash
 cd ${PBS_O_WORKDIR}
+CONTAINER=mpi.sif
+
 # SET proxy for internet access
 module load singularity
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
@@ -96,30 +104,38 @@ export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
 ```
 
-Setup our MPI settings and download pytorch benchmark tool
+To allow for multi node runs, we will bind system MPI by setting the following environment variables
 
 ```bash
-wget https://github.com/horovod/horovod/raw/master/examples/pytorch/pytorch_synthetic_benchmark.py
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=$(nvidia-smi -L | wc -l)
-NTHREADS=1
-NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
-echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+MPI_BASE=/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/comm_libs/hpcx/hpcx-2.9.0/ompi/
+export PATH=$MPI_BASE/bin:$PATH
+export LD_LIBRARY_PATH=$MPI_BASE/lib:$LD_LIBRARY_PATH
+export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 ```
 
-Finally the executable is launched. Notice on NVIDIA systems that the `singularity exec` or `singularity run` commands must use the `--nv` flag to pass important libraries/drivers from the host to the container environment.
+Pass mpi parameters to script and run the container by binding the `$MPI_BASE` variable
 
 ```bash
-echo test mpi
-mpiexec -n ${NNODES} --ppn 1 \
-   singularity exec --nv -B $PWD $CONTAINER \
-      python $PWD/pytorch_synthetic_benchmark.py
+# MPI example w/ 16 MPI ranks per node spread evenly across cores
+NODES=`wc -l < $PBS_NODEFILE`
+PPN=1
+PROCS=$((NODES * PPN))
+echo "NUM_OF_NODES= ${NODES} TOTAL_NUM_RANKS= ${PROCS} RANKS_PER_NODE= ${PPN}"
+
+echo library path
+mpirun -hostfile $PBS_NODEFILE -n $PROCS -npernode $PPN singularity exec --nv -B $MPI_BASE $CONTAINER ldd /usr/source/mpi_hello_world
+
+echo C++ MPI
+mpirun -hostfile $PBS_NODEFILE -n $PROCS -npernode $PPN singularity exec --nv -B $MPI_BASE $CONTAINER /usr/source/mpi_hello_world
+
+echo Python MPI
+mpirun -hostfile $PBS_NODEFILE -n $PROCS -npernode $PPN singularity exec --nv -B $MPI_BASE $CONTAINER python3 /usr/source/mpi_hello_world.py
 ```
 
 The job can be submitted using:
 
 ```bash
-qsub -v CONTAINER=bootstrap.sif job_submission_dl.sh
+qsub -v CONTAINER=mpi.sif job_submission.sh
 ```
 
 ## Available containers
@@ -128,7 +144,7 @@ If you just want to know what containers are available, here you go.
 Containers are stored at `/soft/containers/`, within `pytorch` and `tensorflow` subfolders. The latest containers are updated periodically. If you have trouble using containers, or request a newer or a different container please contact ALCF support at `support@alcf.anl.gov`.
 
 !!! warning
-    These containers work out-of-the-box on a single node, but currently we are investigating a problem with multi-node runs. Once the problem is resolved, we will also include containers with `mpi4py` and `horovod` for Polaris.
+    These containers work out-of-the-box on a single node, but currently we are investigating a problem with multi-node runs. Once the problem is resolved, we will also include containers with `horovod` for Polaris.
     
 
 ## Troubleshooting
