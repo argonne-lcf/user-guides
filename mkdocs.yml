@@ -269,5 +269,6 @@ extra:
       link: 'https://github.com/argonne-lcf/alcf-userguide'
 
 plugins:
+  - include-markdown
   - search:
       lang: en
