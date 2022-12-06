@@ -1,12 +1,16 @@
 # Example Job Scripts
 
-This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md). A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
+This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris.
+Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md).
+
+A simple example using a similar script on Polaris is available in the 
+[Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
 ## CPU MPI-OpenMP Example
 
 The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. 
 
-```
+```bash
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -54,8 +58,7 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 
 Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
 
-
-```
+```bash
 #!/bin/bash -l
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
@@ -127,7 +130,7 @@ The `CUDA_VISIBLE_DEVICES` environment variable is provided for users to set whi
 
 A copy of the small helper script provided in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) is provided below for reference.
 
-```
+```bash
 $ cat ./set_affinity_gpu_polaris.sh
 #!/bin/bash -l
 num_gpus=$(nvidia-smi -L | wc -l)
@@ -155,21 +158,30 @@ exec "$@"
 
 Documentation for the Nvidia Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
 
-In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY`do not "collide" and end up with all the nodes writing to the same place.  An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps) and discussed below. The local SSDs or /dev/shm or incorporation of the node name into the path would all be possible ways of dealing with that issue.
-```
+In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node,
+and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY` do not "collide" 
+and end up with all the nodes writing to the same place.
+
+An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps) and discussed below.
+The local SSDs or `/dev/shm` or incorporation of the node name into the path would all be possible ways of dealing with that issue.
+
+```bash
 #!/bin/bash -l
 export CUDA_MPS_PIPE_DIRECTORY=</path/writeable/by/you>
 export CUDA_MPS_LOG_DIRECTORY=</path/writeable/by/you>
 CUDA_VISIBLE_DEVICES=0,1,2,3 nvidia-cuda-mps-control -d
 echo "start_server -uid $( id -u )" | nvidia-cuda-mps-control
-```  
+```
+
 to verify the control service is running:
 
-`nvidia-smi | grep -B1 -A15 Processes`
+```bash
+$ nvidia-smi | grep -B1 -A15 Processes
+```
 
 and the output should look similar to this:
 
-```
+```bash
 +-----------------------------------------------------------------------------+
 | Processes:                                                                  |
 |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
@@ -192,7 +204,7 @@ to verify the service shut down properly:
 
 and the output should look like this:
 
-```
+```bash
 +-----------------------------------------------------------------------------+
 | Processes:                                                                  |
 |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
@@ -206,7 +218,7 @@ and the output should look like this:
 
 As stated earlier, it is important to start the MPS control service on each node in a job that requires it.  An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps). The helper script `enable_mps_polaris.sh` can be used to start the MPS on a node.
 
-```
+```bash
 #!/bin/bash -l
 
 export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps
@@ -216,14 +228,14 @@ echo "start_server -uid $( id -u )" | nvidia-cuda-mps-control
 ```
 The helper script `disable_mps_polaris.sh` can be used to disable MPS at appropriate points during a job script, if needed.
 
-```
+```bash
 #!/bin/bash -l
 
 echo quit | nvidia-cuda-mps-control
 ```
 In the example job script `submit.sh` below, MPS is first enabled on all nodes in the job using `mpiexec -n ${NNODES} --ppn 1` to launch the enablement script using a single MPI rank on each compute node. The application is then run as normally. If desired, a similar one-rank-per-node `mpiexec` command can be used to disable MPS on all the nodes in a job.
 
-```
+```bash
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -256,9 +268,15 @@ mpiexec -n ${NNODES} --ppn 1 ./disable_mps_polaris.sh
 
 ## Single-node Ensemble Calculations Example
 
-In the script below, a set of four applications are launched simultaneously on a single node. Each application runs on 8 MPI ranks and targets a specific GPU using the `CUDA_VISIBLE_DEVICES` environment variable. In the first instance, MPI ranks 0-7 will spawn on CPUs 24-31 and GPU 0 is used. This pairing of CPUs and GPU is based on output of the `nvidia-smi topo-m` command showing which CPUs share a NUMA domain with each GPU. It is important to background processes using `&` and to `wait` for all runs to complete before exiting the script or continuing on with additional work. Note, multiple applications can run on the same set of CPU resources, but it may not be optimal depending on the workload. An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/ensemble/submit_4x8.sh).
+In the script below, a set of four applications are launched simultaneously on a single node.
+Each application runs on 8 MPI ranks and targets a specific GPU using the `CUDA_VISIBLE_DEVICES` environment variable.
+In the first instance, MPI ranks 0-7 will spawn on CPUs 24-31, and GPU 0 is used.
+This pairing of CPUs and GPU is based on output of the `nvidia-smi topo-m` command showing which CPUs share a NUMA domain with each GPU.
+It is important to background processes using `&` and to `wait` for all runs to complete before exiting the script or continuing on with additional work.
+Note, multiple applications can run on the same set of CPU resources, but it may not be optimal depending on the workload.
+An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/ensemble/submit_4x8.sh).
 
-```
+```bash
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -297,7 +315,7 @@ wait
 ## Multi-node Ensemble Calculations Example
 To run multiple concurrent applications on distinct sets of nodes, one simply needs to provide appropriate hostfiles to the `mpiexec` command. The `split` unix command is one convenient way to create several unique hostfiles, each containing a subset of nodes available to the job. In the 8-node example below, a total of four applications will be launched on separate sets of nodes. The `$PBS_NODEFILE` file will be split into several hostfiles, each containing two lines (nodes). These smaller hostfiles are then used as the argument to the `--hostfile` argument of `mpiexec` to the launch applications. It is important to background processes using `&` and to `wait` for applications to finish running before leaving the script or continuing on with additional work. Note, multiple applications can run on the same set of CPU resources, but it may not be optimal depending on the workload. An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/ensemble/submit_multinode.sh).
 
-```
+```bash
 #!/bin/bash -l
 #PBS -l select=8:system=polaris
 #PBS -l place=scatter
@@ -333,4 +351,3 @@ done
 
 wait
 ```
-
