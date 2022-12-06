@@ -6,7 +6,8 @@ The following guide is for PIs and Proxies to get insight into managing projects
 To get familiar with our resources, please view our user guides: 
 [https://www.alcf.anl.gov/support/user-guides/index.html](https://www.alcf.anl.gov/support/user-guides/index.html)
 
-We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
+We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below
+
 - [Theta and Cooley Overview](http://bit.ly/Getting_Started_On_Theta)
 - [Running on Theta](https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…) 
 - [ThetaGPU Overview](https://www.youtube.com/watch?v=N0Xip1mUZY8)
@@ -15,6 +16,7 @@ We also encourage you to take full advantage of ALCF's training programs and use
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
+
 - **Project Short Name**: The assigned, shortened name for your project. This will be the name that you’ll use to access your project on the systems.
 - **Project Proxies**: Project members designated by PIs that are authorized to add or renew project members on your behalf.
 - **Allocation System(s) and Allocation Amount**: The approved system(s) and amount of your award in node hours.
@@ -34,14 +36,15 @@ The U.S. Department of Energy has guidelines and requirements for foreign nation
 
 If you are a foreign national and do not have current authorization credentials, you are required to submit a ANL-593 (Foreign National Access Request) form. It is critical that identity documentation requests sent by ALCF staff are completed as early as possible to facilitate timely processing for your account approval.
 
-### User Agreement for INCITE, ALCC, and ADSP
+## User Agreement for INCITE, ALCC, and ADSP
 **Note:** This does not apply to Director's Discretionary awards.
 
+### Insitution Master Agreement for INCITE, ALCC, and ADSP
 If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne’s user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
 
 A list of home institutions that have master agreements in place is located on this webpage:  https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-…
 
-### ALCF Acknowledgement Form for INCITE, ALCC, and ADSP
+### ALCF User Agreement for INCITE, ALCC, and ADSP
 **Note:** This does not apply to Director's Discretionary awards.
 
 Every project team member who requests an ALCF account must sign and return an acknowledgment form, stating that they agree to the terms in the user agreement.
@@ -52,12 +55,17 @@ The form is located at: https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf.
 As a PI, you can add members to your project. You can assign proxies who are project members authorized to add or renew project members on your behalf.
 
 A project PI or proxy has the authority to:
+
 - Approve and renew accounts
 - Add and delete users to/from the project
 - Approve Foreign Assignment/Visit Request form renewals for project members who are foreign nationals
 
 During your project setup, the ALCF Support Team will request the following information to establish your project members:
 - The names, email addresses, and/or ALCF usernames (if already existing) of up to two proxies and all project members.
+
+## About Project and UNIX Group Membership
+All project members have the ability to run jobs against your allocation. There is no limit to the number of project members you may authorize.
+Project members are automatically added to the project UNIX group giving them the ability to write to the project directory and to access project data. When a project member is added or removed from a project, this automatically be reflected in the project UNIX group membership. 
 
 ### Adding Project Members
 The PI or a proxy must approve each team member to access ALCF resources and run jobs on their project. PI/proxies can respond to emails from ALCF for account access approval with a "yes" or "no".
@@ -107,6 +115,7 @@ Facility policies have been established to provide consistent and reliable servi
 
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
+
 - myprojectquotas: log into Theta and type this command to view the project directory quotas for all your projects
 - myquota: log into Theta and type this command to view your home directory quota
 

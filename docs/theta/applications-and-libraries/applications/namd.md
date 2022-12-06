@@ -43,7 +43,8 @@ make -j8
 Be sure that $HOME/tcl8.5.9-crayxe-threaded Tcl library is included and linked!
 
 "make -j8 release" will give you a distribution directory and tar file
- ```
+```
+
 ### Running NAMD 
 
 A prebuilt NAMD binary can be found in directory /soft/applications/namd/

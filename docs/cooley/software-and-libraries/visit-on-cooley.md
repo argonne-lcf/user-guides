@@ -3,7 +3,7 @@
 
 On your local machine:
 
-  - Download (https://wci.llnl.gov/simulation/computer-codes/visit/downloads) and install VisIt (The most recent version installed on Cooley is 2.12.3. Versions 2.10.2 and  2.9.1 are also available.)
+  - Download ([https://wci.llnl.gov/simulation/computer-codes/visit/downloads](https://wci.llnl.gov/simulation/computer-codes/visit/downloads)) and install VisIt (The most recent version installed on Cooley is 2.12.3. Versions 2.10.2 and  2.9.1 are also available.)
   - Download the [Cooley host profile for VisIt](https://www.alcf.anl.gov/support/user-guides/cooley/software-and-libraries/files/host_anl_cooley_1.xml) (you may need to right-click and choose "Save link as..." or "Save target as...")
   - Copy this file to a file called ~/.visit/hosts/host_anl_cooley.xml 
 

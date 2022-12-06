@@ -8,7 +8,7 @@ To request a reservation, e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.
 
 1. RESERVATION REQUEST FOR ALL SYSTEMS (including vis clusters) AT ALCF Machine name:
 2. Project for reservation:
-3. User name(s) for reservation:
+3. ALCF account username(s) (NOT the user's legal name) for reservation:
 4. Length of reservation:
 5. Earliest date you could start:
 6. Deadline for the run(s),

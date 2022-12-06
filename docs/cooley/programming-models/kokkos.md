@@ -1,6 +1,6 @@
 # Kokkos on Cooley
 ## Overview
-Kokkos implements a programming model in C++ for writing performance portable applications targeting all major HPC platforms. It provides abstractions for both parallel execution of code and data management. Kokkos is designed to target complex node architectures with N-level memory hierarchies and multiple types of execution resources. It can use OpenMP, etc as backend programming model. For more information please visit https://github.com/kokkos/kokkos
+Kokkos implements a programming model in C++ for writing performance portable applications targeting all major HPC platforms. It provides abstractions for both parallel execution of code and data management. Kokkos is designed to target complex node architectures with N-level memory hierarchies and multiple types of execution resources. It can use OpenMP, etc as backend programming model. For more information please visit [https://github.com/kokkos/kokkos](https://github.com/kokkos/kokkos)
 
 The Kokkos shared memory programming model is a C++ library, that provides the necessary architecture specific backends (e.g. OpenMP, CUDA, …). To begin with, though, it is important to note that the Kokkos programming model is usable only in C/C++ codes. Hence, for those with Fortran codes, Kokkos must first be encapsulated within C/C++ functions and called from the main Fortran code.
 

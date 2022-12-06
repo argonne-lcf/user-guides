@@ -76,4 +76,13 @@ The cloning process can be quite slow.
     In the above commands, `path/to/envs/base-clone` should be replaced by a
     suitably chosen path.
 
+### Using `pip install --user` (not recommended)
+With the conda environment setup, one can install common Python modules using `pip install --users <module-name>` which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` environment variable is automatically set when you load the base conda module, and is equal to  `/home/$USER/.local/polaris/conda/YYYY-MM-DD`.
 
+Note, Python modules installed this way that contain command line binaries will not have those binaries automatically added to the shell's `$PATH`. To manually add the path:
+```
+export PATH=$PYTHONUSERBASE/bin:$PATH"
+```
+Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module. 
+
+Cloning the Anaconda environment, or using `venv` are both more flexible and transparent when compared to `--user` installs. 

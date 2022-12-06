@@ -45,10 +45,10 @@ The data is available for download here (~27MB compressed, ~39MB uncompressed):
 </figure>
 
 ## 2. Select which data to view
-Let's start by looking at the continuum.000**data. This is an unstructured mesh that has velocity and count (density) values.
+Let's start by looking at the continuum.000\*data. This is an unstructured mesh that has velocity and count (density) values.
 - Hide other data sets using the Eyeball icon next their names in the Pipeline Browser.
   - Black = visible, Grey = hidden
-- Select continuum.000**(name is highlighted) in the Pipeline Browser
+- Select continuum.000\*(name is highlighted) in the Pipeline Browser
   - Click on the name to highlight it
 - When manipulating appearance or applying filters, these always affect the selected data set
 - Switch to the Display tab in the Object Inspector
@@ -63,7 +63,7 @@ Let's start by looking at the continuum.000**data. This is an unstructured mesh 
 ## 3. Manipulating the Color Map
 To change the colors used to represent the Velocity:
 - Under Color byclick the Edit Color Map... button
-- On the Color Scale Editor window click the Choose Presetbutton
+- On the Color Scale Editor window click the Choose Preset button
 - On the Preset Color Scales window, select: Blue to Red Rainbow, and click OK. Then click Close on the Color Scale Editor window
 - You can also create and save your own color maps
 
@@ -85,11 +85,11 @@ In order to be able to see the particles and red blood cells inside the cylinder
 ## 5. Generate Streamlines
 - ParaView enables the generation of different types of data from existing data sets in the Pipeline
 - Streamlines: Generated from vectors of the flow field. These curves show the direction a fluid element will travel in at any point in time
-- Make sure that the continuum.000*data is selected in the Pipeline Browser
+- Make sure that the continuum.000\*data is selected in the Pipeline Browser
 - From the main menu select: Filters->Alphabetical->Stream Tracer, or click on the Stream Tracer icon from the menu bar
-- In the Object Inspector make sure the Propertiestab is selected.
+- In the Object Inspector make sure the Properties tab is selected.
 - Scroll down to seeds, and change Seed Type to Line Source
-- Click the Y Axisbutton to set the seed line to run along the Y axis.
+- Click the Y Axis button to set the seed line to run along the Y axis.
 - The default Resolution is set to 100. This will make things a bit cluttered, especially when we start adding in the other data, so let's reduce this to 25
 - Click the Apply button
 
@@ -101,7 +101,7 @@ In order to be able to see the particles and red blood cells inside the cylinder
 ## 6. Streamlines as Tubes
 The streamlines are just that, lines. We can use the Tubes filter to represent them as 3D objects, rather than just lines.
 - With StreamTracer1selected in the Pipeline Browser, from the main menu select: Filters->Alphabetical->Tube
-- In the Object Inspector make sure the Propertiestab is selected
+- In the Object Inspector make sure the Properties tab is selected
 - The default value for the Radius is a bit too large for this data, let's set that value to 0
 - Click the Apply button
 - Notice that the StreamLine1 object has automatically been hidden

@@ -1,5 +1,10 @@
 # ALCF File Systems
-Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively.
+Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. 
+Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. 
+Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively. 
+For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
+
+* [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 For information on the AI Testbed storage systems, refer to the AI Testbed storage page: [https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/](https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/)
 
@@ -7,13 +12,13 @@ Our HPC systems also share a Lustre home file system, called swift-home. The hom
 
 The swift-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
-| Name                       | Accessible From                         |  Type  |  Path      | Production |  Backed-up      | Usage |
-|----------------------------|-----------------------------------------| ----------- | ----------- | ----------- | ----------- | ----------- | 
-| swift-home                 | Theta ThetaGPU Cooley  Polaris          | Lustre	| /home or /lus/swift/home	| Yes  | 	Yes	|  general use |
-| lus-projects  (theta-fs0)	 | Theta  ThetaGPU  Cooley	                | Lustre	| /projects or /lus-projects or /lus/theta-fs0/projects	| Yes	| No	| intensive job output, large files |
-| Grand                      | Theta  ThetaGPU  Cooley  Polaris	       |  Lustre	 | /grand or /lus/grand/projects	| Yes	| No	| intensive job output, large files |
-| Eagle	                     | Theta  ThetaGPU  Cooley  Polaris	       | Lustre	| /eagle or /lus/eagle/projects	| Yes	| No	| community sharing via Globus; intensive job output, large files | 
-| Node SSD	                  | Theta and ThetaGPU - compute node only	 | ext3	 | /local/scratch (theta)/raid/scratch (thetagpu) | Yes - By Request Only	| No	|local node scratch during run|
+| Name                                 | Accessible From                                     | Type   | Path                                                                                  | Production                                         | Backed-up | Usage                                                                  |
+|--------------------------------------|-----------------------------------------------------|--------|---------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------------------------------------------------------------------------| 
+| swift-home                           | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris  | Lustre | /home or /lus/swift/home	                                                          | Yes                                                | Yes | General use                                                            |
+| lus-projects  (theta-fs0)	           | Theta <br /> ThetaGPU <br /> Cooley	                | Lustre | /projects or /lus-projects or /lus/theta-fs0/projects	                              | Yes	                                               | No  | Intensive job output, large files                                      |
+| Grand                                | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris	 | Lustre | /grand or /lus/grand/projects	                                                      | Yes	                                               | No  | Intensive job output, large files                                      |
+| Eagle	                               | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris	 | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                               | No  | Community sharing via Globus; <br /> Intensive job output, large files | 
+| Node SSD <br /><br /> (Compute node only)	 | Theta <br /> ThetaGPU <br /> Polaris	               | xfs	   | /local/scratch (Theta) <br /> /local/scratch (Polaris) <br />/raid/scratch (ThetaGPU) | Yes <br /> <br /> Theta & ThetaGPU by request only | No  | Local node scratch during run                                          |
 
 ## Available Directories
 ### Home Directories
@@ -65,16 +70,27 @@ setfacl -R -u gilgamesh:m:r-X,d:u:gilgamesh:r-X /home/username/subdirectoryname
 These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](disk-quota.md).
 
 ## Local Node SSD
-Access to SSDs is disabled by default. Project PIs may request access by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). A use case will need to be provided.
+Access to SSDs is disabled by default for Theta and ThetaGPU. Project PIs may request access by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). A use case will need to be provided.
 
 ### SSD Information
 - Local scratch SSD storage on compute nodes for running jobs
 - Completely local non-parallel filesystem
-- Located at /local/scratch on theta computes and /raid/scratch on thetagpu computes
-- Wiped between Cobalt jobs
+- Located at /local/scratch on Theta and Polaris computes and /raid/scratch on ThetaGPU computes
+- Wiped between Cobalt/PBS Pro jobs
 - No automatic backups provided
-- Refer to [this page](add link) for requesting SSDs in Cobalt.
 - Information on the current SSD drives in use is below:
+
+**Polaris SSD Specs**
+
+Model PM1725a drives [specifications](https://semiconductor.samsung.com/resources/brochure/Brochure_Samsung_PM1725a_NVMe_SSD_1805.pdf)
+
+| Model PM1725a drives | -------         |
+| ------ |-----------------|
+| Capacity	| 1.6 TB          |
+| Sequential | Read	3300 MB/s  |
+| Sequential | Write	3300 MB/s |
+
+**Theta and ThetaGPU SSD Specs**
 
 Model SM961 drives
 

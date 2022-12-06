@@ -4,18 +4,18 @@
 [Keras](https://keras.io) is a high-level neural networks API, written in Python and capable of running on top of [TensorFlow](https://github.com/tensorflow/tensorflow), [CNTK](https://github.com/Microsoft/cntk), or [Theano](https://github.com/Theano/Theano). It was developed with a focus on enabling fast experimentation. It allows for easy and fast prototyping, and support both convolutional networks and recurrent networks and the combination of the two. It runs seamlessly on CPU and GPU.
 
 ## Datascience module
-On Theta, we support Tensorflow backend for Keras. To use the datascience Keras module on Theta, please load the following two modules:
+On Theta, we support TensorFlow backend for Keras. To use the datascience Keras module on Theta, please load the following two modules:
 ```
 module load datascience/keras-2.2.4
  
 module load datascience/tensorflow-1.12
 ```
 
-Notice that the datascience/tensorflow-* modules were compiled with AVX512 extension on Theta. Therefore, it could not run on login node, otherwise it will issue an “illegal instruction” fault. One has to submit the job to KNL nodes (see Tensorflow documentation for details). 
+Notice that the datascience/tensorflow-* modules were compiled with AVX512 extension on Theta. Therefore, it could not run on login node, otherwise it will issue an “illegal instruction” fault. One has to submit the job to KNL nodes (see TensorFlow documentation for details). 
 
-Since we use Tensorflow as the backend, all the optimal environmental setups (Threading + affinity) are applicable here. Please visit the [Tensorflow documentation page](tensorflow) for the optimal setting.  
+Since we use TensorFlow as the backend, all the optimal environmental setups (Threading + affinity) are applicable here. Please visit the [Tensorflow documentation page](tensorflow) for the optimal setting.  
 
-We do not see any incompatibility issues in using different versions of keras and tensorflow as those specified above. Feel free to change other versions of keras or Tensorflow. Currently, we support version 2.2.2 and 2.2.4.  
+We do not see any incompatibility issues in using different versions of keras and tensorflow as those specified above. Feel free to change other versions of keras or TensorFlow. Currently, we support version 2.2.2 and 2.2.4.  
 
 ## Distributed learning using Horovod
 We support distributed learning using Horovod. To use it please load datascience/horovod-0.15.2 module. Please change your python script accordingly
@@ -63,4 +63,4 @@ A simple example for doing linear regression using Keras + Horovod is put in the
  
 linreg_keras.py is the python script, and qsub.sc is the COBALT submission script. 
 
-<iframe width="709" height="399" src="https://www.youtube.com/embed/930yrXjNkgM" title="Deep Learning with Keras, Tensorflow, PyTorch, and Horovod on Theta" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="709" height="399" src="https://www.youtube.com/embed/930yrXjNkgM" title="Deep Learning with Keras, TensorFlow, PyTorch, and Horovod on Theta" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

@@ -125,7 +125,28 @@ qsub -A YourProject -n 256  -t 30  \
 --env MYVAR=value1 -i inputdata -O Project1_out \
 –attrs mcdram=flat:numa=quad program.exe progarg1
 ```
+
 The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://xgitlab.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
+
+### Requesting Ability to SSH into the Compute Nodes on KNL Nodes
+
+To be able to ssh from the MOM/launch nodes on Theta to the compute nodes, pass enable_ssh=1 as part of the --attrs argument (see the example below). 
+Once the job begins on the MOM/launch node, you can ssh (or scp, etc.) from the MOM node to the compute nodes. 
+The compute node name can be found by reading the $COBALT_PARTNAME number, and prepending "nid" with the appropriate number of 0s to reach 5 digits.
+
+For example, for an interactive job:
+
+```
+n@thetalogin4:~/> qsub -I -n 1 -t 20 --attrs enable_ssh=1 -A project -q debug-cache-quad 
+Connecting to thetamom1 for interactive qsub... 
+Job routed to queue "debug-cache-quad". 
+Memory mode set to cache quad for queue debug-cache-quad Wait for job 266815 to start... 
+Opening interactive session to 3835 n@thetamom1:/gpfs/mira-home/user> echo $COBALT_PARTNAME 
+3835 
+n@thetamom1:/gpfs/mira-home/user> 
+ssh nid03835 n@nid03835:~> hostname 
+nid03835
+```
 
 ### Specifying Filesystems
 

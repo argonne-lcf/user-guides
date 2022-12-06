@@ -21,7 +21,8 @@ What this will do is essentially prepend PyTorch related path to your PYTHONPATH
 - **OMP affinity settings:** the user can specify the environmental variable KMP_AFFINITY to change the thread affinity. We suggest to use "-cc depth"in the aprun command, which corresponds to the following setting:  "KMP_AFFINITY=granularity=fine,verbose,compact,1,0!". The other option the user could try is "-cc none". We have found that "-cc depth" gives best performance for most cases.
 - **Submitting jobs (sample scripts in /soft/datascience/):** Below is a typical submission script on Theta (sub.sc)
 
-```#!/bin/sh
+```
+#!/bin/sh
 #COBALT -n 128 -t 1:00:00
 #COBALT -q default --attrs mcdram=cache:numa=quad
 #COBALT -A YOUR_PROJECT_NAME
@@ -68,9 +69,9 @@ hvd.broadcast_parameters(model.stat_dict(), root_rank=0)
 
 5. Loading data according to rank ID: Torch has some functions for parallel distribution of data. But for specific applications, the user might have to write their own data loader.
 
-## Profiling/post-processing with TensorboardX
+## Profiling/post-processing with TensorBoardX
 
-TensorboardX is for creating events in PyTorch, which can be process by Tensorboard. One could check [tensorboardX](https://github.com/lanpa/tensorboardX) for details on how to use it. Tensorboard events, including scalar, image, figure, histogram, audio, text, graph, onnx_graph, embedding, pr_curve and video summaries, could be created with a simple function call "writer.add_XXX(...)" as follows: 
+TensorBoardX is for creating events in PyTorch, which can be process by Tensorboard. One could check [tensorboardX](https://github.com/lanpa/tensorboardX) for details on how to use it. Tensorboard events, including scalar, image, figure, histogram, audio, text, graph, onnx_graph, embedding, pr_curve and video summaries, could be created with a simple function call "writer.add_XXX(...)" as follows: 
 
 ```
 from tensorboardX 
@@ -83,7 +84,7 @@ writer.export_scalars_to_json("output.json")
 writer.close()
 ```
 
-The created log files could then be read with "tensorboard --logdir runs". The data could be visualized on your local machine through ssh tunneling (see Tensorboard usage in TensorFlow).
+The created log files could then be read with "tensorboard --logdir runs". The data could be visualized on your local machine through ssh tunneling (see TensorBoard usage in TensorFlow).
 
 ### Examples on Theta (MNIST, imagenet benchmarks)
 
@@ -95,10 +96,10 @@ Please check the test example on Theta:
 
 ## FAQ and common issues
 
-- **Illegal instruction" or "AVX512F" error**
+**Illegal instruction" or "AVX512F" error**
 This happens when you are trying to run AVX512 compiled applications on login nodes or mom nodes. Run use aprun on KNL nodes through qsub instead. If you hit this error while you are building python package, try to use "aprun -n 1 -cc node python setup.py build ..."
 
-- **Cannot download dataset**
+**Cannot download dataset**
 When the job is submitted, it is submitted to KNL nodes which are not connected to outside internet. Therefore, it is suggested that the users download the datasets on login node (e.g., through wget), or transfer the data through scp or Globus. 
 
 ## References: 

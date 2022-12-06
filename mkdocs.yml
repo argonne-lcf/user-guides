@@ -5,11 +5,11 @@ nav:
     - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
     - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
     - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
-    - Project Management: 
+    - Project Management:
       - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
       - Managing Your Team Members: account-project-management/project-management/team-management.md
       - Reporting: account-project-management/project-management/project-reports.md
-    - Allocations: 
+    - Allocations:
       - Allocations on ALCF Computing Resources: account-project-management/allocation-management/overview.md
       - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
       - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
@@ -25,6 +25,12 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+  - Services:
+    - JupyterHub: services/jupyter-hub.md
+    - Continuous Integration: 
+      - General: services/continuous-integration.md
+      - Jenkins: services/jenkins.md
+      - Gitlab-CI: services/gitlab-ci.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
@@ -43,10 +49,13 @@ nav:
     - Queueing and Running Jobs on Polaris:
       - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
+      - Machine Reservations: polaris/queueing-and-running-jobs/machine-reservations-polaris.md
       - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
     - Applications and Libraries:
         - Applications:
+            - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - OpenMM: polaris/applications-and-libraries/applications/openmm.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
@@ -69,6 +78,9 @@ nav:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+    - Workflows:
+        - Balsam: polaris/workflows/balsam.md
+        - Parsl: polaris/workflows/parsl.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
@@ -79,9 +91,8 @@ nav:
       - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
       - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
       - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
-      - Continuous Integration: theta/compiling-and-linking/continuous-integration-theta.md
     - Queueing and Running Jobs on Theta:
-      - The Grounkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
+      - The Gronkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
       - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: theta/queueing-and-running-jobs/example-job-scripts.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
@@ -113,7 +124,6 @@ nav:
       - DeepHyper: theta/data-science-workflows/deephyper.md
       - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
       - HDF5: theta/data-science-workflows/hdf5.md
-      - JupyterHub: theta/data-science-workflows/jupyter-hub.md
       - Keras: theta/data-science-workflows/keras.md
       - MongoDB: theta/data-science-workflows/mongo-db.md
       - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
@@ -148,19 +158,21 @@ nav:
     - Queueing and Running Jobs on ThetaGPU:
       - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
       - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
+    - Applications and Libraries:
+      - Applications:
+        - Gromacs: theta-gpu/applications-and-libraries/applications/gromacs.md
     - Data Science:
       - Data Science Software Availability: theta-gpu/data-science-workflows/data-science-software-availability.md
       - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
       - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
       - GPU Node Queue and Policy: theta-gpu/data-science-workflows/gpu-node-queue-and-policy.md
-      - Jupyter Hub: theta-gpu/data-science-workflows/jupyter-hub.md
       - Python/C++ Code Interoperability: theta-gpu/data-science-workflows/pythonc-code-interoperability.md
       - Containers: theta-gpu/data-science-workflows/containers/containers.md
       - Deep Learning Frameworks:
         - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md
         - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
-        - Running Tensorflow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
-        - Tensorboard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
+        - Running TensorFlow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
+        - TensorBoard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
     - Programming Models:
       - Kokkos: theta-gpu/programming-models/kokkos.md
       - OpenMP: theta-gpu/programming-models/openmp.md
@@ -192,7 +204,8 @@ nav:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora: https://www.alcf.anl.gov/support-center/aurora
-  - Facility Policies: 
+  - Facility Policies:
+    - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
       - Accounts Policy: policies/accounts/accounts-policy.md
@@ -256,5 +269,6 @@ extra:
       link: 'https://github.com/argonne-lcf/alcf-userguide'
 
 plugins:
+  - include-markdown
   - search:
       lang: en

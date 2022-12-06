@@ -27,7 +27,7 @@ HDF5_MPI="ON" HDF5_DIR=$CRAY_HDF5_DIR pip install --user --no-binary=h5py h5py
 ```
 This command requires that the cray-hdf5-parallel module is first loaded, because parallel h5py will need an existing HDF5 library to build against.
 
-***Warning: Users should always **clone** the module-provided miniconda environment before making changes.***
+***Warning: Users should always CLONE the module-provided miniconda environment before making changes.***
 
 ## Other I/O Libraries
 The libraries activated by the cray-hdf5-parallel modules leverage MPI-IO for parallel file-system access. Therefore, parallel performance is limited that of the active cray-mpich library (currently cray-mpich/7.7.0 by default).

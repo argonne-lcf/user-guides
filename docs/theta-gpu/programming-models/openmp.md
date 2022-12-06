@@ -4,6 +4,7 @@ All the compilers available on ThetaGPU supports OpenMP threading.
 
 ## OpenMP offload on A100 GPU
 A few compilers which support OpenMP offload are accessible on ThetaGPU. They are made available via modules.
+
 ```
 $ module avail llvm
 
@@ -17,8 +18,9 @@ $ module avail nvhpc
    nvhpc-byo-compiler/21.2        nvhpc-nompi/21.2        nvhpc/21.2
    nvhpc-byo-compiler/21.3        nvhpc-nompi/21.3        nvhpc/21.3
  
- ```
- ## LLVM Clang for C/C++
+```
+
+## LLVM Clang for C/C++
 - [Clang OpenMP offload features](https://clang.llvm.org/docs/OpenMPSupport.html#basic-support-for-cuda-devices) 
 - [More details about the OpenMP runtime](https://openmp.llvm.org/docs/)
 
@@ -26,21 +28,26 @@ If there is an issue with the compiler, feel free to contact [openmp-dev@lists.l
 
 ### Warning message
 
-```clang-12 warning: Unknown CUDA version. version.txt: 11.0.205. Assuming the latest supported version 10.1 [-Wunknown-cuda-version]```
+```
+clang-12 warning: Unknown CUDA version. version.txt: 11.0.205. Assuming the latest supported version 10.1 [-Wunknown-cuda-version]
+```
 
-means CUDA 11 language features are not supported. As long as these features are not used, the full CUDA 11.x toolchain works. This warning can be ignored or suppressed by -Wno-unknown-cuda-version compiler option.
+Means CUDA 11 language features are not supported. As long as these features are not used, the full CUDA 11.x toolchain works. This warning can be ignored or suppressed by -Wno-unknown-cuda-version compiler option.
 
 ### Compiling example
+
 ```
 module load llvm/release-12.0.0
 clang++ -fopenmp -fopenmp-targets=nvptx64 your_source.cpp
 ```
+
 ### NVIDIA HPC SDK for C/C++/Fortran
 [OpenMP documentation](https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-user-guide/index.html#openmp-use)
 
 For compiler bugs, please file bug reports at https://developer.nvidia.com after login
 
 ### Compiling example
+
 ```
 module load nvhpc-sdk/nvhpc/21.3
 nvfortran -mp=gpu -gpu=cc80 your_source.f90
