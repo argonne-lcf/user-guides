@@ -106,7 +106,7 @@ Here is a heavily commented sample PBS submission script:
 # oe=merge stdout/stderr to stdout, eo=merge stderr/stdout to stderr, n=don't merge
 #PBS -j n
 
-# Controlling email notifications
+# Controlling email notifications -- NOT YET CONFIGURED!!
 # UG Sec 2.5.1, page UG-25 Specifying Email Notification
 # When to send email b=job begin, e=job end, a=job abort, j=subjobs (job arrays), n=no mail
 #PBS -m be 
@@ -115,16 +115,16 @@ Here is a heavily commented sample PBS submission script:
 
 # Setting job dependencies
 # UG Section 6.2, page UG-109 Using Job Dependencies
-# There are many options for how to set up dependancies;  afterok will give behavior similar
+# There are many options for how to set up dependencies;  afterok will give behavior similar
 # to Cobalt (uncomment to use)
 ##PBS depend=afterok:<jobid>:<jobid>
 
 # Environment variables (uncomment to use)
 # UG Section 6.12, page UG-126 Using Environment Variables
-# RG Sect 2.57.7, page RG-233 Enviornment variables PBS puts in the job environment
+# RG Sect 2.57.7, page RG-233 Environment variables PBS puts in the job environment
 ##PBS -v <variable list>
 ## -v a=10, "var2='A,B'", c=20, HOME=/home/zzz
-##PBS -V exports all the environment variables in your environnment to the compute node
+##PBS -V exports all the environment variables in your environment to the compute node
 
 
 # The rest is an example of how an MPI job might be set up
@@ -146,6 +146,8 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
+**Note: Email notifications for when your job has begun/aborted/completed/etc. has not yet been configured on Polaris.**
+
 ### Specifying Filesystems 
 
 **Note: The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:**
@@ -155,7 +157,7 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified (prior to 10/10/22)
 all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
 
-If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailabe, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
+If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailable, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
 
 If a job requesting a filesystem that is marked down is already in the queue, the job will be not run until all of it's requested filesystems are available.
 
@@ -187,7 +189,7 @@ To update the filesystems list for your job, use `qalter`.
     * This has to be turned on (we have);  It is configured to keep 2 weeks of history.
 * Get estimated start time: `qstat -T <jobid>`
 * Make output parseable: `qstat -F [json | dsv]`
-    * That is `dsv` (delimeter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
+    * That is `dsv` (delimiter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
 
 #### `qalter` - Alter a job submission 
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
@@ -411,7 +413,7 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_
 ### Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script. 
 
-* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and recieves data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
+* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
 
 * If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
