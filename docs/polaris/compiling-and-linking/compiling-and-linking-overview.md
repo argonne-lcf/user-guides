@@ -16,9 +16,9 @@ An example is creating an alias for the `qstat` command to, for example, change 
 
 Submitting a single-node interactive job to, for example, build and test applications on a Polaris compute node can be accomplished using the `qsub` command.
 ```
-qsub -I -l select=1 -l walltime=1:00:00
+qsub -I -l select=1 -l walltime=1:00:00 -q debug
 ```
-This command requests 1 node for a period of 1 hour. After waiting in the queue for a node to become available, a shell prompt on a compute node will become available. Users can then proceed to start building applications and testing job submission scripts.
+This command requests 1 node for a period of 1 hour in the debug queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will become available. Users can then proceed to start building applications and testing job submission scripts.
 
 ## Cray Programming Environment
 
