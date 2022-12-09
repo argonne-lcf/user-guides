@@ -1,15 +1,18 @@
 ## Documentation / Tools
-* [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf) - This is really excellent.  We highly suggest you download it and search through it when you have questions.
-* [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) - This is the users guide.
-* [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) - If you don't download the Big Book, the Reference Guide is also useful.  It shows every option and gives you details on how to format various elements on the command line.
-* [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md) - shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
-* `qsub2pbs`  - Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the --directives option and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
+* [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf): This is really excellent.  We highly suggest you download it and search through it when you have questions.
+* [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf): This is the users guide.
+* [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf): If you don't download the Big Book, the Reference Guide is also useful.  It shows every option and gives you details on how to format various elements on the command line.
+* [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md): shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
+* `qsub2pbs` : Installed on Theta and Cooley.  Pass it a Cobalt command line, and it will convert it to a PBS command line.  Add the `--directives` option, and it will output an executable script.  Note that it outputs -l select=system=None.  You would need to change the None to whatever system you wanted to target (polaris, aurora, etc).
 
 ## Introduction
-At a high level, getting computational tasks run on systems at ALCF is a two step process:
+At a high level, getting computational tasks run on systems at ALCF is a two-step process:
 
-1. You request and get allocated resources (compute nodes) on one or more of the systems.  This is accomplished by interacting with the job scheduler / workload manager.  In the ALCF we use PBS Professional.
-2. You execute your tasks on those resources.  This is accomplished in your job script by interacting with various system services (MPI, OpenMP, the HPE PALS job launch system, etc.)
+1. You request and get allocated resources (compute nodes) on one or more of the systems.
+   This is accomplished by interacting with the job scheduler / workload manager.  In the ALCF we use PBS Professional.
+
+2. You execute your tasks on those resources.
+   This is accomplished in your job script by interacting with various system services (MPI OpenMP, the HPE PALS job launch system, etc.)
 
 Our documentation is organized in two sections aligned with the two steps described above.
 
@@ -28,12 +31,12 @@ or a nodeboard or a blade. A single host can be made up of multiple vnodes. Each
 ### The basics
 If you are an existing ALCF user and are familiar with Cobalt, you will find the PBS commands very similar though the options to qsub are quite different.  Here are the "Big Four" commands you will use:
 
-1. `qsub` - request resources (compute nodes) to run your job and start your script/executable on the head node.
-2. `qstat` - check on the status of your request
-3. `qalter` - update your request for resources
-4. `qdel` - cancel an uneeded request for resources
+1. `qsub`: request resources (compute nodes) to run your job and start your script/executable on the head node.
+2. `qstat`: check on the status of your request
+3. `qalter`: update your request for resources
+4. `qdel`: cancel an uneeded request for resources
 
-#### `qsub` - submit a job to run
+#### `qsub`: submit a job to run
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf), Chapter 2, page UG-11 and [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Chapter 2, section 2.57, page RG-216
 
 The single biggest difference between Cobalt and PBS is the way you select resources when submitting a job.  In Cobalt, every system had its own Cobalt server and you just specified the number of nodes you wanted (-n).  With PBS, we are planning on running a single "PBS Complex" which means there will be a single PBS server for all systems in the ALCF and you need to specify enough constraints to get your job to run on the resources you want/need.  One advantage of this is that getting resources from two different systems or "co-scheduling" is trivially possible.
@@ -72,7 +75,7 @@ There is an alternative to using the `group=` syntax.  The downside to `group=` 
 
 Here is a heavily commented sample PBS submission script:
 
-```
+```bash
 #!/bin/bash -l
 # UG Section 2.5, page UG-24 Job Submission Options
 # Add another # at the beginning of the line to comment out a line
@@ -146,7 +149,9 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
+
 **Note: Email notifications for when your job has begun/aborted/completed/etc. has not yet been configured on Polaris.**
+
 
 ### Specifying Filesystems 
 
@@ -167,7 +172,7 @@ An example of a job requesting filesystems:
 
 To update the filesystems list for your job, use `qalter`. 
 
-### qsub examples ###
+### qsub examples
 
 * `qsub -A my_allocation -l select=4:system=polaris -l filesystems=home:eagle -l walltime=30:00 -q debug-scaling -- a.out`
 	* run a.out on 4 chunks on polaris with a walltime of 30 minutes in debug-scaling queue; charge my_allocation;
@@ -176,10 +181,10 @@ To update the filesystems list for your job, use `qalter`.
 * `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
-#### `qstat` - Query Job/Queue Status 
+#### `qstat`: Query Job/Queue Status 
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200 
 * NOTE: By default, the columns are fixed width and will truncate information.
-* The most basic: `qstat` - will show all jobs queued and running in the system
+* The most basic: `qstat`: will show all jobs queued and running in the system
 * Only a specific users jobs: `qstat -u <my username>`
 * Detailed information about a specific job: `qstat -f <jobid> [<jobid> <jobid>...]`
     * The comment field with the `-f` output can often tell you why your job isn't running or why it failed.
@@ -191,27 +196,32 @@ To update the filesystems list for your job, use `qalter`.
 * Make output parseable: `qstat -F [json | dsv]`
     * That is `dsv` (delimiter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
 
-#### `qalter` - Alter a job submission 
+#### `qalter`: Alter a job submission 
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 * Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]` 
 * The new value overwrites any previous value.
 
-#### `qdel` - Delete a job: 
+#### `qdel`: Delete a job: 
 *  [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 *  `qdel <jobid> [<jobid> <jobid>...]`
 
-#### `qmove` - Move a job to a different queue
+#### `qmove`: Move a job to a different queue
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
 * `qmove <new queue> <jobid> [<jobid> <jobid>...]`
 * Only works before a job starts running
 
-#### `qhold, qrls` - Place / release a user hold on a job
+#### `qhold, qrls`: Place / release a user hold on a job
 * [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.44, page RG-150 and Sec 2.50, page RG-183
 * `[qhold | qrls] <jobid> [<jobid> <jobid>...]`
 
-#### `qselect` - Query jobids for use in commands
+#### `qselect`: Query jobids for use in commands
+
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.1, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.52, page RG-189
-* ```qdel `qselect -N test1` ``` will delete all the jobs that had the job name set to `test1`.
+    ```bash
+    $ qdel `qselect -N test1`
+    ```
+
+<!-- * ```qdel `qselect -N test1` ``` will delete all the jobs that had the job name set to `test1`. -->
 
 #### `qmsg` Write a message string into one or more output files of the job
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.4, page UG-171; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.47, page RG-177
@@ -230,18 +240,18 @@ To update the filesystems list for your job, use `qalter`.
 ## Getting information about the state of the resources ##
 
 ### `qstat` Get information about the server or queues ###
-* [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.3 & 10.4, page UG-188 - UG-189
-* `qstat -B[f]` - Check the server status
-* `qstat -Q[f] <queue name>` - Check the queue status 
+* [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.3 & 10.4, page UG-188 -- UG-189
+* `qstat -B[f]`: Check the server status
+* `qstat -Q[f] <queue name>`: Check the queue status 
 
 
 ### `pbsnodes` Get information about the current state of nodes ###
 * [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 * This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
 
-`pbsnodes -av` - Everything there is to know about a node
+`pbsnodes -av`: Everything there is to know about a node
 
-```
+```bash
 aps-edge-dev-04
      Mom = aps-edge-dev-04.mcp.alcf.anl.gov
      ntype = PBS
@@ -264,9 +274,10 @@ aps-edge-dev-04
      license = l
      last_state_change_time = Tue Oct  5 21:58:57 2021
 ```
-`pbsnodes -avSj` - A nice table to see what is free and in use
 
-```
+`pbsnodes -avSj`: A nice table to see what is free and in use
+
+```bash
 (base) [allcock@edtb-01 20220214-22:53:26]> pbsnodes -avSj
                                                         mem       ncpus   nmics   ngpus
 vnode           state           njobs   run   susp      f/t        f/t     f/t     f/t   jobs
@@ -284,15 +295,17 @@ edtb-03[1]      free                 0     0      0  251gb/251gb   64/64     0/0
 edtb-04[0]      free                 0     0      0  250gb/250gb   64/64     0/0     1/1 --
 edtb-04[1]      free                 0     0      0  251gb/251gb   64/64     0/0     1/1 --
 ```
-`pbsnodes -avSj | grep free | wc -l` - A quick way to see how many nodes are free
 
-```
+`pbsnodes -avSj | grep free | wc -l`: A quick way to see how many nodes are free
+
+```bash
 [20220217-21:09:30]> pbsnodes -avSj | grep free | wc -l
 38
 ```
-`pbsnodes -avSj | grep free | awk '{print $1}'` - Lists the free nodes
 
-```
+`pbsnodes -avSj | grep free | awk '{print $1}'`: Lists the free nodes
+
+```bash
 [20220217-21:09:30]> pbsnodes -avSj | grep free | awk '{print $1}'
 x3201c0s25b0n0
 x3209c0s13b0n0
@@ -300,15 +313,16 @@ x3209c0s19b0n0
 x3209c0s1b1n0
 ```
 
-`pbsnodes -l` - (lowercase  l) see which nodes are down;  The comment often indicates why it is down
+`pbsnodes -l`: (lowercase  l) see which nodes are down;  The comment often indicates why it is down
 
-```
+```bash
 [20220217-21:10:31]> pbsnodes -l
 x3014c0s19b0n0       offline,resv-exclusive Xid 74 -- GPUs need reseat
 x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 ```
 
 ##  Queues
+
 There are three production queues you can target in your qsub (`-q <queue name>`):  
 
 |Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
@@ -346,15 +360,18 @@ If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
 
 ### Job Priority
+
 As with all Argonne Leadership Computing Facility production systems, job priority in the queue is based on several criteria:
 
 1. positive balance of your project
 2. size (in nodes) of the job, larger jobs receive higher priority
 3. the type of project (e.g. INCITE, ALCC, or discretionary)
-4. job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
+4. job duration: shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
  
 ## Polaris specific stuff
+
 ### Polaris Rack and Dragonfly group mappings
+
 * Racks contain (7) 6U chassis; Each chassis has 2 nodes for 14 nodes per rack
 * The hostnames are of the form xRRPPc0sUUb[0|1]n0 where:
     * RR is the row {30, 31, 32}
@@ -377,8 +394,10 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 
 ## Controlling the execution on your allocated resources
 
-### Running MPI+OpenMP Applications
-Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
+### Running MPI + OpenMP Applications
+
+Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application.
+Documentation is accessible via `man mpiexec` and some helpful options follow.
 
 * `-n` total number of MPI ranks
 * `-ppn` number of MPI ranks per node
@@ -389,7 +408,7 @@ Once a submitted job is running calculations can be launched on the compute node
 
 A sample submission script with directives is below for a 4-node job with 32 MPI ranks on each node and 8 OpenMP threads per rank (1 per CPU).
 
-```
+```bash
 #!/bin/bash -l
 #PBS -N AFFINITY
 #PBS -l select=4:ncpus=256
@@ -411,16 +430,34 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_
 ```
 
 ### Running GPU-enabled Applications
+
 GPU-enabled applications will similarly run on the compute nodes using the above example script. 
 
-* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
+#### MPI-GPU Support
 
-* If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
+The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support.
+
+Explicitly, this is required if the MPI library sends and receives data directly from GPU buffers.
+In this case, it will be important to have the `craype-accel-nvidia80`
+module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library.
+Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
+
+#### Device Specification
+
+If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used.
+For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
 ### Running Multiple MPI Applications on a node
-Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
 
-```
+Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them.
+For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs.
+One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` 
+provides a user with specifying exactly which CPU and GPU resources to run each application on. 
+In the example below, four instances of the application are simultaneously running on a single node. 
+In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. 
+This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
+
+```bash
 export CUDA_VISIBLE_DEVICES=0
 mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity & 
 
@@ -437,10 +474,14 @@ wait
 ```
 
 ### Binding MPI ranks to GPUs
-The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
 
-A example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
-```
+The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs.
+For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank.
+One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
+
+An example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
+
+```bash
 #!/bin/bash -l
 num_gpus=4
 # need to assign GPUs in reverse order due to topology
@@ -450,16 +491,24 @@ export CUDA_VISIBLE_DEVICES=$gpu
 echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
 exec "$@"
 ```
+
 This script can be placed just before the executable in the `mpiexec` command like so.
-```
+
+```bash
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
+
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
 
 ### Running Multiple Multi-node Applications
-With some minimal processing of `$PBS_NODEFILE`, one is able to launch multiple applications simultaneously in a job on separate sets of nodes by providing separate hostfiles to each `mpiexec` command. The `split` unix command is one convenient way in which the `$PBS_NODEFILE` file can be split into several files containing distinct sets of fewer nodes. In the example below, each application is expected to run on a single node. For example, a 4-node job would result in four instances of the application running each on a single node. The `split` command creates several `local_hostfile.*` hostfiles that can then be passed as arguments to each `mpiexec` command.
 
-```
+With some minimal processing of `$PBS_NODEFILE`, one is able to launch multiple applications simultaneously in a job on separate sets of nodes by providing separate hostfiles to each `mpiexec` command.
+The `split` unix command is one convenient way in which the `$PBS_NODEFILE` file can be split into several files containing distinct sets of fewer nodes.
+In the example below, each application is expected to run on a single node.
+For example, a 4-node job would result in four instances of the application running each on a single node.
+The `split` command creates several `local_hostfile.*` hostfiles that can then be passed as arguments to each `mpiexec` command.
+
+```bash
 # Settings for each run: 1 nodes, 4 MPI ranks per node spread evenly across cores
 # User must ensure there are enough nodes in job to support all concurrent runs
 NUM_NODES_PER_MPI=1
@@ -483,7 +532,9 @@ wait
 ```
 
 ### Using Fakeroot with Singularity
-The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:
+
+The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.
+To request this feature be enabled on your job add the following to your `qsub` command line:
 
 `-l singularity_fakeroot=true`
 
