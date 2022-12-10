@@ -27,7 +27,7 @@ nav:
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
   - Services:
     - JupyterHub: services/jupyter-hub.md
-    - Continuous Integration: 
+    - Continuous Integration:
       - General: services/continuous-integration.md
       - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
@@ -116,7 +116,7 @@ nav:
       - Visualization:
         - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
     - Data Science:
-      - Maching Learning Tools: theta/data-science-workflows/machine-learning-tools.md
+      - Machine Learning Tools: theta/data-science-workflows/machine-learning-tools.md
       - Data Science Modules: theta/data-science-workflows/data-science-modules.md
       - Apache Spark: theta/data-science-workflows/apache-spark.md
       - Balsam: theta/data-science-workflows/balsam.md
