@@ -24,7 +24,7 @@ The ACDC portal is a deployment of Django Globus Portal Framework customized for
 3. **Authentication:** Globus is used for authentication and identity needed to access the system. As Globus has built-in support for federated logins, users can access ACDC using their campus or institution federated username and passcode
 
 If you are new to the ALCF, follow these instructions on how to transfer your data to ACDC:
-== Add page: Transferring your data to ACDC ==
+[Transferring Data to Eagle](transferring-data-to-eagle.md)
 
 If you already have an ALCF account, follow these instructions on how to share your data:
 [Sharing Data to Eagle](eagle-data-sharing.md)
