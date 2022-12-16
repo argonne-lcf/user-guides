@@ -131,7 +131,7 @@ The A100 GPUs have a capability known as [Multi-Instance GPU (MIG)](https://docs
 If you wish to have the resources you have requested put into MIG mode you can add either of these to your qsub command line: `--attrs mig-mode=True`.
   
 ### Details of a job submission
-Details of the job submission are recorded in the <jobid>.cobaltlog. This file contains the qsub command and environment variables. The location of this file can be controlled with the ‘qsub --debuglog <path>’ that defaults to the same place as the .output and .error files.
+Details of the job submission are recorded in the `<jobid>.cobaltlog`. This file contains the qsub command and environment variables. The location of this file can be controlled with the `qsub --debuglog <path>` that defaults to the same place as the `.output` and `.error` files.
 
 ### Jobs stuck in "starting" state
 If you submit a job and qstat shows it in "starting" state for 5 minutes or more, most likely your memory/numa mode selection requires rebooting some or all of the nodes your job was assigned. This process takes about 15 minutes, during which your job appears to be in the "starting" phase. When no reboots are required, the "starting" phase only lasts a matter of seconds.
@@ -143,8 +143,8 @@ Application 3373484 resources: utime ~6s, stime ~6s, Rss ~5036, inblocks ~0, out
 ```
 The "utime" and "stime" values are user CPU time and system CPU time from the aprun and getrusage commands. They are rounded aggregate numbers scaled by the number of resources used, and are approximate. The aprun man page has more information about them.
   
-### #COBALT directives on the second line of job script
-If #COBALT directives are used inside a job submission script, then they must appear at the topmost lines of the script. #COBALT directives following a blank line will be ignored. Attempting to qsub the following example script will lead to the error message below.
+### `#COBALT` directives on the second line of job script
+If `#COBALT` directives are used inside a job submission script, then they must appear at the topmost lines of the script. `#COBALT` directives following a blank line will be ignored. Attempting to qsub the following example script will lead to the error message below.
   
 ```
 > cat submit.csh #!/bin/csh #COBALT -n 2 -t 2:00:00 -q full-node mpirun -np 20 -npernode 10 ./my_app > qsub submit.csh Usage: qsub.py [options] [] Refer to man pages for JOBID EXPANSION and SCRIPT JOB DIRECTIVES. No required options provided
@@ -168,7 +168,7 @@ mpirun -np 20 -npernode 10 ./my_app
 The queuing system used on ThetaGPU is [Cobalt](https://xgitlab.cels.anl.gov/aig-public/cobalt). On ThetaGPU, Cobalt jobs may run either as script jobs or interactive mode jobs.
 
 ##  Script Method
-In the script method, Cobalt will execute a user-supplied script when running a user’s job. Following are the required flags to qsub, as well as some of the more common options. A complete list of options may be found as a part of the qsub manpage, available on any login node.
+In the script method, Cobalt will execute a user-supplied script when running a user’s job. Following are the required flags to `qsub`, as well as some of the more common options. A complete list of options may be found as a part of the `qsub` manpage, available on any login node.
 
 ### Required Flags
 ```
@@ -203,7 +203,7 @@ See: https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html
 
 Users will need an allocation on ThetaGPU to utilize the GPU nodes. [Request for an allocation](https://accounts.alcf.anl.gov/#!/allocationRequest) on ThetaGPU bthrough our Director's Discretionary award. ThetaGPU is listed under Theta on the form.
 
-Users will need to load the cobalt/cobalt-gpu module before issuing a qsub command to access ThetaGPU.
+Users will need to load the `cobalt/cobalt-gpu` module before issuing a `qsub` command to access ThetaGPU.
 
 ### Example Script
 ```
@@ -223,7 +223,7 @@ To run an “interactive mode” job on ALCF Cray resources, add the “-I” (u
 Users may run an “ensemble job” and combine runs into a single script. This can provide major enhancements to throughput, especially for large ensemble jobs. Users may run multiple jobs in sequence or may use multiple backgrounded apruns to subset their resources among multiple backend executables. There is a system limitation of 1000 simultaneous apruns per Cobalt script job.
 
 ### Submitted Job with the Wrong Arguments
-If you submit a job with the wrong arguments, you can modify without deleting it and resubmitting it. Most settings can be changed using qalter.
+If you submit a job with the wrong arguments, you can modify without deleting it and resubmitting it. Most settings can be changed using `qalter`.
 
 #### Example 
 ```
@@ -234,7 +234,7 @@ If you submit a job with the wrong arguments, you can modify without deleting it
              -n <number nodes of> -h --proccount <processor count>
              -M <email address> <jobid1> <jobid2>
 ```
-**Note:** To change the queue, use ```qmove```.
+**Note:** To change the queue, use `qmove`.
 ```
 Usage: qmove <queue name> <jobid> <jobid>
 ```
@@ -243,26 +243,26 @@ When a job is submitted via qsub, Cobalt records the path to the executable or s
 
 ## Holding and Releasing Jobs
 ### User Holds
-To hold a job (prevent from running), use qhold. This will put the job in the "user_hold" state.
+To hold a job (prevent from running), use `qhold`. This will put the job in the `user_hold` state.
 ```
 qhold <jobid>
 ```
-To release a job in a user hold (user_hold) state, use qrls.
+To release a job in a user hold (`user_hold`) state, use `qrls`.
 ```
 qrls <jobid>
 ```
-A job may also be put into a user hold immediately upon submission by passing qsub the -h flag.
+A job may also be put into a user hold immediately upon submission by passing `qsub` the `-h` flag.
 ```
 qsub -n 8 -t 60 --attrs filesystems=home,grand -A MyProject -h myExe
 ```
 ### Dependency Holds
-For jobs in the dep_hold or dep_fail state, see the section on job dependencies.
+For jobs in the `dep_hold` or `dep_fail` state, see the section on job dependencies.
 
 ### Admin Holds
-Jobs in the state admin_hold may be released only by a system administrator.
+Jobs in the state `admin_hold` may be released only by a system administrator.
 
 ### MaxRun Holds
-Jobs may temporarily enter the state maxrun_hold if the user has reached the limit of per-user running jobs in a particular queue. No action is required; as running jobs complete, jobs in the maxrun_hold state will be automatically changed back to queued and eligible to run.
+Jobs may temporarily enter the state `maxrun_hold` if the user has reached the limit of per-user running jobs in a particular queue. No action is required; as running jobs complete, jobs in the `maxrun_hold` state will be automatically changed back to queued and eligible to run.
 
 ## Job Dependencies
 To submit a job that waits until another job or jobs have completed, use the dependencies argument to qsub. For example, to submit a job that depends on job 12345:
@@ -273,9 +273,9 @@ For multiple dependencies, list and separate with colons.
 ```
 qsub -n 2 -t 30 -A yourproject --attrs filesystems=theta-fs0,grand,home --dependencies 12345:12346 a.out
 ```
-Jobs submitted with dependencies will remain in the state dep_hold until all the dependencies are fulfilled, then will proceed to the state queued.
+Jobs submitted with dependencies will remain in the state `dep_hold` until all the dependencies are fulfilled, then will proceed to the state queued.
 
-**Note:** In the event any of the dependencies do not complete successfully (nonzero exit status), the job will instead go into the state dep_fail. To manually release a job that is in either dep_hold or dep_fail:
+**Note:** In the event any of the dependencies do not complete successfully (nonzero exit status), the job will instead go into the state `dep_fail`. To manually release a job that is in either `dep_hold` or `dep_fail`:
 ```
 qrls --dependencies <jobid>
 ```
@@ -283,8 +283,8 @@ or alternatively change the job's dependencies setting to "none":
 ```
 qalter --dependencies none <jobid>
 ```
-## Customizing the Output of Qstat
-Default fields displayed by the qstat command may be changed by setting the ```QSTAT_HEADER``` environment variable.
+## Customizing the Output of `qstat`
+Default fields displayed by the `qstat` command may be changed by setting the `QSTAT_HEADER` environment variable.
 ```
 export QSTAT_HEADER="JobID:JobName:User:WallTime:RunTime:Nodes:State:attrs:Queue""
 qstat
@@ -300,12 +300,12 @@ JobID   JobName                           User      WallTime  RunTime   Nodes  S
      104848  bbbbbb                            user7     01:00:00  N/A       3624   queued     {'numa': 'quad', 'mcdram': 'cache'}  default
      ....
 ```
-One may specify column headers via the --header flag to qstat.
+One may specify column headers via the `--header` flag to `qstat`.
 
-Available field names can be seen by entering ```qstat -fl <jobid>``` for any current jobid.
+Available field names can be seen by entering `qstat -fl <jobid>` for any current jobid.
 
 ## Redirecting Standard Input
-To redirect the standard input to a job, do not use the '<' redirection operator on the qsub command line. This simply redirects standard input to qsub, not the job itself. Instead, use the qsub option "-i".
+To redirect the standard input to a job, do not use the `<` redirection operator on the `qsub` command line. This simply redirects standard input to `qsub`, not the job itself. Instead, use the qsub option `-i`.
 ```
 # WRONG
 qsub -t 10 -n 1 --attrs filesystems=home a.out < my_input_file.dat
@@ -319,7 +319,7 @@ You can find active project names that your account is associated with by runnin
 ```
 sbank allocations
 ```
-If an account is associated with more than one project, a job must be submitted by using a specific project name using -A or by setting the environment variable ```COBALT_PROJ```.
+If an account is associated with more than one project, a job must be submitted by using a specific project name using `-A` or by setting the environment variable `COBALT_PROJ`.
 
 ## Sbank
 The sbank database is updated hourly. This means transactions against your account can take up to an hour before they show up.
@@ -329,7 +329,7 @@ Sometimes the scheduler will try to clear up room for a large job. During these 
 
 At such times, backfill nodes may be available. While nodes are being drained for a larger job, other user jobs may be backfilled onto these resources, provided that their requested wall time is less than the remaining drain time of the set of resources. For instance, suppose that 16 nodes are being drained to allow a 16-node job to run. Of the 16 nodes, perhaps eight are empty and the other eight are running an eight-node job that has 2 hours of wall time left. This allows the opportunity to run a 2-hour, eight-node job in the backfill here.
 
-To discover available backfill, run the nodelist command. This command can only be run on the service nodes (thetagpusn1-2), it cannot be run on the compute nodes.
+To discover available backfill, run the nodelist command. This command can only be run on the service nodes (`thetagpusn1-2`), it cannot be run on the compute nodes.
 
 ### Example
 ```
@@ -360,7 +360,7 @@ thetagpu17-gpu7  single-gpu                                  down       -
 In this example, a four-node job with a maximum wall time of 4 hours and 59 minutes can be run during this backfill. The backfill times will not always be identical and will depend on the mix of jobs on the partitions that are being drained.
 
 ## Submitting to Specific Nodes
-In rare cases, there may be a need to target specific hardware. This may be accomplished using ```--attrs location=```.
+In rare cases, there may be a need to target specific hardware. This may be accomplished using `--attrs location=`.
 
 ### Example
 ```
@@ -369,15 +369,15 @@ qsub -t 10 -n 2 --attrs filesystems=grand location=thetagpu01:thetagpu02 myprog.
 This will force the job to run on those specific nodes. Should that location become unschedulable, for instance, due to a failed node, the job will not be allowed to run anywhere else, without resetting the location attribute. If more nodes are specified in the location field than are required to fill a job’s requested node count, then the first n nodes available in the location set will be used.
 
 ## Running with a Group of Users
-Sometimes it is useful to allow other users to run Cobalt commands on a given job such as qhold, qrls, or qdel. A list of users can be allowed to run commands on your job by submitting a list of users to qsub, cqsub, or qalter using the flag --run_users. Specified users need not be in the same project under which the job was submitted.
+Sometimes it is useful to allow other users to run Cobalt commands on a given job such as `qhold`, `qrls`, or `qdel`. A list of users can be allowed to run commands on your job by submitting a list of users to `qsub`, `cqsub`, or `qalter` using the flag `--run_users`. Specified users need not be in the same project under which the job was submitted.
 
 ### Example
 ```
 qsub -t 10 -n 16 --attrs filesystems=grand,eagle,home location=thetagpu01:thetagpu02 --run_users frodo:sam:pippin myprog.exe
 ```
-As a convenience, all users belonging to the project under which a job was submitted can be added to a list of users that may control a job by using the --run_project flag.
+As a convenience, all users belonging to the project under which a job was submitted can be added to a list of users that may control a job by using the `--run_project` flag.
 
-Users who have been added to the list can run any command that the job-submitter could run on a job. This includes qhold, qrls, qalter, and qdel.
+Users who have been added to the list can run any command that the job-submitter could run on a job. This includes `qhold`, `qrls`, `qalter`, and `qdel`.
 
 ### Group Running and File System Groups
 While setting this list of users allows any of the listed users to run Cobalt commands on a job, it does not do anything about the permissions of any files involved with the job. Those must be handled by the user(s) setting appropriate permissions on their directories to allow users in their group to read and write files as appropriate. If your project needs a group on the file system to share files or a user needs to be added, email [User Support](mailto:support@alcf.anl.gov).
@@ -389,18 +389,18 @@ For more information on Cobalt commands, their options, consult the manpages on 
 This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. For an introduction to using the job resource manager and running jobs on ThetaGPU, see [Running Jobs on ThetaGPU](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md). 
 
 ### Submit a Job Request
-Use qsub to submit a job. (Unlike jobs on the ALCF BlueGene systems, all jobs on ThetaGPU are either script or interactive.)
+Use `qsub` to submit a job. Unlike jobs on the ALCF Blue Gene systems, all jobs on ThetaGPU are either script or interactive.
 
-Run the script jobscript.sh with 2 nodes for a maximum of 15 minutes:
+Run the script `jobscript.sh` with 2 nodes for a maximum of 15 minutes:
 ```
 qsub -n 2 -t 15 --attrs filesystems=theta-fs0 jobscript.sh
 ```
-To submit jobs to a particular queue, use qsub -q <queue_name>.
+To submit jobs to a particular queue, use `qsub -q <queue_name>`.
 
 ### Charge a Job to a Project
-Use qsub -A <project_name> to charge a job to a particular project.
+Use `qsub -A <project_name>` to charge a job to a particular project.
 
-To run jobscript.sh with 2 nodes for a maximum of 15 minutes and charge the job to MyProject:
+To run `jobscript.sh` with 2 nodes for a maximum of 15 minutes and charge the job to MyProject:
 ```
 qsub -n 2 -t 15 --attrs filesystems=grand,home -A MyProject jobscript.sh
 ```
@@ -418,9 +418,9 @@ qdel 34586
 Depending on the stage of a job’s lifetime, qdel may not complete immediately, especially if the delete is issued during startup on a job that is changing memory modes and rebooting a node. If the job does not ultimately terminate, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the jobid so that an administrator can take appropriate cleanup actions and administratively terminate the job.
 
 ### Query Partition Availability
-To determine which partitions are currently available to the scheduler, use the nodelist command. This command provides a list of node ids, names, queue, and state as well as any backfill windows. This command can only be run on the service nodes (thetagpusn1-2), it cannot be run on the compute nodes. 
+To determine which partitions are currently available to the scheduler, use the nodelist command. This command provides a list of node ids, names, queue, and state as well as any backfill windows. This command can only be run on the service nodes (`thetagpusn1-2`), it cannot be run on the compute nodes. 
 
-For example on thetagpusnX it displays:
+For example on `thetagpusnX` it displays:
 ```
 Host             Queue                                       State      Backfill
 ================================================================================== 
@@ -447,19 +447,19 @@ thetagpu18       CompBioAffin:backfill:full-node             allocated  -
 [...]
 ```
 ## Specifying Filesystems
-On ThetaGPU and other systems running Cobalt at the ALCF your job submission should specify which filesystems your will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally.  
+On ThetaGPU and other systems running Cobalt at the ALCF your job submission should specify which filesystems your will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally.
 
-You may specify your filesystem by adding ```filesystems=<list of filesystems>``` to the ```--attrs``` argument of qsub in Cobalt. Valid filesystems are home, eagle, grand, and theta-fs0. The list is comma-delimited. 
+You may specify your filesystem by adding ```filesystems=<list of filesystems>``` to the ```--attrs``` argument of qsub in Cobalt. Valid filesystems are `home`, `eagle`, `grand`, and `theta-fs0`. The list is comma-delimited. 
 
-For example, to request the home and eagle filesystems for your job you would add filesystems=home,eagle to your qsub command. If this is not specified a warning will be printed and then **the job will be tagged as requesting all filesystems and may be held unnecessarily if a filesystem is not currently available**. The warnings are written to stderr of qsub and qalter commands that change the value of the --attrs flag.  Scripts that are parsing stderr from these utilities may encounter errors from the additional warnings if filesystems are not specified in these commands.
+For example, to request the `home` and `eagle` filesystems for your job you would add `filesystems=home,eagle` to your `qsub` command. If this is not specified a warning will be printed and then **the job will be tagged as requesting all filesystems and may be held unnecessarily if a filesystem is not currently available**. The warnings are written to stderr of `qsub` and `qalter` commands that change the value of the `--attrs` flag.  Scripts that are parsing stderr from these utilities may encounter errors from the additional warnings if filesystems are not specified in these commands.
 
-If a job is submitted while a filesystem it requested is marked down, the job will automatically be placed into a user_hold and a warning message will be printed, but the job will be otherwise queued. The job is also placed into admin_hold by a sysadmin script. Once the affected filesystem has been returned to normal operation, the admin_hold is released. You are responsible for releasing the user_hold once you receive the message that the affected filesystem has been returned to normal operation. The job cannot run until both the holds are released.
+If a job is submitted while a filesystem it requested is marked down, the job will automatically be placed into a `user_hold` status and a warning message will be printed, but the job will be otherwise queued. The job is also placed into `admin_hold` status by a sysadmin script. Once the affected filesystem has been returned to normal operation, the `admin_hold` is released. You are responsible for releasing the `user_hold` once you receive the message that the affected filesystem has been returned to normal operation. The job cannot run until both the holds are released.
 
-If a job requesting a filesystem that is marked down is already in the queue, it will be placed on admin_hold and will be released once the filesystem is operational.
+If a job requesting a filesystem that is marked down is already in the queue, it will be placed on `admin_hold` status and will be released once the filesystem is operational.
 ```
 qsub -n 1 -t 30 -q full-node --attrs filesystems=home,grand -A Project ./my_job.sh
 ```
-To update the filesystems list for your job, use qalter. Note that qalter --attrs is a replace and not an update operation. This means that you should once again specify all the attributes that you had in the original qsub command.
+To update the filesystems list for your job, use `qalter`. Note that `qalter --attrs` is a replace and not an update operation. This means that you should once again specify all the attributes that you had in the original `qsub` command.
 ```
 qalter --attr filesystems=home,eagle:mig-mode=True <jobid>
 ```
@@ -470,5 +470,3 @@ qrls <jobid>
 
 ## References
 <iframe width="560" height="315" src="https://www.youtube.com/embed/s2U18IO88-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-

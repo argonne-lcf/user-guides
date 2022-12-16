@@ -58,7 +58,8 @@ PyTorch is compatible with scaling up to multiple GPUs per node, and across mult
 
 DeepSpeed is also available and usable on Polaris.  For more information, please see the [DeepSpeed](./deepspeed.md) documentation directly.
 
-## PyTorch Dataloaders
+## PyTorch `DataLoader` and multi-node Horovod
 
-Please note there is a bug that causes a hang when using pytorch data loaders + distributed training (Horovod, DDP, etc).  To workaround this, NVIDIA recommends setting `num_workers=0` in the dataloader configuration.
+Please note there is a bug that causes a hang when using PyTorch's multithreaded data loaders with distributed training across multiple nodes. To workaround this, NVIDIA recommends setting `num_workers=0` in the dataloader configuration, which serializes data loading. 
 
+For more details, see [Polaris Known Issues](../../known-issues.md).
