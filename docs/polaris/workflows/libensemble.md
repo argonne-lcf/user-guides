@@ -9,6 +9,8 @@ libEnsemble is provided on Polaris in the **conda** module:
     module load conda
     conda install base
 
+See the docs for more details on using [python on Polaris](https://www.alcf.anl.gov/support/user-guides/polaris/data-science-workflows/python/index.html).
+
 ## libEnsemble examples
 
 For a very simple example of using libEnsemble see the [Simple Sine tutorial](https://libensemble.readthedocs.io/en/main/tutorials/local_sine_tutorial.html)
@@ -30,13 +32,12 @@ A simple example batch script for a libEnsemble use case that runs 5 workers (on
 generator and four simulators) on one node:
 
 ```shell
-    #!/bin/bash
-    #PBS -A <myproject>
-    #PBS -lwalltime=00:15:00
-    #PBS -lselect=1
+    #!/bin/bash -l
+    #PBS -l select=1:system=polaris
+    #PBS -l walltime=00:15:00
+    #PBS -l filesystems=home:grand
     #PBS -q debug
-    #PBS -lsystem=polaris
-    #PBS -lfilesystems=home:grand
+    #PBS -A <myproject>
 
     export MPICH_GPU_SUPPORT_ENABLED=1
     cd $PBS_O_WORKDIR
