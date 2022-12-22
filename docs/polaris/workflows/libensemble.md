@@ -7,7 +7,7 @@ libEnsemble is a Python toolkit for running dynamic ensembles of calculations. U
 libEnsemble is provided on Polaris in the **conda** module:
 
     module load conda
-    conda install base
+    conda activate base
 
 See the docs for more details on using [python on Polaris](https://www.alcf.anl.gov/support/user-guides/polaris/data-science-workflows/python/index.html).
 
