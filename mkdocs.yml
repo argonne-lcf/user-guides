@@ -81,6 +81,7 @@ nav:
     - Workflows:
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
+        - libEnsemble: polaris/workflows/libensemble.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
