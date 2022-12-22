@@ -3,7 +3,7 @@ We are moving our ALCF documentation into GitHub to make it easier to contribute
 
 Our user guides contain information for: 
 
-- [Account and Project Management](account-and-project-management/accounts-and-access/user-account-overview.md): Information and instructions on how to manage your ALCF account and awarded project.  
+- [Account and Project Management](account-project-management/accounts-and-access/user-account-overview.md): Information and instructions on how to manage your ALCF account and awarded project.  
 - [Data Management](data-management/filesystem-and-storage/data-storage.md): Information on our file systems that are mounted globally across all of our production systems.
 - [Polaris](polaris/getting-started.md): Information on how to get started our newest supercomputer.
 - [Theta](theta/hardware-overview/machine-overview.md): Information on how to use our Cray XC40/KNL supercomputer.
