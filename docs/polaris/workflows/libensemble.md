@@ -20,6 +20,10 @@ For an example that runs a small ensemble using a C application (offloading work
 
 The required files for the second tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces).
 
+Note that when initializing the MPIExecutor on Polaris (**run_libe_forces.py** in the example), you currently need to use the following options to pick up the correct MPI runner:
+
+    exctr = MPIExecutor(custom_info={'mpi_runner':'mpich', 'runner_name':'mpiexec'})
+
 ## Job Submission
 
 libEnsemble runs on the compute nodes on Polaris using either
