@@ -32,8 +32,7 @@ maximum concurrency. libEnsemble will detect the nodes available
 from the PBS environment and use these for running simulations. Polaris supports
 running multiple concurrent simulations on each node if desired,
 
-A simple example batch script for a libEnsemble use case that runs 5 workers (one
-generator and four simulators) on one node:
+A simple example batch script for a libEnsemble use case that runs four workers on one node:
 
 ```shell
     #!/bin/bash -l
@@ -45,7 +44,7 @@ generator and four simulators) on one node:
 
     export MPICH_GPU_SUPPORT_ENABLED=1
     cd $PBS_O_WORKDIR
-    python run_libe_forces.py --comms local --nworkers 5
+    python run_libe_forces.py --comms local --nworkers 4
 ```
 
 The script can be run with:
