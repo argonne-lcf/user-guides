@@ -9,11 +9,14 @@ libEnsemble is provided on Polaris in the **conda** module:
     module load conda
     conda install base
 
-## libEnsemble example
+## libEnsemble examples
+
+For a very simple example of using libEnsemble see the [Simple Sine tutorial](https://libensemble.readthedocs.io/en/main/tutorials/local_sine_tutorial.html)
 
 For an example that runs a small ensemble using a C application (offloading work to the GPU), see
 [the tutorial](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html).
 
+The required files for the second tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces).
 
 ## Job Submission
 
@@ -27,7 +30,6 @@ A simple example batch script for a libEnsemble use case that runs 5 workers (on
 generator and four simulators) on one node:
 
 ```shell
-
     #!/bin/bash
     #PBS -A <myproject>
     #PBS -lwalltime=00:15:00
@@ -39,7 +41,6 @@ generator and four simulators) on one node:
     export MPICH_GPU_SUPPORT_ENABLED=1
     cd $PBS_O_WORKDIR
     python run_libe_forces.py --comms local --nworkers 5
-
 ```
 
 The script can be run with:
