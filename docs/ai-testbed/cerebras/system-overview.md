@@ -12,14 +12,19 @@ On the first Argonne CS-2 cluster(cs2-01), the eight worker nodes and the chief 
 On the second Argonne CS-2 cluster(cs2-02), the seven worker nodes and the chief node each have Intel(R) Xeon(R) Gold 6248 CPU processors totaling 80 cores and 200GB memory.<br>
 The `/home`, `/projects` and `/software` trees are shared across both CS2 clusters, and all ALCF AI testbed platforms.
 
-![CS-2 cluster figure](files/cs-getting-started.png)
+<figure markdown>
+  ![CS-2 cluster figure](files/cs-getting-started.png){ width="700" }
+  <figcaption>CS-2 cluster figure</figcaption>
+</figure>
 (Figure from
 [https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html](https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html))
 
 As indicated in the figures, a CS system is responsible only for running and accelerating the actual training and predictions with the model.
 
 All the supporting tasks such as compiling the model, preprocessing the input data, running the input function, streaming the data, and managing the training loop, are executed in a Cerebras CPU cluster by the Cerebras software running on these nodes.
-
-![Programming model](./compile-vs-run.png)
+<figure markdown>
+  ![Programming model](files/compile-vs-run.png){ width="700" }
+  <figcaption>Programming model</figcaption>
+</figure>
 <!---https://docs.cerebras.net/en/latest/_images/compile-vs-run.png-->
 (Figure from [https://docs.cerebras.net/en/latest/cerebras-basics/how-cerebras-works.html](https://docs.cerebras.net/en/latest/cerebras-basics/how-cerebras-works.html))
