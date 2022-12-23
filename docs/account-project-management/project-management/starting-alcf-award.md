@@ -3,10 +3,10 @@
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit for questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Get Started with ALCF’s Systems
-To get familiar with our resources, please view our user guides: 
-[https://www.alcf.anl.gov/support/user-guides/index.html](https://www.alcf.anl.gov/support/user-guides/index.html)
+To get started using our resources, please visit: 
+[Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
 
-We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below
+We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
 - [Theta and Cooley Overview](http://bit.ly/Getting_Started_On_Theta)
 - [Running on Theta](https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…) 
@@ -29,7 +29,7 @@ Before your project begins, you will receive an email with the following project
 ## Account Setup
 **If you do not have an ALCF account:** You will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-**If you have an active ALCF account:** Submit a request to join the newly awarded project at https://accounts.alcf.anl.gov/#!/joinProject
+**If you have an active ALCF account:** Submit a request to join the newly awarded project at [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
 
 ### Information for Foreign National Access 
 The U.S. Department of Energy has guidelines and requirements for foreign nationals who access its facilities and sites. This guidance is issued in DOE Order 142.3, which is part of Argonne's contract; therefore, all foreign nationals (non-U.S. Citizens) must obtain authorization prior to using ALCF resources.
@@ -42,14 +42,14 @@ If you are a foreign national and do not have current authorization credentials,
 ### Insitution Master Agreement for INCITE, ALCC, and ADSP
 If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne’s user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
 
-A list of home institutions that have master agreements in place is located on this webpage:  https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-…
+A list of home institutions that have master agreements in place is located on this webpage: [https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-Facility-Agreements](https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-Facility-Agreements)
 
 ### ALCF User Agreement for INCITE, ALCC, and ADSP
 **Note:** This does not apply to Director's Discretionary awards.
 
 Every project team member who requests an ALCF account must sign and return an acknowledgment form, stating that they agree to the terms in the user agreement.
 
-The form is located at: https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf. Please print, sign, scan and email it to [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov).
+The form is located at: [https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf](https://www.alcf.anl.gov/files/Acknowledgement_Form.pdf). Please print, sign, scan and email it to [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov).
 
 ## Managing Project Team Membership
 As a PI, you can add members to your project. You can assign proxies who are project members authorized to add or renew project members on your behalf.
@@ -61,6 +61,7 @@ A project PI or proxy has the authority to:
 - Approve Foreign Assignment/Visit Request form renewals for project members who are foreign nationals
 
 During your project setup, the ALCF Support Team will request the following information to establish your project members:
+
 - The names, email addresses, and/or ALCF usernames (if already existing) of up to two proxies and all project members.
 
 ## About Project and UNIX Group Membership
@@ -77,11 +78,11 @@ PI/proxies with active ALCF accounts can also approve new account requests, proj
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
 
-Members that do not have an ALCF account should request one at: https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, they should select your project short name.
+Members that do not have an ALCF account should request one at: [https://accounts.alcf.anl.gov/accountRequest](https://accounts.alcf.anl.gov/accountRequest). When prompted for project name, they should select your project short name.
 
-If your project members have ALCF accounts that are no longer active, please ask them to submit a reactivation request here: https://accounts.alcf.anl.gov/accountReactivate. When prompted for project name, they should select your project short name.
+If your project members have ALCF accounts that are no longer active, please ask them to submit a reactivation request here: [https://accounts.alcf.anl.gov/accountReactivate](https://accounts.alcf.anl.gov/accountReactivate). When prompted for project name, they should select your project short name.
 
-If you project members have active ALCF accounts but have not been added to your project, they should submit a request to join your project by going to this page : https://accounts.alcf.anl.gov/#!/joinProject
+If you project members have active ALCF accounts but have not been added to your project, they should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
 
 ## Moving Your Data
 We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see Using Globus on Theta.
@@ -102,16 +103,16 @@ The ALCF will send you a report template at the end of each quarter. Please comp
 
 ## Policies
 ### Pullback Policy
-Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view our pullback policy at the following link: https://www.alcf.anl.gov/user-guides/pullback-policy
+Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy:](../../../policies/queue-scheduling/pullback-policy.md)
 
 ### Allocation Overburn Policy
-Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: https://www.alcf.anl.gov/support-center/facility-policies/queue-and-sch…
+Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
 
 ### Acknowledgment In Publications
-Please follow the guidelines provided at https://www.alcf.anl.gov/user-guides/alcf-acknowledgement-policy to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
+Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../../policies/alcf-acknowledgement-policy/) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
 ### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read at: https://www.alcf.anl.gov/user-guides/policies
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies] (../../../policies/facility-policies/).
 
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
@@ -125,6 +126,7 @@ You can use the following command to check your project balance on Theta:
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).
 
 ## How Can We Help?
+
 We can also help resolve any issues or needs that may be delaying the start of your scientific campaign.
 - Are you in need of high-throughput software?
 - Are you having difficulty compiling your application?
