@@ -27,7 +27,7 @@ Before your project begins, you will receive an email with the following project
 - **Allocation End Date**: The end date of your award.
 
 ## Account Setup
-**If you do not have an ALCF account:** You will need to request one at https://accounts.alcf.anl.gov/accountRequest. When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+**If you do not have an ALCF account:** You will need to request one at [https://accounts.alcf.anl.gov/accountRequest](https://accounts.alcf.anl.gov/accountRequest). When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 **If you have an active ALCF account:** Submit a request to join the newly awarded project at [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
 
@@ -103,16 +103,16 @@ The ALCF will send you a report template at the end of each quarter. Please comp
 
 ## Policies
 ### Pullback Policy
-Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy:](../../../policies/queue-scheduling/pullback-policy.md)
+Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
 ### Allocation Overburn Policy
-Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
+Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
 
 ### Acknowledgment In Publications
-Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../../policies/alcf-acknowledgement-policy/) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
+Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy/) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
 ### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies] (../../../policies/facility-policies/).
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies] (../../policies/facility-policies/).
 
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
