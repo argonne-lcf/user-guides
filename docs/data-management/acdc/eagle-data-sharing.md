@@ -48,9 +48,9 @@ There are two ways for a PI to access their project directory on Eagle.
 ## Creating a Guest Collection
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections. 
 
-- If you have an "Inactive/Deleted" ALCF account, please click on the account re-activation link to begin the re-activation process: [Re-activation Link](https://accounts.alcf.anl.gov/accountReactivate)
+* If you have an "Inactive/Deleted" ALCF account, please click on the account re-activation link to begin the re-activation process: [Re-activation Link](https://accounts.alcf.anl.gov/accountReactivate)
 
-- If you DO NOT have an ALCF account, click on the account request link to begin the application process: [Account Request Link](https://accounts.alcf.anl.gov/#!/accountRequest) 
+* If you DO NOT have an ALCF account, click on the account request link to begin the application process: [Account Request Link](https://accounts.alcf.anl.gov/#!/accountRequest) 
 
 In the Globus application in your browser:
 
