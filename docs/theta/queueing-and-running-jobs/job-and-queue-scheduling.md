@@ -32,7 +32,7 @@ INCITE and ALCC projects needing additional overburn hours should e-mail [suppor
 To be clear, this policy does not constitute a guarantee of extra time, and we reserve the right to prioritize the scheduling of jobs submitted by projects that have not yet used 100% of their allocations, so the earlier that an INCITE or ALCC project exhausts its allocation, the more likely it is to be able to take full advantage of this policy.
 
 ## Queues
-[Information on ThetaGPU Queues](../../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling/index.html)
+[Information on ThetaGPU Queues](../../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md)
 
 ### Theta (KNL) Queues
 **Debugging Queues**
