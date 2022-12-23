@@ -1,12 +1,12 @@
 # Managing Your Team Members
 New project members will need a user account to access project data and to run jobs on ALCF systems.
 
-Please instruct any members who do not have an ALCF account to request one as soon as possible by visiting: https://accounts.alcf.anl.gov/#!/accountRequest. When prompted for project name, they should select the "short name" for your project. 
+Please instruct any members who do not have an ALCF account to request one as soon as possible by visiting: [https://accounts.alcf.anl.gov/#!/accountRequest](https://accounts.alcf.anl.gov/#!/accountRequest). When prompted for project name, they should select the "short name" for your project. 
 
-The PI or Proxy must approve each member of the team to gain access and to run project jobs on the ALCF's resources. If you have an active ALCF account, you can manage your project team by logging into the ALCF account and project management website and navigating to https://accounts.alcf.anl.gov/#!/manageProjects
+The PI or Proxy must approve each member of the team to gain access and to run project jobs on the ALCF's resources. If you have an active ALCF account, you can manage your project team by logging into the ALCF account and project management website and navigating to [https://accounts.alcf.anl.gov/#!/manageProjects](https://accounts.alcf.anl.gov/#!/manageProjects)
 
 ## Accessing your project(s)
-1. Log in at https://accounts.alcf.anl.gov/#!/manageProjects using your credentials: ALCF username and Physical/Mobile token passcode for a password.
+1. Log in at [https://accounts.alcf.anl.gov/#!/manageProjects](https://accounts.alcf.anl.gov/#!/manageProjects) using your credentials: ALCF username and Physical/Mobile token passcode for a password.
 2. Click on Project Management, located in the right sidebar.
 3. You will see a list of projects of which you are the Primary Investigator (PI).
 4. Click on the desired project to view information and management options for the selected project.
