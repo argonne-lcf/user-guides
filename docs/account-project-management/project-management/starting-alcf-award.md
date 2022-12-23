@@ -106,13 +106,13 @@ The ALCF will send you a report template at the end of each quarter. Please comp
 Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
 ### Allocation Overburn Policy
-Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
+Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
 
 ### Acknowledgment In Publications
 Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy.md) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
 ### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies] (../../policies/facility-policies.md).
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies] (../policies/facility-policies.md).
 
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
