@@ -1,6 +1,6 @@
 # Compiling and Linking Overview on Theta
 
-**Note:** ThetaGPU have very different programming environment. [See webpages dedicated to ThetaGPU](https://www.alcf.anl.gov/support/user-guides/theta-gpu/compiling-and-linking/compiling-and-linking-overview/index.html).
+**Note:** ThetaGPU have very different programming environment. [See webpages dedicated to ThetaGPU](../../theta-gpu/compiling-and-linking/compiling-and-linking-overview/index.html).
 
 ## Compiling and Linking on Theta
 Due to hardware differences between login (non-KNL) and compute nodes (Intel Phi 2nd Generation KNL), compilation of application codes on Theta systems normally involves cross-compiling. The module craype-mic-knl loaded by default defines the target architecture along with the appropriate compilation options that tune the compiler optimization to KNL hardware. For that reason, any compiler options preexisting in the application Makefile that auto-tune the code to the automatically recognized CPU architecture of the login node where the compilation proceeds have negative impact on performance of the compiled code, and should be removed.
