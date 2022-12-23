@@ -12,7 +12,7 @@ On the first Argonne CS-2 cluster(cs2-01), the eight worker nodes and the chief 
 On the second Argonne CS-2 cluster(cs2-02), the seven worker nodes and the chief node each have Intel(R) Xeon(R) Gold 6248 CPU processors totaling 80 cores and 200GB memory.<br>
 The `/home`, `/projects` and `/software` trees are shared across both CS2 clusters, and all ALCF AI testbed platforms.
 
-![CS-2 cluster figure](./cs-getting-started.png)
+![CS-2 cluster figure](file/cs-getting-started.png)
 (Figure from
 [https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html](https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html))
 
