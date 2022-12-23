@@ -8,9 +8,12 @@ With Jupyter Hub, you can run Python and R notebooks, or open a terminal directl
 You can log in to Theta, ThetaGPU, or Cooley instances of Jupyter Hub at [https://jupyter.alcf.anl.gov](https://jupyter.alcf.anl.gov) using your ALCF credentials.
 Theta Jupyter Hub instances runs on an external server ([jupyter02.mcp.alcf.anl.gov](http://jupyter02.mcp.alcf.anl.gov/)), but not on Theta login, mom, or compute nodes.
 Theta Jupyter Hub has access to your home folder (```/home/$USER```) and projects folders on theta-lustre, grand, and eagle file systems (```/projects, /grand, /eagle respectively```), but does not have access to ```/opt/cray, /opt/intel, etc.—that``` is, you cannot use any Theta modules or any Cray libraries.
+
 Cooley Jupyter Hub instances have access to the user's home folder (```/home/$USER```), and theta-lustre, grand, and eagle file systems (```/projects, /grand, /eagle respectively```).
 You can submit jobs to run on Theta/Cooley with ```!qsub myjob.sh```.
+
 You can customize your environment and add new kernels. To do so, you could run shell commands on a notebook cell by prepending them with ! (```i.e., !pwd```). However, it would be much easier to use the Jupyter terminal. You can open a terminal on the Jupyter Hub home page under Files/new menu. Using the terminal, you can create a new conda environment and a new Jupyter kernel with the commands below.
+
 For more information on how to manage conda environments, refer to this [page](https://conda.io/docs/user-guide/tasks/manage-environments.html).
 
 ```
