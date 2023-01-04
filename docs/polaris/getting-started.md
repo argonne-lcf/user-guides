@@ -3,10 +3,10 @@
 ## Logging Into Polaris
 
 To log into Polaris:
-
+```
 ssh <username\>@polaris.alcf.anl.gov
-
-Then, type in the password from your cryptocard/mobilepass token.
+```
+Then, type in the password from your cryptocard/MobilePASS+ token.
 
 
 ## Hardware Overview
