@@ -54,7 +54,7 @@ Links to detailed NVIDIA A100 documentation:
 
 
 ## Login nodes
-There are four login nodes for editing code, building code, submitting / monitoring jobs, checking usage (`sbank`), etc..  The various compilers and libraries are present on the logins, so most users should be able to build their code.  However, if your build requires the physical presence of the GPU, you will need to build on a compute node.
+There are four login nodes available to users for editing code, building code, submitting / monitoring jobs, checking usage (`sbank`), etc..  Their full hostnames are `polaris-login-N.hsn.cm.polaris.alcf.anl.gov`  for `N` equal to `01` through `04`; there are an additional two login nodes that are not user-accessible which are used for running services such as JupyterHub. The various compilers and libraries are present on the logins, so most users should be able to build their code.  However, if your build requires the physical presence of the GPU, you will need to build on a compute node.
 
 All users share the same login nodes so please be courteous and respectful of your fellow users.  For example, please do not run computationally or IO intensive pre- or post-processing on the logins and keep the parallelism of your builds to a reasonable level.
 
