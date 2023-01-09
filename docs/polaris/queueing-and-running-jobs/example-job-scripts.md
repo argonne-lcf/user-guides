@@ -101,6 +101,11 @@ binding of MPI/OpenMP processes to GPUs. A small helper script is available for 
 applications that rely on MPI to handle the binding of MPI ranks to GPUs. Some notes on
 this helper script and other key differences with the early CPU example follow.
 
+In this script, we have added `-j oe` to the list of PBS options; `-j oe` combines stdout
+and stderr to the same file and uses the stdout filename provided (if provided). `-j eo`
+would do the same but use the stderr filename provided. Without these options, separate
+files containing stdout and stderr of the job are produced.
+
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
     For applications that support GPU-enabled MPI (i.e. use MPI to communicate
