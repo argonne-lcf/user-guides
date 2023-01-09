@@ -8,7 +8,7 @@ A simple example using a similar script on Polaris is available in the
 
 ## CPU MPI-OpenMP Example
 
-The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. 
+The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) program is a compiled C++ code, which is built via `make -f Makefile.nvhpc` in the linked directory after cloning the [Getting Started](https://github.com/argonne-lcf/GettingStarted) repository.
 
 ```bash
 #!/bin/bash -l
@@ -24,7 +24,7 @@ cd ${PBS_O_WORKDIR}
 
 # MPI and OpenMP settings
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=16
+NRANKS_PER_NODE=32
 NDEPTH=2
 NTHREADS=2
 
@@ -36,12 +36,12 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 *NOTE: If you are a ```zsh``` user, you will need to ensure **ALL** submission and shell scripts include the ```-l``` flag following ```#!/bin/bash``` as seen in the example above to ensure your environment is being instantiated properly. ```zsh``` is **NOT** supported by HPE and support from ALCF will be best effort only.*
 
-Each Polaris node has 1 Milan CPU with a total of 32 cores and each core supports 2 threads. The process affinity in this example is setup to map each MPI rank to 2 cores utilizing all one thread on each core. The OpenMP settings bind each OpenMP thread to one hardware thread within a core such that all 32 cores are utilized. Some additional notes on the contents of the script before the `mpiexec` command follow.
+Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). The process affinity in this example is setup to map each MPI rank to 2 logical cores. Each MPI rank spawns 2 OpenMP threads. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 64 logical cores are utilized.
 
 * `cd ${PBS_O_WORKDIR}` : change into the working directory from where `qsub` was executed.
 * ``NNODES= `wc -l < $PBS_NODEFILE` ``: one method for determine the total number of nodes allocated to a job.
-* `NRANKS_PER_NODE=16` : This is a helper variable to set the number of MPI ranks for each node to 16.
-* `NDEPTH=2` : This is a helper variable to space MPI ranks 2 "slots" from each other. In this example, individual threads correspond to a slot. This will be used together with the `--cpu-bind` option from `mpiexec` and additional binding options are available (e.g. numa).
+* `NRANKS_PER_NODE=32` : This is a helper variable to set the number of MPI ranks for each node to 32.
+* `NDEPTH=2` : This is a helper variable to space MPI ranks 2 "slots" from each other. In this example, individual threads correspond to a slot. This will be used together with the `--cpu-bind` option from `mpiexec` and additional binding options are available (e.g. `numa`).
 * `NTHREADS=2` : This is a helper variable to set the number of OpenMP threads per MPI rank. 
 * `NTOTRANKS=$(( NNODES * NRANKS_PER_NODE))` : This is a helper variable calculating the total number of MPI ranks spanning all nodes in the job.
 
@@ -54,9 +54,11 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 * `--env OMP_NUM_THREADS=${NTHREADS}` : This is setting the environment variable `OMP_NUM_THREADS` : to determine the number of OpenMP threads per MPI rank.
 * `--env OMP_PLACES=threads` : This is indicating how OpenMP should distribute threads across the resource, in this case across hardware threads.
 
+Note, this example exhausts all 64 logical cores available on each compute node CPU. Some applications do not benefit from utilizing the CPU's SMT2 capabilities, and such software may achieve better performance by setting `NRANKS_PER_NODE=16` such that each of the 32 physical cores only runs a single OpenMP thread.
+
 ## GPU MPI Example
 
-Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
+Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/).
 
 ```bash
 #!/bin/bash -l
@@ -64,6 +66,7 @@ Using the CPU job submission example above as a baseline, there are not many add
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=home:eagle
+#PBS -j oe
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -76,7 +79,7 @@ cd ${PBS_O_WORKDIR}
 # MPI and OpenMP settings
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=$(nvidia-smi -L | wc -l)
-NDEPTH=8
+NDEPTH=16
 NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
@@ -89,13 +92,14 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 #mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
 
-The OpenMP-related options are not needed if your application does not use
-OpenMP. Nothing additional is required on the `mpiexec` command for
-applications that internally manage GPU devices and handle the binding of
-MPI/OpenMP processes to GPUs. A small helper script is available for those with
-applications that rely on MPI to handle the binding of MPI ranks to GPUs. Some
-notes on this helper script and other key differences with the early CPU
-example follow.
+As in the previous example, the MPI ranks are spaced apart assuming the user wants to
+utilize all 64 logical cores (achieved by setting `NTHREADS=$NDEPTH` here). Set `NDEPTH=8;
+NTHREADS=8` to spawn only 1 thread per physical core. The OpenMP-related options are not
+needed if your application does not use OpenMP. Nothing additional is required on the
+`mpiexec` command for applications that internally manage GPU devices and handle the
+binding of MPI/OpenMP processes to GPUs. A small helper script is available for those with
+applications that rely on MPI to handle the binding of MPI ranks to GPUs. Some notes on
+this helper script and other key differences with the early CPU example follow.
 
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
