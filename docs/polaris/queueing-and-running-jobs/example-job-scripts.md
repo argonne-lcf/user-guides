@@ -24,7 +24,7 @@ cd ${PBS_O_WORKDIR}
 
 # MPI and OpenMP settings
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=32
+NRANKS_PER_NODE=16
 NDEPTH=2
 NTHREADS=2
 
@@ -36,12 +36,14 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 *NOTE: If you are a ```zsh``` user, you will need to ensure **ALL** submission and shell scripts include the ```-l``` flag following ```#!/bin/bash``` as seen in the example above to ensure your environment is being instantiated properly. ```zsh``` is **NOT** supported by HPE and support from ALCF will be best effort only.*
 
-Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). The process affinity in this example is setup to map each MPI rank to 2 logical cores. Each MPI rank spawns 2 OpenMP threads. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 64 logical cores are utilized.
+Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). 
+
+The process affinity in this example is setup to map each MPI rank to 2 physical cores. Each MPI rank spawns 2 OpenMP threads, so 1 thread per physical core. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 32 of 64 logical cores are utilized. CPU core ids `32` to `63` are not mapped to any MPI rank, since they correspond to sibling logical cores of the core ids `0` to `31`.
 
 * `cd ${PBS_O_WORKDIR}` : change into the working directory from where `qsub` was executed.
 * ``NNODES= `wc -l < $PBS_NODEFILE` ``: one method for determine the total number of nodes allocated to a job.
-* `NRANKS_PER_NODE=32` : This is a helper variable to set the number of MPI ranks for each node to 32.
-* `NDEPTH=2` : This is a helper variable to space MPI ranks 2 "slots" from each other. In this example, individual threads correspond to a slot. This will be used together with the `--cpu-bind` option from `mpiexec` and additional binding options are available (e.g. `numa`).
+* `NRANKS_PER_NODE=16` : This is a helper variable to set the number of MPI ranks for each node to 16.
+* `NDEPTH=2` : This is a helper variable to space MPI ranks 2 "slots" from each other. In this example, individual threads correspond to a slot. This will be used together with the `--cpu-bind` option from `mpiexec` and additional binding options are available (e.g. `numa`, `socket`, `core`, etc.).
 * `NTHREADS=2` : This is a helper variable to set the number of OpenMP threads per MPI rank.
 * `NTOTRANKS=$(( NNODES * NRANKS_PER_NODE))` : This is a helper variable calculating the total number of MPI ranks spanning all nodes in the job.
 
@@ -54,7 +56,36 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 * `--env OMP_NUM_THREADS=${NTHREADS}` : This is setting the environment variable `OMP_NUM_THREADS` : to determine the number of OpenMP threads per MPI rank.
 * `--env OMP_PLACES=threads` : This is indicating how OpenMP should distribute threads across the resource, in this case across hardware threads.
 
-Note, this example exhausts all 64 logical cores available on each compute node CPU. Some applications do not benefit from utilizing the CPU's SMT2 capabilities, and such software may achieve better performance by setting `NRANKS_PER_NODE=16` such that each of the 32 physical cores only runs a single OpenMP thread.
+
+### Hardware threads
+
+This example is similar to the previous, but it exhausts all 64 logical cores available on each compute node CPU. We double the number of MPI ranks to 32, one per each physical CPU. Using `--cpu-bind=core`, the `--depth` flag becomes spacing in number of physical cores, so `NDEPTH=1` ensures that rank 0 is given CPU core id `(0,32)`, the 2 logical sibling cores associated with the first physical core. 
+
+```bash
+#!/bin/bash -l
+#PBS -l select=1:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:30:00
+#PBS -l filesystems=home:grand
+#PBS -q debug
+#PBS -A Catalyst
+
+# Change to working directory
+cd ${PBS_O_WORKDIR}
+
+# MPI and OpenMP settings
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS_PER_NODE=32
+NDEPTH=1
+NTHREADS=2
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind core --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
+```
+Many HPC applications do not benefit from utilizing the CPU's SMT2 capabilities, and such software may achieve better performance by using the previous script such that each of the 32 physical cores only runs a single OpenMP thread.
+
 
 ## GPU MPI Example
 
