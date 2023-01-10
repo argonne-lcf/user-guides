@@ -81,7 +81,7 @@ With the conda environment setup, one can install common Python modules using `p
 
 Note, Python modules installed this way that contain command line binaries will not have those binaries automatically added to the shell's `$PATH`. To manually add the path:
 ```
-export PATH=$PYTHONUSERBASE/bin:$PATH"
+export PATH=$PYTHONUSERBASE/bin:$PATH
 ```
 Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module. 
 
