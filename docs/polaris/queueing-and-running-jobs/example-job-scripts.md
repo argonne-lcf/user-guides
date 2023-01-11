@@ -38,7 +38,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). 
 
-The process affinity in this example is setup to map each MPI rank to 2 physical cores. Each MPI rank spawns 2 OpenMP threads, so 1 thread per physical core. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 32 of 64 logical cores are utilized. CPU core ids `32` to `63` are not mapped to any MPI rank, since they correspond to sibling logical cores of the core ids `0` to `31`.
+The process affinity in this example is setup to map each MPI rank to 2 physical cores. Each MPI rank spawns 2 OpenMP threads, so 1 thread per physical core. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 32 physical cores are utilized. CPU core ids `32` to `63` are not mapped to any MPI rank, since they correspond to sibling logical cores of the core ids `0` to `31`.
 
 * `cd ${PBS_O_WORKDIR}` : change into the working directory from where `qsub` was executed.
 * ``NNODES= `wc -l < $PBS_NODEFILE` ``: one method for determine the total number of nodes allocated to a job.
