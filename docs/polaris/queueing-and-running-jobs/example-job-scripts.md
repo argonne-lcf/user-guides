@@ -1,14 +1,15 @@
 # Example Job Scripts
 
-This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris.
-Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md).
+This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./job-and-queue-scheduling.md).
 
 A simple example using a similar script on Polaris is available in the
 [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
 ## CPU MPI-OpenMP Example
 
-The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) program is a compiled C++ code, which is built via `make -f Makefile.nvhpc` in the linked directory after cloning the [Getting Started](https://github.com/argonne-lcf/GettingStarted) repository.
+The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. See [Queues](./job-and-queue-scheduling/#queues) for details on practical limits to node counts and job times for different sizes of jobs.
+
+The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) program is a compiled C++ code, which is built via `make -f Makefile.nvhpc` in the linked directory after cloning the [Getting Started](https://github.com/argonne-lcf/GettingStarted) repository.
 
 ```bash
 #!/bin/bash -l
@@ -197,11 +198,9 @@ exec "$@"
 
 ### Using MPS on the GPUs
 
-Documentation for the Nvidia Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
+Documentation for the NVIDIA Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
 
-In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node,
-and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY` do not "collide"
-and end up with all the nodes writing to the same place.
+In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node, and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY` do not "collide" and end up with all the nodes writing to the same place.
 
 An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps) and discussed below.
 The local SSDs or `/dev/shm` or incorporation of the node name into the path would all be possible ways of dealing with that issue.
