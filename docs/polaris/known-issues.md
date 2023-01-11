@@ -13,3 +13,7 @@ This is a collection of known issues that have been encountered during Polaris's
     `export IBV_FORK_SAFE=1` may be a workaround for some manifestations of this bug; however it will incur memory registration overheads. It does not fix the hanging experienced with multithreaded dataloading in PyTorch+Horovod across multiple nodes with `conda/2022-09-08`, however (instead prompting a segfault). 
 
     This incompatibility also may affect Parsl; see details in the [Special notes for Polaris](./workflows/parsl.md#special-notes-for-polaris) section of the Parsl page.
+
+4. Email notifications for changes to job status in PBS (controlled by the `-m` and `-M` options of `qsub`) are not yet configured on the system. 
+
+5. For batch job submissions, if the parameters within your submission script do not meet the parameters of any of the execution queues (`small`, ..., `backfill-large`) you might not receive the "Job submission" error on the command line at all, and the job will never appear in history `qstat -xu <username>` (current bug in PBS). E.g. if a user submits a script to the `prod` routing queue requesting 10 nodes for 24 hours, exceeding "Time Max" of 6 hrs of the `small` execution queue (which handles jobs with 10-24 nodes), then it may behave as if the job was never submitted. 
