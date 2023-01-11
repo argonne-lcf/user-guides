@@ -48,11 +48,11 @@ Resources come in two flavors:
 
 * Job Wide: Walltime is the most common example of a job wide resource.  You use the `-l` option to specify job wide resources, i.e. `-l walltime=06:00:00`.  All the resources in the job have the same walltime.
   * `-l <resource name>=<value>[,<resource name>=<value> ...]`
-* Chunks: (see the definition above) This is how you describe what your needs are to run your job.  You do this with the `-l select=` syntax.  In the ALCF, every node has a resource called `system` which is set to the system name it belongs to (Polaris, Aurora, etc).  This means you can typically get away with the very simple `-l select=128:system=polaris` which will give you 128 complete nodes on Polaris.  
+* Chunks: (see the definition above) This is how you describe what your needs are to run your job.  You do this with the `-l select=` syntax.  In the ALCF, every node has a resource called `system` which is set to the system name it belongs to (Polaris, Aurora, etc).  This means you can typically get away with the very simple `-l select=128:system=polaris` which will give you 128 complete nodes on Polaris.
   * `-l select=[<N>:]<chunk>[+[<N>:]<chunk> ...]` where N specifies how many of that chunk and a chunk is of the form:
   * `<resource name>=<value>[:<resource name>=<value> ...]`
   * Here is an example that would select resources from a machine like Polaris (A100s) and a hypothetical vis machine with A40 GPUs.  Note that PBS takes care of co-scheduling the nodes on the two systems for you transparently:
-     * `-l select=128:ncpus=64:ngpus=4:gputype=A100+32:ncpus=64:ngpus=2:gputype=A40` 
+     * `-l select=128:ncpus=64:ngpus=4:gputype=A100+32:ncpus=64:ngpus=2:gputype=A40`
 
 You also have to tell PBS how you want the chunks distributed across the physical hardware.  You do that via the `-l place` option:
 
@@ -69,7 +69,7 @@ You also have to tell PBS how you want the chunks distributed across the physica
      * `shared` means the vnode could be shared with another job from another user.
      * `exclhost` means this job gets the entire host, even if it has multiple vnodes.
   * group=`<resource name>`
-     * Below you will see the rack and dragonfly group mappings.  If you wanted to ensure that all the chunks came from dragonfly group 2, you could specify `group=g2`.  
+     * Below you will see the rack and dragonfly group mappings.  If you wanted to ensure that all the chunks came from dragonfly group 2, you could specify `group=g2`.
 
 There is an alternative to using the `group=` syntax.  The downside to `group=` is that you have to specify a specific dragonfly group, when what you may really want is for your chunks to all be in one dragonfly group, but you don't care which one.  On each node, we have defined two resources, one called `tier0` which is equal to the rack the node is in (each rack has a switch in it) and `tier1` which is equal to the dragonfly group it is in.  We have defined *placement sets* for the tier0 and tier1 resources.  If you use placement sets it will *preferentially* choose nodes from the specified resource, but it won't drain or delay your job start.
 
@@ -86,7 +86,7 @@ Here is a heavily commented sample PBS submission script:
 #PBS -l walltime=HH:MM:SS
 
 
-# Highly recommended 
+# Highly recommended
 # The first 15 characters of the job name are displayed in the qstat output:
 #PBS -N <name>
 #file systems used by the job
@@ -112,7 +112,7 @@ Here is a heavily commented sample PBS submission script:
 # Controlling email notifications -- NOT YET CONFIGURED!!
 # UG Sec 2.5.1, page UG-25 Specifying Email Notification
 # When to send email b=job begin, e=job end, a=job abort, j=subjobs (job arrays), n=no mail
-#PBS -m be 
+#PBS -m be
 # Be default, mail goes to the submitter, use this option to add others (uncomment to use)
 ##PBS -M <email addresses>
 
@@ -153,14 +153,14 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 **Note: Email notifications for when your job has begun/aborted/completed/etc. has not yet been configured on Polaris.**
 
 
-### Specifying Filesystems 
+### Specifying Filesystems
 
 **Note: The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:**
 
-`qsub: Resource: filesystems is required to be set.` 
+`qsub: Resource: filesystems is required to be set.`
 
 Your job submission (`qsub`) should specify which filesystems your job will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally. If this is not specified (prior to 10/10/22)
-all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command. 
+all valid filesystems will be added to the command.  Add the attribute `-l filesystems` and specify a colon-delimited list. Valid filesystems are `home` (or `swift`), `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command.
 
 If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailable, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
 
@@ -170,7 +170,7 @@ An example of a job requesting filesystems:
 
 `qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
 
-To update the filesystems list for your job, use `qalter`. 
+To update the filesystems list for your job, use `qalter`.
 
 ### qsub examples
 
@@ -181,27 +181,27 @@ To update the filesystems list for your job, use `qalter`.
 * `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
-#### `qstat`: Query Job/Queue Status 
-* [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200 
+#### `qstat`: Query Job/Queue Status
+* [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200
 * NOTE: By default, the columns are fixed width and will truncate information.
 * The most basic: `qstat`: will show all jobs queued and running in the system
 * Only a specific users jobs: `qstat -u <my username>`
 * Detailed information about a specific job: `qstat -f <jobid> [<jobid> <jobid>...]`
     * The comment field with the `-f` output can often tell you why your job isn't running or why it failed.
 * Display status of a queue: `qstat -Q <queue name>`
-* Display details of a queue: `qstat -Qf <queue name>` 
+* Display details of a queue: `qstat -Qf <queue name>`
 * Display status of a completed job: `qstat -x <jobid> [<jobid> <jobid>...]`
     * This has to be turned on (we have);  It is configured to keep 2 weeks of history.
 * Get estimated start time: `qstat -T <jobid>`
 * Make output parseable: `qstat -F [json | dsv]`
     * That is `dsv` (delimiter) not `csv`;  The default delimiter is `|`, but -D can change it for instance `-D,` would use a comma instead.
 
-#### `qalter`: Alter a job submission 
+#### `qalter`: Alter a job submission
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
-* Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]` 
+* Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 * The new value overwrites any previous value.
 
-#### `qdel`: Delete a job: 
+#### `qdel`: Delete a job:
 *  [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 *  `qdel <jobid> [<jobid> <jobid>...]`
 
@@ -242,7 +242,7 @@ To update the filesystems list for your job, use `qalter`.
 ### `qstat` Get information about the server or queues ###
 * [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.3 & 10.4, page UG-188 -- UG-189
 * `qstat -B[f]`: Check the server status
-* `qstat -Q[f] <queue name>`: Check the queue status 
+* `qstat -Q[f] <queue name>`: Check the queue status
 
 
 ### `pbsnodes` Get information about the current state of nodes ###
@@ -323,7 +323,7 @@ x3014c0s25b0n0       offline,resv-exclusive Checking on ConnectX-5 firmware
 
 ##  Queues
 
-There are three production queues you can target in your qsub (`-q <queue name>`):  
+There are three production queues you can target in your qsub (`-q <queue name>`):
 
 |Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
 |----|----|----|-----------------------------|----|----------------------------------------------------|
@@ -331,7 +331,7 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 |debug-scaling|1|10| 10 min (5 min from 10/3/22)|1 hr| max 1 job running/accruing/queued **per-user**     |
 |prod|10|496| 30 min (5 min from 10/3/22)|24 hrs| Routing queue; See below                           |
 
-`prod` is routing queue and routes your job to one of the following six execution queues:  
+`prod` is routing queue and routes your job to one of the following six execution queues:
 
 |Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
 |----|----|----|------------------------------|----|----------------------------------------|
@@ -340,11 +340,12 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 |large|50|496| 30 min (5 min from 10/3/22)  |24 hrs||
 |backfill-small|10|24| 30 min (5 min from 10/3/22)  |6 hrs| low priority, negative project balance |
 |backfill-medium|25|49| 30 min (5 min from 10/3/22)  |12 hrs| low priority, negative project balance |
-|backfill-large|50|496| 30 min (5 min from 10/3/22)                      |24 hrs| low priority, negative project balance |  
+|backfill-large|50|496| 30 min (5 min from 10/3/22)                      |24 hrs| low priority, negative project balance |
 
-**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".  
-**Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**  
-**Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**  
+**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
+**Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
+**Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
+**Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
 
 ### Scheduling Errors
 
@@ -367,7 +368,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 2. size (in nodes) of the job, larger jobs receive higher priority
 3. the type of project (e.g. INCITE, ALCC, or discretionary)
 4. job duration: shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
- 
+
 ## Polaris specific stuff
 
 ### Polaris Rack and Dragonfly group mappings
@@ -379,11 +380,11 @@ As with all Argonne Leadership Computing Facility production systems, job priori
     * c is chassis and is always 0
     * s stands for slot, but in this case is the RU in the rack and values are {1,7,13,19,25,31,37}
     * b is BMC controller and is 0 or 1 (each node has its own BMC)
-    * n is node, but is always 0 since there is only one node per BMC 
+    * n is node, but is always 0 since there is only one node per BMC
 * So, 16+12+12 = 40 racks * 14 nodes per rack = 560 nodes.
 * Note that in production group 9 (the last 4 racks) will be the designated on-demand racks
 * The management racks are x3000 and X3100 and are dragonfly group 10
-* The TDS rack is x3200 and is dragonfly group 11 
+* The TDS rack is x3200 and is dragonfly group 11
 
 |g0 |g1 |g2	|g3 |g4 |g5 |g6 |g7 |g8 |g9|
 |----|----|----|----|----|----|----|----|----|----|
@@ -431,7 +432,7 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_
 
 ### Running GPU-enabled Applications
 
-GPU-enabled applications will similarly run on the compute nodes using the above example script. 
+GPU-enabled applications will similarly run on the compute nodes using the above example script.
 
 #### MPI-GPU Support
 
@@ -451,24 +452,24 @@ For example, if one only wanted an application to access the first two GPUs on a
 
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them.
 For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs.
-One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` 
-provides a user with specifying exactly which CPU and GPU resources to run each application on. 
-In the example below, four instances of the application are simultaneously running on a single node. 
-In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. 
+One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES`
+provides a user with specifying exactly which CPU and GPU resources to run each application on.
+In the example below, four instances of the application are simultaneously running on a single node.
+In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0.
 This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0
-mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity & 
+mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity &
 
 export CUDA_VISIBLE_DEVICES=1
-mpiexec -n 8 --ppn 8 --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity & 
+mpiexec -n 8 --ppn 8 --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity &
 
 export CUDA_VISIBLE_DEVICES=2
-mpiexec -n 8 --ppn 8 --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity & 
+mpiexec -n 8 --ppn 8 --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity &
 
 export CUDA_VISIBLE_DEVICES=3
-mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity & 
+mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity &
 
 wait
 ```
@@ -524,7 +525,7 @@ split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_N
 for lh in local_hostfile*
 do
   echo "Launching mpiexec w/ ${lh}"
-  mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --hostfile ${lh} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity & 
+  mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --hostfile ${lh} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity &
   sleep 1s
 done
 
