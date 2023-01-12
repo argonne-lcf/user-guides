@@ -87,6 +87,10 @@ body {
 	width: 5rem;
 }
 
+.md-typeset :target {
+    --md-scroll-margin: 9rem;
+}
+
 
 
 
