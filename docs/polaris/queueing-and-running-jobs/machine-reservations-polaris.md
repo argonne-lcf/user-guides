@@ -35,6 +35,9 @@ qsub -q A123456 walltime=60:00 -l select=1024:system=polaris -l filesystems=eagl
 
 Once the reservation is set up, jobs can be submitted to the reservation queue prior to the reservation start time.
 
+For recurring reservations, the ```reserve_start``` and ```reserve_end``` are always the first instance. 
+```reserve_index``` and ```reserve_count``` tell you where you are in the recurrence.
+
 For jobs using 33 percent or more of a system, place your job in the queue at least 12 hours prior to the start of the reservation or your reservation may be canceled. The machine will start to drain for your reservation, and it is important that your job is ready to run.
 
 You can also move jobs from the regular queue to the reservation queue at any time using the “qmove” command. 
