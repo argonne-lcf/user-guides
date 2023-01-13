@@ -25,20 +25,20 @@ body {
 }
 
 .md-typeset h1 {
-	font-size: 60px;
-	line-height: 60px;
+/* 	font-size: 60px; */
+/* 	line-height: 60px; */
 	border-bottom: 1px solid rgb(216, 220, 225);
 	padding-bottom: .75rem;
 	margin: 0;
 }
 
 .md-typeset h2 {
-	font-size: 36px;
-	line-height: 36px;
+/* 	font-size: 36px; */
+/* 	line-height: 36px; */
 }
 
 .md-typeset h3 {
-	margin:3em 0 0;
+/* 	margin:3em 0 0; */
 ;
 }
 
