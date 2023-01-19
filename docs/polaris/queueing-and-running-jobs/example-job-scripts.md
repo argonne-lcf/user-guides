@@ -5,7 +5,7 @@ This page contains a small collection of example job scripts users may find usef
 A simple example using a similar script on Polaris is available in the
 [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
-## CPU MPI-OpenMP Example
+## CPU MPI-OpenMP Examples
 
 The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. See [Queues](./job-and-queue-scheduling/#queues) for details on practical limits to node counts and job times for different sizes of jobs.
 
@@ -39,7 +39,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). 
 
-The process affinity in this example is setup to map each MPI rank to 2 physical cores. Each MPI rank spawns 2 OpenMP threads, so 1 thread per physical core. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 32 physical cores are utilized. CPU core ids `32` to `63` are not mapped to any MPI rank, since they correspond to sibling logical cores of the core ids `0` to `31`.
+The process affinity in this example is setup to map each MPI rank to 2 physical cores. Each MPI rank spawns 2 OpenMP threads, so 1 thread per physical core. The OpenMP settings bind each OpenMP thread to a single hardware thread within a core, such that all 32 physical cores are utilized. CPU core IDs `32` to `63` are not mapped to any MPI rank, since they correspond to simultaneous multithreaded (SMT) sibling hardware threads that share the execution resources of the core ids `0` to `31`, respectively.
 
 * `cd ${PBS_O_WORKDIR}` : change into the working directory from where `qsub` was executed.
 * ``NNODES= `wc -l < $PBS_NODEFILE` ``: one method for determine the total number of nodes allocated to a job.
@@ -60,7 +60,9 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 
 ### Hardware threads
 
-This example is similar to the previous, but it exhausts all 64 logical cores available on each compute node CPU. We double the number of MPI ranks to 32, one per each physical CPU. Using `--cpu-bind=core`, the `--depth` flag becomes spacing in number of physical cores, so `NDEPTH=1` ensures that rank 0 is given CPU core id `(0,32)`, the 2 logical sibling cores associated with the first physical core. 
+This example is similar to the previous, but it exhausts all 64 logical cores available on each compute node CPU. We double the number of MPI ranks to 32, one per each physical core. Using `--cpu-bind=core`, the `--depth` flag value becomes interpreted by Cray MPICH as spacing in number of **physical cores**, so `NDEPTH=1` ensures that rank 0 is bound to CPU core IDs `(0,32)`, the 2 SMT sibling hardware threads that share the first physical core.
+<!-- NOTE about use of "sibling" terminology for logical cores/hardware threads : "SMT sibling hardware threads" as in sysfs thread_siblings_list; not core_siblings_list, which lists all logical core siblings in a socket, as in /proc/cpuinfo siblings entry -->
+
 
 ```bash
 #!/bin/bash -l
@@ -88,9 +90,9 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind co
 Many HPC applications do not benefit from utilizing the CPU's SMT2 capabilities, and such software may achieve better performance by using the previous script such that each of the 32 physical cores only runs a single OpenMP thread.
 
 
-## GPU MPI Example
+## GPU MPI Examples
 
-Using the CPU job submission example above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/).
+Using the CPU job submission examples above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/).
 
 ```bash
 #!/bin/bash -l
@@ -111,33 +113,30 @@ cd ${PBS_O_WORKDIR}
 # MPI and OpenMP settings
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=$(nvidia-smi -L | wc -l)
-NDEPTH=16
+NDEPTH=8
 NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
 
 # For applications that internally handle binding MPI/OpenMP processes to GPUs
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind numa --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
 
 # For applications that need mpiexec to bind MPI ranks to GPUs
-#mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind numa --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./set_affinity_gpu_polaris.sh ./hello_affinity
+#mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
 
-As in the previous example, the MPI ranks are spaced apart assuming the user wants to
-utilize all 64 logical cores (achieved by setting `NTHREADS=$NDEPTH` and `--cpu-bind numa`
-here). Set `NDEPTH=8; NTHREADS=8` and use `--cpu-bind depth` or `core` to spawn only 1
-thread per physical core. The OpenMP-related options are not needed if your application
-does not use OpenMP. Nothing additional is required on the `mpiexec` command for
-applications that internally manage GPU devices and handle the binding of MPI/OpenMP
+The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ensure that
+each MPI rank is bound to a separate NUMA node. If OpenMP threading is desired, set
+`NTHREADS=8` for each MPI rank to spawn 1 thread per physical core (all in the same NUMA
+domain that the rank is bound to). The OpenMP-related options are not needed if your
+application does not use OpenMP. Nothing additional is required on the `mpiexec` command
+for applications that internally manage GPU devices and handle the binding of MPI/OpenMP
 processes to GPUs. A small helper script is available for those with applications that
 rely on MPI to handle the binding of MPI ranks to GPUs. Some notes on this helper script
 and other key differences with the early CPU example follow.
 
-In this script, we have added `-j oe` to the list of PBS options; `-j oe` combines stdout
-and stderr to the same file and uses the stdout filename provided (if provided). `-j eo`
-would do the same but use the stderr filename provided. Without these options, separate
-files containing stdout and stderr of the job are produced.
+<!-- NOTE: "-d 8 --cpu-bind=core" equiv to "-d 16 --cpu-bind=numa", so it is not quite the same as -d 8 --cp-bind=depth. E.g. in the former 2, rank0 has logical cores (0-7,32-39) so if NTHREADS=8, the behavior will be the same as "-d 8 --cpu-bind=depth -->
 
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
@@ -166,7 +165,50 @@ files containing stdout and stderr of the job are produced.
     repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
     and copied below.
 
-### Setting MPI-GPU affinity
+### Hardware threads
+
+```bash
+#!/bin/bash -l
+#PBS -l select=2:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:30:00
+#PBS -l filesystems=home:eagle
+#PBS -q debug
+#PBS -A Catalyst
+
+# Enable GPU-MPI (if supported by application)
+export MPICH_GPU_SUPPORT_ENABLED=1
+
+# Change to working directory
+cd ${PBS_O_WORKDIR}
+
+# MPI and OpenMP settings
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS_PER_NODE=$(nvidia-smi -L | wc -l)
+NDEPTH=16
+NTHREADS=16
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+# For applications that internally handle binding MPI/OpenMP processes to GPUs
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind numa --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
+
+# For applications that need mpiexec to bind MPI ranks to GPUs
+#mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind numa --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./set_affinity_gpu_polaris.sh ./hello_affinity
+```
+
+As in the previous hardware threads example, the MPI ranks are spaced apart assuming the
+user wants to utilize all 64 logical cores (achieved by setting `NTHREADS=$NDEPTH=16` and
+`--cpu-bind numa` here).
+
+In this script, we have added `-j oe` to the list of PBS options; `-j oe` combines stdout
+and stderr to the same file and uses the stdout filename provided (if provided). `-j eo`
+would do the same but use the stderr filename provided. Without these options, separate
+files containing stdout and stderr of the job are produced.
+
+
+### Setting GPU affinity for each MPI rank
 
 The `CUDA_VISIBLE_DEVICES` environment variable is provided for users to set which GPUs on a node are accessible to an application or MPI ranks started on a node.
 
