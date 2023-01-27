@@ -109,12 +109,12 @@ Here is a heavily commented sample PBS submission script:
 # oe=merge stdout/stderr to stdout, eo=merge stderr/stdout to stderr, n=don't merge
 #PBS -j n
 
-# Controlling email notifications -- NOT YET CONFIGURED!!
+# Controlling email notifications
 # UG Sec 2.5.1, page UG-25 Specifying Email Notification
 # When to send email b=job begin, e=job end, a=job abort, j=subjobs (job arrays), n=no mail
 #PBS -m be
 # Be default, mail goes to the submitter, use this option to add others (uncomment to use)
-##PBS -M <email addresses>
+#PBS -M <email addresses>
 
 # Setting job dependencies
 # UG Section 6.2, page UG-109 Using Job Dependencies
@@ -150,7 +150,11 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
 
-**Note: Email notifications for when your job has begun/aborted/completed/etc. has not yet been configured on Polaris.**
+### Email Notifications
+
+Users should add ```-M <email address>``` if they want notifications as a best practice.
+
+**Note: For users with '<username>@alcf.anl.gov' email addressed, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add ```#PBS -m n``` to your script.**
 
 
 ### Specifying Filesystems
