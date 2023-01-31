@@ -28,8 +28,8 @@ CPP_OPTIONS = -DHOST=\"LinuxNV\" \
 
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
 
-FC         = ftn -acc -gpu=cc80 -mp
-FCL        = ftn -acc -gpu=cc80 -c++libs
+FC         = ftn -acc -gpu=cc80 -mp -target-accel=nvidia80
+FCL        = ftn -acc -gpu=cc80 -c++libs -target-accel=nvidia80
 
 FREE       = -Mfree
 
@@ -87,8 +87,7 @@ SOURCE_O2  := pead.o
 CPP_LIB    = $(CPP)
 FC_LIB     = nvfortran
 CC_LIB     = cc
-CFLAGS_LIB = -O 
-CFLAGS_LIB = -O $(INCS) -c++libs
+CFLAGS_LIB = -O $(INCS) -c++libs -cuda
 FFLAGS_LIB = -O1 -Mfixed
 FREE_LIB   = $(FREE)
 
@@ -111,24 +110,25 @@ The follow modules will update the include and libraries paths used by the Cray 
 
 ```
 module purge
-module load PrgEnv-nvhpc
+module add PrgEnv-nvhpc
 module add cray-libsci
+module add craype-accel-nvidia8
 
 ```
 
 ### Compiling vasp
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
-```cray-fftw 
+``` 
 make -j1
 ```
 
 ### Running VASP in Polaris
 
+An example of a submission script could be found here `/soft/applications/vasp/vasp.6.3.2/submit-polaris2023.sh` , which would looks something similar to:
 
-`example-script.sh`
 
-```
+``` example-script.sh
 #!/bin/sh
 #PBS -l select=1:system=polaris  
 #PBS -l place=scatter
@@ -152,6 +152,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env
 ```
 
 Submission scripts should have executable attibutes to be used with `qsub` script mode.
+
 ```
 chmod +x example-script.sh
 qsub  example-script.sh
