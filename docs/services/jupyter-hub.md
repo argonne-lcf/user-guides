@@ -3,7 +3,7 @@
 
 JupyterHub is an open-source application to allow multiple users to launch Jupyter Notebooks from a central location. At ALCF users can use the JupyterHub instances at https://jupyter.alcf.anl.gov to run notebooks on servers connect to the compute resource or on the compute resource itself.
 
-The JupyterHub instance assigned to Cooley start notebooks on a login node.  The JupyterHub instance assigned to theta run notebooks a server external to Theta.  This instance does not have access to HPE/Cray programing environment and tools located in ``/opt/cray, opt/intel, etc.``.  These instances provide users access to their home (/home/$USER) and project fo9lders on theta-lustre, grand and eagle file systems (/home/$USER, /project, /grand, /eagle) using symbolic links in the home directory.  
+The JupyterHub instance assigned to Cooley start notebooks on a login node.  The JupyterHub instance assigned to theta run notebooks a server external to Theta.  This instance does not have access to HPE/Cray programing environment and tools located in ``/opt/cray, opt/intel, etc.``.  These instances provide users access to their home (/home/$USER) and project folders on theta-lustre, grand and eagle file systems (/home/$USER, /project, /grand, /eagle) using symbolic links in the home directory.  
 
 The JupyterHub instances assigned to ThetaGPU allows users to start notebooks on a compute node through the job schedule system (Cobalt).  The instance assigned to Polaris will start notebooks on compute nodes through the job scheduler (PBS Pro).  These instances follow the scheduling and accounting policies run the notebook against the project allocation.
 
@@ -27,7 +27,7 @@ conda deactivate
 
 After completing these steps, you will see jhub_myenv kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
 
-The user also has the option of manually adding a python environment by placing the approperate Jupyter kernel configurations in /home/<userid>/.local.share/jupyter/kernels/. It is the user's responsibility to ensure that the Python environment specified in that custom kernel is present and functional.
+The user also has the option of manually adding a python environment by placing the approperate Jupyter kernel configurations in /home/$USER/.local.share/jupyter/kernels/. It is the user's responsibility to ensure that the Python environment specified in that custom kernel is present and functional.
 
 
 ## Accessing Project Folders:
