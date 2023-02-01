@@ -25,7 +25,7 @@ conda deactivate
 
 ````
 
-After completing these steps, you will see jhub_myenv kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
+After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
 
 The user also has the option of manually adding a python environment by placing the approperate Jupyter kernel configurations in /home/$USER/.local.share/jupyter/kernels/. It is the user's responsibility to ensure that the Python environment specified in that custom kernel is present and functional.
 
