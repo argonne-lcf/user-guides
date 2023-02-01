@@ -17,12 +17,13 @@ For more information on how to manage conda environments, refer to this [page](h
 From a terminal :
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=$http_proxy
+
 conda create -y -n projectA
+conda activate projectA
 conda install -y jupyter nb_conda ipykernel mpi
 python -m ipykernel install --user --name projectA
 
 conda deactivate 
-
 ````
 
 After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
