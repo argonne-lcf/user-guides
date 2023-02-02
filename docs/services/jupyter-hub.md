@@ -15,15 +15,28 @@ ALCF provide a simple Python environment to start.  User can customize their env
 For more information on how to manage conda environments, refer to this [page](https://conda.io/docs/user-guide/tasks/manage-environments.html).
 ````
 From a terminal :
+
+# Source required conda environment variables from appropriate install
+. /soft/systems/jupyterhub/miniconda3/etc/profile.d/conda.sh
+
+# set shell proxy variables to access external URL
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=$http_proxy
 
+# create an environment name projectA
 conda create -y -n projectA
+
+# Activate conda environment
 conda activate projectA
+
+# Install required packages
 conda install -y jupyter nb_conda ipykernel mpi
+
+# Add environment to available kernel list
 python -m ipykernel install --user --name projectA
 
-conda deactivate 
+# deactivate conda environment
+conda deactivate
 ````
 
 After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
