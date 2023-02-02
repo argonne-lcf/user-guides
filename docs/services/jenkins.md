@@ -1,5 +1,10 @@
 # Jenkins on Theta
 
+## Jenkins End of Life
+The Jenkins based CI process is being phased out and will be decommissioned at some future date.  New projects should request access to our Gitlab-CI based system.  Instructions on how to request access can be found [here](/services/gitlab-ci/#quickstart).
+
+Existing projects can continue to use Jenkins.  We will reach out when we are closer to setting a decommission date to help migrate projects over to Gitlab-CI.
+
 ## Jenkins at ALCF
 The ALCF provides a tool for implementing CI processes named Jenkins. Using the Jenkins tool, ALCF projects can make use of CI functionality. The Jenkins CI tool enables projects to auto-compile their custom software code, automate testing cycles, provide a feedback loop, and submit jobs to HPC resources. The custom pipelines needed for each project can be defined in Jenkins by project users, and execution can be controlled through triggers.
 
