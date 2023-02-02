@@ -115,7 +115,7 @@ Once the appropriate information is provided the user will click the “Start”
 
 
 ### End a Jupyter Notebook running on a compute node ###
-When a user has completed their task in Jupyter the user should stop the Jupyter instance running on the compute node before logging out.  Failing to correctly end a running Jupyter Notebook will continue to consume the selected Project's allocation on the resource in question.  To stop the Notebook, click the “Control Panel” button in the top right, then click “Stop My Server”.
+Failing to correctly end a running Jupyter Notebook will continue to consume the selected Project's allocation on the resource in question. When a user has completed their task in Jupyter the user should stop the Jupyter instance running on the compute node before logging out.  To stop the Notebook, click the “Control Panel” button in the top right, then click “Stop My Server”.
 
 <figure markdown>
   ![Stop panel](files/Jupyter-4-stop-panel.png){ width="700" }
