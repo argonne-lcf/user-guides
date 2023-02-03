@@ -39,12 +39,12 @@ python -m ipykernel install --user --name projectA
 conda deactivate
 ````
 
-Once the base environment is setup the user must add an "env" section to the kernel.json file defining the "CONDA_PREFIX" and "PATH" variables.  Currently Polaris compute nodes access the internet through a proxy.  To configure the kernel to use the proxy add variables "http_proxy" and "https_proxy" to the "env" section.  This will allow users to install packages form within the notebook using "!conda".  The following is a sample configuration:
+Once the base environment is setup the user must add an "env" section to the kernel.json file, located in directory "${USER}/.local/share/jupyter/kernels/projecta", defining the "CONDA_PREFIX" and "PATH" variables.  Currently Polaris compute nodes access the internet through a proxy.  To configure the kernel to use the proxy add variables "http_proxy" and "https_proxy" to the "env" section.  This will allow users to install packages form within the notebook using "!conda".  The following is a sample configuration:
 
 ````
 {
  "argv": [
-  "/home/<user>/.conda/envs/projectD/bin/python",
+  "/home/<user>/.conda/envs/projectA/bin/python",
   "-m",
   "ipykernel_launcher",
   "-f",
