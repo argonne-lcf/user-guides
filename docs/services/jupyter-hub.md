@@ -39,9 +39,33 @@ python -m ipykernel install --user --name projectA
 conda deactivate
 ````
 
-After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
+Once the base environment is setup the user must add an "env" section to the kernel.json file defining the "CONDA_PREFIX" and "PATH" variables.  Currently Polaris compute nodes access the internet through a proxy.  To configure the kernel to use the proxy add variables "http_proxy" and "https_proxy" to the "env" section.  This will allow users to install packages form within the notebook using "!conda".  The following is a sample configuration:
 
-The user also has the option of manually adding a python environment by placing the approperate Jupyter kernel configurations in /home/$USER/.local.share/jupyter/kernels/. It is the user's responsibility to ensure that the Python environment specified in that custom kernel is present and functional.
+````
+{
+ "argv": [
+  "/home/<user>/.conda/envs/projectD/bin/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "projectA",
+ "language": "python",
+ "env": {
+    "CONDA_PREFIX":"/home/<user>/.conda/envs/projecta",
+    "PATH":"/home/<user>/.conda/envs/projecta/bin:${PATH}",
+    "http_proxy":"http://proxy.alcf.anl.gov:3128",
+    "https_proxy":"http://proxy.alcf.anl.gov:3128"
+ },
+ "metadata": {
+  "debugger": true
+ }
+}
+````
+example: /home/$USER/.local/share/jupyter/kernels/projecta
+
+After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
 
 
 ## Accessing Project Folders:
