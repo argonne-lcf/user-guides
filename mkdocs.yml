@@ -206,7 +206,7 @@ nav:
       #- DataParallel: ai-testbed/sambanova/DataParallel.md
       - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova/documentation.md
-    - Data Managemente: ai-testbed/data-management/data-management-overview.md
+    - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
       - Cooley Machine Overview: cooley/cooley-overview.md
