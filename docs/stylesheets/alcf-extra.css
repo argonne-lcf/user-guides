@@ -102,9 +102,9 @@ body {
 	.header--primary { display: none; }
 }
 
-@media only screen and (min-width: 961px) {
+/*@media only screen and (min-width: 961px) {
 	.md-header { display: none; }
-}
+}*/
 
 .header--primary {
 	background-color: var(--md-primary-fg-color);
