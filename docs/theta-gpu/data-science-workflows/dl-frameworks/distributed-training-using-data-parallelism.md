@@ -81,7 +81,7 @@ We provided some examples in: [https://github.com/argonne-lcf/sdl_ai_workshop/bl
 ### PyTorch with DDP
 PyTorch has its own native parallelization library called DDP. We will provide more details on how to run this on ThetaGPU. The current PyTorch on ThetaGPU does not have DDP built in. We will update to our users once we have DDP. 
 
-For now, please refer to [https://pytorch.org/tutorials/intermediate/ddp_tutorial.html]([https://pytorch.org/tutorials/intermediate/ddp_tutorial.html])
+For now, please refer to [https://pytorch.org/tutorials/intermediate/ddp_tutorial.html](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html)
 
 ### MPI Profiling for data parallel training
 We support two ways for profling the performance of data parallel training. 

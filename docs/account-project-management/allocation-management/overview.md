@@ -14,6 +14,7 @@ Director's Discretionary awards will receive information in the award confirmati
 
 ## Allocation Resources
 While requesting an allocation, users can choose from:
+
 **Computes:** 
 - Polaris
 - Theta (KNL Node)
@@ -25,7 +26,7 @@ While requesting an allocation, users can choose from:
 - Eagle (Community Sharing)
 
 ## Policy Information Related to Allocations
-Pullback Policy
+[Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
 ## Requesting Additional Allocation Hours
 If you are a PI of a Director's Discretionary project that has an active allocation, you can request additional time or an extension using the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests).

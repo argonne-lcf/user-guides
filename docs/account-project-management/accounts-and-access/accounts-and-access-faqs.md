@@ -15,7 +15,9 @@ To request an extension of your existing discretionary allocation or to request 
 To join a project, please go to [https://accounts.alcf.anl.gov](http://accounts.alcf.anl.gov/), then click "join a project". Once there, scroll down to the project you want to join and click on it. At the bottom of the next page, please click on the "Request Membership" button. Once we receive approval from the PI regarding your membership request, we will provide you with access to the necessary resources.
 
 ## How do I request a reservation?
-Reservation requests must include information detailed here: [Machine Reservations](https://argonne-lcf.github.io/user-guides/theta/queueing-and-running-jobs/machine-reservations/). Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
+Reservation requests must include information detailed here: 
+
+- [Machine Reservations](../../theta/queueing-and-running-jobs/machine-reservations.md): Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
 
 ## How do I apply for a new account?
 **Note:** All ALCF accounts must be associated with an allocated project.

@@ -10,7 +10,7 @@ CC -> nvc++
 ftn -> nvfortran
 ```
 
-Users are encouraged to look through (NVIDIA's documentation)[https://developer.nvidia.com/hpc-sdk] for the NVHPC SDK and specific information on the compilers, tools, and libraries.
+Users are encouraged to look through [NVIDIA's documentation](https://developer.nvidia.com/hpc-sdk) for the NVHPC SDK and specific information on the compilers, tools, and libraries.
 
 ## Notes on NVIDIA Compilers
 ### PGI compilers
@@ -26,14 +26,14 @@ While `nvcc` is the traditional CUDA C and CUDA C++ compiler for NVIDIA GPUs, th
 
 ### NVHPC SDK Directory Structure
 
-Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the hpc-sdk directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvhpc` module loaded, the `NVIDIA_PATH` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
+Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the `hpc-sdk` directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvhpc` module loaded, the `NVIDIA_PATH` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
 
-- compiler/bin - cuda-gdb, ncu, nsys, ...
-- examples - CUDA-Fortran, OpenMP, ...
-- comm_libs - nccl, nvshmem, ...
-- compiler/libs - blas, lapack, ...
-- cuda/lib64 - cudart, OpenCL, ...
-- math_libs/lib64 - cublas, cufft, ...
+- `compiler/bin` - cuda-gdb, ncu, nsys, ...
+- `examples` - CUDA-Fortran, OpenMP, ...
+- `comm_libs` - nccl, nvshmem, ...
+- `compiler/libs` - blas, lapack, ...
+- `cuda/lib64` - cudart, OpenCL, ...
+- `math_libs/lib64` - cublas, cufft, ...
 
 ### Differences between nvcc and nvc/nvc++
 
@@ -41,7 +41,7 @@ For users that want to continue using `nvcc` it is important to be mindful of di
 
 ### Known Issues and Workarounds
 
-If you are using nvcc to invoke nvc++ and compiling C++17 code, and are seeing the following warning and unable to compile C++17 constructs:
+If you are using `nvcc` to invoke `nvc++` and compiling C++17 code, and are seeing the following warning and unable to compile C++17 constructs:
 
 ```
 polaris-login-01(~)> nvcc --std=c++17 -ccbin nvc++ ~/smalltests/bool_constant.cpp

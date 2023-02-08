@@ -1,5 +1,5 @@
 # ALCF User Guide
-Source for the documentation located at https://www.alcf.anl.gov/support/user-guides/index.html
+Source for the documentation located at https://docs.alcf.anl.gov/
 
 ## Contributing to documentation
 

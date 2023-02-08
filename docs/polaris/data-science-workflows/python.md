@@ -11,11 +11,11 @@ Explicitly (either from an interactive job, or inside a job script):
 $ module load conda
 $ conda activate base
 (base) $ which python3
-/soft/datascience/conda/2022-07-19/mconda3/bin/python3
+/soft/datascience/conda/2022-09-08/mconda3/bin/python3
 ```
 In one line, `module load conda; conda activate`. This can be performed on a compute node, as well as a login node. 
 
-As of writing, the latest `conda` module on Polaris is built on Miniconda3 version 4.13.0 and contains Python 3.8.13. Future modules may contain entirely different major versions of Python, PyTorch, TensorFlow, etc.; however, the existing modules will be maintained as-is as long as feasible. 
+As of writing, the latest `conda` module on Polaris is built on Miniconda3 version 4.14.0 and contains Python 3.8.13. Future modules may contain entirely different major versions of Python, PyTorch, TensorFlow, etc.; however, the existing modules will be maintained as-is as long as feasible. 
 
 While the shared Anaconda environment encapsulated in the module contains many of the most commonly used Python libraries for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages)
 
@@ -81,7 +81,7 @@ With the conda environment setup, one can install common Python modules using `p
 
 Note, Python modules installed this way that contain command line binaries will not have those binaries automatically added to the shell's `$PATH`. To manually add the path:
 ```
-export PATH=$PYTHONUSERBASE/bin:$PATH"
+export PATH=$PYTHONUSERBASE/bin:$PATH
 ```
 Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module. 
 

@@ -6,7 +6,7 @@ Quantum ESPRESSO (QE) is a suite of codes for electronic structure calculations 
 Prebuilt QE binaries are provided on Theta under /soft/applications/quantum_espresso. The binaries for v5.3.0 and v6.2.1 are dynamically linked and require certain version of libraries to function. Please read the README file and load necessary modules. The binaries for v6.3 and beyond are statically linked and there is no dependance on loaded modules.
 
 ## Using Quantum ESPRESSO at ALCF
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](support@alcf.anl.gov).
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 If building your own QE is necessary, follow the instructions below.
 

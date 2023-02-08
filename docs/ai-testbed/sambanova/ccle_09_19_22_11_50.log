@@ -1,0 +1,375 @@
+(venv) wilsonb@sm-01:~/DL/Sambanova/apps_1.12/private/anl$ sambatune uno_brw_CCLE.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
+No plugins available at this time.
+/usr/local/lib/python3.7/site-packages/sambatune/userinterface.py:57: UserWarning: It is recommened to set Artifact root with a network drive starting with /import
+Retrieving configuration file from: uno_brw_CCLE.yaml
+19-Sep 17:39:30 - Info - SUCCESS: Save Configuration File
+19-Sep 17:39:33 - Info - SUCCESS: Process User Input
+Export environment variable OMP_NUM_THREADS=16,
+Export environment variable SF_RNT_NUMA_BIND=2
+Arguments preparation was finished and prepare to compile!
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/snconfig show Node all -j /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/snconfig
+
+======================================================
+=======                NODE Info               =======
+======================================================
+=======                Static Info             =======
+Output JSON file: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/snconfig/show_node_static_2022-09-19_17-39-33.json
+
+
+=======                Dynamic Info            =======
+Output JSON file: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/snconfig/show_node_dynamic_2022-09-19_17-39-34.json
+
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/snconfig show Host all
+
+======================================================
+=======                Host Info               =======
+======================================================
+Timestamp                 : 2022-09-19 17:39:35
+cpuinfo_version           : [8, 0, 0]
+cpuinfo_version_string    : 8.0.0
+arch                      : X86_64
+bits                      : 64
+count                     : 128
+arch_string_raw           : x86_64
+vendor_id_raw             : AuthenticAMD
+brand_raw                 : AMD EPYC 7742 64-Core Processor
+hz_advertised_friendly    : 1.7487 GHz
+hz_actual_friendly        : 1.7487 GHz
+hz_advertised             : [1748667000, 0]
+hz_actual                 : [1748667000, 0]
+model                     : 49
+family                    : 23
+l3_cache_size             : 524288
+l2_cache_size             : 64 MiB
+l1_data_cache_size        : 4 MiB
+l1_instruction_cache_size : 4 MiB
+l2_cache_line_size        : 512
+l2_cache_associativity    : 6
+MemTotal                  : 1054336368 kB
+MemFree                   : 31623660 kB
+MemAvailable              : 520658504 kB
+HugePages_Total           : 263
+HugePages_Free            : 262
+HugePages_Rsvd            : 0
+HugePages_Surp            : 0
+Hugepagesize              : 1048576 kB
+
+SambaTune is running on sn10.
+19-Sep 17:39:36 - Info - SUCCESS: Execute Snconfig
+
+--> Compiling PEF ...
+/opt/sambaflow/venv/bin/python3 /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1 --debug --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --compiler-configs-file /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/test_lists/compiler_configs_9_19_17_39_uno_full.json --output-folder /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile --pef-name sn10__9_19_17_39_uno_full
+19-Sep 17:43:26 - Info - SUCCESS: Copy Compile Gen Folder
+19-Sep 17:43:26 - Info - SUCCESS: Execute Compile sn10__9_19_17_39_uno_full
+19-Sep 17:43:26 - Info - SUCCESS: uno_full.py PEF (baseline)
+19-Sep 17:43:26 - Info - SUCCESS: Compile App Baseline
+
+--> Compiling PEF ...
+/opt/sambaflow/venv/bin/python3 /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1 --debug  --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --stage-instrumentation=metapipe_stage_cycles --gen-tensorboard --compiler-configs-file /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/test_lists/compiler_configs_9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles.json --output-folder /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles/compile --pef-name sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles
+19-Sep 17:44:09 - Info - SUCCESS: Copy Compile Gen Folder
+19-Sep 17:44:09 - Info - SUCCESS: Execute Compile sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles
+
+--> Compiling PEF ...
+/opt/sambaflow/venv/bin/python3 /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1 --debug  --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --stage-instrumentation=metapipe_stage_cycles --include-read-stall-cycles --gen-tensorboard --compiler-configs-file /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/test_lists/compiler_configs_9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles.json --output-folder /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles/compile --pef-name sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles
+19-Sep 17:44:52 - Info - SUCCESS: Copy Compile Gen Folder
+19-Sep 17:44:52 - Info - SUCCESS: Execute Compile sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles
+
+--> Compiling PEF ...
+/opt/sambaflow/venv/bin/python3 /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1 --debug  --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --stage-instrumentation=metapipe_buf_cycles --gen-tensorboard --compiler-configs-file /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/test_lists/compiler_configs_9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles.json --output-folder /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles/compile --pef-name sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles
+19-Sep 17:45:33 - Info - SUCCESS: Copy Compile Gen Folder
+19-Sep 17:45:33 - Info - SUCCESS: Execute Compile sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles
+19-Sep 17:45:33 - Info - SUCCESS: uno_full.py PEF
+19-Sep 17:45:33 - Info - SUCCESS: Compile App
+Compilation was finished and prepare to run!
+Export environment variable OMP_NUM_THREADS=16,
+Export environment variable SF_RNT_NUMA_BIND=2
+Export environment variable ENABLE_RUNTIME_PERF=SVP
+Unset environment variable OMP_NUM_THREADS
+Unset environment variable SF_RNT_NUMA_BIND
+Unset environment variable ENABLE_RUNTIME_PERF
+19-Sep 17:45:36 - Error - FAILURE: Execute Snprof
+19-Sep 17:45:36 - Error - Message: Run Cmd Failed: /opt/sambaflow/bin/snprof -c "/opt/sambaflow/venv/bin/python3 /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py measure-performance --multiprocess-pickle --use-pickle-train  --measure-spatial --train-samba-spatial --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_500 --converted-pickle --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial -b 16 --pef=/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile/sn10__9_19_17_39_uno_full/sn10__9_19_17_39_uno_full.pef --bench-report-json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/benchmark/sn10__9_19_17_39_uno_full_measure_performance.json" -bs 16 -i 100 --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/snprof/sn10__9_19_17_39_uno_full_measure_performance_snprof.json -p SVP
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "<sambatune-1.1>/utils_labhost.py", line 188, in copy_benchmark_data
+  File "/usr/local/lib/python3.7/shutil.py", line 248, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/usr/local/lib/python3.7/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/benchmark/sn10__9_19_17_39_uno_full_measure_performance.json'
+19-Sep 17:45:36 - Info - SUCCESS: Copy Benchmark Data
+
+
+Error while running snprof jobs
+19-Sep 17:45:36 - Error - FAILURE: Run snprof by lists
+19-Sep 17:45:36 - Error - Message: Error while running snprof jobs
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/read_perf_counters -p /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile/sn10__9_19_17_39_uno_full/sn10__9_19_17_39_uno_full.pef --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full.json
+
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  from sambaflow.samba.utils.read_perf_counters import main
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from sambaflow.samba.utils.read_perf_counters import main
+Reading performance counters.
+Instrumentation, DDR, PCIE counters saved to /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full.json.
+
+[Info][SAMBA][Default] # Attempting to tear down a valid SambaRuntime context
+[Info][SAMBA][Default] # Successfully tore down SambaRuntime context
+2022-09-19T17:45:38 : [INFO][LIB][31335]: sn_create_session: PEF File: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile/sn10__9_19_17_39_uno_full/sn10__9_19_17_39_uno_full.pef
+Log ID initialized to: [wilsonb][python3][31335] at /var/log/sambaflow/runtime/sn.log
+
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/read_perf_counters -p /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile/sn10__9_19_17_39_uno_full/sn10__9_19_17_39_uno_full.pef --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full.json
+
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  from sambaflow.samba.utils.read_perf_counters import main
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from sambaflow.samba.utils.read_perf_counters import main
+Reading performance counters.
+Instrumentation, DDR, PCIE counters saved to /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full.json.
+
+[Info][SAMBA][Default] # Attempting to tear down a valid SambaRuntime context
+[Info][SAMBA][Default] # Successfully tore down SambaRuntime context
+2022-09-19T17:45:51 : [INFO][LIB][31540]: sn_create_session: PEF File: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full/compile/sn10__9_19_17_39_uno_full/sn10__9_19_17_39_uno_full.pef
+Log ID initialized to: [wilsonb][python3][31540] at /var/log/sambaflow/runtime/sn.log
+
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/read_perf_counters -p /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles.pef --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles.json
+
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  from sambaflow.samba.utils.read_perf_counters import main
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from sambaflow.samba.utils.read_perf_counters import main
+Reading performance counters.
+Instrumentation, DDR, PCIE counters saved to /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles.json.
+
+[Info][SAMBA][Default] # Attempting to tear down a valid SambaRuntime context
+[Info][SAMBA][Default] # Successfully tore down SambaRuntime context
+2022-09-19T17:46:04 : [INFO][LIB][31958]: sn_create_session: PEF File: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles.pef
+Log ID initialized to: [wilsonb][python3][31958] at /var/log/sambaflow/runtime/sn.log
+
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/read_perf_counters -p /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles.pef --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles.json
+
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  from sambaflow.samba.utils.read_perf_counters import main
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from sambaflow.samba.utils.read_perf_counters import main
+Reading performance counters.
+Instrumentation, DDR, PCIE counters saved to /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles.json.
+
+[Info][SAMBA][Default] # Attempting to tear down a valid SambaRuntime context
+[Info][SAMBA][Default] # Successfully tore down SambaRuntime context
+2022-09-19T17:46:25 : [INFO][LIB][32373]: sn_create_session: PEF File: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles.pef
+Log ID initialized to: [wilsonb][python3][32373] at /var/log/sambaflow/runtime/sn.log
+
+
+*** Running command ***:
+/opt/sambaflow/venv/bin/python3 /opt/sambaflow/bin/read_perf_counters -p /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles.pef --json /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles.json
+
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  from sambaflow.samba.utils.read_perf_counters import main
+/opt/sambaflow/bin/read_perf_counters:13: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from sambaflow.samba.utils.read_perf_counters import main
+Reading performance counters.
+Instrumentation, DDR, PCIE counters saved to /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles.json.
+
+[Info][SAMBA][Default] # Attempting to tear down a valid SambaRuntime context
+[Info][SAMBA][Default] # Successfully tore down SambaRuntime context
+2022-09-19T17:46:46 : [INFO][LIB][32578]: sn_create_session: PEF File: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/apps/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles/compile/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles/sn10__9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles.pef
+Log ID initialized to: [wilsonb][python3][32578] at /var/log/sambaflow/runtime/sn.log
+
+19-Sep 17:46:58 - Info - SUCCESS: Copy Instrumentation Data
+19-Sep 17:46:58 - Info - SUCCESS: Execute Read Performance Counter
+19-Sep 17:47:20 - Info - SUCCESS: Execute Benchmarking sn10__9_19_17_39_uno_full_measure_sections___debug
+19-Sep 17:47:42 - Info - SUCCESS: Execute Benchmarking sn10__9_19_17_39_uno_full_measure_performance___run_graph_only
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "<sambatune-1.1>/utils_labhost.py", line 188, in copy_benchmark_data
+  File "/usr/local/lib/python3.7/shutil.py", line 248, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/usr/local/lib/python3.7/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/benchmark/sn10__9_19_17_39_uno_full_measure_performance.json'
+19-Sep 17:47:42 - Info - SUCCESS: Copy Benchmark Data
+
+
+Error while running benchmarking jobs
+19-Sep 17:47:42 - Error - FAILURE: Run benchmarking by lists
+19-Sep 17:47:42 - Error - Message: Error while running benchmarking jobs
+19-Sep 17:47:46 - Info - SUCCESS: Copy Pyinstrument File
+19-Sep 17:47:46 - Info - SUCCESS: Execute pyinstrument
+
+*** Running command ***:
+bash /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/run_benchmarks/raw_data/run_with_benchmark.sh
+
+usage: uno_full.py [-h] {compile,run,test,measure-performance} ...
+uno_full.py: error: unrecognized arguments: --multiprocess-pickle --use-pickle-train --converted-pickle
+
+19-Sep 17:47:49 - Info - SUCCESS: Execute Run Benchmarks
+Instrumentation, Benchmarking or snprof have failed!
+
+--> uno_full.py instrumented and run successfully!
+
+19-Sep 17:47:49 - Info - SUCCESS: Gather instrumentation output for --stage-instrumentation=metapipe_stage_cycles:9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles found at /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count (None
+19-Sep 17:47:49 - Info - SUCCESS: Gather instrumentation output for --stage-instrumentation=metapipe_stage_cycles --include-read-stall-cycles:9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles found at /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count (stage latency
+19-Sep 17:47:49 - Info - SUCCESS: Gather stage latencies
+19-Sep 17:47:49 - Info - SUCCESS: Gather instrumentation output for --stage-instrumentation=metapipe_buf_cycles:9_19_17_39_uno_full___stage_instrumentation_metapipe_buf_cycles found at /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count (None
+19-Sep 17:47:49 - Info - SUCCESS: Gather TLIR
+19-Sep 17:47:49 - Info - SUCCESS: Gather instrumentation output for --stage-instrumentation=metapipe_stage_cycles --include-read-stall-cycles:9_19_17_39_uno_full___stage_instrumentation_metapipe_stage_cycles___include_read_stall_cycles found at /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/instr-count (stall cycles
+19-Sep 17:47:49 - Info - SUCCESS: Gather stall cycles
+19-Sep 17:47:49 - Info - SUCCESS: Gather instrumentation output for measure_sections --debug:9_19_17_39_uno_full_measure_sections___debug found at /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/benchmark (None
+19-Sep 17:47:49 - Info - SUCCESS: Gather measure sections
+19-Sep 17:47:50 - Info - SUCCESS: Read stage_latency into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read stage_latency_w_stalls into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read pmu_bandwidth into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read tlir into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read stalls into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read prism_stages into UnifiedData
+19-Sep 17:47:50 - Info - SUCCESS: Read measure_sections into UnifiedData
+19-Sep 17:47:51 - Info - SUCCESS: Verify Stage Latency sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write Stage Latency sub report
+19-Sep 17:47:51 - Info - SUCCESS: Verify PMU Bandwidth sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write PMU Bandwidth sub report
+19-Sep 17:47:51 - Info - SUCCESS: Verify Stage Latency + Stalls sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write Stage Latency + Stalls sub report
+19-Sep 17:47:51 - Info - SUCCESS: Verify Paths sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write Paths sub report
+19-Sep 17:47:51 - Info - SUCCESS: Verify Stage Latency + Bandwidth sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write Stage Latency + Bandwidth sub report
+19-Sep 17:47:51 - Info - SUCCESS: Verify Bandwidth + Stage Latency sub-report
+19-Sep 17:47:51 - Info - SUCCESS: Write Bandwidth + Stage Latency sub report
+19-Sep 17:47:52 - Info - SUCCESS: Verify Combined Stage Latency UI Report report
+19-Sep 17:47:52 - Info - SUCCESS: Write Combined Stage Latency UI Report Report
+19-Sep 17:47:52 - Info - SUCCESS: Verify Stage Latency report
+19-Sep 17:47:52 - Info - SUCCESS: Write Stage Latency Report
+19-Sep 17:47:52 - Info - SUCCESS: Verify PMU Bandwidth report
+19-Sep 17:47:52 - Info - SUCCESS: Write PMU Bandwidth Report
+19-Sep 17:47:52 - Info - SUCCESS: Verify Paths report
+19-Sep 17:47:52 - Info - SUCCESS: Write Paths Report
+19-Sep 17:47:52 - Info - SUCCESS: Verify Stage Latency + Stalls report
+19-Sep 17:47:52 - Info - SUCCESS: Write Stage Latency + Stalls Report
+
+--> Wrote collated report to /srv/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/collated_report.xlsx
+
+
+--> Wrote unified output to /srv/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/unified.json
+
+19-Sep 17:47:52 - Info - SUCCESS: Process Instrumentation Data
+19-Sep 17:47:52 - Info - SUCCESS: Post Process - Instrumentation
+19-Sep 17:47:52 - Info - SUCCESS: Process Util Reports Helper Function
+19-Sep 17:47:52 - Info - SUCCESS: Process Resources Helper Function
+19-Sep 17:47:52 - Warning - ddr_report_dir is not provided
+19-Sep 17:47:52 - Warning - arc_dram_analysis_report is not provided
+19-Sep 17:47:52 - Warning - prism_dram_analysis_report is not provided
+19-Sep 17:47:52 - Warning - section_latency_report is not provided
+19-Sep 17:47:52 - Info - SUCCESS: Verify DDR Report analysis sub-report
+Read file failed. Invalid file.
+Read file failed. Invalid file.
+19-Sep 17:47:52 - Info - SUCCESS: Write DDR Report analysis sub report
+19-Sep 17:47:53 - Info - SUCCESS: Post Process - DDR Counter
+19-Sep 17:47:53 - Info - SUCCESS: Post Process - PCIE Counter
+19-Sep 17:47:53 - Info - SUCCESS: Create Annotated Graphs Helper Function
+Could not find the file containing data of measured e2e latency and throughput.
+Retrieving estimated prism latency and throughput
+Read file failed. Invalid file.
+Traceback (most recent call last):
+  File "<sambatune-1.1>/section_report.py", line 340, in get_measured_pmu_pcu_utilization_chips_sections_from_txt
+FileNotFoundError: [Errno 2] No such file or directory: '/home/wilsonb/DL/Sambanova/apps_1.s0.utilization_report.txt'
+Could not find PCU/PMU utilization data from utilization_report.txt files.
+Read file failed. Invalid file.
+Read file failed. Invalid file.
+Could not find the data for estimated mac latency and throughput
+Read file failed. Invalid file.
+19-Sep 17:47:53 - Warning - ddr_report_dir is not provided
+19-Sep 17:47:53 - Warning - arc_dram_analysis_report is not provided
+19-Sep 17:47:53 - Warning - prism_dram_analysis_report is not provided
+19-Sep 17:47:53 - Warning - section_latency_report is not provided
+Read file failed. Invalid file.
+Read file failed. Invalid file.
+19-Sep 17:47:53 - Info - SUCCESS: Create CSV Section Report
+Cannot find 9_19_17_39_uno_full_ in /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/perf_data/snprof
+
+Cannot find snprof data
+
+19-Sep 17:47:53 - Error - FAILURE: Extract and Process e2e Snprof Data
+19-Sep 17:47:53 - Error - Message: Cannot find snprof data.
+Cannot find measure-performance data
+19-Sep 17:47:53 - Error - FAILURE: Get e2e measure performance json path
+19-Sep 17:47:53 - Error - Message: Cannot find measure-performance data.
+See per-section measure-performance data in /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/benchmark-data/sn10__9_19_17_39_uno_full_measure_sections___debug.json
+
+19-Sep 17:47:53 - Info - SUCCESS: Get per-section measure performance json path
+See graph measure-performance data in /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/benchmark-data/sn10__9_19_17_39_uno_full_measure_performance___run_graph_only.json
+
+19-Sep 17:47:53 - Info - SUCCESS: Get graph measure performance json path
+See runtime perf info in /srv/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen/uno_brw_CCLE_9_19_17_39/reports/runtime_perf_info.json
+
+19-Sep 17:47:53 - Info - SUCCESS: Collating runtime performance
+19-Sep 17:47:53 - Info - SUCCESS: Post Process - Runtime Data
+19-Sep 17:47:53 - Info - SUCCESS: Post Process - DDR Bandwidth from training/inference run
+19-Sep 17:47:54 - Info - SUCCESS: Post Process - PCIE Bandwidth from training/inference run
+19-Sep 17:47:54 - Info - SUCCESS: Post Process - Tile Data from training/inference run
+19-Sep 17:47:54 - Info - SUCCESS: Post Process
+Postprocessing was finished!
+Generating Web UI files...
+Getting num iterations from measure perf FAILED! list index out of range
+Retrieving estimated prism latency and throughput
+19-Sep 17:47:54 - Info - SUCCESS: Build Run Info
+19-Sep 17:47:54 - Info - SUCCESS: Build Configuration Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build Snconfig Tabs
+19-Sep 17:47:54 - Info - SUCCESS: Build General
+Could not find snprof output. No e2e throughput data available.
+Could not find snprof output. No e2e latency data available.
+19-Sep 17:47:54 - Info - SUCCESS: Build Runtime Stats
+19-Sep 17:47:54 - Info - SUCCESS: Build Runtime Stats Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build Pyinstrument Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build PNR-Sweep Tab
+Could not find snprof output. No host latency data available.
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Latency
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Timeline Profile Widget
+Could not find snprof output. No host latency data available.
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Breakdown Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Analysis Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Section Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Tensor Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build Host Layer
+Could not find snprof output. No rdu latency data available.
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Latency
+19-Sep 17:47:54 - Info - SUCCESS: Build Section Report Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build Compiler Graphs
+19-Sep 17:47:54 - Info - SUCCESS: Build Model Graphs Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build Collated Report Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build Paths Report Tab
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Run PCIE/DDR/Tile
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Sections Empty
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Section Data
+19-Sep 17:47:54 - Info - SUCCESS: Build Filtered Stage Report Tabs
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Section Utilization Data
+19-Sep 17:47:54 - Info - SUCCESS: Build Stage Buffer Graphs
+19-Sep 17:47:54 - Info - SUCCESS: Build Util Report Tabs
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU PCIE Counters
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU DDR Counters
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Stage Data
+19-Sep 17:47:54 - Info - SUCCESS: Build Section Breakdown Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build RDU Layer
+19-Sep 17:47:54 - Info - SUCCESS: Build Overview Layer
+Web UI files generation complete.
+19-Sep 17:47:54 - Info - SUCCESS: Save JSONs
+Elapsed time: 504.227s
+To launch the Sambatune-UI and view the results, use
+$ sambatune_ui --directory /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/artifact_root/sambatune_gen --port 8576
+Point your browser to http://localhost:8576

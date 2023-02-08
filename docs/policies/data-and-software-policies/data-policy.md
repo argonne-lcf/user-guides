@@ -34,7 +34,7 @@ Data stored for any length of time on ALCF resources should only be data directl
 ### Home File System Space
 **swift-home**
 
-The home file system (/home) is intended to hold your executable files, configuration files, etc. It is NOT meant to hold the output from your application runs (use the data/parallel file system for that purpose). The home file system space is generally moderate in size and is the best protected. Because of its size, backups are practical to accomplish.  The system performs tape backups, enabling the recovery of files more than seven days old or recovery from a catastrophic disk failure.  The table below indicates the capabilities and characteristics of each file system.
+The home file system (/home) is intended to hold your executable files, configuration files, etc. It is NOT meant to hold the output from your application runs (use the data/parallel file system for that purpose). The home file system space is generally moderate in size and is the best protected. Because of its size, backups are practical to accomplish.  The system performs tape backups, enabling the recovery of files more than seven days old or recovery from a catastrophic disk failure. Users should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if they need assistance. The table below indicates the capabilities and characteristics of each file system.
 
 **AI Testbed home**
 

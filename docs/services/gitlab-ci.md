@@ -227,7 +227,7 @@ If running a CI/CD job on theta cluster you will also need to provide a `ANL_THE
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Theta   | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS | [Theta Job Queue and Scheduling](../../../user-guides/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
+| Theta   | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
 | Theta   | Cobalt    | ANL_THETA_PROJECT_SERVICE_USER | This variable will be provided to you once your project is setup in gitlab. |
 
 _Example: Running a batch job on Theta HPC_

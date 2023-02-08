@@ -25,20 +25,20 @@ body {
 }
 
 .md-typeset h1 {
-	font-size: 60px;
-	line-height: 60px;
+/* 	font-size: 60px; */
+/* 	line-height: 60px; */
 	border-bottom: 1px solid rgb(216, 220, 225);
 	padding-bottom: .75rem;
 	margin: 0;
 }
 
 .md-typeset h2 {
-	font-size: 36px;
-	line-height: 36px;
+/* 	font-size: 36px; */
+/* 	line-height: 36px; */
 }
 
 .md-typeset h3 {
-	margin:3em 0 0;
+/* 	margin:3em 0 0; */
 ;
 }
 
@@ -69,6 +69,10 @@ body {
   color: #6e6e78;
 }
 
+.md-typeset :target {
+    --md-scroll-margin: 9rem;
+}
+
 
 
 
@@ -78,13 +82,13 @@ body {
 	margin-bottom: 5rem;
 }
 
-.md-header[data-md-state=shadow] {
+.md-header-alcf[data-md-state=shadow] {
 	box-shadow: none;
 }
 
-.md-header__button.md-logo img {
+.md-header__inner .md-logo img {
 	height: auto;
-	width: 5rem;
+	width: 100px;
 }
 
 
@@ -92,6 +96,15 @@ body {
 
 /* primary header */
 /* ------------------------------------------------------------------------- */
+
+/* hide material header at large sizes, and the alcf header at small sizes */
+@media only screen and (max-width: 960px) {
+	.header--primary { display: none; }
+}
+
+@media only screen and (min-width: 961px) {
+	.md-header { display: none; }
+}
 
 .header--primary {
 	background-color: var(--md-primary-fg-color);
@@ -102,9 +115,8 @@ body {
 	line-height: 24px;
 }
 
-@media only screen and (max-width: 960px) {
-	.header--primary { display: none; }
-}
+
+
 
 .header--primary .grid{
 	position: relative;
@@ -885,13 +897,6 @@ footer a:hover {
 	display: inline;
 	margin-right: 18px;
 }
-
-
-
-/* sidebar */
-/* ------------------------------------------------------------------------- */
-
-.md-sidebar { height: auto !important; }
 
 
 /*remove edit buttton by titles*/

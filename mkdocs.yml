@@ -27,7 +27,7 @@ nav:
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
   - Services:
     - JupyterHub: services/jupyter-hub.md
-    - Continuous Integration: 
+    - Continuous Integration:
       - General: services/continuous-integration.md
       - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
@@ -81,6 +81,7 @@ nav:
     - Workflows:
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
+        - libEnsemble: polaris/workflows/libensemble.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
@@ -116,7 +117,7 @@ nav:
       - Visualization:
         - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
     - Data Science:
-      - Maching Learning Tools: theta/data-science-workflows/machine-learning-tools.md
+      - Machine Learning Tools: theta/data-science-workflows/machine-learning-tools.md
       - Data Science Modules: theta/data-science-workflows/data-science-modules.md
       - Apache Spark: theta/data-science-workflows/apache-spark.md
       - Balsam: theta/data-science-workflows/balsam.md
@@ -180,7 +181,32 @@ nav:
     - Performance Tools:
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
-  - AI Testbed: https://argonne-lcf.github.io/ai-testbed-userdocs/
+  - AI Testbed: 
+    - Getting Started: ai-testbed/index.md
+    - Cerebras:
+      - System Overview: ai-testbed/cerebras/system-overview.md
+      - Getting Started: ai-testbed/cerebras/getting-started.md
+      - Steps to Run a Model/Program: ai-testbed/cerebras/steps-to-run-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/cerebras/example-programs.md
+      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
+      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
+      - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
+    - SambaNova:
+      - System Overview: ai-testbed/sambanova/system-overview.md
+      - Getting Started: ai-testbed/sambanova/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+      - Steps to Run a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova/running-bert-large-on-sn10-8r.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      #- DataParallel: ai-testbed/sambanova/DataParallel.md
+      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+    - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
       - Cooley Machine Overview: cooley/cooley-overview.md
@@ -203,7 +229,7 @@ nav:
     - Performance Tools:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
-  - Aurora: https://www.alcf.anl.gov/support-center/aurora
+  - Aurora/Sunspot: https://www.alcf.anl.gov/support-center/aurora-sunspot
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
@@ -269,5 +295,6 @@ extra:
       link: 'https://github.com/argonne-lcf/alcf-userguide'
 
 plugins:
+  - include-markdown
   - search:
       lang: en

@@ -1,0 +1,11 @@
+app: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py
+
+model-args: --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial
+
+compile-args: compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1
+
+run-args: --measure-spatial --train-samba-spatial --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_500
+
+env:
+     OMP_NUM_THREADS: 16,
+     SF_RNT_NUMA_BIND: 2
