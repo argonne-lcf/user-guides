@@ -58,7 +58,7 @@ or a nodeboard or a blade. A single host can be made up of multiple vnodes. Each
 
 `ncpus`: Number of resources available to execute a program. In ALCF, given the way we configure PBS, this equates to a hardware thread.  For example, a single socket node with a 32 core CPU, each with two hardware threads would report that as ncpus=64.
 
-`ngpus`: The number of allocable GPUs on the vnode.  For an Nvidia A100, this could be one, however, if we enable *Multi Instance GPU (MIG)* mode and use cgroups it could be as high as 7.
+`ngpus`: The number of allocable GPUs on the vnode.  For an NVIDIA A100, this could be one, however, if we enable *Multi Instance GPU (MIG)* mode and use cgroups it could be as high as 7.
 
 `job`: A job equates to a qsub.  A set of resources allocated to you for a period of time.  Your will execute one or more `tasks` on those resources during your job.
 
@@ -196,16 +196,16 @@ Here is a heavily commented sample PBS submission script that shows some more of
 
 # Setting job dependencies
 # UG Section 6.2, page UG-109 Using Job Dependencies
-# There are many options for how to set up dependancies;  afterok will give behavior similar
+# There are many options for how to set up dependencies;  afterok will give behavior similar
 # to Cobalt (uncomment to use)
 ##PBS depend=afterok:<jobid>:<jobid>
 
 # Environment variables (uncomment to use)
 # UG Section 6.12, page UG-126 Using Environment Variables
-# RG Sect 2.57.7, page RG-233 Enviornment variables PBS puts in the job environment
+# RG Sect 2.57.7, page RG-233 Environment variables PBS puts in the job environment
 ##PBS -v <variable list>
 ## -v a=10, "var2='A,B'", c=20, HOME=/home/zzz
-##PBS -V exports all the environment variables in your environnment to the compute node
+##PBS -V exports all the environment variables in your environment to the compute node
 
 
 # The rest is an example of how an MPI job might be set up
@@ -346,7 +346,7 @@ Basically takes the same options as `qsub`;  Say you typoed and set the walltime
 ## <a name="pbsnodes"></a>`pbsnodes` Get information about the current state of nodes ###
 [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 
-This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with some GPUs like Nvidia A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
+This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with some GPUs like NVIDIA A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
 
 `pbsnodes <node name>`: Everything there is to know about a node
 
@@ -550,7 +550,7 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_
 ## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script. 
 
-* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and recieves data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
+* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
 
 * If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
@@ -630,7 +630,7 @@ The fakeroot feature (commonly referred as rootless mode) allows an unprivileged
 
 * Thinking of things like:
   * How do you set affinity
-  * Nvidia specific stuff
+  * NVIDIA specific stuff
   * There is a PALS specific thing to tell you what rank you are in a node?
   * Should Chris cook up example running four mpiexec on different GPUs and separate CPUs or just rely on PBS's vnode (discussion at very top here)?-->
 
