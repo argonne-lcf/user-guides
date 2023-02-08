@@ -86,7 +86,7 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
 **Note: The page numbers in the PBS guides are unique.  If you search for the specified page number it will take you directly to the relevant page.**
 
 ## <a name="qsub"></a>`qsub` - submit a job to run
-Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf), Chapter 2, page UG-11 and [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Chapter 2, section 2.57, page RG-216
 
 At the ALCF, your qsub will likely use the following parameters:
 
@@ -116,7 +116,7 @@ Also note that if you want to run an executable directly rather than a script yo
 The single biggest difference between Cobalt and PBS is the way you select resources when submitting a job.  In Cobalt, every system had its own Cobalt server and you just specified the number of nodes you wanted (-n).  With PBS, we are planning on running a single "PBS Complex" which means there will be a single PBS server for all systems in the ALCF and you need to specify enough constraints to get your job to run on the resources you want/need.  One advantage of this is that getting resources from two different systems or "co-scheduling" is trivially possible.
 
 #### Resource Selection and Job Placement
-Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs in the Reference Guide.
+Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs in the [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf).
 
 Resources come in two flavors:
 
@@ -151,7 +151,7 @@ The downside to `group=` is that you have to specify a specific group, when what
 Here is a heavily commented sample PBS submission script that shows some more of the options, but remember that the PBS manuals referenced at the top of this page are the ultimate resource.
 
 ```
-#!/bin/bash
+#!/bin/bash -l
 # UG Section 2.5, page UG-24 Job Submission Options
 # Add another # at the beginning of the line to comment out a line
 # NOTE: adding a switch to the command line will override values in this file.
@@ -253,7 +253,7 @@ To update the filesystems list for your job, use `qalter`.
 	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
 
 ## <a name="qstat"></a>`qstat` - Query the status of jobs/queues
-Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200
 
 ### Jobs
 At it's most basic, you just type `qstat` and it will list all the jobs currently running, queued, or held on the system.  If you are interested in a specific job or jobs, you can provide a space separated list on the command line: `qstat job1 job2...`.
@@ -301,48 +301,47 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 ### Queues
  `qstat -Q` Will show you the names of all the queues and tell you their status.  If they are enabled (Ena column), you can queue jobs into them.  If they are started (Str column) then the scheduler will try and run jobs from it.  There is a `-f` (full) option but that is mostly for admins, though you can find the min and max node count `(resources_[min|max].nodect)` and min and max walltime `(resources_[min|max]walltime)` from the output.  Those values are also available in this documentation.
 
-
 ## <a name="qalter"></a>`qalter` - Alter a queued job
-Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
 Basically takes the same options as `qsub`;  Say you typoed and set the walltime to 300 minutes instead of 30 minutes.  You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]` 
  The new value overwrites any previous value.
 
 ## <a name="qdel"></a>`qdel` - Delete a queued or running job: 
-Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 
 `qdel <jobid> [<jobid> <jobid>...]`
 
 ## <a name="qmove"></a>`qmove` - Move a job to a different queue
-Users Guide Sec. 9.7, page UG-173; Reference Guide Sec. 2.46, page RG-175
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
 
 * `qmove <new queue> <jobid> [<jobid> <jobid>...]`
 * Only works before a job starts running
 
 ## <a name="qhold,qrls"></a>`qhold,qrls` - Place / release a user hold on a job
-Reference Guide Sec 2.44, page RG-150 and Sec 2.50, page RG-183
+[Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.44, page RG-150 and Sec 2.50, page RG-183
 
 * `[qhold | qrls] <jobid> [<jobid> <jobid>...]`
 
 ## <a name="qselect"></a>`qselect` - Query jobids for use in commands
-Users Guide Sec. 10.1, page UG-175; Reference Guide Sec. 2.52, page RG-189
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.1, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.52, page RG-189
 
 * ```qdel `qselect -N test1` ``` will delete all the jobs that had the job name set to `test1`.
 
 ## <a name="qmsg"></a>`qmsg` Write a message into a jobs output file
-Users Guide Sec. 9.4, page UG-171; Reference Guide Sec. 2.47, page RG-177
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.4, page UG-171; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.47, page RG-177
 
 * `qmsg -E -O "This is the message" <jobid> [<jobid> <jobid>...]`
 * `-E` writes it to standard error, `-O` writes it to standard out
 
 ## <a name="qsig"></a>`qsig` Send a signal to a job
-Users Guide Sec. 9.5, page UG-172; Reference Guide Sec. 2.53, page RG-195
+[Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.5, page UG-172; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.53, page RG-195
 
 * `qsig -s <signal> <jobid> [<jobid> <jobid>...]`
 * If you don't specify a signal, `SIGTERM` is sent.
 
 ## <a name="pbsnodes"></a>`pbsnodes` Get information about the current state of nodes ###
-Reference Guide Sec 2.7 page RG-36
+[Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 
 This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with some GPUs like Nvidia A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
 
@@ -393,6 +392,23 @@ x3014c0s19b0n0  job-exclusive        1     1      0  503gb/503gb   63/64     0/0
 x3014c0s19b1n0  resv-exclusive       0     0      0  503gb/503gb    0/64     0/0     4/4 --
 x3014c0s1b0n0   offline              0     0      0  503gb/503gb   64/64     0/0     4/4 --
 ```
+
+`pbsnodes -avSj | grep free | wc -l` - A quick way to see how many nodes are free
+
+```
+[20220217-21:09:30]> pbsnodes -avSj | grep free | wc -l
+38
+```
+`pbsnodes -avSj | grep free | awk '{print $1}'` - Lists the free nodes
+
+```
+[20220217-21:09:30]> pbsnodes -avSj | grep free | awk '{print $1}'
+x3201c0s25b0n0
+x3209c0s13b0n0
+x3209c0s19b0n0
+x3209c0s1b1n0
+```
+
 `pbsnodes -l` - (lowercase  l) see which nodes are down;  The comment often indicates why it is down
 
 ```
@@ -506,7 +522,7 @@ Once a submitted job is running calculations can be launched on the compute node
 A sample submission script with directives is below for a 4-node job with 32 MPI ranks on each node and 8 OpenMP threads per rank (1 per CPU).
 
 ```
-#!/bin/bash
+#!/bin/bash -l
 #PBS -N AFFINITY
 #PBS -l select=4:ncpus=256
 #PBS -l walltime=0:10:00
@@ -558,7 +574,7 @@ The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. Fo
 A example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
 
 ```
-#!/bin/bash
+#!/bin/bash -l
 num_gpus=4
 # need to assign GPUs in reverse order due to topology
 # See Polaris Device Affinity Information:
