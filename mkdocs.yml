@@ -31,6 +31,11 @@ nav:
       - General: services/continuous-integration.md
       - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
+  - Running Jobs with PBS at the ALCF:
+      - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
+      - Example Job Scripts: running-jobs/example-job-scripts.md
+      - Machine Reservations: running-jobs/machine-reservations-polaris.md
+      - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
@@ -46,11 +51,6 @@ nav:
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
-    - Queueing and Running Jobs on Polaris:
-      - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
-      - Machine Reservations: polaris/queueing-and-running-jobs/machine-reservations-polaris.md
-      - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
     - Applications and Libraries:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
@@ -288,6 +288,7 @@ markdown_extensions:
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
