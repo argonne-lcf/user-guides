@@ -35,9 +35,7 @@ See the docs for more details on using [python on Polaris](https://www.alcf.anl.
 For a very simple example of using libEnsemble see the [Simple Sine tutorial](https://libensemble.readthedocs.io/en/main/tutorials/local_sine_tutorial.html)
 
 For an example that runs a small ensemble using a C application (offloading work to the GPU), see
-[the tutorial](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html).
-
-The required files for the this tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces). Also, see the
+[the GPU app tutorial](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html). The required files for the this tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces). Also, see the
 [video demo](https://youtu.be/Ff0dYYLQzoU).
 
 Note that when initializing the MPIExecutor on Polaris (**run_libe_forces.py** in the example), you currently need to use the following options to pick up the correct MPI runner:
