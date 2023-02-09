@@ -11,18 +11,24 @@ libEnsemble is provided on Polaris in the **conda** module:
 
 See the docs for more details on using [python on Polaris](https://www.alcf.anl.gov/support/user-guides/polaris/data-science-workflows/python/index.html).
 
-E.g.,~  to create a virtual environment that allows installation of
-further packages with pip:
+<details>
+  <summary>Example: creating virtual environment and updating libEnsemble</summary>
 
-    python -m venv /path/to-venv --system-site-packages
-    . /path/to-venv/bin/activate
+    E.g.,~  to create a virtual environment that allows installation of
+    further packages with pip:
 
-Where ``/path/to-venv`` can be anywhere you have write access.
-For future uses just load the conda module and run the activate line.
+        python -m venv /path/to-venv --system-site-packages
+        . /path/to-venv/bin/activate
 
-You can also ensure you are using the latest version of libEnsemble:
+    Where ``/path/to-venv`` can be anywhere you have write access.
+    For future uses just load the conda module and run the activate line.
 
-    pip install libensemble
+    You can also ensure you are using the latest version of libEnsemble:
+
+        pip install libensemble
+
+</details>
+
 
 ## libEnsemble examples
 
