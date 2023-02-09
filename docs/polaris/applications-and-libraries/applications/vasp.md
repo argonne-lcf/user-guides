@@ -110,13 +110,13 @@ The follow modules will update the include and libraries paths used by the Cray 
 
 ```
 module purge
-module add PrgEnv-nvhpc
-module add cray-libsci
-module add craype-accel-nvidia8
+module load PrgEnv-nvhpc
+module load cray-libsci
+module load craype-accel-nvidia8
 
 ```
 
-### Compiling vasp
+### Compiling VASP
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
 ``` 
@@ -138,7 +138,7 @@ An example of a submission script could be found here `/soft/applications/vasp/v
 #PBS -A Catalyst
 
 module load PrgEnv-nvhpc
-module add cray-libsci
+module load cray-libsci
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
