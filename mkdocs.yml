@@ -288,6 +288,7 @@ markdown_extensions:
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
