@@ -17,7 +17,7 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
     $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
     ```
 
-    Refer to [job scheduling and execution](../../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
 ## Running DeepSpeed on Polaris

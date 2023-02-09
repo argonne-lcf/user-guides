@@ -13,7 +13,7 @@ A batch submission script for the following example is available [here](https://
     $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
     ```
 
-    Refer to [job scheduling and execution](../../queueing-and-running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
 1. Load and activate the base `conda` environment:
