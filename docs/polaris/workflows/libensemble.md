@@ -11,6 +11,19 @@ libEnsemble is provided on Polaris in the **conda** module:
 
 See the docs for more details on using [python on Polaris](https://www.alcf.anl.gov/support/user-guides/polaris/data-science-workflows/python/index.html).
 
+E.g.,~  to create a virtual environment that allows installation of
+further packages with pip:
+
+    python -m venv /path/to-venv --system-site-packages
+    . /path/to-venv/bin/activate
+
+Where ``/path/to-venv`` can be anywhere you have write access.
+For future uses just load the conda module and run the activate line.
+
+You can also ensure you are using the latest version of libEnsemble:
+
+    pip install libensemble
+
 ## libEnsemble examples
 
 For a very simple example of using libEnsemble see the [Simple Sine tutorial](https://libensemble.readthedocs.io/en/main/tutorials/local_sine_tutorial.html)
@@ -18,7 +31,7 @@ For a very simple example of using libEnsemble see the [Simple Sine tutorial](ht
 For an example that runs a small ensemble using a C application (offloading work to the GPU), see
 [the tutorial](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html).
 
-The required files for the second tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces).
+The required files for the this tutorial can be found in [this directory](https://github.com/Libensemble/libensemble/tree/develop/libensemble/tests/scaling_tests/forces).
 
 Note that when initializing the MPIExecutor on Polaris (**run_libe_forces.py** in the example), you currently need to use the following options to pick up the correct MPI runner:
 
@@ -57,6 +70,6 @@ Or you can run an interactive session with:
 
 ## Further links
 
-Docs:  https://libensemble.readthedocs.io
-github: https://github.com/Libensemble/libensemble
+Docs:  <https://libensemble.readthedocs.io>
+github: <https://github.com/Libensemble/libensemble>
 
