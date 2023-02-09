@@ -467,7 +467,7 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 | preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
 | demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
-**Note: Jobs in the demand queue take priority over jobs int he preemptable queue.
+**Note: Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
 Please use the following command to view details of a queue: ```qstat -Qf <queuename>```**
 
