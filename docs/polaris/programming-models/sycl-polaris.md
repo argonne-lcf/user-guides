@@ -7,9 +7,17 @@
 - ALCF Tutorial: [https://github.com/argonne-lcf/sycltrain](https://github.com/argonne-lcf/sycltrain)
 
 ```
-module use /soft/compilers
-module load llvm-sycl/2022-06 
+module load oneapi
 ```
+
+## Dependencies
+- oneapi compilers were built from source
+- This module switches the programming environment to GNU and loads the following dependencies
+  - PrgEnv-gnu/8.3.3
+  - cpe-cuda/22.05
+  - gcc/10.3.0
+  - cudatoolkit-standalone/11.8.0
+
 
 ## Example (memory intilization)
 
@@ -31,8 +39,7 @@ int main(){
     std::cout << "A[ " << i << " ] = " << A[i] << std::endl;
   return 0;
 }
-module use /soft/compilers
-module load llvm-sycl/2022-06 
+module load oneapi
 $ clang++ -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' main.cpp
 $ ./a.out
 ```
@@ -45,7 +52,7 @@ $ cat main.cpp
 #include <stdio.h>
 #include <mpi.h>
 
-#include <CL/sycl.hpp>
+#include <sycl/sycl.hpp>
 
 // Modified from NERSC website: 
 // https://docs.nersc.gov/development/programming-models/mpi
@@ -110,10 +117,7 @@ int main(int argc, char *argv[]) {
 Load Modules
 
 ```
-module use /soft/compilers
-module load mpiwrappers/cray-mpich-llvm
-module load llvm-sycl
-module load nvhpc/21.9
+module use oneapi
 export MPICH_GPU_SUPPORT_ENABLED=1
 ```
 
