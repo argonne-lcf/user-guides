@@ -31,14 +31,14 @@ int main(){
     float *A = sycl::malloc_shared<float>(N, Q);
 
     std::cout << "Running on "
-	      << Q.get_device().get_info<sycl::info::device::name>()
-	      << "\n";
+              << Q.get_device().get_info<sycl::info::device::name>()
+              << "\n";
 
     // Create a command_group to issue command to the group
     Q.parallel_for(N, [=](sycl::item<1> id) { A[id] = 0.1 * id; }).wait();
 
     for (size_t i = 0; i < N; i++)
-	std::cout << "A[ " << i << " ] = " << A[i] << std::endl;
+        std::cout << "A[ " << i << " ] = " << A[i] << std::endl;
     return 0;
 }
 ```
