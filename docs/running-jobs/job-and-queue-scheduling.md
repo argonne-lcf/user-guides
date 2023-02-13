@@ -459,11 +459,17 @@ If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 ###  <a name="Polaris-Queues"></a>Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):
 
-|Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
-|----|----|----|-----------------------------|----|----------------------------------------------------|
-|debug|1|2| 10 min (5 min from 10/3/22) |1 hr| max 8 nodes in use by this queue ay any given time |
-|debug-scaling|1|10| 10 min (5 min from 10/3/22)|1 hr| max 1 job running/accruing/queued **per-user**     |
-|prod|10|496| 30 min (5 min from 10/3/22)|24 hrs| Routing queue; See below                           |
+| Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
+|---------------|----------|-----------|-----------------------------|----------|-----------------------------------------------------------------------------|
+| debug         | 1        | 2         | 10 min (5 min from 10/3/22) | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
+| debug-scaling | 1        | 10        | 10 min (5 min from 10/3/22) | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
+| prod          | 10       | 496       | 30 min (5 min from 10/3/22) | 24 hrs   | Routing queue; See below                                                    |
+| preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
+| demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+
+**Note: Jobs in the demand queue take priority over jobs in the preemptable queue.
+This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
+Please use the following command to view details of a queue: ```qstat -Qf <queuename>```**
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
