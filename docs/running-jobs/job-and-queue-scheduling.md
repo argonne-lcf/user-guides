@@ -1,4 +1,4 @@
-# Running Jobs using PBS at the ALCF
+# Running Jobs using PBS
 
 ## Documentation / Tools
 * [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf): This is really excellent.  We highly suggest you download it and search through it when you have questions.  However, it is big at about 2000 pages / 40MB and contains a bunch of stuff you don't really need, so you can also download the guides separately here:
@@ -45,8 +45,6 @@ Our documentation is organized in two sections aligned with the two steps descri
     - [Binding MPI ranks to GPUs](#Binding-MPI-ranks-to-GPUs)
     - [Running Multiple Multi-node Applications](#Running-Multiple-Multi-node-Applications)
     - [Using Fakeroot with Singularity](#Using-Fakeroot-with-Singularity)
-
-
 
 ## Obtaining and managing compute resources at ALCF
 
@@ -232,13 +230,11 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 
 Users should add ```-M <email address>``` if they want notifications as a best practice.
 
-**Note: For users with '<username>@alcf.anl.gov' email addressed, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add ```#PBS -m n``` to your script.**
-
-
+**Note:** For users with '<username>@alcf.anl.gov' email addressed, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add ```#PBS -m n``` to your script.
 
 #### Specifying Filesystems
 
-**Note: The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:**
+**Note:** The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:
 
 `qsub: Resource: filesystems is required to be set.`
 
@@ -451,10 +447,9 @@ In this case you will receive a jobid back and qsub will exit, however when the 
 In that case, the job will be deleted from the system and will not show up in the job history for that system.
 If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
+## Machine specific job execution information
 
-# Machine specific job execution information
-
-## <a name="Polaris"></a>Polaris
+### <a name="Polaris"></a>Polaris
 
 ###  <a name="Polaris-Queues"></a>Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):
@@ -467,9 +462,9 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 | preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
 | demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
-**Note: Jobs in the demand queue take priority over jobs in the preemptable queue.
+**Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
-Please use the following command to view details of a queue: ```qstat -Qf <queuename>```**
+Please use the following command to view details of a queue: ```qstat -Qf <queuename>```
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
@@ -521,15 +516,15 @@ export ftp_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
 
 In the future, though we don't have a timeline on this because it depends on future features in slingshot and internal software development, we intend to have public IP addresses be a schedulable resource.  For instance, if only your head node needed public access your select statement might looks something like: `-l select=1:pubnet=True+63`.
 
-# Controlling task execution on your allocated resources
+## Controlling task execution on your allocated resources
 
-## <a name="Controlling-Where-Your-Job-Runs"></a>Controlling Where Your Jobs Runs
+### <a name="Controlling-Where-Your-Job-Runs"></a>Controlling Where Your Jobs Runs
 If you wish to have your job run on specific nodes form your select like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>...` . Obviously, that gets tedious for large jobs.
 
 If you want to control the location of a few nodes, for example 2 out of 64, but the rest don't matter, you can do something like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>+62:system=foo`
 
 Every node has a PBS resource called `tier0` with a rack identifier and `tier1` with a dragonfly group identifieer.  If you want all your nodes grouped in a rack, you can add the group specifier `-l select=8:system=foo,place=scatter:group=tier0`.  If you wanted everything in the same dragonfly group, replace `tier0` with `tier1`.  Note that you have to also explicitly specify the place when you use group.  If you wanted a specific rack or dragonfly group instead of any of them, you are back to the select: `-l select 10:tier0=x3001-g0`.
-## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
+### <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
 * `-n` total number of MPI ranks
@@ -562,14 +557,14 @@ cd /home/knight/affinity
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
 ```
 
-## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
+### <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script.
 
 * The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
 
 * If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
-## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
+### <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
 
 ```bash
@@ -588,7 +583,7 @@ mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity &
 wait
 ```
 
-## <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
+### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
 
 A example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
@@ -636,12 +631,12 @@ done
 wait
 ```
 
-## <a name="Using-Fakeroot-with-Singularity"></a>Using Fakeroot with Singularity
+### <a name="Using-Fakeroot-with-Singularity"></a>Using Fakeroot with Singularity
 The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:
 
 `-l singularity_fakeroot=true`
 
-<!--### Need help from applications people for this section
+<!--#### Need help from applications people for this section
 
 * Thinking of things like:
   * How do you set affinity
