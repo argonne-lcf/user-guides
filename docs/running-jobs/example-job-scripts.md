@@ -35,6 +35,12 @@ echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NR
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
 ```
 
+The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
+<!--codeinclude-->
+[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:get_uuid
+<!--/codeinclude-->
+
+
 *NOTE: If you are a ```zsh``` user, you will need to ensure **ALL** submission and shell scripts include the ```-l``` flag following ```#!/bin/bash``` as seen in the example above to ensure your environment is being instantiated properly. ```zsh``` is **NOT** supported by HPE and support from ALCF will be best effort only.*
 
 Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores). 
