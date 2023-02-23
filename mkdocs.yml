@@ -270,7 +270,6 @@ extra_javascript:
 markdown_extensions:
   - admonition
   - codehilite
-  - pymdownx.superfences
   - tables
   - attr_list
   - md_in_html

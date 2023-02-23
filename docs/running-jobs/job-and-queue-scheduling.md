@@ -73,14 +73,14 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * If you want to run an executable rather than a script replace `<your jobs script>` in the example above with `-- <your executable>` (that is dash dash)
     * PBS Documentation: Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
 2. `qstat`: check on the status of your jobs or queues
-    * Try these variations and see which you like best: `qstat`, `qstat -was`, `qstat -was1`, `qstat -wan`, `qstat -wan1`; Add `-x` to see jobs that have completed.  We keep two weeks of history.
+    * Try these variations and see which you like best: `qstat`, `qstat -was`, `qstat -was1`, `qstat -wan`, `qstat -wan1`. Add `-x` to see jobs that have completed.  We keep two weeks of history.
     * `qstat -Q` will list all the queues in case you forget.
     * PBS Documentation: Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200
 3. `qalter`: update your request for resources
     * Just like qsub, just add a jobid at the end.  Only works before the job starts;
     * If you want to change the walltime to 30 minutes: `qalter -l walltime=30:00:00 <jobid>`
     * PBS Documentation: Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
-4. `qdel`: cancel a job that you don't need; This will also kill a running job
+4. `qdel`: cancel a job that you don't need. This will also kill a running job
     * `qdel <jobid>`
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
@@ -257,7 +257,7 @@ To update the filesystems list for your job, use `qalter`.
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 threads.
 	* use the -- (dash dash) syntax when directly running an executable.
 * `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
-	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
+	* 32 chunks on any system that meets the requirements. Each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode. Use the queue named `prod`.
 
 ## <a name="qstat"></a>`qstat`: Query the status of jobs/queues
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200
@@ -417,7 +417,7 @@ x3209c0s19b0n0
 x3209c0s1b1n0
 ```
 
-`pbsnodes -l`: (lowercase  l) see which nodes are down;  The comment often indicates why it is down
+`pbsnodes -l`: (lowercase  l) see which nodes are down. The comment often indicates why it is down
 
 ```bash
 [20220217-21:10:31]> pbsnodes -l
@@ -449,9 +449,9 @@ If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
 ## Machine specific job execution information
 
-### <a name="Polaris"></a>Polaris
+<!-- ### <a name="Polaris"></a>Polaris -->
 
-###  <a name="Polaris-Queues"></a>Queues
+###  <a name="Polaris-Queues"></a>Polaris Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):
 
 | Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
@@ -477,13 +477,13 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 |backfill-medium|25|49| 5 min  |12 hrs| low priority, negative project balance |
 |backfill-large|50|496| 5 min                     |24 hrs| low priority, negative project balance |
 
-**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
-**Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
-**Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
-**Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
+- **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
+- **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
+- **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
+- **Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
 
 ### <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
-* Racks contain (7) 6U chassis; Each chassis has 2 nodes for 14 nodes per rack
+* Racks contain (7) 6U chassis; each chassis has 2 nodes for 14 nodes per rack
 * The hostnames are of the form xRRPPc0sUUb[0|1]n0 where:
     * RR is the row {30, 31, 32}
     * PP is the position in the row {30 goes 1-16, 31 and 32 go 1-12}
@@ -559,10 +559,8 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_
 
 ### <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script.
-
-* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
-
-* If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
+- The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
+- If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
 
 ### <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
