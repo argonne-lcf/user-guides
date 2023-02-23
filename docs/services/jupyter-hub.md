@@ -3,19 +3,19 @@
 
 JupyterHub is an open-source application to allow multiple users to launch Jupyter Notebooks from a central location. At ALCF users can use the JupyterHub instances at https://jupyter.alcf.anl.gov to run notebooks on servers connect to the compute resource or on the compute resource itself.
 
-The JupyterHub instance assigned to Cooley start notebooks on a login node.  The JupyterHub instance assigned to theta run notebooks a server external to Theta.  This instance does not have access to HPE/Cray programing environment and tools located in ``/opt/cray, opt/intel, etc.``.  These instances provide users access to their home (/home/$USER) and project folders on theta-lustre, grand and eagle file systems (/home/$USER, /project, /grand, /eagle) using symbolic links in the home directory.  
+The JupyterHub instance assigned to Cooley start notebooks on a login node.  The JupyterHub instance assigned to theta run notebooks a server external to Theta.  This instance does not have access to HPE/Cray programing environment and tools located in ``/opt/cray, opt/intel, etc.``.  These instances provide users access to their home (/home/$USER) and project folders on theta-lustre, grand and eagle file systems (/home/$USER, /project, /grand, /eagle) using symbolic links in the home directory.
 
 The JupyterHub instances assigned to ThetaGPU allows users to start notebooks on a compute node through the job schedule system (Cobalt).  The instance assigned to Polaris will start notebooks on compute nodes through the job scheduler (PBS Pro).  These instances follow the scheduling and accounting policies run the notebook against the project allocation.
 
 
-##Customize Environment 
+## Customize Environment
 
-ALCF provide a simple Python environment to start.  User can customize their environment to meet their needs by creating virtual python environment and defining new kernels.  Below is an example of setting up a simple environment `projectA` with module mpi from within a notebook
+ALCF provides a simple Python environment to start.  User can customize their environment to meet their needs by creating virtual python environment and defining new kernels.  Below is an example of setting up a simple environment `projectA` with module mpi from within a notebook
 
 For more information on how to manage conda environments, refer to this [page](https://conda.io/docs/user-guide/tasks/manage-environments.html).
-````
-From a terminal :
 
+From a terminal:
+```
 # Source required conda environment variables from appropriate install
 . /soft/systems/jupyterhub/miniconda3/etc/profile.d/conda.sh
 
@@ -37,11 +37,11 @@ python -m ipykernel install --user --name projectA
 
 # deactivate conda environment
 conda deactivate
-````
+```
 
-Once the base environment is setup the user must add an "env" section to the kernel.json file, located in directory "${USER}/.local/share/jupyter/kernels/projecta", defining the "CONDA_PREFIX" and "PATH" variables.  Currently Polaris compute nodes access the internet through a proxy.  To configure the kernel to use the proxy add variables "http_proxy" and "https_proxy" to the "env" section.  This will allow users to install packages form within the notebook using "!conda".  The following is a sample configuration:
+Once the base environment is setup the user must add an `env` section to the `kernel.json` file, located in directory `${USER}/.local/share/jupyter/kernels/projecta`, defining the `CONDA_PREFIX` and `PATH` variables.  Currently, Polaris compute nodes access the internet through a proxy.  To configure the kernel to use the proxy add variables `http_proxy` and `https_proxy` to the `env` section.  This will allow users to install packages form within the notebook using `!conda` magic commands.  The following is a sample configuration:
 
-````
+```
 {
  "argv": [
   "/home/<user>/.conda/envs/projectA/bin/python",
@@ -62,10 +62,9 @@ Once the base environment is setup the user must add an "env" section to the ker
   "debugger": true
  }
 }
-````
-example: /home/$USER/.local/share/jupyter/kernels/projecta
+```
 
-After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.  
+After completing these steps, you will see projectA kernel when you click new on the Jupyter Hub home page or when you use Kernel menu on a Jupyter notebook.
 
 
 ## Accessing Project Folders:
@@ -78,7 +77,7 @@ Jupyterhub file browser limits the user view files and directories within their 
 From terminal:
 ln -s /project/ABC ABC_project
 ln -s /lus/theta-fs0/projects/EFG EFG_project
- 
+
 From notebook:
 !ln -s /project/ABC ABC_project
 !ln -s /lus/theta-fs0/projects/EFG EFG_project
@@ -87,7 +86,7 @@ From notebook:
 
 ## Running Notebook on a compute node
 
-The ThetaGPU and Polaris instance of JupyterHub allow users to start Jupyter Notebooks on compute nodes through the given job scheduler.  The job will be executed according to ALCF’s  queue and scheduling policy (Note:  If the queued Job does not start within 2 minutes JupyterHub will timeout and the job will be removed from queue) 
+The ThetaGPU and Polaris instance of JupyterHub allow users to start Jupyter Notebooks on compute nodes through the given job scheduler.  The job will be executed according to ALCF’s  queue and scheduling policy (Note:  If the queued Job does not start within 2 minutes JupyterHub will timeout and the job will be removed from queue)
 
 ### ThetaGPU
 
@@ -121,15 +120,15 @@ Once the appropriate information is provided the user will click the “Start”
 
 ### Polaris
 
-The Polaris JupyterHub instance does not have a “Local Host Process” option.  All jupyter notebooks are run on a compute node through the job scheduler.  When the user authenticates the user will be presented with a “Start My Server” button and after clicking the button the user will be presented the available job options needed to start the notebook.  
+The Polaris JupyterHub instance does not have a “Local Host Process” option.  All jupyter notebooks are run on a compute node through the job scheduler.  When the user authenticates the user will be presented with a “Start My Server” button and after clicking the button the user will be presented the available job options needed to start the notebook.
 
 - Select a job profile:  This field list the current available Profiles “Polaris Compute Node”
-- Queue Name: This field provide a list of available queues on the system. 
+- Queue Name: This field provide a list of available queues on the system.
 - Project List: This field displays the active projects associated with the user on the given system (ThetaGPU).
 - Number Chunks: This field allows the user to select the number of compute nodes to allocated to the job starts.
 - Runtime (minutes:seconds) : This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the Polaris queue scheduling policy for minimum and maximum runtime allowed for a selected queue.
 - File Systems: This field allow the user to select which file systems are required.   By default al file systems are checked.
- 
+
 <figure markdown>
   ![Add options](files/Jupyter-6-job-options.png){ width="700" }
   <figcaption>Poalris Job options</figcaption>
@@ -151,7 +150,8 @@ Failing to correctly end a running Jupyter Notebook will continue to consume the
   <figcaption>Stop server</figcaption>
 </figure>
 
-Reference 
+
+### References
 
 - [ThetaGPU Queue Policy](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md)
-- [Polaris Queue Policy](../polaris/queueing-and-running-jobs/job-and-queue-scheduling.md)
+- [Polaris Queue Policy](../running-jobs/job-and-queue-scheduling.md#Polaris-Queues)
