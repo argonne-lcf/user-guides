@@ -164,6 +164,10 @@ and other key differences with the early CPU example follow.
     [Getting Started
     repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
     and copied below.
+	
+<!--codeinclude-->
+[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
+<!--/codeinclude-->
 
 ### Hardware threads
 
