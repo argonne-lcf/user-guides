@@ -20,9 +20,10 @@ $ source env/bin/activate
 
 ### Git
 
-Using Git ssh. Make sure you add ssh public key to your profile (https cloning to be deprecated soon)
+Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub account:
 ```
 $ git clone git@github.com:argonne-lcf/user-guides.git
+$ git submodule init; git submodule update
 ```
 
 ### Installing MkDocs
