@@ -2,3 +2,4 @@ mkdocs-material
 mkdocs
 mkdocs-video
 mkdocs-include-markdown-plugin
+mkdocs-codeinclude-plugin

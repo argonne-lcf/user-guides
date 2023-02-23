@@ -181,7 +181,7 @@ nav:
     - Performance Tools:
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
-  - AI Testbed: 
+  - AI Testbed:
     - Getting Started: ai-testbed/index.md
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
@@ -297,5 +297,7 @@ extra:
 
 plugins:
   - include-markdown
+  - codeinclude:
+      title_mode: pymdownx.tabbed
   - search:
       lang: en
