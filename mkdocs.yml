@@ -274,17 +274,18 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - def_list
   - pymdownx.critic
   - pymdownx.caret
+  - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.tilde
-  - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
-  - def_list
+  - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.tilde
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
