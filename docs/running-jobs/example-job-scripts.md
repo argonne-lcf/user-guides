@@ -163,11 +163,7 @@ and other key differences with the early CPU example follow.
     impact on performance. An example for this script is available in the
     [Getting Started
     repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
-    and copied below.
-	
-<!--codeinclude-->
-[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
-<!--/codeinclude-->
+    and copied below.	
 
 ### Hardware threads
 
@@ -211,24 +207,22 @@ and stderr to the same file and uses the stdout filename provided (if provided).
 would do the same but use the stderr filename provided. Without these options, separate
 files containing stdout and stderr of the job are produced.
 
+Here we compare two bare-bones PBS submission scripts for a CUDA example with and without MPI:
+<!--codeinclude-->
+[No MPI](../../ALCFBeginnersGuide/polaris/examples/01_example_cu.sh)
+[With MPI](../../ALCFBeginnersGuide/polaris/examples/01_example_mpi.sh)
+<!--/codeinclude-->
+
 
 ### Setting GPU affinity for each MPI rank
 
 The `CUDA_VISIBLE_DEVICES` environment variable is provided for users to set which GPUs on a node are accessible to an application or MPI ranks started on a node.
 
-A copy of the small helper script provided in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) is provided below for reference.
+A copy of the small helper script provided in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) is provided below for reference:
 
-```bash
-$ cat ./set_affinity_gpu_polaris.sh
-#!/bin/bash -l
-num_gpus=$(nvidia-smi -L | wc -l)
-# need to assign GPUs in reverse order due to topology
-# See Polaris Device Affinity Information https://www.alcf.anl.gov/support/user-guides/polaris/hardware-overview/machine-overview/index.html
-gpu=$((${num_gpus} - 1 - ${PMI_LOCAL_RANK} % ${num_gpus}))
-export CUDA_VISIBLE_DEVICES=$gpu
-echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
-exec "$@"
-```
+<!--codeinclude-->
+[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
+<!--/codeinclude-->
 
 !!! note
 
