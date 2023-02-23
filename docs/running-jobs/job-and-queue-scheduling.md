@@ -449,9 +449,9 @@ If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
 ## Machine specific job execution information
 
-<!-- ### <a name="Polaris"></a>Polaris -->
+### <a name="Polaris"></a>Polaris
 
-###  <a name="Polaris-Queues"></a>Polaris Queues
+####  <a name="Polaris-Queues"></a>Queues
 There are three production queues you can target in your qsub (`-q <queue name>`):
 
 | Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
@@ -482,7 +482,7 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 - **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
 - **Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
 
-### <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
+#### <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
 * Racks contain (7) 6U chassis; each chassis has 2 nodes for 14 nodes per rack
 * The hostnames are of the form xRRPPc0sUUb[0|1]n0 where:
     * RR is the row {30, 31, 32}
@@ -504,7 +504,7 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 |x3003-g0	|x3007-g1	|x3011-g2	|x3015-g3	|x3103-g4 |x3107-g5 |x3111-g6 |x3203-g7 |x3207-g8 |x3211-g9 |
 |x3004-g0	|x3008-g1	|x3012-g2	|x3016-g3	|x3104-g4 |x3108-g5 |x3112-g6 |x3204-g7 |x3208-g8 |x3212-g9
 
-### <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
+#### <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
 
 Currently, the only access the internet is via a proxy.  Here are the proxy environment variables for Polaris:
 
