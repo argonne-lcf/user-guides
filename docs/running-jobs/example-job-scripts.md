@@ -37,7 +37,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
 <!--codeinclude-->
-[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:get_uuid
+[Identifying physical or virtual GPU by UUID](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:uuid_print
 <!--/codeinclude-->
 
 
