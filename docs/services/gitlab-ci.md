@@ -175,7 +175,7 @@ _Cluster Tag(s)_
 |:--------|:---------:|:-------------:|
 | Theta     | ecp-theta | This tag will send jobs to the Theta HPC runners    |
 | ThetaGPU  | thetagpu  | This tag will send jobs to the ThetaGPU HPC runners |
-| Theta     | polaris   | This tag will send jobs to the Polaris HPC runners  |
+| Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
 
