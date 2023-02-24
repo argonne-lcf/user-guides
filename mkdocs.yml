@@ -51,6 +51,7 @@ nav:
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
+    - Running Jobs: polaris/running-jobs.md
     - Applications and Libraries:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
