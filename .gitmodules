@@ -1,0 +1,6 @@
+[submodule "GettingStarted"]
+	path = GettingStarted
+	url = https://github.com/argonne-lcf/GettingStarted.git
+[submodule "ALCFBeginnersGuide"]
+	path = ALCFBeginnersGuide
+	url = https://github.com/jtchilders/ALCFBeginnersGuide.git

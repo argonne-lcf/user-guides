@@ -1,4 +1,4 @@
-# Running Jobs using PBS at the ALCF
+# Running Jobs using PBS
 
 ## Documentation / Tools
 * [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf): This is really excellent.  We highly suggest you download it and search through it when you have questions.  However, it is big at about 2000 pages / 40MB and contains a bunch of stuff you don't really need, so you can also download the guides separately here:
@@ -32,21 +32,7 @@ Our documentation is organized in two sections aligned with the two steps descri
 	 - [qmsg - write a message into a jobs output file](#qmsg)
 	 - [qsig - send a signal to a job](#qsig)
 	 - [pbsnodes - Get information about the current state of nodes](#pbsnodes)
- - **Obtaining and managing compute resources at ALCF - Machine Specific Information**
-     - [Polaris](#Polaris)
-         - [Queues](#Polaris-Queues)
-         - [Network: Rack and Dragonfly Group Mappings](#Rack-and-Dragonfly-Group-Mappings)
-         - [Compute Node Access to the Internet](#Compute-Node-Access-to-the-Internet)
- - **Controlling task execution on your allocated resources**
-    - [Controlling Where Your Jobs Runs](#Controlling-Where-Your-Jobs-Runs)
-    - [Running MPI+OpenMP Applications](#Running-MPI+OpenMP-Applications)
-    - [Running GPU-enabled Applications](#Running-GPU-enabled-Applications)
-    - [Running Multiple MPI Applications on a node](#Running-Multiple-MPI-Applications-on-a-node)
-    - [Binding MPI ranks to GPUs](#Binding-MPI-ranks-to-GPUs)
-    - [Running Multiple Multi-node Applications](#Running-Multiple-Multi-node-Applications)
     - [Using Fakeroot with Singularity](#Using-Fakeroot-with-Singularity)
-
-
 
 ## Obtaining and managing compute resources at ALCF
 
@@ -75,14 +61,14 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * If you want to run an executable rather than a script replace `<your jobs script>` in the example above with `-- <your executable>` (that is dash dash)
     * PBS Documentation: Users Guide, Chapter 2, page UG-11 and Reference Guide Chapter 2, section 2.57, page RG-216
 2. `qstat`: check on the status of your jobs or queues
-    * Try these variations and see which you like best: `qstat`, `qstat -was`, `qstat -was1`, `qstat -wan`, `qstat -wan1`; Add `-x` to see jobs that have completed.  We keep two weeks of history.
+    * Try these variations and see which you like best: `qstat`, `qstat -was`, `qstat -was1`, `qstat -wan`, `qstat -wan1`. Add `-x` to see jobs that have completed.  We keep two weeks of history.
     * `qstat -Q` will list all the queues in case you forget.
     * PBS Documentation: Users Guide Sec. 10.2, page UG-175; Reference Guide Sec. 2.55, page RG-200
 3. `qalter`: update your request for resources
     * Just like qsub, just add a jobid at the end.  Only works before the job starts;
     * If you want to change the walltime to 30 minutes: `qalter -l walltime=30:00:00 <jobid>`
     * PBS Documentation: Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
-4. `qdel`: cancel a job that you don't need; This will also kill a running job
+4. `qdel`: cancel a job that you don't need. This will also kill a running job
     * `qdel <jobid>`
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
@@ -103,7 +89,7 @@ Where:
 *  `walltime=HH:MM:SS` specifying a wall time is mandatory at the ALCF.  Valid wall times depend on the queue you are using.  There is a table with the queues for each machine at the end of this section and in the machine specific documentation.
 *  `filesystems=fs1:fs2:...` Specifying which filesystems your application uses is mandatory at ALCF.  The reason for this is if a filesystem goes down, we have a way of making PBS aware of that and it won't run jobs that need that filesystem.  If you don't specify filesystems you will receive the following error: `qsub: Resource: filesystems is required to be set.`
 *  `place=scatter` is telling PBS you want each of your chunks on a separate vnode.  By default, PBS will pack your chunks to get maximum utilization.  If you requested `ncpus=1` and `chunks=64` **without** `place=scatter` on a system with `ncpus=64`, all your chunks would end up on one node.
-*  Your job script:  See [Controlling the execution on your allocated resources](#Controlling the execution on your allocated resources) for more information about how to build your job script.  For options that wont change, you do have the option of taking things off the command line and putting them in your job script.  For instance the above command line could be simplified to `qsub -l select=<#> <your job script>` if you added the following to the top (the PBS directives have to be before any executable line) of your job script:
+*  Your job script:  See [Example Job Scripts](../example-job-scripts) for more information about how to build your job script.  For options that wont change, you do have the option of taking things off the command line and putting them in your job script.  For instance the above command line could be simplified to `qsub -l select=<#> <your job script>` if you added the following to the top (the PBS directives have to be before any executable line) of your job script:
 
 ```bash
 #PBS -A <project>
@@ -147,9 +133,9 @@ You also have to tell PBS how you want the chunks distributed across the physica
      * `shared` means the vnode could be shared with another job from another user.
      * `exclhost` means this job gets the entire host, even if it has multiple vnodes.
   * group=`<resource name>`
-     * As an example, for machines that use a dragonfly network topology, we provide a PBS resource named `tier1` indicating which dragonfly group a node is in.  If you wanted to ensure that all the chunks came from dragonfly group 2, you could specify `tier1=g2`.
+     * As an example, for machines that use a dragonfly network topology, we provide a PBS resource named `tier1` indicating which dragonfly group a node is in.  If you wanted to ensure that all the chunks came from a single dragonfly group, you could specify `place=group=tier1` as part of your qsub.  `tier0` is rack granularity, so `group=tier0` would ensure your nodes all came from one rack.  Note that if you requested more nodes than were available in a rack your job would never run and you would see something like `Not Running: Insufficient amount of resource: tier0`.
 
-The downside to `group=` is that you have to specify a specific group, when what you may really want is for your chunks to all be in one dragonfly group, but you don't care which one.  On each node, we have defined two resources, one called `tier0` which is equal to the rack the node is in (each rack has a switch in it) and `tier1` which is equal to the dragonfly group it is in.  We have defined *placement sets* for the tier0 and tier1 resources.  As a result, if you don't specify a grouping PBS will *preferentially* group your nodes in a placement set, but it won't drain or delay your job start to do so.
+We have defined *placement sets* for the tier0 and tier1 resources.  As a result, if you don't specify a grouping PBS will *preferentially* group your nodes in a placement set, but it won't drain or delay your job start to do so.  For example, if you request 10 nodes and don't specify a grouping, if 10 nodes are available in the same rack, all your nodes will be in one rack.  If not, but there are 10 nodes in a single dragonfly group, all your nodes will be in one dragonfly group.  If you wish to specify a specific rack or dragonfly group, that is accomplished via the select syntax.  For instance, `qsub ... -l select=10:tier1=g0` would force your 10 nodes to be in dragonfly group 0.
 
 Here is a heavily commented sample PBS submission script that shows some more of the options, but remember that the PBS manuals referenced at the top of this page are the ultimate resource.
 
@@ -232,13 +218,11 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 
 Users should add ```-M <email address>``` if they want notifications as a best practice.
 
-**Note: For users with '<username>@alcf.anl.gov' email addressed, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add ```#PBS -m n``` to your script.**
-
-
+**Note:** For users with '<username>@alcf.anl.gov' email addressed, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add ```#PBS -m n``` to your script.
 
 #### Specifying Filesystems
 
-**Note: The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:**
+**Note:** The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:
 
 `qsub: Resource: filesystems is required to be set.`
 
@@ -261,7 +245,7 @@ To update the filesystems list for your job, use `qalter`.
 	* Since we allocate full nodes on Polaris, 4 chunks will be 4 nodes.  If we shared nodes, that would be 4 threads.
 	* use the -- (dash dash) syntax when directly running an executable.
 * `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
-	* 32 chunks on any system that meets the requirements; each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode; use the queue named prod.
+	* 32 chunks on any system that meets the requirements. Each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode. Use the queue named `prod`.
 
 ## <a name="qstat"></a>`qstat`: Query the status of jobs/queues
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200
@@ -421,7 +405,7 @@ x3209c0s19b0n0
 x3209c0s1b1n0
 ```
 
-`pbsnodes -l`: (lowercase  l) see which nodes are down;  The comment often indicates why it is down
+`pbsnodes -l`: (lowercase  l) see which nodes are down. The comment often indicates why it is down
 
 ```bash
 [20220217-21:10:31]> pbsnodes -l
@@ -452,190 +436,12 @@ In that case, the job will be deleted from the system and will not show up in th
 If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
 
 
-# Machine specific job execution information
-
-## <a name="Polaris"></a>Polaris
-
-###  <a name="Polaris-Queues"></a>Queues
-There are three production queues you can target in your qsub (`-q <queue name>`):
-
-|Queue Name |Node Min |Node Max	| Time Min                    |Time Max | Notes                                              |
-|----|----|----|-----------------------------|----|----------------------------------------------------|
-|debug|1|2| 10 min (5 min from 10/3/22) |1 hr| max 8 nodes in use by this queue ay any given time |
-|debug-scaling|1|10| 10 min (5 min from 10/3/22)|1 hr| max 1 job running/accruing/queued **per-user**     |
-|prod|10|496| 30 min (5 min from 10/3/22)|24 hrs| Routing queue; See below                           |
-
-`prod` is routing queue and routes your job to one of the following six execution queues:
-
-|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
-|----|----|----|------------------------------|----|----------------------------------------|
-|small|10|24| 5 min  |6 hrs||
-|medium|25|49| 5 min  |12 hrs||
-|large|50|496| 5 min  |24 hrs||
-|backfill-small|10|24| 5 min   |6 hrs| low priority, negative project balance |
-|backfill-medium|25|49| 5 min  |12 hrs| low priority, negative project balance |
-|backfill-large|50|496| 5 min                     |24 hrs| low priority, negative project balance |
-
-**Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
-**Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
-**Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
-**Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
-
-### <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
-* Racks contain (7) 6U chassis; Each chassis has 2 nodes for 14 nodes per rack
-* The hostnames are of the form xRRPPc0sUUb[0|1]n0 where:
-    * RR is the row {30, 31, 32}
-    * PP is the position in the row {30 goes 1-16, 31 and 32 go 1-12}
-    * c is chassis and is always 0
-    * s stands for slot, but in this case is the RU in the rack and values are {1,7,13,19,25,31,37}
-    * b is BMC controller and is 0 or 1 (each node has its own BMC)
-    * n is node, but is always 0 since there is only one node per BMC
-* So, 16+12+12 = 40 racks * 14 nodes per rack = 560 nodes.
-* Note that in production group 9 (the last 4 racks) will be the designated on-demand racks
-* The management racks are x3000 and X3100 and are dragonfly group 10
-* The TDS rack is x3200 and is dragonfly group 11
-* Each compute node will have a PBS resource named `tier0` which will be equal to the values in the table below.  This allows you to group your jobs within a rack if you wish.  There is also a resource called `tier1` which will be equal to the column headings.  This allows you to group your jobs within a dragonfly group if you wish.
-
-|g0 |g1 |g2	|g3 |g4 |g5 |g6 |g7 |g8 |g9|
-|----|----|----|----|----|----|----|----|----|----|
-|x3001-g0	|x3005-g1	|x3009-g2	|x3013-g3	|x3101-g4 |x3105-g5 |x3109-g6 |x3201-g7 |x3205-g8 |x3209-g9|
-|x3002-g0	|x3006-g1	|x3010-g2	|x3014-g3	|x3102-g4 |x3106-g5 |x3110-g6 |x3202-g7 |x3206-g8 |x3210-g9|
-|x3003-g0	|x3007-g1	|x3011-g2	|x3015-g3	|x3103-g4 |x3107-g5 |x3111-g6 |x3203-g7 |x3207-g8 |x3211-g9 |
-|x3004-g0	|x3008-g1	|x3012-g2	|x3016-g3	|x3104-g4 |x3108-g5 |x3112-g6 |x3204-g7 |x3208-g8 |x3212-g9
-
-### <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
-
-Currently, the only access the internet is via a proxy.  Here are the proxy environment variables for Polaris:
-
-```bash
-export http_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export https_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-```
-
-In the future, though we don't have a timeline on this because it depends on future features in slingshot and internal software development, we intend to have public IP addresses be a schedulable resource.  For instance, if only your head node needed public access your select statement might looks something like: `-l select=1:pubnet=True+63`.
-
-# Controlling task execution on your allocated resources
-
-## <a name="Controlling-Where-Your-Job-Runs"></a>Controlling Where Your Jobs Runs
-If you wish to have your job run on specific nodes form your select like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>...` . Obviously, that gets tedious for large jobs.
-
-If you want to control the location of a few nodes, for example 2 out of 64, but the rest don't matter, you can do something like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>+62:system=foo`
-
-Every node has a PBS resource called `tier0` with a rack identifier and `tier1` with a dragonfly group identifieer.  If you want all your nodes grouped in a rack, you can add the group specifier `-l select=8:system=foo,place=scatter:group=tier0`.  If you wanted everything in the same dragonfly group, replace `tier0` with `tier1`.  Note that you have to also explicitly specify the place when you use group.  If you wanted a specific rack or dragonfly group instead of any of them, you are back to the select: `-l select 10:tier0=x3001-g0`.
-## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
-Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
-
-* `-n` total number of MPI ranks
-* `-ppn` number of MPI ranks per node
-* `--cpu-bind` CPU binding for application
-* `--depth` number of cpus per rank (useful with `--cpu-bind`)
-* `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
-* `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
-
-A sample submission script with directives is below for a 4-node job with 32 MPI ranks on each node and 8 OpenMP threads per rank (1 per CPU).
-
-```bash
-#!/bin/bash -l
-#PBS -N AFFINITY
-#PBS -l select=4:ncpus=256
-#PBS -l walltime=0:10:00
-#PBS -q debug-scaling
-#PBS -A Catalyst
-
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=32 # Number of MPI ranks to spawn per node
-NDEPTH=8 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
-NTHREADS=8 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
-
-NTOTRANKS=$(( NNODES * NRANKS ))
-
-echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
-
-cd /home/knight/affinity
-mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
-```
-
-## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
-GPU-enabled applications will similarly run on the compute nodes using the above example script.
-
-* The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
-
-* If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
-
-## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
-Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
-
-```bash
-export CUDA_VISIBLE_DEVICES=0
-mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=1
-mpiexec -n 8 --ppn 8 --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=2
-mpiexec -n 8 --ppn 8 --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=3
-mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity &
-
-wait
-```
-
-## <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
-The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
-
-A example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
-
-```bash
-#!/bin/bash -l
-num_gpus=4
-# need to assign GPUs in reverse order due to topology
-# See Polaris Device Affinity Information:
-# https://www.alcf.anl.gov/support/user-guides/polaris/hardware-overview/machine-overview/index.html
-gpu=$((${num_gpus} - 1 - ${PMI_LOCAL_RANK} % ${num_gpus}))
-export CUDA_VISIBLE_DEVICES=$gpu
-echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
-exec "$@"
-```
-This script can be placed just before the executable in the `mpiexec` command like so.
-```bash
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
-```
-Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
-
-## <a name="Running-Multiple-Multi-node-Applications"></a>Running Multiple Multi-node Applications
-With some minimal processing of `$PBS_NODEFILE`, one is able to launch multiple applications simultaneously in a job on separate sets of nodes by providing separate hostfiles to each `mpiexec` command. The `split` unix command is one convenient way in which the `$PBS_NODEFILE` file can be split into several files containing distinct sets of fewer nodes. In the example below, each application is expected to run on a single node. For example, a 4-node job would result in four instances of the application running each on a single node. The `split` command creates several `local_hostfile.*` hostfiles that can then be passed as arguments to each `mpiexec` command.
-
-```bash
-# Settings for each run: 1 nodes, 4 MPI ranks per node spread evenly across cores
-# User must ensure there are enough nodes in job to support all concurrent runs
-NUM_NODES_PER_MPI=1
-NRANKS_PER_NODE=4
-NDEPTH=8
-NTHREADS=1
-
-NTOTRANKS=$(( NUM_NODES_PER_MPI * NRANKS_PER_NODE ))
-
-# Increase value of suffix-length if more than 99 jobs
-split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_NODEFILE local_hostfile.
-
-for lh in local_hostfile*
-do
-  echo "Launching mpiexec w/ ${lh}"
-  mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --hostfile ${lh} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity &
-  sleep 1s
-done
-
-wait
-```
-
 ## <a name="Using-Fakeroot-with-Singularity"></a>Using Fakeroot with Singularity
 The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:
 
 `-l singularity_fakeroot=true`
 
-<!--### Need help from applications people for this section
+<!--#### Need help from applications people for this section
 
 * Thinking of things like:
   * How do you set affinity

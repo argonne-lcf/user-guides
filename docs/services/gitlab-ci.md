@@ -22,8 +22,6 @@ ALCF's Gitlab-CI environment can be accessed by logging into the [ALCF Gitlab-CI
 _Example: A `.gitlab-ci.yml` file for a Theta project_
 ```
 variables:
-  # This variable will no longer needed pending December 1st 2022
-  ANL_THETA_PROJECT_SERVICE_USER: "ThetaCISerivceUser"
   ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
 stages:
   - stage1
@@ -69,10 +67,9 @@ Include with the request :
 * The ALCF Project shortname
 * The PI’s name 
 
-<b>Change effective Dec 1st</b>
 Gitlab-ci jobs run as the triggering user on relevant systems. The triggering user's home directory will be used by Jacamar-CI to copy the git repository and cache files into `~/.jacamar-ci`. This job will run out of their home directory and consume filesystem quota.  If you need more space you should try to reference files in any ALCF Project allocations you have on shared filesystems.  Unfortunately the initial git clone must run out of `~/.jacamar-ci` in your home directory.
 
-  The triggering user is defined as the user account who caused the CI/CD pipeline to execute.  Via scheduling a re-occurring job, pushing commits up to the server, creating a merge request, and/or merging a branch.  When the CI/CD jobs run they will run as that user on the relevant systems. For a job to succeed the `triggering user` must have appropriate permissions and access to all relevant systems and files.
+The triggering user is defined as the user account who caused the CI/CD pipeline to execute.  Via scheduling a re-occurring job, pushing commits up to the server, creating a merge request, and/or merging a branch.  When the CI/CD jobs run they will run as that user on the relevant systems. For a job to succeed the `triggering user` must have appropriate permissions and access to all relevant systems and files.
 
 ### Initial Login and Profile setup of Gitlab-CI
 * Login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
@@ -176,7 +173,9 @@ _Cluster Tag(s)_
 
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
-| Theta   | ecp-theta | This tag will send jobs to the Theta HPC runners |
+| Theta     | ecp-theta | This tag will send jobs to the Theta HPC runners    |
+| ThetaGPU  | thetagpu  | This tag will send jobs to the ThetaGPU HPC runners |
+| Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
 
@@ -221,14 +220,11 @@ For for more details please set please see upstream [docs](https://docs.gitlab.c
 ##### ALCF Specific Variables
 If you are planning to submit jobs to a scheduler then you will need to specify a per system variable `ANL_${CLUSTER}_SCHEDULER_PARAMETERS`; where `${CLUSTER}` is the name of the cluster.  This variable will contain any command line flags you would need to submit jobs as if you were on the command line / scripting.  Please consult the below table for more info.
 
-***Note: The service account will no longer be needed on Theta starting December 1, 2022 and is not needed on any other available cluster***
-
-If running a CI/CD job on theta cluster you will also need to provide a `ANL_THETA_PROJECT_SERVICE_USER` variable.  This service account username will be given to you when the ALCF project is setup in gitlab-ci.alcf.anl.gov.  
-
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Theta   | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
-| Theta   | Cobalt    | ANL_THETA_PROJECT_SERVICE_USER | This variable will be provided to you once your project is setup in gitlab. |
+| Theta     | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS    | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
+| ThetaGPU  | Cobalt    | ANL_THETAGPU_SCHEDULER_PARAMETERS | [ThetaGPU Job Queue and Scheduling](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md) |
+| Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
 
 _Example: Running a batch job on Theta HPC_
 ```
@@ -376,7 +372,6 @@ test2:
 </figure>
 
 
-***Effective December 1 2022***
 ## Storage Use and Policy 
 ### Gitlab Project Quota
   Each repository will be have a default quota of 1GB in Gitlab.  Quota increases may be requested by emailing [Support](mailto:support@alcf.anl.gov).  This quota is separate from the storage quotas allocated to ALCF Projects and ALCF Users on the HPC clusters and shared filesystems.
@@ -386,7 +381,6 @@ test2:
 
   It is recommended that if you need more space then your home directory can provide, that you leverage any ALCF Project space you may have been allocated on a shared filesystem.
 
-***Effective December 1 2022***
 ## Gitlab-CI Access Termination Policy
   Projects that have exhibited a period of inactivity for at least 6 months will have their access disabled and their repositories deleted.  Notification will be sent to the PI 30 days prior to the day of the action.  
 
