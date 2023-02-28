@@ -86,7 +86,7 @@ cat submit.sh
 
 #COBALT -A myproject
 
-module add atp
+module load atp
 
 bin=/soft/applications/nwchem/6.8/bin/nwchem
 echo "Running Cobalt Job $COBALT_JOBID."

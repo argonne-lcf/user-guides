@@ -31,6 +31,11 @@ nav:
       - General: services/continuous-integration.md
       - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
+  - Running Jobs with PBS at the ALCF:
+      - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
+      - Example Job Scripts: running-jobs/example-job-scripts.md
+      - Machine Reservations: running-jobs/machine-reservations-polaris.md
+      - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - Known Issues: polaris/known-issues.md
@@ -46,11 +51,7 @@ nav:
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
-    - Queueing and Running Jobs on Polaris:
-      - Job Scheduling and Execution: polaris/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Example Job Scripts: polaris/queueing-and-running-jobs/example-job-scripts.md
-      - Machine Reservations: polaris/queueing-and-running-jobs/machine-reservations-polaris.md
-      - Cobalt to PBS option Comparison: polaris/queueing-and-running-jobs/pbs-qsub-options-table.md
+    - Running Jobs: polaris/running-jobs.md
     - Applications and Libraries:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
@@ -171,6 +172,7 @@ nav:
       - Containers: theta-gpu/data-science-workflows/containers/containers.md
       - Deep Learning Frameworks:
         - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md
+        - DeepSpeed on ThetaGPU: theta-gpu/data-science-workflows/dl-frameworks/deepspeed.md
         - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
         - Running TensorFlow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
         - TensorBoard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
@@ -281,26 +283,35 @@ extra_javascript:
   - javascripts/alcf-extra.js
 
 markdown_extensions:
+  - footnotes
   - admonition
   - codehilite
-  - pymdownx.superfences
   - tables
   - attr_list
   - md_in_html
+  - def_list
   - pymdownx.critic
-  - pymdownx.caret
+  - pymdownx.inlinehilite
   - pymdownx.keys
+  - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
-  - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
-  - def_list
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      use_pygments: true
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
 
+
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
@@ -309,5 +320,7 @@ extra:
 
 plugins:
   - include-markdown
+  - codeinclude:
+      title_mode: pymdownx.tabbed
   - search:
       lang: en
