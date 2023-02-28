@@ -1,4 +1,4 @@
-# Steps to Run a Model/Program
+# Running a Model/Program
 
 **NOTE:  Please be mindful of how you are using the system.
 For example, consider running larger jobs in the evening or on weekends.**

@@ -199,11 +199,11 @@ nav:
       - System Overview: ai-testbed/sambanova/system-overview.md
       - Getting Started: ai-testbed/sambanova/getting-started.md
       - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
-      - Steps to Run a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
       - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
       - Example Programs: ai-testbed/sambanova/example-programs.md
       - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
-      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova/running-bert-large-on-sn10-8r.md
+      - Running BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova/running-bert-large-on-sn10-8r.md
       - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
       #- DataParallel: ai-testbed/sambanova/DataParallel.md
       - Miscellaneous: ai-testbed/sambanova/miscellaneous.md

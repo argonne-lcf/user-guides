@@ -1,4 +1,4 @@
-# Steps to Run BERT-Large on Sambanova DataScale SN10-8R
+# Running BERT-Large on Sambanova DataScale SN10-8R
 
 * BERT Code is in the [Bert](./bert/) directory here for your reference.
   * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT.
@@ -22,7 +22,7 @@
     source /software/sambanova/envs/sn_env.sh
     ``` -->
 
-## Pretraining in data parallel mode
+## Pretraining in Data Parallel Mode
 
 **Note**: for the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time.
 
@@ -48,6 +48,7 @@
    ```bash
    sbatch --output=log_bert_pretrain_LBS1024_np2.out --gres=rdu:2 -c 8 submit-bert-pretrain-job-LBS1024.sh
    ```
+
    Note: `-c` represents the number of cores per task
 
 4. You can follow the status of your job using: `squeue`. The job should take about 8 min to complete.
@@ -104,7 +105,7 @@
 
     </details>
 
-## Fine-tuning for question answering using 1 RDU
+## Fine-Tuning for Question Answering Using 1 RDU
 
 **Note**: for the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time. We will also use a processed dataset.
 
@@ -118,6 +119,7 @@
    ```
 
 2. Copy the processed dataset to the finetune repo. This will avoid tokenizing the dataset on the fly.
+
    ```bash
    cp -r /projects/aitestbed_training/SN/precompiled_bert/squad_cache ./
    ```
@@ -127,8 +129,8 @@
    ```bash
    OUTDIR=$HOME/finetune
    ```
-   Note: the number of train epochs is set to 0.08, but this can be changed
 
+   Note: the number of train epochs is set to 0.08, but this can be changed
 
 4. SambaNova uses SLURM for job submission and queueing. We will use sbatch to submit our job to the job scheduler. Please refer to [Sambanova Documentation](https://www.alcf.anl.gov/support/ai-testbed-userdocs/sambanova/Job-Queuing-and-Submission/index.html) for further details. In the following example, 1 RDU is used:
 
@@ -169,7 +171,7 @@
 
     </details>
 
-# Other Models and Use-cases
+## Other Models and Use-Cases
 
 * Full execution scripts (compile, run, measure-perf) for BERT-Large can be found under `/projects/aitestbed_training/SN/full_execution_bert/bash_scripts`.
   * `submit-bert-pretrain-job.sh`: bash script for pretraining job with 8 RDUs and LBS=256
