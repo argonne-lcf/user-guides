@@ -17,16 +17,19 @@ See the docs for more details on using [python on Polaris](https://www.alcf.anl.
     E.g.,~  to create a virtual environment that allows installation of
     further packages with pip:
 
-        python -m venv /path/to-venv --system-site-packages
-        . /path/to-venv/bin/activate
+    ```bash
+    python -m venv /path/to-venv --system-site-packages
+    . /path/to-venv/bin/activate
+    ```
 
-    Where ``/path/to-venv`` can be anywhere you have write access.
+    Where `/path/to-venv` can be anywhere you have write access.
     For future uses just load the conda module and run the activate line.
 
     You can also ensure you are using the latest version of libEnsemble:
 
-        pip install libensemble
-
+    ```bash
+    pip install libensemble
+    ```
 </details>
 
 
