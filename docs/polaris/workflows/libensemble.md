@@ -78,6 +78,6 @@ Or you can run an interactive session with:
 
 ## Further links
 
-Docs:  <https://libensemble.readthedocs.io> <br>
+Docs: <https://libensemble.readthedocs.io> <br>
 GitHub: <https://github.com/Libensemble/libensemble>
 
