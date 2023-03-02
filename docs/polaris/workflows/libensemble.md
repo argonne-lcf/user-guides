@@ -9,12 +9,12 @@ libEnsemble is provided on Polaris in the **conda** module:
     module load conda
     conda activate base
 
-See the docs for more details on using [python on Polaris](https://www.alcf.anl.gov/support/user-guides/polaris/data-science-workflows/python/index.html).
+See the docs for more details on using [python on Polaris](https://docs.alcf.anl.gov/polaris/data-science-workflows/python/).
 
 <details>
   <summary>Example: creating virtual environment and updating libEnsemble</summary>
 
-    E.g.,~  to create a virtual environment that allows installation of
+    E.g., to create a virtual environment that allows installation of
     further packages with pip:
 
     ```bash
@@ -22,7 +22,7 @@ See the docs for more details on using [python on Polaris](https://www.alcf.anl.
     . /path/to-venv/bin/activate
     ```
 
-    Where `/path/to-venv` can be anywhere you have write access.
+    Where /path/to-venv can be anywhere you have write access.
     For future uses just load the conda module and run the activate line.
 
     You can also ensure you are using the latest version of libEnsemble:
@@ -78,6 +78,6 @@ Or you can run an interactive session with:
 
 ## Further links
 
-Docs:  <https://libensemble.readthedocs.io>
-github: <https://github.com/Libensemble/libensemble>
+Docs: <https://libensemble.readthedocs.io> <br>
+GitHub: <https://github.com/Libensemble/libensemble>
 
