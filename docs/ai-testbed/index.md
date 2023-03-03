@@ -34,4 +34,4 @@ Submit your proposal requests at: [Allocation Request Page](https://accounts.alc
 The documentation is based on [MkDocs](https://www.mkdocs.org/){:target="_blank"} and source files are
 on [GitHub](https://github.com/argonne-lcf/ai-testbed-userdocs). You can contribute to the documentation by creating a pull request. 
  
- [Learn more on how to contribute to documentation.](https://github.com/argonne-lcf/ai-testbed-userdocs/blob/main/docs/HOWTO_CONTRIBUTE.md)
+ [Learn more on how to contribute to documentation.](howto-contribute.md)
