@@ -1,27 +1,28 @@
-# PBS Pro qsub Options
+# PBS Pro `qsub` Options
 
 Version 1.2 2021-04-28 
 
--l select and similar is a lower case "L", -I for interactive is an upper case "I"
+`-l select` and similar options use a lower case "L", `-I` for interactive is an upper case "I"
 
 | Cobalt CLI                           | PBS CLI                                                            | PBS Directive | Function and Page Reference |
 |--------------------------------------|--------------------------------------------------------------------| ----- | ---- |
 | `-A <account_string>`                 | `-A <account_string>`                                               |`#PBS Account_Name=<accounting string>` | "Specifying Accounting String” UG-29 |
-| `-n NODES<br />--nodecount NODES      | -l select=NODES:system=\<hostname>                                 |One or more <br />#PBS -l \<resource name>=\<value> <br />directives |"Requesting Resources” UG-51
-| `-t <br />--walltime                  | -l walltime=1:00:00                                                |One or more <br />#PBS -l \<resource name>=\<value> <br />directives |"Requesting Resources” UG-51
-| `--attrs <br />filesystems=\<resouce> | -l filesystems=\<resource>                                         |One or more <br />#PBS -l \<resource name>=\<value> <br />directives |"Requesting Resources” UG-51
-| `-q                                   | -q \<destination>                                                  |#PBS -q \<queue name> <br /> #PBS -q @\<server name><br /> #PBS -q \<queue name>@\<server name> |"Specifying Server and/or Queue” UG-29
-| `--env                                | -v \<variable list>                                                | |"Exporting Specific Environment Variables” UG-126
-| `--env                                | -V                                                                 | #PBS -V|"Exporting All Environment Variables” UG-126
-| `--attrs                              | Done via custom resources and select statements                    | |"Setting Job Attributes” UG-16
-| <br/><br/>--dependencies=\<list>     | -W depend=afterok:\<list>                                          | #PBS depend=... |"Using Job Dependencies” UG-107
-| -I<br />--interactive                | -I                                                                 |Deprecated for use in a script |"Running Your Job Interactively” UG-121
-| -e<br /> --error=                    | -e \<path>                                                         | #PBS -e \<path><br />#PBS Error_Path=\<path>|"Paths for |--jobname |-N \<name> | #PBS -N \<job name>  <br /> #PBS -WJob_Name=\<job name>|"Specifying Job Name” UG-27
-| -o<br />--output=                    | -o \<path>                                                         | #PBS -o \<path><br />#PBS Output_Path=\<path>|"Paths for Output and Error Files” UG-42
-| -M<br />--notify<br /> see note #1   | -M \<user list><br /> -m \<mail options><br /> -m be is suggested  | #PBS -M \<mail recipients> <br />#PBS -WMail_Users=\<mail recipients><br /> #PBS -m \<mail points> <br />#PBS -WMail_Points=\<mail points>|"Setting Email Recipient List” UG-26|
-| -u<br />--umask                      | -W umask=\<value>                                                  |#PBS umask=\<value> |"Changing Linux Job umask” UG-45
-| -h                                   | -h                                                                 | #PBS -h |"Holding and Releasing Jobs” UG-115
-| --proccount<br /> See Note #2        | -l mpiprocs<br />Not needed to get equivalent Cobalt functionality |One or more <br />#PBS -l \<resource name>=\<value> directives |"Requesting Resources” UG-51| |-l \<resource list> |One or more <br />#PBS -l \<resource name>=\<value> <br />directives |"Requesting Resources” UG-51
+| `-n NODES`<br />`--nodecount NODES`      | `-l select=NODES:system=<hostname>`                                 |One or more <br />`#PBS -l <resource name>=<value>` <br />directives |"Requesting Resources” UG-51
+| `-t` <br />`--walltime`                  | `-l walltime=H:MM:SS`                                                |One or more <br />`#PBS -l <resource name>=<value>` <br />directives |"Requesting Resources” UG-51
+| `--attrs` <br />`filesystems=<resouce>` | `-l filesystems=<resource>`                                         |One or more <br />`#PBS -l <resource name>=<value>` <br />directives |"Requesting Resources” UG-51
+| `-q`                                   | `-q <destination>`                                                  |`#PBS -q <queue name>` <br /> `#PBS -q @<server name>`<br /> `#PBS -q <queue name>@<server name>` |"Specifying Server and/or Queue” UG-29
+| `--env`                                | `-v <variable list>`                                                | |"Exporting Specific Environment Variables” UG-126
+| `--env`                                | `-V`                                                                 | `#PBS -V`|"Exporting All Environment Variables” UG-126
+| `--attrs`                              | Done via custom resources and select statements                    | |"Setting Job Attributes” UG-16
+| `--dependencies=<list>`     | `-W depend=afterok:<list>`                                          | `#PBS depend=...` |"Using Job Dependencies” UG-107
+| `-I`<br />`--interactive`                | `-I`                                                                 |Deprecated for use in a script |"Running Your Job Interactively” UG-121
+|`--jobname` |`-N <name>` | `#PBS -N <job name>`  <br /> `#PBS -WJob_Name=<job name>`|"Specifying Job Name” UG-27
+| `-e`<br />`--error=`                    | `-e <path>`                                                         | `#PBS -e <path>`<br />`#PBS Error_Path=<path>`|"Paths for Output and Error Files” UG-42
+| `-o`<br />--output=                    | `-o <path>`                                                         | `#PBS -o <path>`<br />`#PBS Output_Path=<path>`|"Paths for Output and Error Files” UG-42
+| `-M`<br />--notify<br /> see note #1   | `-M <user list>`<br > `-m <mail options>`<br /> (`-m be` is suggested)  | `#PBS -M <mail recipients>` <br />`#PBS -WMail_Users=<mail recipients>`<br /> `#PBS -m <mail points>` <br />`#PBS -WMail_Points=<mail points>`|"Setting Email Recipient List” UG-26|
+| `-u`<br />`--umask`                      | `-W umask=<value>`                                                  |`#PBS umask=<value>` |"Changing Linux Job umask” UG-45
+| `-h`                                   | `-h`                                                                 | `#PBS -h` |"Holding and Releasing Jobs” UG-115
+| `--proccount`<br /> See Note #2        | `-l mpiprocs`<br />Not needed to get equivalent Cobalt functionality |One or more <br />`#PBS -l <resource name>=<value>` directives |"Requesting Resources” UG-51| |`-l <resource list>` |One or more <br />`#PBS -l <resource name>=<value>` <br />directives |"Requesting Resources” UG-51
 
 ## PBS options that provide functionality above and beyond Cobalt
 
