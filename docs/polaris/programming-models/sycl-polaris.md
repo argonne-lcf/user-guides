@@ -272,7 +272,7 @@ int main() {
 ```
 
 Compile and Run
-The user would need to provide paths the math-libraris as shown below.
+The user would need to provide paths the math-libraris as shown below. Also please provide AOCL library for CPU GEMM by `module load aocl`.
 Environment variables `MKLROOT` is defined with `oneapi` module & `AOCL_ROOT` is defined with `aocl` module.
 Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
 ```bash
