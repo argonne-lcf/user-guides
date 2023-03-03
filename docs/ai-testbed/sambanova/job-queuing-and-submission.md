@@ -4,13 +4,13 @@
 
 SambaNova uses Slurm for job submission and queueing. Below are some of the important commands for using Slurm. For more information refer to [Slurm Documentation](https://slurm.schedmd.com/).
 
-**NOTE: Run the python scripts using srun or sbatch, to ensure that concurrent jobs do not interfere with each other.**
+**NOTE: Run the Python scripts using 'srun' or 'sbatch', to ensure that concurrent jobs do not interfere with each other.**
 
-**NOTE: There is just one scheduler for both sm-01 and sm-02.**
+**NOTE: There is just one scheduler for all of the SambaNova nodes, e.g., sn30-r4-h2.**
 
-## Srun
+## SRun
 
-The Slurm command `srun` can be used to run individual python scripts in parallel with other scripts on a cluster managed by Slurm. Examples of `srun` usage are shown below.
+The Slurm command `srun` can be used to run individual Python scripts in parallel with other scripts on a cluster managed by Slurm. Examples of `srun` usage are shown below.
 
 Slurm will assign a **nodelist/host** to run a job if a host is not specified.
 
@@ -25,16 +25,16 @@ You may specify which node/host on which to run a job.
 
 Reasons to specify a node list:
 
-- One wants to test a specific node to verify function of the HW and SW  (daily smoke tests do this)
+- One wants to test a specific node to verify the function of the HW and SW  (daily smoke tests do this)
 - The nodes are at different software levels and one wants to use a node that has the needed software level for one's application.
 
 Example:
 
 ```bash
-srun --nodelist=sm-02 python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
+srun --nodelist=sn30-r1-h1 python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 ```
 
-## Sbatch
+## SBatch
 
 Alternatively, these jobs can be submitted to the Slurm workload manager through a batch script by using the `sbatch` command. To do this, create a bash script (submit-lenet-job.sh here as an example) with the commands that you want to execute.
 
@@ -58,7 +58,7 @@ sbatch --gres=rdu:2 <your_script.sh>
 ```
 <!--- See [DataParallel](DataParallel.md) for additional information. --->
 
-## Squeue
+## SQueue
 
 The `squeue` command provides information about jobs located in the Slurm scheduling queue.
 
@@ -66,9 +66,9 @@ The `squeue` command provides information about jobs located in the Slurm schedu
 squeue
 ```
 
-## Sinfo
+## SInfo
 
-Sinfo is used to view partition and node information for a system running Slurm.
+SInfo is used to view partition and node information for a system running Slurm.
 
 Here is a suggested command:
 
@@ -76,11 +76,11 @@ Here is a suggested command:
 sinfo -O AllocNodes, GresUsed, Gres, NodeList
 ```
 
-For more information, see [sinfo](https://slurm.schedmd.com/sinfo.html).
+For more information, see [SInfo](https://slurm.schedmd.com/sinfo.html).
 
-## Scancel
+## SCancel
 
-Scancel is used to signal or cancel jobs, job arrays, or job steps.
+SCancel is used to signal or cancel jobs, job arrays, or job steps.
 
 ```bash
 scancel job_id

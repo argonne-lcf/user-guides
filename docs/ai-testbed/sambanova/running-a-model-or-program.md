@@ -4,7 +4,7 @@
 For example, consider running larger jobs in the evening or on weekends.**
 
 **NOTE: Please use only Slurm commands, i.e., srun and sbatch, to run your code.
-If you run your code directly using the python command, it may cause conflicts
+If you run your code directly using the 'python' command, it may cause conflicts
 on the system.**
 
 ## Introduction
@@ -24,15 +24,15 @@ scheduler](https://slurm.schedmd.com/quickstart.html) to schedule the jobs and m
 
 Compiles the model and generates a **.pef** file. This file contains
 information on how to reconfigure the hardware, how many compute and
-memory resources are required and how they will be used in all subsequent steps.
-The pef files are by default saved in the 'out' directory; the
-SambaNova documentation advises saving pef files in separate
+memory resources are required, and how they will be used in all subsequent steps.
+The **pef** files are by default saved in the 'out' directory; the
+SambaNova documentation advises saving **pef** files in separate
 directories with the '--output-folder' option.
 
 It is necessary to re-compile only when the model changes, or parameters specific to the model graph change, including the batch size.
 
 Compile times can be significant.
-Compile of the Unet sample, for example, when using images of size 32x32 pixels, takes 358 (s), and 1844 (s) for images of size 256x256.
+Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
 
 Example:
 
@@ -59,7 +59,7 @@ The location of the **pef** file generated in the compile step is passed as an a
 
 ## Test (Optional)
 
-This command is used to run the model on both the host CPU and the SambaNova node.  It compares the answers from the CPU and SambaNova RDU and will raise errors if any discrepancies are found. Pass the pef file generated as part of the compile step as the input to this command.
+This command is used to run the model on both the host CPU and a SambaNova RDU.  It compares the answers from the CPU and SambaNova RDU and will raise errors if any discrepancies are found. Pass the **pef** file generated as part of the compile step as the input to this command.
 
 ```bash
 srun python lenet.py test --pef="pef/lenet/lenet.pef"

@@ -57,6 +57,12 @@ Below are some of the common arguments used across most of the models in the exa
 |                        | data'     |                                |
 |                        |           |                                |
 
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
+```
+
 **NOTE:  If you receive an \"HTTP error\" message on any of the
 following commands, run the command again. Such errors (e.g 503) are
 commonly an intermittent failure to download a dataset.**
@@ -92,59 +98,19 @@ squeue
 watch squeue
 ```
 
-The output file will look something like this:
+One may see the run log using:
 
-```text
-[Info][SAMBA][Default] # Placing log files in
-pef/lenet/lenet.samba.log
-
-[Info][MAC][Default] # Placing log files in
-pef/lenet/lenet.mac.log
-
-[Warning][SAMBA][Default] #
-
---------------------------------------------------
-
-Using patched version of torch.cat and torch.stack
-
---------------------------------------------------
-
-[Warning][SAMBA][Default] # The dtype of "targets" to
-CrossEntropyLoss is torch.int64, however only int16 is currently
-supported, implicit conversion will happen
-
-[Warning][MAC][GraphLoweringPass] # lenet__reshape skip
-set_loop_to_air
-
-[Warning][MAC][GraphLoweringPass] # lenet__reshape_bwd skip
-set_loop_to_air
-
-...
-
-Epoch [1/1], Step [59994/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59995/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59996/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59997/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59998/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59999/60000], Loss: 0.1712
-
-Epoch [1/1], Step [60000/60000], Loss: 0.1712
-
-Test Accuracy: 98.06 Loss: 0.0628
-
-2021-6-10 10:52:28 : [INFO][SC][53607]: SambaConnector: PEF File:
-pef/lenet/lenet.pef
-
-Log ID initialized to: [ALCFUserID][python][53607] at
-/var/log/sambaflow/runtime/sn.log
+```bash
+cat pef/lenet/output.log
 ```
 
 ## MNIST - Feed Forward Network
+
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/ffn_mnist/venv/bin/activate
+```
 
 Change directory
 
@@ -172,6 +138,12 @@ sbatch --output=pef/ffn_mnist/output.log submit-ffn_mnist-job.sh
 ```
 
 ## Logistic Regression
+
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+```
 
 Change directory
 
@@ -265,6 +237,25 @@ Log ID initialized to: [ALCFUserID][python][99185] at
 ```
 
 ## UNet
+
+```text
+both unet2d and 3d are operational.
+unet2d should be ran on sn30-r4-h2 if you are taking performance measurements,
+for unet2d see /home/rweisner/tmp/unet/unet_compile_run_all.sh
+/home/rweisner/tmp/unet/unet_compile_run_all.sh compile 512 512
+/home/rweisner/tmp/unet/unet_compile_run_all.sh run 512 512
+
+for 3d see
+/data/ANL/scripts/Unet*
+
+see /home/rweisner/ffn_mnist
+ ```
+
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+```
 
 Change directory and copy files.
 
