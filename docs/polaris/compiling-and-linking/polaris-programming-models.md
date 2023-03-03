@@ -9,7 +9,7 @@ The Cray compiler wrappers `cc`, `CC`, and `ftn` are recommended for MPI applica
 |Programming Model| GNU | NVHPC | LLVM |
 | --- | --- | --- | --- |
 | OpenMP | -fopenmp | -mp | -fopenmp |
-| OpenACC | -- | -acc=multicore | -- | 
+| OpenACC | -- | -acc=multicore | -- |
 
 Higher-level programming models such as [Kokkos](../programming-models/kokkos-polaris.md) and Raja may also be used for CPU programming.
 
@@ -22,22 +22,22 @@ Higher-level programming models such as [Kokkos](../programming-models/kokkos-po
 
 A summary of available GPU programming models and relevant compiler flags is shown below for compilers that generate offloadable code. Users are encouraged to review the corresponding man pages and documentation.
 
-|Programming Model| GNU | NVHPC | LLVM | LLVM-SYCL |
+|Programming Model| GNU | NVHPC | LLVM | ONEAPI |
 | --- | --- | --- | --- | --- |
 | CUDA | -- | -cuda [-gpu=cuda8.0,cc11.0] | -- | -- |
 | HIP* | -- | -- | -- | -- |
 | OpenACC | -- | -acc | -- | -- |
 | OpenCL* | -- | -- | -- | -- |
 | OpenMP | --| -mp=gpu | -fopenmp-targets=nvptx64 | -- |
-| SYCL | -- | -- | -- | -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend '--cuda-gpu-arch=sm_80' |
+| SYCL | -- | -- | -- | -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 |
 
-Note, the `llvm` and `llvm-sycl` modules are provided by ALCF to complement the compilers provided by the Cray PE on Polaris.
+Note, the `llvm` and `oneapi` modules are provided by ALCF to complement the compilers provided by the Cray PE on Polaris.
 
 Higher-level programming models such as [Kokkos](../programming-models/kokkos-polaris.md) and Raja may also be used for GPU programming.
 
 [//]: # (ToDo: Add links to programming model pages)
 
-OpenCL is supported, but does not require specific compiler flags per-se as the offloaded kernels are just-in-time compiled. Abstraction programming models, such as Kokkos, can be built on top of some of these programming models (see below). 
+OpenCL is supported, but does not require specific compiler flags per-se as the offloaded kernels are just-in-time compiled. Abstraction programming models, such as Kokkos, can be built on top of some of these programming models (see below).
 
 A HIP compiler supporting the A100 GPUs is still to be installed on Polaris.
 
@@ -69,4 +69,3 @@ Note, users are encouraged to use `PrgEnv-nvhpc` instead of `PrgEnv-nvidia` as t
 | Fortran | OpenACC | PrgEnv-nvhpc |  |
 | Fortran | OpenCL | PrgEnv-nvhpc, PrgEnv-gnu | JIT GPU code generation |
 | Fortran | OpenMP | PrgEnv-nvhpc |  |
-

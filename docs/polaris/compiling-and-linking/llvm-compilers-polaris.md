@@ -1,7 +1,7 @@
 # LLVM Compilers on Polaris
 
 This page is not about LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but about open source LLVM compilers.
-If LLVM compilers are needed without MPI support, simply load the `llvm` or `llvm-sycl` module. 
+If LLVM compilers are needed without MPI support, simply load the `llvm` or `oneapi` module.
 
 Cray Programming Environment does not offer LLVM compiler support.
 Thus cc/CC/ftn compiler wrappers using LLVM compilers currently are not available.
@@ -25,11 +25,8 @@ When targeting the OpenMP or CUDA programming models for GPUs, the `cudatoolkit-
 
 ## SYCL
 
-For users working with the SYCL programming model, a separate `llvm` module can be loaded in the environment with support for the A100 GPUs on Polaris.
-
-```
-module load llvm-sycl/2022-06
-```
+For users working with the SYCL programming model, a separate `oneapi` module can be loaded in the environment with support for the A100 GPUs on Polaris.
+To use oneapi with MPI, one can load the `mpiwrappers/cray-mpich-oneapi` module which loads the following modules.
 
 [//]: # (ToDo: create examples and document)
 [//]: # (ToDo: should get )
