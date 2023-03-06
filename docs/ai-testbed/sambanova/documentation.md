@@ -3,6 +3,7 @@
 The SambaNova documentation is housed at `/software/sambanova/docs/latest/` accessible via login node.
 
 ```text
+# TODO Update this.
 getting-started.pdf             # Getting Started with SambaFlow
 accuracy-debugging-tools.pdf    # Introduction to the model accuracy debugging tools.
 compiler-options.pdf            # Provides advanced compiler options for the compile command.

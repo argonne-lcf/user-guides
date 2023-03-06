@@ -2,49 +2,49 @@
 
 Port forwarding is covered here.  This is specifically for TensorBoard.
 
-## TensorBoard Port-Forwarding
+## TensorBoard Port Forwarding
 
 This section describes the steps to be followed to set up port forwarding for applications,
 like TensorBoard, which runs on the SambaNova system and binds to one or more ports.
 This example uses 6006 and 16006 as port numbers. Using port numbers other than these may
 avoid collisions with other users.
 
-### From your local machine
+### From Your Local Machine
+
+*Replace* ***ALCFUserID*** *with your ALCF User ID.*
 
 Run
 
 ```bash
 ssh -v -N -f -L localhost:16006:localhost:16006 ALCFUserID@sambanova.alcf.anl.gov
 ...
-Password: < MobilPass+ code >
+Password: < MobilePass+ code >
 
 ssh ALCFUserID@sambanova.alcf.anl.gov
 ...
-Password: < MobilPass+ code >
+Password: < MobilePass+ code >
 ```
-
-*replacing* ***ALCFUserID*** *with your ALCF User ID.*
 
 ### From **sambanova.alcf.anl.gov**
 
-Below are the commands specific to sm-01. You may replace **sm-01** with **sm-02** when using the appropriate system.
+Below are the commands specific to sn30-r1-h1. You may replace **sn30-r1-h1** with any other node when using the appropriate system.
 
 Run
 
-**NOTE:  The full name is sm-01.ai.alcf.anl.gov and it may also be used.**
+**NOTE:  The full name is sn30-r1-h1.ai.alcf.anl.gov and it may also be used.**
 
 ```bash
-ssh -N -f -L localhost:16006:localhost:6006 ALCFUserID@sm-01
-ssh ALCFUserID@sm-01
+ssh -N -f -L localhost:16006:localhost:6006 ALCFUserID@sn30-r1-h1
+ssh ALCFUserID@sn30-r1-h1
 ```
 
-### On **sm-01**
+### On **sn30-r1-h1**
 
 Execute the following command:
 
 ```bash
-ALCFUserID@sm-01:~$ source /software/sambanova/envs/sn_env.sh
-(venv) ALCFUserID@sm-01:~$
+ALCFUserID@sn30-r1-h1:~$ source /software/sambanova/envs/sn_env.sh
+(venv) ALCFUserID@sn30-r1-h1:~$
 ```
 
 Navigate to the appropriate directory for your model.
@@ -55,17 +55,19 @@ cd /path/to/your/project
 sbatch --output=pef/my_model/output.log submit-my_model-job.sh
 ```
 
-### On Another sm-01 Terminal Window
+### On Another sn30-r1-h1 Terminal Window
 
 The SambaNova system has a bash shell script to setup the required software environment.
 This sets up the SambaFlow software stack, the associated environmental variables and activates
 a pre-configured virtual environment.
 
-Use
+Use the command appropriate for your environment.
+
+For example, if you are using LogReg:
 
 ```bash
-ALCFUserID@sm-01:~$ source /software/sambanova/envs/sn_env.sh
-(venv) ALCFUserID@sm-01:~$
+ALCFUserID@sn30-r1-h1:~$ source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+(venv) ALCFUserID@sn30-r1-h1:~$
 ```
 
 Navigate to the appropriate directory for your model.

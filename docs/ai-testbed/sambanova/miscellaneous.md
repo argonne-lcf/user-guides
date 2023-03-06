@@ -5,14 +5,15 @@
 To find the SDK version, run the following commands
 
 ```console
-(venv) ALCFUserID@sm-01:~$ python
-Python 3.7.6 (default, Feb 18 2020, 21:28:31) 
+# TODO
+(venv) ALCFUserID@sn30-r1-h1:~$ python
+Python 3.7.6 (default, Feb 18 2020, 21:28:31)
 [GCC 9.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import sambaflow
 >>> sambaflow.__version__
 '1.11.5'
->>> 
+>>>
 ```
 
 ## OMP_NUM_THREADS
@@ -24,7 +25,7 @@ The value of this environment variable must be a list of positive integer values
 For the SambaNova system it, is usually set to one.
 
 ```bash
-export OMP_NUM_THREADS=1
+export OMP_NUM_THREADS=16
 ```
 
 ## Where is the Model?
@@ -50,9 +51,10 @@ In order to run the model on RDU, you would need to use **session.run()**.
 snconfig
 ```
 
-The snconfig utility shows the static configuration of the system. The configuration on sm-01 for the first RDU is as follows:
+The snconfig utility shows the static configuration of the system. The configuration on sn30-r1-h1 for the first RDU is as follows:
 
 ```text
+# TODO
 Platform Name: DataScale SN10-8
 Node Name: NODE
 Number of XRDUS: 4
@@ -134,6 +136,7 @@ systemctl status snd
 The output should look something like this:
 
 ```text
+# TODO Update this output.
 * snd.service - SN Devices Service
    Loaded: loaded (/usr/lib/systemd/system/snd.service; enabled; vendor preset: enabled)
    Active: active (running) since Fri 2022-02-18 11:45:15 CST; 1 months 25 days ago
@@ -155,6 +158,7 @@ watch sntilestat
 The output shown below is when the system is completely idle.
 
 ```text
+# TODO Update this output.
 TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER COMMAND
 /XRDU_0/RDU_0/TILE_0 100.0   0.0    0.0    0.0    0.0      0.0
 /XRDU_0/RDU_0/TILE_1 100.0   0.0    0.0    0.0    0.0      0.0

@@ -494,7 +494,7 @@ Run
 ```bash
 ssh -N -f -L localhost:18576:localhost:18576 ALCFUserID@sambanova.alcf.anl.gov
 ...
-Password: < MobilPass+ code >
+Password: < MobilePass+ code >
 
 ssh ALCFUserID@sambanova.alcf.anl.gov
 ```
@@ -504,7 +504,7 @@ ssh ALCFUserID@sambanova.alcf.anl.gov
 ssh -v -N -f -L localhost:8580:localhost:8580 wilsonb@sambanova.alcf.anl.gov
 ssh -N -f -L localhost:8580:localhost:8580 wilsonb@sambanova.alcf.anl.gov
 ...
-Password: < MobilPass+ code >
+Password: < MobilePass+ code >
 
 ssh wilsonb@sambanova.alcf.anl.gov
 ```

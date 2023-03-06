@@ -1,6 +1,6 @@
 # Example Multi-Node Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on both SambaNova compute nodes. Make a copy of this to your home directory:
+SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
 
 Copy starters to your personal directory structure if you have not already done so.
 
@@ -12,7 +12,7 @@ cp -r /opt/sambaflow/apps/starters apps/starters
 
 ## UNet
 
-### Set-up
+### Set Up
 
 Copy files and change directory if you have not already done so.
 
@@ -32,7 +32,7 @@ You just copied two **bash** scripts.  They are:
 
     - Runs Unet.
 
-### Unet All
+### UNet All
 
 Here is a breakdown of **unet_all.sh**.
 
@@ -106,7 +106,7 @@ Sbatch argument definitions:
 
     The number of nodes to use.  Currently there are two nodes.
 
-  - **--nodelist sm-02,sm-01**
+  - **--nodelist sn30-r2-h1,sn30-r2-h2**
 
     The node names to use.
 
@@ -133,7 +133,7 @@ sbatch --gres=rdu:1 --tasks-per-node 8  --nodes 2 --nodelist sm-02,sm-01 --cpus-
 echo "Duration: " $SECONDS
 ```
 
-### Unet Batch
+### UNet Batch
 
 Here is a description of **unet_batch.sh**.  This script is automatically run by **unet_all.sh**.
 
@@ -167,6 +167,7 @@ export SAMBA_CCL_USE_PCIE_TRANSPORT=0
 Activate virtual environment.
 
 ```bash
+# TODO: Update this.
 source /opt/sambaflow/venv/bin/activate
 ```
 
@@ -178,7 +179,7 @@ echo "Date: " $(date +%m/%d/%y)
 echo "Time: " $(date +%H:%M)
 ```
 
-Run Unet
+Run UNet
 
 ```bash
 srun --mpi=pmi2 python ${UNET}/unet_hook.py  run --do-train --in-channels=3 --in-width=${IM} --in-height=${IM} --init-features 32 --batch-size=${BS} --epochs 2   --data-dir ${DATADIR} --log-dir log_dir_unet_${NN}_train_kaggle --pef=$(pwd)/out/unet_train_${BS}_${IM}_NN/unet_train_${BS}_${IM}_NN.pef --data-parallel --reduce-on-rdu --num-workers=${NUM_WORKERS}
@@ -204,7 +205,7 @@ Compile and run UNet:
 ./unet_all.sh 256 256
 ```
 
-Squeue will give you the queue status.
+SQueue will give you the queue status.
 
 ```bash
 squeue
