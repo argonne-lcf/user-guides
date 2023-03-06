@@ -22,6 +22,6 @@ The Bow-2000™ IPU-Machine™ is a 1U compute platform for AI infrastructure an
         Sync-Link - dedicated hardware signalling for BSP, low jitter on IPU to IPU synchronisation
         Host-Link - PCIe Gen4 RoCEv2 NIC/SmartNIC Interface for Bow-2000 to server communication
 
-![Bow Architecture](Bow.jpg "Bow Architecture")
+![Bow Architecture](files/Bow.jpg "Bow Architecture")
 
 Graphcore’s Bow-2000 IPU-Machine is designed to support scale-up and scale-out machine intelligence compute. The Bow Pod reference designs, based on the Bow-2000, deliver scalable building blocks for the Bow Pod systems range of products: Bow Pod16 (4 Bow-2000 machines directly attach to a single host server), Bow Pod64 (16 Bow-2000 machines in a switched system with 1-4 host servers).

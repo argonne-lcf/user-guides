@@ -196,18 +196,18 @@ nav:
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
     - Graphcore:
-      - System Overview: graphcore/System-Overview.md
-      - Getting Started: graphcore/Logging-into-a-Graphcore-Node.md
-      - Virtual Environment: graphcore/Virtual-Environment.md
-      - Steps to Run a Model/Program: graphcore/Steps-to-Run-a-Model-or-Program.md
-      - Job Queuing and Submission: graphcore/Job-Queuing-and-Submission.md
-      - Example Programs: graphcore/Example-Programs.md
-      - Tunneling and Forwarding Ports: graphcore/Tunneling-and-forwarding-ports.md
-      - CosmicTagger Conversion: graphcore/CosmicTagger-Conversion.md
-      - CosmicTagger Distributed Data Parallel: graphcore/CosmicTagger-DDP.md
-      #- DataParallel: graphcore/DataParallel.md
-      - Miscellaneous: graphcore/Miscellaneous.md
-      - Documentation: graphcore/Documentation.md
+      - System Overview: ai-testbed/graphcore/System-Overview.md
+      - Getting Started: ai-testbed/graphcore/Logging-into-a-Graphcore-Node.md
+      - Virtual Environment: ai-testbed/graphcore/Virtual-Environment.md
+      - Running a Model/Program: ai-testbed/graphcore/Running-a-Model-or-Program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/Job-Queuing-and-Submission.md
+      - Example Programs: ai-testbed/graphcore/Example-Programs.md
+      - Tunneling and Forwarding Ports: ai-testbed/graphcore/Tunneling-and-forwarding-ports.md
+      - CosmicTagger Conversion: ai-testbed/graphcore/CosmicTagger-Conversion.md
+      - CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/CosmicTagger-DDP.md
+      #- DataParallel: ai-testbed/graphcore/DataParallel.md
+      - Miscellaneous: ai-testbed/graphcore/Miscellaneous.md
+      - Documentation: ai-testbed/graphcore/Documentation.md
     - SambaNova:
       - System Overview: ai-testbed/sambanova/system-overview.md
       - Getting Started: ai-testbed/sambanova/getting-started.md

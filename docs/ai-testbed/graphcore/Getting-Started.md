@@ -17,7 +17,7 @@ The first step is to **ssh** to the **login node**.
 
 The second step is to log in to a Graphcore node from the **login node**.
 
-![Graphcore System View](graphcore_login.jpg "Graphcore System View")
+![Graphcore System View](files/graphcore_login.jpg "Graphcore System View")
 
 ### Log in to Login Node
 
