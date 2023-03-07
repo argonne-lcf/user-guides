@@ -25,7 +25,7 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-  - Services:
+  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since it is a dropdown. Only linked to in base docs/index.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
@@ -283,7 +283,12 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
+      # base_path: ["docs"]
+      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      check_paths: True
+      url_download: True
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.inlinehilite
