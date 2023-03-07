@@ -254,21 +254,25 @@ see /home/rweisner/ffn_mnist
 Establish the Environment
 
 ```bash
+#TODO Update
 source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
 ```
 
 Change directory and copy files.
 
 ```bash
-cp -r /opt/sambaflow/apps/image ~/apps/image
-cd ~/apps/image/unet
-cp /software/sambanova/apps/image/pytorch/unet/*.sh .
+cd ~/apps/image/
+mkdir unet
+cd unet
+cp /home/rweisner/tmp/unet/unet_compile_run_all.sh .
+cp -r /home/rweisner/tmp/unet/unet/ .
+#cp /software/sambanova/apps/image/pytorch/unet/*.sh .
 ```
 
 Export the path to the dataset which is required for the training.
 
 ```bash
-export OUTDIR=~/apps/image/unet
+export OUTDIR=~/apps/image/unet/unet
 export DATADIR=/software/sambanova/dataset/kaggle_3m
 ```
 
