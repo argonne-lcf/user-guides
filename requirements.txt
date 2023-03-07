@@ -2,4 +2,4 @@ mkdocs-material
 mkdocs
 mkdocs-video
 mkdocs-include-markdown-plugin
-git+https://github.com/felker/mkdocs-codeinclude-plugin.git@support-lang-based-extensions
+mkdocs-codeinclude-plugin
