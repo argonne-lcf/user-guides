@@ -4,7 +4,7 @@ SECONDS=0
 BS=$3
 NUM_WORKERS=4
 NUM_TILES=4
-DS=/nvmedata/ANL/kaggle_3m
+DS=/data/ANL/kaggle_3m
 export OMP_NUM_THREADS=16
 if [ -e /opt/sambaflow/apps/image/segmentation/venv/bin/activate ] ; then
   source /opt/sambaflow/apps/image/segmentation/venv/bin/activate
@@ -76,8 +76,8 @@ elif [ "${1}" == "run" ] ; then
    export SF_RNT_DMA_POLL_BUSY_WAIT=1
    #run single
    if [ -e ${UNET}/hook.py ] ; then
-     #orig srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-transform-config /opt/sambaflow/apps/image/segmentation/segmentation/datasets/data_transforms_config.yaml --data-cache-dir /nvmedata/scratch/rweisner/kaggle_3m --num-workers=${NUM_WORKERS} --mode train --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 -b ${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${3} --pef=$(pwd)/out/unet_train_${BS}_${2}_single/unet_train_${BS}_${2}_single.pef > run_unet_${BS}_${2}_16_sl.log 2>&1
-    srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=/nvmedata/scratch/rweisner/kaggle_3mv2  --num-workers=${NUM_WORKERS} --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=$(pwd)/out/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef > run_unet_${BS}_${2}_single_${NUM_TILES}.log 2>&1
+    #orig srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-transform-config ~/apps/image/segmentation/segmentation/datasets/data_transforms_config.yaml --data-cache-dir /nvmedata/scratch/rweisner/kaggle_3m --num-workers=${NUM_WORKERS} --mode train --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 -b ${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${3} --pef=$(pwd)/out/unet_train_${BS}_${2}_single/unet_train_${BS}_${2}_single.pef > run_unet_${BS}_${2}_16_sl.log 2>&1
+    srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=/data/ANL/scratch/kaggle_3mv2  --num-workers=${NUM_WORKERS} --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=$(pwd)/out/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef > run_unet_${BS}_${2}_single_${NUM_TILES}.log 2>&1
 
    else
      srun --nodelist $(hostname) python ${UNET}/unet_hook.py  run --num-workers=${NUM_WORKERS} --do-train --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${3} --pef=$(pwd)/out/unet_train_${BS}_${2}_single/unet_train_${BS}_${2}_single.pef --use-sambaloader  > run_unet_${BS}_${2}_16_sl.log 2>&1

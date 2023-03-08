@@ -255,7 +255,7 @@ Establish the Environment
 
 ```bash
 #TODO Update
-source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+# source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
 ```
 
 Change directory and copy files.
@@ -263,46 +263,27 @@ Change directory and copy files.
 ```bash
 cd ~/apps/image/
 mkdir unet
-cd unet
-cp /home/rweisner/tmp/unet/unet_compile_run_all.sh .
-cp -r /home/rweisner/tmp/unet/unet/ .
-#cp /software/sambanova/apps/image/pytorch/unet/*.sh .
+cd ~/apps/image/unet
 ```
 
-Export the path to the dataset which is required for the training.
+Copy and paste the contents of [unet_compile_run_all.sh](/docs/ai-testbed/sambanova/files/unet_compile_run_all.sh "unet_compile_run_all.sh") to a file with the same name into the current directory using your favorite editor.
 
-```bash
-export OUTDIR=~/apps/image/unet/unet
-export DATADIR=/software/sambanova/dataset/kaggle_3m
+```
+# TODO Update the location.
+cp /home/rweisner/tmp/unet/unet_compile_run_all.sh .
+chmod +x unet_compile_run_all.sh
+# cp -r /home/rweisner/tmp/unet/unet/ .
+#cp /software/sambanova/apps/image/pytorch/unet/*.sh .
 ```
 
 Run these commands for training (compile + train):
 
 ```bash
-sbatch unet_compile_run_inf_rl.sh compile 32 1  # Takes over 15 minutes.
-sbatch unet_compile_run_inf_rl.sh test 32 1     # Very fast.
-sbatch unet_compile_run_inf_rl.sh run 32 1      #
+./unet_compile_run_all.sh compile 256 256
+./unet_compile_run_all.sh run 256 256
 ```
 
-The output files are named **slurm-\<batch ID\>.out**.
-
-Using SLURM:  To use Slurm, create submit-unet-job.sh with the following
-contents:
-
-```bash
-#!/bin/sh
-export OUTDIR=~/apps/image/unet
-export DATADIR=/software/sambanova/dataset/kaggle_3m
-./unet_compile_run_inf_rl.sh compile 32 1
-./unet_compile_run_inf_rl.sh test 32 1
-./unet_compile_run_inf_rl.sh run 32 1
-```
-
-Then
-
-```bash
-sbatch submit-unet-job.sh
-```
+The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
 Squeue will give you the queue status.
 
