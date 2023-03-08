@@ -106,6 +106,11 @@ cat pef/lenet/output.log
 
 ## MNIST - Feed Forward Network
 
+```text
+see /home/rweisner/ffn_mnist
+ ```
+
+
 Establish the Environment
 
 ```bash
@@ -238,19 +243,6 @@ Log ID initialized to: [ALCFUserID][python][99185] at
 
 ## UNet
 
-```text
-both unet2d and 3d are operational.
-unet2d should be ran on sn30-r4-h2 if you are taking performance measurements,
-for unet2d see /home/rweisner/tmp/unet/unet_compile_run_all.sh
-/home/rweisner/tmp/unet/unet_compile_run_all.sh compile 512 512
-/home/rweisner/tmp/unet/unet_compile_run_all.sh run 512 512
-
-for 3d see
-/data/ANL/scripts/Unet*
-
-see /home/rweisner/ffn_mnist
- ```
-
 Establish the Environment
 
 ```bash
@@ -266,14 +258,14 @@ mkdir unet
 cd ~/apps/image/unet
 ```
 
-Copy and paste the contents of [unet_compile_run_all.sh](/docs/ai-testbed/sambanova/files/unet_compile_run_all.sh "unet_compile_run_all.sh") to a file with the same name into the current directory using your favorite editor.
+Copy and paste the contents of
+[unet_compile_run_all.sh](/docs/ai-testbed/sambanova/files/unet_compile_run_all.sh "unet_compile_run_all.sh")
+to a file with the same name into the current directory using your favorite editor.
 
-```
-# TODO Update the location.
-cp /home/rweisner/tmp/unet/unet_compile_run_all.sh .
+Change the permissions of the bash script to be executable.
+
+```bash
 chmod +x unet_compile_run_all.sh
-# cp -r /home/rweisner/tmp/unet/unet/ .
-#cp /software/sambanova/apps/image/pytorch/unet/*.sh .
 ```
 
 Run these commands for training (compile + train):
