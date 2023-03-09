@@ -68,12 +68,6 @@ Here are the initial queue limits. You may not violate either of these policies.
 
 The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill.
 
-#### Debug queues (currently unavailable)
-  - debug-node: submit to this queue if you need an entire node for your testing (for instance you are utilizing the NVLink)
-  - debug-gpu: submit to this queue if you need GPUs.
-
-Initially, we are relaxing our node restrictions to encourage early users.  Please be courteous to your fellow users and do not monopolize the machine.  We will tighten restrictions as required to manage the demonstrated workload. 
-
 ## Running Jobs On ThetaGPU
 **Note:** Users will need an allocation on ThetaGPU to utilize the GPU nodes. Request for an allocation by filling out this form: Allocation request. ThetaGPU is listed under Theta on the form.
 
