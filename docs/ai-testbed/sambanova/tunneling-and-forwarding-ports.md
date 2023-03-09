@@ -16,10 +16,12 @@ avoid collisions with other users.
 Run
 
 ```bash
+# Forward a port number from sambanova.alcf.anl.gov to your local machine.
 ssh -v -N -f -L localhost:16006:localhost:16006 ALCFUserID@sambanova.alcf.anl.gov
 ...
 Password: < MobilePass+ code >
 
+# Connect to sambanova.alcf.anl.gov
 ssh ALCFUserID@sambanova.alcf.anl.gov
 ...
 Password: < MobilePass+ code >
@@ -34,18 +36,15 @@ Run
 **NOTE:  The full name is sn30-r1-h1.ai.alcf.anl.gov and it may also be used.**
 
 ```bash
+# Forward the port.
 ssh -N -f -L localhost:16006:localhost:6006 ALCFUserID@sn30-r1-h1
+# Connect to the system.
 ssh ALCFUserID@sn30-r1-h1
 ```
 
 ### On **sn30-r1-h1**
 
-Execute the following command:
-
-```bash
-ALCFUserID@sn30-r1-h1:~$ source /software/sambanova/envs/sn_env.sh
-(venv) ALCFUserID@sn30-r1-h1:~$
-```
+Activate the venv appropriate to your project.
 
 Navigate to the appropriate directory for your model.
 Launch your model using **srun** or **sbatch**.
@@ -92,7 +91,7 @@ Explanation of **ssh** command:
 
 -L <machine1>:<portA>:<machine2>:<portB> :
 
-The full command line will forward <machine1>:<portA> (local scope) to <machine2>:<portB> (remote scope)
+The full command line will forward <machine2>:<portB> (remote scope) to <machine1>:<portA> (local scope)
 ```
 
 Adapted from:  [How can I run Tensorboard on a remote server?](https://stackoverflow.com/questions/37987839/how-can-i-run-tensorboard-on-a-remote-server)
