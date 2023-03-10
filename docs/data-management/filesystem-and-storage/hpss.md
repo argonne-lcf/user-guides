@@ -8,11 +8,7 @@ HPSS is currently configured with a disk and tape tier. The disk tier has a capa
 Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients, HSI and HTAR.  These are installed on the login nodes of Theta and Cooley (*NOTE: The HPSS clients, HSI and HTAR are not yet installed on Polaris*). In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under subdirectory .hpss. The file name will be in the format .ktb_<userid>.
   
 ## HSI General Usage
-Before you can use HSI on XC40 systems such as Theta, you must load a module:
-```
-module load hsi
-```
- 
+
 HSI can be invoked by simply entering hsi at your normal shell prompt. Once authenticated, you will enter the hsi command shell environment:
 ```
 > hsi
@@ -20,8 +16,6 @@ HSI can be invoked by simply entering hsi at your normal shell prompt. Once auth
 ```
 
 You may enter "help" to display a brief description of available commands.
-
-If archiving from or retrieving to home, grand or eagle you must disable the Transfer Agent. -T off
 
 Example archive:
 ```
@@ -34,7 +28,6 @@ Example retrieval:
 ```
 [HSI]/home/username-> get mydatafile
 [HSI]/home/username-> get local.file : hpss.file
-[HSI]/home/username-> get -T off mydatafile
 ```
 
 Most of the usual shell commands will work as expected in the HSI command environment. 
