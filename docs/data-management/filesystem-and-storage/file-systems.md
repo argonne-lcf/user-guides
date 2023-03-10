@@ -72,6 +72,8 @@ These project spaces do not have user quotas but a directory quota, meaning that
 ## Local Node SSD
 Access to SSDs is disabled by default for Theta and ThetaGPU. Project PIs may request access by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). A use case will need to be provided.
 
+Access to SSDs is enabled by default on Polaris.
+
 ### SSD Information
 - Local scratch SSD storage on compute nodes for running jobs
 - Completely local non-parallel filesystem
