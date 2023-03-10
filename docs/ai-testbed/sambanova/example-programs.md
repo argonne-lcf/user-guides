@@ -12,7 +12,7 @@ cp -r /opt/sambaflow/apps/starters apps/starters
 
 ## LeNet
 
-Change directory
+Change the directory
 
 ```bash
 cd ~/apps/starters/lenet
@@ -112,7 +112,7 @@ Establish the Environment
 source /opt/sambaflow/apps/starters/ffn_mnist/venv/bin/activate
 ```
 
-Change directory
+Change the directory
 
 ```bash
 cd ~/apps/starters/ffn_mnist/
@@ -145,7 +145,7 @@ Establish the Environment
 source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
 ```
 
-Change directory
+Change the directory
 
 ```bash
 cd ~/apps/starters/logreg
@@ -228,7 +228,7 @@ Establish the Environment
 # source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
 ```
 
-Change directory and copy files.
+Change the directory and copy files.
 
 ```bash
 cd ~/apps/image/

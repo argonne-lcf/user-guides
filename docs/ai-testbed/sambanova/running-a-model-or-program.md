@@ -23,7 +23,7 @@ scheduler](https://slurm.schedmd.com/quickstart.html) to schedule the jobs and m
 ## Compile
 
 Compiles the model and generates a **.pef** file. This file contains
-information on how to reconfigure the hardware, how many compute and
+information on how to reconfigure the hardware, how many computes and
 memory resources are required, and how they will be used in all subsequent steps.
 The **pef** files are by default saved in the 'out' directory; the
 SambaNova documentation advises saving **pef** files in separate
