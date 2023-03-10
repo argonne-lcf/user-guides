@@ -21,7 +21,6 @@ Example archive:
 ```
 [HSI]/home/username-> put mydatafile                # same name on HPSS
 [HSI]/home/username-> put local.file : hpss.file    # different name on HPSS
-[HSI]/home/username-> put -T off mydatafile
 ```
 
 Example retrieval:
