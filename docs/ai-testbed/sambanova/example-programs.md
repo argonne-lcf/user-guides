@@ -221,13 +221,6 @@ Test Accuracy: 91.40  Loss: 0.3014
 
 ## UNet
 
-Establish the Environment
-
-```bash
-#TODO Update
-# source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
-```
-
 Change the directory and copy files.
 
 ```bash
