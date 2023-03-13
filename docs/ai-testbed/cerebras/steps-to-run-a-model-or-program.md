@@ -5,167 +5,125 @@
 [This subsection is an adaption of <br>
 [https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html](https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html)]
 
-<!---#### Login steps:<br>
-Follow the instructions in section [Connect to a CS-2 node](./Connect-to-a-CS-2-node.md)--->
+#### Job submission and queuing:
 
-<!---
-#### Cerebras SIF container:<br>
-The Cerebras Singularity container (SIF) is used for all work with the Cerebras software, and includes the Cerebras Graph Compiler (CGC) and other necessary software.</br>
-Its path on cs2-01 is /software/cerebras/cs2-01/container/cbcore_latest.sif<br>
-Its path on cs2-02 is /software/cerebras/cs2-02/container/cbcore_latest.sif<br>
-It is used by the csrun_cpu and csrun_wse scripts, and can also be used directly with singularity.<br>
---->
+Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node. 
 
-#### Slurm:
-
-Slurm is installed and running on all the CPU nodes. The coordination between a Cerebras system and the nodes in a Cerebras cluster is performed by Slurm. See section
-[Job Queueing and Submission](Job-Queuing-and-Submission.md) for more details.</br>
-<!---
-[TODO Verify that a csrun_wse job locks the CS-2 wafer for exclusive use; if not, then it will need to be fixed. (Even with a hack like exclusively reserving >50% of the worker nodes by default)]
---->
-
-#### Worker hostnames:<br>
-<!---The worker nodes for the 1st CS-2 are testbed-cs2-01-med[2-7].ai.alcf.anl.gov<br>--->
-The worker nodes (see the first diagram in [System Overview](System-Overview.md#system-overview)) for the cs2-01 cluster are cs2-01-med[2-9].<br>
-The worker nodes (see the first diagram in [System Overview](System-Overview.md#system-overview)) for the cs2-02 cluster are cs2-02-med[1-7].<br>
-You may occasionally need to log into a specific worker node for debugging purposes.
-
-#### CS_IP address of the Cerebras system:
-
-The CS-2 systems can be accessed using the `CS_IP` environment variable. This is set automatically on login.<br>
-The CS_IP for cs2-01 is `192.168.220.30`<br>
-The CS_IP for cs2-02 is `192.168.220.50`<br>
-
-<!---The `CS_IP` environment variable is set to this value by the `/software/cerebras/cs2-02/envs/cs_env.sh` script, and the `$CS_IP` variable may be used by any user application that needs to access the CS-2 wafer.--->
-
-
-
-#### Running slurm jobs:<br>
-
-Cerebras includes two scripts for running slurm jobs.<br>
-`csrun_cpu` is for running a Cerebras compilation. By default it reserves a single entire worker node.<br>
-`csrun_wse` is for running a job on the wafer scale engine. By default it reserves five entire worker nodes, which are used to feed the dataset to the CS2 wafer.<br>
-```csrun_cpu --help``` and ```csrun_wse --help``` will list the available options.<br>
-See section [Job Queuing and Submission](Job-Queuing-and-Submission.md) for more details.
+#### Login nodes <br>
+Jobs are launced from login nodes.
+If you expect loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either screen or tmux to create persistent command line sessions. 
+`man screen` or `man tmux` for details. 
 
 #### Execution mode:</br>
 The cs2 system supports two modes of execution.<br>
 1. Pipeline mode (default mode)<br>
-Both cs2-01 and cs2-02 are currently configured for pipelined mode. This mode has more mature software support when compared to the weight streaming mode.<br>
-2. Weight streaming mode.(See the [Weight Streaming Quickstart](https://docs.cerebras.net/en/latest/getting-started/weight-streaming-quickstart.html?highlight=weight%20streaming).)<br>
-Weight streaming mode uses the host memory of one or more dedicated worker nodes to store model weights, and supports larger models compared to pipelined mode.<br>
-Weight streaming mode is newly introduced in Rel 1.5, and supports only a  limited number of model layers.<br>
+This mode is used for smaller models. <br>
+2. Weight streaming mode.<br>
+Weight streaming mode uses the host memory of the Cerebras cluster's MemoryX nodes to store and broadcast model weights, and supports larger models compared to pipelined mode.<br>
 
-## Running a training job on the wafer
+## Running jobs on the wafer
 
 Follow these instructions to compile and train the `fc_mnist` TensorFlow estimator example. This model is a couple of fully connected layers plus dropout and RELU. <br>
 
+TODO make common read-only venvs available
+
+TODO instruction page on creating tf and pytorch venvs.
+
+### Make virtualenvs
+
+#### To make a pytorch virtual environment:
 ```console
-cd ~/
-mkdir ~/R1.5/
-cp -r /software/cerebras/model_zoo/modelzoo ~/R1.5/modelzoo
-cd ~/R1.5/modelzoo/fc_mnist/tf
-csrun_wse python run.py --mode train --cs_ip $CS_IP --max_steps 100000
+mkdir ~/R_1.7.1
+cd ~/R_1.7.1
+# Note: "deactivate" does not actually work in scripts.  
+deactivate
+rm -r venv_pt
+/software/cerebras/python3.7/bin/python3.7 -m venv venv_pt
+source venv_pt/bin/activate
+python -m pip -q --disable-pip-version-check install pip
+pip install db-sqlite3
+pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_appliance-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
+pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.7.1_202301251118_3_7170ade7-py3-none-any.whl --find-links=/opt/cerebras/wheels/
+```
+#### To make a pytorch virtual environment:
+```console
+mkdir ~/R_1.7.1
+cd ~/R_1.7.1
+# Note: "deactivate" does not actually work in scripts.                                                                                                                                 
+deactivate
+rm -r venv_tf
+/software/cerebras/python3.7/bin/python3.7 -m venv venv_tf
+source venv_tf/bin/activate
+python -m pip -q --disable-pip-version-check install pip
+pip install db-sqlite3
+pip install tensorflow_datasets
+pip install spacy
+pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_appliance-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
+pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensorflow-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
 ```
 
-You should see a training rate of about 1870 steps per second, and output that finishes with something similar to this:
+TODO make a copy of [always current] modelzoo available
 
+### Clone or copy the modelzoo
+
+```console
+# TODO either common venv, or instructions to make one.
+cd ~/
+mkdir ~/R_1.7.1
+cd ~/R_1.7.1
+git clone https://github.com/Cerebras/modelzoo.git
+cd modelzoo
+git tag
+git checkout R_1.7.1
+```
+
+### Running a sample tensorflow training job
+```console
+source ~/R_1.7.1/venv_tf/bin/activate
+cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
+export MODEL_DIR=model_dir
+# deletion of the model_dir is only needed if sample has been previously run
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+python run_appliance.py --execution_strategy pipeline --params configs/params.yaml --num_csx=1 --num_workers_per_csx=8 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+```
+
+TODO something about what one sees after a successful training run
 ```text
-INFO:tensorflow:Training finished with 25600000 samples in 53.424 seconds, 479188.55 samples/second.
-INFO:tensorflow:Loss for final step: 0.0.
+[Some results text]
 ```
 
-To separately compile and train,
-
-```bash
-# delete any existing compile artifacts and checkpoints
-rm -r model_dir
-csrun_cpu python run.py --mode train --compile_only --cs_ip $CS_IP
-csrun_wse python run.py --mode train --cs_ip $CS_IP --max_steps 100000
-```
-
-The training will reuse an existing compilation if no changes were made that force a recompile, and will start from the newest checkpoint file if any. Compiles may be done while another job is using the wafer.
-
-See also the current Cerebras quickstart documentation, that uses a clone of Cerebras's abbreviated public "reference implementations" github repo rather than the full modelzoo.<br>
-[https://docs.cerebras.net/en/latest/getting-started/cs-tf-quickstart.html](https://docs.cerebras.net/en/latest/getting-started/cs-tf-quickstart.html)<br>
-[https://github.com/Cerebras/cerebras_reference_implementations/](https://github.com/Cerebras/cerebras_reference_implementations/)
-
-## Running a training job on the wafer in weight streaming mode
-No CS2-nodes are currently configured for weight streaming mode. This section is currently a placeholder.
-
-If not already done, copy the modelzoo tree:
-
+### Running a sample pytorch training job
 ```console
-cd ~/
-mkdir ~/R1.5/
-cp -r /software/cerebras/model_zoo/modelzoo ~/R1.5/modelzoo
+source ~/R_1.7.1/venv_pt/bin/activate
+cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/pytorch
 ```
-then change to the TensorFlow GPT2 directory:
+Next, edit configs/params.yaml, making the following changes:
+```text
+ train_input:
+-    data_dir: "./data/mnist/train"
++    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
 ```
-cd ~/R1.5/modelzoo/transformers/tf/gpt2
+and
+```text
+ eval_input:
+-    data_dir: "./data/mnist/val"
++    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/val"
 ```
-then edit the two instances of data_dir in configs/params_gpt2_small_ws.yaml (or in a copy of that file) as follows:
-```
-<     data_dir: "./input/pile_pretraining_gpt/train_msl2048/"
----
->     data_dir: "/software/cerebras/dataset/transformers/owt/openwebtext/owt_tfrecords_gpt2_msl2048/train/"
-<     data_dir: "./input/pile_pretraining_gpt/val_msl2048/"
----
->     data_dir: "/software/cerebras/dataset/transformers/owt/openwebtext/owt_tfrecords_gpt2_msl2048/val/"
-```
-then
+If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s
+Then, to run the sample:
 ```console
-csrun_wse --cyclic --total-nodes=4 --single-task-nodes=2 python-ws run.py  -p configs/params_gpt2_small.yaml  -m train --model_dir gpt2_small_owt_2048 --cs_ip $CS_IP
+export MODEL_DIR=model_dir
+# deletion of the model_dir is only needed if sample has been previously run
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+```
+
+TODO something about what one sees after a successful training run
+```text
+[Some results text]
 ```
 
 
-## Running a training job on the CPU
 
-The examples in the modelzoo<!--- [TODO And PyTorch?]--> will run in CPU mode, either using the csrun_cpu script, or in a singularity shell as shown below.<br>
 
-### Using csrun_cpu
 
-To separately compile and train,
-
-```console
-# delete any existing compile artifacts and checkpoints
-rm -r model_dir
-csrun_cpu python run.py --mode train --compile_only
-csrun_cpu python run.py --mode train --max_steps 400
-```
-
-<i>Note: If no cs_ip is specified, a training run will be in cpu mode. </i>
-
-Change the max steps for the training run command line to something smaller than the default so that the training completes in a reasonable amount of time. (CPU mode is &gt;2 orders of magnitude slower for many examples.)
-
-### Using a singularity shell
-
-This illustrates how to create a singularity container.
-The `-B /opt:/opt` is an illustrative example of how to bind a directory to a singularity container. (The singularity containers by default bind both one's home directory and /tmp, read/write.)
-
-```console
-cd ~/R1.5/modelzoo/fc_mnist/tf
-singularity shell -B /opt:/opt /software/cerebras/cs2-02/container/cbcore_latest.sif
-```
-or, on cs2-01,
-```console
-cd ~/R1.5/modelzoo/fc_mnist/tf
-singularity shell -B /opt:/opt /software/cerebras/cs2-01/container/cbcore_latest.sif
-```
-
-At the shell prompt for the container,
-
-```console
-#rm -r model_dir
-# compile and train on the CPUs
-python run.py --mode train --max_steps 1000
-python run.py --mode eval --eval_steps 1000
-# validate_only is the first portion of a compile
-python run.py --mode train --validate_only
-# remove the existing compile and training artifacts
-rm -r model_dir
-# compile_only does a compile but no training
-python run.py --mode train --compile_only
-```
-
-Type `exit` at the shell prompt to exit the container.
