@@ -236,10 +236,6 @@ mkdir unet
 cd ~/apps/image/unet
 ```
 
-Using the contents of [unet_compile_run_inf_rl.sh](unet_compile_run_inf_rl.sh), create a file in the current directory with the same name.
-
-Using the contents of [unet_compile_run_inf_rl.sh](unet_compile_run_inf_rl.sh), create a file in the current directory with the same name.
-
 Copy and paste the contents of
 [unet_compile_run_all.sh](/docs/ai-testbed/sambanova/files/unet_compile_run_all.sh "unet_compile_run_all.sh")
 to a file with the same name into the current directory using your favorite editor.
