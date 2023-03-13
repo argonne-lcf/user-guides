@@ -36,10 +36,24 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 ```
 
 The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
+<!-- BEGIN COMPARISON of mkdocs-codeinclude-plugin and pymdownx.snippets -->
 <!--codeinclude-->
-[Identifying physical or virtual GPU by UUID](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:uuid_print
+<!-- [Identifying physical or virtual GPU by UUID](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:uuid_print -->
 <!--/codeinclude-->
 
+<!-- Snippets paths are relative to base location, by default the current working directory (relative to mkdocs.yml?). You can specify a new base location by setting the base_path. base_path is a list of paths. When evaluating paths, they are done in the order specified. The specified snippet will be evaluated against each base path and the first base path that yields a valid snippet will be returned. -->
+
+=== "Identifying physical or virtual GPU by UUID"
+```c++
+---8<---
+./GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
+---8<---
+```
+
+<!--- example of other pymdownx.snippets syntax. ; temp disables it -->
+---8<--- "; docs/running-jobs/pbs-qsub-options-table.md"
+
+<!-- END COMPARISON -->
 
 *NOTE: If you are a ```zsh``` user, you will need to ensure **ALL** submission and shell scripts include the ```-l``` flag following ```#!/bin/bash``` as seen in the example above to ensure your environment is being instantiated properly. ```zsh``` is **NOT** supported by HPE and support from ALCF will be best effort only.*
 
