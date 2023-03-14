@@ -153,17 +153,16 @@ The latest containers are updated periodically. If you have trouble using contai
 ## Troubleshooting
 
 1. **Permission Denied Error**: One may get a `permission denied` error during the build process, due to a nasty permission setting, quota limitations, or simply due to an unresolved symbolic link. You can try one of the solutions below:
-  - Check your quota and delete any unnecessary files. 
-  - Clean-up singularity cache, `~/.singularity/cache`, and set the singularity tmp and cache directories as below:
-
-```bash
- export SINGULARITY_TMPDIR=/tmp/singularity-tmpdir
- mkdir $SINGULARITY_TMPDIR
- export SINGULARITY_CACHEDIR=/tmp/singularity-cachedir/
- mkdir $SINGULARITY_CACHEDIR
-``` 
- - Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
- - If any of the above doesn't work, try running the build in your home directory.
+	- Check your quota and delete any unnecessary files. 
+	- Clean-up singularity cache, `~/.singularity/cache`, and set the singularity tmp and cache directories as below:
+		```bash
+ 		export SINGULARITY_TMPDIR=/tmp/singularity-tmpdir
+ 		mkdir $SINGULARITY_TMPDIR
+ 		export SINGULARITY_CACHEDIR=/tmp/singularity-cachedir/
+ 		mkdir $SINGULARITY_CACHEDIR
+		``` 
+	- Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
+	- If any of the above doesn't work, try running the build in your home directory.
 
 2. **Mapping to rank 0 on all nodes**: This is mainly due to container mpich not binding to system mpich. It is imperative for the container to have mpich which can bind dynamically to system mpich at runtime. Ensuring your submission script has the following variables (see below) and the container to have mpich which is built with the the ' --disable-wrapper-rpath' flag will rectify this error. Please refer to this [link](https://github.com/argonne-lcf/container-registry/blob/main/containers/mpi/Polaris/job_submission.sh).
  ```bash
