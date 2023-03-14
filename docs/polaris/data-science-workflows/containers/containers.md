@@ -142,18 +142,19 @@ qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 
 If you just want to know what containers are available, here you go. 
 
-* Some of the available containers are stored at `/soft/containers/`
+* For running mpich/MPI containers on Polaris, it can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
 * For running databases on Polaris. It can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/databases)
 * For using shpc - that allows for running containers as modules. It can be found [here](https://github.com/argonne-lcf/container-registry/blob/main/containers/shpc/shpc.md)
+* Some containers are found in /soft/containers
 
 The latest containers are updated periodically. If you have trouble using containers, or request a newer or a different container please contact ALCF support at `support@alcf.anl.gov`.
  
 
 ## Troubleshooting
 
-1. *Permission Denied Error*: One may get a `permission denied` error during the build process, due to a nasty permission setting, quota limitations, or simply due to an unresolved symbolic link. You can try one of the solutions below:
- * Check your quota and delete any unnecessary files. 
- * Clean-up singularity cache, `~/.singularity/cache`, and set the singularity tmp and cache directories as below:
+1. **Permission Denied Error**: One may get a `permission denied` error during the build process, due to a nasty permission setting, quota limitations, or simply due to an unresolved symbolic link. You can try one of the solutions below:
+  - Check your quota and delete any unnecessary files. 
+  - Clean-up singularity cache, `~/.singularity/cache`, and set the singularity tmp and cache directories as below:
 
 ```bash
  export SINGULARITY_TMPDIR=/tmp/singularity-tmpdir
@@ -161,10 +162,10 @@ The latest containers are updated periodically. If you have trouble using contai
  export SINGULARITY_CACHEDIR=/tmp/singularity-cachedir/
  mkdir $SINGULARITY_CACHEDIR
 ``` 
- * Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
- * If any of the above doesn't work, try running the build in your home directory.
+ - Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
+ - If any of the above doesn't work, try running the build in your home directory.
 
-2. *Mapping to rank 0 on all nodes*: This is mainly due to container mpich not binding to system mpich. It is imperative for the container to have mpich which can bind dynamically to system mpich at runtime. Ensuring your submission script has the following variables (see below) and the container to have mpich which is built with the the ' --disable-wrapper-rpath' flag will rectify this error. Please refer to this [link](https://github.com/argonne-lcf/container-registry/blob/main/containers/mpi/Polaris/job_submission.sh).
+2. **Mapping to rank 0 on all nodes**: This is mainly due to container mpich not binding to system mpich. It is imperative for the container to have mpich which can bind dynamically to system mpich at runtime. Ensuring your submission script has the following variables (see below) and the container to have mpich which is built with the the ' --disable-wrapper-rpath' flag will rectify this error. Please refer to this [link](https://github.com/argonne-lcf/container-registry/blob/main/containers/mpi/Polaris/job_submission.sh).
  ```bash
  ADDITIONAL_PATH=/opt/cray/pe/pals/1.1.7/lib/
  module load cray-mpich-abi
@@ -172,5 +173,5 @@ The latest containers are updated periodically. If you have trouble using contai
  singularity exec -B /opt -B /var/run/palsd/
  ```
 
-3. libmpi.so.40 not found: This may be due to mpich binding to the wrong system mpich. Try removing .conda & .cache & .local folders from your home directory. Also rebuild your container and try again.
+3. **libmpi.so.40 not found**: This may be due to mpich binding to the wrong system mpich. Try removing .conda & .cache & .local folders from your home directory. Also rebuild your container and try again.
 
