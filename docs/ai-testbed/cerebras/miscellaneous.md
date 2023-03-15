@@ -2,41 +2,15 @@
 
 ## Porting applications to the CS-2
 
+TODO write this. Old porting guides are completely invalid.
+
 Cerebras’s mature Python support is built around [Cerebras Estimator](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/example-walk-through-cs-estimator.html?highlight=estimator), which inherits from [TensorFlow Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator).<br>
 A Keras model can be converted to TF Estimator, and hence to a Cerebras Estimator. See [https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator](https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator) for more information on conversion of Keras models.<br>
 
-Cerebras has recently introduced PyTorch support. The PyTorch support is documented at [Cerebras Software Documentation](https://docs.cerebras.net/en/latest/) in the section DEVELOP WITH PYTORCH. 
-
-Cerebras has guides for porting TensorFlow and PyTorch models:<br>
-[Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)</br>
-[Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
-This is Cerebras's list of the TensorFlow layers that they support (for the current version): [Supported TensorFlow Layers](https://docs.cerebras.net/en/latest/tensorflow-docs/tf-layers/index.html)<br>
-This is Cerebras's list of the PyTorch operations supported (for the current version): [Supported PyTorch Ops](https://docs.cerebras.net/en/latest/pytorch-docs/pytorch-ops.html)
-
-
-When porting, it is often helpful to study a related example in the Cerebras modelzoo.<br>
-A copy of the modelzoo for the install release is at ```/software/cerebras/model_zoo/modelzoo/```<br>
-Both the `README.md` files and source code in the modelzoo can be quite helpful.
-
 ## Determining the CS-2 version
 
-<!---
-[TODO should this API/auth string be made public? Alternative supplied that inspects the singularity container.]
-Note: replace the IP address with the CS_IP for the CS-2 cluster being used.<br>
-[TODO could use CS_IP environment variable if set.]<br>
-[balin: I was not able to make the `curl` command below run, even removing the `<br>` characters. Bill Arnold - checked with cerebras and this isn't working with the cs2-02 (does on cs2-01) that we're going live with, so commenting out.<br>
---->
-<!---
-```console
-...$ # Query the software level in the singularity image
-...$ singularity sif dump 1 /software/cerebras/cs2-02/container/cbcore_latest.sif | grep "from"
-from: cbcore:1.1.1-202203171919-5-6e2dbf07
-...# or singularity sif dump 1 /software/cerebras/cs2-01/container/cbcore_latest.sif | grep "from"
-...$
-```
---->
-
-These queries will only work on cs2-01 due to networking constraints:
+TODO, need another approach for new worker nodes with general ANL access.
+These queries will only work on cer-usr-01 due to networking constraints:
 ```
 ...$ # Query the firmware level for cs2-01
 ...$ curl -k -X GET 'https://192.168.120.30/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null  | python -m json.tool | grep FirmwareVersion
@@ -49,19 +23,7 @@ These queries will only work on cs2-01 due to networking constraints:
 ...$
 
 ```
-<!---
-## Viewing the Cerebras V 1.3 documentation
-The Cerebras V 1.3 documentation is stored on the Cerebras systems and can be served to be viewed with a local browser by running the following in a command prompt on your workstation/laptop.<br>
-*Change the <strong>ALCFUserID</strong> to your id.*<br>
-If there is a port conflict, use a different port number in either the second and third port number instance, or all three of them.
-```console
-ssh -t -L localhost:8089:localhost:8089 ALCFUserID@cerebras.alcf.anl.gov  "cd /software/cerebras/docs/V1.3/;python3 -m http.server 8089"
-```
-To view the documentation, copy the url into your browser as indicated in the output of the above command (e.g., `http://0.0.0.0:8089/`).
-
-This v 1.3 documentation tree can also be copied to your laptop/workstation and the files can be viewed locally with a browser. The Cerebras system has a tar file at /software/cerebras/docs/Cerebras_ML_SW_Docs_V1.3.tar
---->
-
+<!--- NO LONGER NEEDED; direct login. 
 ## Copying files
 To copy a file to your CS-2 home dir (same on both CS2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
 ```console
@@ -72,6 +34,10 @@ To copy a file from your CS-2 home dir (same on both CS2 clusters) to the curren
 ```console
 scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" ALCFUserID@cs2-01-master:~/filename .
 ```
+--->
+
+<!---
+NO LONGER NEEDED - python environments are available
 
 ## Downloading a Kaggle competition dataset to a CS-2 node using the command line
 
@@ -109,6 +75,7 @@ Exit the singularity container (with `exit`), then unzip the dataset zip file.<b
 `unzip` is available on the CS2 worker nodes.
 
 Note: the kaggle download shown above included two identical copies of the dataset; one copy was in a subdirectory.
+--->
 
 
 

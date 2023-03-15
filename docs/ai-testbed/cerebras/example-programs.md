@@ -4,9 +4,9 @@
 Make a local copy of the Cerebras modelzoo and anl_shared repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R1.5
-cp -r /software/cerebras/model_zoo/modelzoo/ ~/R1.5/modelzoo
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R1.5/anl_shared
+mkdir ~/R1.7.1
+cp -r /software/cerebras/model_zoo/modelzoo/ ~/R1.7.1/modelzoo
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R1.7.1/anl_shared
 ```
 
 

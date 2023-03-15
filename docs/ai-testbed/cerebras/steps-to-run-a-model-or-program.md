@@ -2,9 +2,6 @@
 
 ## Getting Started
 
-[This subsection is an adaption of <br>
-[https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html](https://docs.cerebras.net/en/latest/getting-started/checklist-before-you-start.html)]
-
 #### Job submission and queuing:
 
 Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node. 
@@ -26,8 +23,6 @@ Weight streaming mode uses the host memory of the Cerebras cluster's MemoryX nod
 Follow these instructions to compile and train the `fc_mnist` TensorFlow estimator example. This model is a couple of fully connected layers plus dropout and RELU. <br>
 
 TODO make common read-only venvs available
-
-TODO instruction page on creating tf and pytorch venvs.
 
 ### Make virtualenvs
 
