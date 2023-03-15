@@ -33,7 +33,7 @@ ls -al /opt/sambaflow/venv/lib/python3.7/site-packages
 Install packages in the normal manner such as:
 
 ```bash
-python3 -m pip install "package"
+python3 -m pip install <package>
 ```
 
 For more details see [Use pip for installing](https://packaging.python.org/en/latest/tutorials/installing-packages/#use-pip-for-installing).

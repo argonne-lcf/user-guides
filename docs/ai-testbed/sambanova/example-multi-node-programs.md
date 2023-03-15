@@ -4,7 +4,7 @@ SambaNova provides examples of some well-known AI applications under the path: `
 
 If you haven't already done so, please copy the starter files to your personal directory structure.
 
-```bash
+```console
 cd ~/
 mkdir apps
 cp -r /opt/sambaflow/apps/starters apps/starters
@@ -14,9 +14,9 @@ cp -r /opt/sambaflow/apps/starters apps/starters
 
 ### Set Up
 
-Copy files and change directory if you have not already done so.
+Copy files and change the directory if you have not already done so.
 
-```bash
+```console
 cp -r /opt/sambaflow/apps/image ~/apps/image
 cd ~/apps/image
 cp /software/sambanova/apps/image/pytorch/unet/*.sh .
@@ -38,9 +38,9 @@ Here is a breakdown of **unet_all.sh**.
 
 The argument **-x** is used to specify that each executed line is to be displayed.
 
-The second line is to stop on error.
+The second line is to stop on an error.
 
-Lastly, set total time, **SECONDS**, to zero.
+Lastly, set the total time, **SECONDS**, to zero.
 
 ```bash
 #! /bin/bash -x
@@ -102,11 +102,11 @@ Sbatch argument definitions:
 
     All eight RDUs per node are to be used.  Valid options are 1 through 8.
 
-  - **--nodes 2**
+  - **--nodes 8**
 
-    The number of nodes to use.  Currently there are two nodes.
+    The number of nodes to use.  Currently, there are eight nodes.
 
-  - **--nodelist sn30-r2-h1,sn30-r2-h2**
+  - **--nodelist sn30-r1-h1,sn30-r1-h2,sn30-r2-h1,sn30-r2-h2,sn30-r3-h1,sn30-r3-h2,sn30-r4-h1,sn30-r4-h2**
 
     The node names to use.
 
@@ -195,18 +195,18 @@ echo "Duration: " $SECONDS
 
 Change directory:
 
-```bash
+```console
 cd ~/apps/image/
 ```
 
 Compile and run UNet:
 
-```bash
+```console
 ./unet_all.sh 256 256
 ```
 
 SQueue will give you the queue status.
 
-```bash
+```console
 squeue
 ```
