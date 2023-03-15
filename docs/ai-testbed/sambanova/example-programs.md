@@ -241,6 +241,9 @@ Copy and paste the contents of
 to a file with the same name into the current directory using your favorite editor.
 
 Change the permissions of the bash script to be executable.
+Using the contents of [unet_compile_run_inf_rl.sh](unet_compile_run_inf_rl.sh), create a file in the current directory with the same name.
+
+Export the path to the dataset which is required for the training.
 
 ```bash
 chmod +x unet_compile_run_all.sh
