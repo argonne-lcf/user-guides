@@ -37,7 +37,7 @@ scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" ALCFUserID@cs2-01-master:~/f
 --->
 
 <!---
-NO LONGER NEEDED - python environments are available
+NO LONGER NEEDED - python environments are available, and singularity not available
 
 ## Downloading a Kaggle competition dataset to a CS-2 node using the command line
 
