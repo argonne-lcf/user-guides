@@ -74,8 +74,8 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 --->
 
 ## GPTJ
-This PyTorch GPTJ 6B parameter pretraining sample uses 2 CS2s
-TODO links to external documentation for GPTJ
+GPT-J [[1]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
+This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
 First, source a Cerebras PyTorch virtual env.
 ```console
@@ -86,8 +86,27 @@ source ~/R_1.7.1/venv_pt/bin/activate
 Then
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/gptj
-# TODO cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
+cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run.py --appliance --execution_strategy weight_streaming --params configs/params_gptj_6B.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+```
+The last parts of the output should resemble the following:
+```console
+2023-03-16 16:05:51,582 INFO:   About to send initial weights
+2023-03-16 16:08:00,833 INFO:   Finished sending initial weights
+2023-03-16 16:15:52,360 INFO:   | Train Device=xla:0, Step=100, Loss=8.59375, Rate=27.82 samples/sec, GlobalRate=27.82 samples/sec
+2023-03-16 16:23:45,144 INFO:   | Train Device=xla:0, Step=200, Loss=8.06250, Rate=27.62 samples/sec, GlobalRate=27.66 samples/sec
+2023-03-16 16:31:38,130 INFO:   | Train Device=xla:0, Step=300, Loss=7.87500, Rate=27.54 samples/sec, GlobalRate=27.60 samples/sec
+2023-03-16 16:39:30,581 INFO:   | Train Device=xla:0, Step=400, Loss=7.62500, Rate=27.53 samples/sec, GlobalRate=27.58 samples/sec
+2023-03-16 16:47:23,284 INFO:   | Train Device=xla:0, Step=500, Loss=7.42188, Rate=27.51 samples/sec, GlobalRate=27.56 samples/sec
+2023-03-16 16:55:16,032 INFO:   | Train Device=xla:0, Step=600, Loss=7.34375, Rate=27.50 samples/sec, GlobalRate=27.55 samples/sec
+2023-03-16 17:03:09,369 INFO:   | Train Device=xla:0, Step=700, Loss=7.17188, Rate=27.48 samples/sec, GlobalRate=27.54 samples/sec
+2023-03-16 17:11:02,115 INFO:   | Train Device=xla:0, Step=800, Loss=6.95312, Rate=27.49 samples/sec, GlobalRate=27.53 samples/sec
+2023-03-16 17:18:55,027 INFO:   | Train Device=xla:0, Step=900, Loss=6.84375, Rate=27.49 samples/sec, GlobalRate=27.53 samples/sec
+2023-03-16 17:26:47,287 INFO:   | Train Device=xla:0, Step=1000, Loss=6.68750, Rate=27.51 samples/sec, GlobalRate=27.53 samples/sec
+2023-03-16 17:26:47,289 INFO:   Saving checkpoint at global step 1000
+2023-03-16 17:30:37,821 INFO:   Saved checkpoint at global step: 1000
+2023-03-16 17:30:37,823 INFO:   Training Complete. Completed 130000 sample(s) in 4952.796596050262 seconds.
+2023-03-16 17:30:41,854 INFO:   Monitoring is over without any issue
 ```
