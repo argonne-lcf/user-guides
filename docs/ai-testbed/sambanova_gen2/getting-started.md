@@ -40,8 +40,7 @@ ssh sn30-r1-h1
 ### SDK setup
 
 The SambaNova system has a bash shell script to set up the required software environment.
-This sets up the SambaFlow software stack, and the associated environmental variables and starts
-a pre-configured virtual environment.
+This sets up the SambaFlow software stack, and the associated environmental variables.
 
 Use
 
