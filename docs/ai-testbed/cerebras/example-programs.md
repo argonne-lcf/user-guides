@@ -14,8 +14,21 @@ cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
 To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset,
 
+First, source a Cerebras PyTorch virtual env.
 ```console
-TODO (not working, ATM)
+source /srv/software/cerebras/venvs/venv_pt/bin/activate
+# or your personal venv
+source ~/R_1.7.1/venv_pt/bin/activate
+```
+then
+
+```console
+#TODO (not working, ATM; Debugging with Cerebras)
+cd ~/R_1.7.1/modelzoo/modelzoo/vision/pytorch/unet
+cp /srv/software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
+export MODEL_DIR=model_dir_unet
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+python run.py --appliance --execution_strategy pipeline --params configs/params_severstal_binary_rawds.yaml --num_csx=1  --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir unet |& tee mytest.log
 ```
 ## Bert
 A TensorFlow implementation of this: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
