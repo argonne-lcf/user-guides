@@ -252,7 +252,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
         client
         ```
 
-    - Shut down the cluster with 
+    - Shutdown the cluster with 
         ```python
         client.shutdown()
         ```
