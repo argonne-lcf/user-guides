@@ -1,21 +1,21 @@
 ## Job Queuing and Submission
-The CS-2 cluster has its own kubernetes-bssed system for job submission and queueing.<br>
+The CS-2 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
 
 Jobs are started automatically through the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils
-Continuous job status for a job is ouput to stdout/stderr; redirect the ouput, or consider using a persistent session started with screen/tmux, or both.
+Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with screen/tmux, or both.
 
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
 ```console
 (venv_tf) $ csctl  get jobs | grep -v "SUCCEEDED\|FAILED\|CANCELLED"
 NAME                          AGE    PHASE      SYSTEMS                USER     LABELS
 wsjob-eyjapwgnycahq9tus4w7id  88s    RUNNING    cer-cs2-01             username  name=pt_smoketest,user=username
-(venv_tf) $ 
+(venv_tf) $
 ```
-Jobs can be cancelled as shown:
+Jobs can be canceled as shown:
 ```console
 (venv_tf) $ csctl cancel job wsjob-eyjapwgnycahq9tus4w7id
 Job canceled successfully
-(venv_tf) $ 
+(venv_tf) $
 ```
 
 See `csctl -h` for more options

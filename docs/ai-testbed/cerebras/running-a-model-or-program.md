@@ -4,15 +4,20 @@
 
 #### Job submission and queuing:
 
-Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node.
+Cerebras jobs are initiated and tracked automatically within the Python frameworks in **modelzoo.common.pytorch.run_utils** and **modelzoo.common.tf.run_utils**. These frameworks interact with the Cerebras cluster management node.
 
 #### Login nodes <br>
-Jobs are launched from login nodes.
-If you expect loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either screen or tmux to create persistent command line sessions.
-`man screen` or `man tmux` for details.
+Jobs are launched from **login** nodes.
+If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
+
+```bash
+man screen
+# or
+man tmux
+```
 
 #### Execution mode:</br>
-The cs2 system supports two modes of execution.<br>
+The CS-2 system supports two modes of execution.<br>
 1. Pipeline mode (default mode)<br>
 This mode is used for smaller models. <br>
 2. Weight streaming mode.<br>

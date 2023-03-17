@@ -23,14 +23,14 @@ These queries will only work on cer-usr-01 due to networking constraints:
 ...$
 
 ```
-<!--- NO LONGER NEEDED; direct login. 
+<!--- NO LONGER NEEDED; direct login.
 ## Copying files
-To copy a file to your CS-2 home dir (same on both CS2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
+To copy a file to your CS-2 home dir (same on both CS-2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
 ```console
 scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" filename ALCFUserID@cs2-01-master:~/
 ```
 
-To copy a file from your CS-2 home dir (same on both CS2 clusters) to the current local directory, replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
+To copy a file from your CS-2 home dir (same on both CS-2 clusters) to the current local directory, replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
 ```console
 scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" ALCFUserID@cs2-01-master:~/filename .
 ```
@@ -51,7 +51,7 @@ source env/bin/activate
 pip3 install kaggle
 ```
 
-Go to www.kaggle.com in a browser, log in (create account if first time). In user(icon upper right) -&gt; Account tab, there is a button (scroll down) to "Create New API Token". Click it. It will open a download window for a one line json. 
+Go to www.kaggle.com in a browser, log in (create account if first time). In user(icon upper right) -&gt; Account tab, there is a button (scroll down) to "Create New API Token". Click it. It will open a download window for a one line json.
 
 put the json in `~/.kaggle/kaggle.json`</br>
 e.g. scp the downloaded file, or single quote the json text and echo it as shown</br>
@@ -69,10 +69,10 @@ Paste the API command to the command line inside the singularity shell with the 
 kaggle datasets download -d mhskjelvareid/dagm-2007-competition-dataset-optical-inspection
 ```
 
-It will download as a zip file. 
+It will download as a zip file.
 
 Exit the singularity container (with `exit`), then unzip the dataset zip file.<br>
-`unzip` is available on the CS2 worker nodes.
+`unzip` is available on the CS-2 worker nodes.
 
 Note: the kaggle download shown above included two identical copies of the dataset; one copy was in a subdirectory.
 --->
