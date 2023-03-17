@@ -1,15 +1,15 @@
-# Steps to Run a Model/Program
+# Running a Model/Program
 
 ## Getting Started
 
 #### Job submission and queuing:
 
-Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node. 
+Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node.
 
 #### Login nodes <br>
 Jobs are launched from login nodes.
-If you expect loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either screen or tmux to create persistent command line sessions. 
-`man screen` or `man tmux` for details. 
+If you expect loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either screen or tmux to create persistent command line sessions.
+`man screen` or `man tmux` for details.
 
 #### Execution mode:</br>
 The cs2 system supports two modes of execution.<br>
@@ -38,7 +38,7 @@ These are sufficient for running samples, but you may want to make your own virt
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
-# Note: "deactivate" does not actually work in scripts.  
+# Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_pt
 /srv/software/cerebras/python3.7/bin/python3.7 -m venv venv_pt
@@ -52,7 +52,7 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorc
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
-# Note: "deactivate" does not actually work in scripts.                                                                                                                                 
+# Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_tf
 /srv/software/cerebras/python3.7/bin/python3.7 -m venv venv_tf
@@ -94,7 +94,7 @@ Next, edit configs/params.yaml, making the following change:
 --- a/modelzoo/fc_mnist/tf/configs/params.yaml
 +++ b/modelzoo/fc_mnist/tf/configs/params.yaml
 @@ -17,7 +17,7 @@ description: "FC-MNIST base model params"
- 
+
  train_input:
      shuffle: True
 -    data_dir: './tfds' # Place to store data
@@ -156,8 +156,3 @@ A successful fc_mnist PyTorch training run should finish with output resembling 
 2023-03-15 19:01:28,754 INFO:   Training Complete. Completed 1280000 sample(s) in 42.468820095062256 seconds.
 2023-03-15 19:01:32,175 INFO:   Monitoring is over without any issue
 ```
-
-
-
-
-
