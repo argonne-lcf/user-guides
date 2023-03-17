@@ -1,26 +1,37 @@
-# Running BERT-Large on Sambanova DataScale SN30-8
+# Running BERT-Large on SambaNova DataScale SN30-8
 
 * BERT Code is in the [Bert](./bert/) directory here for your reference.
   * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT.
 
 <!-- ## Getting started
 
-1. Login to Sambanova login node.
+1. Login to SambaNova login node.
     ```bash
     ssh ALCFUserID@sambanova.alcf.anl.gov
     ```
 
-2. Connect to the one of the destination Sambanova nodes:
+2. Connect to the one of the destination SambaNova nodes:
     ```bash
-    ssh sm-01
+    ssh sn30-r1-h1
     or
-    ssh sm-02
-    ```
-
-3. Set up the required software environment. Do:
-     ```bash
-    source /software/sambanova/envs/sn_env.sh
+    ssh sn30-r2-h1
     ``` -->
+
+## ...Running Bert Large
+
+```bash
+cd
+```
+
+Copy BertLarge.sh into your root directory and execute the script.
+
+```bash
+cp /data/ANL/scripts/BertLarge.sh .
+./BertLarge.sh
+```
+
+
+
 
 ## Pretraining in Data Parallel Mode
 

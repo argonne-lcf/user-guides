@@ -30,6 +30,7 @@ passcode
 pretrain
 pretraining
 RELU
+sambanova
 SambaNova
 SambaFlow
 sbatch
