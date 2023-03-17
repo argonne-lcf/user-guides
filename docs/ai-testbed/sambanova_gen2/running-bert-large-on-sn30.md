@@ -1,4 +1,4 @@
-# Running BERT-Large on Sambanova DataScale SN10-8R
+# Running BERT-Large on Sambanova DataScale SN30-8
 
 * BERT Code is in the [Bert](./bert/) directory here for your reference.
   * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT.
@@ -59,7 +59,7 @@
     <summary>Click for sample throughput</summary>
 
     ```bash
-    Measuring peformance with world size:  2
+    Measuring performance with world size:  2
     initial run starts.
     initial run completes.
     e2e_latency: 30.75621747970581 seconds, throughput: 665.8816225861821 samples/s, measured over 10 iterations.
@@ -109,7 +109,7 @@
 
 **Note**: for the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time. We will also use a processed dataset.
 
-1. Create a folder for finetuning in your home repo, and copy the bash script `/projects/aitestbed_training/SN/precompiled_bert/bash_scripts/submit-bert-squad-job.sh` to it. Then, go to that folder. Example:
+1. Create a folder for fine-tuning in your home repo, and copy the bash script `/projects/aitestbed_training/SN/precompiled_bert/bash_scripts/submit-bert-squad-job.sh` to it. Then, go to that folder. Example:
 
    ```bash
    cd $HOME
