@@ -3,6 +3,7 @@
 ## Porting applications to the CS-2
 
 TODO write this. Old porting guides are completely invalid.
+There is some documentation on the Cerebras docs site but it needs to be tested.
 
 Cerebras’s mature Python support is built around [Cerebras Estimator](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/example-walk-through-cs-estimator.html?highlight=estimator), which inherits from [TensorFlow Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator).<br>
 A Keras model can be converted to TF Estimator, and hence to a Cerebras Estimator. See [https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator](https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator) for more information on conversion of Keras models.<br>
