@@ -7,7 +7,7 @@
 Cerebras jobs are initiated and tracked automatically within the python frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils. These frameworks interact with the Cerebras cluster management node. 
 
 #### Login nodes <br>
-Jobs are launced from login nodes.
+Jobs are launched from login nodes.
 If you expect loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either screen or tmux to create persistent command line sessions. 
 `man screen` or `man tmux` for details. 
 
@@ -22,11 +22,19 @@ Weight streaming mode uses the host memory of the Cerebras cluster's MemoryX nod
 
 Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyTorch samples. These models are each a couple of fully connected layers plus dropout and RELU. <br>
 
-TODO make common read-only venvs available
-
 ### Make virtualenvs
 
 #### To make a pytorch virtual environment:
+Read-only virtual environments for TensorFlow and Pytorch are available with
+```console
+source /srv/software/cerebras/venvs/venv_tf/bin/activate
+```
+or 
+```console
+source /srv/software/cerebras/venvs/venv_pt/bin/activate
+```
+These are sufficient for running samples, but you may want to make your own virtual environment(s) for installation of additional packages
+
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
@@ -57,12 +65,11 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_applia
 pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensorflow-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
 ```
 
-TODO make a copy of [always current] modelzoo available
-
 ### Clone or copy the modelzoo
 
+TODO make a copy of [always current] modelzoo available?
+
 ```console
-# TODO either common venv, or instructions to make one.
 cd ~/
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
@@ -71,7 +78,7 @@ cd modelzoo
 git tag
 git checkout R_1.7.1
 ```
-### Activate either your tensorflow environment or a read-only common tensorflow environment, and change to the working directory.
+### Activate either your TensorFlow environment or a read-only common TensorFlow environment, and change to the working directory.
 ```console
 source ~/R_1.7.1/venv_tf/bin/activate
 cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
@@ -96,7 +103,7 @@ Next, edit configs/params.yaml, making the following change:
      num_parallel_calls: 0   # 0 means AUTOTUNE
 ```
 
-### Run a sample tensorflow training job
+### Run a sample TensorFlow training job
 ```console
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
