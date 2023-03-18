@@ -225,7 +225,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # open_jupyterlab_polaris.sh
 
-    SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids polaris.alcf.anl.gov"
+    SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"
     PORT=8675 && \
     ssh ${SSH_MULTIPLEX} "echo \$(hostname) | tee ~/jupyter_pol.log && \
     source ~/activate_rapids_env_polaris.sh 2> /dev/null  && \
@@ -265,7 +265,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # close_jupyterlab_polaris.sh
 
-    SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids polaris.alcf.anl.gov"  && \
+    SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"  && \
     PORT=$(sed -n 's/.*:\([0-9][0-9]*\)\/.*/\1/p' ~/jupyter_pol.log)  && \
     ssh -O cancel -L $PORT:localhost:$PORT ${SSH_MULTIPLEX}  && \
     ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep `whoami` | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9  &&  rm ~/jupyter_pol.log" && \
