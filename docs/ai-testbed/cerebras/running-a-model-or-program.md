@@ -29,16 +29,16 @@ Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyT
 
 ### Make virtualenvs
 
-#### To make a pytorch virtual environment:
-Read-only virtual environments for TensorFlow and Pytorch are available with
+#### To make a PyTorch virtual environment:
+Read-only virtual environments for TensorFlow and PyTorch are available with
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 ```
-or 
+or
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 ```
-These are sufficient for running samples, but you may want to make your own virtual environment(s) for installation of additional packages
+These are sufficient for running samples, but you may want to make your own virtual environment(s) for the installation of additional packages
 
 ```console
 mkdir ~/R_1.7.1
@@ -53,7 +53,7 @@ pip install db-sqlite3
 pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_appliance-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
 pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.7.1_202301251118_3_7170ade7-py3-none-any.whl --find-links=/opt/cerebras/wheels/
 ```
-#### To make a pytorch virtual environment:
+#### To make a PyTorch virtual environment:
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
