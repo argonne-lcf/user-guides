@@ -218,7 +218,6 @@ nav:
       - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
       # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
       - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
-      - DataParallel: ai-testbed/sambanova_gen2/DataParallel.md
       - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
       - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
