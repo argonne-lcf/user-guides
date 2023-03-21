@@ -30,7 +30,7 @@ You just copied two **bash** scripts.  They are:
 
 2. **unet_batch.sh**
 
-    - Runs Unet.
+    - Runs UNet.
 
 ### UNet All
 
