@@ -5,7 +5,7 @@ SambaNova provides examples of some well-known AI applications under the path: `
 If you haven't already done so, please copy the starter files to your personal directory structure.
 
 ```console
-cd ~/
+cd
 mkdir apps
 cp -r /opt/sambaflow/apps/starters apps/starters
 ```
@@ -19,20 +19,25 @@ Copy files and change the directory if you have not already done so.
 ```console
 cp -r /opt/sambaflow/apps/image ~/apps/image
 cd ~/apps/image
-cp /software/sambanova/apps/image/pytorch/unet/*.sh .
 ```
+
+
+
+Create unet.sh
+
+
+
 
 You just copied two **bash** scripts.  They are:
 
 1. **unet_all.sh**
-
-    - Compiles UNet and then submits a batch job to run the model.
-
 2. **unet_batch.sh**
 
     - Runs UNet.
 
-### UNet All
+### unet_all.sh
+
+The unet_all.sh script compiles UNet and then submits a batch job to train the model.
 
 Here is a breakdown of **unet_all.sh**.
 
@@ -133,7 +138,9 @@ sbatch --gres=rdu:1 --tasks-per-node 8  --nodes 2 --nodelist sm-02,sm-01 --cpus-
 echo "Duration: " $SECONDS
 ```
 
-### UNet Batch
+### unet_batch.sh
+
+The unet_batch.sh script trains the UNet model.
 
 Here is a description of **unet_batch.sh**.  This script is automatically run by **unet_all.sh**.
 
@@ -167,8 +174,8 @@ export SAMBA_CCL_USE_PCIE_TRANSPORT=0
 Activate virtual environment.
 
 ```bash
-# TODO: Update this.
-source /opt/sambaflow/venv/bin/activate
+# TODO: Update this in the script.
+source ~/apps/image/segmentation/venv/bin/activate
 ```
 
 Display an informative banner.
@@ -179,7 +186,7 @@ echo "Date: " $(date +%m/%d/%y)
 echo "Time: " $(date +%H:%M)
 ```
 
-Run UNet
+Train UNet
 
 ```bash
 srun --mpi=pmi2 python ${UNET}/unet_hook.py  run --do-train --in-channels=3 --in-width=${IM} --in-height=${IM} --init-features 32 --batch-size=${BS} --epochs 2   --data-dir ${DATADIR} --log-dir log_dir_unet_${NN}_train_kaggle --pef=$(pwd)/out/unet_train_${BS}_${IM}_NN/unet_train_${BS}_${IM}_NN.pef --data-parallel --reduce-on-rdu --num-workers=${NUM_WORKERS}
@@ -199,7 +206,7 @@ Change directory:
 cd ~/apps/image/
 ```
 
-Compile and run UNet:
+Compile and run/train UNet:
 
 ```console
 ./unet_all.sh 256 256
