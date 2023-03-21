@@ -2,25 +2,25 @@
 
 ## Porting applications to the CS-2
 
-TODO write this. Old porting guides are completely invalid.
-There is some documentation on the Cerebras docs site but it needs to be tested.
-
-Cerebras’s mature Python support is built around [Cerebras Estimator](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/example-walk-through-cs-estimator.html?highlight=estimator), which inherits from [TensorFlow Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator).<br>
-A Keras model can be converted to TF Estimator, and hence to a Cerebras Estimator. See [https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator](https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator) for more information on conversion of Keras models.<br>
+TODO
+Cerebras currently lacks a porting guide for applications running on a cluster in appliance configuration. There is some pipeline-mode documentation on the cerebras site that might be close; needs testing:<br>
+[Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
+[Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)
 
 ## Determining the CS-2 version
 
-TODO, need another approach for new worker nodes with general ANL access.
+TODO
+Need another approach for the new worker nodes with general ANL access.
 These queries will only work on cer-usr-01 due to networking constraints:
 ```
 ...$ # Query the firmware level for cs2-01
-...$ curl -k -X GET 'https://192.168.120.30/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null  | python -m json.tool | grep FirmwareVersion
-"FirmwareVersion": "1.1.1-202203171919-5-879ff4ef",
+...$ curl -k -X GET 'https://10.140.89.251/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
+ "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
 ...$
 
-...$ # Query the firmware level for cs2-02 (from cs2-01)
-...$ curl -k -X GET 'https://192.168.120.50/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null  | python -m json.tool | grep FirmwareVersion
-"FirmwareVersion": "1.1.1-202203171919-5-879ff4ef",
+...$ # Query the firmware level for cs2-02
+...$ curl -k -X GET 'https://10.140.89.252/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
+ "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
 ...$
 
 ```
