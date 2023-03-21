@@ -38,13 +38,37 @@ One may find the output in **compile_256_256_single_4.log**.
 
 ### Run
 
+#### SBatch Arguments
+
+**gres=rdu:1** Indicates the model fits on a single RDU.
+
+**tasks-per-node 8** Indicates the number of Python tasks to execute.
+
+**nodes 4** Nodes to use.
+
+**cpus-per-task=16** CPUs per task.
+
+#### Run Command
+
 Run/train UNet using the following command:
 
 ```console
-./unet.sh run 256 256
+sbatch --gres=rdu:1 --tasks-per-node 8  --nodes 4 --cpus-per-task=16 ./unet.sh run 256 256
 ```
 
 One may find the output in **run_unet_256_256_single_4.log**.
+
+#### Repeated Runs
+
+If one desires to make repeated runs, execute the following commands:
+
+```bash
+rm -rf log_dir_unet_256_256_single_4
+rm -rf out
+rm *.log
+```
+
+Otherwise, there will be an error finding a model checkpoint error.
 
 SQueue will give you the queue status.
 
