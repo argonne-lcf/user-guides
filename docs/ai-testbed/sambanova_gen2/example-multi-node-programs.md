@@ -38,6 +38,11 @@ One may find the output in **compile_256_256_single_4.log**.
 
 ### Run
 
+As indicated on [Getting Started](/docs/ai-testbed/sambanova_gen2/getting-started), each
+node has eight (8) RDUs.
+
+This example uses 4 nodes times 8 RDUs per node for a total of 32 RDUs.
+
 #### SBatch Arguments
 
 **gres=rdu:1** Indicates the model fits on a single RDU.
@@ -53,7 +58,7 @@ One may find the output in **compile_256_256_single_4.log**.
 Run/train UNet using the following command:
 
 ```console
-sbatch --gres=rdu:1 --tasks-per-node 8  --nodes 4 --cpus-per-task=16 ./unet.sh run 256 256
+sbatch --gres=rdu:1 --tasks-per-node 8 --nodes 4 --cpus-per-task=16 ./unet.sh run 256 256
 ```
 
 One may find the output in **run_unet_256_256_single_4.log**.
@@ -69,6 +74,8 @@ rm *.log
 ```
 
 Otherwise, there will be an error finding a model checkpoint error.
+
+## SQueue
 
 SQueue will give you the queue status.
 
