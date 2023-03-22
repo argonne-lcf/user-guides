@@ -20,11 +20,13 @@ layernorm
 lenet
 libcudart
 libnvinfer
+LOGDIR
 logreg
 mgmt
 MNIST
 modelzoo
 nodelist
+ntasks
 OUTDIR
 passcode
 pretrain
