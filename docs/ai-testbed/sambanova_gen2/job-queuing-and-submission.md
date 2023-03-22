@@ -6,7 +6,7 @@ SambaNova uses Slurm for job submission and queueing. Below are some of the impo
 
 **NOTE: Run the Python scripts using 'srun' or 'sbatch', to ensure that concurrent jobs do not interfere with each other.**
 
-**NOTE: There is just one scheduler for all of the SambaNova nodes, e.g., sn30-r4-h2.**
+**NOTE: There is just one scheduler for all of the SambaNova nodes.**
 
 ## SRun
 
