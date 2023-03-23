@@ -5,7 +5,7 @@ NOTE: At this time, we only support client/server mode where the user must manua
 
 ## Setting up Paraview 
 
-On your local client click on the following icon:
+From your local client select Connect, either from the File menu, or by clicking on the icon circled below:
 
 ![Connect icon](connect-icon.png) 
 
@@ -17,7 +17,7 @@ Give your server a name, select Client/Server, localhost, and a TCP port (8000 i
 
 ![Edit server](edit-server.png)
 
-Press "Configure" and "Save" in the next window.
+Click "Configure". In the next window there is an option to set up how Paraview server will be launched, and the default is "Manual". Leave it on "Manual" and click "Save".
 
 You will use these settings when establishing the connection.
 
@@ -35,7 +35,7 @@ When the job starts you will receive a prompt on your head node like this:
 username@x3005c0s7b0n0:~>
 ```
 
-Make a note of the node hostname (x3005c0s7b0n0 in the example above). You can also get this information from qstat -fx jobID
+Make a note of the node hostname (`x3005c0s7b0n0` in the example above). You can also get this information from `qstat -fx jobID`
 
 
 Now load the Paraview module
@@ -62,7 +62,9 @@ Connection URL: cs://x3005c0s7b0n0:8000
 Accepting connection(s): x3005c0s7b0n0:8000
 ```
 
-In this case pvserver will be listening on TCP port 8000 of your head node. You can change this port if you want.
+In this case `pvserver` will be listening on TCP port 8000 of your head node. You can change this port if you want.
+
+## Creating a tunnel over ssh
 
 We need to establish an ssh tunnel to connect client to server. On your local machine open a new terminal and type:
 
@@ -80,13 +82,21 @@ Keep this terminal open for the duration of your session to keep the ssh tunnel 
 
 Now you are ready to launch your Paraview client locally. Keep in mind that client and servers versions must match. The Paraview version currently deployed on Polaris is 5.11.0
 
-Connect your Paraview client to the server configuration you created above. It should point to:
+## Connecting to Paraview server
+
+Connect your Paraview client to the server configuration you created above. You can select Connect, either from the File menu, or the icon circled in the figure:
+
+![Connect icon](connect-icon.png)  
+
+and selecting the configuration you created in a previous step.
+
+The connection should point to:
 
 ```
 localhost:8000
 ```
 
-In the terminal where you launched the server you will see now that the connection is established
+In the terminal where you launched the server you will see now that the connection is established. Note that Paraview may take a few seconds to connect. This is normal behavior.
 
 ```
 username@x3005c0s7b0n0:~> mpirun -n 8 pvserver --server-port=8000
