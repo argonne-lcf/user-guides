@@ -197,19 +197,32 @@ nav:
       - Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-    - SambaNova:
-      - System Overview: ai-testbed/sambanova/system-overview.md
-      - Getting Started: ai-testbed/sambanova/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
-      - Steps to Run a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
-      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova/running-bert-large-on-sn10-8r.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
-      #- DataParallel: ai-testbed/sambanova/DataParallel.md
-      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+    - SambaNova Gen1:
+      - System Overview: ai-testbed/sambanova_gen1/system-overview.md
+      - Getting Started: ai-testbed/sambanova_gen1/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova_gen1/virtual-environment.md
+      - Steps to Run a Model/Program: ai-testbed/sambanova_gen1/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova_gen1/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova_gen1/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova_gen1/example-multi-node-programs.md
+      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen1/tunneling-and-forwarding-ports.md
+      #- DataParallel: ai-testbed/sambanova_gen1/DataParallel.md
+      - Miscellaneous: ai-testbed/sambanova_gen1/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova_gen1/documentation.md
+    - SambaNova Gen2:
+      - System Overview: ai-testbed/sambanova_gen2/system-overview.md
+      - Getting Started: ai-testbed/sambanova_gen2/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova_gen2/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova_gen2/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova_gen2/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova_gen2/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
+      #- Running BERT Large on Sambanova DataScale SN30-8R: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
+      #- DataParallel: ai-testbed/sambanova_gen2/DataParallel.md
+      - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:

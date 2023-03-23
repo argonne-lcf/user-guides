@@ -1,8 +1,8 @@
 # Example Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on both SambaNova compute nodes. Make a copy of this to your home directory:
+SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
 
-Copy starters to your personal directory structure:
+Copy the starters to your personal directory structure:
 
 ```bash
 cd ~/
@@ -57,6 +57,12 @@ Below are some of the common arguments used across most of the models in the exa
 |                        | data'     |                                |
 |                        |           |                                |
 
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
+```
+
 **NOTE:  If you receive an \"HTTP error\" message on any of the
 following commands, run the command again. Such errors (e.g 503) are
 commonly an intermittent failure to download a dataset.**
@@ -92,59 +98,19 @@ squeue
 watch squeue
 ```
 
-The output file will look something like this:
+One may see the run log using:
 
-```text
-[Info][SAMBA][Default] # Placing log files in
-pef/lenet/lenet.samba.log
-
-[Info][MAC][Default] # Placing log files in
-pef/lenet/lenet.mac.log
-
-[Warning][SAMBA][Default] #
-
---------------------------------------------------
-
-Using patched version of torch.cat and torch.stack
-
---------------------------------------------------
-
-[Warning][SAMBA][Default] # The dtype of "targets" to
-CrossEntropyLoss is torch.int64, however only int16 is currently
-supported, implicit conversion will happen
-
-[Warning][MAC][GraphLoweringPass] # lenet__reshape skip
-set_loop_to_air
-
-[Warning][MAC][GraphLoweringPass] # lenet__reshape_bwd skip
-set_loop_to_air
-
-...
-
-Epoch [1/1], Step [59994/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59995/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59996/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59997/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59998/60000], Loss: 0.1712
-
-Epoch [1/1], Step [59999/60000], Loss: 0.1712
-
-Epoch [1/1], Step [60000/60000], Loss: 0.1712
-
-Test Accuracy: 98.06 Loss: 0.0628
-
-2021-6-10 10:52:28 : [INFO][SC][53607]: SambaConnector: PEF File:
-pef/lenet/lenet.pef
-
-Log ID initialized to: [ALCFUserID][python][53607] at
-/var/log/sambaflow/runtime/sn.log
+```bash
+cat pef/lenet/output.log
 ```
 
 ## MNIST - Feed Forward Network
+
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/ffn_mnist/venv/bin/activate
+```
 
 Change directory
 
@@ -155,16 +121,16 @@ cd ~/apps/starters/ffn_mnist/
 Commands to run MNIST example:
 
 ```bash
-srun python ffn_mnist.py compile --pef-name="ffn_mnist" --output-folder="pef"
-srun python ffn_mnist.py run --pef="pef/ffn_mnist/ffn_mnist.pef" --data-path mnist_data
+srun python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
+srun python ffn_mnist.py  run -b 1 -p out/ffn_mnist/ffn_mnist.pef
 ```
 
 To run the same using Slurm sbatch, create and run the submit-ffn_mnist-job.sh with the following contents.
 
 ```bash
 #!/bin/sh
-python ffn_mnist.py compile --pef-name="ffn_mnist" --output-folder="pef"
-python ffn_mnist.py run --pef="pef/ffn_mnist/ffn_mnist.pef" --data-path mnist_data
+python python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
+python ffn_mnist.py  run -b 1 -p out/ffn_mnist/ffn_mnist.pef
 ```
 
 ```bash
@@ -172,6 +138,12 @@ sbatch --output=pef/ffn_mnist/output.log submit-ffn_mnist-job.sh
 ```
 
 ## Logistic Regression
+
+Establish the Environment
+
+```bash
+source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+```
 
 Change directory
 
@@ -226,88 +198,60 @@ sbatch --output=pef/logreg/output.log submit-logreg-job.sh
 The output, pef/logreg/output.log, will look something like this:
 
 ```text
-[Info][SAMBA][Default] # Placing log files in
-pef/logreg/logreg.samba.log
-[Info][MAC][Default] # Placing log files in
-pef/logreg/logreg.mac.log
-[Warning][SAMBA][Default] #
---------------------------------------------------
-Using patched version of torch.cat and torch.stack
---------------------------------------------------
-
-[Warning][SAMBA][Default] # The dtype of "targets" to
-CrossEntropyLoss is torch.int64, however only int16 is currently
-supported, implicit conversion will happen
-[Warning][MAC][MemoryOpTransformPass] # Backward graph is trimmed
-according to requires_grad to save computation.
-[Warning][MAC][WeightShareNodeMergePass] # Backward graph is
-trimmed according to requires_grad to save computation.
-[Warning][MAC][ReduceCatFaninPass] # Backward graph is trimmed
-according to requires_grad to save computation.
-[info ] [PLASMA] Launching plasma compilation! See log file:
-/home/ALCFUserID/apps/starters/pytorch/pef/logreg//logreg.plasma_compile.log
+2023-03-08 21:18:25.168190: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-03-08 21:18:25.334389: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2023-03-08 21:18:25.334430: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-03-08 21:18:26.422458: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2023-03-08 21:18:26.422701: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2023-03-08 21:18:26.422709: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+[Info][SAMBA]# Placing log files in /home/wilsonb/apps/starters/logreg/pef/logreg/logreg.samba.log
+[Info][MAC]# Placing log files in /home/wilsonb/apps/starters/logreg/pef/logreg/logreg.mac.log
 ...
 
-[Warning][SAMBA][Default] # The dtype of "targets" to
-CrossEntropyLoss is torch.int64, however only int16 is currently
-supported, implicit conversion will happen
-Epoch [1/1], Step [10000/60000], Loss: 0.4763
-Epoch [1/1], Step [20000/60000], Loss: 0.4185
-Epoch [1/1], Step [30000/60000], Loss: 0.3888
-Epoch [1/1], Step [40000/60000], Loss: 0.3721
-Epoch [1/1], Step [50000/60000], Loss: 0.3590
-Epoch [1/1], Step [60000/60000], Loss: 0.3524
-Test Accuracy: 90.07 Loss: 0.3361
-2021-6-11 8:38:49 : [INFO][SC][99185]: SambaConnector: PEF File:
-pef/logreg/logreg.pef
-Log ID initialized to: [ALCFUserID][python][99185] at
-/var/log/sambaflow/runtime/sn.log
+Epoch [1/1], Step [10000/60000], Loss: 0.4642
+Epoch [1/1], Step [20000/60000], Loss: 0.4090
+Epoch [1/1], Step [30000/60000], Loss: 0.3863
+Epoch [1/1], Step [40000/60000], Loss: 0.3703
+Epoch [1/1], Step [50000/60000], Loss: 0.3633
+Epoch [1/1], Step [60000/60000], Loss: 0.3553
+Test Accuracy: 91.40  Loss: 0.3014
+2023-03-08T21:19:08 : [INFO][LIB][2688517]: sn_create_session: PEF File: pef/logreg/logreg.pef
 ```
 
 ## UNet
 
+Establish the Environment
+
+```bash
+#TODO Update
+# source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
+```
+
 Change directory and copy files.
 
 ```bash
-cp -r /opt/sambaflow/apps/image ~/apps/image
+cd ~/apps/image/
+mkdir unet
 cd ~/apps/image/unet
-cp /software/sambanova/apps/image/pytorch/unet/*.sh .
 ```
 
-Export the path to the dataset which is required for the training.
+Copy and paste the contents of
+[unet_compile_run_all.sh](/docs/ai-testbed/sambanova_gen2/files/unet_compile_run_all.sh "unet_compile_run_all.sh")
+to a file with the same name into the current directory using your favorite editor.
 
 ```bash
-export OUTDIR=~/apps/image/unet
-export DATADIR=/software/sambanova/dataset/kaggle_3m
+chmod +x unet_compile_run_all.sh
 ```
 
 Run these commands for training (compile + train):
 
 ```bash
-sbatch unet_compile_run_inf_rl.sh compile 32 1  # Takes over 15 minutes.
-sbatch unet_compile_run_inf_rl.sh test 32 1     # Very fast.
-sbatch unet_compile_run_inf_rl.sh run 32 1      #
+./unet_compile_run_all.sh compile 256 256
+./unet_compile_run_all.sh run 256 256
 ```
 
-The output files are named **slurm-\<batch ID\>.out**.
-
-Using SLURM:  To use Slurm, create submit-unet-job.sh with the following
-contents:
-
-```bash
-#!/bin/sh
-export OUTDIR=~/apps/image/unet
-export DATADIR=/software/sambanova/dataset/kaggle_3m
-./unet_compile_run_inf_rl.sh compile 32 1
-./unet_compile_run_inf_rl.sh test 32 1
-./unet_compile_run_inf_rl.sh run 32 1
-```
-
-Then
-
-```bash
-sbatch submit-unet-job.sh
-```
+The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
 Squeue will give you the queue status.
 
