@@ -1,6 +1,6 @@
 # Paraview on Polaris
 
-NOTE: At this time, we only support client/server mode where the user must manually launch the server on Polaris.
+!!! note  At this time, we only support client/server mode where the user must manually launch the server on Polaris.
 
 
 ## Setting up Paraview 
@@ -72,7 +72,9 @@ We need to establish an ssh tunnel to connect client to server. On your local ma
 ssh -v -N -L 8000:x3005c0s7b0n0:8000 polaris.alcf.anl.gov
 ```
 
-and, among multiple lines with debug information,  you should see something like:
+where 8000 is a TCP port and `x3005c0s7b0n0` the name of your head node. Adjust these values accordingly.
+
+Among multiple lines with debug information,  you should see something like:
 
 ```
 debug1: Local connections to LOCALHOST:8000 forwarded to remote address x3005c0s7b0n0:8000
