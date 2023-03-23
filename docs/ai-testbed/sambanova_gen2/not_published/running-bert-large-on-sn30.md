@@ -1,8 +1,5 @@
 # Running BERT-Large on SambaNova DataScale SN30-8
 
-* BERT Code is in the [Bert](./bert/) directory here for your reference.
-  * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT.
-
 <!-- ## Getting started
 
 1. Login to SambaNova login node.
@@ -17,7 +14,7 @@
     ssh sn30-r2-h1
     ``` -->
 
-## ...Running Bert Large
+## Skip itRunning Bert Large
 
 ```bash
 cd
@@ -27,7 +24,9 @@ Copy BertLarge.sh into your root directory and execute the script.
 
 ```bash
 cp /data/ANL/scripts/BertLarge.sh .
-./BertLarge.sh
+sbatch --output=${HOME}/slurm-%A.out --cpus-per-task=128 --gres=rdu:16 /data/ANL/scripts/BertLarge.sh
+You may want to also use --nodelist $(hostname) to run it on the local machine.
+Optional argument
 ```
 
 
@@ -35,9 +34,9 @@ cp /data/ANL/scripts/BertLarge.sh .
 
 ## Pretraining in Data Parallel Mode
 
-**Note**: for the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time.
+**Note**: For the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time.
 
-1. Create a folder for pretraining in your home repo, and copy the bash script `/projects/aitestbed_training/SN/precompiled_bert/bash_scripts/submit-bert-pretrain-job-LBS1024.sh` to it. Then, go to that folder. Example:
+1. Create a folder for pretraining in your home directory, and copy the bash script `/projects/aitestbed_training/SN/precompiled_bert/bash_scripts/submit-bert-pretrain-job-LBS1024.sh` to it. Then, go to that folder. Example:
 
    ```bash
    cd $HOME
@@ -52,7 +51,7 @@ cp /data/ANL/scripts/BertLarge.sh .
    OUTDIR=$HOME/pretrain
    ```
 
-   Note: the per device batch size (LBS) is set to 1024 here. Also, the number of steps is set to 100, but this can be changed.
+   Note: The per device batch size (LBS) is set to 1024 here. Also, the number of steps is set to 100, but this can be changed.
 
 3. SambaNova uses SLURM for job submission and queueing. We will use sbatch to submit our job to the job scheduler. Please refer to [Sambanova Documentation](https://www.alcf.anl.gov/support/ai-testbed-userdocs/sambanova/Job-Queuing-and-Submission/index.html) for further details. In the following example, 2 RDUs are used:
 
@@ -66,59 +65,59 @@ cp /data/ANL/scripts/BertLarge.sh .
 
 5. Once the job is completed, you can see the checkpoint(s) and accuracy metrics in `hf_output_lrg_run/`. The throughput is outputted in the `log_bert_pretrain_LBS1024_np2.out` file (search for throughput in the file).
 
-    <details>
-    <summary>Click for sample throughput</summary>
+   <details>
+   <summary>Click for sample throughput</summary>
 
-    ```bash
-    Measuring performance with world size:  2
-    initial run starts.
-    initial run completes.
-    e2e_latency: 30.75621747970581 seconds, throughput: 665.8816225861821 samples/s, measured over 10 iterations.
-    NOTE: This is the combined throughput for 2 workers
-    total duration: 30.75621747970581 s
-    ```
+   ```bash
+   Measuring performance with world size:  2
+   initial run starts.
+   initial run completes.
+   e2e_latency: 30.75621747970581 seconds, throughput: 665.8816225861821 samples/s, measured over 10 iterations.
+   NOTE: This is the combined throughput for 2 workers
+   total duration: 30.75621747970581 s
+   ```
 
-    </details>
+   </details>
 
-    <details>
-    <summary>Click for sample train_steps.txt</summary>
+   <details>
+   <summary>Click for sample train_steps.txt</summary>
 
-    ```bash
-    10
-    20
-    30
-    40
-    50
-    60
-    70
-    80
-    90
-    100
-    ```
+   ```bash
+   10
+   20
+   30
+   40
+   50
+   60
+   70
+   80
+   90
+   100
+   ```
 
-    </details>
+   </details>
 
-    <details>
-    <summary>Click for sample step_loss.txt</summary>
+   <details>
+   <summary>Click for sample step_loss.txt</summary>
 
-    ```bash
-    11.16291
-    10.76511
-    10.44571
-    10.16663
-    9.98203
-    9.85561
-    9.76017
-    9.66340
-    9.57864
-    9.50137
-    ```
+   ```bash
+   11.16291
+   10.76511
+   10.44571
+   10.16663
+   9.98203
+   9.85561
+   9.76017
+   9.66340
+   9.57864
+   9.50137
+   ```
 
-    </details>
+   </details>
 
 ## Fine-Tuning for Question Answering Using 1 RDU
 
-**Note**: for the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time. We will also use a processed dataset.
+**Note**: For the sake of the tutorial, we have precompiled the model and lowered the number of train steps to reduce the execution time. We will also use a processed dataset.
 
 1. Create a folder for fine-tuning in your home repo, and copy the bash script `/projects/aitestbed_training/SN/precompiled_bert/bash_scripts/submit-bert-squad-job.sh` to it. Then, go to that folder. Example:
 
@@ -153,34 +152,34 @@ cp /data/ANL/scripts/BertLarge.sh .
 
 6. Once the job is completed, you can see the checkpoint(s) and accuracy metrics in `hf_output_squad_run/`.
 
-    <details>
-    <summary>Click for sample log_history.json</summary>
+   <details>
+   <summary>Click for sample log_history.json</summary>
 
-    ```bash
-    [
-      {
-         "exact": 54.33301797540208,
-         "f1": 66.54507382283774,
-         "epoch": 0.07965242577842144,
-         "total_flos": 5419063617454080,
-         "step": 220
-       }
-    ]
-    ```
+   ```bash
+   [
+   {
+      "exact": 54.33301797540208,
+      "f1": 66.54507382283774,
+      "epoch": 0.07965242577842144,
+      "total_flos": 5419063617454080,
+      "step": 220
+      }
+   ]
+   ```
 
-    </details>
+   </details>
 
-    <details>
-    <summary>Click for sample eval_results_squad.txt</summary>
+   <details>
+   <summary>Click for sample eval_results_squad.txt</summary>
 
-    ```bash
-    exact = 54.33301797540208
-    f1 = 66.54507382283774
-    epoch = 0.07965242577842144
-    total_flos = 5419063617454080
-    ```
+   ```bash
+   exact = 54.33301797540208
+   f1 = 66.54507382283774
+   epoch = 0.07965242577842144
+   total_flos = 5419063617454080
+   ```
 
-    </details>
+   </details>
 
 ## Other Models and Use-Cases
 

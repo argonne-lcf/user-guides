@@ -12,6 +12,8 @@ DATADIR
 dlerror
 dlopen
 elif
+finetune
+flos
 GEMM
 gres
 jsons
