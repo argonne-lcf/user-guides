@@ -1,6 +1,7 @@
 # Paraview on Polaris
 
-!!! note  At this time, we only support client/server mode where the user must manually launch the server on Polaris.
+!!! note  
+	At this time, we only support client/server mode where the user must manually launch the server on Polaris.
 
 
 ## Setting up Paraview 
