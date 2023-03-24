@@ -14,20 +14,49 @@
     ssh sn30-r2-h1
     ``` -->
 
-## Skip itRunning Bert Large
+## Set Up
+
+Establish a test directory from which to work.
 
 ```bash
-cd
+mkdir $HOME/app-test
+cd $HOME/app-test
 ```
 
-Copy BertLarge.sh into your root directory and execute the script.
+Copy BertLarge.sh into your current directory.
 
 ```bash
 cp /data/ANL/scripts/BertLarge.sh .
-sbatch --output=${HOME}/slurm-%A.out --cpus-per-task=128 --gres=rdu:16 /data/ANL/scripts/BertLarge.sh
-You may want to also use --nodelist $(hostname) to run it on the local machine.
-Optional argument
 ```
+
+## Running Bert Large
+
+Let's cover several options for executing the script.
+
+1. Basic
+
+   ```bash
+   sbatch --output=${HOME}/app-test/slurm-%A.out --cpus-per-task=128 --gres=rdu:16 BertLarge.sh
+   ```
+
+2. Specify a Log Directory
+
+   This is helpful if doing multiple runs and one wishes to specify a run ID.
+   This bash script argument is optional.  Place it at the very end of the command.
+
+   Example:
+
+   ```bash
+   sbatch --output=${HOME}/app-test/slurm-%A.out --cpus-per-task=128 --gres=rdu:16 BertLarge.sh my_runID
+   ```
+
+3. Specify Nodelist
+
+One may optionally specify a **nodelist** for **sbatch**. An example is to use **hostname**.
+
+   ```bash
+   sbatch --nodelist $(hostname) --output=${HOME}/app-test/slurm-%A.out --cpus-per-task=128 --gres=rdu:16 BertLarge.sh
+   ```
 
 
 
