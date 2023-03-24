@@ -17,6 +17,7 @@ nav:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
     - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
     - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
+    - Sharing on ACDC Portal: data-management/acdc/acdc-portal.md
     - Data Transfer:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
