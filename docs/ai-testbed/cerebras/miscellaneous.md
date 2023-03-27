@@ -2,8 +2,7 @@
 
 ## Porting applications to the CS-2
 
-TODO
-Cerebras currently lacks a porting guide for applications running on a cluster in appliance configuration. There is some pipeline-mode documentation on the cerebras site that might be close; needs testing:<br>
+There is some documentation on the Cerebras documentation site that is helpful. (It is not complete.)<br>
 [Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
 [Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)
 
