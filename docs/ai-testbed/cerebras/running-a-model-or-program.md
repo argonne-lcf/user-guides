@@ -18,18 +18,17 @@ man tmux
 
 #### Execution mode:</br>
 The CS-2 system supports two modes of execution.<br>
-1. Pipeline mode (default mode)<br>
-This mode is used for smaller models. <br>
+1. Pipeline mode.<br>
+This mode is used for smaller models (fewer than 1 billion parameters). <br>
 2. Weight streaming mode.<br>
 Weight streaming mode uses the host memory of the Cerebras cluster's MemoryX nodes to store and broadcast model weights, and supports larger models compared to pipelined mode.<br>
 
 ## Running jobs on the wafer
 
-Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyTorch samples. These models are each a couple of fully connected layers plus dropout and RELU. <br>
+Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyTorch samples. These models are a couple of fully connected layers plus dropout and RELU. <br>
 
-### Make virtualenvs
+### Cerebras virtualenvs
 
-#### To make a PyTorch virtual environment:
 Read-only virtual environments for TensorFlow and PyTorch are available with
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
@@ -38,41 +37,10 @@ or
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 ```
-These are sufficient for running samples, but you may want to make your own virtual environment(s) for the installation of additional packages
+These are sufficient for running samples, but you may want to make your own virtual environment(s) for the installation of additional packages. <br>
+See [Customizing Environments](./customizing-environment.md) for the procedures for making custom TensorFlow and PyTorch virtual environments for Cerebras.
 
-```console
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
-# Note: "deactivate" does not actually work in scripts.
-deactivate
-rm -r venv_pt
-/srv/software/cerebras/python3.7/bin/python3.7 -m venv venv_pt
-source venv_pt/bin/activate
-python -m pip -q --disable-pip-version-check install pip
-pip install db-sqlite3
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_appliance-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.7.1_202301251118_3_7170ade7-py3-none-any.whl --find-links=/opt/cerebras/wheels/
-```
-#### To make a PyTorch virtual environment:
-```console
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
-# Note: "deactivate" does not actually work in scripts.
-deactivate
-rm -r venv_tf
-/srv/software/cerebras/python3.7/bin/python3.7 -m venv venv_tf
-source venv_tf/bin/activate
-python -m pip -q --disable-pip-version-check install pip
-pip install db-sqlite3
-pip install tensorflow_datasets
-pip install spacy
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_appliance-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensorflow-1.7.1_202301251118_3_7170ade7-py3-none-any.whl
-```
-
-### Clone or copy the modelzoo
-
-TODO make a copy of [always current] modelzoo available?
+### Clone the Cerebras modelzoo
 
 ```console
 cd ~/
@@ -83,6 +51,8 @@ cd modelzoo
 git tag
 git checkout R_1.7.1
 ```
+
+## Running a TensorFlow sample
 ### Activate either your TensorFlow environment or a read-only common TensorFlow environment, and change to the working directory.
 ```console
 source ~/R_1.7.1/venv_tf/bin/activate
@@ -94,7 +64,7 @@ source /srv/software/cerebras/venvs/venv_tf/bin/activate
 cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
 ```
 
-Next, edit configs/params.yaml, making the following change:
+Next, edit configs/params.yaml, making the following change. Cerebras requires that the data_dir be an absolute path. 
 ```text
 --- a/modelzoo/fc_mnist/tf/configs/params.yaml
 +++ b/modelzoo/fc_mnist/tf/configs/params.yaml
@@ -125,8 +95,8 @@ INFO:root:Taking final checkpoint at step: 100000
 INFO:tensorflow:Saved checkpoint for global step 100000 in 3.7506210803985596 seconds: model_dir/model.ckpt-100000
 INFO:root:Monitoring is over without any issue
 ```
-
-### Running a sample PyTorch training job
+## Running a Pytorch sample
+### Activate either your PyTorch environment or a read-only common PyTorch environment, and change to the working directory.
 ```console
 source ~/R_1.7.1/venv_pt/bin/activate
 cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/pytorch
@@ -144,7 +114,9 @@ and
 +    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/val"
 ```
 If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s
-Then, to run the sample:
+
+### Running a sample PyTorch training job
+To run the sample:
 ```console
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
