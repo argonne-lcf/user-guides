@@ -1,7 +1,7 @@
 # Example Programs
 
 ## Use a local copy of the model zoo
-Make a working directory and a local copy of the Cerebras modelzoo and anl_shared repository, if not previously done, as follows.
+Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
 mkdir ~/R_1.7.1
@@ -10,7 +10,7 @@ git clone https://github.com/Cerebras/modelzoo.git
 cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
 ```
 
-## Unet
+## UNet
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
 To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset:<br>
 First, source a Cerebras PyTorch virtual env.
