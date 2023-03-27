@@ -183,5 +183,11 @@ python run_appliance.py --execution_strategy weight_streaming --job_labels name=
 ```
 The last parts of the output should resemble the following:
 ```console
-TODO
+INFO:root:About to send initial weights
+INFO:root:Finished sending initial weights
+INFO:tensorflow:global step 500: loss = 6.044921875 (0.17 steps/sec)
+INFO:root:Training complete. Completed 65000 sample(s) in 2960.4926776885986 seconds
+INFO:root:Taking final checkpoint at step: 500
+INFO:tensorflow:Saved checkpoint for global step 500 in 304.37238907814026 seconds: model_dir_gptj_tf/model.ckpt-500
+INFO:root:Monitoring is over without any issue
 ```
