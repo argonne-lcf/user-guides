@@ -126,7 +126,7 @@ qsub -A YourProject -n 256  -t 30  \
 –attrs mcdram=flat:numa=quad program.exe progarg1
 ```
 
-The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://xgitlab.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
+The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://git.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
 
 ### Requesting Ability to SSH into the Compute Nodes on KNL Nodes
 
