@@ -81,7 +81,7 @@ Time spent booting or rebooting nodes to obtain requested modes will not be char
 Failure to specify a mode will result in the selection of cache-quad, the equivalent of listing `#!--attrs mcdram=cache:numa=quad` in your qsub or job script.
 
 ## Submit a Job
-The queuing system used at ALCF is [Cobalt](https://xgitlab.cels.anl.gov/aig-public/cobalt). On Theta, Cobalt jobs may run either as script jobs or interactive mode jobs.
+The queuing system used at ALCF is [Cobalt](https://git.cels.anl.gov/aig-public/cobalt). On Theta, Cobalt jobs may run either as script jobs or interactive mode jobs.
 
 ### Script Method
 In the script method, Cobalt will execute a user-supplied script when running a user’s job. All scripts on Theta must have their execute bit set, and must be able to run on a standard x86_64 architecture. Following are the required flags to qsub, as well as some of the more common options. A complete list of options may be found as a part of the qsub manpage, available on any login node.
