@@ -27,4 +27,3 @@ To connect to a CS-2 login:<br>
     ```bash
     ssh ALCFUserID@cer-login-03.ai.alcf.anl.gov
     ```
-

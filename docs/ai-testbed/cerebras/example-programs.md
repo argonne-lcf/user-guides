@@ -13,7 +13,7 @@ cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
 ## UNet
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
 To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset:<br>
-First, source a Cerebras PyTorch virtual env.
+First, source a Cerebras PyTorch virtual environment.
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
@@ -124,7 +124,7 @@ The last parts of the output should resemble the following, with messages about 
 2023-03-24 23:06:04,359 INFO:   Monitoring is over without any issue
 ```
 
-## GPTJ PyTorch
+## GPT-J PyTorch
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
 This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
@@ -163,11 +163,11 @@ The last parts of the output should resemble the following:
 ```
 
 
-## GPTJ TensorFlow
+## GPT-J TensorFlow
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
 This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
-First, source a Cerebras TensorFlow virtual env.
+First, source a Cerebras TensorFlow virtual environment.
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
