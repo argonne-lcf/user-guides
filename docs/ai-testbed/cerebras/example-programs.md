@@ -25,7 +25,7 @@ source ~/R_1.7.1/venv_pt/bin/activate
 Then
 
 ```console
-#TODO (not working, ATM; Debugging with Cerebras)
+# NOTE not working in release 1.7.1; Should be working in next release.
 cd ~/R_1.7.1/modelzoo/modelzoo/vision/pytorch/unet
 cp /srv/software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet

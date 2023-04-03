@@ -6,6 +6,7 @@ There is some documentation on the Cerebras documentation site that is helpful. 
 [Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
 [Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)
 
+<!---
 ## Determining the CS-2 version
 
 TODO
@@ -23,6 +24,7 @@ These queries will only work on cer-usr-01 due to networking constraints:
 ...$
 
 ```
+--->
 <!--- NO LONGER NEEDED; direct login.
 ## Copying files
 To copy a file to your CS-2 home dir (same on both CS-2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
