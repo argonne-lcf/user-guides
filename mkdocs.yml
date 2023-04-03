@@ -301,7 +301,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
       # base_path: ["docs"]
-      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
   - pymdownx.superfences
