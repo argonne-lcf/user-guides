@@ -2,7 +2,8 @@
 
 ## Using virtual Python environments
 
-#### To make a PyTorch virtual environment for Cerebras:
+#### To make a PyTorch virtual environment for Cerebras
+
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
@@ -17,7 +18,8 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_applia
 pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.7.1_202301251118_3_7170ade7-py3-none-any.whl --find-links=/opt/cerebras/wheels/
 ```
 
-#### To make a TensorFlow virtual environment for Cerebras:
+#### To make a TensorFlow virtual environment for Cerebras
+
 ```console
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
@@ -35,16 +37,21 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensor
 ```
 
 #### Activation and deactivation
+
 To activate one of these virtual environments,
+
 ```console
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
-or 
+
+or
+
 ```console
 source ~/R_1.7.1/venv_tf/bin/activate
 ```
 
 To deactivate a virtual environment,
+
 ```console
 deactivate
 ```

@@ -11,14 +11,17 @@ cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
 ```
 
 ## UNet
+
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
 To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset:<br>
 First, source a Cerebras PyTorch virtual environment.
+
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
+
 Then
 
 ```console
@@ -29,16 +32,21 @@ export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run.py --appliance --execution_strategy pipeline --params configs/params_severstal_binary_rawds.yaml --num_csx=1  --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir unet |& tee mytest.log
 ```
+
 ## BERT - TensorFlow
+
 A TensorFlow implementation of this: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
-First, source a Cerebras TensorFlow virtual env.
+First, source a Cerebras TensorFlow virtual environment.
+
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 source ~/R_1.7.1/venv_tf/bin/activate
 ```
+
 Then
+
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/bert
 cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
@@ -48,6 +56,7 @@ python run_appliance.py --execution_strategy pipeline --job_labels name=bert_tf 
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
+
 ```console
 INFO:root:Finished sending initial weights
 INFO:tensorflow:global step 100: loss = 9.390625 (5.6 steps/sec)
@@ -87,15 +96,19 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 
 
 ## BERT - PyTorch
+
 A PyTorch implementation of this: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
-First, source a Cerebras TensorFlow virtual env.
+First, source a Cerebras PyTorch virtual environment.
+
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
+
 Then
+
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/bert
 cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
@@ -105,6 +118,7 @@ python run.py --appliance --execution_strategy pipeline --job_labels name=bert_p
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
+
 ```console
 2023-03-24 22:56:37,334 INFO:   About to send initial weights
 2023-03-24 22:56:48,973 INFO:   Finished sending initial weights
@@ -125,16 +139,20 @@ The last parts of the output should resemble the following, with messages about 
 ```
 
 ## GPT-J PyTorch
+
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
 This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
-First, source a Cerebras PyTorch virtual env.
+First, source a Cerebras PyTorch virtual environment.
+
 ```console
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
+
 Then
+
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/gptj
 cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
@@ -142,7 +160,9 @@ export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run.py --appliance --execution_strategy weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
 ```
+
 The last parts of the output should resemble the following:
+
 ```console
 2023-03-16 16:05:51,582 INFO:   About to send initial weights
 2023-03-16 16:08:00,833 INFO:   Finished sending initial weights
@@ -162,18 +182,21 @@ The last parts of the output should resemble the following:
 2023-03-16 17:30:41,854 INFO:   Monitoring is over without any issue
 ```
 
-
 ## GPT-J TensorFlow
+
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
 This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
 First, source a Cerebras TensorFlow virtual environment.
+
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 source ~/R_1.7.1/venv_tf/bin/activate
 ```
+
 Then
+
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/gptj
 cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
@@ -181,7 +204,9 @@ export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run_appliance.py --execution_strategy weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
 ```
+
 The last parts of the output should resemble the following:
+
 ```console
 INFO:root:About to send initial weights
 INFO:root:Finished sending initial weights
