@@ -98,10 +98,10 @@ source ~/R_1.7.1/venv_pt/bin/activate
 Then
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/bert
-cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128.yaml
+cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py --appliance --execution_strategy pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -140,7 +140,7 @@ cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/gptj
 cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py --appliance --execution_strategy weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
 ```
 The last parts of the output should resemble the following:
 ```console
@@ -176,10 +176,10 @@ source ~/R_1.7.1/venv_tf/bin/activate
 Then
 ```console
 cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/gptj
-cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B.yaml
+cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+python run_appliance.py --execution_strategy weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
 ```
 The last parts of the output should resemble the following:
 ```console
