@@ -23,7 +23,7 @@ Login to the homes-gce login node from your local machine using the below comman
 ssh CELSGCEUserID@homes.cels.anl.gov
 ```
 
-**NOTE: Use the ssh "-v" option in order to debug any ssh problems.**
+> **Note**: Use the ssh "-v" option in order to debug any ssh problems.
 
 ### Log in to a Graphcore Node
 
