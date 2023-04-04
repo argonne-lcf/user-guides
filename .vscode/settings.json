@@ -1,0 +1,10 @@
+{
+    "cSpell.customDictionaries": {
+        "myWords": {
+          "name": "dictionary",
+          "path": "docs/ai-testbed/files/dictionary.txt",
+          "scope": "user",
+          "addWords": true
+        }
+      }
+}
