@@ -2,7 +2,7 @@
 
 ## Porting applications to the CS-2
 
-There is some documentation on the Cerebras documentation site that is helpful. (It is not complete.)<br>
+There is some documentation on the Cerebras documentation site that is helpful.<br>
 [Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
 [Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)
 

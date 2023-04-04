@@ -7,9 +7,12 @@ Make a working directory and a local copy of the Cerebras **modelzoo** and **anl
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
 git clone https://github.com/Cerebras/modelzoo.git
-cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
 ```
+<!---
+cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
+--->
 
+<!---
 ## UNet
 
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
@@ -32,10 +35,10 @@ export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run.py --appliance --execution_strategy pipeline --params configs/params_severstal_binary_rawds.yaml --num_csx=1  --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir unet |& tee mytest.log
 ```
+--->
 
 ## BERT - TensorFlow
-
-A TensorFlow implementation of this: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
+The modelzoo/modelzoo/transformers/tf/bert directory is a TensorFlow implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
 First, source a Cerebras TensorFlow virtual environment.
 
@@ -97,7 +100,7 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 
 ## BERT - PyTorch
 
-A PyTorch implementation of this: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
+The modelzoo/modelzoo/transformers/pytorch/bert directory is a PyTorch implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
 First, source a Cerebras PyTorch virtual environment.
 

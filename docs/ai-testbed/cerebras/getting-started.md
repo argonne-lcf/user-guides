@@ -11,11 +11,8 @@ Connection to one of the **CS-2** cluster login nodes requires an MFA passcode f
 *In the examples below, <strong>replace ALCFUserID with your ALCF user id.</strong>*<br>
 To connect to a CS-2 login:<br>
 
-1. From your local machine, ssh to a random login node:
-    ```bash
-    ssh ALCFUserID@cerebras.ai.alcf.anl.gov
-    ```
-2. Alternatively, ssh to a desired login node:
+
+1. ssh to a desired login node:
     ```bash
     ssh ALCFUserID@cer-login-01.ai.alcf.anl.gov
     ```
@@ -26,4 +23,8 @@ To connect to a CS-2 login:<br>
     or
     ```bash
     ssh ALCFUserID@cer-login-03.ai.alcf.anl.gov
+    ```
+2. Alternatively, ssh randomly to one of the above three login nodes:
+    ```bash
+    ssh ALCFUserID@cerebras.ai.alcf.anl.gov
     ```
