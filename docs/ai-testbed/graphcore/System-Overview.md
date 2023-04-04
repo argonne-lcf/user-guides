@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Bow-2000™ IPU-Machine™ is a 1U compute platform for AI infrastructure and is scalable for both direct attach and switched Bow™ Pod systems. The Bow-2000 is characterised by the following high-level features:
+The Bow-2000™ IPU-Machine™ is a 1U compute platform for AI infrastructure and is scalable for both direct attach and switched Bow™ Pod systems. The Bow-2000 is characterized by the following high-level features:
 
 * 4x Bow IPUs
 
@@ -19,7 +19,7 @@ The Bow-2000™ IPU-Machine™ is a 1U compute platform for AI infrastructure an
 
         IPU-Link™ - 512Gbps for communication within Bow Pods
         GW-Link - 2x 100Gbps Gateway-Links for communication between Bow Pods
-        Sync-Link - dedicated hardware signalling for BSP, low jitter on IPU to IPU synchronisation
+        Sync-Link - dedicated hardware signalling for BSP, low jitter on IPU to IPU synchronization
         Host-Link - PCIe Gen4 RoCEv2 NIC/SmartNIC Interface for Bow-2000 to server communication
 
 ![Bow Architecture](files/Bow.jpg "Bow Architecture")
