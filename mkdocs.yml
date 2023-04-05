@@ -194,7 +194,7 @@ nav:
       - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
       - Example Programs: ai-testbed/cerebras/example-programs.md
       - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
     - SambaNova Gen1:
