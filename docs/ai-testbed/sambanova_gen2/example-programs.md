@@ -232,18 +232,18 @@ cd ~/apps/image/unet
 ```
 
 Copy and paste the contents of
-[unet_compile_run_all.sh](/docs/ai-testbed/sambanova_gen2/files/unet_compile_run_all.sh "unet_compile_run_all.sh")
+[unet.sh](./files/unet.sh "unet.sh")
 to a file with the same name into the current directory using your favorite editor.
 
 ```bash
-chmod +x unet_compile_run_all.sh
+chmod +x unet.sh
 ```
 
 Run these commands for training (compile + train):
 
 ```bash
-./unet_compile_run_all.sh compile 256 256
-./unet_compile_run_all.sh run 256 256
+./unet.sh compile 256 256
+./unet.sh run 256 256
 ```
 
 The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
