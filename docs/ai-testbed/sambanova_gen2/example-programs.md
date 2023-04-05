@@ -221,8 +221,6 @@ Test Accuracy: 91.40  Loss: 0.3014
 
 ## UNet
 
-Establish the Environment
-
 Change directory and copy files.
 
 ```bash
