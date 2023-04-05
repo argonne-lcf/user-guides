@@ -4,17 +4,17 @@ The Argonne Leadership Computing Facility (ALCF) is required to report the progr
 PIs of INCITE, ALCC, and ADSP projects are required to complete quarterly reports and a final end-of-project (EOY/EOP) report.
 
 ## Due dates
-### Due dates for the 2022 INCITE quarterly, EOY, and the EOP reports:
-- April 1, 2022 (CY2022 - Q1)
-- July 1, 2022 (CY2022 - Q2)
-- October 1, 2022 (CY2022 - Q3)
-- January 1, 2023 (CY2022 - EOY) or February 15, 2023 (entire allocation period - EOP)
-
-### Due dates for the 2022-2023 ALCC quarterly and the EOP reports:
-- October 1, 2022 (CY2022 - Q3)
-- January 1, 2023 (CY2023 - Q4)
+### Due dates for the 2023 INCITE quarterly, EOY, and the EOP reports:
 - April 1, 2023 (CY2023 - Q1)
-- August 15, 2023 (CY2023 - EOP)
+- July 1, 2023 (CY2023 - Q2)
+- October 1, 2023 (CY2023 - Q3)
+- January 1, 2024 (CY2024 - EOY) or February 15, 2024 (entire allocation period - EOP)
+
+### Due dates for the 2023-2024 ALCC quarterly and the EOP reports:
+- October 1, 2023 (CY2023 - Q3)
+- January 1, 2024 (CY2024 - Q4)
+- April 1, 2024 (CY2024 - Q1)
+- August 15, 2024 (CY2024 - EOP)
 
 ## Penalties
 If a quarterly report is more than **30 days late**:

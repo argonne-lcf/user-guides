@@ -15,15 +15,25 @@ In addition, the baseline feature of this tool allows users to compare results w
 ### Common part on Polaris
 Build your application for Polaris, and then submit your job script to Polaris or start an interactive job mode on Polaris as follows:  
 ```
-$ qsub -I -l select=1 -l walltime=1:00:00
+$ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:grand -q debug -A <project-name>
 
+$ module load cudatoolkit-standalone/11.8.0 
+$ module li
+
+Currently Loaded Modules:
+  1) craype-x86-rome          6) craype/2.7.15        11) cray-pals/1.1.7
+  2) libfabric/1.11.0.4.125   7) cray-dsmml/0.2.2     12) cray-libpals/1.1.7
+  3) craype-network-ofi       8) cray-mpich/8.1.16    13) PrgEnv-nvhpc/8.3.3
+  4) perftools-base/22.05.0   9) cray-pmi/6.1.2       14) craype-accel-nvidia80
+  5) nvhpc/21.9              10) cray-pmi-lib/6.0.17  15) cudatoolkit-standalone/11.8.0
+ 
 $ nsys --version
-NVIDIA Nsight Systems version 2021.3.1.54-ee9c30a
+NVIDIA Nsight Systems version 2022.4.2.1-df9881f
 
 $ ncu --version
 NVIDIA (R) Nsight Compute Command Line Profiler
-Copyright (c) 2018-2021 NVIDIA Corporation
-Version 2021.2.1.0 (build 30182073) (public-release)
+Copyright (c) 2018-2022 NVIDIA Corporation
+Version 2022.3.0.0 (build 31729285) (public-release)
 ```
 
 
