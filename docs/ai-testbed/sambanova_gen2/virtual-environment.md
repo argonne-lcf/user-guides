@@ -44,4 +44,4 @@ To install a different version of a package that is already installed in one's e
 pip install --ignore-installed  ... # or -I
 ```
 
-Note: Conda is not supported on the SambaNova system.
+> **Note**: Conda is not supported on the SambaNova system.

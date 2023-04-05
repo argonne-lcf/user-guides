@@ -33,7 +33,7 @@ Below are the commands specific to sn30-r1-h1. You may replace **sn30-r1-h1** wi
 
 Run
 
-**NOTE:  The full name is sn30-r1-h1.ai.alcf.anl.gov and it may also be used.**
+> **Note**:  The full name is sn30-r1-h1.ai.alcf.anl.gov and it may also be used.
 
 ```bash
 # Forward the port.

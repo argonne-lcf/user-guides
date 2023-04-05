@@ -1,11 +1,11 @@
 # Running a Model/Program
 
-**NOTE:  Please be mindful of how you are using the system.
-For example, consider running larger jobs in the evening or on weekends.**
+> **Note**:  Please be mindful of how you are using the system.
+For example, consider running larger jobs in the evening or on weekends
 
-**NOTE: Please use only Slurm commands, i.e., srun and sbatch, to run your code.
+> **Note**: Please use only Slurm commands, i.e., srun and sbatch, to run your code.
 If you run your code directly using the 'python' command, it may cause conflicts
-on the system.**
+on the system.
 
 ## Introduction
 

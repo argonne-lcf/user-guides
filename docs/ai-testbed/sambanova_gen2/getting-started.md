@@ -27,7 +27,7 @@ ssh ALCFUserID@sambanova.alcf.anl.gov
 Password: < MobilePASS+ code >
 ```
 
-Note: Use the ssh "-v" option in order to debug any ssh problems.
+> **Note**: Use the ssh "-v" option in order to debug any ssh problems.
 
 ### Log in to a SambaNova Node
 
@@ -61,8 +61,8 @@ alias snp='snpath;snthreads' # Creates an alias to execute the commands.
 snp # Executes the commands.
 ```
 
-**NOTE:  SambaNova operations will fail unless the SambaNova venv is set
-up.**
+> **Note**:  SambaNova operations will fail unless the SambaNova venv is set
+up.
 
 Each example has its own environment.
 

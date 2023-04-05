@@ -63,9 +63,9 @@ Establish the Environment
 source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
 ```
 
-**NOTE:  If you receive an \"HTTP error\" message on any of the
+> **Note**:  If you receive an \"HTTP error\" message on any of the
 following commands, run the command again. Such errors (e.g 503) are
-commonly an intermittent failure to download a dataset.**
+commonly an intermittent failure to download a dataset.
 
 Run these commands:
 
