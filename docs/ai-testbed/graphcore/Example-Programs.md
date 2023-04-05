@@ -208,7 +208,7 @@ You may want to use **screen** because this run can be long.
 
 POD64 refers to four POD16 racks for a total of 64 IPUs.
 
-**NOTE:** One must complete the instructions on [Multi-node Setup](Multi-node-Setup.md) before running this example.
+> **Note**: One must complete the instructions on [Multi-node Setup](Multi-node-Setup.md) before running this example.
 
 ##### Update rn50_pod64.sh
 

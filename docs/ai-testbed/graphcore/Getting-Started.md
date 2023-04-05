@@ -39,5 +39,5 @@ ssh gc-poplar-03.ai.alcf.anl.gov
 ssh gc-poplar-04.ai.alcf.anl.gov
 ```
 
-**NOTE: Each system has a separate scheduler.  If you have already
-ssh'd into one of those nodes, you are all set.**
+> **Note: Each system has a separate scheduler.  If you have already
+ssh'd into one of those nodes, you are all set.

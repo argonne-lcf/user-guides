@@ -49,7 +49,7 @@ PARTITON=${PARTITION:=$FIRST_PARTITION}
 
 Profile **ResNet50**.
 
-**NOTE:** Use **screen** because every run is long.
+> **Note**: Use **screen** because every run is long.
 
 ```bash
 cd train

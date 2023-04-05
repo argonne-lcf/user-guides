@@ -146,9 +146,9 @@ with your favorite editor.  At about line 30, change **use_bbox_info: true** to
 
 Scale and benchmark **ResNet50**.
 
-**Note:** The number at the end of each line indicates the number of IPUs.
+> **Note**: The number at the end of each line indicates the number of IPUs.
 
-**NOTE:** Use **screen** because every run is long.
+> **Note**: Use **screen** because every run is long.
 
 "PopRun exposes this control with the --process-placement flag and provides multiple pre-defined strategies. By default (and with --process-placement spreadnuma), PopRun is designed to be NUMA-aware. On each host, all the available NUMA nodes are divided among the instances. This means that each instance is bound to execute on and allocate memory from its assigned NUMA nodes, ensuring memory access locality. This strategy maximises memory bandwidth and is likely to yield optimal performance for most of the data loading workloads in machine learning." [Multi-Instance Multi-Host(https://docs.graphcore.ai/projects/poprun-user-guide/en/latest/launching.html#multi-instance-multi-host)
 
@@ -175,7 +175,7 @@ python3 -m examples_utils benchmark --spec benchmarks.yml --benchmark pytorch_re
 
 ### Scaling to 64 IPUs
 
-**NOTE:** One must complete the instructions on [Multi-node Setup](Multi-node-Setup.md) before running this example.
+> **Note**: One must complete the instructions on [Multi-node Setup](Multi-node-Setup.md) before running this example.
 
 #### Establish Environment Variables
 
@@ -197,7 +197,7 @@ export IPUOF_VIPU_API_HOST=$HOST1
 
 This runs to convergence.  It uses all 64 **IPUs** for more than 12 hours.
 
-**NOTE:** This should only be used if absolutely required.
+> **Note**: This should only be used if absolutely required.
 
 Execute:
 
