@@ -223,11 +223,6 @@ Test Accuracy: 91.40  Loss: 0.3014
 
 Establish the Environment
 
-```bash
-#TODO Update
-# source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
-```
-
 Change directory and copy files.
 
 ```bash
