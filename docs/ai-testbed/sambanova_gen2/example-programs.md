@@ -129,7 +129,7 @@ To run the same using Slurm sbatch, create and run the submit-ffn_mnist-job.sh w
 
 ```bash
 #!/bin/sh
-python python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
+python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
 python ffn_mnist.py  run -b 1 -p out/ffn_mnist/ffn_mnist.pef
 ```
 
