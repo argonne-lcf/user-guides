@@ -28,9 +28,10 @@ Copy the contents of [unet.sh](/ai-testbed/sambanova_gen2/files/unet.sh).
 
 ### Compile
 
-Compile UNet using the following command:
+Compile UNet using the following commands:
 
 ```console
+chmod +x unet.sh
 ./unet.sh compile 256 256
 ```
 
