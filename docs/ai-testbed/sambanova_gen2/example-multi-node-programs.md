@@ -24,7 +24,7 @@ cd ~/apps/image
 ### Create unet.sh
 
 Create the file **unet.sh** in the current directory using your favorite editor.
-Copy the contents of [unet.sh](/ai-testbed/sambanova_gen2/files/unet.sh).
+Copy the contents of [unet.sh](./files/unet.sh).
 
 ### Compile
 
