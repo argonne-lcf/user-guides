@@ -38,9 +38,9 @@ source ~/venvs/graphcore/poptorch31_env/bin/activate
 Use the following commands to install PopTorch.
 
 ```bash
-POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
+POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.2.0
 export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
-pip install $POPLAR_SDK_ROOT/poptorch-3.1.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
+pip install $POPLAR_SDK_ROOT/poptorch-3.2.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
 ```
 
 ### Miscellaneous Environment Variables
@@ -83,7 +83,7 @@ python -c "from tensorflow.python import ipu"
 
 You should see:
 
-```bash
+```console
 2023-01-04 17:17:12.609331: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
 ```
 

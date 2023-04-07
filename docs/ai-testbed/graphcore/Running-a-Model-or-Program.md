@@ -8,14 +8,14 @@ for the original version on your development machine.
 
 ## Tutorials Repo
 
-Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/tutorials.git](https://github.com/graphcore/tutorials.git).
+Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
-Clone the **tutorials** repository to your personal directory structure:
+Clone the **examples** repository to your personal directory structure:
 
 ```bash
 mkdir ~/graphcore
 cd ~/graphcore
-git clone https://github.com/graphcore/tutorials.git
+git clone https://github.com/graphcore/examples.git
 ```
 
 ### MNIST
@@ -31,7 +31,7 @@ source ~/venvs/graphcore/poptorch31_env/bin/activate
 Change directory:
 
 ```bash
-cd ~/graphcore/tutorials/simple_applications/pytorch/mnist
+cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
 python -m pip install -r requirements.txt
 ```
 
