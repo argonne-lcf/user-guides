@@ -31,8 +31,9 @@ directories with the '--output-folder' option.
 
 It is necessary to re-compile only when the model changes, or parameters specific to the model graph change, including the batch size.
 
-Compile times can be significant.
-Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
+Compile times can be significant. Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
+
+The entire compile process is executed on the host and no RDUs are involved in the compile step. 
 
 Example of compiling the LeNet application:
 
@@ -49,13 +50,12 @@ Where
 
 ## Run
 
-This will run the application on SN nodes.
+As part of this step, the model is trained on the RDUs by passing in the PEF file and the training dataset. The location of the **pef** file generated in the compile step is passed as an argument to the run command. Below is the example of the ```run``` command that train a LeNet model. 
 
 ```bash
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
 ```
 
-The location of the **pef** file generated in the compile step is passed as an argument to the run command.
 
 ## Test (Optional)
 
