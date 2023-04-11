@@ -8,7 +8,7 @@ To create a virtual environment, one can use the --system-site-packages flag:
 python -m venv --system-site-packages my_env
 source my_env/bin/activate
 ```
-
+<!---
 ### System Site Packages
 
 There are many packages available on the system.
@@ -27,7 +27,7 @@ For example:
 ```bash
 ls -al /opt/sambaflow/venv/lib/python3.7/site-packages
 ```
-
+--->
 ## Installing Packages
 
 Install packages in the normal manner such as:
