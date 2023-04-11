@@ -243,7 +243,7 @@ Run these commands for training (compile + train) on a single node:
 
 The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
-Squeue will give you the queue status.
+Squeue will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
 
 ```bash
 squeue
