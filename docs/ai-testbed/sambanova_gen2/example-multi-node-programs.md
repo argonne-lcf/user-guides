@@ -30,10 +30,10 @@ Compile UNet using the following commands:
 
 ```console
 chmod +x unet.sh
-./unet.sh compile 256 256
+./unet.sh pcompile 256 256
 ```
 
-One may find the output in **compile_256_256_single_4.log**.
+One may find the output in **compile_128_256_NP_4.log**.
 
 ### Run
 
