@@ -1,13 +1,11 @@
 # Example Multi-Node Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
+SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/`, Some of the large language models and computer vision models can be run on multiple nodes either in a data parallel mode. You can optionally make a copy of this to your home directory:
 
-If you haven't already done so, please copy the starter files to your personal directory structure.
 
 ```console
 cd
-mkdir apps
-cp -r /opt/sambaflow/apps/starters apps/starters
+cp -r /opt/sambaflow/apps/ ~/
 ```
 
 ## UNet
