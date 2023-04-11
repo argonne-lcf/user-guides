@@ -23,8 +23,8 @@ scheduler](https://slurm.schedmd.com/quickstart.html) to schedule the jobs and m
 ## Compile
 
 Compiles the model and generates a **.pef** file. This file contains
-information on how to reconfigure the hardware, how many computes and
-memory resources are required, and how they will be used in all subsequent steps.
+information on how to reconfigure the hardware, and map the compute and
+memory resources required to run an application on the RDU.
 The **pef** files are by default saved in the 'out' directory; the
 SambaNova documentation advises saving **pef** files in separate
 directories with the '--output-folder' option.
@@ -34,7 +34,7 @@ It is necessary to re-compile only when the model changes, or parameters specifi
 Compile times can be significant.
 Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
 
-Example:
+Example of compiling the LeNet application:
 
 ```bash
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
