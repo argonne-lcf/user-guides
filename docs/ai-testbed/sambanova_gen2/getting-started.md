@@ -43,11 +43,10 @@ ssh sn30-r1-h1
 
 ### SDK setup
 
-The SambaNova system has a bash shell script to set up the required software environment.
-This sets up the SambaFlow software stack, and the associated environmental variables.
-
+The required software environment (SambaFlow software stack and the associated environmental variables) for the SN30 node is set up automatically at login. This is unlike the SN10 where the environment had to be set up by each user. 
 Use
 
+<!---
 ```bash
 ALCFUserID@sm-01:~$ source /software/sambanova/envs/sn_env.sh
 (venv) ALCFUserID@sm-01:~$
@@ -75,3 +74,4 @@ You may deactivate an environment if finished.
 ```bash
 deactivate
 ```
+--->
