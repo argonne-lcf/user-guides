@@ -41,7 +41,7 @@ Example of compiling the LeNet application:
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 ```
 
-Where
+where
 
 | Argument               | Default   | Help                           |
 |------------------------|-----------|--------------------------------|
