@@ -1,22 +1,25 @@
 # Example Multi-Node Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/`, Some of the large language models and computer vision models can be run on multiple nodes either in a data parallel mode. You can optionally make a copy of this to your home directory:
+SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/`, Some of the large language models and computer vision models can be run on multiple nodes either in a data parallel mode. 
+
+<!---
+You can optionally make a copy of this to your home directory:
 
 
 ```console
 cd
 cp -r /opt/sambaflow/apps/ ~/
 ```
-
+--->
 ## UNet
 
 ### Set Up
 
-Copy files and change the directory if you have not already done so.
+Create a working directory in your home. 
 
 ```console
-cp -r /opt/sambaflow/apps/image ~/apps/image
-cd ~/apps/image
+mkdir -p ~/scripts/image
+cd ~/scripts/image
 ```
 
 ### Create unet.sh
@@ -32,7 +35,6 @@ Compile UNet using the following commands:
 chmod +x unet.sh
 ./unet.sh pcompile 256 256
 ```
-
 One may find the output in **compile_128_256_NP_4.log**.
 
 ### Run
