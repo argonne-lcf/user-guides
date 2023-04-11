@@ -50,7 +50,7 @@ Where
 
 ## Run
 
-As part of this step, the model is trained on the RDUs by passing in the PEF file and the training dataset. The location of the **pef** file generated in the compile step is passed as an argument to the run command. Below is the example of the ```run``` command that train a LeNet model. 
+As part of this step, the model is trained on the RDUs by passing in the PEF file and the training dataset. The location of the **pef** file generated in the compile step is passed as an argument to the run command. Below is the example of the ```run``` command that trains a LeNet model. 
 
 ```bash
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
