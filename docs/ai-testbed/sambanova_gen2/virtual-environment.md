@@ -44,6 +44,6 @@ To install a different version of a package that is already installed in one's e
 pip install --ignore-installed  ... # or -I
 ```
 ## Pre-Built sample venv 
-Each of the samples or application examples provided by SambaNova has its own pre-built virtual environment which can be readily used. They are present in the /opt/sambaflow/apps/ directory tree within each of the applications. 
+Each of the samples or application examples provided by SambaNova has its own pre-built virtual environment which can be readily used. They are present in the ```/opt/sambaflow/apps/``` directory tree within each of the applications. 
 
 > **Note**: Conda is not supported on the SambaNova system.
