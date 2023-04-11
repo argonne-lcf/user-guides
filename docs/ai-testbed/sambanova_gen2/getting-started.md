@@ -2,8 +2,8 @@
 
 ## On-Boarding
 
-See [Get Started](https://www.alcf.anl.gov/support-center/get-started)
-to request an account and additional information.
+SambaNova SN30 can be accessed using your ALCF account. See [Get Started](https://www.alcf.anl.gov/support-center/get-started)
+to request an account, and for additional information.
 
 ## Setup
 
