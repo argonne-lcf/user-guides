@@ -222,8 +222,7 @@ Test Accuracy: 91.40  Loss: 0.3014
 Change directory and copy files.
 
 ```bash
-cd ~/apps/image/
-mkdir unet
+mkdir -p ~/apps/image/unet
 cd ~/apps/image/unet
 ```
 
@@ -235,7 +234,7 @@ to a file with the same name into the current directory using your favorite edit
 chmod +x unet.sh
 ```
 
-Run these commands for training (compile + train):
+Run these commands for training (compile + train) on a single node:
 
 ```bash
 ./unet.sh compile 256 256
