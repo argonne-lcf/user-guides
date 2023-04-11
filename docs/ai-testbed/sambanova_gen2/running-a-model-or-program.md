@@ -24,7 +24,7 @@ scheduler](https://slurm.schedmd.com/quickstart.html) to schedule the jobs and m
 
 Compiles the model and generates a **.pef** file. This file contains
 information on how to reconfigure the hardware, and map the compute and
-memory resources required to run an application on the RDU.
+memory resources required to run an application on RDUs.
 The **pef** files are by default saved in the 'out' directory; the
 SambaNova documentation advises saving **pef** files in separate
 directories with the '--output-folder' option.
