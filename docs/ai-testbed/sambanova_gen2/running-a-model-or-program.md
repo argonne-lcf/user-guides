@@ -59,7 +59,7 @@ srun python lenet.py run --pef="pef/lenet/lenet.pef"
 
 ## Test (Optional)
 
-This command is used to run the model on both the host CPU and a SambaNova RDU.  It compares the answers from the CPU and SambaNova RDU and will raise errors if any discrepancies are found. Pass the **pef** file generated as part of the compile step as the input to this command.
+This command is used to run the model on both the host CPU and a SambaNova RDU.  It compares the results from the CPU and RDU and will report if any discrepancies are found. Pass the **pef** file generated as part of the compile step as the input to this command.
 
 ```bash
 srun python lenet.py test --pef="pef/lenet/lenet.pef"
