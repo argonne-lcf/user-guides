@@ -65,14 +65,14 @@ source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
 following commands, run the command again. Such errors (e.g 503) are
 commonly an intermittent failure to download a dataset.
 
-Run these commands:
+Run these commands to compile and train the LeNet model:
 
 ```bash
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
 ```
 
-To use Slurm sbatch, create submit-lenet-job.sh with the following
+Alternatively to use Slurm sbatch, create submit-lenet-job.sh with the following
 contents:
 
 ```bash
