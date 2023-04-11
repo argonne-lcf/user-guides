@@ -1,8 +1,6 @@
 # Example Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
-
-Copy the starters to your personal directory structure:
+SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on a given SambaNova compute node. Make a copy of this to your home directory:
 
 ```bash
 cd ~/
