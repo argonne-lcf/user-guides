@@ -1,7 +1,5 @@
 # Example Multi-Node Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
-
 ## UNet
 
 ### Set Up
@@ -25,14 +23,22 @@ Copy the contents of [unet_batch.sh](./files/unet_batch.sh).
 
 ### Compile
 
+Unet.sh requires three parameters.
+
+1. **image size**:  The images are square.  Valid sizes include 256, 512, and 1024.
+
+2. **Batch size**: Global batch size.  The local batch size is **global batch size / nodes**.
+
+3. **nodes**: Nodes to use.
+
 Compile UNet using the following commands:
 
 ```console
 chmod +x unet*.sh
-./unet.sh pcompile 256 256 4
+./unet.sh pcompile 256 256 2
 ```
 
-One may find the output in **compile_256_256_single_4.log**.
+One may find the output in **compile_128_256_NP_4.log**.
 
 ### Run
 
@@ -41,25 +47,21 @@ node has eight (8) RDUs.
 
 This example uses 4 nodes times 8 RDUs per node for a total of 32 RDUs.
 
-#### SBatch Arguments
-
-**gres=rdu:1** Indicates the model fits on a single RDU.
-
-**tasks-per-node 8** Indicates the number of Python tasks to execute.
-
-**nodes 4** Nodes to use.
-
-**cpus-per-task=16** CPUs per task.
-
 #### Run Command
 
 Run/train UNet using the following command:
 
 ```console
-./unet.sh prun 256 256 4
+./unet.sh prun 256 256 2
 ```
 
-One may find the output in **run_unet_256_256_single_4.log**.
+One may find the output in **run_unet_128_256_2_4.log**.
+
+The last line of the output will be similar to the following.
+
+```console
+inner train loop time : 82.35215544700623 for 10 epochs, number of global steps: 130, e2e samples_per_sec: 404.11814140573097
+```
 
 ## SQueue
 

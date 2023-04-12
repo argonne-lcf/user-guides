@@ -95,7 +95,6 @@ elif [ "${1}" == "prun" ] ; then
   echo "PRUN"
   echo "NP=${NP}"
   cpus=$((128/NP))
-  sbatch --gres=rdu:1 --tasks-per-node ${NP} --nodes 1 --nodelist $(hostname) --cpus-per-task=${cpus} ./unet_batch.sh ${NP} ${NUM_WORKERS} ${BS} ${2}
-  done
+  sbatch --gres=rdu:1 --tasks-per-node ${NP} --nodes 1 --cpus-per-task=${cpus} ./unet_batch.sh ${NP} ${NUM_WORKERS} ${BS} ${2}
 fi
 echo "Duration: " $SECONDS
