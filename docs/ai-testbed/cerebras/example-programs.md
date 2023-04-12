@@ -20,8 +20,6 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
-# or your personal venv
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
 
@@ -37,47 +35,6 @@ python run.py --appliance --execution_strategy pipeline --params configs/params_
 ```
 --->
 
-## BERT - TensorFlow
-The modelzoo/modelzoo/transformers/tf/bert directory is a TensorFlow implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
-This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
-First, source a Cerebras TensorFlow virtual environment.
-
-```console
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
-# or your personal venv
-source ~/R_1.7.1/venv_tf/bin/activate
-```
-
-Then
-
-```console
-cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/bert
-cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
-export MODEL_DIR=mytest
-if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test_${RANDOM}${RANDOM} |& tee mytest.log
-```
-
-The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
-
-```console
-INFO:root:Finished sending initial weights
-INFO:tensorflow:global step 100: loss = 9.390625 (5.6 steps/sec)
-INFO:tensorflow:global step 200: loss = 8.921875 (6.48 steps/sec)
-INFO:tensorflow:global step 300: loss = 8.7109375 (5.96 steps/sec)
-INFO:tensorflow:global step 400: loss = 8.3671875 (6.31 steps/sec)
-INFO:tensorflow:global step 500: loss = 8.0703125 (6.04 steps/sec)
-INFO:tensorflow:global step 600: loss = 7.98046875 (6.26 steps/sec)
-INFO:tensorflow:global step 700: loss = 7.8515625 (6.07 steps/sec)
-INFO:tensorflow:global step 800: loss = 7.78125 (6.23 steps/sec)
-INFO:tensorflow:global step 900: loss = 7.7265625 (6.09 steps/sec)
-INFO:tensorflow:global step 1000: loss = 7.6171875 (6.22 steps/sec)
-INFO:root:Training complete. Completed 1024000 sample(s) in 160.75317454338074 seconds
-INFO:root:Taking final checkpoint at step: 1000
-...
-INFO:tensorflow:Saved checkpoint for global step 1000 in 69.48748517036438 seconds: mytest/model.ckpt-1000
-INFO:root:Monitoring is over without any issue
-```
 <!--- Appears to not have been ported to 1.7.1
 ## BraggNN
 An implementation of this: [BraggNN: fast X-ray Bragg peak analysis using deep
@@ -104,9 +61,11 @@ The modelzoo/modelzoo/transformers/pytorch/bert directory is a PyTorch implement
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
 First, source a Cerebras PyTorch virtual environment.
 
-```console
+<!---
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
+--->
+```console
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
 
@@ -141,6 +100,50 @@ The last parts of the output should resemble the following, with messages about 
 2023-03-24 23:06:04,359 INFO:   Monitoring is over without any issue
 ```
 
+## BERT - TensorFlow
+The modelzoo/modelzoo/transformers/tf/bert directory is a TensorFlow implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
+This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
+First, source a Cerebras TensorFlow virtual environment.
+
+<!---
+source /srv/software/cerebras/venvs/venv_tf/bin/activate
+# or your personal venv
+--->
+```console
+source ~/R_1.7.1/venv_tf/bin/activate
+```
+
+Then
+
+```console
+cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/bert
+cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
+export MODEL_DIR=mytest
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+python run_appliance.py --execution_strategy pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test_${RANDOM}${RANDOM} |& tee mytest.log
+```
+
+The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
+
+```console
+INFO:root:Finished sending initial weights
+INFO:tensorflow:global step 100: loss = 9.390625 (5.6 steps/sec)
+INFO:tensorflow:global step 200: loss = 8.921875 (6.48 steps/sec)
+INFO:tensorflow:global step 300: loss = 8.7109375 (5.96 steps/sec)
+INFO:tensorflow:global step 400: loss = 8.3671875 (6.31 steps/sec)
+INFO:tensorflow:global step 500: loss = 8.0703125 (6.04 steps/sec)
+INFO:tensorflow:global step 600: loss = 7.98046875 (6.26 steps/sec)
+INFO:tensorflow:global step 700: loss = 7.8515625 (6.07 steps/sec)
+INFO:tensorflow:global step 800: loss = 7.78125 (6.23 steps/sec)
+INFO:tensorflow:global step 900: loss = 7.7265625 (6.09 steps/sec)
+INFO:tensorflow:global step 1000: loss = 7.6171875 (6.22 steps/sec)
+INFO:root:Training complete. Completed 1024000 sample(s) in 160.75317454338074 seconds
+INFO:root:Taking final checkpoint at step: 1000
+...
+INFO:tensorflow:Saved checkpoint for global step 1000 in 69.48748517036438 seconds: mytest/model.ckpt-1000
+INFO:root:Monitoring is over without any issue
+```
+
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
@@ -148,9 +151,11 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
 First, source a Cerebras PyTorch virtual environment.
 
-```console
+<!---
 source /srv/software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
+--->
+```console
 source ~/R_1.7.1/venv_pt/bin/activate
 ```
 
@@ -192,9 +197,11 @@ This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
 First, source a Cerebras TensorFlow virtual environment.
 
-```console
+<!---
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
+--->
+```console
 source ~/R_1.7.1/venv_tf/bin/activate
 ```
 
