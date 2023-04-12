@@ -79,6 +79,8 @@ nav:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+    - Visualization:
+        - Paraview: polaris/visualization/paraview.md
     - Workflows:
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
@@ -188,11 +190,11 @@ nav:
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
       - Getting Started: ai-testbed/cerebras/getting-started.md
-      - Steps to Run a Model/Program: ai-testbed/cerebras/steps-to-run-a-model-or-program.md
+      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
       - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
       - Example Programs: ai-testbed/cerebras/example-programs.md
       - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
     - SambaNova Gen1:
@@ -299,7 +301,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
       # base_path: ["docs"]
-      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
   - pymdownx.superfences
