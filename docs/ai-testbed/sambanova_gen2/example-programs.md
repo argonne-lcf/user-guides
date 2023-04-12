@@ -67,14 +67,14 @@ source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
 following commands, run the command again. Such errors (e.g 503) are
 commonly an intermittent failure to download a dataset.
 
-Run these commands:
+Run these commands to compile and train the LeNet model:
 
 ```bash
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
 ```
 
-To use Slurm sbatch, create submit-lenet-job.sh with the following
+Alternatively to use Slurm sbatch, create submit-lenet-job.sh with the following
 contents:
 
 ```bash
@@ -224,8 +224,7 @@ Test Accuracy: 91.40  Loss: 0.3014
 Change directory and copy files.
 
 ```bash
-cd ~/apps/image/
-mkdir unet
+mkdir -p ~/apps/image/unet
 cd ~/apps/image/unet
 ```
 
@@ -237,7 +236,7 @@ to a file with the same name into the current directory using your favorite edit
 chmod +x unet.sh
 ```
 
-Run these commands for training (compile + train):
+Run these commands for training (compile + train) on a single node:
 
 ```bash
 ./unet.sh compile 256 256
@@ -246,7 +245,7 @@ Run these commands for training (compile + train):
 
 The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
-Squeue will give you the queue status.
+Squeue will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
 
 ```bash
 squeue
