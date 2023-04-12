@@ -1,11 +1,11 @@
 # Running a Model/Program
 
-**NOTE:  Please be mindful of how you are using the system.
-For example, consider running larger jobs in the evening or on weekends.**
+> **Note**:  Please be mindful of how you are using the system.
+For example, consider running larger jobs in the evening or on weekends
 
-**NOTE: Please use only Slurm commands, i.e., srun and sbatch, to run your code.
+> **Note**: Please use only Slurm commands, i.e., srun and sbatch, to run your code.
 If you run your code directly using the 'python' command, it may cause conflicts
-on the system.**
+on the system.
 
 ## Introduction
 
@@ -23,24 +23,25 @@ scheduler](https://slurm.schedmd.com/quickstart.html) to schedule the jobs and m
 ## Compile
 
 Compiles the model and generates a **.pef** file. This file contains
-information on how to reconfigure the hardware, how many computes and
-memory resources are required, and how they will be used in all subsequent steps.
+information on how to reconfigure the hardware, and map the compute and
+memory resources required to run an application on RDUs.
 The **pef** files are by default saved in the 'out' directory; the
 SambaNova documentation advises saving **pef** files in separate
 directories with the '--output-folder' option.
 
 It is necessary to re-compile only when the model changes, or parameters specific to the model graph change, including the batch size.
 
-Compile times can be significant.
-Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
+Compile times can be significant. Compiling the UNet sample, for example, when using images of size 32x32 pixels, takes 358(s), and 1844(s) for images of size 256x256.
 
-Example:
+The entire compile process is executed on the host and no RDUs are involved in the compile step.
+
+Example of compiling the LeNet application:
 
 ```bash
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 ```
 
-Where
+where
 
 | Argument               | Default   | Help                           |
 |------------------------|-----------|--------------------------------|
@@ -49,7 +50,7 @@ Where
 
 ## Run
 
-This will run the application on SN nodes.
+As part of this step, the model is trained on the RDUs by passing in the PEF file and the training dataset. The location of the **pef** file generated in the compile step is passed as an argument to the run command. Below is the example of the ```run``` command that trains a LeNet model.
 
 ```bash
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
@@ -59,7 +60,7 @@ The location of the **pef** file generated in the compile step is passed as an a
 
 ## Test (Optional)
 
-This command is used to run the model on both the host CPU and a SambaNova RDU.  It compares the answers from the CPU and SambaNova RDU and will raise errors if any discrepancies are found. Pass the **pef** file generated as part of the compile step as the input to this command.
+This command is used to run the model on both the host CPU and a SambaNova RDU.  It compares the results from the CPU and RDU and will report if any discrepancies are found. Pass the **pef** file generated as part of the compile step as the input to this command.
 
 ```bash
 srun python lenet.py test --pef="pef/lenet/lenet.pef"

@@ -63,18 +63,18 @@ Establish the Environment
 source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
 ```
 
-**NOTE:  If you receive an \"HTTP error\" message on any of the
+> **Note**:  If you receive an \"HTTP error\" message on any of the
 following commands, run the command again. Such errors (e.g 503) are
-commonly an intermittent failure to download a dataset.**
+commonly an intermittent failure to download a dataset.
 
-Run these commands:
+Run these commands to compile and train the LeNet model:
 
 ```bash
 srun python lenet.py compile -b=1 --pef-name="lenet" --output-folder="pef"
 srun python lenet.py run --pef="pef/lenet/lenet.pef"
 ```
 
-To use Slurm sbatch, create submit-lenet-job.sh with the following
+Alternatively to use Slurm sbatch, create submit-lenet-job.sh with the following
 contents:
 
 ```bash
@@ -129,7 +129,7 @@ To run the same using Slurm sbatch, create and run the submit-ffn_mnist-job.sh w
 
 ```bash
 #!/bin/sh
-python python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
+python ffn_mnist.py  compile -b 1 --pef-name="ffn_mnist" --mac-v2
 python ffn_mnist.py  run -b 1 -p out/ffn_mnist/ffn_mnist.pef
 ```
 
@@ -221,39 +221,31 @@ Test Accuracy: 91.40  Loss: 0.3014
 
 ## UNet
 
-Establish the Environment
-
-```bash
-#TODO Update
-# source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
-```
-
 Change directory and copy files.
 
 ```bash
-cd ~/apps/image/
-mkdir unet
+mkdir -p ~/apps/image/unet
 cd ~/apps/image/unet
 ```
 
 Copy and paste the contents of
-[unet_compile_run_all.sh](/docs/ai-testbed/sambanova_gen2/files/unet_compile_run_all.sh "unet_compile_run_all.sh")
+[unet.sh](./files/unet.sh "unet.sh")
 to a file with the same name into the current directory using your favorite editor.
 
 ```bash
-chmod +x unet_compile_run_all.sh
+chmod +x unet.sh
 ```
 
-Run these commands for training (compile + train):
+Run these commands for training (compile + train) on a single node:
 
 ```bash
-./unet_compile_run_all.sh compile 256 256
-./unet_compile_run_all.sh run 256 256
+./unet.sh compile 256 256
+./unet.sh run 256 256
 ```
 
 The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
-Squeue will give you the queue status.
+Squeue will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
 
 ```bash
 squeue
