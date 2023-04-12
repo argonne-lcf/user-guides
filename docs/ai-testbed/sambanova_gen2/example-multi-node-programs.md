@@ -2,23 +2,15 @@
 
 SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
 
-If you haven't already done so, please copy the starter files to your personal directory structure.
-
-```console
-cd
-mkdir apps
-cp -r /opt/sambaflow/apps/starters apps/starters
-```
-
 ## UNet
 
 ### Set Up
 
-Copy files and change the directory if you have not already done so.
+Create the following directory and change to it if you have not already done so.
 
 ```console
-cp -r /opt/sambaflow/apps/image ~/apps/image
-cd ~/apps/image
+mkdir ~/app-test
+cd ~/app-test
 ```
 
 ### Create unet.sh
@@ -26,13 +18,18 @@ cd ~/apps/image
 Create the file **unet.sh** in the current directory using your favorite editor.
 Copy the contents of [unet.sh](./files/unet.sh).
 
+### Create unet_batch.sh
+
+Create the file **unet_batch.sh** in the current directory using your favorite editor.
+Copy the contents of [unet_batch.sh](./files/unet_batch.sh).
+
 ### Compile
 
 Compile UNet using the following commands:
 
 ```console
-chmod +x unet.sh
-./unet.sh compile 256 256
+chmod +x unet*.sh
+./unet.sh pcompile 256 256 4
 ```
 
 One may find the output in **compile_256_256_single_4.log**.
@@ -59,22 +56,10 @@ This example uses 4 nodes times 8 RDUs per node for a total of 32 RDUs.
 Run/train UNet using the following command:
 
 ```console
-sbatch --gres=rdu:1 --tasks-per-node 8 --nodes 4 --cpus-per-task=16 ./unet.sh run 256 256
+./unet.sh prun 256 256 4
 ```
 
 One may find the output in **run_unet_256_256_single_4.log**.
-
-#### Repeated Runs
-
-If one desires to make repeated runs, execute the following commands:
-
-```bash
-rm -rf log_dir_unet_256_256_single_4
-rm -rf out
-rm *.log
-```
-
-Otherwise, there will be an error finding a model checkpoint error.
 
 ## SQueue
 
