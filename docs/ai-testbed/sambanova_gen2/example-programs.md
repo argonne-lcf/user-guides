@@ -1,8 +1,6 @@
 # Example Programs
 
-SambaNova provides examples of some well-known AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
-
-Copy the starters to your personal directory structure:
+SambaNova provides examples of some well-known simple AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes. Make a copy of this to your home directory:
 
 ```bash
 cd ~/
@@ -243,7 +241,7 @@ Run these commands for training (compile + train) on a single node:
 
 The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
 
-Squeue will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
+*squeue* will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
 
 ```bash
 squeue
