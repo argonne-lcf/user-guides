@@ -30,7 +30,7 @@ Weight streaming mode uses the host memory of the Cerebras cluster's MemoryX nod
 Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyTorch samples. These models are a couple of fully connected layers plus dropout and RELU. <br>
 
 ### Cerebras virtual environments
-
+<!---
 Read-only virtual environments for TensorFlow and PyTorch are available with
 
 ```console
@@ -45,11 +45,21 @@ source /srv/software/cerebras/venvs/venv_pt/bin/activate
 
 These are sufficient for running samples, but you may want to make your own virtual environment(s) for the installation of additional packages. <br>
 See [Customizing Environments](./customizing-environment.md) for the procedures for making custom TensorFlow and PyTorch virtual environments for Cerebras.
+--->
+First, make virtual environments for Cerebras for PyTorch and/or TensorFlow.
+See [Customizing Environments](./customizing-environment.md) for the procedures for making custom PyTorch and/or TensorFlow virtual environments for Cerebras.
+If the environments are made in ```~/R_1.7.1/```, then they would be activated as follows:
+```console
+source ~/R_1.7.1/venv_pt/bin/activate
+```
+or
+```console
+source ~/R_1.7.1/vent/tf/bin/activate
+```
 
 ### Clone the Cerebras modelzoo
 
 ```console
-cd ~/
 mkdir ~/R_1.7.1
 cd ~/R_1.7.1
 git clone https://github.com/Cerebras/modelzoo.git
@@ -57,22 +67,71 @@ cd modelzoo
 git tag
 git checkout R_1.7.1
 ```
+## Running a Pytorch sample
+
+### Activate your PyTorch virtual environment, and change to the working directory
+
+```console
+source ~/R_1.7.1/venv_pt/bin/activate
+cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/pytorch
+```
+
+Next, edit configs/params.yaml, making the following changes:
+
+```text
+ train_input:
+-    data_dir: "./data/mnist/train"
++    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/train"
+```
+
+and
+
+```text
+ eval_input:
+-    data_dir: "./data/mnist/val"
++    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/val"
+```
+
+If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s
+
+### Running a sample PyTorch training job
+
+To run the sample:
+
+```console
+export MODEL_DIR=model_dir
+# deletion of the model_dir is only needed if sample has been previously run
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+```
+
+A successful fc_mnist PyTorch training run should finish with output resembling the following:
+
+```text
+2023-03-15 19:01:23,008 INFO:   | Train Device=xla:0, Step=9950, Loss=1.69782, Rate=149740.06 samples/sec, GlobalRate=34681.55 samples/sec
+2023-03-15 19:01:23,061 INFO:   | Train Device=xla:0, Step=10000, Loss=1.65959, Rate=132247.02 samples/sec, GlobalRate=34805.53 samples/sec
+2023-03-15 19:01:23,062 INFO:   Saving checkpoint at global step 10000
+2023-03-15 19:01:28,754 INFO:   Saved checkpoint at global step: 10000
+2023-03-15 19:01:28,754 INFO:   Training Complete. Completed 1280000 sample(s) in 42.468820095062256 seconds.
+2023-03-15 19:01:32,175 INFO:   Monitoring is over without any issue
+```
 
 ## Running a TensorFlow sample
 
-### Activate either your TensorFlow environment or a read-only common TensorFlow environment, and change to the working directory
+### Activate your TensorFlow virtual environment and change to the working directory
 
 ```console
 source ~/R_1.7.1/venv_tf/bin/activate
 cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
 ```
-
+<!---
 or
 
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
 cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
 ```
+--->
 
 Next, edit configs/params.yaml, making the following change. Cerebras requires that the data_dir be an absolute path.
 
@@ -109,51 +168,3 @@ INFO:tensorflow:Saved checkpoint for global step 100000 in 3.7506210803985596 se
 INFO:root:Monitoring is over without any issue
 ```
 
-## Running a Pytorch sample
-
-### Activate either your PyTorch environment or a read-only common PyTorch environment, and change to the working directory
-
-```console
-source ~/R_1.7.1/venv_pt/bin/activate
-cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/pytorch
-```
-
-Next, edit configs/params.yaml, making the following changes:
-
-```text
- train_input:
--    data_dir: "./data/mnist/train"
-+    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/train"
-```
-
-and
-
-```text
- eval_input:
--    data_dir: "./data/mnist/val"
-+    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/val"
-```
-
-If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s
-
-### Running a sample PyTorch training job
-
-To run the sample:
-
-```console
-export MODEL_DIR=model_dir
-# deletion of the model_dir is only needed if sample has been previously run
-if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
-```
-
-A successful fc_mnist PyTorch training run should finish with output resembling the following:
-
-```text
-2023-03-15 19:01:23,008 INFO:   | Train Device=xla:0, Step=9950, Loss=1.69782, Rate=149740.06 samples/sec, GlobalRate=34681.55 samples/sec
-2023-03-15 19:01:23,061 INFO:   | Train Device=xla:0, Step=10000, Loss=1.65959, Rate=132247.02 samples/sec, GlobalRate=34805.53 samples/sec
-2023-03-15 19:01:23,062 INFO:   Saving checkpoint at global step 10000
-2023-03-15 19:01:28,754 INFO:   Saved checkpoint at global step: 10000
-2023-03-15 19:01:28,754 INFO:   Training Complete. Completed 1280000 sample(s) in 42.468820095062256 seconds.
-2023-03-15 19:01:32,175 INFO:   Monitoring is over without any issue
-```
