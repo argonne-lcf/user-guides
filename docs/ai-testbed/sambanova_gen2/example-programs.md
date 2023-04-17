@@ -216,7 +216,7 @@ Test Accuracy: 91.40  Loss: 0.3014
 ```
 
 ## UNet
-The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguements respectively. 
+The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguments respectively. 
 The scripts containing the compile and run commands for UNet model can be accessed at [unet.sh](./files/unet.sh "unet.sh") or at `/data/ANL/scripts/Unet2d.sh` on any compute node. 
 
 Change directory and copy files.
