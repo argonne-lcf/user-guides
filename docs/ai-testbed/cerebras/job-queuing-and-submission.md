@@ -22,6 +22,25 @@ Job canceled successfully
 (venv_tf) $
 ```
 
+Jobs can be labeled in the command line that launches them, if they are written with Cerebras's Python framework for running appliance jobs, by adding a command line option of this form:
+```console
+ --job_labels labelname=labelvalue
+```
+
+Jobs can also be labeled after they have been started as shown:
+```console
+(venv_pt) $ csctl label job wsjob-ez6dyfronnsg2rz7f7fqw4 testlabel=test
+job/wsjob-ez6dyfronnsg2rz7f7fqw4 was patched
+(venv_pt) $
+```
+
+Jobs with a particular label/label value can be listed as shown:
+```console
+(venv_pt) $ csctl get jobs | grep "testlabel=test"
+wsjob-ez6dyfronnsg2rz7f7fqw4  19m SUCCEEDED  cer-cs2-02 username testlabel=test,user=username
+(venv_pt) $
+```
+
 See `csctl -h` for more options
 
 ```console

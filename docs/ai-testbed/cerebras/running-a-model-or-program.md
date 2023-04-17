@@ -54,7 +54,7 @@ source ~/R_1.7.1/venv_pt/bin/activate
 ```
 or
 ```console
-source ~/R_1.7.1/vent/tf/bin/activate
+source ~/R_1.7.1/vent_tf/bin/activate
 ```
 
 ### Clone the Cerebras modelzoo
