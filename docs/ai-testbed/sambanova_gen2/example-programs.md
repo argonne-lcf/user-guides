@@ -176,7 +176,6 @@ Run these commands:
 
 ```bash
 srun python logreg.py compile --pef-name="logreg" --output-folder="pef"
-srun python logreg.py test --pef="pef/logreg/logreg.pef"
 srun python logreg.py run --pef="pef/logreg/logreg.pef"
 ```
 
@@ -185,7 +184,6 @@ To use Slurm, create submit-logreg-job.sh with the following contents:
 ```bash
 #!/bin/sh
 python logreg.py compile --pef-name="logreg" --output-folder="pef"
-python logreg.py test --pef="pef/logreg/logreg.pef"
 python logreg.py run --pef="pef/logreg/logreg.pef"
 ```
 
