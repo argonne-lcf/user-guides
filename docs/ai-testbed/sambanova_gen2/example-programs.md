@@ -234,7 +234,7 @@ to a file with the same name into the current directory using your favorite edit
 chmod +x unet.sh
 ```
 
-Run these commands for training (compile + train) on a single node:
+Run these commands for training (compile + train):
 
 ```bash
 ./unet.sh compile <image size> <batch_size>
