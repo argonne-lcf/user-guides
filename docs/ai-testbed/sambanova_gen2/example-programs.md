@@ -246,17 +246,18 @@ For a image size of 256x256 and batch size 256, the commands are provided as fol
 ./unet.sh run 256 256
 ```
 
-The compile command for the UNet application is as follows. 
+If we inspect the compile and run commands for the UNet application provided in the script, 
+
 ```bash
 python ${UNET}/compile.py compile -b ${BS}  --num-classes 2 --num-flexible-classes -1 --in-channels=3 --init-features 32 --in-width=${2} --in-height=${2} --enable-conv-tiling --mac-v2  --compiler-configs-file ${UNET}/jsons/compiler_configs/unet_compiler_configs_no_inst.json  --mac-human-decision ${UNET}/jsons/hd_files/hd_unet_${HD}_depth2colb.json --enable-stoc-rounding  --num-tiles ${NUM_TILES} --pef-name="unet_train_${BS}_${2}_single_${NUM_TILES}" > compile_${BS}_${2}_single_${NUM_TILES}.log 2>&1
 ```
-This application is compiled with `--num-tiles = 4`, which means that the entire application fits on 4 tiles or half RDU. 
-The scripts currently logs to a file **run_unet_256_256_single_4.log** and the performance data is located at the bottom of file. The pef generated from the compilation process is placed under `out/unet_train_${BS}_${2}_single_${NUM_TILES}` inside the current working directory. 
 
-The run command to train the UNet is provided below. 
 ```bash
 srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=${CACHE_DIR}  --num-workers=${NUM_WORKERS} --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=$(pwd)/out/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef > run_unet_${BS}_${2}_single_${NUM_TILES}.log 2>&1
 ```
+
+we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU. 
+The scripts currently logs to a file **run_unet_256_256_single_4.log** and the performance data is located at the bottom of file. The pef generated from the compilation process is placed under `out/unet_train_${BS}_${2}_single_${NUM_TILES}` inside the current working directory.   
 
 ## Gpt 1.5B 
 
