@@ -216,6 +216,8 @@ Test Accuracy: 91.40  Loss: 0.3014
 ```
 
 ## UNet
+The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguements respectively. 
+The scripts containing the compile and run commands for UNet model can be accessed at [unet.sh](./files/unet.sh "unet.sh") or at `/data/ANL/scripts/Unet2d.sh` on any compute node. 
 
 Change directory and copy files.
 
@@ -235,14 +237,27 @@ chmod +x unet.sh
 Run these commands for training (compile + train) on a single node:
 
 ```bash
+./unet.sh compile <image size> <batch_size>
+./unet.sh run <image size> <batch_size>
+```
+For a image size of 256x256 and batch size 256, the commands are provided as follows. 
+```bash
 ./unet.sh compile 256 256
 ./unet.sh run 256 256
 ```
 
-The performance data is located at the bottom of **run_unet_256_256_single_4.log**.
-
-*squeue* will give you the queue status. (Run it in another command prompt session if you need to see the status of your own job.)
-
+The compile command for the UNet application is as follows. 
 ```bash
-squeue
+python ${UNET}/compile.py compile -b ${BS}  --num-classes 2 --num-flexible-classes -1 --in-channels=3 --init-features 32 --in-width=${2} --in-height=${2} --enable-conv-tiling --mac-v2  --compiler-configs-file ${UNET}/jsons/compiler_configs/unet_compiler_configs_no_inst.json  --mac-human-decision ${UNET}/jsons/hd_files/hd_unet_${HD}_depth2colb.json --enable-stoc-rounding  --num-tiles ${NUM_TILES} --pef-name="unet_train_${BS}_${2}_single_${NUM_TILES}" > compile_${BS}_${2}_single_${NUM_TILES}.log 2>&1
 ```
+This application is compiled with `--num-tiles = 4`, which means that the entire application fits on 4 tiles or half RDU. 
+The scripts currently logs to a file **run_unet_256_256_single_4.log** and the performance data is located at the bottom of file. The pef generated from the compilation process is placed under `out/unet_train_${BS}_${2}_single_${NUM_TILES}` inside the current working directory. 
+
+The run command to train the UNet is provided below. 
+```bash
+srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=${CACHE_DIR}  --num-workers=${NUM_WORKERS} --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=$(pwd)/out/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef > run_unet_${BS}_${2}_single_${NUM_TILES}.log 2>&1
+```
+
+## Gpt 1.5B 
+
+
