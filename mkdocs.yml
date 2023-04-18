@@ -222,7 +222,7 @@ nav:
       - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
-      - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
+      # - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:

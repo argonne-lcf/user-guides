@@ -22,4 +22,3 @@ List of documentation:
 
 [SambaNova Documentation](documentation.md)
 
-[Performance Tools](performance-tools.md)
