@@ -82,9 +82,16 @@ Copy the contents of [Gpt1.5B_compile.sh](./files/Gpt1.5B_compile.sh) and [Gpt1.
 ### Compile and Run
 This script consists of commands to `compile` and `run` multiple instances of Gpt1.5B model across multiple nodes. Run the Gpt1.5B_compile.sh to first compile and generate the `pef` file for the model and it in turn launches the `Gpt1.5B_run.sh` script to run multiple instances of the model over the different nodes.  
 
-```bash
+```console
+chmod +x Gpt1.5B_compile.sh
+chmod +x Gpt1.5B_run.sh
 ./Gpt1.5B_compile.sh
 ```
+You can see the log file path displayed on the screen as seen in the example below. You can use the `tail` command to check the progress of the run. 
+```console 
+vsastry@sn30-r1-h1:~/Sambanova/GEN2/Gpt1.5_single$ ./Gpt1.5B_compile.sh
+Using /data/ANL/results/sn30-r1-h1/vsastry/041823.19/GPT1.5B.out for output
+``` 
 Inspect the `compile` command in the script to see that it includes additional arguments `--data-parallel` and `-ws 2` to generate a `pef` that is compatible for data parallel runs. 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile --module_name gpt2_pretrain --task_name clm --max_seq_length 1024 -b 16 --output_dir=${OUTDIR}/hf_output --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/ --tokenizer_name gpt2 --model_name gpt2 --mac-v2 --non_split_head --mac-human-decision /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/mac_v2_overrides/gpt2_48_enc_full_recompute_training_spatialmapping_tiling16_clmerge_gm_nonpardp_lnsd.json --compiler-configs-file /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/compiler_configs/compiler_configs_gpt2_sc_recompute_spatialmapping_tiling16_clsmerge_withcls_nonpardp_norc_e2e.json --skip_broadcast_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --no_index_select_patch --data-parallel -ws 2 --weight_decay 0.1  --max_grad_norm_clip 1.0 --num-tiles 4 --pef-name=gpt15 --output-folder=${OUTDIR}
@@ -100,14 +107,14 @@ Once the model is compiled, `sbatch` is used to launch the multiple instances ac
  /usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data-parallel --reduce-on-rdu --data_dir /data/ANL/ss1024 --data_dir /data/ANL/ss1024  --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 800 --min_throughput 299000 --max_throughput 600000 --pef=${OUTDIR}/gpt15/gpt15.pef >> ${OUTPUT_PATH} 2>&1
  ```
  
- `squeue` shows that the model is run on 2 nodes `sn30-r1-h1` and `sn30-r2-h2`
+ `squeue` shows that the model is run on 2 nodes `sn30-r1-h1` and `sn30-r2-h2`. 
  ```bash
  JOBID PARTITION                      NAME     USER ST       TIME  NODES NODELIST(REASON)
  10191 sambanova            Gpt1.5B_run.sh  vsastry  R      23:18      2 sn30-r1-h1,sn30-r2-h2
  ```
  
- `sntilestat` can also be used to check the total numbers of tiles used for the runs. 
-
+ 
+`sntilestat` can also be used to check the total numbers of tiles used for the runs. 
 ```bash
 TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER COMMAND
 /XRDU_0/RDU_0/TILE_0   8.0  91.6    0.3    0.1    0.0      0.0 2750333  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
@@ -174,5 +181,17 @@ TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER C
 /XRDU_3/RDU_1/TILE_5   7.3  91.9    0.5    0.3    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
 /XRDU_3/RDU_1/TILE_6   7.3  91.9    0.5    0.3    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
 /XRDU_3/RDU_1/TILE_7   7.3  92.0    0.5    0.1    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+```
+
+The slurm log associated with the JOBID (10191 in the above example) is located in the home directory. You can use the `tail` command to check the progress of the run. 
+```console
+vsastry@sn30-r1-h1:~$ tail -f slurm-10191.out 
+Using /data/ANL/results/sn30-r1-h1/vsastry/041823.03/Gpt1.5B.out for output
+```
+
+Once the run is completed, check the log file for the performance results. 
+```console
+{'e2e_train_time': 2179.2292835712433, 'training_sequences_per_second': 192467.31088004305, 'final_loss': 4.781678199768066}
+247/3247 [01:03<00:00, 50.76it/s]
 ```
 
