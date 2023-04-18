@@ -261,27 +261,27 @@ The scripts currently logs to a file **run_unet_256_256_single_4.log** and the p
 
 ## Gpt 1.5B 
 The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`. 
-The scripts containing the `compile` and `run` commands for Gpt1.5 model can be accessed at [Gpt1.5_single.sh](./files/Gpt1.5_single.sh "Gpt1.5_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. 
+The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. 
 
 Change directory and copy files.
 
 ```bash
-mkdir -p ~/apps/nlp/Gpt1.5_single
-cd ~/apps/nlp/Gpt1.5_single
+mkdir -p ~/apps/nlp/Gpt1.5B_single
+cd ~/apps/nlp/Gpt1.5B_single
 ```
 Copy and paste the contents of
-[Gpt1.5_single.sh](./files/Gpt1.5_single.sh "Gpt1.5_single.sh")
+[Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh")
 to a file with the same name into the current directory using your favorite editor.
 
 or copy the contents from `/data/ANL/scripts/Gpt1.5B_single.sh`. 
 
 ```bash
-cp /data/ANL/scripts/Gpt1.5B_single.sh ~/apps/nlp/Gpt1.5_single
+cp /data/ANL/scripts/Gpt1.5B_single.sh ~/apps/nlp/Gpt1.5B_single/
 ```
 Run the script. 
 ```bash
-chmod +x Gpt1.5_single.sh
-./Gpt1.5_single.sh
+chmod +x Gpt1.5B_single.sh
+./Gpt1.5B_single.sh
 ```
 
 You can inspect the `compile` and `run` commands in the script to learn that this model trains with a batch size of 16 for 1 instance over 4 tiles. The human decision file and the compiler config file helps to optimize the compute and memory resources specific to this Gpt 1.5B model run. 
