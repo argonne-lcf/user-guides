@@ -45,7 +45,7 @@ if [ ! -e  ${OUTDIR}/gpt15/gpt15.pef ] ; then
 fi
 #######################
 echo "RUN" >> ${OUTPUT_PATH} 2>&1
-/usr/local/bin/sbatch --output=${HOME}/slurm-%A.out --ntasks 32 --gres=rdu:1 --ntasks-per-node 16  --nodes 2 --cpus-per-task=8  ./Gpt1.5B_run.sh ${1} >> ${OUTPUT_PATH} 2>&1
+/usr/local/bin/sbatch --output=${HOME}/slurm-%A.out --ntasks 32 --gres=rdu:1 --ntasks-per-node 16  --nodes 2 --cpus-per-task=8 /home/$(whoami)/nlp-multiNodetest/Gpt1.5B_run.sh ${1} >> ${OUTPUT_PATH} 2>&1
 
 echo "Machine state After: " >> ${OUTPUT_PATH} 2>&1
 /opt/sambaflow/bin/snfadm -l inventory >> ${OUTPUT_PATH} 2>&1
