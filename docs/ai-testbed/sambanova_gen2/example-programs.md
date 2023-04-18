@@ -284,7 +284,8 @@ chmod +x Gpt1.5_single.sh
 ./Gpt1.5_single.sh
 ```
 
-You can inspect the `compile` and `run` commands in the script. 
+You can inspect the `compile` and `run` commands in the script to learn that this model trains with a batch size of 16 for 1 instance over 4 tiles. The human decision file and the compiler config file helps to optimize the compute and memory resources specific to this Gpt 1.5B model run. 
+
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile --module_name gpt2_pretrain --task_name clm --max_seq_length 1024 -b 16 --output_dir=${OUTDIR}/hf_output --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/ --tokenizer_name gpt2 --model_name gpt2 --mac-v2 --non_split_head --mac-human-decision /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/mac_v2_overrides/gpt2_48_enc_full_recompute_training_spatialmapping_tiling16_clmerge_gm_nonpardp_lnsd.json --compiler-configs-file /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/compiler_configs/compiler_configs_gpt2_sc_recompute_spatialmapping_tiling16_clsmerge_withcls_nonpardp_norc_e2e.json --skip_broadcast_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --no_index_select_patch --weight_decay 0.1  --max_grad_norm_clip 1.0 --num-tiles 4 --pef-name=gpt15_single --output-folder=${OUTDIR}
 ```
@@ -292,15 +293,14 @@ python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data_dir /data/ANL/ss1024 --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 100 --pef=${OUTDIR}/gpt15_single/gpt15_single.pef >> ${OUTPUT_PATH} 2>&1
 ```
-
+The `squeue` command shows that the application runs on 4 tiles as shown below. 
 ```bash
-TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER COMMAND
-/XRDU_0/RDU_0/TILE_0 100.0   0.0    0.0    0.0    0.0      0.0 3926304  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu
-/XRDU_0/RDU_0/TILE_1 100.0   0.0    0.0    0.0    0.0      0.0 3926304  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu
-/XRDU_0/RDU_0/TILE_2 100.0   0.0    0.0    0.0    0.0      0.0 3926304  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu
-/XRDU_0/RDU_0/TILE_3 100.0   0.0    0.0    0.0    0.0      0.0 3926304  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu
+/XRDU_0/RDU_0/TILE_0   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
+/XRDU_0/RDU_0/TILE_1   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
+/XRDU_0/RDU_0/TILE_2   2.5  96.9    0.4    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
+/XRDU_0/RDU_0/TILE_3   2.5  96.9    0.4    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
 /XRDU_0/RDU_0/TILE_4 100.0   0.0    0.0    0.0    0.0      0.0
 /XRDU_0/RDU_0/TILE_5 100.0   0.0    0.0    0.0    0.0      0.0
-/XRDU_0/RDU_0/TILE_6 100.0   0.0    0.0    0.0    0.0      0.0
+...
 
 ```
