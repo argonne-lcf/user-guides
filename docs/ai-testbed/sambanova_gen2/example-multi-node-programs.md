@@ -1,6 +1,9 @@
 # Example Multi-Node Programs
-In this section we will learn how to extend the UNet and Gpt1.5B applications scripts that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes. 
+<!--- In this section we will learn how to extend the UNet and Gpt1.5B applications scripts that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes. --->
 
+In this section we will learn how to extend the Gpt1.5B application that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes.
+
+<!---
 ## UNet
 
 ### Set Up
@@ -62,7 +65,7 @@ The last line of the output will be similar to the following.
 ```console
 inner train loop time : 82.35215544700623 for 10 epochs, number of global steps: 130, e2e samples_per_sec: 404.11814140573097
 ```
-
+---> 
 ## Gpt 1.5B 
 
 ### Setup
