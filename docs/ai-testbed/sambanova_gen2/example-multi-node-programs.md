@@ -95,4 +95,80 @@ Once the model is compiled, `sbatch` is used to launch the multiple instances ac
  ```bash
  /usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data-parallel --reduce-on-rdu --data_dir /data/ANL/ss1024 --data_dir /data/ANL/ss1024  --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 800 --min_throughput 299000 --max_throughput 600000 --pef=${OUTDIR}/gpt15/gpt15.pef >> ${OUTPUT_PATH} 2>&1
  ```
+ 
+ ```bash
+ JOBID PARTITION                      NAME     USER ST       TIME  NODES NODELIST(REASON)
+ 10191 sambanova            Gpt1.5B_run.sh  vsastry  R      23:18      2 sn30-r1-h1,sn30-r2-h2
+ ```
+ `squeue` shows that the model is run on 2 nodes `sn30-r1-h1` and `sn30-r2-h2`
+ 
+ `sntilestat` can also be used to check the total numbers of tiles used for the runs. 
+
+```bash
+TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER COMMAND
+/XRDU_0/RDU_0/TILE_0   8.0  91.6    0.3    0.1    0.0      0.0 2750333  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_1   8.0  91.6    0.3    0.1    0.0      0.0 2750333  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_2   7.9  91.6    0.3    0.3    0.0      0.0 2750333  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_3   7.7  91.8    0.3    0.3    0.0      0.0 2750333  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_4   7.6  91.9    0.4    0.1    0.0      0.0 2750339  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_5   7.5  91.9    0.5    0.1    0.0      0.0 2750339  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_6   7.5  91.8    0.5    0.3    0.0      0.0 2750339  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_0/TILE_7   7.3  92.0    0.6    0.0    0.0      0.0 2750339  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_0   8.9  89.9    1.0    0.1    0.0      0.0 2750338  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_1   9.0  89.9    0.9    0.1    0.0      0.0 2750338  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_2   8.6  89.8    1.4    0.1    0.0      0.0 2750338  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_3   8.5  89.9    1.4    0.1    0.0      0.0 2750338  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_4   7.9  90.9    0.9    0.4    0.0      0.0 2750343  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_5   7.7  90.9    0.9    0.5    0.0      0.0 2750343  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_6   7.7  91.0    0.9    0.4    0.0      0.0 2750343  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_0/RDU_1/TILE_7   8.0  91.0    0.6    0.4    0.0      0.0 2750343  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_0   7.6  92.0    0.3    0.1    0.0      0.0 2750345  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_1   7.6  92.0    0.3    0.1    0.0      0.0 2750345  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_2   7.5  92.1    0.3    0.1    0.0      0.0 2750345  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_3   7.5  92.1    0.3    0.1    0.0      0.0 2750345  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_4   7.5  92.1    0.3    0.1    0.0      0.0 2750335  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_5   7.5  92.1    0.3    0.1    0.0      0.0 2750335  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_6   7.5  92.1    0.3    0.1    0.0      0.0 2750335  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_0/TILE_7   7.5  92.1    0.3    0.1    0.0      0.0 2750335  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_0   7.7  91.5    0.4    0.4    0.0      0.0 2750330  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_1   7.9  91.5    0.3    0.4    0.0      0.0 2750330  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_2   7.9  91.5    0.3    0.4    0.0      0.0 2750330  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_3   7.6  91.8    0.4    0.3    0.0      0.0 2750330  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_4   7.7  91.9    0.4    0.0    0.0      0.0 2750334  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_5   7.7  91.9    0.4    0.0    0.0      0.0 2750334  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_6   7.9  91.9    0.3    0.0    0.0      0.0 2750334  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_1/RDU_1/TILE_7   7.9  91.9    0.3    0.0    0.0      0.0 2750334  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_0   8.0  91.8    0.1    0.1    0.0      0.0 2750346  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_1   8.0  91.8    0.1    0.1    0.0      0.0 2750346  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_2   8.0  91.8    0.1    0.1    0.0      0.0 2750346  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_3   7.7  91.9    0.1    0.3    0.0      0.0 2750346  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_4   7.5  92.0    0.5    0.0    0.0      0.0 2750336  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_5   7.6  91.9    0.5    0.0    0.0      0.0 2750336  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_6   7.6  91.9    0.4    0.1    0.0      0.0 2750336  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_0/TILE_7   7.5  91.9    0.4    0.3    0.0      0.0 2750336  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_0   7.5  91.8    0.6    0.1    0.0      0.0 2750331  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_1   7.5  91.8    0.6    0.1    0.0      0.0 2750331  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_2   7.7  91.6    0.5    0.1    0.0      0.0 2750331  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_3   7.7  91.6    0.5    0.1    0.0      0.0 2750331  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_4   7.9  91.4    0.8    0.0    0.0      0.0 2750329  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_5   7.9  91.4    0.8    0.0    0.0      0.0 2750329  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_6   8.1  91.4    0.5    0.0    0.0      0.0 2750329  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_2/RDU_1/TILE_7   8.2  91.4    0.4    0.0    0.0      0.0 2750329  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_0   7.5  91.8    0.4    0.4    0.0      0.0 2750344  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_1   7.5  91.8    0.4    0.4    0.0      0.0 2750344  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_2   7.5  91.8    0.4    0.4    0.0      0.0 2750344  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_3   7.5  91.8    0.4    0.4    0.0      0.0 2750344  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_4   7.6  91.8    0.3    0.4    0.0      0.0 2750337  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_5   7.7  91.8    0.1    0.4    0.0      0.0 2750337  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_6   7.7  91.8    0.3    0.3    0.0      0.0 2750337  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_0/TILE_7   7.7  91.9    0.3    0.1    0.0      0.0 2750337  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_0   7.7  92.0    0.1    0.1    0.0      0.0 2750347  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_1   7.7  92.0    0.1    0.1    0.0      0.0 2750347  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_2   7.7  92.1    0.1    0.0    0.0      0.0 2750347  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_3   7.7  92.1    0.1    0.0    0.0      0.0 2750347  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_4   7.3  91.9    0.5    0.3    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_5   7.3  91.9    0.5    0.3    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_6   7.3  91.9    0.5    0.3    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+/XRDU_3/RDU_1/TILE_7   7.3  92.0    0.5    0.1    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
+```
 
