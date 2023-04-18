@@ -214,7 +214,7 @@ Epoch [1/1], Step [60000/60000], Loss: 0.3553
 Test Accuracy: 91.40  Loss: 0.3014
 2023-03-08T21:19:08 : [INFO][LIB][2688517]: sn_create_session: PEF File: pef/logreg/logreg.pef
 ```
-
+<!---
 ## UNet
 The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguments respectively. 
 The scripts containing the compile and run commands for UNet model can be accessed at [unet.sh](./files/unet.sh "unet.sh") or at `/data/ANL/scripts/Unet2d.sh` on any compute node. 
@@ -258,6 +258,7 @@ srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=${CACHE_DIR
 
 we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU. 
 The scripts currently logs to a file **run_unet_256_256_single_4.log** and the performance data is located at the bottom of file. The pef generated from the compilation process is placed under `out/unet_train_${BS}_${2}_single_${NUM_TILES}` inside the current working directory.   
+--->
 
 ## Gpt 1.5B 
 The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`. 
