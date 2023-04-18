@@ -92,6 +92,8 @@ You can see the log file path displayed on the screen as seen in the example bel
 vsastry@sn30-r1-h1:~/nlp-multiNodetest$ ./Gpt1.5B_compile.sh
 Using /data/ANL/results/sn30-r1-h1/vsastry/041823.19/GPT1.5B.out for output
 ``` 
+The artifacts of the compile process is produced in the path : `/data/scratch/<userId>`. 
+
 Inspect the `compile` command in the script to see that it includes additional arguments `--data-parallel` and `-ws 2` to generate a `pef` that is compatible for data parallel runs. 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile --module_name gpt2_pretrain --task_name clm --max_seq_length 1024 -b 16 --output_dir=${OUTDIR}/hf_output --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/ --tokenizer_name gpt2 --model_name gpt2 --mac-v2 --non_split_head --mac-human-decision /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/mac_v2_overrides/gpt2_48_enc_full_recompute_training_spatialmapping_tiling16_clmerge_gm_nonpardp_lnsd.json --compiler-configs-file /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/compiler_configs/compiler_configs_gpt2_sc_recompute_spatialmapping_tiling16_clsmerge_withcls_nonpardp_norc_e2e.json --skip_broadcast_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --no_index_select_patch --data-parallel -ws 2 --weight_decay 0.1  --max_grad_norm_clip 1.0 --num-tiles 4 --pef-name=gpt15 --output-folder=${OUTDIR}
