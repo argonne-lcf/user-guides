@@ -89,7 +89,7 @@ chmod +x Gpt1.5B_run.sh
 ```
 You can see the log file path displayed on the screen as seen in the example below. You can use the `tail` command to check the progress of the run. 
 ```console 
-vsastry@sn30-r1-h1:~/Sambanova/GEN2/Gpt1.5_single$ ./Gpt1.5B_compile.sh
+vsastry@sn30-r1-h1:~/nlp-multiNodetest$ ./Gpt1.5B_compile.sh
 Using /data/ANL/results/sn30-r1-h1/vsastry/041823.19/GPT1.5B.out for output
 ``` 
 Inspect the `compile` command in the script to see that it includes additional arguments `--data-parallel` and `-ws 2` to generate a `pef` that is compatible for data parallel runs. 
@@ -185,7 +185,7 @@ TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER C
 
 The slurm log associated with the JOBID (10191 in the above example) is located in the home directory. You can use the `tail` command to check the progress of the run. 
 ```console
-vsastry@sn30-r1-h1:~$ tail -f slurm-10191.out 
+vsastry@sn30-r1-h1:~$ tail -f ~/slurm-10191.out 
 Using /data/ANL/results/sn30-r1-h1/vsastry/041823.03/Gpt1.5B.out for output
 ```
 
