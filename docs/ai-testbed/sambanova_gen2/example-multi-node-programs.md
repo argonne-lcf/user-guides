@@ -93,17 +93,18 @@ Once the model is compiled, `sbatch` is used to launch the multiple instances ac
 ```bash
 /usr/local/bin/sbatch --output=${HOME}/slurm-%A.out --ntasks 32 --gres=rdu:1 --ntasks-per-node 16  --nodes 2 --cpus-per-task=8  Gpt1.5B_run.sh ${1} >> ${OUTPUT_PATH} 2>&1
 ```
+
  The `run` command for each of this instance is present in the `Gpt1.5B_run.sh` script. You can inspect the command in the script to see that `--data-parallel --reduce-on-rdu` arguments are present to ensure that the model is run in a data parallel fashion and that the gradient accumulation takes place on the RDU.  
  
  ```bash
  /usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data-parallel --reduce-on-rdu --data_dir /data/ANL/ss1024 --data_dir /data/ANL/ss1024  --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 800 --min_throughput 299000 --max_throughput 600000 --pef=${OUTDIR}/gpt15/gpt15.pef >> ${OUTPUT_PATH} 2>&1
  ```
  
+ `squeue` shows that the model is run on 2 nodes `sn30-r1-h1` and `sn30-r2-h2`
  ```bash
  JOBID PARTITION                      NAME     USER ST       TIME  NODES NODELIST(REASON)
  10191 sambanova            Gpt1.5B_run.sh  vsastry  R      23:18      2 sn30-r1-h1,sn30-r2-h2
  ```
- `squeue` shows that the model is run on 2 nodes `sn30-r1-h1` and `sn30-r2-h2`
  
  `sntilestat` can also be used to check the total numbers of tiles used for the runs. 
 
