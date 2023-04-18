@@ -73,8 +73,10 @@ cd ~/nlp-multiNodetest
 ```
 ### Create and run Gpt1.5B_compile.sh and Gpt1.5B_run.sh
 
-Create the file **Gpt1.5B_compile.sh** and **Gpt1.5B_run.sh** in the current directory using your favorite editor.
-Copy the contents of [Gpt1.5B_compile.sh](./files/Gpt1.5B_compile.sh) and [Gpt1.5B_run.sh](./files/Gpt1.5B_run.sh). Alternatively, the files can be accessed at `/data/ANL/scripts/Gpt1.5B_compile.sh` and `/data/ANL/scripts/Gpt1.5B_run.sh` on any of the compute node and can be copied over to the working directory. This script consists of commands to compile and run multiple instances of Gpt1.5B model across multiple nodes. Run the Gpt1.5B_compile.sh to first compile and generate the `pef` file for the model and it inturn runs the `Gpt1.5B_run.sh` to launch multiple instances of the model over the different nodes.  
+Create the files **Gpt1.5B_compile.sh** and **Gpt1.5B_run.sh** in the current directory.
+Copy the contents of [Gpt1.5B_compile.sh](./files/Gpt1.5B_compile.sh) and [Gpt1.5B_run.sh](./files/Gpt1.5B_run.sh). Alternatively, the files can be accessed at `/data/ANL/scripts/Gpt1.5B_compile.sh` and `/data/ANL/scripts/Gpt1.5B_run.sh` on any of the compute node and can be copied over to the working directory. 
+
+This script consists of commands to `compile` and `run` multiple instances of Gpt1.5B model across multiple nodes. Run the Gpt1.5B_compile.sh to first compile and generate the `pef` file for the model and it inturn launches the `Gpt1.5B_run.sh` script to run multiple instances of the model over the different nodes.  
 
 ```bash
 ./Gpt1.5B_compile.sh
