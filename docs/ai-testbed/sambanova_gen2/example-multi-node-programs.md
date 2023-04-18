@@ -183,10 +183,15 @@ TILE                 %idle %exec %pload %aload %chkpt %quiesce    PID     USER C
 /XRDU_3/RDU_1/TILE_7   7.3  92.0    0.5    0.1    0.0      0.0 2750332  vsastry /opt/sambaflow/apps/nlp/transformers_on_rdu/venv/b
 ```
 
-The slurm log associated with the JOBID (10191 in the above example) is located in the home directory. You can use the `tail` command to check the progress of the run. 
+The slurm log associated with the JOBID (10191 in the above example) is located in the home directory. You can use the `tail` command to check the progress of the training. 
+
 ```console
 vsastry@sn30-r1-h1:~$ tail -f ~/slurm-10191.out 
 Using /data/ANL/results/sn30-r1-h1/vsastry/041823.03/Gpt1.5B.out for output
+```
+
+```console
+vsastry@sn30-r1-h1:~$ tail -f /data/ANL/results/sn30-r1-h1/vsastry/041823.03/Gpt1.5B.out
 ```
 
 Once the run is completed, check the log file for the performance results. 
