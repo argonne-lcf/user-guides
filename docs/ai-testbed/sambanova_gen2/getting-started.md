@@ -31,7 +31,7 @@ Password: < MobilePASS+ code >
 
 ### Log in to a SambaNova Node
 
-Once you are on the **login node**, a SambaNova node can be accessed using an alias, **sn30-r[1-4]-h[1-2]** where 'r' stands for the rack number, and 'h' stands for half. **sn30-r1-h1** is the node in the first half of the first rack.
+Once you are on the **login node**, a SambaNova node can be accessed using an alias, **sn30-r[1-4]-h[1-2]** where 'r' stands for the rack number, and 'h' stands for host. **sn30-r1-h1** is the first host of the first rack.
 
 The 8 nodes are aliased as : **sn30-r1-h1** , **sn30-r1-h2**, **sn30-r2-h1**, **sn30-r2-h2**, **sn30-r3-h1**, **sn30-r3-h2**, **sn30-r4-h1**, **sn30-r4-h2**.
 
