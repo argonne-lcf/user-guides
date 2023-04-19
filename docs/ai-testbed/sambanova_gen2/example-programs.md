@@ -227,11 +227,11 @@ cd ~/apps/image/unet
 ```
 
 Copy and paste the contents of
-[unet.sh](./files/unet.sh "unet.sh")
+[Unet2d.sh](./files/Unet2d.sh "Unet2d.sh")
 to a file with the same name into the current directory using your favorite editor.
 
 ```bash
-chmod +x unet.sh
+chmod +x Unet2d.sh
 ```
 
 Run these commands for training (compile + train):
@@ -245,21 +245,23 @@ For a image size of 256x256 and batch size 256 when running just 1 instance, the
 ./unet.sh compile 256 256 1 unet2d_single_compile
 ./unet.sh run 256 256 1 unet2d_single_run
 ```
+The above commands displays the file that contains the output for the execution of the above scripts, usually `/data/ANL/results/<hostname>/<userid>/<RunID>/Unet2d.out`
 
-If we inspect the compile and run commands for the UNet application provided in the script, 
+If we inspect the compile and run commands for the UNet application provided in the script, we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU. 
+The pef generated from the compilation process of the above command is placed under `out/Unet2d/unet_train_256_256_single_4` inside the current working directory.  
 
 ```bash
-python ${UNET}/compile.py compile -b ${BS}  --num-classes 2 --num-flexible-classes -1 --in-channels=3 --init-features 32 --in-width=${2} --in-height=${2} --enable-conv-tiling --mac-v2  --compiler-configs-file ${UNET}/jsons/compiler_configs/unet_compiler_configs_no_inst.json  --mac-human-decision ${UNET}/jsons/hd_files/hd_unet_${HD}_depth2colb.json --enable-stoc-rounding  --num-tiles ${NUM_TILES} --pef-name="unet_train_${BS}_${2}_single_${NUM_TILES}" > compile_${BS}_${2}_single_${NUM_TILES}.log 2>&1
+python ${UNET}/compile.py compile --mac-v2 --in-channels=3 --in-width=${2} --in-height=${2} --batch-size=${BS} --enable-conv-tiling --num-tiles=4 --pef-name=unet_train_${BS}_${2}_single_${NUM_TILES} --output-folder=${OUTDIR}
 ```
 
 ```bash
-srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-cache=${CACHE_DIR}  --num-workers=${NUM_WORKERS} --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=$(pwd)/out/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef > run_unet_${BS}_${2}_single_${NUM_TILES}.log 2>&1
+srun --nodelist $(hostname) python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=${OUTDIR}/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef
 ```
-
-we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU. 
-The scripts currently logs to a file **run_unet_256_256_single_4.log** and the performance data is located at the bottom of file. The pef generated from the compilation process is placed under `out/unet_train_${BS}_${2}_single_${NUM_TILES}` inside the current working directory.   
-
-
+The performance data is located at the bottom of log file. 
+```console
+inner train loop time : 374.6789753437042 for 10 epochs, number of global steps: 130, e2e samples_per_sec: 88.82270474202953
+```
+ 
 ## Gpt 1.5B 
 The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`. 
 The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. 
