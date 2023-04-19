@@ -32,6 +32,11 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 - **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
 - **Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
 
+***NOTE: From May 2023 onward, the following changes will be made to the production (prod) queue policies***
+- ***The small queue will have a 3 hr walltime limit (no change to min/max nodes)***
+- ***The medium queue will have a 6 hr walltime limit (no change to min/max nodes)***
+- ***The large queue will have a 24 hr walltime limit and require a minimum of 100 nodes***
+
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
