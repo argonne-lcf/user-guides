@@ -35,6 +35,8 @@ The compile and run scripts have the following input arguments.
 
 4. **RunID**: A unique Id for the compile or run process. 
 
+The script uses the arguments `pcompile` and `prun` for the data parallel compile and run. 
+
 ```bash
 ./Unet2d.sh pcompile <image size> <batch_size> <num of instances> <RunID>
 ./Unet2d.sh prun <image size> <batch_size> <num of instances> <RunID>
