@@ -4,13 +4,13 @@
 ##  <a name="Polaris-Queues"></a>Queues
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
-|---------------|----------|-----------|-----------------------------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2         | 10 min (5 min from 10/3/22) | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
-| debug-scaling | 1        | 10        | 10 min (5 min from 10/3/22) | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
-| prod          | 10       | 496       | 30 min (5 min from 10/3/22) | 24 hrs   | Routing queue; See below                                                    |
-| preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
-| demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
+|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
+| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
+| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                    |
+| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
+| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
 **Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
@@ -18,14 +18,14 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
-|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
-|----|----|----|------------------------------|----|----------------------------------------|
-|small|10|24| 5 min  |6 hrs||
-|medium|25|49| 5 min  |12 hrs||
-|large|50|496| 5 min  |24 hrs||
-|backfill-small|10|24| 5 min   |6 hrs| low priority, negative project balance |
-|backfill-medium|25|49| 5 min  |12 hrs| low priority, negative project balance |
-|backfill-large|50|496| 5 min                     |24 hrs| low priority, negative project balance |
+| Queue Name      | Node Min                  | Node Max | Time Min | Time Max                        | Notes                                  |
+|-----------------|---------------------------|----------|----------|---------------------------------|----------------------------------------|
+| small           | 10                        | 24       | 5 min    | 6 hrs (3 hrs, from 05/01/2023)  ||
+| medium          | 25                        | 49       | 5 min    | 12 hrs (6 hrs, from 05/01/2023) ||
+| large           | 50 (100, from 05/01/2023) | 496      | 5 min    | 24 hrs                          ||
+| backfill-small  | 10                        | 24       | 5 min    | 6 hrs (3 hrs, from 05/01/2023)  | low priority, negative project balance |
+| backfill-medium | 25                        | 49       | 5 min    | 12 hrs (6 hrs, from 05/01/2023) | low priority, negative project balance |
+| backfill-large  | 50 (100, from 05/01/2023) | 496      | 5 min    | 24 hrs                          | low priority, negative project balance |
 
 - **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
 - **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
