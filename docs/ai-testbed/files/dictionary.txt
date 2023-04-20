@@ -10,6 +10,7 @@ gbps
 Graphcore
 graphcore_login
 inet
+inplace
 keras
 keygen
 keyscan
@@ -18,14 +19,18 @@ libnvinfer
 logreg
 mnist
 petaFLOPS
+POPART
+POPLIBS
 poptorch
 popvision
+PYTHONPATH
 relu
 resnet
 run_unet_256_256_single_4
 sambanova
 sbatch
 Slurm
+softmax
 srun
 tensorrt
 unet

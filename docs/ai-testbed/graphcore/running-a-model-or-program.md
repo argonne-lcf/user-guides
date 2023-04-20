@@ -10,7 +10,7 @@ for the original version on your development machine.
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
-Clone the **examples** repository to your personal directory structure:
+Clone the examples repository to your personal directory structure:
 
 ```bash
 mkdir ~/graphcore
@@ -23,7 +23,7 @@ git clone https://github.com/graphcore/examples.git
 #### Activate PopTorch Environment
 
 ```bash
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+source ~/venvs/graphcore/poptorch32_env/bin/activate
 ```
 
 #### Install Requirements
