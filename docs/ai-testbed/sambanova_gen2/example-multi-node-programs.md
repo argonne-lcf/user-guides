@@ -51,16 +51,26 @@ You can inspect the compile command that contains `--data-parallel -ws 2` argume
 ```console
 python /opt/sambaflow/apps/image/segmentation/compile.py compile --mac-v2 --in-channels=3 --in-width=${2} --in-height=${2} --batch-size=${BS} --enable-conv-tiling --num-tiles=4 --pef-name=unet_train_${BS}_${2}_NP_${NUM_TILES}  --data-parallel -ws 2 --output-folder=${OUTDIR}
 ```
-Once the model is compiled, sbatch is used to launch the multiple instances across the nodes. The below example shows that a total of 8 tasks or instances are launched over the host on which the script is launched.
+Once the model is compiled, sbatch is used to launch the multiple instances. The below example shows that a total of 8 tasks or instances are launched over the host on which the script is launched.
 
 ```console
 sbatch --gres=rdu:1 --tasks-per-node ${NP} --nodes 1 --nodelist $(hostname) --cpus-per-task=${cpus} $(pwd)/unet_batch.sh ${NP} ${NUM_WORKERS} ${BS} ${2} ${5}
 ```
-
+The `run` command has `--data-parallel --reduce-on-rdu` arguments that is compatible with data parallel run. 
 ```console
 srun --mpi=pmi2 python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${IM} --in-height=${IM} --init-features 32 --batch-size=${BS} --epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${IM}_${BS}_${NP} --data-parallel --reduce-on-rdu --pef=${OUTDIR}/unet_train_${BS}_${IM}_NP_4/unet_train_${BS}_${IM}_NP_4.pef
 ```
-
+The throughput is calculated by averaging the `e2e samples_per_sec` over the different instances. 
+```console
+inner train loop time : 36.314290046691895 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 563.9653143065
+inner train loop time : 33.36756229400635 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 613.7697389922524
+inner train loop time : 33.94625234603882 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 603.3066563941279
+inner train loop time : 32.309499979019165 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 633.8692958200872
+inner train loop time : 31.418426036834717 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 651.8467849404489
+inner train loop time : 28.164129495620728 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 727.1660927132315
+inner train loop time : 30.29698896408081 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 675.9747651583616
+inner train loop time : 25.332663536071777 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 808.442427336472
+```
 
 ## Gpt 1.5B 
 
