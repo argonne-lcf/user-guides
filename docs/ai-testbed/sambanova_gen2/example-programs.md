@@ -237,13 +237,13 @@ chmod +x Unet2d.sh
 Run these commands for training (compile + train):
 
 ```bash
-./unet.sh compile <image size> <batch_size> <num of instances> <RunID>
-./unet.sh run <image size> <batch_size> <num of instances> <RunID>
+./Unet2d.sh compile <image size> <batch_size> <num of instances> <RunID>
+./Unet2d.sh run <image size> <batch_size> <num of instances> <RunID>
 ```
 For a image size of 256x256 and batch size 256 when running just 1 instance, the commands are provided as follows. 
 ```bash
-./unet.sh compile 256 256 1 unet2d_single_compile
-./unet.sh run 256 256 1 unet2d_single_run
+./Unet2d.sh compile 256 256 1 unet2d_single_compile
+./Unet2d.sh run 256 256 1 unet2d_single_run
 ```
 The above commands displays the file that contains the output for the execution of the above scripts, usually `/data/ANL/results/<hostname>/<userid>/<RunID>/Unet2d.out`
 
