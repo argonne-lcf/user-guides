@@ -18,14 +18,14 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
-| Queue Name      | Node Min                  | Node Max | Time Min | Time Max                        | Notes                                  |
-|-----------------|---------------------------|----------|----------|---------------------------------|----------------------------------------|
-| small           | 10                        | 24       | 5 min    | 6 hrs (3 hrs, from 05/01/2023)  ||
-| medium          | 25                        | 49       | 5 min    | 12 hrs (6 hrs, from 05/01/2023) ||
-| large           | 50 (100, from 05/01/2023) | 496      | 5 min    | 24 hrs                          ||
-| backfill-small  | 10                        | 24       | 5 min    | 6 hrs (3 hrs, from 05/01/2023)  | low priority, negative project balance |
-| backfill-medium | 25                        | 49       | 5 min    | 12 hrs (6 hrs, from 05/01/2023) | low priority, negative project balance |
-| backfill-large  | 50 (100, from 05/01/2023) | 496      | 5 min    | 24 hrs                          | low priority, negative project balance |
+| Queue Name      | Node Min                                | Node Max | Time Min | Time Max                                      | Notes                                  |
+|-----------------|-----------------------------------------|----------|----------|-----------------------------------------------|----------------------------------------|
+| small           | 10                                      | 24       | 5 min    | 6 hrs (3 hrs, first maintanence in May 2023)  ||
+| medium          | 25                                      | 49       | 5 min    | 12 hrs (6 hrs, first maintanence in May 2023) ||
+| large           | 50 (100, first maintanence in May 2023) | 496      | 5 min    | 24 hrs                                        ||
+| backfill-small  | 10                                      | 24       | 5 min    | 6 hrs (3 hrs, first maintanence in May 2023)  | low priority, negative project balance |
+| backfill-medium | 25                                      | 49       | 5 min    | 12 hrs (6 hrs, first maintanence in May 2023) | low priority, negative project balance |
+| backfill-large  | 50 (100, first maintanence in May 2023) | 496      | 5 min    | 24 hrs                                        | low priority, negative project balance |
 
 - **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
 - **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
