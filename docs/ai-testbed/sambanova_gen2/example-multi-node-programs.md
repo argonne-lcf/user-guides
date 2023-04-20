@@ -39,7 +39,7 @@ The compile and run scripts have the following input arguments.
 ./Unet2d.sh pcompile <image size> <batch_size> <num of instances> <RunID>
 ./Unet2d.sh prun <image size> <batch_size> <num of instances> <RunID>
 ```
-For a image size of 256x256 and local batch size of 256 when running just 8 instance, the commands are provided as follows. 
+For a image size of 256x256 and local batch size of 256 when running 8 instance, the commands are provided as follows. 
 ```bash
 ./Unet2d.sh pcompile 256 256 8 unet2d_8inst_pcompile
 ./Unet2d.sh prun 256 256 8 unet2d_8inst_prun
