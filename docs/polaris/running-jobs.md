@@ -4,13 +4,13 @@
 ##  <a name="Polaris-Queues"></a>Queues
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max	 | Time Min | Time Max | Notes                                                                       |
-|---------------|----------|-----------|----------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2         | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
-| debug-scaling | 1        | 10        | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
-| prod          | 10       | 496       | 5 min    | 24 hrs   | Routing queue; See below                                                    |
-| preemptable   | 1        | 10        | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
-| demand        | 1        | 56        | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
+|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
+| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
+| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                    |
+| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
+| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
 **Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
