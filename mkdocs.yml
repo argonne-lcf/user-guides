@@ -196,18 +196,22 @@ nav:
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
     - Graphcore:
-      - System Overview: ai-testbed/graphcore/System-Overview.md
-      - Getting Started: ai-testbed/graphcore/Logging-into-a-Graphcore-Node.md
-      - Virtual Environment: ai-testbed/graphcore/Virtual-Environment.md
-      - Running a Model/Program: ai-testbed/graphcore/Running-a-Model-or-Program.md
-      - Job Queuing and Submission: ai-testbed/graphcore/Job-Queuing-and-Submission.md
-      - Example Programs: ai-testbed/graphcore/Example-Programs.md
-      - Tunneling and Forwarding Ports: ai-testbed/graphcore/Tunneling-and-forwarding-ports.md
-      - CosmicTagger Conversion: ai-testbed/graphcore/CosmicTagger-Conversion.md
-      - CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/CosmicTagger-DDP.md
+      - System Overview: ai-testbed/graphcore/system-overview.md
+      - Getting Started: ai-testbed/graphcore/getting-started.md
+      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
+      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/graphcore/example-programs.md
+      #- Tunneling and Forwarding Ports: ai-testbed/graphcore/Tunneling-and-forwarding-ports.md
+      - CosmicTagger Conversion: ai-testbed/graphcore/cosmictagger-conversion.md
+      - CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/cosmictagger-ddp.md
       #- DataParallel: ai-testbed/graphcore/DataParallel.md
-      - Miscellaneous: ai-testbed/graphcore/Miscellaneous.md
-      - Documentation: ai-testbed/graphcore/Documentation.md
+      - Multi-node: ai-testbed/graphcore/multi-node-setup.md
+      - Profiling: ai-testbed/graphcore/profiling.md
+      - Profiling MNIST: ai-testbed/graphcore/profiling-mnist.md
+      - Profiling ResNet50: ai-testbed/graphcore/profiling-resnet50.md
+      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
+      - Documentation: ai-testbed/graphcore/documentation.md
     - SambaNova Gen1:
       - System Overview: ai-testbed/sambanova_gen1/system-overview.md
       - Getting Started: ai-testbed/sambanova_gen1/getting-started.md

@@ -42,7 +42,7 @@ Where:
 
 | Argument            | Help |
 |---------------------|------------------------------|
-| CELSGCEUserID       | Is your CELS user identification.   |
+| ALCFUserID       | Is your ALCF user identification.   |
 | DD                  | Is the Graphcore node to use, i.e., 01, 02, 03, or 04.   |
 | 8090                | Is the port on your local machine.   |
 | 127.0.0.1:22        | Is the local IP address and port on the remote machine. |
@@ -71,7 +71,7 @@ cd /path/to/graph/analyser/directory
 
 1. Click **Open a report...**;
 2. Click the **remote** tab;
-3. Enter your **CELGCEUserID** for remote machine;
+3. Enter your **ALCFUserID** for remote machine;
 4. Enter the **Hostname** of your local machine, i.e., 127.0.0.1;
 5. Enter your **Port** address used in the **ssh** command, e.g., 8090;
 6. Click **Connect**;

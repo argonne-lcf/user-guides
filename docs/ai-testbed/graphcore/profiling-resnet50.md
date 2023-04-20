@@ -2,7 +2,7 @@
 
 Follow all the instructions in [Getting Started](/docs/graphcore/Getting-Started) to log into a Graphcore node.
 
-Follow the instructructions in [Virtual Environments](/docs/graphcore/Virtual-Environments) up to and including **PopART Environment Setup**.
+Follow the instructions in [Virtual Environments](/docs/graphcore/Virtual-Environments) up to and including **PopART Environment Setup**.
 
 ## Examples Repo
 
