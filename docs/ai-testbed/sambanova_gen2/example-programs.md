@@ -240,6 +240,7 @@ Run these commands for training (compile + train):
 ./Unet2d.sh compile <image size> <batch_size> <num of instances> <RunID>
 ./Unet2d.sh run <image size> <batch_size> <num of instances> <RunID>
 ```
+The `compile` and `run` arguments of the script can only be run with number of instances equal to 1, indicating that this is a simple 4 tile run without data parallel framework. 
 For a image size of 256x256 and batch size 256 when running just 1 instance, the commands are provided as follows. 
 ```bash
 ./Unet2d.sh compile 256 256 1 unet2d_single_compile
