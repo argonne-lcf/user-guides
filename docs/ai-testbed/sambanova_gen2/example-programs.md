@@ -297,7 +297,7 @@ python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data_dir /data/ANL/ss1024 --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 100 --pef=${OUTDIR}/gpt15_single/gpt15_single.pef >> ${OUTPUT_PATH} 2>&1
 ```
-The `squeue` command shows that the application runs on 4 tiles as shown below. 
+The `sntilestat` command shows that the application runs on 4 tiles as shown below. 
 ```bash
 /XRDU_0/RDU_0/TILE_0   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
 /XRDU_0/RDU_0/TILE_1   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
