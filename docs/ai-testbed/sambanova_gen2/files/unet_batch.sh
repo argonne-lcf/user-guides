@@ -15,7 +15,7 @@ export OMP_NUM_THREADS=8
 # Start script timer
 SECONDS=0
 # Temp file location
-OUTDIR=${HOME}/out/${MODEL_NAME}
+OUTDIR=$(pwd)/out/${MODEL_NAME}
 
 BS=$3
 IM=$4
