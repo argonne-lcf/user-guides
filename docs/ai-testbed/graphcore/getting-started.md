@@ -28,11 +28,9 @@ ssh ALCFUserID@gc-login-02.ai.alcf.anl.gov
 
 ### Log in to a Graphcore Node
 
-Once you are on the login node, one of the four Graphcore nodes can be accessed using ssh.
+Once you are on the login node, ssh to one of the Graphcore nodes.
 
 ```bash
-ssh gc-poplar-01.ai.alcf.anl.gov
-# or
 ssh gc-poplar-02.ai.alcf.anl.gov
 # or
 ssh gc-poplar-03.ai.alcf.anl.gov
@@ -40,5 +38,5 @@ ssh gc-poplar-03.ai.alcf.anl.gov
 ssh gc-poplar-04.ai.alcf.anl.gov
 ```
 
-> **Note: Each system has a separate scheduler.  If you have already
-ssh'd into one of those nodes, you are all set.
+> **Note: `ssh gc-poplar-01.ai.alcf.anl.gov` is not accessible to users. However, its IPU resources can be used by slurm tasks.
+

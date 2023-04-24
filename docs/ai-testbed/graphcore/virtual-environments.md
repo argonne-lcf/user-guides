@@ -7,7 +7,12 @@ The **Graphcore** system has a bash shell script to set up the required software
 The following command is automatically executed when one logs into a node.
 
 ```bash
-source /software/graphcore/poplar_sdk/3.2.0/enable
+source /software/graphcore/poplar_sdk/3.1.0/enable
+```
+
+To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, 
+```bash
+unset POPLAR_SDK_ENABLED
 ```
 
 Check if **Poplar** is setup correctly:
@@ -31,16 +36,16 @@ Run these commands:
 
 ```bash
 mkdir -p ~/venvs/graphcore
-virtualenv ~/venvs/graphcore/poptorch32_env
-source ~/venvs/graphcore/poptorch32_env/bin/activate
+virtualenv ~/venvs/graphcore/poptorch31_env
+source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 Use the following commands to install PopTorch.
 
 ```bash
-POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.2.0
+POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
 export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
-pip install $POPLAR_SDK_ROOT/poptorch-3.2.0+109946_bb50ce43ab_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
+pip install $POPLAR_SDK_ROOT/poptorch-3.1.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
 ```
 
 ### Miscellaneous Environment Variables
@@ -54,7 +59,7 @@ export POPART_LOG_LEVEL=WARN
 export POPLAR_LOG_LEVEL=WARN
 export POPLIBS_LOG_LEVEL=WARN
 
-export PYTHONPATH=/software/graphcore/poplar_sdk/3.2.0/poplar-ubuntu_20_04-3.2.0+7651-b82480c629/python:$PYTHONPATH
+export PYTHONPATH=/software/graphcore/poplar_sdk/3.1.0/poplar-ubuntu_20_04-3.1.0+6824-9c103dc348/python:$PYTHONPATH
 ```
 
 ## TensorFlow 2 Environment Setup
@@ -62,17 +67,17 @@ export PYTHONPATH=/software/graphcore/poplar_sdk/3.2.0/poplar-ubuntu_20_04-3.2.0
 Create virtual environment.
 
 ```bash
-virtualenv ~/venvs/graphcore/tensorflow2_32_env
-source ~/venvs/graphcore/tensorflow2_32_env/bin/activate
+virtualenv ~/venvs/graphcore/tensorflow2_31_env
+source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
 ```
 
 Install **TensorFlow** and **Keras**.
 
 ```bash
-POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.2.0
+POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
 export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
-pip install $POPLAR_SDK_ROOT/tensorflow-2.6.3+gc3.2.0+248974+085b20a4b62+amd_znver1-cp38-cp38-linux_x86_64.whl
-pip install $POPLAR_SDK_ROOT/keras-2.6.0+gc3.2.0+248973+0135b7c6-py2.py3-none-any.whl
+pip install $POPLAR_SDK_ROOT/tensorflow-2.6.3+gc3.1.0+246224+2b7af067dae+amd_znver1-cp38-cp38-linux_x86_64.whl
+pip install $POPLAR_SDK_ROOT/keras-2.6.0+gc3.1.0+246230+88e2debf-py2.py3-none-any.whl
 ```
 
 ### Verify Installation
