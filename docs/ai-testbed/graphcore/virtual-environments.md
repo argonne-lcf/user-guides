@@ -89,7 +89,7 @@ python -c "from tensorflow.python import ipu"
 You should see:
 
 ```console
-2023-01-04 17:17:12.609331: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.2.0 (e12d5f9f01) Poplar package: 9c103dc348
+2023-04-24 23:13:36.091496: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
 ```
 
 ## Installing Packages

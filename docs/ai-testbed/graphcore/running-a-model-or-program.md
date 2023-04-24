@@ -10,12 +10,14 @@ for the original version on your development machine.
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
-Clone the examples repository to your personal directory structure:
+Clone the examples repository to your personal directory structure, and checkout the v3.1.0 release:
 
 ```bash
 mkdir ~/graphcore
 cd ~/graphcore
 git clone https://github.com/graphcore/examples.git
+cd examples
+git checkout v3.1.0
 ```
 
 ### MNIST
