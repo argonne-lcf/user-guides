@@ -96,7 +96,7 @@ DeepSpeed support.
           --envall \
           -n "${NGPUS}" \
           --ppn "${NGPU_PER_HOST}" \
-          --hostfile="${PBS_NODEFILE}" 
+          --hostfile="${PBS_NODEFILE}" \
           python3 \
             cifar10_deepspeed.py \
             --deepspeed_config ds_config.json
