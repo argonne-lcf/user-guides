@@ -76,7 +76,8 @@ inner train loop time : 25.332663536071777 for 10 epochs, number of global steps
 
 ## Gpt 1.5B 
 
-### Setupolsole
+### Set up
+```console 
 mkdir ~/nlp-multiNodetest
 cd ~/nlp-multiNodetest
 ```
