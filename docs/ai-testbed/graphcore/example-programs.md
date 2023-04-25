@@ -239,3 +239,17 @@ The ImageNet data path is now defined.
 ```bash
 ./rn50_pod64.sh
 ```
+### Gpt2B Pytorch - POD16 run. 
+
+The scripts to train a Gpt2B pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch] (https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
+
+The command for the pod 16 run is as follows. 
+```console
+/opt/slurm/bin/srun --ipus=16 python /home/$USER/Graphcore/examples/nlp/gpt2/pytorch/train_gpt2.py --model gpt2 --ipus-per-replica 4 --replication-factor 4 --gradient-accumulation 2048 --device-iterations 8 --batch-size 1 --layers-per-ipu 0 4 4 4 --matmul-proportion 0.15 0.15 0.15 0.15 --max-len 1024 --optimizer AdamW --learning-rate 0.00015 --lr-schedule cosine --lr-warmup 0.01 --remap-logit True --enable-sequence-serialized True --embedding-serialization-factor 4 --recompute-checkpoint-every-layer True --enable-half-partials True --replicated-tensor-sharding True --dataset 'generated' --epochs 1
+```
+
+It runs a `gpt2` model that fits on 4 IPUS indicated by `--ipus-per-replica`. The `--replication-factor` indicates how many times the model is replicated in a data parallel manner (4 in the above example). Hence the total number of IPUs used in this example is 16. 
+
+The effective global batch size in this example is (micro)batch-size * gradient-accumulation * replication-factor = 1 x 2048 x 4 = 8192.  The device iterations indicates the total number samples loaded in 1 training step = global batch size * device iterations = 8192*8 = 65536. To learn more about these parameters and in general batching of IPUs refer [IPU batching] (https://docs.graphcore.ai/projects/tutorials/en/latest/pytorch/efficient_data_loading/README.html?highlight=device%20iterations#understanding-batching-with-ipu) . 
+
+The above example is running with `generated` or `synthetic data`. To use the same example with a real world dataset, refer to [data setup] (https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch#dataset-setup). 
