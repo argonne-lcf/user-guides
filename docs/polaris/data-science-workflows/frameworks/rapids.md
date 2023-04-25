@@ -13,9 +13,6 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 ## Install
 
 
-> :warning: **As of 2023/03/15 there is a [known bug with dask.distributed](https://github.com/dask/distributed/pull/7544/files) that has not been fixed on pypi yet. This bug will cause the scheduler to fail when starting the cluster.**
-
-
 1. Access one of Polaris' login nodes: `ssh username@polaris.alcf.anl.gov`. 
 
 1. Run the following bash script `install_rapids_polaris.sh` to create a conda environment with Rapids, Jupyter, and dashboard libraries to visualize the cluster and GPU activities. It will also create a Jupyter kernel for the environment and the script `activate_rapids_env_polaris.sh` to activate the environment.    
@@ -38,7 +35,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     # [check here for the latest version](https://rapids.ai/start.html)
     
     SYSTEM="polaris"
-    RAPIDS_VERSION=23.02
+    RAPIDS_VERSION=23.04
     CUDATOOLKIT_VERSION=11.8
     PYTHON_VERSION=3.10
     ENV_PATH="/path/to/conda/dir"
