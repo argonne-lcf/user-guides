@@ -1,20 +1,16 @@
 # Getting Started
 
-## Setup
-
-### System View
-
 Connection to a Graphcore node is a two-step process.
 
-The first step is to ssh to the login node.
+The first step is to ssh from a local machine to the login node.
 
 The second step is to log in to a Graphcore node from the login node.
 
 ![Graphcore System View](files/graphcore_login.jpg "Graphcore System View")
 
-### Log in to Login Node
+## Log in to Login Node
 
-Login to the Graphcore login node from your local machine using the below command. This uses the ALCF account ID.
+Login to the Graphcore login node from your local machine using the below command. This uses the ALCF account ID that uses the password generated from the mobilpass+. 
 
 > **Note**:  In the examples below, replace ALCFUserID with your ALCF user id.
 
@@ -38,5 +34,5 @@ ssh gc-poplar-03.ai.alcf.anl.gov
 ssh gc-poplar-04.ai.alcf.anl.gov
 ```
 
-> **Note: `ssh gc-poplar-01.ai.alcf.anl.gov` is not accessible to users. However, its IPU resources can be used by slurm tasks.
+> **Note: `ssh gc-poplar-01.ai.alcf.anl.gov` is not accessible to users. However, its IPU resources are assigned by the slurm tasks.
 
