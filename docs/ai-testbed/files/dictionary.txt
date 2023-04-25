@@ -1,5 +1,6 @@
 alcf
 analyser
+Cerebras
 conv
 cosmictagger
 cuda
@@ -35,6 +36,7 @@ srun
 tensorrt
 unet
 unet_compile_run_all
+Venkat
 venvs
 vipu
 virtualenv
