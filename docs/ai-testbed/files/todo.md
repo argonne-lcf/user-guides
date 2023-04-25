@@ -44,7 +44,8 @@ When you change back to 3.2, use virtual-environments.md from the commit a4ce3b5
 
 ## Groq
 
-
+Repo:   https://github.com/argonne-lcf/user-guides.git
+Branch: feature/Groq001-DNP
 
 ## Habana
 

@@ -8,7 +8,7 @@ This is an adaptation of [Capturing IPU Reports](https://docs.graphcore.ai/proje
 
 See [Capturing IPU Reports](https://docs.graphcore.ai/projects/graph-analyser-userguide/en/latest/user-guide.html#capturing-ipu-reports) for more information.
 
-This section describes how to generate the files that the Graph Analyser can analyse. The Graph Analyser uses report files generated during compilation and execution by the Poplar SDK.
+This section describes how to generate the files that the Graph Analyser can analyze. The Graph Analyser uses report files generated during compilation and execution by the Poplar SDK.
 
 ### IPU Memory Overhead
 
@@ -16,7 +16,7 @@ Because of all these extra memory requirements, a model with high memory consump
 
 ### Host Computing Overhead
 
-It is essential that you also try to reduce the iterations on each run. For instance, by reducing the number of steps or the number of batches per step you can get a lighter execution profile. This will not only reduce the host computation overhead but will also speed up visualisation in the Graph Analyser.
+It is essential that you also try to reduce the iterations on each run. For instance, by reducing the number of steps or the number of batches per step you can get a lighter execution profile. This will not only reduce the host computation overhead but will also speed up visualization in the Graph Analyser.
 
 ## Download PopVision
 
@@ -35,7 +35,8 @@ Use **ssh** from your development system.
 The **ssh** command will use a **jumphost** and **port forwarding**.  The format is as follows:
 
 ```bash
-ssh -J CELSGCEUserID@homes.cels.anl.gov CELSGCEUserID@gc-poplar-DD -L 8090:127.0.0.1:22
+ssh -J ALCFUserID@gc-login-01.ai.alcf.anl.gov ALCFUserID@gc-poplar-DD -L 8090:127.0.0.1:22
+ssh -J wilsonb@gc-login-01.ai.alcf.anl.gov wilsonb@gc-poplar-DD -L 8090:127.0.0.1:22
 ```
 
 Where:
