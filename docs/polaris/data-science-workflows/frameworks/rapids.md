@@ -20,7 +20,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     - check [Rapids' official website](https://rapids.ai/start.html) for the latest versions of the library and its dependencies, and edit the script's variables `RAPIDS_VERSION`, `CUDATOOLKIT_VERSION`, `PYTHON_VERSION` accordingly
 
-    - choose a directory where you want your conda environment to be created and store it in the `ENV_PATH` variable: for example, the conda environment in the example below will be created in `/path/to/conda/dir/rapids-23.02_polaris`
+    - choose a directory where you want your conda environment to be created and store it in the `ENV_PATH` variable: for example, the conda environment in the example below will be created in `/path/to/conda/dir/rapids-23.04_polaris`
 
     - if you wish or need to use a different version of the base conda module to load, edit the `BASE_CONDA` variable accordingly
 
@@ -238,7 +238,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
 1. On JupyterLab
     
-    - Select the kernel with your Rapids' eniroment name (something like `Python [conda env:rapids-23.02_polaris]`) from the Kernel menu in the top right corner 
+    - Select the kernel with your Rapids' eniroment name (something like `Python [conda env:rapids-23.04_polaris]`) from the Kernel menu in the top right corner 
     
     - Select and access the dashboards from the bar on the left side
 
