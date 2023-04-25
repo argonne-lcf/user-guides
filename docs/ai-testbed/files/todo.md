@@ -17,24 +17,34 @@ He ran CT but, it ran on the CPU.  He has stated that it may need to be complete
 using, I can't remember which, Poplar or PopArt.  If that is necessary, Venkat should
 make the call.
 
+### Groq CT
+
 ### Habana CT
 
-Repo:  https://github.com/argonne-lcf/user-guides.git
+Repo:    https://github.com/argonne-lcf/user-guides.git
 Branch:  feature/Habana002-DNP
+File:    docs/ai-testbed/habana/CosmicTagger-Conversion.md
 
 ### SambaNova CT
 
-Repo:  https://github.com/argonne-lcf/user-guides.git
+SN has a highly-engineered version of CT.
+
+They are working to support CT OOB, Out-Of-Box.
 
 ## Cerebras
 
-Repo:  https://github.com/argonne-lcf/user-guides.git
+Repo:    https://github.com/argonne-lcf/user-guides.git
+Branch:  Talk to Bill.
 
 ## Graphcore
 
 Repo:  https://github.com/argonne-lcf/user-guides.git
 
 When you change back to 3.2, use virtual-environments.md from the commit a4ce3b5598f4d6feee7ca58accde1a6a0ea84244 "virtual-environments.md with 3.2 edits."
+
+## Groq
+
+
 
 ## Habana
 
