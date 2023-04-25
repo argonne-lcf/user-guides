@@ -1,17 +1,12 @@
 # Example Programs
 
-For a Graphcore PyTorch tutorial, see [PyTorch Basics](https://github.com/graphcore/tutorials/blob/master/tutorials/pytorch/basics/README.md).
-
-## Tutorials Repo
-
-Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/tutorials.git](https://github.com/graphcore/tutorials.git).
-
-Clone the **tutorials** repository to your personal directory structure:
+Graphcore provides examples of some well-known AI applications in their repository at https://github.com/graphcore/examples.git.
+Clone the **examples** repository to your personal directory structure:
 
 ```bash
 mkdir ~/graphcore
 cd ~/graphcore
-git clone https://github.com/graphcore/tutorials.git
+git clone https://github.com/graphcore/examples.git
 ```
 
 ### MNIST
@@ -27,8 +22,8 @@ source ~/venvs/graphcore/poptorch31_env/bin/activate
 Change directory:
 
 ```bash
-cd ~/graphcore/tutorials/simple_applications/pytorch/mnist
-python -m pip install -r requirements.txt
+cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
+pip install torchvision==0.14.0
 ```
 
 #### Run MNIST
@@ -36,7 +31,7 @@ python -m pip install -r requirements.txt
 Execute the command:
 
 ```bash
-python mnist_poptorch.py
+/opt/slurm/bin/srun --ipus=1 python mnist_poptorch.py
 ```
 
 #### Output
@@ -117,18 +112,6 @@ Question: How long is Scotland's border in km?
 Answer: 154
 Question: Where is England in relation to scotland?
 Answer: southeast
-```
-
-## Examples Repo
-
-Graphcore provides examples of some well-known AI applications in their repository at https://github.com/graphcore/examples.git.
-
-Clone the **examples** repository to your personal directory structure:
-
-```bash
-mkdir ~/graphcore
-cd ~/graphcore
-git clone https://github.com/graphcore/examples.git
 ```
 
 ### ResNet50
