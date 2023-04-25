@@ -3,9 +3,6 @@
 > **Note**:  Please be mindful of how you are using the system.
 For example, consider running larger jobs in the evening or on weekends.
 
-Running basic Graphcore models is the same on this system as it would be
-for the original version on your development machine.
-
 ## Tutorials Repo
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).

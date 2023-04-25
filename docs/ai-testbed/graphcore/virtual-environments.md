@@ -2,6 +2,8 @@
 
 ## Poplar SDK Setup
 
+
+
 The **Graphcore** system has a bash shell script to set up the required software environment **Poplar** and **PopArt**.
 
 The following command is automatically executed when one logs into a node.
