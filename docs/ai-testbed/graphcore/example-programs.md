@@ -124,8 +124,11 @@ Change directory
 ```bash
 cd ~/graphcore/examples/vision/cnns/pytorch
 python -m pip install -r requirements.txt
+pip install torch==1.13.0
 ```
+Note: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version. 
 
+<!---
 #### Update configs.yml
 
 Change directory:
@@ -223,6 +226,20 @@ The ImageNet data path is now defined.
 ```bash
 ./rn50_pod64.sh
 ```
+--->
+The scripts to train a resnet50 pytorch model on pod4 is located at [https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train](https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train)
+
+Set the following environmental variables. 
+```console
+export PYTORCH_CACHE_DIR=/tmp/pt_cache/
+```
+The command to run 4 replicas (a total for 4 IPUs) of the resnet50 model is as follows. 
+```console
+
+srun --ipus=4 poprun -vv --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
+```
+This model is run with the [imagenet dataset](https://image-net.org/). 
+
 ### Gpt2B Pytorch - POD16 run. 
 
 The scripts to train a Gpt2B pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
