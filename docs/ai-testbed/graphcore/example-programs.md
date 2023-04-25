@@ -64,7 +64,7 @@ Epochs:   0%|
 Graph compilation: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [00:16<00:00]
 Accuracy on test set: 98.04%
 ```
-
+<!---
 ### BERT Inference
 
 #### Install Requirements
@@ -113,6 +113,7 @@ Answer: 154
 Question: Where is England in relation to scotland?
 Answer: southeast
 ```
+--->
 
 ### ResNet50
 
