@@ -7,4 +7,4 @@
  [Examples](https://docs.graphcore.ai/projects/tutorials/en/latest/intro.html) <br>
  [Examples Github Repo](https://github.com/graphcore/examples) <br>
  [POD systems](https://docs.graphcore.ai/projects/ipu-pod-getting-started/en/latest/overview.html?highlight=PopTorch#pod-overview) <br> 
- [POD64](https://www.graphcore.ai/products/bow-pod64) <br>
+ [POD64 specs](https://www.graphcore.ai/products/bow-pod64#product-spec) <br>
