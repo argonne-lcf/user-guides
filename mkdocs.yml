@@ -205,13 +205,13 @@ nav:
       - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
       - Example Programs: ai-testbed/graphcore/example-programs.md
       #- Tunneling and Forwarding Ports: ai-testbed/graphcore/Tunneling-and-forwarding-ports.md
-      - CosmicTagger Conversion: ai-testbed/graphcore/cosmictagger-conversion.md
-      - CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/cosmictagger-ddp.md
+      #- CosmicTagger Conversion: ai-testbed/graphcore/cosmictagger-conversion.md
+      #- CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/cosmictagger-ddp.md
       #- DataParallel: ai-testbed/graphcore/DataParallel.md
-      - Multi-node: ai-testbed/graphcore/multi-node-setup.md
-      - Profiling: ai-testbed/graphcore/profiling.md
-      - Profiling MNIST: ai-testbed/graphcore/profiling-mnist.md
-      - Profiling ResNet50: ai-testbed/graphcore/profiling-resnet50.md
+      #- Multi-node: ai-testbed/graphcore/multi-node-setup.md
+      #- Profiling: ai-testbed/graphcore/profiling.md
+      #- Profiling MNIST: ai-testbed/graphcore/profiling-mnist.md
+      #- Profiling ResNet50: ai-testbed/graphcore/profiling-resnet50.md
       - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
       - Documentation: ai-testbed/graphcore/documentation.md
     - SambaNova Gen1:
