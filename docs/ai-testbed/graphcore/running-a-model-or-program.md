@@ -16,7 +16,6 @@ mkdir ~/graphcore
 cd ~/graphcore
 git clone https://github.com/graphcore/examples.git
 cd examples
-git checkout v3.1.0
 ```
 
 ### MNIST
