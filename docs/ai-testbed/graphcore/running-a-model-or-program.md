@@ -43,7 +43,7 @@ python -m pip install torchvision==0.14.0
 Execute the command:
 
 ```bash
-srun --ipus=1 python mnist_poptorch.py
+/opt/slurm/bin/srun --ipus=1 python mnist_poptorch.py
 ```
 
 All models are run using Slurm, with the `--ipus` indicating how many IPUs are need to be allocated for the model being run. This example uses a batchsize of 8, and run for 10 epochs. It also set the device iteration to 50 which is the number of iterations the device should run over the data before returning to the user.  The dataset used in the example is derived from the TorchVision and the PopTorch dataloader is used to load the data required for the 50 device iterations from the host to the device in a single step.
