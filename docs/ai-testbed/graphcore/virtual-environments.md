@@ -27,10 +27,21 @@ One should see:
 POPLAR version 3.1.0 (e12d5f9f01)
 clang version 15.0.0 (bab932b4fc4cdb58bb009370384b2c41579bd9d9)
 ```
+## Miscellaneous Environment Variables
 
-## PopTorch
+```bash
+mkdir ~/tmp
+export TF_POPLAR_FLAGS=--executable_cache_path=~/tmp
+export POPTORCH_CACHE_DIR=~/tmp
 
-### PopTorch Environment Setup
+export POPART_LOG_LEVEL=WARN
+export POPLAR_LOG_LEVEL=WARN
+export POPLIBS_LOG_LEVEL=WARN
+
+export PYTHONPATH=/software/graphcore/poplar_sdk/3.1.0/poplar-ubuntu_20_04-3.1.0+6824-9c103dc348/python:$PYTHONPATH
+```
+
+## PopTorch Environment Setup
 
 Run these commands:
 
@@ -46,20 +57,6 @@ Use the following commands to install PopTorch.
 POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
 export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
 pip install $POPLAR_SDK_ROOT/poptorch-3.1.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
-```
-
-### Miscellaneous Environment Variables
-
-```bash
-mkdir ~/tmp
-export TF_POPLAR_FLAGS=--executable_cache_path=~/tmp
-export POPTORCH_CACHE_DIR=~/tmp
-
-export POPART_LOG_LEVEL=WARN
-export POPLAR_LOG_LEVEL=WARN
-export POPLIBS_LOG_LEVEL=WARN
-
-export PYTHONPATH=/software/graphcore/poplar_sdk/3.1.0/poplar-ubuntu_20_04-3.1.0+6824-9c103dc348/python:$PYTHONPATH
 ```
 
 ## TensorFlow 2 Environment Setup
