@@ -88,7 +88,7 @@ cd ~/graphcore/examples/tutorials/simple_applications/tensorflow2/mnist/
 Execute the command:
 
 ```bash
-srun --ipus=1 python mnist.py
+/opt/slurm/bin/srun --ipus=1 python mnist.py
 ```
 
 ### Output
@@ -290,7 +290,7 @@ The command to run 4 replicas (a total for 4 IPUs) of the ResNet50 model is as f
 
 ```console
 
-srun --ipus=4 poprun -vv --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
+/opt/slurm/bin/srun --ipus=4 poprun -vv --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
 ```
 
 This model is run with the [imagenet dataset](https://image-net.org/).
