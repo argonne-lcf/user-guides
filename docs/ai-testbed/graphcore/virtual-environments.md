@@ -2,9 +2,8 @@
 
 ## Poplar SDK Setup
 
-The **Graphcore** system has a bash shell script to set up the required software environment **Poplar** and **PopArt**.
-
-The following command is automatically executed when one logs into a node.
+The Poplar SDK is downloaded onto the graphcore systems at the `/software/graphcore/poplar_sdk/` location. The default poplar
+version (3.1.0) is enabled automatically upon logging into a graphcore node.
 
 ```bash
 source /software/graphcore/poplar_sdk/3.1.0/enable
@@ -23,27 +22,13 @@ POPLAR version 3.1.0 (e12d5f9f01)
 clang version 15.0.0 (bab932b4fc4cdb58bb009370384b2c41579bd9d9)
 ```
 
-## PopTorch
-
-### PopTorch Environment Setup
-
-Run these commands:
+To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK,
 
 ```bash
-mkdir -p ~/venvs/graphcore
-virtualenv ~/venvs/graphcore/poptorch31_env
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+unset POPLAR_SDK_ENABLED
 ```
 
-Use the following commands to install PopTorch.
-
-```bash
-POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.2.0
-export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
-pip install $POPLAR_SDK_ROOT/poptorch-3.2.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
-```
-
-### Miscellaneous Environment Variables
+## Miscellaneous Environment Variables
 
 ```bash
 mkdir ~/tmp
@@ -57,7 +42,27 @@ export POPLIBS_LOG_LEVEL=WARN
 export PYTHONPATH=/software/graphcore/poplar_sdk/3.1.0/poplar-ubuntu_20_04-3.1.0+6824-9c103dc348/python:$PYTHONPATH
 ```
 
+## PopTorch Environment Setup
+
+PopTorch is an extension of the Pytorch framework that is optimized for the IPU specific functionality. To activate the PopTorch environment, first create a virtual environment and activate it.
+
+```bash
+mkdir -p ~/venvs/graphcore
+virtualenv ~/venvs/graphcore/poptorch31_env
+source ~/venvs/graphcore/poptorch31_env/bin/activate
+```
+
+Use the following commands to install the PopTorch environment.
+
+```bash
+POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
+export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
+pip install $POPLAR_SDK_ROOT/poptorch-3.1.0+98660_0a383de63f_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
+```
+
 ## TensorFlow 2 Environment Setup
+
+The Poplar SDK provides TensorFlow and Keras wheels built on 2.6 that includes the IPU specific functionality and optimized for the AMD processors. It can be installed as follows.
 
 Create virtual environment.
 
@@ -66,7 +71,7 @@ virtualenv ~/venvs/graphcore/tensorflow2_31_env
 source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
 ```
 
-Install **TensorFlow** and **Keras**.
+Install the TensorFlow and Keras wheels.
 
 ```bash
 POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.1.0
@@ -84,7 +89,7 @@ python -c "from tensorflow.python import ipu"
 You should see:
 
 ```console
-2023-01-04 17:17:12.609331: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
+2023-04-24 23:13:36.091496: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
 ```
 
 ## Installing Packages
