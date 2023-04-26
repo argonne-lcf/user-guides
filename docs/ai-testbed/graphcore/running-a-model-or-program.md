@@ -6,7 +6,7 @@ For example, consider running larger jobs in the evening or on weekends.
 Running basic Graphcore models is the same on this system as it would be
 for the original version on your development machine.
 
-## Tutorials Repo
+## Examples Repo
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
@@ -25,7 +25,7 @@ git checkout v3.1.0
 #### Activate PopTorch Environment
 
 ```bash
-source ~/venvs/graphcore/poptorch32_env/bin/activate
+source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 #### Install Requirements
@@ -34,7 +34,7 @@ Change directory:
 
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
-python -m pip install -r requirements.txt
+python -m pip install torchvision==0.14.0
 ```
 
 #### Run MNIST
@@ -42,7 +42,7 @@ python -m pip install -r requirements.txt
 Execute the command:
 
 ```bash
-python mnist_poptorch.py
+srun --ipus=1 ppython mnist_poptorch.py
 ```
 
 #### Output
@@ -50,7 +50,15 @@ python mnist_poptorch.py
 The expected output will start with downloads followed by:
 
 ```console
-TrainingModelWithLoss(
+srun: job 2623 queued and waiting for resources
+srun: job 2623 has been allocated resources
+/home/arnoldw/workspace/poptorch31.env/lib/python3.8/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libc10_cuda.so: cannot open shared object file: No such file or directory
+  warn(f"Failed to load image Python extension: {e}")
+Epochs:   0%|          | 0/10 [00:00<?,[16:58:56.683] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
+Graph compilation: 100%|██████████| 100/100 [00:20<00:00]
+Epochs: 100%|██████████| 10/10 [01:35<00:00,  9.57s/it]
+Graph compilation: 100%|██████████| 100/100 [00:13<00:00]                          
+TrainingModelWithLoss(%|█████████▋| 97/100 [00:13<00:01]
   (model): Network(
     (layer1): Block(
       (conv): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1))
@@ -70,10 +78,10 @@ TrainingModelWithLoss(
   )
   (loss): CrossEntropyLoss()
 )
-Epochs:   0%|
-...
-Graph compilation: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [00:16<00:00]
-Accuracy on test set: 98.04%
+Accuracy on test set: 98.59%
 ```
 
-[Example Programs](Example-Programs.md) lists the different example applications with corresponding commands for each of the above steps.
+[Example Programs](example-programs.md) lists the different example applications with corresponding commands for each of the above steps.
+
+
+
