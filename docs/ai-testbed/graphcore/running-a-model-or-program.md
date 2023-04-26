@@ -3,33 +3,39 @@
 > **Note**:  Please be mindful of how you are using the system.
 For example, consider running larger jobs in the evening or on weekends.
 
-## Tutorials Repo
+Running of any model or application includes graph compilation of the model that is then deployed on the IPUs. Below is the description of training a neural network for classification on the MNIST dataset using the PopTorch (pytorch framework optimized for IPU).
+
+## Examples Repo
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
-Clone the examples repository to your personal directory structure:
+Clone the examples repository to your personal directory structure, and checkout the v3.1.0 release:
 
 ```bash
 mkdir ~/graphcore
 cd ~/graphcore
 git clone https://github.com/graphcore/examples.git
+cd examples
+git checkout v3.1.0
 ```
 
 ### MNIST
 
 #### Activate PopTorch Environment
 
+Follows the steps at [Poptorch environment setup](./virtual-environments.md#poptorch-environment-setup) to enable the Poplar SDK.
+
 ```bash
-source ~/venvs/graphcore/poptorch32_env/bin/activate
+source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 #### Install Requirements
 
-Change directory:
+Change directory and install packages specific to the MNIST model:
 
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
-python -m pip install -r requirements.txt
+python -m pip install torchvision==0.14.0
 ```
 
 #### Run MNIST
@@ -37,15 +43,36 @@ python -m pip install -r requirements.txt
 Execute the command:
 
 ```bash
-python mnist_poptorch.py
+srun --ipus=1 python mnist_poptorch.py
 ```
+
+All models are run using Slurm, with the `--ipus` indicating how many IPUs are need to be allocated for the model being run. This example uses a batchsize of 8, and run for 10 epochs. It also set the device iteration to 50 which is the number of iterations the device should run over the data before returning to the user.  The dataset used in the example is derived from the TorchVision and the PopTorch dataloader is used to load the data required for the 50 device iterations from the host to the device in a single step.
+
+The model used here is a simple CNN based model with an output from a classifier (softmax layer).
+A simple Pytorch model is translated to a PopTorch model using `poptorch.Options()`.
+`poptorch.trainingModel` is the model wrapping function on the Pytorch model. The first call to `trainingModel` will compile the model for the IPU. You can observe the compilation process as part of output of the above command.
+
+```console
+Graph compilation:   3%|▎         | 3/100 [00:00<00:03]2023-04-26T16:53:21.225944Z PL:POPLIN    3680893.3680893 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+Graph compilation: 100%|██████████| 100/100 [00:20<00:00]2023-04-26T16:53:38.241395Z popart:session 3680893.3680893
+```
+
+The artifacts from the graph compilations is cached in the location set by the flag `POPTORCH_CACHE_DIR`, where the `.popef` file corresponding to the model under consideration is cached.
 
 #### Output
 
-The expected output will start with downloads followed by:
+The expected output will start with downloads followed by and we can observe the model used by the model, the progress bar of the compilation process, and the training progress bar.
 
 ```console
-TrainingModelWithLoss(
+srun: job 2623 queued and waiting for resources
+srun: job 2623 has been allocated resources
+/home/arnoldw/workspace/poptorch31.env/lib/python3.8/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libc10_cuda.so: cannot open shared object file: No such file or directory
+  warn(f"Failed to load image Python extension: {e}")
+Epochs:   0%|          | 0/10 [00:00<?,[16:58:56.683] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
+Graph compilation: 100%|██████████| 100/100 [00:20<00:00]
+Epochs: 100%|██████████| 10/10 [01:35<00:00,  9.57s/it]
+Graph compilation: 100%|██████████| 100/100 [00:13<00:00]
+TrainingModelWithLoss(%|█████████▋| 97/100 [00:13<00:01]
   (model): Network(
     (layer1): Block(
       (conv): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1))
@@ -65,10 +92,10 @@ TrainingModelWithLoss(
   )
   (loss): CrossEntropyLoss()
 )
-Epochs:   0%|
-...
-Graph compilation: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [00:16<00:00]
-Accuracy on test set: 98.04%
+Accuracy on test set: 98.59%
 ```
 
-[Example Programs](Example-Programs.md) lists the different example applications with corresponding commands for each of the above steps.
+
+Refer to the [script](https://github.com/graphcore/examples/blob/master/tutorials/simple_applications/pytorch/mnist/mnist_poptorch.py) to learn more about this example.
+
+[Example Programs](example-programs.md) lists the different example applications with corresponding commands for each of the above steps.
