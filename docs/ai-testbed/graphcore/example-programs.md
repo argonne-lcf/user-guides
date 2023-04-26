@@ -9,7 +9,7 @@ cd ~/graphcore
 git clone https://github.com/graphcore/examples.git
 ```
 
-### MNIST
+### MNIST - PopTorch
 
 #### Activate PopTorch Environment
 
@@ -64,6 +64,54 @@ Epochs:   0%|
 Graph compilation: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [00:16<00:00]
 Accuracy on test set: 98.04%
 ```
+
+### MNIST - Tensorflow2
+
+#### Activate Tensorflow2 Environment
+Create a tensorflow2 environment as explained in the [tensorflow-2-environment-setup](https://github.com/argonne-lcf/user-guides/blob/feature/Graphcore001-DNP_edits/docs/ai-testbed/graphcore/virtual-environments.md#tensorflow-2-environment-setup) and activate the same. 
+```bash
+source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
+```
+
+#### Install Requirements
+
+Change directory:
+
+```bash
+cd ~/graphcore/examples/tutorials/simple_applications/tensorflow2/mnist/
+```
+
+#### Run MNIST
+
+Execute the command:
+
+```bash
+srun --ipus=1 python mnist.py 
+```
+
+#### Output
+
+The expected output will start with downloads followed by:
+
+```console
+2023-04-26 14:42:32.179566: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
+2023-04-26 14:42:34.517107: I tensorflow/compiler/plugin/poplar/driver/poplar_executor.cc:1619] TensorFlow device /device:IPU:0 attached to 1 IPU with Poplar device ID: 0
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
+11493376/11490434 [==============================] - 0s 0us/step
+11501568/11490434 [==============================] - 0s 0us/step
+2023-04-26 14:42:35.673768: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
+2023-04-26 14:42:35.947832: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:210] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2023-04-26 14:42:46.953720: I tensorflow/compiler/jit/xla_compilation_cache.cc:376] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+Epoch 1/4
+2000/2000 [==============================] - 13s 7ms/step - loss: 0.6238
+Epoch 2/4
+2000/2000 [==============================] - 0s 222us/step - loss: 0.3361
+Epoch 3/4
+2000/2000 [==============================] - 0s 225us/step - loss: 0.2894
+Epoch 4/4
+2000/2000 [==============================] - 0s 226us/step - loss: 0.2601
+```
+
 <!---
 ### BERT Inference
 
