@@ -9,12 +9,6 @@ The following command is automatically executed when one logs into a node.
 ```bash
 source /software/graphcore/poplar_sdk/3.1.0/enable
 ```
-
-To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, 
-```bash
-unset POPLAR_SDK_ENABLED
-```
-
 Check if **Poplar** is setup correctly:
 
 ```bash
@@ -27,6 +21,12 @@ One should see:
 POPLAR version 3.1.0 (e12d5f9f01)
 clang version 15.0.0 (bab932b4fc4cdb58bb009370384b2c41579bd9d9)
 ```
+
+To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, 
+```bash
+unset POPLAR_SDK_ENABLED
+```
+
 ## Miscellaneous Environment Variables
 
 ```bash
