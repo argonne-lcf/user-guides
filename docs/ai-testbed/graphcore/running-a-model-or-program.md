@@ -3,8 +3,7 @@
 > **Note**:  Please be mindful of how you are using the system.
 For example, consider running larger jobs in the evening or on weekends.
 
-Running basic Graphcore models is the same on this system as it would be
-for the original version on your development machine.
+Running of any model or application includes graph compilation of the model that is then deployed on the IPUs. Below is the description of training a neural network for classification on the MNIST dataset using the PopTorch (pytorch framework optimized for IPU). 
 
 ## Examples Repo
 
@@ -23,31 +22,39 @@ git checkout v3.1.0
 ### MNIST
 
 #### Activate PopTorch Environment
-
+Follows the steps at [Poptorch environment setup](./virtual-environments.md#poptorch-environment-setup) to enable the Poplar SDK. 
 ```bash
 source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 #### Install Requirements
-
-Change directory:
-
+Change directory and install packages specific to the MNIST model:
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
 python -m pip install torchvision==0.14.0
 ```
 
 #### Run MNIST
-
 Execute the command:
 
 ```bash
-srun --ipus=1 ppython mnist_poptorch.py
+srun --ipus=1 python mnist_poptorch.py
 ```
 
-#### Output
+All models are run using the Slurm, with the `--ipus` indicating how many IPUs are need to be allocated for the model being run. This example uses a batchsize of 8, and run for 10 epochs. It also set the device iteration to 50 which is the number of iterations the device should run over the data before returning to the user.  The dataset used in the example is derived from the torchvision and the PopTorch dataloader is used to load the data required for the 50 device iterations from the host to the device in a single step. 
 
-The expected output will start with downloads followed by:
+The model used here is a simple CNN based model with an output from a classifier (softmax layer). 
+A simple Pytorch model is translated to a PopTorch model using `poptorch.Options()`. 
+`poptorch.trainingModel` is the model wrapping function on the Pytorch model. The first call to `trainingModel` will compile the model for the IPU. You can observe the compilation process as part of output of the above command. 
+
+```console
+Graph compilation:   3%|▎         | 3/100 [00:00<00:03]2023-04-26T16:53:21.225944Z PL:POPLIN    3680893.3680893 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+Graph compilation: 100%|██████████| 100/100 [00:20<00:00]2023-04-26T16:53:38.241395Z popart:session 3680893.3680893 
+```
+The artifacts from the graph compilations is cached in the location set by the flag `POPTORCH_CACHE_DIR`, where the `.popef` file corresponding to the model under consideration is cached. 
+
+#### Output
+The expected output will start with downloads followed by and we can observe the model used by the model, the progress bar of the compilation process, and the training progress bar. 
 
 ```console
 srun: job 2623 queued and waiting for resources
@@ -80,6 +87,9 @@ TrainingModelWithLoss(%|█████████▋| 97/100 [00:13<00:01]
 )
 Accuracy on test set: 98.59%
 ```
+
+
+Refer to the [script](https://github.com/graphcore/examples/blob/master/tutorials/simple_applications/pytorch/mnist/mnist_poptorch.py) to learn more about this example.  
 
 [Example Programs](example-programs.md) lists the different example applications with corresponding commands for each of the above steps.
 
