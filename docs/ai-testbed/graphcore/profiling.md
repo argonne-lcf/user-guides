@@ -35,8 +35,8 @@ Use **ssh** from your development system.
 The **ssh** command will use a **jumphost** and **port forwarding**.  The format is as follows:
 
 ```bash
-ssh -J ALCFUserID@gc-login-01.ai.alcf.anl.gov ALCFUserID@gc-poplar-DD -L 8090:127.0.0.1:22
-ssh -J wilsonb@gc-login-01.ai.alcf.anl.gov wilsonb@gc-poplar-DD -L 8090:127.0.0.1:22
+ssh -J ALCFUserID@gc-login-dd.ai.alcf.anl.gov ALCFUserID@gc-poplar-DD -L 8090:127.0.0.1:22
+ssh -J wilsonb@gc-login-01.ai.alcf.anl.gov wilsonb@gc-poplar-02.ai.alcf.anl.gov -L 8090:127.0.0.1:22
 ```
 
 Where:
@@ -44,6 +44,7 @@ Where:
 | Argument            | Help |
 |---------------------|------------------------------|
 | ALCFUserID       | Is your ALCF user identification.   |
+| dd                  | Is the Graphcore login node to use, i.e., 01 or 02|
 | DD                  | Is the Graphcore node to use, i.e., 01, 02, 03, or 04.   |
 | 8090                | Is the port on your local machine.   |
 | 127.0.0.1:22        | Is the local IP address and port on the remote machine. |
