@@ -167,6 +167,12 @@ Answer: southeast
 
 ## ResNet50
 
+### Activate PopTorch Environment
+
+```bash
+source ~/venvs/graphcore/poptorch31_env/bin/activate
+```
+
 ### Install Requirements
 
 Change directory
