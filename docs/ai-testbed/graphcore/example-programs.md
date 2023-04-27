@@ -158,21 +158,17 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
-
 ```bash
 source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 ### Install Requirements
-
 Change directory
-
 ```bash
 cd ~/graphcore/examples/vision/cnns/pytorch
 python -m pip install -r requirements.txt
 pip install torch==1.13.0
 ```
-
 > **Note**: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version.
 
 <!---
@@ -274,24 +270,23 @@ The ImageNet data path is now defined.
 ./rn50_pod64.sh
 ```
 --->
+### Run ResNet50
 The scripts to train a ResNet50 PyTorch model on Pod4 is located at [https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train](https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train)
 
 Set the following environmental variables.
-
 ```console
 export PYTORCH_CACHE_DIR=/tmp/pt_cache/
 ```
-
 The command to run 4 replicas (a total for 4 IPUs) of the ResNet50 model is as follows.
-
 ```console
-
 /opt/slurm/bin/srun --ipus=4 poprun -vv --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
 ```
-
 This model is run with the [imagenet dataset](https://image-net.org/).
 
-### GPT-2 PyTorch - POD16 run
+### Output 
+
+
+## GPT-2 PyTorch - POD16 run
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
 In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup).
@@ -388,3 +383,5 @@ Data loaded in 2.358953586081043 secs
 Graph compilation:   4%|▍         | 4/100 [00:29<11:57]2023-04-27T03:39:53.291853Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
 
 ```
+> **Note**: The graph compilation for a large model like GPT-2 takes about an hour. 
+
