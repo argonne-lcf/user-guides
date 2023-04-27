@@ -166,7 +166,8 @@ source ~/venvs/graphcore/poptorch31_env/bin/activate
 Change directory
 ```bash
 cd ~/graphcore/examples/vision/cnns/pytorch
-python -m pip install -r requirements.txt
+make install 
+make install-turbojpeg
 pip install torch==1.13.0
 ```
 > **Note**: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version.
