@@ -284,7 +284,51 @@ The command to run 4 replicas (a total for 4 IPUs) of the ResNet50 model is as f
 This model is run with the [imagenet dataset](https://image-net.org/).
 
 ### Output 
-
+```console
+04:22:59.948 3905692 POPRUN [I] V-IPU server address picked up from 'vipu': 10.1.3.101:8090
+04:22:59.950 3905692 POPRUN [I] Using V-IPU partition slurm_2657 as it is the only one available
+04:22:59.950 3905692 POPRUN [D] Connecting to 10.1.3.101:8090
+04:22:59.951 3905692 POPRUN [D] Status for partition slurm_2657: OK (error 0)
+04:22:59.951 3905692 POPRUN [I] Partition slurm_2657 already exists and is in state: PS_ACTIVE
+04:22:59.952 3905692 POPRUN [D] The reconfigurable partition slurm_2657 is OK
+ ===========================
+|      poprun topology      |
+|===========================|
+| hosts     | gc-poplar-02  |
+|-----------|---------------|
+| ILDs      |       0       |
+|-----------|---------------|
+| instances |       0       |
+|-----------|---------------|
+| replicas  | 0 | 1 | 2 | 3 |
+ ---------------------------
+04:22:59.952 3905692 POPRUN [D] Target options from environment: {}
+04:22:59.952 3905692 POPRUN [D] Target options from V-IPU partition: {"ipuLinkDomainSize":"4","ipuLinkConfiguration":"default","ipuLinkTopology":"mesh","gatewayMode":"true","instanceSize":"4"}
+04:22:59.998 3905692 POPRUN [D] Found 1 devices with 4 IPUs
+04:23:00.689 3905692 POPRUN [D] Attached to device 6
+04:23:00.689 3905692 POPRUN [I] Preparing parent device 6
+04:23:00.689 3905692 POPRUN [D] Device 6 ipuLinkDomainSize=64, ipuLinkConfiguration=Default, ipuLinkTopology=Mesh, gatewayMode=true, instanceSize=4
+[1,0]<stdout>:[INFO] Total replicas: 4
+[1,0]<stdout>:[INFO] Global batch size: 16416
+[1,0]<stdout>:[INFO] Number of IPUs required: 4
+[1,0]<stdout>:[INFO] Loading the data
+Graph compilation: 100%|██████████| 100/100 [06:26<00:00][1,0]<stderr>:WARNING: The compile time engine option debug.branchRecordTile is set to "5887" when creating the Engine. (At compile-tile it was set to 1471)
+[1,0]<stderr>:2023-04-27T04:30:33.475912Z PO:ENGINE   3906481.3906481 W: WARNING: The compile time engine option debug.branchRecordTile is set to "5887" when creating the Engine. (At compile-tile it was set to 1471)
+[1,0]<stderr>:2023-04-27T04:30:36.928499Z popart:session 3906481.3906481 W: Rng state buffer was not serialized.You did not load poplar Engine.Remember that if you would like to run the model using the model runtime then you have to create your own buffer and callback in your model runtime application for rngStateTensor.
+[1,0]<stderr>:
+Loss:6.7615 | Accuracy:0.57%:  96%|█████████▌| 75/78 [11:07<00:10,  3.62s/it][1,0[1,0]<stdout>:[INFO] Epoch 1
+[1,0]<stdout>:[INFO] loss: 6.7508,
+[1,0]<stdout>:[INFO] accuracy: 0.61 %
+[1,0]<stdout>:[INFO] throughput: 1886.4 samples/sec
+[1,0]<stdout>:[INFO] Epoch 2/2
+Loss:6.7508 | Accuracy:0.61%: 100%|██████████| 78/78 [11:18<00:00,  8.70s/it][1,0]<stderr>:
+Loss:6.2860 | Accuracy:2.41%:  96%|█████████▌| 75/7[1,0]<stdout>:[INFO] Epoch 2,0]<stderr>:
+[1,0]<stdout>:[INFO] loss: 6.2747,
+[1,0]<stdout>:[INFO] accuracy: 2.48 %
+[1,0]<stdout>:[INFO] throughput: 4476.7 samples/sec
+[1,0]<stdout>:[INFO] Finished training. Time: 2023-04-27 04:40:05.821555. It took: 0:16:04.818638
+Loss:6.2747 | Accuracy:2.48%: 100%|██████████| 78/78 [04:46<00:00,  3.67s/it][1,0]<stderr>:
+```
 
 
 ## GPT-2 PyTorch - POD16 run
