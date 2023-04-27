@@ -286,6 +286,7 @@ This model is run with the [imagenet dataset](https://image-net.org/).
 ### Output 
 
 
+
 ## GPT-2 PyTorch - POD16 run
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
@@ -381,7 +382,25 @@ Data loaded in 2.358953586081043 secs
 -----------------------------------------------------------
 --------------------- Training Started --------------------
 Graph compilation:   4%|▍         | 4/100 [00:29<11:57]2023-04-27T03:39:53.291853Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+MatMuls() is deprecated! Use poplin::preplan() instead
+2023-04-27T03:39:55.159194Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+2023-04-27T03:39:56.958834Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+2023-04-27T03:39:58.748727Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
 
+Graph compilation: 100%|██████████| 100/100 [28:04<00:00]WARNING: The compile time engine option debug.branchRecordTile is set to "23551" when creating the Engine. (At compile-tile it was set to 5887)
+2023-04-27T04:07:29.993259Z PO:ENGINE   3888383.3888383 W: WARNING: The compile time engine option debug.branchRecordTile is set to "23551" when creating the Engine. (At compile-tile it was set to 5887)
+2023-04-27T04:07:42.941039Z popart:session 3888383.3888383 W: Rng state buffer was not serialized.You did not load poplar Engine.Remember that if you would like to run the model using the model runtime then you have to create your own buffer and callback in your model runtime application for rngStateTensor.
+
+[04:09:02.177] [poptorch::python] [warning] Ignoring unexpected optimizer attribute in ADAMW_NO_BIAS optimizer: ['step', '_step_count']
+Ignoring unexpected optimizer attribute in ADAMW_NO_BIAS optimizer: ['step', '_step_count']
+[04:09:02.179] [poptorch::python] [warning] Ignoring unexpected group 0 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
+Ignoring unexpected group 0 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
+[04:09:02.179] [poptorch::python] [warning] Ignoring unexpected group 1 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
+Ignoring unexpected group 1 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
+step 0 of epoch 0, loss: 10.913212776184082, acc: 2.0116567611694336e-05, lr: 0.00012803300858899104, throughput: 36.69187444207895 samples/sec
+step 1 of epoch 0, loss: 10.836352348327637, acc: 1.9758939743041992e-05, lr: 7.5e-05, throughput: 1064.3232077940409 samples/sec
+step 2 of epoch 0, loss: 10.83123779296875, acc: 2.0459294319152832e-05, lr: 2.1966991411008938e-05, throughput: 1064.3064018230857 samples/sec
+step 3 of epoch 0, loss: 10.829036712646484, acc: 1.9878149032592773e-05, lr: 0.0, throughput: 1064.4397806661352 samples/sec
 ```
-> **Note**: The graph compilation for a large model like GPT-2 takes about an hour. 
+> **Note**: The graph compilation for a large model like GPT-2 takes about half an hour. 
 
