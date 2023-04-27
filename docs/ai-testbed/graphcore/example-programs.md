@@ -336,7 +336,7 @@ Loss:6.2747 | Accuracy:2.48%: 100%|██████████| 78/78 [04:46<
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
 
-In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch31_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup).
+In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch31_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup) and activate it.
 
 ```console
 source ~/venvs/graphcore/poptorch31_gpt2/bin/activate
