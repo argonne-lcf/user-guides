@@ -2,7 +2,6 @@
 
 Graphcore provides examples of some well-known AI applications in their repository at https://github.com/graphcore/examples.git.
 Clone the **examples** repository to your personal directory structure:
-
 ```bash
 mkdir ~/graphcore
 cd ~/graphcore
@@ -12,30 +11,24 @@ git clone https://github.com/graphcore/examples.git
 ## MNIST - PopTorch
 
 ### Activate PopTorch Environment
-
 ```bash
 source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 ### Install Requirements
-
 Change directory:
-
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
 pip install torchvision==0.14.0
 ```
 
 ### Run MNIST
-
 Execute the command:
-
 ```bash
 /opt/slurm/bin/srun --ipus=1 python mnist_poptorch.py
 ```
 
 ### Output
-
 The expected output will start with downloads followed by:
 
 ```console
@@ -70,15 +63,12 @@ Accuracy on test set: 98.04%
 ### Activate Tensorflow2 Environment
 
 Create a TensorFlow2 environment as explained in the [tensorflow-2-environment-setup](https://github.com/argonne-lcf/user-guides/blob/feature/Graphcore001-DNP_edits/docs/ai-testbed/graphcore/virtual-environments.md#tensorflow-2-environment-setup) and activate the same.
-
 ```bash
 source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
 ```
 
 ### Install Requirements
-
 Change directory:
-
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/tensorflow2/mnist/
 ```
@@ -304,15 +294,97 @@ This model is run with the [imagenet dataset](https://image-net.org/).
 ### GPT-2 PyTorch - POD16 run
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
+In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup).
 
-The command for the POD16 run is as follows.
-
+```console
+source ~/venvs/graphcore/poptorch31_gpt2/bin/activate
+```
+### Install Requirements
+Change directory:
+```bash
+cd ~/graphcore/examples/nlp/gpt2/pytorch
+pip3 install -r requirements.txt
+```
+### Run GPT2 on 16 IPUs
+The command for the GPT2 model is as follows is as follows.
 ```console
 /opt/slurm/bin/srun --ipus=16 python /home/$USER/graphcore/examples/nlp/gpt2/pytorch/train_gpt2.py --model gpt2 --ipus-per-replica 4 --replication-factor 4 --gradient-accumulation 2048 --device-iterations 8 --batch-size 1 --layers-per-ipu 0 4 4 4 --matmul-proportion 0.15 0.15 0.15 0.15 --max-len 1024 --optimizer AdamW --learning-rate 0.00015 --lr-schedule cosine --lr-warmup 0.01 --remap-logit True --enable-sequence-serialized True --embedding-serialization-factor 4 --recompute-checkpoint-every-layer True --enable-half-partials True --replicated-tensor-sharding True --dataset 'generated' --epochs 1
 ```
-
 It runs a `gpt2` model that fits on 4 IPUS indicated by `--ipus-per-replica`. The `--replication-factor` indicates how many times the model is replicated in a data parallel manner (4 in the above example). Hence the total number of IPUs used in this example is 16.
 
 The effective global batch size in this example is (micro)batch-size * gradient-accumulation * replication-factor = 1 x 2048 x 4 = 8192.  The device iterations indicates the total number samples loaded in 1 training step = global batch size * device iterations = 8192*8 = 65536. To learn more about these parameters and in general batching of IPUs refer [IPU batching](https://docs.graphcore.ai/projects/tutorials/en/latest/pytorch/efficient_data_loading/README.html?highlight=device%20iterations#understanding-batching-with-ipu) .
 
 The above example is running with `generated` or `synthetic data`. To use the same example with a real world dataset, refer to [data setup](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch#dataset-setup).
+
+### Output
+```console
+Building (if necessary) and loading remap_tensor_ce.
+Failed to find compiled extension; rebuilding.
+Building (if necessary) and loading residual_add_inplace_pattern.
+Model initializing
+-------------------- Device Allocation --------------------
+Embedding  --> IPU 0
+Layer 0  --> IPU 1
+Layer 1  --> IPU 1
+Layer 2  --> IPU 1
+Layer 3  --> IPU 1
+Layer 4  --> IPU 2
+Layer 5  --> IPU 2
+Layer 6  --> IPU 2
+Layer 7  --> IPU 2
+Layer 8  --> IPU 3
+Layer 9  --> IPU 3
+Layer 10 --> IPU 3
+Layer 11 --> IPU 3
+LM_head --> IPU 0
+Arguments: Namespace(async_dataloader=False, auto_loss_scaling=False, batch_size=1, checkpoint_input_dir='', checkpoint_output_dir=None, compile_only=False, custom_ops=True, dataset='generated', device_iterations=8, embedding_serialization_factor=4, enable_half_partials=True, enable_sequence_serialized=True, epochs=1, executable_cache_dir=None, gradient_accumulation=2048, input_files=None, ipus_per_replica=4, layers_per_ipu=[0, 4, 4, 4], learning_rate=0.00015, log_steps=1, loss_scaling=50000.0, lr_decay_steps=None, lr_schedule='cosine', lr_warmup=0.01, lr_warmup_steps=None, matmul_proportion=[0.15, 0.15, 0.15, 0.15], max_len=1024, model='gpt2', num_workers=4, optimizer='AdamW', optimizer_state_offchip=True, recompute_checkpoint_every_layer=True, recompute_checkpoint_layers=None, remap_logit=True, replicated_tensor_sharding=True, replication_factor=4, resume_training_from_checkpoint=False, save_per_epochs=1, save_per_steps=None, seed=1234, serialized_seq_len=128, stride=128, training_steps=10000, use_popdist=False, use_wandb=False, val_num=0, weight_decay=0.0)
+Model config: GPT2Config {
+  "activation_function": "gelu",
+  "architectures": [
+    "GPT2LMHeadModel"
+  ],
+  "attn_pdrop": 0.1,
+  "bos_token_id": 50272,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 50272,
+  "gradient_checkpointing": false,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gpt2",
+  "n_ctx": 1024,
+  "n_embd": 768,
+  "n_head": 12,
+  "n_inner": null,
+  "n_layer": 12,
+  "n_positions": 1024,
+  "output_past": true,
+  "reorder_and_upcast_attn": false,
+  "resid_pdrop": 0.1,
+  "scale_attn_by_inverse_layer_idx": false,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "task_specific_params": {
+    "text-generation": {
+      "do_sample": true,
+      "max_length": 400
+    }
+  },
+  "transformers_version": "4.26.1",
+  "use_cache": true,
+  "vocab_size": 50272
+}
+
+------------------- Data Loading Started ------------------
+loading training dataset and validating dataset
+Samples per epoch: 262144
+Steps per epoch: 4
+Data loaded in 2.358953586081043 secs
+-----------------------------------------------------------
+--------------------- Training Started --------------------
+Graph compilation:   4%|▍         | 4/100 [00:29<11:57]2023-04-27T03:39:53.291853Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
+
+```
