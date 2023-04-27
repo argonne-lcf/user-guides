@@ -69,7 +69,7 @@ source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
 
 ### Install Requirements
 Change directory:
-```bash
+```console
 cd ~/graphcore/examples/tutorials/simple_applications/tensorflow2/mnist/
 ```
 
@@ -77,7 +77,7 @@ cd ~/graphcore/examples/tutorials/simple_applications/tensorflow2/mnist/
 
 Execute the command:
 
-```bash
+```console
 /opt/slurm/bin/srun --ipus=1 python mnist.py
 ```
 
@@ -111,7 +111,7 @@ Epoch 4/4
 
 Change directory:
 
-```bash
+```console
 cd ~/graphcore/tutorials/simple_applications/pytorch/bert
 python -m pip install -r requirements.txt
 ```
@@ -120,7 +120,7 @@ python -m pip install -r requirements.txt
 
 Execute the command:
 
-```bash
+```console
 python bert_inference.py
 ```
 
@@ -158,13 +158,13 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
-```bash
+```console
 source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
 
 ### Install Requirements
 Change directory
-```bash
+```console
 cd ~/graphcore/examples/vision/cnns/pytorch
 make install 
 make install-turbojpeg
@@ -343,7 +343,7 @@ source ~/venvs/graphcore/poptorch31_gpt2/bin/activate
 ```
 ### Install Requirements
 Change directory:
-```bash
+```console
 cd ~/graphcore/examples/nlp/gpt2/pytorch
 pip3 install -r requirements.txt
 ```
