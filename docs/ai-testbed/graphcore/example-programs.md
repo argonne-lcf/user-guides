@@ -158,6 +158,7 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
+Create and activate a fresh PopTorch environment as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup)
 ```console
 source ~/venvs/graphcore/poptorch31_env/bin/activate
 ```
