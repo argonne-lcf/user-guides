@@ -154,7 +154,7 @@ Question: Where is England in relation to scotland?
 Answer: southeast
 ```
 --->
-<!---
+
 ## ResNet50
 
 ### Activate PopTorch Environment
@@ -172,34 +172,23 @@ make install-turbojpeg
 pip install torch==1.13.0
 ```
 > **Note**: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version.
---->
-<!---
+
+
 #### Update configs.yml
-
 Change directory:
-
 ```bash
 cd ~/graphcore/examples/vision/cnns/pytorch/train
 ```
-
 Open **configs.yml** with your favorite editor.
-
 Find in the **resnet50** section
-
 ```yaml
-epoch: 100
-
 use_bbox_info: true
 ```
-
-and change them to:
-
+and change it to:
 ```yaml
-epoch: 20
-
 use_bbox_info: false
 ```
-
+<!---
 #### POD16
 
 ##### Update rn50_pod16.sh
@@ -272,7 +261,7 @@ The ImageNet data path is now defined.
 ./rn50_pod64.sh
 ```
 --->
-<!---
+
 ### Run ResNet50
 The scripts to train a ResNet50 PyTorch model on Pod4 is located at [https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train](https://github.com/graphcore/examples/tree/master/vision/cnns/pytorch/train)
 
@@ -332,7 +321,6 @@ Loss:6.2860 | Accuracy:2.41%:  96%|█████████▌| 75/7[1,0]<std
 [1,0]<stdout>:[INFO] Finished training. Time: 2023-04-27 04:40:05.821555. It took: 0:16:04.818638
 Loss:6.2747 | Accuracy:2.48%: 100%|██████████| 78/78 [04:46<00:00,  3.67s/it][1,0]<stderr>:
 ```
---->
 
 ## GPT-2 PyTorch - POD16 run
 
