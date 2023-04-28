@@ -158,9 +158,9 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
-Create and activate a fresh PopTorch environment as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup)
+Create and activate a fresh PopTorch environment `poptorch31_resnet50_env` as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup), then activate it.
 ```console
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+source ~/venvs/graphcore/poptorch31_resnet50_env/bin/activate
 ```
 
 ### Install Requirements
