@@ -32,6 +32,9 @@ The Graphcore Bow-Pod64 system is the latest-generation AI accelerator from Grap
 For more details refer to the [POD64 spec](https://www.graphcore.ai/products/bow-pod64#product-spec) 
 
 ![Poplar SDK](files/Poplar_sdk.png)
+(Figure from
+[https://www.graphcore.ai/products/poplar](https://www.graphcore.ai/products/poplar))
+
 
 The Graphcore software stack includes support for TensorFlow and PyTorch using the Poplar SDK. The Poplar® SDK is t is the toolchain specifically designed for creating graph software for ML applications.  It integrates with the traditional ML frameworks like PyTorch and TensorFlow allowing users to port their existing code to the IPU hardware-specific code. The various components of the poplar SDK stack are shown in the figure. It includes the PopTorch framework which is a wrapper over the PyTorch framework optimized to the IPU hardware. It also enlists the different PopLibs libraries supported, which enables to construct graphs, define tensor data and control how the code and data are mapped onto the IPU for execution.  
 

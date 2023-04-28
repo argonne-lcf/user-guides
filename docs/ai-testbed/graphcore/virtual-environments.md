@@ -5,10 +5,6 @@
 The Poplar SDK is downloaded onto the graphcore systems at the `/software/graphcore/poplar_sdk/` location. The default poplar
 version (3.1.0) is enabled automatically upon logging into a graphcore node.
 
-```bash
-source /software/graphcore/poplar_sdk/3.1.0/enable
-```
-
 Check if **Poplar** is setup correctly:
 
 ```bash
@@ -17,9 +13,14 @@ popc --version
 
 One should see:
 
-```bash
+```console
 POPLAR version 3.1.0 (e12d5f9f01)
 clang version 15.0.0 (bab932b4fc4cdb58bb009370384b2c41579bd9d9)
+```
+
+If the Poplar SDK is not enabled, it can be enabled with
+```bash
+source /software/graphcore/poplar_sdk/3.1.0/enable
 ```
 
 To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK,
