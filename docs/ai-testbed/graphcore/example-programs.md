@@ -267,7 +267,8 @@ The scripts to train a ResNet50 PyTorch model on Pod4 is located at [https://git
 
 Set the following environmental variables.
 ```console
-export PYTORCH_CACHE_DIR=/tmp/pt_cache/
+mkdir -p ~/graphcore/tmp/pt_cache/
+export PYTORCH_CACHE_DIR=~/graphcore/tmp/pt_cache/
 ```
 The command to run 4 replicas (a total for 4 IPUs) of the ResNet50 model is as follows.
 ```console
