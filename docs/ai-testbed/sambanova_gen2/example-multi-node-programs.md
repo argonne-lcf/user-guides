@@ -1,76 +1,83 @@
 # Example Multi-Node Programs
-<!--- In this section we will learn how to extend the UNet and Gpt1.5B applications scripts that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes. --->
+In this section we will learn how to extend the UNet2d and Gpt1.5B applications scripts that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes. 
 
-In this section we will learn how to extend the Gpt1.5B application that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes.
+<!--- In this section we will learn how to extend the Gpt1.5B application that we instroduced in the [Example Programs](/docs/ai-testbed/sambanova_gen2/example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes. --->
 
-<!---
-## UNet
+## UNet2d
 
 ### Set Up
 
 Create the following directory and change to it if you have not already done so.
 
 ```console
-mkdir ~/app-test
-cd ~/app-test
+mkdir -p ~/apps/image/unet
+cd ~/apps/image/unet
 ```
-### Create unet.sh
+### Create Unet2d.sh and unet_batch.sh
 
-Create the file **unet.sh** in the current directory using your favorite editor.
-Copy the contents of [unet.sh](./files/unet.sh).
+Create the file **Unet2d.sh** and **unet_batch.sh** in the current directory using your favorite editor.
+Copy and paste the contents of [Unet2d.sh](./files/Unet2d.sh "Unet2d.sh") and [unet_batch.sh](./files/unet_batch.sh)
+to files with the same name into the current directory using your favorite editor.
 
-### Create unet_batch.sh
+```bash
+chmod +x Unet2d.sh
+chmod +x unet_batch.sh
+```
 
-Create the file **unet_batch.sh** in the current directory using your favorite editor.
-Copy the contents of [unet_batch.sh](./files/unet_batch.sh).
-
-### Compile
-
-Unet.sh requires three parameters.
-
+### Compile and run 
+Run these commands for training (compile + train):
+The compile and run scripts have the following input arguments. 
 1. **image size**:  The images are square.  Valid sizes include 256, 512, and 1024.
 
-2. **Batch size**: Global batch size.  The local batch size is **global batch size / nodes**.
+2. **Batch size**: local batch size.  The global batch size is **local batch size * Num of instances**.
 
-3. **nodes**: Nodes to use.
+3. **num of instances**: Total number of instances of Unet2d run in data parallel framework.
 
-Compile UNet using the following commands:
+4. **RunID**: A unique Id for the compile or run process. 
+
+The script uses the arguments `pcompile` and `prun` for the data parallel compile and run. 
+
+```bash
+./Unet2d.sh pcompile <image size> <batch_size> <num of instances> <RunID>
+./Unet2d.sh prun <image size> <batch_size> <num of instances> <RunID>
+```
+For a image size of 256x256 and local batch size of 256 when running 8 instance, the commands are provided as follows. 
+```bash
+./Unet2d.sh pcompile 256 256 8 unet2d_8inst_pcompile
+./Unet2d.sh prun 256 256 8 unet2d_8inst_prun
+```
+The above commands displays the file that contains the output for the execution of the above scripts, usually `/data/ANL/results/<hostname>/<userId>/<RunID>/Unet2d.out`
+
+You can inspect the compile command that contains `--data-parallel -ws 2` arguments to ensure that the `pef` file is compatible for data parallel runs. The pef generated from the compilation process for the above compile command is placed under out/Unet2d/unet_train_256_256_NP_4 inside the current working directory.
 
 ```console
-chmod +x unet*.sh
-./unet.sh pcompile 256 256 2
+python /opt/sambaflow/apps/image/segmentation/compile.py compile --mac-v2 --in-channels=3 --in-width=${2} --in-height=${2} --batch-size=${BS} --enable-conv-tiling --num-tiles=4 --pef-name=unet_train_${BS}_${2}_NP_${NUM_TILES}  --data-parallel -ws 2 --output-folder=${OUTDIR}
 ```
-
-One may find the output in **compile_128_256_NP_4.log**.
-
-### Run
-
-As indicated on [Getting Started](/docs/ai-testbed/sambanova_gen2/getting-started), each
-node has eight (8) RDUs.
-
-This example uses 4 nodes times 8 RDUs per node for a total of 32 RDUs.
-
-#### Run Command
-
-Run/train UNet using the following command:
+Once the model is compiled, sbatch is used to launch the multiple instances. The below example shows that a total of 8 tasks or instances are launched over the host on which the script is launched.
 
 ```console
-./unet.sh prun 256 256 2
+sbatch --gres=rdu:1 --tasks-per-node ${NP} --nodes 1 --nodelist $(hostname) --cpus-per-task=${cpus} $(pwd)/unet_batch.sh ${NP} ${NUM_WORKERS} ${BS} ${2} ${5}
 ```
-
-One may find the output in **run_unet_128_256_2_4.log**.
-
-The last line of the output will be similar to the following.
-
+The `run` command has `--data-parallel --reduce-on-rdu` arguments that is compatible with data parallel run. 
 ```console
-inner train loop time : 82.35215544700623 for 10 epochs, number of global steps: 130, e2e samples_per_sec: 404.11814140573097
+srun --mpi=pmi2 python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${IM} --in-height=${IM} --init-features 32 --batch-size=${BS} --epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${IM}_${BS}_${NP} --data-parallel --reduce-on-rdu --pef=${OUTDIR}/unet_train_${BS}_${IM}_NP_4/unet_train_${BS}_${IM}_NP_4.pef
 ```
----> 
+The throughput is calculated by averaging the `e2e samples_per_sec` over the different instances. 
+```console
+inner train loop time : 36.314290046691895 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 563.9653143065
+inner train loop time : 33.36756229400635 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 613.7697389922524
+inner train loop time : 33.94625234603882 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 603.3066563941279
+inner train loop time : 32.309499979019165 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 633.8692958200872
+inner train loop time : 31.418426036834717 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 651.8467849404489
+inner train loop time : 28.164129495620728 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 727.1660927132315
+inner train loop time : 30.29698896408081 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 675.9747651583616
+inner train loop time : 25.332663536071777 for 10 epochs, number of global steps: 10, e2e samples_per_sec: 808.442427336472
+```
+
 ## Gpt 1.5B 
 
-### Setup
-Create the following directory and change to it if you have not already done so.
-```console
+### Set up
+```console 
 mkdir ~/nlp-multiNodetest
 cd ~/nlp-multiNodetest
 ```
