@@ -23,6 +23,6 @@ The trees `/home`, `/srv/projects`, and `/srv/software` are shared across all th
   <figcaption>CS-2 cluster figure</figcaption>
 </figure>
 (Figure from
-[https://docs.cerebras.net/en/latest/cerebras-basics/cerebras-installations.html](https://docs.cerebras.net/en/latest/cerebras-basics/cerebras-installations.html))
+[https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html](https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html))
 
 As indicated in the figures, the CS-2 nodes on the right are responsible only for running and accelerating the computations for training and predictions with the model. The other work, including compilation, is performed by input nodes, and by MemoryX nodes, which are used for weight storage and broadcast, and SwarmX nodes, which are used for gradient accumulation. Some model verification work can be done on login nodes.
