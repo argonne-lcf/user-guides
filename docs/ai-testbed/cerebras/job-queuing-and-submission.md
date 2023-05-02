@@ -7,7 +7,7 @@ Continuous job status for a job is output to stdout/stderr; redirect the output,
 
 In order to run the Cerebras csctl utility you will need to copy a config file to your home directory.  Future versions of Cerebras software will reference a system wide file.
 ```console
-mkdir ~/.cs; cp /opt/cerebras/config to ~/.cs/config
+mkdir ~/.cs; cp /opt/cerebras/config ~/.cs/config
 ```
 
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
