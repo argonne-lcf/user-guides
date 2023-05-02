@@ -1,4 +1,4 @@
-# Graphcore
+# Cerebras
 
 [System Overview](./system-overview.md)
 
