@@ -5,6 +5,11 @@ The CS-2 cluster has its own **Kubernetes-based** system for job submission and 
 Jobs are started automatically through the **Python** frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
 
+In order to run the Cerebras csctl utility you will need to copy a config file to your home directory.  Future versions of Cerebras software will reference a system wide file.
+```console
+mkdir ~/.cs; cp /opt/cerebras/config ~/.cs/config
+```
+
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
 
 ```console
