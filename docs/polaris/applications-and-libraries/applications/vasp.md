@@ -125,7 +125,7 @@ make -j1
 
 ### Running VASP in Polaris
 
-An example of a submission script could be found here `/soft/applications/vasp/vasp.6.3.2/submit-polaris2023.sh` , which would looks something similar to:
+An example of a submission script could be found here `/soft/applications/vasp/submit-polaris2023-2.sh` , which would looks something similar to:
 
 
 ``` example-script.sh
@@ -142,10 +142,10 @@ module load cray-libsci
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=4
-NDEPTH=8
-NTHREADS=1
-NGPUS=4
+NRANKS=2
+NDEPTH=4
+NTHREADS=4
+NGPUS=2
 NTOTRANKS=$(( NNODES * NRANKS ))
 
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /path_to_vasp/bin/vasp_std
@@ -158,7 +158,7 @@ chmod +x example-script.sh
 qsub  example-script.sh
 ```
 
-### Known issues
+### Known issues versions: >= 6.4.0 in Polaris 
 ---
 
 * Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this
