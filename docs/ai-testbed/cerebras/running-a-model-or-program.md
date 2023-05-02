@@ -102,7 +102,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
