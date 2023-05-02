@@ -79,6 +79,8 @@ nav:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+    - Visualization:
+        - Paraview: polaris/visualization/paraview.md
     - Workflows:
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
@@ -188,14 +190,31 @@ nav:
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
       - Getting Started: ai-testbed/cerebras/getting-started.md
-      - Steps to Run a Model/Program: ai-testbed/cerebras/steps-to-run-a-model-or-program.md
+      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
       - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
       - Example Programs: ai-testbed/cerebras/example-programs.md
       - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-    - SambaNova:
+    - Graphcore:
+      - System Overview: ai-testbed/graphcore/system-overview.md
+      - Getting Started: ai-testbed/graphcore/getting-started.md
+      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
+      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/graphcore/example-programs.md
+      #- Tunneling and Forwarding Ports: ai-testbed/graphcore/Tunneling-and-forwarding-ports.md
+      #- CosmicTagger Conversion: ai-testbed/graphcore/cosmictagger-conversion.md
+      #- CosmicTagger Distributed Data Parallel: ai-testbed/graphcore/cosmictagger-ddp.md
+      #- DataParallel: ai-testbed/graphcore/DataParallel.md
+      #- Multi-node: ai-testbed/graphcore/multi-node-setup.md
+      #- Profiling: ai-testbed/graphcore/profiling.md
+      #- Profiling MNIST: ai-testbed/graphcore/profiling-mnist.md
+      #- Profiling ResNet50: ai-testbed/graphcore/profiling-resnet50.md
+      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
+      - Documentation: ai-testbed/graphcore/documentation.md
+    - SambaNova Gen1:
       - System Overview: ai-testbed/sambanova_gen1/system-overview.md
       - Getting Started: ai-testbed/sambanova_gen1/getting-started.md
       - Virtual Environment: ai-testbed/sambanova_gen1/virtual-environment.md
@@ -208,6 +227,19 @@ nav:
       #- DataParallel: ai-testbed/sambanova_gen1/DataParallel.md
       - Miscellaneous: ai-testbed/sambanova_gen1/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova_gen1/documentation.md
+    - SambaNova Gen2:
+      - System Overview: ai-testbed/sambanova_gen2/system-overview.md
+      - Getting Started: ai-testbed/sambanova_gen2/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova_gen2/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova_gen2/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova_gen2/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova_gen2/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
+      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
+      - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
+      # - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
@@ -286,7 +318,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
       # base_path: ["docs"]
-      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
   - pymdownx.superfences

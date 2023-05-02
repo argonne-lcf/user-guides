@@ -1,27 +1,73 @@
-## Job Queuing and Submission
-The CS-2 systems use slurm for job submission and queueing.<br>
-**`csrun_cpu`** is used to run a cpu-only job on one or more worker nodes.<br>
-**`csrun_wse`** is used to run a job on both the wafer scale engine and one or more worker nodes.
+# Job Queuing and Submission
 
-Your job will be blocked until there are available resources.<br>
-Scheduling is in first in, first out (FIFO) order.
-```bash
-# csrun_cpu [--help] [--alloc_node] [--mount_dirs] command_to_execute
-csrun_cpu --help
-# csrun_wse [--help] [--total-nodes] [--tasks_per_node] [--cpus_per_task] [--mount_dirs] command_for_cs_execution
-csrun_wse --help
-#
-# squeue is used to inspect the job queue
-# squeue [OPTIONS]
-squeue -a
-# scancel is used to cleanly kill a job
-# scancel [OPTIONS] [job_id[_array_id][.step_id]]
-scancel JOBID
+The CS-2 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
+
+Jobs are started automatically through the **Python** frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils
+Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
+
+In order to run the Cerebras csctl utility you will need to copy a config file to your home directory.  Future versions of Cerebras software will reference a system wide file.
+```console
+mkdir ~/.cs; cp /opt/cerebras/config ~/.cs/config
 ```
 
-Note: slurm jobs using the wafer (started using `csrun_wse`) will show with two parts in the `squeue -a` output. The jobids will be the base ID plus 0 or 1, e.g. 555+0 and 555+1. To cancel using `scancel`, give just the base ID as the argument, e.g. `scancel 555`. 
+Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
 
-You can find a detailed documentation for slurm
-[here](https://slurm.schedmd.com/documentation.html) or use `--help` to see a
-summary of options for slurm [commands](https://slurm.schedmd.com/quickstart.html#commands), i.e. `squeue --help`.<br>
-See some examples of how these commands are used to submit and queue jobs in section [Steps to run a model/program](Steps-to-run-a-model-or-program.md).
+```console
+(venv_tf) $ csctl  get jobs | grep -v "SUCCEEDED\|FAILED\|CANCELLED"
+NAME                          AGE    PHASE      SYSTEMS                USER     LABELS
+wsjob-eyjapwgnycahq9tus4w7id  88s    RUNNING    cer-cs2-01             username  name=pt_smoketest,user=username
+(venv_tf) $
+```
+
+Jobs can be canceled as shown:
+
+```console
+(venv_tf) $ csctl cancel job wsjob-eyjapwgnycahq9tus4w7id
+Job canceled successfully
+(venv_tf) $
+```
+
+Jobs can be labeled in the command line that launches them, if they are written with Cerebras's Python framework for running appliance jobs, by adding a command line option of this form:
+```console
+ --job_labels labelname=labelvalue
+```
+
+Jobs can also be labeled after they have been started as shown:
+```console
+(venv_pt) $ csctl label job wsjob-ez6dyfronnsg2rz7f7fqw4 testlabel=test
+job/wsjob-ez6dyfronnsg2rz7f7fqw4 was patched
+(venv_pt) $
+```
+
+Jobs with a particular label/label value can be listed as shown:
+```console
+(venv_pt) $ csctl get jobs | grep "testlabel=test"
+wsjob-ez6dyfronnsg2rz7f7fqw4  19m SUCCEEDED  cer-cs2-02 username testlabel=test,user=username
+(venv_pt) $
+```
+
+See `csctl -h` for more options
+
+```console
+$ csctl -h
+Cerebras cluster command line tool.
+
+Usage:
+  csctl [command]
+
+Available Commands:
+  cancel      Cancel job
+  config      Modify csctl config files
+  get         Get resources
+  label       Label resources
+  log-export  Gather and download logs.
+  types       Display resource types
+
+Flags:
+      --csconfig string   config file (default is $HOME/.cs/config) (default "$HOME/.cs/config")
+  -d, --debug int         higher debug values will display more fields in output objects
+  -h, --help              help for csctl
+
+Use "csctl [command] --help" for more information about a command.
+
+```

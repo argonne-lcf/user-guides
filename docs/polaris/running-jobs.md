@@ -4,13 +4,13 @@
 ##  <a name="Polaris-Queues"></a>Queues
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
-|---------------|----------|-----------|-----------------------------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2         | 10 min (5 min from 10/3/22) | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
-| debug-scaling | 1        | 10        | 10 min (5 min from 10/3/22) | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
-| prod          | 10       | 496       | 30 min (5 min from 10/3/22) | 24 hrs   | Routing queue; See below                                                    |
-| preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
-| demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
+|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
+| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
+| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                    |
+| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
+| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
 **Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
@@ -18,14 +18,14 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
-|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
-|----|----|----|------------------------------|----|----------------------------------------|
-|small|10|24| 5 min  |6 hrs||
-|medium|25|49| 5 min  |12 hrs||
-|large|50|496| 5 min  |24 hrs||
-|backfill-small|10|24| 5 min   |6 hrs| low priority, negative project balance |
-|backfill-medium|25|49| 5 min  |12 hrs| low priority, negative project balance |
-|backfill-large|50|496| 5 min                     |24 hrs| low priority, negative project balance |
+| Queue Name      | Node Min                                | Node Max | Time Min | Time Max                                      | Notes                                  |
+|-----------------|-----------------------------------------|----------|----------|-----------------------------------------------|----------------------------------------|
+| small           | 10                                      | 24       | 5 min    | 6 hrs (3 hrs, first maintanence in May 2023)  ||
+| medium          | 25                                      | 49       | 5 min    | 12 hrs (6 hrs, first maintanence in May 2023) ||
+| large           | 50 (100, first maintanence in May 2023) | 496      | 5 min    | 24 hrs                                        ||
+| backfill-small  | 10                                      | 24       | 5 min    | 6 hrs (3 hrs, first maintanence in May 2023)  | low priority, negative project balance |
+| backfill-medium | 25                                      | 49       | 5 min    | 12 hrs (6 hrs, first maintanence in May 2023) | low priority, negative project balance |
+| backfill-large  | 50 (100, first maintanence in May 2023) | 496      | 5 min    | 24 hrs                                        | low priority, negative project balance |
 
 - **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
 - **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
@@ -91,6 +91,18 @@ This script can be placed just before the executable in the `mpiexec` command li
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
+
+
+## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
+
+Here is how to submit an interactive job to, for example, edit/build/test an application Polaris compute nodes:
+```
+qsub -I -l select=1:filesystems=home:eagle -l walltime=1:00:00 -q debug
+```
+
+This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
+
+**NOTE:** If you want to ```ssh``` or ```scp``` to one of your assigned compute nodes you will need to make sure your ```$HOME``` directory and your ```$HOME/.ssh``` directory permissions are both set to ```700```.
 
 ## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.

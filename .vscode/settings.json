@@ -1,0 +1,12 @@
+{
+  "cSpell.customDictionaries": {
+      "project-words": {
+        "name": "project-words",
+        "path": "${workspaceRoot}/docs/ai-testbed/files/dictionary.txt",
+        "description": "Words used in AI Testbed documents.",
+        "addWords": true
+      },
+      "custom": true, // Enable the `custom` dictionary
+      "internal-terms": false // Disable the `internal-terms` dictionary
+    }
+}
