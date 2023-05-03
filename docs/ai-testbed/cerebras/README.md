@@ -1,10 +1,10 @@
-# Graphcore
+# Cerebras
 
 [System Overview](./system-overview.md)
 
 [Getting Started](./getting-started.md)
 
-[Virtual Environment](./virtual-environments.md)
+[Customizing Environment](./customizing-environment.md)
 
 [Running a Model/Program](./running-a-model-or-program.md)
 
