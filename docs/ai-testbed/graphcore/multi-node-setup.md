@@ -25,5 +25,3 @@ Running on multiple nodes is a three step process.
     ssh-keyscan -H 10.1.3.103 >> ~/.ssh/known_hosts
     ssh-keyscan -H 10.1.3.104 >> ~/.ssh/known_hosts
     ```
-
-See [POD64](Example-Programs.md#pod64) for a multi-node example.
