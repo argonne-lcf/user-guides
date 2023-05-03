@@ -21,4 +21,3 @@ List of documentation:
 [Miscellaneous](miscellaneous.md)
 
 [SambaNova Documentation](documentation.md)
-
