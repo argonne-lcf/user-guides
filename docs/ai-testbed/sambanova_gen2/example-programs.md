@@ -216,8 +216,9 @@ Test Accuracy: 91.40  Loss: 0.3014
 ```
 
 ## UNet2D
-The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguments respectively. 
-The scripts containing the compile and run commands for UNet2D model can be accessed at [Unet2d.sh](./files/Unet2d.sh "Unet2d.sh") or at `/data/ANL/scripts/Unet2d.sh` on any SN30 compute node. 
+
+The UNet application example is provided in the the path : `/opt/sambaflow/apps/image/segmentation/`. As any other application, we first compile and then train the model using *compile* and *run* arguments respectively.
+The scripts containing the compile and run commands for UNet2D model can be accessed at [Unet2d.sh](./files/Unet2d.sh "Unet2d.sh") or at `/data/ANL/scripts/Unet2d.sh` on any SN30 compute node.
 
 Change directory and copy files.
 
@@ -240,16 +241,19 @@ Run these commands for training (compile + train):
 ./Unet2d.sh compile <image size> <batch_size> <num of instances> <RunID>
 ./Unet2d.sh run <image size> <batch_size> <num of instances> <RunID>
 ```
-The `compile` and `run` arguments of the script can only be run with number of instances equal to 1, indicating that this is a simple 4 tile run without data parallel framework. 
-For a image size of 256x256 and batch size 256 when running just 1 instance, the commands are provided as follows. 
+
+The `compile` and `run` arguments of the script can only be run with number of instances equal to 1, indicating that this is a simple 4 tile run without data parallel framework.
+For a image size of 256x256 and batch size 256 when running just 1 instance, the commands are provided as follows.
+
 ```bash
 ./Unet2d.sh compile 256 256 1 unet2d_single_compile
 ./Unet2d.sh run 256 256 1 unet2d_single_run
 ```
+
 The above commands displays the file that contains the output for the execution of the above scripts, usually `/data/ANL/results/<hostname>/<userid>/<RunID>/Unet2d.out`
 
-If we inspect the compile and run commands for the UNet application provided in the script, we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU. 
-The pef generated from the compilation process of the above command is placed under `out/Unet2d/unet_train_256_256_single_4` inside the current working directory.  
+If we inspect the compile and run commands for the UNet application provided in the script, we see that the application is compiled with `--num-tiles 4`, which means that the entire application fits on 4 tiles or half of a RDU.
+The pef generated from the compilation process of the above command is placed under `out/Unet2d/unet_train_256_256_single_4` inside the current working directory.
 
 ```bash
 python ${UNET}/compile.py compile --mac-v2 --in-channels=3 --in-width=${2} --in-height=${2} --batch-size=${BS} --enable-conv-tiling --num-tiles=4 --pef-name=unet_train_${BS}_${2}_single_${NUM_TILES} --output-folder=${OUTDIR}
@@ -258,14 +262,17 @@ python ${UNET}/compile.py compile --mac-v2 --in-channels=3 --in-width=${2} --in-
 ```bash
 srun --nodelist $(hostname) python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=${OUTDIR}/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef
 ```
-The performance data is located at the bottom of log file. 
+
+The performance data is located at the bottom of log file.
+
 ```console
 inner train loop time : 374.6789753437042 for 10 epochs, number of global steps: 130, e2e samples_per_sec: 88.82270474202953
 ```
- 
-## Gpt 1.5B 
-The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`. 
-The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. 
+
+## Gpt 1.5B
+
+The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`.
+The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU.
 
 Change directory and copy files.
 
@@ -273,22 +280,25 @@ Change directory and copy files.
 mkdir -p ~/apps/nlp/Gpt1.5B_single
 cd ~/apps/nlp/Gpt1.5B_single
 ```
+
 Copy and paste the contents of
 [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh")
 to a file with the same name into the current directory using your favorite editor.
 
-or copy the contents from `/data/ANL/scripts/Gpt1.5B_single.sh`. 
+or copy the contents from `/data/ANL/scripts/Gpt1.5B_single.sh`.
 
 ```bash
 cp /data/ANL/scripts/Gpt1.5B_single.sh ~/apps/nlp/Gpt1.5B_single/
 ```
-Run the script. 
+
+Run the script.
+
 ```bash
 chmod +x Gpt1.5B_single.sh
 ./Gpt1.5B_single.sh
 ```
 
-You can inspect the `compile` and `run` commands in the script to learn that this model trains with a batch size of 16 for 1 instance over 4 tiles. The human decision file and the compiler config file helps to optimize the compute and memory resources specific to this Gpt 1.5B model run. 
+You can inspect the `compile` and `run` commands in the script to learn that this model trains with a batch size of 16 for 1 instance over 4 tiles. The human decision file and the compiler config file helps to optimize the compute and memory resources specific to this Gpt 1.5B model run.
 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile --module_name gpt2_pretrain --task_name clm --max_seq_length 1024 -b 16 --output_dir=${OUTDIR}/hf_output --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/ --tokenizer_name gpt2 --model_name gpt2 --mac-v2 --non_split_head --mac-human-decision /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/mac_v2_overrides/gpt2_48_enc_full_recompute_training_spatialmapping_tiling16_clmerge_gm_nonpardp_lnsd.json --compiler-configs-file /opt/sambaflow/apps/nlp/transformers_on_rdu/human_decisions_gm/compiler_configs/compiler_configs_gpt2_sc_recompute_spatialmapping_tiling16_clsmerge_withcls_nonpardp_norc_e2e.json --skip_broadcast_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --no_index_select_patch --weight_decay 0.1  --max_grad_norm_clip 1.0 --num-tiles 4 --pef-name=gpt15_single --output-folder=${OUTDIR}
@@ -297,7 +307,9 @@ python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py compile 
 ```bash
 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data_dir /data/ANL/ss1024 --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 100 --pef=${OUTDIR}/gpt15_single/gpt15_single.pef >> ${OUTPUT_PATH} 2>&1
 ```
-The `sntilestat` command shows that the application runs on 4 tiles as shown below. 
+
+The `sntilestat` command shows that the application runs on 4 tiles as shown below.
+
 ```bash
 /XRDU_0/RDU_0/TILE_0   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/
 /XRDU_0/RDU_0/TILE_1   2.1  96.9    0.8    0.1    0.0      0.0 796481  vsastry python /opt/sambaflow/apps/nlp/transformers_on_rdu/

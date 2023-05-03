@@ -44,4 +44,3 @@ ssh sn30-r1-h1
 ### SDK setup
 
 The required software environment (SambaFlow software stack and the associated environmental variables) for a SN30 node is set up automatically at login. This is unlike the SN10 where the environment had to be set up by each user.
-
