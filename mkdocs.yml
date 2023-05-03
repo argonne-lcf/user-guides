@@ -222,7 +222,7 @@ nav:
       - Job Queuing and Submission: ai-testbed/sambanova_gen1/job-queuing-and-submission.md
       - Example Programs: ai-testbed/sambanova_gen1/example-programs.md
       - Example Multi-Node Programs: ai-testbed/sambanova_gen1/example-multi-node-programs.md
-      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
+      #- Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
       - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen1/tunneling-and-forwarding-ports.md
       #- DataParallel: ai-testbed/sambanova_gen1/DataParallel.md
       - Miscellaneous: ai-testbed/sambanova_gen1/miscellaneous.md
