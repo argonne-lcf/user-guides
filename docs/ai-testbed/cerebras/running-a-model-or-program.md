@@ -48,32 +48,32 @@ See [Customizing Environments](./customizing-environment.md) for the procedures 
 --->
 First, make virtual environments for Cerebras for PyTorch and/or TensorFlow.
 See [Customizing Environments](./customizing-environment.md) for the procedures for making custom PyTorch and/or TensorFlow virtual environments for Cerebras.
-If the environments are made in ```~/R_1.7.1/```, then they would be activated as follows:
+If the environments are made in ```~/R_1.8.0/```, then they would be activated as follows:
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
+source ~/R_1.8.0/venv_pt/bin/activate
 ```
 or
 ```console
-source ~/R_1.7.1/vent_tf/bin/activate
+source ~/R_1.8.0/vent_tf/bin/activate
 ```
 
 ### Clone the Cerebras modelzoo
 
 ```console
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
+mkdir ~/R_1.8.0
+cd ~/R_1.8.0
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout R_1.7.1
+git checkout R_1.8.0
 ```
 ## Running a Pytorch sample
 
 ### Activate your PyTorch virtual environment, and change to the working directory
 
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
-cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/pytorch
+source ~/R_1.8.0/venv_pt/bin/activate
+cd ~/R_1.8.0/modelzoo/modelzoo/fc_mnist/pytorch
 ```
 
 Next, edit configs/params.yaml, making the following changes:
@@ -102,7 +102,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
@@ -121,15 +121,15 @@ A successful fc_mnist PyTorch training run should finish with output resembling 
 ### Activate your TensorFlow virtual environment and change to the working directory
 
 ```console
-source ~/R_1.7.1/venv_tf/bin/activate
-cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
+source ~/R_1.8.0/venv_tf/bin/activate
+cd ~/R_1.8.0/modelzoo/modelzoo/fc_mnist/tf/
 ```
 <!---
 or
 
 ```console
 source /srv/software/cerebras/venvs/venv_tf/bin/activate
-cd ~/R_1.7.1/modelzoo/modelzoo/fc_mnist/tf/
+cd ~/R_1.8.0/modelzoo/modelzoo/fc_mnist/tf/
 ```
 --->
 
@@ -154,7 +154,7 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --job_labels name=tf_fc_mnist --execution_strategy pipeline --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run_appliance.py --job_labels name=tf_fc_mnist --execution_strategy pipeline --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist TensorFlow training run should finish with output resembling the following:

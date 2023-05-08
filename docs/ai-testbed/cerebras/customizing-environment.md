@@ -5,8 +5,8 @@
 #### To make a PyTorch virtual environment for Cerebras
 
 ```console
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
+mkdir ~/R_1.8.0
+cd ~/R_1.8.0
 # Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_pt
@@ -21,8 +21,8 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorc
 #### To make a TensorFlow virtual environment for Cerebras
 
 ```console
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
+mkdir ~/R_1.8.0
+cd ~/R_1.8.0
 # Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_tf
@@ -41,13 +41,13 @@ pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensor
 To activate one of these virtual environments,
 
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
+source ~/R_1.8.0/venv_pt/bin/activate
 ```
 
 or
 
 ```console
-source ~/R_1.7.1/venv_tf/bin/activate
+source ~/R_1.8.0/venv_tf/bin/activate
 ```
 
 To deactivate a virtual environment,
