@@ -80,4 +80,4 @@ sbank-list-allocations -r polaris -p <projectname> -f”+subname users_list”''
 2. Start and end dates of suballocations by default are inherited from the primary suballocation. However, a PI is able to edit them so that they are outside the threshold dates of the primary allocation. This is a bug that will be fixed. 
 3. Qsub throws an error if you pass <projectname>::<suballocationname>, but passing <suballocationID> works. This is a bug that will need to be fixed. 
 4. Start and end dates of suballocations are ignored when suballocation management is enabled. This is a bug that will be fixed. 
-5. Only suballocation balances are currently checked at job submission, and the overall allocation balance is not considered. This will be changed in a subsequent release (look at allocation balance and then the suballocation balance) 
+5. Only suballocation balances are currently checked at job submission, and the overall allocation balance is not considered. This will be changed in a subsequent release (look at allocation balance and then the suballocation balance)
