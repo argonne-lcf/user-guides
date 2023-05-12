@@ -28,50 +28,50 @@ To request an extension of your existing discretionary allocation or to request 
 ## Sub-allocations
 Suballocations let PIs control who in their team can runs jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates)
 
-Step 1: Enable Suballocation Management (ALCF):
-'''#Enable suballocations on an allocation 
-sbank e a <allocationid>  --submanagement-enable'''   
+**Step 1: Enable Suballocation Management (ALCF):**
+```#Enable suballocations on an allocation 
+sbank e a <allocationid>  --submanagement-enable```
 
-Step 2: Create Suballocations (Project PI): 
-'''#PI creates suballocations 
-sbank new sub <allocationid> --name <nameofsuballoc>'''
+**Step 2: Create Suballocations (Project PI):**
+```#PI creates suballocations 
+sbank new sub <allocationid> **-name <nameofsuballoc>```
 
 *Tip: see sbank new suballocation -h for all the options.* 
 
-Step 3: Manage Suballocations (Project PI) 
-'''#PI adds users to suballocations 
-sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..." '''
+**Step 3: Manage Suballocations (Project PI)**
+```#PI adds users to suballocations 
+sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."```
 
-'''#PI can change the name of a suballocation 
-sbank e sub <suballocationID> --name=<new_name_of_suballocation>'''
+```#PI can change the name of a suballocation 
+sbank e sub <suballocationID> --name=<new_name_of_suballocation>```
 
 By default, the primary suballocation (created when the allocation is created by ALCF) is enabled for all project members. That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default and users have to be added for each of them.
 
 To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation
 
-'''sbank-edit-suballocation --restrict <primary suballocation id>'''
+```sbank-edit-suballocation --restrict <primary suballocation id>```
 
 Then add users with this command:
 
-'''sbank e sub <primary suballocation id>  --add-user="<username1> <username2> ..."'''
+```sbank e sub <primary suballocation id>  --add-user="<username1> <username2> ..."```
 
-'''#PI changes start and end dates for a suballocation. See known issue #4. 
-Sbank e sub <suallocationID> -S <start_date> -E <end_date>'''
+```#PI changes start and end dates for a suballocation. See known issue #4. 
+Sbank e sub <suallocationID> -S <start_date> -E <end_date>```
  
-'''#PI adds hours to a suballocation
-sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameofsuballoc2>''' 
+```#PI adds hours to a suballocation
+sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameofsuballoc2>``` 
 
 *Tip: see sbank e suballocation -h for all the options*
 
-Step 4 :Submit Jobs  (Project team) 
-'''#Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
+**Step 4 :Submit Jobs  (Project team)**
+```#Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
 
-Eg: qsub -l select=10,walltime=30:00,filesystems=grand:home -A <suballoctionID> -q demand test.sh'''
+Eg: qsub -l select=10,walltime=30:00,filesystems=grand:home -A <suballoctionID> -q demand test.sh```
 
 Useful commands: 
-'''#List all suballocations for a project that shows no.of jobs run, charges, allocation balance, suballocation name, and list of users  
+```#List all suballocations for a project that shows no.of jobs run, charges, allocation balance, suballocation name, and list of users  
 
-sbank-list-allocations -r polaris -p <projectname> -f”+subname users_list”'''
+sbank-list-allocations -r polaris -p <projectname> -f”+subname users_list”```
 
 *Tip: see sbank l a -h for all the options and sbank –f? for list of fields that can be displayed* 
 
