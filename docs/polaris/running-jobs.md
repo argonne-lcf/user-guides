@@ -21,10 +21,10 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
 |-----------------|----------|----------|----------|----------|----------------------------------------|
 | small           | 10       | 24       | 5 min    | 3 hrs    ||
-| medium          | 25       | 49       | 5 min    | 6 hrs    ||
+| medium          | 25       | 99       | 5 min    | 6 hrs    ||
 | large           | 100      | 496      | 5 min    | 24 hrs   ||
 | backfill-small  | 10       | 24       | 5 min    | 3 hrs    | low priority, negative project balance |
-| backfill-medium | 25       | 49       | 5 min    | 6 hrs    | low priority, negative project balance |
+| backfill-medium | 25       | 99       | 5 min    | 6 hrs    | low priority, negative project balance |
 | backfill-large  | 100      | 496      | 5 min    | 24 hrs   | low priority, negative project balance |
 
 - **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
