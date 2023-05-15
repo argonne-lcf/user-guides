@@ -102,18 +102,19 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=pt_smoketest --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
 
 ```text
-2023-03-15 19:01:23,008 INFO:   | Train Device=xla:0, Step=9950, Loss=1.69782, Rate=149740.06 samples/sec, GlobalRate=34681.55 samples/sec
-2023-03-15 19:01:23,061 INFO:   | Train Device=xla:0, Step=10000, Loss=1.65959, Rate=132247.02 samples/sec, GlobalRate=34805.53 samples/sec
-2023-03-15 19:01:23,062 INFO:   Saving checkpoint at global step 10000
-2023-03-15 19:01:28,754 INFO:   Saved checkpoint at global step: 10000
-2023-03-15 19:01:28,754 INFO:   Training Complete. Completed 1280000 sample(s) in 42.468820095062256 seconds.
-2023-03-15 19:01:32,175 INFO:   Monitoring is over without any issue
+2023-05-15 16:05:54,510 INFO:   | Train Device=xla:0, Step=9950, Loss=2.30234, Rate=157300.30 samples/sec, GlobalRate=26805.42 samples/sec
+2023-05-15 16:05:54,571 INFO:   | Train Device=xla:0, Step=10000, Loss=2.29427, Rate=125599.14 samples/sec, GlobalRate=26905.42 samples/sec
+2023-05-15 16:05:54,572 INFO:   Saving checkpoint at global step 10000
+2023-05-15 16:05:59,734 INFO:   Saving step 10000 in dataloader checkpoint
+2023-05-15 16:06:00,117 INFO:   Saved checkpoint at global step: 10000
+2023-05-15 16:06:00,117 INFO:   Training Complete. Completed 1280000 sample(s) in 53.11996841430664 seconds.
+2023-05-15 16:06:04,356 INFO:   Monitoring returned
 ```
 
 ## Running a TensorFlow sample
@@ -154,17 +155,18 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --job_labels name=tf_fc_mnist --execution_strategy pipeline --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist TensorFlow training run should finish with output resembling the following:
 
 ```text
-INFO:tensorflow:global step 99900: loss = 0.0 (907.74 steps/sec)
-INFO:tensorflow:global step 100000: loss = 0.0 (908.08 steps/sec)
-INFO:root:Training complete. Completed 25600000 sample(s) in 110.12226128578186 seconds
+INFO:tensorflow:global step 99900: loss = 0.10198974609375 (915.74 steps/sec)
+INFO:tensorflow:global step 100000: loss = 0.0 (915.96 steps/sec)
+INFO:root:Training complete. Completed 25600000 sample(s) in 109.17504906654358 seconds
 INFO:root:Taking final checkpoint at step: 100000
-INFO:tensorflow:Saved checkpoint for global step 100000 in 3.7506210803985596 seconds: model_dir/model.ckpt-100000
-INFO:root:Monitoring is over without any issue
+INFO:root:Saving step 99999 in dataloader checkpoint
+INFO:tensorflow:Saved checkpoint for global step 100000 in 3.9300642013549805 seconds: model_dir/model.ckpt-100000
+INFO:root:Monitoring returned
 ```
 
