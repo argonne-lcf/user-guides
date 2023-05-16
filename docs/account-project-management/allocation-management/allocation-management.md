@@ -28,13 +28,7 @@ To request an extension of your existing discretionary allocation or to request 
 ## Sub-allocations
 Suballocations let PIs control who in their team can runs jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates)
 
-**Step 1: Enable Suballocation Management (ALCF):**
-
-Enable suballocations on an allocation 
-
-`sbank e a <allocationid> --submanagement-enable`
-
-**Step 2: Create Suballocations (Project PI):**
+**Step 1: Create Suballocations (Project PI):**
 
 PI creates suballocations 
 
@@ -42,7 +36,7 @@ PI creates suballocations
 
 *Tip: see sbank new suballocation -h for all the options.* 
 
-**Step 3: Manage Suballocations (Project PI)**
+**Step 2: Manage Suballocations (Project PI)**
 
 PI adds users to suballocations
 
@@ -72,7 +66,7 @@ PI adds hours to a suballocation
 
 *Tip: see sbank e suballocation -h for all the options*
 
-**Step 4: Submit Jobs  (Project team)**
+**Step 3: Submit Jobs  (Project team)**
 
 Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
 
@@ -86,8 +80,5 @@ List all suballocations for a project that shows no.of jobs run, charges, alloca
 *Tip: see sbank l a -h for all the options and sbank –f? for list of fields that can be displayed* 
 
 ## Known Issues
-1. Error message displayed when you try to move more hours than available between suballocations is incorrect. This is a bug that will be fixed. 
-2. Start and end dates of suballocations by default are inherited from the primary suballocation. However, a PI is able to edit them so that they are outside the threshold dates of the primary allocation. This is a bug that will be fixed. 
-3. qsub throws an error if you pass `<projectname>::<suballocationname>`, but passing `<suballocationID>` works. This is a bug that will need to be fixed. 
-4. Start and end dates of suballocations are ignored when suballocation management is enabled. This is a bug that will be fixed. 
-5. Only suballocation balances are currently checked at job submission, and the overall allocation balance is not considered. This will be changed in a subsequent release (look at allocation balance and then the suballocation balance)
+1. qsub throws an error if you pass `<projectname>::<suballocationname>`, but passing `<suballocationID>` works. This is a bug that will need to be fixed. 
+2. Start and end dates of suballocations are ignored when suballocation management is enabled. This is a bug that will be fixed.
