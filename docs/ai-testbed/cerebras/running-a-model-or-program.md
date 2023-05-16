@@ -65,7 +65,7 @@ cd ~/R_1.8.0
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout R_1.8.0
+git checkout Release_1.8.0
 ```
 ## Running a Pytorch sample
 
