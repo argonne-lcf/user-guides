@@ -14,7 +14,7 @@ rm -r venv_pt
 source venv_pt/bin/activate
 #python -m pip -q --disable-pip-version-check install pip
 #pip install db-sqlite3
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.8.0+de49801ca3-py3-none-any.whl --find-links=/opt/cerebras/wheels/
+pip3 install --disable-pip-version-check /opt/cerebras/wheels/cerebras_pytorch-1.8.0+de49801ca3-py3-none-any.whl --find-links=/opt/cerebras/wheels/
 ```
 
 #### To make a TensorFlow virtual environment for Cerebras
@@ -30,8 +30,8 @@ source venv_tf/bin/activate
 #python -m pip -q --disable-pip-version-check install pip
 #pip install db-sqlite3
 pip install tensorflow_datasets
-#pip install spacy
-pip3 install -q --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensorflow-1.8.0+de49801ca3-py3-none-any.whl --find-links=/opt/cerebras/wheels/
+pip install spacy
+pip3 install --disable-pip-version-check /opt/cerebras/wheels/cerebras_tensorflow-1.8.0+de49801ca3-py3-none-any.whl --find-links=/opt/cerebras/wheels/
 ```
 
 #### Activation and deactivation

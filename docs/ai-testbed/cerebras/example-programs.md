@@ -12,6 +12,7 @@ git clone https://github.com/Cerebras/modelzoo.git
 cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.8.0/anl_shared
 --->
 
+<!---
 ## UNet
 
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
@@ -29,8 +30,9 @@ cd ~/R_1.8.0/modelzoo/modelzoo/vision/pytorch/unet
 cp /srv/software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --params configs/params_severstal_binary_rawds.yaml --num_csx=1  --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir unet |& tee mytest.log
+python run.py CSX pipeline --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
+--->
 
 <!--- Appears to not have been ported to 1.7.1
 ## BraggNN
@@ -73,28 +75,29 @@ cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/bert
 cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
 ```console
-2023-03-24 22:56:37,334 INFO:   About to send initial weights
-2023-03-24 22:56:48,973 INFO:   Finished sending initial weights
-2023-03-24 23:02:07,002 INFO:   | Train Device=xla:0, Step=100, Loss=9.64062, Rate=7657.52 samples/sec, GlobalRate=7657.51 samples/sec
-2023-03-24 23:02:18,125 INFO:   | Train Device=xla:0, Step=200, Loss=9.02344, Rate=8586.60 samples/sec, GlobalRate=8360.66 samples/sec
-2023-03-24 23:02:35,940 INFO:   | Train Device=xla:0, Step=300, Loss=8.81250, Rate=6883.56 samples/sec, GlobalRate=7260.71 samples/sec
-2023-03-24 23:02:48,484 INFO:   | Train Device=xla:0, Step=400, Loss=8.30469, Rate=7651.26 samples/sec, GlobalRate=7467.06 samples/sec
-2023-03-24 23:03:06,117 INFO:   | Train Device=xla:0, Step=500, Loss=8.15625, Rate=6544.95 samples/sec, GlobalRate=7063.35 samples/sec
-2023-03-24 23:03:18,876 INFO:   | Train Device=xla:0, Step=600, Loss=8.06250, Rate=7433.17 samples/sec, GlobalRate=7207.33 samples/sec
-2023-03-24 23:03:36,654 INFO:   | Train Device=xla:0, Step=700, Loss=8.01562, Rate=6429.21 samples/sec, GlobalRate=6957.56 samples/sec
-2023-03-24 23:03:49,268 INFO:   | Train Device=xla:0, Step=800, Loss=8.01562, Rate=7442.51 samples/sec, GlobalRate=7084.15 samples/sec
-2023-03-24 23:04:07,361 INFO:   | Train Device=xla:0, Step=900, Loss=7.98438, Rate=6372.77 samples/sec, GlobalRate=6891.42 samples/sec
-2023-03-24 23:04:19,437 INFO:   | Train Device=xla:0, Step=1000, Loss=8.01562, Rate=7637.03 samples/sec, GlobalRate=7022.97 samples/sec
-2023-03-24 23:04:19,438 INFO:   Saving checkpoint at global step 1000
-2023-03-24 23:05:46,674 INFO:   Saved checkpoint at global step: 1000
-2023-03-24 23:05:46,676 INFO:   Training Complete. Completed 1024000 sample(s) in 233.04593181610107 seconds.
-2023-03-24 23:06:04,359 INFO:   Monitoring is over without any issue
+2023-05-15 17:39:15,140 INFO:   About to send initial weights
+2023-05-15 17:39:27,423 INFO:   Finished sending initial weights
+2023-05-15 17:44:36,638 INFO:   | Train Device=xla:0, Step=100, Loss=9.46875, Rate=4727.42 samples/sec, GlobalRate=4727.42 samples/sec
+2023-05-15 17:44:48,154 INFO:   | Train Device=xla:0, Step=200, Loss=8.94531, Rate=7225.87 samples/sec, GlobalRate=6172.86 samples/sec
+2023-05-15 17:45:06,606 INFO:   | Train Device=xla:0, Step=300, Loss=8.79688, Rate=6220.12 samples/sec, GlobalRate=5950.12 samples/sec
+2023-05-15 17:45:19,149 INFO:   | Train Device=xla:0, Step=400, Loss=8.28906, Rate=7386.33 samples/sec, GlobalRate=6382.81 samples/sec
+2023-05-15 17:45:37,418 INFO:   | Train Device=xla:0, Step=500, Loss=8.14844, Rate=6317.63 samples/sec, GlobalRate=6210.49 samples/sec
+2023-05-15 17:45:50,150 INFO:   | Train Device=xla:0, Step=600, Loss=8.06250, Rate=7352.49 samples/sec, GlobalRate=6455.56 samples/sec
+2023-05-15 17:46:08,385 INFO:   | Train Device=xla:0, Step=700, Loss=8.00000, Rate=6310.35 samples/sec, GlobalRate=6320.50 samples/sec
+2023-05-15 17:46:21,205 INFO:   | Train Device=xla:0, Step=800, Loss=7.96484, Rate=7316.72 samples/sec, GlobalRate=6489.82 samples/sec
+2023-05-15 17:46:39,690 INFO:   | Train Device=xla:0, Step=900, Loss=7.89844, Rate=6250.48 samples/sec, GlobalRate=6368.45 samples/sec
+2023-05-15 17:46:52,088 INFO:   | Train Device=xla:0, Step=1000, Loss=7.90234, Rate=7455.73 samples/sec, GlobalRate=6517.66 samples/sec
+2023-05-15 17:46:52,089 INFO:   Saving checkpoint at global step 1000
+2023-05-15 17:48:03,482 INFO:   Saving step 1000 in dataloader checkpoint
+2023-05-15 17:48:04,007 INFO:   Saved checkpoint at global step: 1000
+2023-05-15 17:48:04,009 INFO:   Training Complete. Completed 1024000 sample(s) in 229.03258180618286 seconds.
+2023-05-15 17:48:14,792 INFO:   Monitoring returned
 ```
 
 ## BERT - TensorFlow
@@ -117,7 +120,7 @@ cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/bert
 cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
 export MODEL_DIR=mytest
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test_${RANDOM}${RANDOM} |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -163,7 +166,7 @@ cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/gptj
 cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
@@ -209,7 +212,7 @@ cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/gptj
 cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
