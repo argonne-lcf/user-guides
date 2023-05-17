@@ -102,7 +102,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=pt_smoketest --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=pt_smoketest --params configs/params.yaml --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
@@ -155,7 +155,7 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist TensorFlow training run should finish with output resembling the following:
