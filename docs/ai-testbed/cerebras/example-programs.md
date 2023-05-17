@@ -9,7 +9,7 @@ cd ~/R_1.8.0
 git clone https://github.com/Cerebras/modelzoo.git
 ```
 <!---
-cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.8.0/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_1.8.0/anl_shared
 --->
 
 <!---
@@ -27,10 +27,10 @@ Then
 
 ```console
 cd ~/R_1.8.0/modelzoo/modelzoo/vision/pytorch/unet
-cp /srv/software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
+cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX pipeline --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 --->
 
@@ -47,7 +47,7 @@ The BraggNN model has two versions:<br>
 TODO
 cd ~/R_1.8.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
-cp /srv/software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
+cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 ```
@@ -61,7 +61,7 @@ This BERT-large msl128 example uses a single sample dataset for both training an
 First, source a Cerebras PyTorch virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
+source /software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 --->
 ```console
@@ -72,10 +72,10 @@ Then
 
 ```console
 cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/bert
-cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
+cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -106,7 +106,7 @@ This BERT-large msl128 example uses a single sample dataset for both training an
 First, source a Cerebras TensorFlow virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 --->
 ```console
@@ -117,10 +117,10 @@ Then
 
 ```console
 cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/bert
-cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
+cp /software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
 export MODEL_DIR=mytest
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -152,7 +152,7 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
+source /software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 --->
 ```console
@@ -163,10 +163,10 @@ Then
 
 ```console
 cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/gptj
-cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
+cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
@@ -198,7 +198,7 @@ This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras TensorFlow virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 --->
 ```console
@@ -209,10 +209,10 @@ Then
 
 ```console
 cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/gptj
-cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
+cp /software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:

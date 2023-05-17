@@ -16,7 +16,7 @@ The public Cerebras documentation is available [here](https://docs.cerebras.net/
 A typical Cerebras Wafer-Scale Cluster is shown in the figure.<br>
 Users connect (ssh) to one of the three login nodes. Either ssh to `cerebras.ai.alcf.anl.gov`, which randomly resolves to one of cer-login-0[1-3].ai.alcf.anl.gov, or ssh to a specific node, `cer-login-01.ai.alcf.anl.gov`, `cer-login-02.ai.alcf.anl.gov`, `cer-login-03.ai.alcf.anl.gov`.
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
-The trees `/home`, `/srv/projects`, and `/srv/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
+The trees `/home`, `/projects`, and `/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 <figure markdown>
   <!--![CS-2 cluster figure](files/cs-getting-started.png){ width="700" }-->
   ![CS-2 cluster figure](https://docs.cerebras.net/en/latest/_images/topology-of-weight-streaming-on-wsc.png){ width="700" }

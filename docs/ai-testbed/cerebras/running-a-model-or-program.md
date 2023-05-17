@@ -34,13 +34,13 @@ Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyT
 Read-only virtual environments for TensorFlow and PyTorch are available with
 
 ```console
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 ```
 
 or
 
 ```console
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
+source /software/cerebras/venvs/venv_pt/bin/activate
 ```
 
 These are sufficient for running samples, but you may want to make your own virtual environment(s) for the installation of additional packages. <br>
@@ -81,7 +81,7 @@ Next, edit configs/params.yaml, making the following changes:
 ```text
  train_input:
 -    data_dir: "./data/mnist/train"
-+    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/train"
++    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
 ```
 
 and
@@ -89,7 +89,7 @@ and
 ```text
  eval_input:
 -    data_dir: "./data/mnist/val"
-+    data_dir: "/srv/software/cerebras/dataset/fc_mnist/data/mnist/val"
++    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/val"
 ```
 
 If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s
@@ -102,7 +102,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=pt_smoketest --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=pt_smoketest --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
@@ -129,7 +129,7 @@ cd ~/R_1.8.0/modelzoo/modelzoo/fc_mnist/tf/
 or
 
 ```console
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 cd ~/R_1.8.0/modelzoo/modelzoo/fc_mnist/tf/
 ```
 --->
@@ -144,7 +144,7 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
  train_input:
      shuffle: True
 -    data_dir: './tfds' # Place to store data
-+    data_dir: '/srv/software/cerebras/dataset/fc_mnist/tfds/' # Place to store data
++    data_dir: '/software/cerebras/dataset/fc_mnist/tfds/' # Place to store data
      batch_size: 256
      num_parallel_calls: 0   # 0 means AUTOTUNE
 ```
@@ -155,7 +155,7 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist TensorFlow training run should finish with output resembling the following:
