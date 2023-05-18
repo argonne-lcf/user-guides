@@ -4,12 +4,12 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_1.7.1
-cd ~/R_1.7.1
+mkdir ~/R_1.8.0
+cd ~/R_1.8.0
 git clone https://github.com/Cerebras/modelzoo.git
 ```
 <!---
-cp -r /srv/software/cerebras/model_zoo/anl_shared/ ~/R_1.7.1/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_1.8.0/anl_shared
 --->
 
 <!---
@@ -20,18 +20,17 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
+source ~/R_1.8.0/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-# NOTE not working in release 1.7.1; Should be working in next release.
-cd ~/R_1.7.1/modelzoo/modelzoo/vision/pytorch/unet
-cp /srv/software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
+cd ~/R_1.8.0/modelzoo/modelzoo/vision/pytorch/unet
+cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --params configs/params_severstal_binary_rawds.yaml --num_csx=1  --model_dir $MODEL_DIR --mode train --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir unet |& tee mytest.log
+python run.py CSX pipeline --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 --->
 
@@ -46,9 +45,9 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_1.7.1/anl_shared/braggnn/tf
+cd ~/R_1.8.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
-cp /srv/software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
+cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 ```
@@ -62,42 +61,42 @@ This BERT-large msl128 example uses a single sample dataset for both training an
 First, source a Cerebras PyTorch virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
+source /software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
+source ~/R_1.8.0/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/bert
-cp /srv/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
+cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/bert
+cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
 ```console
-2023-03-24 22:56:37,334 INFO:   About to send initial weights
-2023-03-24 22:56:48,973 INFO:   Finished sending initial weights
-2023-03-24 23:02:07,002 INFO:   | Train Device=xla:0, Step=100, Loss=9.64062, Rate=7657.52 samples/sec, GlobalRate=7657.51 samples/sec
-2023-03-24 23:02:18,125 INFO:   | Train Device=xla:0, Step=200, Loss=9.02344, Rate=8586.60 samples/sec, GlobalRate=8360.66 samples/sec
-2023-03-24 23:02:35,940 INFO:   | Train Device=xla:0, Step=300, Loss=8.81250, Rate=6883.56 samples/sec, GlobalRate=7260.71 samples/sec
-2023-03-24 23:02:48,484 INFO:   | Train Device=xla:0, Step=400, Loss=8.30469, Rate=7651.26 samples/sec, GlobalRate=7467.06 samples/sec
-2023-03-24 23:03:06,117 INFO:   | Train Device=xla:0, Step=500, Loss=8.15625, Rate=6544.95 samples/sec, GlobalRate=7063.35 samples/sec
-2023-03-24 23:03:18,876 INFO:   | Train Device=xla:0, Step=600, Loss=8.06250, Rate=7433.17 samples/sec, GlobalRate=7207.33 samples/sec
-2023-03-24 23:03:36,654 INFO:   | Train Device=xla:0, Step=700, Loss=8.01562, Rate=6429.21 samples/sec, GlobalRate=6957.56 samples/sec
-2023-03-24 23:03:49,268 INFO:   | Train Device=xla:0, Step=800, Loss=8.01562, Rate=7442.51 samples/sec, GlobalRate=7084.15 samples/sec
-2023-03-24 23:04:07,361 INFO:   | Train Device=xla:0, Step=900, Loss=7.98438, Rate=6372.77 samples/sec, GlobalRate=6891.42 samples/sec
-2023-03-24 23:04:19,437 INFO:   | Train Device=xla:0, Step=1000, Loss=8.01562, Rate=7637.03 samples/sec, GlobalRate=7022.97 samples/sec
-2023-03-24 23:04:19,438 INFO:   Saving checkpoint at global step 1000
-2023-03-24 23:05:46,674 INFO:   Saved checkpoint at global step: 1000
-2023-03-24 23:05:46,676 INFO:   Training Complete. Completed 1024000 sample(s) in 233.04593181610107 seconds.
-2023-03-24 23:06:04,359 INFO:   Monitoring is over without any issue
+2023-05-17 18:10:08,776 INFO:   Finished sending initial weights
+2023-05-17 18:15:11,548 INFO:   | Train Device=xla:0, Step=100, Loss=9.46875, Rate=4597.49 samples/sec, GlobalRate=4597.49 samples/sec
+2023-05-17 18:15:23,067 INFO:   | Train Device=xla:0, Step=200, Loss=8.94531, Rate=7173.00 samples/sec, GlobalRate=6060.68 samples/sec
+2023-05-17 18:15:41,547 INFO:   | Train Device=xla:0, Step=300, Loss=8.79688, Rate=6193.85 samples/sec, GlobalRate=5876.98 samples/sec
+2023-05-17 18:15:54,118 INFO:   | Train Device=xla:0, Step=400, Loss=8.28906, Rate=7365.06 samples/sec, GlobalRate=6316.84 samples/sec
+2023-05-17 18:16:12,430 INFO:   | Train Device=xla:0, Step=500, Loss=8.14844, Rate=6301.21 samples/sec, GlobalRate=6157.22 samples/sec
+2023-05-17 18:16:25,177 INFO:   | Train Device=xla:0, Step=600, Loss=8.06250, Rate=7340.44 samples/sec, GlobalRate=6406.58 samples/sec
+2023-05-17 18:16:43,315 INFO:   | Train Device=xla:0, Step=700, Loss=8.00000, Rate=6323.57 samples/sec, GlobalRate=6285.55 samples/sec
+2023-05-17 18:16:56,110 INFO:   | Train Device=xla:0, Step=800, Loss=7.96484, Rate=7331.29 samples/sec, GlobalRate=6458.82 samples/sec
+2023-05-17 18:17:14,564 INFO:   | Train Device=xla:0, Step=900, Loss=7.89844, Rate=6261.77 samples/sec, GlobalRate=6343.22 samples/sec
+2023-05-17 18:17:26,977 INFO:   | Train Device=xla:0, Step=1000, Loss=7.90234, Rate=7454.38 samples/sec, GlobalRate=6493.27 samples/sec
+2023-05-17 18:17:26,978 INFO:   Saving checkpoint at global step 1000
+2023-05-17 18:18:38,485 INFO:   Saving step 1000 in dataloader checkpoint
+2023-05-17 18:18:38,931 INFO:   Saved checkpoint at global step: 1000
+2023-05-17 18:18:38,932 INFO:   Training Complete. Completed 1024000 sample(s) in 229.65675950050354 seconds.
+2023-05-17 18:18:49,293 INFO:   Monitoring returned
 ```
 
 ## BERT - TensorFlow
@@ -106,42 +105,42 @@ This BERT-large msl128 example uses a single sample dataset for both training an
 First, source a Cerebras TensorFlow virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_1.7.1/venv_tf/bin/activate
+source ~/R_1.8.0/venv_tf/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/bert
-cp /srv/software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
+cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/bert
+cp /software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
 export MODEL_DIR=mytest
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_csx=1 --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test_${RANDOM}${RANDOM} |& tee mytest.log
+python run.py CSX pipeline --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
 ```console
 INFO:root:Finished sending initial weights
-INFO:tensorflow:global step 100: loss = 9.390625 (5.6 steps/sec)
-INFO:tensorflow:global step 200: loss = 8.921875 (6.48 steps/sec)
-INFO:tensorflow:global step 300: loss = 8.7109375 (5.96 steps/sec)
-INFO:tensorflow:global step 400: loss = 8.3671875 (6.31 steps/sec)
-INFO:tensorflow:global step 500: loss = 8.0703125 (6.04 steps/sec)
-INFO:tensorflow:global step 600: loss = 7.98046875 (6.26 steps/sec)
-INFO:tensorflow:global step 700: loss = 7.8515625 (6.07 steps/sec)
-INFO:tensorflow:global step 800: loss = 7.78125 (6.23 steps/sec)
-INFO:tensorflow:global step 900: loss = 7.7265625 (6.09 steps/sec)
-INFO:tensorflow:global step 1000: loss = 7.6171875 (6.22 steps/sec)
-INFO:root:Training complete. Completed 1024000 sample(s) in 160.75317454338074 seconds
+INFO:tensorflow:global step 100: loss = 9.859375 (27.49 steps/sec)
+INFO:tensorflow:global step 200: loss = 9.28125 (21.77 steps/sec)
+INFO:tensorflow:global step 300: loss = 8.921875 (20.38 steps/sec)
+INFO:tensorflow:global step 400: loss = 8.3984375 (19.78 steps/sec)
+INFO:tensorflow:global step 500: loss = 8.1328125 (24.65 steps/sec)
+INFO:tensorflow:global step 600: loss = 7.8359375 (23.27 steps/sec)
+INFO:tensorflow:global step 700: loss = 7.69140625 (22.37 steps/sec)
+INFO:tensorflow:global step 800: loss = 7.75390625 (21.75 steps/sec)
+INFO:tensorflow:global step 900: loss = 7.63671875 (21.31 steps/sec)
+INFO:tensorflow:global step 1000: loss = 7.59375 (23.64 steps/sec)
+INFO:root:Training complete. Completed 256000 sample(s) in 42.299458026885986 seconds
 INFO:root:Taking final checkpoint at step: 1000
 ...
-INFO:tensorflow:Saved checkpoint for global step 1000 in 69.48748517036438 seconds: mytest/model.ckpt-1000
-INFO:root:Monitoring is over without any issue
+INFO:tensorflow:Saved checkpoint for global step 1000 in 67.17758774757385 seconds: mytest/model.ckpt-1000
+INFO:root:Monitoring returned
 ```
 
 ## GPT-J PyTorch
@@ -152,42 +151,36 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_pt/bin/activate
+source /software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_1.7.1/venv_pt/bin/activate
+source ~/R_1.8.0/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.7.1/modelzoo/modelzoo/transformers/pytorch/gptj
-cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
+cd ~/R_1.8.0/modelzoo/modelzoo/transformers/pytorch/gptj
+cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py --appliance --execution_strategy weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir myuser_test |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
 
 ```console
-2023-03-16 16:05:51,582 INFO:   About to send initial weights
-2023-03-16 16:08:00,833 INFO:   Finished sending initial weights
-2023-03-16 16:15:52,360 INFO:   | Train Device=xla:0, Step=100, Loss=8.59375, Rate=27.82 samples/sec, GlobalRate=27.82 samples/sec
-2023-03-16 16:23:45,144 INFO:   | Train Device=xla:0, Step=200, Loss=8.06250, Rate=27.62 samples/sec, GlobalRate=27.66 samples/sec
-2023-03-16 16:31:38,130 INFO:   | Train Device=xla:0, Step=300, Loss=7.87500, Rate=27.54 samples/sec, GlobalRate=27.60 samples/sec
-2023-03-16 16:39:30,581 INFO:   | Train Device=xla:0, Step=400, Loss=7.62500, Rate=27.53 samples/sec, GlobalRate=27.58 samples/sec
-2023-03-16 16:47:23,284 INFO:   | Train Device=xla:0, Step=500, Loss=7.42188, Rate=27.51 samples/sec, GlobalRate=27.56 samples/sec
-2023-03-16 16:55:16,032 INFO:   | Train Device=xla:0, Step=600, Loss=7.34375, Rate=27.50 samples/sec, GlobalRate=27.55 samples/sec
-2023-03-16 17:03:09,369 INFO:   | Train Device=xla:0, Step=700, Loss=7.17188, Rate=27.48 samples/sec, GlobalRate=27.54 samples/sec
-2023-03-16 17:11:02,115 INFO:   | Train Device=xla:0, Step=800, Loss=6.95312, Rate=27.49 samples/sec, GlobalRate=27.53 samples/sec
-2023-03-16 17:18:55,027 INFO:   | Train Device=xla:0, Step=900, Loss=6.84375, Rate=27.49 samples/sec, GlobalRate=27.53 samples/sec
-2023-03-16 17:26:47,287 INFO:   | Train Device=xla:0, Step=1000, Loss=6.68750, Rate=27.51 samples/sec, GlobalRate=27.53 samples/sec
-2023-03-16 17:26:47,289 INFO:   Saving checkpoint at global step 1000
-2023-03-16 17:30:37,821 INFO:   Saved checkpoint at global step: 1000
-2023-03-16 17:30:37,823 INFO:   Training Complete. Completed 130000 sample(s) in 4952.796596050262 seconds.
-2023-03-16 17:30:41,854 INFO:   Monitoring is over without any issue
+2023-05-17 18:44:38,290 INFO:   Finished sending initial weights
+2023-05-17 18:51:03,551 INFO:   | Train Device=xla:0, Step=100, Loss=8.46875, Rate=33.83 samples/sec, GlobalRate=33.83 samples/sec
+2023-05-17 18:57:26,199 INFO:   | Train Device=xla:0, Step=200, Loss=8.06250, Rate=33.92 samples/sec, GlobalRate=33.90 samples/sec
+2023-05-17 19:03:48,354 INFO:   | Train Device=xla:0, Step=300, Loss=7.71875, Rate=33.98 samples/sec, GlobalRate=33.94 samples/sec
+2023-05-17 19:10:10,299 INFO:   | Train Device=xla:0, Step=400, Loss=7.46875, Rate=34.01 samples/sec, GlobalRate=33.96 samples/sec
+2023-05-17 19:16:32,156 INFO:   | Train Device=xla:0, Step=500, Loss=7.21875, Rate=34.03 samples/sec, GlobalRate=33.98 samples/sec
+2023-05-17 19:16:32,157 INFO:   Saving checkpoint at global step 500
+2023-05-17 19:27:12,834 INFO:   Saving step 500 in dataloader checkpoint
+2023-05-17 19:27:13,435 INFO:   Saved checkpoint at global step: 500
+2023-05-17 19:27:13,436 INFO:   Training Complete. Completed 65000 sample(s) in 2554.1804394721985 seconds.
 ```
 
 ## GPT-J TensorFlow
@@ -198,21 +191,21 @@ This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras TensorFlow virtual environment.
 
 <!---
-source /srv/software/cerebras/venvs/venv_tf/bin/activate
+source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_1.7.1/venv_tf/bin/activate
+source ~/R_1.8.0/venv_tf/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.7.1/modelzoo/modelzoo/transformers/tf/gptj
-cp /srv/software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
+cd ~/R_1.8.0/modelzoo/modelzoo/transformers/tf/gptj
+cp /software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run_appliance.py --execution_strategy weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --credentials_path /opt/cerebras/certs/tls.crt --mount_dirs /home/ /srv/software/ --python_paths /home/$(whoami)/R_1.7.1/modelzoo/ --mgmt_address cluster-server.cerebras1.lab.alcf.anl.gov --compile_dir /myuser_test |& tee mytest.log
+python run.py CSX weight_streaming --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:

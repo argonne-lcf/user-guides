@@ -175,7 +175,7 @@ python3 -m examples_utils benchmark --spec benchmarks.yml --benchmark pytorch_re
 
 ### Scaling to 64 IPUs
 
-> **Note**: One must complete the instructions on [Multi-node Setup](Multi-node-Setup.md) before running this example.
+> **Note**: One must complete the instructions on [Multi-node Setup](multi-node-setup.md) before running this example.
 
 #### Establish Environment Variables
 
