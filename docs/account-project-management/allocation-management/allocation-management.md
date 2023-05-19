@@ -46,7 +46,7 @@ PI can change the name of a suballocation
 
 `sbank e sub <suballocationID> --name=<new_name_of_suballocation>`
 
-By default, the primary suballocation (created when the allocation is created by ALCF) is enabled for all project members. That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default and users have to be added for each of them.
+By default, the primary suballocation (which is the default suballocation created when the allocation is created by ALCF) is unrestricted .i.e. enabled for all project members.  That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default and users have to be added for each of them.
 
 To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation
 
@@ -56,13 +56,15 @@ Then add users with this command:
 
 `sbank e sub <primary suballocation id>  --add-user="<username1> <username2> ..."`
 
-PI changes start and end dates for a suballocation. See known issue #4. 
+PI changes start and end dates for a suballocation. 
 
 `sbank e sub <suallocationID> -S <start_date> -E <end_date>`
  
 PI adds hours to a suballocation
 
 `sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameofsuballoc2>`
+
+Note: hourstomove must be greater than or equal to the available balance for the suballocation "from-nameofsuballoc"
 
 *Tip: see sbank e suballocation -h for all the options*
 
@@ -71,6 +73,8 @@ PI adds hours to a suballocation
 Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
 
 `Eg: qsub -l select=10,walltime=30:00,filesystems=grand:home -A <suballoctionID> -q demand test.sh`
+
+Note: Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID
 
 **Useful commands:**
 List all suballocations for a project that shows no.of jobs run, charges, allocation balance, suballocation name, and list of users  
