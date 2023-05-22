@@ -82,7 +82,3 @@ List all suballocations for a project that shows no.of jobs run, charges, alloca
 `sbank-list-allocations -r polaris -p <projectname> -f”+subname users_list”`
 
 *Tip: see sbank l a -h for all the options and sbank –f? for list of fields that can be displayed* 
-
-## Known Issues
-1. qsub throws an error if you pass `<projectname>::<suballocationname>`, but passing `<suballocationID>` works. This is a bug that will need to be fixed. 
-2. Start and end dates of suballocations are ignored when suballocation management is enabled. This is a bug that will be fixed.
