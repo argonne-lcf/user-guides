@@ -25,6 +25,94 @@ execution and CUDA for GPU execution. To use it, run
 module use /soft/modulefiles
 module load kokkos
 ```
+This sets the following environment variables, some of which are used by
+`cmake`:
+
+* `KOKKOS_HOME` - path to the `lib64/`, `include/` files installed
+* `LIBRARY_PATH` - prepends `$KOKKOS_HOME/lib64` to this variable used by `cmake`
+* `CPATH` - prepends `$KOKKOS_HOME/include` to this variable used by `cmake`
+* `LD_LIBRARY_PATH` - prepends `$KOKKOS_HOME/lib64` to this variable
+
+
+### Building a Kokkos Application Using `cmake`
+
+Add these lines to `CMakeLists.txt`:
+
+```
+find_package(Kokkos REQUIRED)
+target_link_libraries(myTarget Kokkos::kokkoscore)
+```
+
+Here is a simple example `CMakeLists.txt` to compile an example program:
+
+```
+cmake_minimum_required(VERSION 3.22)
+project(buildExample)
+find_package(Kokkos REQUIRED)
+
+set(buildExample_SOURCE_DIR ".")
+
+set(top_SRCS
+  ${buildExample_SOURCE_DIR}/example1.cpp)
+
+set(SOURCE_FILES ${top_SRCS})
+
+add_executable(example1_sycl_aot ${SOURCE_FILES})
+target_link_libraries(example1_sycl_aot Kokkos::kokkoscore)
+target_include_directories(example1_sycl_aot PUBLIC ${buildExample_SOURCE_DIR})
+```
+
+Configure and build it like this:
+
+```
+mkdir build
+cd build
+cmake -DCMAKE_CXX_COMPILER=CC -DCMAKE_C_COMPILER=cc ..
+make
+```
+
+### Building a Kokkos Application Using `make`
+
+Here's an example `Makefile`:
+
+```
+# KOKKOS_HOME set via:
+#   module load kokkos
+
+# You can look at the first lines of $KOKKOS_HOME/KokkosConfigCommon.cmake to
+# see the flags used in cmake configuration of the kokkos library build. The
+# default Kokkos module on Polaris was built with PrgEnv-nvhpc and includes
+# Serial, OpenMP (threads) and CUDA backends. So you should have that
+# environment module loaded and include compiler flags for cuda and openmp:
+
+# Cray MPI wrapper for C++ and C compilers:
+CXX=CC
+CC=cc
+
+CPPFLAGS=-cuda -fopenmp
+LDFLAGS=
+
+LDFLAGS=$(CPPFLAGS) $(LDFLAGS)
+LDLIBS=-L$(KOKKOS_HOME)/lib64 -lkokkoscore -lkokkossimd -lpthread
+
+SRCS=example1.cpp
+OBJS=$(subst .cpp,.o,$(SRCS))
+
+all: example1_polaris
+
+example1_polaris: $(OBJS)
+        $(CXX) $(LDFLAGS) -o example1_polaris $(OBJS) $(LDLIBS)
+
+example1.o: example1.cpp
+
+clean:
+        rm -f $(OBJS)
+
+distclean: clean
+        rm -f example1_polaris
+```
+
+
 ### Configuring Your Own Kokkos Build on Polaris
 
 Here are recommended environment settings and configuration to build your own
@@ -61,7 +149,7 @@ cmake\
  -DCMAKE_CXX_COMPILER=CC\
  -DKokkos_ENABLE_OPENMP=ON\
  -DKokkos_ENABLE_SERIAL=ON\
- -DKokkos_ARCH_ZEN2=ON\
+ -DKokkos_ARCH_ZEN3=ON\
  -DKokkos_ARCH_AMPERE80=ON\
  -DKokkos_ENABLE_CUDA=ON\
  -DKokkos_ENABLE_AGGRESSIVE_VECTORIZATION=ON\
