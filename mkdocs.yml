@@ -62,6 +62,7 @@ nav:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science:
+        - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Frameworks:
