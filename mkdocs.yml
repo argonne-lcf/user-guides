@@ -279,6 +279,60 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+not_in_nav: |
+  account-project-management/allocation-management/sbank-detail-allocations.md
+  account-project-management/allocation-management/sbank-detail-jobs.md
+  account-project-management/allocation-management/sbank-detail-projects.md
+  account-project-management/allocation-management/sbank-detail-transactions.md
+  account-project-management/allocation-management/sbank-detail-users.md
+  account-project-management/allocation-management/sbank-detail.md
+  account-project-management/allocation-management/sbank-examples.md
+  account-project-management/allocation-management/sbank-list-allocations.md
+  account-project-management/allocation-management/sbank-list-jobs.md
+  account-project-management/allocation-management/sbank-list-projects.md
+  account-project-management/allocation-management/sbank-list-transactions.md
+  account-project-management/allocation-management/sbank-list-users.md
+  account-project-management/allocation-management/sbank-list.md
+  account-project-management/allocation-management/sbank-manpage.md
+  ai-testbed/howto-contribute.md
+  ai-testbed/cerebras/README.md
+  ai-testbed/cerebras/performance-tools.md
+  ai-testbed/files/notes.md
+  ai-testbed/files/todo.md
+  ai-testbed/graphcore/README.md
+  ai-testbed/graphcore/Scaling-ResNet50.md
+  ai-testbed/graphcore/cosmictagger-conversion.md
+  ai-testbed/graphcore/cosmictagger-ddp.md
+  ai-testbed/graphcore/multi-node-setup.md
+  ai-testbed/graphcore/profiling-mnist.md
+  ai-testbed/graphcore/profiling-resnet50.md
+  ai-testbed/graphcore/profiling.md
+  ai-testbed/habana/getting-started.md
+  ai-testbed/sambanova_gen1/TODO.md
+  ai-testbed/sambanova_gen1/performance-tools.md
+  ai-testbed/sambanova_gen1/readme-rick.md
+  ai-testbed/sambanova_gen1/readme.md
+  ai-testbed/sambanova_gen1/readme_rick_02.md
+  ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
+  ai-testbed/sambanova_gen1/sambanova.md
+  ai-testbed/sambanova_gen1/sambatune-user-guide.md
+  ai-testbed/sambanova_gen2/README.md
+  ai-testbed/sambanova_gen2/TODO.md
+  ai-testbed/sambanova_gen2/cosmictagger-conversion.md
+  ai-testbed/sambanova_gen2/performance-tools.md
+  ai-testbed/sambanova_gen2/running-GPT2.md
+  ai-testbed/sambanova_gen2/sambanova.md
+  ai-testbed/sambanova_gen2/sambatune-user-guide.md
+  ai-testbed/sambanova_gen2/not_published/running-GPT2-multi-node.md
+  ai-testbed/sambanova_gen2/not_published/running-bert-large-on-sn30.md
+  ai-testbed/sambanova_gen2/not_published/sambatune-user-guide.md
+  polaris/compiling-and-linking/continuous-integration-polaris.md
+  polaris/debugging-tools/debugging-overview.md
+  polaris/performance-tools/performance-overview.md
+  running-jobs/gronkulator.md
+  running-jobs/pbs-admin-quick-start-guide.md
+  services/index.md
+  theta/debugging-tools/debugging-overview.md
 
 theme:
   name: 'material'
