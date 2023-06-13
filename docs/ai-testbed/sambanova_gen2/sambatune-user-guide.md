@@ -2,6 +2,9 @@
 
 ## Notes
 
+Rick  4/16/2023 [10:16 AM]
+/home/rweisner/sambatune_ui_dir contains  the 1.15.3 version which is the latest released version. It should work on your experimental. You will need browser access to wherever you install it.
+
 ```bash
 cd /home/rweisner/tmp/uno_test
 ```

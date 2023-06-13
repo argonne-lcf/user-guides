@@ -32,46 +32,101 @@ Password
 
 ## About SambaTune
 
-SambaTune is a tool for profiling, debugging, and tuning the performance of applications
-running on SN hardware.
+SambaTune is a tool for profiling and performance tuning of applications that are running on SambaNova DataScale hardware.
 
 The tool automates the collection of hardware performance counters, metrics aggregation,
 report generation, and visualization. It also automates benchmarking of the application
 to compute average throughput over a sufficient number of runs. The tool is designed to
 aid the user with performance bottleneck analysis and tuning.
 
-SambaTune is currently used by SN engineers involved in performance tuning efforts.
-SambaTune is also planned for release to external customers to aid with performance
-bottleneck analysis and resolution.
-
 ## Run SambaTune
 
 ```bash
 ssh ALCFUserID@sambanova.alcf.anl.gov
 # Enter MobilePass+ pass code
-ssh sm-01
+ssh sn30-r1-h1
 ```
 
 ```bash
 #TODOBRW
 ssh wilsonb@sambanova.alcf.anl.gov
 # Enter MobilePass+ pass code
-ssh sm-01
+ssh sn30-r1-h1
 ```
 
-First, enter the virtual environment on **sm-01** or **sm-02**:
+## TODO
+
+Install the SambaTune package on the host that is connected to the SambaNova hardware.
 
 ```bash
-source /opt/sambaflow/venv/bin/activate
+sudo apt install -y sambanova-sambatune
+sudo apt install -y sambaflow-apps-micros
 ```
 
-Update path:
+## SambaTune Client Installation
+
+TODO: Waiting for Rick to make a .whl file available.
+
+## Establish Files
+
+A sample application, linear_net.py is included with your installation at /opt/sambaflow/apps/micros/linear_net.py.
+
+### Set Up
+
+Create the following directory and change to it if you have not already done so.
+
+```console
+mkdir ~/app-test
+cd ~/app-test
+```
+
+### Copy linear_net.py
+
+A sample application, linear_net.py, is included with your installation at /opt/sambaflow/apps/micros/linear_net.py.
+
+Copy the file to the current directory:
 
 ```bash
-export PATH=/opt/sambaflow/bin:$PATH
+cp /opt/sambaflow/apps/micros/linear_net.py .
 ```
+
+### Create linear_net.yaml
+
+Create the file **linear_net.yaml** in the current directory using your favorite editor.
+Copy the following **yaml**.
+
+```yaml
+app: linear.py
+model-args: -b 128 -mb 64 --in-features 512 --out-features 128
+compile-args: compile --plot
+run-args: -n 10000
+```
+
+## Command Overview
+
+By default, it will run with the benchmarking mode enabled. Use the --modes flag to run
+modes individually or in any combination.
+Benchmark-Only:
+
+```bash
+sambatune linear_net.yaml
+```
+
+Run the application in instrument-only mode.
+
+> **Note**: The space after -- is required.
+
+$ sambatune --modes instrument -- /opt/sambaflow/sambatune/configs/linear_net.yaml
+
+Run in all modes.
+
+> **Note**: The space after -- is required.
+
+$ sambatune --modes benchmark instrument run -- /opt/sambaflow/sambatune/configs/linear_net.yaml
 
 ## Usage
+
+> TODO Update the help
 
 ```console
 usage: sambatune [-h] [--artifact-root ARTIFACT_ROOT] [--disable-override]
@@ -96,315 +151,14 @@ optional arguments:
   --version             version of sambatune and sambaflow.
 ```
 
-## Command Overview
+## Run the sample application
 
-By default, it will run with the benchmarking mode enabled. Use the --modes flag to run
-modes individually or in any combination.
-Benchmark-Only:
+A sample application, **linear_net.py** is included with your installation at /opt/sambaflow/apps/micros/linear_net.py.
 
-```bash
-sambatune example_net.yaml --artifact-root $(pwd)/artifact_root --modes benchmark
-```
 
-Instrument-Only:
 
-```bash
-sambatune example_net.yaml --artifact-root $(pwd)/artifact_root --modes instrument
-```
 
-All modes:
 
-```bash
-sambatune example_net.yaml --artifact-root $(pwd)/artifact_root --modes instrument
-```
-
-## Command Example
-
-```bash
-# From Bill
-python /opt/sambaflow/apps/private/anl/uno_full.py compile --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --pef-name=uno_16_4_500_ws --output-folder=/home/arnoldw//models_dir/1520847 --mac-v1
-
-python /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --pef=/home/arnoldw//models_dir/1520847/uno_16_4_500_ws/uno_16_4_500_ws.pef --in_dir /var/tmp/raw/ --mac-v1
-```
-
-```bash
-# From Bill --> Bruce
-python /opt/sambaflow/apps/private/anl/uno_full.py compile --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --pef-name=uno_16_4_500_ws --output-folder='.' --mac-v1
-
-export OMP_NUM_THREADS=1
-python /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial --pef=./uno_16_4_500_ws/uno_16_4_500_ws.pef --in_dir /var/tmp/raw/ --mac-v1
-```
-
-```text
-#TODOBRW  This works.  9/19/22
-sm-01/home/wilsonb/tmp/uno_test/uno_ccle.yaml
-app: /opt/sambaflow/apps/private/anl/uno_full.py
-
-model-args: --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial
-
-compile-args: compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1
-
-run-args: --multiprocess-pickle --use-pickle-train  --measure-spatial --train-samba-spatial --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_500 --converted-pickle
-
-env:
-     OMP_NUM_THREADS: 16,
-     SF_RNT_NUMA_BIND: 2
-```
-
-Run the following example:
-
-```bash
-sambatune uno_ccle.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-```
-
-```bash
-#TODOBRW
-# Stand-alone
-export UNO=.
-export NS=500
-srun python /opt/sambaflow/apps/private/anl/uno_full.py compile --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --pef-name=uno_16_4_${NS}_ws --output-folder='.' --mac-v1
-
-export OMP_NUM_THREADS=1
-srun python /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./uno_16_4_${NS}_ws/uno_16_4_${NS}_ws.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --data-dir /software/sambanova/dataset/CCLE_16_${NS}
-
-export UNO=.
-export NS=500
-export OMP_NUM_THREADS=1
-srun pyinstrument /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./uno_16_4_${NS}_ws/uno_16_4_${NS}_ws.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --data-dir /software/sambanova/dataset/CCLE_16_${NS} > pyinstrument_1.13.log 2>&1
-
-
-
-Ricks run python ${UNO}/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=“out/uno_16_4_${NS}/uno_16_4_${NS}.pef” --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE
-```
-
-```text
-#TODOBRW
-sm-01/home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_brw_CCLE_1_12.yaml
-export OMP_NUM_THREADS=16
-app: /home/wilsonb/DL/Sambanova/apps_1.12/private/anl/uno_full.py
-
-model-args: --weight-sharing -b 16 -mb 4 --num-spatial-batches 500 --mapping spatial
-
-compile-args: compile --plot --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1
-
-run-args: --measure-spatial --train-samba-spatial --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_500
-
-env:
-     OMP_NUM_THREADS: 16,
-     SF_RNT_NUMA_BIND: 2
-```
-
-Run the following example:
-
-```bash
-sambatune uno_brw_CCLE_1_12.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-
-export UNO=.
-export NS=50
-export OMP_NUM_THREADS=1
-
-srun python /opt/sambaflow/apps/private/anl/uno_full.py compile --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1
-
-xsrun pyinstrument /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./uno_16_4_${NS}_ws/uno_16_4_${NS}_ws.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --data-dir /software/sambanova/dataset/CCLE_16_${NS} --epochs 1 > my.log 2>&1
-
-srun python /opt/sambaflow/apps/private/anl/uno_full.py run --multiprocess-pickle  --measure-spatial --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./out/uno_full_16_47_${NS}/uno_full_16_47_${NS}.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_${NS} > pyinstrument_1.13.log 2>&1
-
-cat my.log # Has pyinstrument run name.
-pyinstrument --load-prev 2022-09-21T19-21-05 -r html
-
-
-1.13
-
-source /opt/sambaflow/venv/bin/activate
-cd ~/tmp/uno_test/
-export UNO=.
-export NS=500
-export OMP_NUM_THREADS=1
-export PATH=/opt/sambaflow/bin:$PATH
-sntilestat
-
-
-
-./uno_pickl.sh compile 500
-./uno_pickl.sh run 500
-
-```
-
-```bash
-sambatune uno_brw_CCLE_1_12.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-
-export UNO=.
-export NS=50
-export OMP_NUM_THREADS=1
-
-srun python /opt/sambaflow/apps/private/anl/uno_full.py compile --mac-human-decision /opt/sambaflow/apps/private/anl/samba_uno/human_decisions_spatial.json --mac-v1
-
-xsrun pyinstrument /opt/sambaflow/apps/private/anl/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./uno_16_4_${NS}_ws/uno_16_4_${NS}_ws.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --data-dir /software/sambanova/dataset/CCLE_16_${NS} --epochs 1 > my.log 2>&1
-
-srun python /opt/sambaflow/apps/private/anl/uno_full.py run --multiprocess-pickle  --measure-spatial --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef=./out/uno_full_16_47_${NS}/uno_full_16_47_${NS}.pef --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE --lr 0.001 --data-dir /software/sambanova/dataset/CCLE_16_${NS} > pyinstrument_1.13.log 2>&1
-
-cat my.log # Has pyinstrument run name.
-pyinstrument --load-prev 2022-09-21T19-21-05 -r html
-
-
-1.13
-
-source /opt/sambaflow/venv/bin/activate
-cd ~/tmp/uno_test/
-export UNO=.
-export NS=500
-export OMP_NUM_THREADS=1
-export PATH=/opt/sambaflow/bin:$PATH
-sntilestat
-```
-
-uno_pickl.sh
-
-```bash
-#! /bin/bash -x
-#set -e
-source /opt/sambaflow/venv/bin/activate
-SECONDS=0
-NS=${2}
-UNO=/opt/sambaflow/apps/private/anl/
-DS="ALL"
-DS="CCLE"
-
-BS=$((NS*16))
-export OMP_NUM_THREADS=16
-
-echo "Model: UNO_SPA_TRN"
-echo "Date: " $(date +%m/%d/%y)
-echo "Time: " $(date +%H:%M)
-if [ "${1}" == "convert" ] ; then
-python3 ${UNO}/uno/uno_data_loaders_converted.py   --in_dir /var/tmp/raw/ --out_dir /software/sambanova/dataset/${DS}_16_${NS}  --batch-size ${BS} --train_sources ${DS} --file-write-frequency 10
-
-
-elif [ "${1}" == "compile" ] ; then
-  echo "COMPILE"
-  python ${UNO}/uno_full.py compile --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --mac-human-decision ${UNO}/samba_uno/human_decisions_spatial.json --pef-name="uno_16_4_${NS}" --mac-v1
-
-
-elif [ "${1}" == "run" ] ; then
-  echo "RUN ${DS}"
-  SF_RNT_NUMA_BIND=2
-  #python ${UNO}/uno_full.py run --acc-test --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE
-  python ${UNO}/uno_full.py run --mac-v1 --multiprocess-pickle --use-pickle-train --train-samba-spatial -b 16 -mb 4 --num-spatial-batches ${NS} --lr 0.001 --mapping spatial --data-dir /software/sambanova/dataset/${DS}_16_${NS} --converted-pickle --train_sources ${DS} --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --epochs 1
-  #python ${UNO}/uno_full.py run --mac-v1 --multiprocess-pickle --use-pickle-train --train-samba-spatial -b 16 -mb 4 --num-spatial-batches ${NS} --lr 0.001 --mapping spatial --data-dir /software/sambanova/dataset/${DS}_16_${NS} --converted-pickle --train_sources ${DS} --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef"
-
-elif [ "${1}" == "pyinstrument" ] ; then
-  echo "RUN ${DS}"
-  SF_RNT_NUMA_BIND=2
-  #python ${UNO}/uno_full.py run --acc-test --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE
-  pyinstrument ${UNO}/uno_full.py run --mac-v1 --multiprocess-pickle --use-pickle-train --train-samba-spatial -b 16 -mb 4 --num-spatial-batches ${NS} --lr 0.001 --mapping spatial --data-dir /software/sambanova/dataset/${DS}_16_${NS} --converted-pickle --train_sources ${DS} --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --epochs 1
-  #python ${UNO}/uno_full.py run --mac-v1 --multiprocess-pickle --use-pickle-train --train-samba-spatial -b 16 -mb 4 --num-spatial-batches ${NS} --lr 0.001 --mapping spatial --data-dir /software/sambanova/dataset/${DS}_16_${NS} --converted-pickle --train_sources ${DS} --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef"
-
-elif [ "${1}" == "no_pickle" ] ; then
-  echo "no_pickle ${DS}"
-  SF_RNT_NUMA_BIND=2
-  python ${UNO}/uno_full.py run --train-samba-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --in_dir /var/tmp/raw/ --mac-v1 --train_source CCLE
-
-elif [ "${1}" == "mp" ] ; then
-echo "Duration: " $SECONDS
-
-elif [ "${1}" == "mp" ] ; then
-echo "Duration: " $SECONDS
-echo "PERF"
-python uno_full.py measure-performance --measure-spatial --weight-sharing -b 16 -mb 4 --num-spatial-batches ${NS} --mapping spatial --pef="out/uno_16_4_${NS}/uno_16_4_${NS}.pef" --num-iterations 20 --mac-v1
-fi
-
-echo "Duration: " $SECONDS
-```
-
-```bash
-./uno_pickl.sh compile 500
-./uno_pickl.sh run 500
-./uno_pickl.sh pyinstrument 500
-pyinstrument --load-prev 2022-09-22T18-31-24 -r html
-stdout is a terminal, so saved profile output to /tmp/tmpeo5ehksn.html
-cp /tmp/tmpeo5ehksn.html .
-```
-
-On dev terminal
-
-```bash
-scp wilsonb@sambanova.alcf.anl.gov:tmp/uno_test/tmpeo5ehksn.html .
-```
-
-View in local browser.
-
-### Running
-
-Create a directory for your work.
-
-```bash
-mkdir ~/sambatune
-cd ~/sambatune
-```
-
-Create **small_vae.yaml** with the following content using your favorite editor.
-
-```yaml
-app: /opt/sambaflow/apps/private/anl/moleculevae.py
-
-model-args: -b 128 --in-width 512 --in-height 512
-
-compile-args: compile --plot --enable-conv-tiling --compiler-configs-file /opt/sambaflow/apps/private/anl/moleculevae/compiler_configs_conv.json --mac-v2 --mac-human-decision /opt/sambaflow/apps/private/anl/moleculevae/symmetric_human_decisions_tiled_v2.json
-
-run-args: --input-path /var/tmp/dataset/moleculevae/ras1_prot-pops.h5 --out-path ${HOME}/moleculevae_out --model-id 0 --epochs 10
-
-env:
-     OMP_NUM_THREADS: 16
-     SF_RNT_FSM_POLL_BUSY_WAIT: 1
-     SF_RNT_DMA_POLL_BUSY_WAIT: 1
-     CONVFUNC_DEBUG_RUN: 0
-```
-
-Run the following example:
-
-```bash
-sambatune small_vae.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-```
-
-Create **linear_net.yaml** with the following content using your favorite editor.
-
-```yaml
-app: /opt/sambaflow/apps/micros/linear_net.py
-
-model-args: >
-  -b 1024
-  -mb 64
-  --in-features 8192
-  --out-features 4096
-  --repeat 128
-  --inference
-
-compile-args: >
-  --n-chips 2
-  --plot
-
-env:
-  SF_RNT_FSM_POLL_BUSY_WAIT: 1
-  SF_RNT_DMA_POLL_BUSY_WAIT: 1
-  CONVFUNC_DEBUG_RUN": 0
-```
-
-**NOTE:** The following takes 45 minutes to run.
-
-Run the following example:
-
-```bash
-sambatune linear_net.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-```
-
-```bash
-#TODOBRW
-cd ~/tmp/uno_test
-screen
-sambatune uno.yaml --artifact-root $(pwd)/artifact_root --modes benchmark instrument run
-```
-
-where **linear_net.yaml** is a user-specified configuration file you created above.
 
 ## SambaTune UI
 
