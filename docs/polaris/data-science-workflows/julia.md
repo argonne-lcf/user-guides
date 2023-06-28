@@ -13,7 +13,7 @@ Labs](https://julia.mit.edu/) team at MIT and in
 scientists and programmers worldwide.
 
 ## Contributing
-This is a first draft of the Julia documentation for Polaris. If you have any
+This guide is a first draft of the Julia documentation for Polaris. If you have any
 suggestions or contributions, please open a pull request or contact us by
 opening a ticket at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
@@ -39,10 +39,17 @@ juliaup add release
 
 ### Julia Project Environment
 
-Julia has a built-in package manager that allows you to create a project and enable project specific dependencies. Julia manages packages in the Julia depot that is located by default in `~/.julia`. However, that NFS filesystem is not meant for high-speed access. Therefore, this Julia depot folder should be located on a fast filesystem of your choice. The Julia depot directory can be set via the environment variable `JULIA_DEPOT_PATH`. For example, you can set the Julia depot to your home directory on Polaris by adding the following line to your `~/.bashrc` file:
+The Julia built-in package manager allows you to create a project and enable
+project-specific dependencies. Julia manages packages in the Julia depot located
+by default in `~/.julia`. However, that NFS filesystem is not meant for
+high-speed access. Therefore, this Julia depot folder should be located on a
+fast filesystem of your choice (grand, eagle). The Julia depot directory is
+set via the environment variable `JULIA_DEPOT_PATH`. For example, you can set
+the Julia depot to a directory on Polaris grand filesystem by adding the following line
+to your `~/.bashrc` file:
 
 ```bash
-export /gpfs/alpine/scratch/$USER/$PROJECT/julia_depot
+export /lus/grand/projects/$PROJECT/$USER/julia_depot
 ```
 
 ## Programming Julia on Polaris
@@ -52,7 +59,7 @@ There are three key components to using Julia for large-scale computations:
 2. GPU support through [CUDA.jl](https://github.com/JuliaGPU/CUDA.jl)
 3. HDF5 support through [HDF5.jl](https://juliaio.github.io/HDF5.jl/stable/)
 
-In addition we recommend VSCode with the [Julia
+In addition, we recommend VSCode with the [Julia
 extension](https://www.julia-vscode.org/) for a modern IDE experience, together
 with the ssh-remote extension for remote interactive development.
 ### MPI Support
@@ -65,6 +72,28 @@ This will install the MPI.jl package and default MPI prebuilt binaries provided 
 ```
 julia --project -e 'using MPIPreferences; MPIPreferences.use_system_binary()'
 ```
+
+Check that the correct MPI library is targeted with Julia.
+```
+julia --project -e 'using MPI; MPI.versioninfo()'
+MPIPreferences:
+  binary:  system
+  abi:     MPICH
+  libmpi:  libmpi_cray
+  mpiexec: mpiexec
+
+Package versions
+  MPI.jl:             0.20.11
+  MPIPreferences.jl:  0.1.8
+
+Library information:
+  libmpi:  libmpi_cray
+  MPI version:  3.1.0
+  Library version:
+    MPI VERSION    : CRAY MPICH version 8.1.16.5 (ANL base 3.4a2)
+    MPI BUILD INFO : Mon Apr 18 12:05 2022 (git hash 4f56723)
+```
+When running on the login node, switch back to the default provided MPI binaries in `MPI_jll.jl` by removing the `LocalPreferences.toml` file.
 ### GPU Support
 
 NVIDIA GPU support is provided through the [CUDA.jl](https://github.com/JuliaGPU/CUDA.jl) package.
@@ -90,18 +119,17 @@ julia> ] add HDF5
 ## Quickstart Guide
 The following example shows how to use MPI.jl, CUDA.jl, and HDF5.jl to write a
 parallel program that computes the sum of two vectors on the GPU and writes the
-result to an HDF5 file. A repository with the example code computing an
+result to an HDF5 file. A repository with an example code computing an
 approximation of pi can be found at
 [Polaris.jl](https://github.com/exanauts/Polaris.jl). In this repository, you will also find
 a `setup_polaris.sh` script that will build the HDF5.jl and MPI.jl package for the system libraries.
-The dependencies can be installed with the following commands:
+The dependencies are installed with the following commands:
 ```bash
 julia --project
 ```
 
 ```julia
 julia> ] up
-end
 ```
 
 ```julia
@@ -159,7 +187,7 @@ end
 
 This example can be run on Polaris with the following job submission script:
 ```bash
-#!/bin/sh
+#!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
@@ -175,13 +203,18 @@ NRANKS_PER_NODE=4
 NDEPTH=8
 NTHREADS=1
 module load cray-hdf5-parallel
+# Put in your Julia depot path
 export JULIA_DEPOT_PATH=MY_JULIA_DEPOT_PATH
-
+# Path to Julia executable. When using juliaup, it's in your julia_depot folder
+JULIA_PATH=$JULIA_DEPOT_PATH/juliaup/julia-1.9.1+0.x64.linux.gnu/bin/julia
 NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE=${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
 
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth julia --check-bounds=no --project pi.jl
 ```
+Verify that `JULIA_DEPOT_PATH` is set to the correct path and `JULIA_PATH`
+points to the Julia executable. When using `juliaup`, the Julia executable is
+located in the `juliaup` folder of your `JULIA_DEPOT_PATH`.
 
 ## Advanced features
 
