@@ -1,6 +1,6 @@
 # Groq
  
-[System Overview](./System-Overview.md)
+[System Overview](./system-overview.md)
 
 [Getting Started](./getting-started.md)
 
