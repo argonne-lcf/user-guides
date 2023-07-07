@@ -244,6 +244,9 @@ nav:
     - Groq:
       #- System Overview: ai-testbed/groq/system-overview.md
       - Getting Started: ai-testbed/groq/getting-started.md
+      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
+      #- Example Programs: ai-testbed/groq/example-programs.md
+      #- Customizing Environments: ai-testbed/groq/customizing-environment.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:

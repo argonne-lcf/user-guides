@@ -6,7 +6,7 @@
 
 <!--- [Customizing Environment](./customizing-environment.md) --->
 
-<!--- [Running a Model/Program](./running-a-model-or-program.md) --->
+[Running a Model/Program](./running-a-model-or-program.md)
 
 <!--- [Job Queuing and Submission](./job-queuing-and-submission.md) --->
 
