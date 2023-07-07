@@ -86,6 +86,7 @@ conda activate groqflow
 #### Run a sample
 ```bash
 cd ~/groqflow/proof_points/natural_language_processing/minilm
+pip install -r requirements.txt
 python minilmv2.py
 ```
 
