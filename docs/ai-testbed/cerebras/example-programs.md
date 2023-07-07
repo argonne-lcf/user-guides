@@ -12,7 +12,6 @@ git clone https://github.com/Cerebras/modelzoo.git
 cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_1.8.0/anl_shared
 --->
 
-<!---
 ## UNet
 
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
@@ -30,9 +29,8 @@ cd ~/R_1.8.0/modelzoo/modelzoo/vision/pytorch/unet
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX weight_streaming --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.8.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
---->
 
 <!--- Appears to not have been ported to 1.7.1
 ## BraggNN
