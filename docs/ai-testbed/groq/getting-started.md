@@ -1,17 +1,23 @@
 # Getting Started
 
+## Allocations
 
-The first step is to ssh from a local machine to the login node.
+TODO confirm all this
+Available for Director’s Discretionary(DD) allocations.
+[https://www.alcf.anl.gov/science/directors-discretionary-allocation-program](Allocation Request Form)
+Allocations also available under the [https://www.alcf.anl.gov/science/adsp-allocation-program](INCITE), [https://www.alcf.anl.gov/science/adsp-allocation-program](ALCC), and [https://www.alcf.anl.gov/science/adsp-allocation-program](ALCF DataScience) programs.
+
 ## Accounts
 
-TODO what procedure exactly is required for gaining password-based login access?
-Get an account on the Groqrack system. Contact TODO for access.
+If you do not have an ALCF account, request one here: [https://accounts.alcf.anl.gov/#/home](ALCF Account and Project Management)
 
 ## Setup
 
 Connection to a Groq node is a two-step process.
 
 ### Log in to a homes node
+
+The first step is to ssh from a local machine to the login node.
 
 Follow the instructions here to access GCE login nodes: [https://help.cels.anl.gov/docs/linux/ssh/](https://help.cels.anl.gov/docs/linux/ssh/)
 If you have not already done so, you will need to create a ssh key pair and add ONLY the public key to your cels account at [https://accounts.cels.anl.gov](https://accounts.cels.anl.gov). Key type ed25519 is preferred, but not required.
