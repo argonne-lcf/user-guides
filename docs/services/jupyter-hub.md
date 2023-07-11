@@ -132,7 +132,7 @@ The Polaris JupyterHub instance does not have a “Local Host Process” option.
 
 <figure markdown>
   ![Add options](files/Jupyter-6-job-options.png){ width="700" }
-  <figcaption>Poalris Job options</figcaption>
+  <figcaption>Polaris Job options</figcaption>
 </figure>
 
 Once the appropriate information is provided the user will click the “Start” button and wait for the job to spawn.  In cases where the job queue is long the interface will time out and the job will be removed from the queue.
