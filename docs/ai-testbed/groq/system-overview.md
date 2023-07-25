@@ -1,1 +1,1 @@
-The GroqRack 42U compute cluster has 9 GroqNodes servers (8 compute nodes and 1 redudant node). 
+The GroqRack 42U compute cluster has 9 GroqNodes servers, 8 compute nodes named sequentially from groq-r01-gn-01 to groq-r01-gn-08 and 1 redudant node (groq-r01-gn-09). The node is Dual AMD based processor with 32 cores and a total of 64 threads. It includes a total of 1TB of DRAM. 
