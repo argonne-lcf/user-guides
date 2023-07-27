@@ -273,7 +273,7 @@ cp -r /opt/sambaflow/apps/image ~/apps/image
 cd ~/apps/image/unet
 ```
 
-Using the contents of [unet_compile_run_inf_rl.sh](unet_compile_run_inf_rl.sh), create a file in the current directory with the same name.
+Using the contents of [unet_compile_run_inf_rl.sh](files/unet_compile_run_inf_rl.sh), create a file in the current directory with the same name.
 
 Export the path to the dataset which is required for the training.
 

@@ -1,8 +1,7 @@
 # Steps to Run BERT-Large on Sambanova DataScale SN10-8R
 
 <!--- TODO: both of these links are broken -->
-* BERT Code is in the [Bert](./bert/) directory here for your reference.
-  * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT.
+<!--- * BERT Code is in the [Bert](./bert/) directory here for your reference.  * [transformners_hook.py](./bert/transformers_hook.py): contains code for BERT. -->
 
 <!-- ## Getting started
 

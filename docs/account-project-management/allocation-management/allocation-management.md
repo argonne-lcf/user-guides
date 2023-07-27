@@ -9,7 +9,7 @@ For information on how to run the query, look at our documentation on our [sbank
 ## Using sbank to Determine the Balance of an Allocation
 To determine which platforms have an active balance, check our allocation accounting system [sbank](sbank-allocation-accounting-system.md).
 
-- To obtain the allocation balance, check the sbank command [sbank-list-allocations](sbank-list-allocations.md).
+- To obtain the allocation balance, check the sbank command [sbank-list-allocations](not_in_nav/sbank-list-allocations.md).
 - DD projects with a negative balance will not be able to run jobs until they have requested additional time, see Getting more time below.
 - INCITE and ALCC PIs automatically email a summary of project usage.  If this is a DD project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
