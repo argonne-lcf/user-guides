@@ -49,6 +49,7 @@ nav:
       - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
+      - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
     - Running Jobs: polaris/running-jobs.md
