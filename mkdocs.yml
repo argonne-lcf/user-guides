@@ -287,9 +287,6 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  running-jobs/gronkulator.md
-  running-jobs/pbs-admin-quick-start-guide.md
-  services/index.md
   theta/theta-decommissioning.md
 
 theme:
