@@ -1,10 +1,10 @@
 # Profiling MNIST
 
-Follow all the instructions in [Getting Started](/docs/graphcore/Getting-Started) to log into a Graphcore node.
+Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.
 
-Follow the instructions in [Virtual Environments](/docs/graphcore/Virtual-Environments) up to and including **PopART Environment Setup**.
+Follow the instructions in [Virtual Environments](../virtual-environments.md) up to and including **PopART Environment Setup**.
 
-Following the instructions in [Example Programs](/docs/graphcore/Example-Programs) up to and including
+Following the instructions in [Example Programs](../example-programs.md) up to and including
 **MNIST, Install Requirements**.
 
 ## Change Directory
@@ -33,4 +33,4 @@ Do so by running the following command:
 python mnist_poptorch.py
 ```
 
-When MNIST has finished running, see [Profiling](/docs/graphcore/Profiling) to use **Graph Analyser**.
+When MNIST has finished running, see [Profiling](./profiling.md) to use **Graph Analyser**.

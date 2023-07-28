@@ -344,6 +344,10 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'

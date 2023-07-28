@@ -2,7 +2,7 @@
 Allocations require management – balance checks, resource allocation, requesting more time, etc.
 
 ## Checking for an Active Allocation
-To determine if there is an active allocation, check [Job Submision](../../../theta/queueing-and-running-jobs/job-and-queue-scheduling/#submit-a-job).
+To determine if there is an active allocation, check [Job Submission](../../theta/queueing-and-running-jobs/job-and-queue-scheduling.md#submit-a-job).
 
 For information on how to run the query, look at our documentation on our [sbank Allocations Accounting System](sbank-allocation-accounting-system.md) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
 
