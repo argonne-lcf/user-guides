@@ -1,4 +1,4 @@
-name: update-livesite
+name: mkdocs-build
 on:
   push:
     branches:
