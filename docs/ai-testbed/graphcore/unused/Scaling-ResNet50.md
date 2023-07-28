@@ -1,6 +1,6 @@
 # Scaling ResNet50
 
-Follow all the instructions in [Getting Started](/docs/graphcore/Getting-Started) to log into a Graphcore node.
+Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.
 
 ## Examples Repo
 
@@ -131,12 +131,12 @@ You should see:
 # gc-poplar-04:22 SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5
 ```
 
-## Benchmarks.yml
+## `benchmarks.yml`
 
 Update **${HOME}/graphcore/examples/vision/cnns/pytorch/train/benchmarks.yml**
-with your favorite editor to match [benchmarks.yml](/docs/graphcore/benchmarks.yml).
+with your favorite editor to match [benchmarks.yml](./files/benchmarks.yml).
 
-## Configs.yml
+## `configs.yml`
 
 Update **${HOME}/graphcore/examples/vision/cnns/pytorch/train/configs.yml**
 with your favorite editor.  At about line 30, change **use_bbox_info: true** to

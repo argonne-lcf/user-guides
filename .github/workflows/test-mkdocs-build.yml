@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [ master ]
 
 jobs:
   deploy:
@@ -15,4 +17,4 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force --strict
+      - run: mkdocs build --strict

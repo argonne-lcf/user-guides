@@ -25,7 +25,9 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since it is a dropdown. Only linked to in base docs/index.md
+  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
+    # it is a dropdown. Only linked to in base docs/index.md
+    - Getting Started: services/getting-started.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
@@ -142,6 +144,7 @@ nav:
       - OpenMP: theta/programming-models/openmp-theta.md
       - Raja: theta/programming-models/raja.md
     - Debugging Tools:
+      - Overview: theta/debugging-tools/debugging-overview.md
       - Arm DDT: theta/debugging-tools/arm-ddt.md
       - ATP and STAT: theta/debugging-tools/atp-and-stat.md
       - GDB: theta/debugging-tools/gdb.md
@@ -188,7 +191,7 @@ nav:
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
   - AI Testbed:
-    - Getting Started: ai-testbed/index.md
+    - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
       - Getting Started: ai-testbed/cerebras/getting-started.md
@@ -280,6 +283,13 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+not_in_nav: |
+  not_in_nav/
+  unused/
+  todo.md
+  TODO.md
+  notes.md
+  theta/theta-decommissioning.md
 
 theme:
   name: 'material'
@@ -334,6 +344,10 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
