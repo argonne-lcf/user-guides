@@ -2,7 +2,7 @@
 
 ## Compiling on Polaris Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, as is usually the case, compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. You may in this case compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](/polaris/running-jobs#Interactive-Jobs-on-Compute-Nodes), or running your build system in a batch job.
+If your build system does not require GPUs for the build process, as is usually the case, compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. You may in this case compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs.md#Interactive-Jobs-on-Compute-Nodes), or running your build system in a batch job.
 
 <!-- The following section on home file system would be more useful somewhere else --Tim W.: -->
 

@@ -7,7 +7,7 @@ A simple example using a similar script on Polaris is available in the
 
 ## CPU MPI-OpenMP Examples
 
-The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. See [Queues](./job-and-queue-scheduling/#queues) for details on practical limits to node counts and job times for different sizes of jobs.
+The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ranks per node and 2 OpenMP threads per rank. See [Queues](./job-and-queue-scheduling.md#queues) for details on practical limits to node counts and job times for different sizes of jobs.
 
 The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) program is a compiled C++ code, which is built via `make -f Makefile.nvhpc` in the linked directory after cloning the [Getting Started](https://github.com/argonne-lcf/GettingStarted) repository.
 

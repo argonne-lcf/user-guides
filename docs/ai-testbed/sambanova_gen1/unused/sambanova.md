@@ -36,7 +36,7 @@ broken (503 errors).
 
 ## Further Information
 
-[Human Decisions Files notes](/display/AI/Human+Decisions+Files+notes)
+<!-- [Human Decisions Files notes](/display/AI/Human+Decisions+Files+notes) -->
 
 ## Creating a SambaNova Portal Account to access the documentation portal
 
