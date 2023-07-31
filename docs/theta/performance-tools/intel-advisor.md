@@ -98,6 +98,6 @@ There are three other types of collections that can be performed with Advisor fo
 ## Additional Information:
 There are many command line options. See [2] for more details on all of the options, and its more comprehensive user guide also available on Intel’s website.
 - [1] Williams, Samuel, Andrew Waterman, and David Patterson. "Roofline: an insightful visual performance model for multicore architectures." Communications of the ACM 52.4 (2009): 65-76.
-- [2] Intel. “Get Started with Intel Advisor.” Intel® Software, Intel, 18 Oct. 2018, [software.intel.com/en-us/get-started-with-advisor-for-more-information](software.intel.com/en-us/get-started-with-advisor-for-more-information)
+- [2] Intel. “Get Started with Intel Advisor.” Intel® Software, Intel, 18 Oct. 2018
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nCEBrkNLUHI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

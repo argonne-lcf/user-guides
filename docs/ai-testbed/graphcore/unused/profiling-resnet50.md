@@ -1,8 +1,8 @@
 # Profiling ResNet50
 
-Follow all the instructions in [Getting Started](/docs/graphcore/Getting-Started) to log into a Graphcore node.
+Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.
 
-Follow the instructions in [Virtual Environments](/docs/graphcore/Virtual-Environments) up to and including **PopART Environment Setup**.
+Follow the instructions in [Virtual Environments](../virtual-environments.md) up to and including **PopART Environment Setup**.
 
 ## Examples Repo
 
@@ -58,4 +58,4 @@ python3 -m examples_utils benchmark --spec benchmarks.yml --benchmark pytorch_re
 
 ## Profile Results
 
-When ResNet50 has finished running, see [Profiling](/docs/graphcore/Profiling) to use **Graph Analyser**.
+When ResNet50 has finished running, see [Profiling](./profiling.md) to use **Graph Analyser**.

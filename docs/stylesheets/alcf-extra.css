@@ -913,3 +913,12 @@ footer a:hover {
 .js-dropdown-hidden {
 	display: none;
 }
+
+table {
+  table-layout: fixed;
+  max-width: 100%;
+}
+
+.md-typeset code {
+  overflow-wrap: break-word;
+}

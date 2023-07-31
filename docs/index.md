@@ -9,9 +9,9 @@ Our user guides contain information for:
 - [Theta](theta/hardware-overview/machine-overview.md): Information on how to use our Cray XC40/KNL supercomputer.
 - [ThetaGPU](theta-gpu/hardware-overview/theta-gpu-machine-overview.md): Information on how to use our NVIDIA DGX A100 supercomputer.
 - [Cooley](cooley/cooley-overview.md): Information on how to use our visualization cluster.
-- [AI Testbed](https://docs.alcf.anl.gov/ai-testbed/): Information on how to use our AI Accelerators.
+- [AI Testbed](ai-testbed/getting-started.md): Information on how to use our AI Accelerators.
 - [Aurora/Sunspot](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for our upcoming exacale supercomputer.
-- [Services](services/index.md): Information on how to use various services provided across clusters.
+- [Services](services/getting-started.md): Information on how to use various services provided across clusters.
 - [Facility Policies](policies/facility-policies.md): Information on our policies and procedures.
 
 ## How to Get Access
