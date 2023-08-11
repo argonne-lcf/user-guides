@@ -174,7 +174,7 @@ The last parts of the output should resemble the following:
 2023-05-17 19:27:13,435 INFO:   Saved checkpoint at global step: 500
 2023-05-17 19:27:13,436 INFO:   Training Complete. Completed 65000 sample(s) in 2554.1804394721985 seconds.
 ```
-
+<!---
 ## GPT-J TensorFlow
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
@@ -182,10 +182,10 @@ This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
 First, source a Cerebras TensorFlow virtual environment.
 
-<!---
+
 source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
---->
+
 ```console
 source ~/R_1.9.1/venv_tf/bin/activate
 ```
@@ -211,3 +211,4 @@ INFO:root:Taking final checkpoint at step: 500
 INFO:tensorflow:Saved checkpoint for global step 500 in 304.37238907814026 seconds: model_dir_gptj_tf/model.ckpt-500
 INFO:root:Monitoring is over without any issue
 ```
+--->
