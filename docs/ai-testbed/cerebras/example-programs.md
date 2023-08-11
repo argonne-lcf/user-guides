@@ -97,7 +97,7 @@ The last parts of the output should resemble the following, with messages about 
 2023-05-17 18:18:49,293 INFO:   Monitoring returned
 ```
 
-<~--- No longer part of the modelzoo
+<!--- No longer part of the modelzoo
 ## BERT - TensorFlow
 The modelzoo/modelzoo/transformers/tf/bert directory is a TensorFlow implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
