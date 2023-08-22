@@ -12,7 +12,7 @@ git clone https://github.com/graphcore/examples.git
 
 ### Activate PopTorch Environment
 ```bash
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+source ~/venvs/graphcore/poptorch33_env/bin/activate
 ```
 
 ### Install Requirements
@@ -64,7 +64,7 @@ Accuracy on test set: 98.04%
 
 Create a TensorFlow2 environment as explained in the [tensorflow-2-environment-setup](https://github.com/argonne-lcf/user-guides/blob/feature/Graphcore001-DNP_edits/docs/ai-testbed/graphcore/virtual-environments.md#tensorflow-2-environment-setup) and activate the same.
 ```bash
-source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
+source ~/venvs/graphcore/tensorflow2_33_env/bin/activate
 ```
 
 ### Install Requirements
@@ -86,7 +86,7 @@ Execute the command:
 The expected output will start with downloads followed by:
 
 ```console
-2023-04-26 14:42:32.179566: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
+2023-04-26 14:42:32.179566: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.3.0 (e12d5f9f01) Poplar package: 9c103dc348
 2023-04-26 14:42:34.517107: I tensorflow/compiler/plugin/poplar/driver/poplar_executor.cc:1619] TensorFlow device /device:IPU:0 attached to 1 IPU with Poplar device ID: 0
 Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
 11493376/11490434 [==============================] - 0s 0us/step
@@ -158,9 +158,9 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
-Create and activate a fresh PopTorch environment `poptorch31_resnet50_env` as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup), then activate it.
+Create and activate a fresh PopTorch environment `poptorch33_resnet50_env` as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup), then activate it.
 ```console
-source ~/venvs/graphcore/poptorch31_resnet50_env/bin/activate
+source ~/venvs/graphcore/poptorch33_resnet50_env/bin/activate
 ```
 
 ### Install Requirements
@@ -169,10 +169,7 @@ Change directory
 cd ~/graphcore/examples/vision/cnns/pytorch
 make install 
 make install-turbojpeg
-pip install torch==1.13.0
 ```
-> **Note**: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version.
-
 
 #### Update configs.yml
 Change directory:
@@ -327,10 +324,10 @@ Loss:6.2747 | Accuracy:2.48%: 100%|██████████| 78/78 [04:46<
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
 
-In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch31_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup) and activate it.
+In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch33_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup) and activate it.
 
 ```console
-source ~/venvs/graphcore/poptorch31_gpt2/bin/activate
+source ~/venvs/graphcore/poptorch33_gpt2/bin/activate
 ```
 ### Install Requirements
 Change directory:

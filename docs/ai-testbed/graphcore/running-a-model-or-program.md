@@ -9,7 +9,7 @@ Running of any model or application includes graph compilation of the model that
 
 Graphcore provides examples of some well-known AI applications in their repository at [https://github.com/graphcore/examples.git](https://github.com/graphcore/examples.git).
 
-Clone the examples repository to your personal directory structure, and checkout the v3.1.0 release:
+Clone the examples repository to your personal directory structure, and checkout the v3.3.0 release:
 
 ```bash
 mkdir ~/graphcore
@@ -25,7 +25,7 @@ cd examples
 Follows the steps at [Poptorch environment setup](./virtual-environments.md#poptorch-environment-setup) to enable the Poplar SDK.
 
 ```bash
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+source ~/venvs/graphcore/poptorch33_env/bin/activate
 ```
 
 #### Install Requirements
@@ -65,7 +65,7 @@ The expected output will start with downloads followed by and we can observe the
 ```console
 srun: job 2623 queued and waiting for resources
 srun: job 2623 has been allocated resources
-/home/arnoldw/workspace/poptorch31.env/lib/python3.8/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libc10_cuda.so: cannot open shared object file: No such file or directory
+/home/arnoldw/workspace/poptorch33.env/lib/python3.8/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libc10_cuda.so: cannot open shared object file: No such file or directory
   warn(f"Failed to load image Python extension: {e}")
 Epochs:   0%|          | 0/10 [00:00<?,[16:58:56.683] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
 Graph compilation: 100%|██████████| 100/100 [00:20<00:00]
