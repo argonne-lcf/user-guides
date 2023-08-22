@@ -40,7 +40,7 @@ export POPART_LOG_LEVEL=WARN
 export POPLAR_LOG_LEVEL=WARN
 export POPLIBS_LOG_LEVEL=WARN
 
-export PYTHONPATH/software/graphcore/poplar_sdk/3.3.0/poplar-ubuntu_20_04-3.3.0+7857-b67b751185/python:$PYTHONPATH
+export PYTHONPATH=/software/graphcore/poplar_sdk/3.3.0/poplar-ubuntu_20_04-3.3.0+7857-b67b751185/python:$PYTHONPATH
 ```
 
 ## PopTorch Environment Setup
