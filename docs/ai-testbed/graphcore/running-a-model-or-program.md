@@ -34,7 +34,6 @@ Change directory and install packages specific to the MNIST model:
 
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
-python -m pip install torchvision==0.14.0
 ```
 
 #### Run MNIST
@@ -63,15 +62,9 @@ The artifacts from the graph compilations is cached in the location set by the f
 The expected output will start with downloads followed by and we can observe the model used by the model, the progress bar of the compilation process, and the training progress bar.
 
 ```console
-srun: job 2623 queued and waiting for resources
-srun: job 2623 has been allocated resources
-/home/arnoldw/workspace/poptorch33.env/lib/python3.8/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libc10_cuda.so: cannot open shared object file: No such file or directory
-  warn(f"Failed to load image Python extension: {e}")
-Epochs:   0%|          | 0/10 [00:00<?,[16:58:56.683] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
-Graph compilation: 100%|██████████| 100/100 [00:20<00:00]
-Epochs: 100%|██████████| 10/10 [01:35<00:00,  9.57s/it]
-Graph compilation: 100%|██████████| 100/100 [00:13<00:00]
-TrainingModelWithLoss(%|█████████▋| 97/100 [00:13<00:01]
+srun: job 10671 queued and waiting for resources
+srun: job 10671 has been allocated resources
+TrainingModelWithLoss(
   (model): Network(
     (layer1): Block(
       (conv): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1))
@@ -91,7 +84,11 @@ TrainingModelWithLoss(%|█████████▋| 97/100 [00:13<00:01]
   )
   (loss): CrossEntropyLoss()
 )
-Accuracy on test set: 98.59%
+Epochs:   0%|          | 0/10 [00:00<?,[23:27:06.753] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
+Graph compilation: 100%|██████████| 100/100 [00:00<00:00]
+Epochs: 100%|██████████| 10/10 [01:17<00:00,  7.71s/it]
+Graph compilation: 100%|██████████| 100/100 [00:00<00:00]                          
+Accuracy on test set: 96.85%██████| 100/100 [00:00<00:00]
 ```
 
 
