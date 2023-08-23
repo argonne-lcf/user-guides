@@ -5,18 +5,13 @@ The CS-2 cluster has its own **Kubernetes-based** system for job submission and 
 Jobs are started automatically through the **Python** frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
 
-In order to run the Cerebras csctl utility you will need to copy a config file to your home directory.  Future versions of Cerebras software will reference a system wide file.
-```console
-mkdir ~/.cs; cp /opt/cerebras/config ~/.cs/config
-```
-
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
 
 ```console
-(venv_tf) $ csctl  get jobs | grep -v "SUCCEEDED\|FAILED\|CANCELLED"
-NAME                          AGE    PHASE      SYSTEMS                USER     LABELS
-wsjob-eyjapwgnycahq9tus4w7id  88s    RUNNING    cer-cs2-01             username  name=pt_smoketest,user=username
-(venv_tf) $
+(venv_pt) $ csctl get jobs
+NAME                          AGE  DURATION  PHASE    SYSTEMS     USER     LABELS        DASHBOARD
+wsjob-thjj8zticwsylhppkbmjqe  13s  1s        RUNNING  cer-cs2-01  username name=unet_pt  https://grafana.cerebras1.lab.alcf.anl.gov/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-thjj8zticwsylhppkbmjqe&from=1691705374000&to=now
+(venv_pt) $
 ```
 
 Jobs can be canceled as shown:
@@ -46,7 +41,8 @@ wsjob-ez6dyfronnsg2rz7f7fqw4  19m SUCCEEDED  cer-cs2-02 username testlabel=test,
 (venv_pt) $
 ```
 
-See `csctl -h` for more options
+See `csctl -h` for more options.<br>
+Add `-h` to a command for help for that command, e.g. `csctl get -h` or `csctl cancel -h`. 
 
 ```console
 $ csctl -h
@@ -56,18 +52,19 @@ Usage:
   csctl [command]
 
 Available Commands:
-  cancel      Cancel job
-  config      Modify csctl config files
-  get         Get resources
-  label       Label resources
-  log-export  Gather and download logs.
-  types       Display resource types
+  cancel             Cancel job
+  clear-worker-cache Clear the worker cache
+  config             View csctl config files
+  get                Get resources
+  label              Label resources
+  log-export         Gather and download logs.
+  types              Display resource types
 
 Flags:
-      --csconfig string   config file (default is $HOME/.cs/config) (default "$HOME/.cs/config")
-  -d, --debug int         higher debug values will display more fields in output objects
-  -h, --help              help for csctl
+  -d, --debug int          higher debug values will display more fields in output objects
+  -h, --help               help for csctl
+      --namespace string   configure csctl to talk to different user namespaces
+  -v, --version            version for csctl
 
 Use "csctl [command] --help" for more information about a command.
-
 ```
