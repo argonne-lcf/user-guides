@@ -7,10 +7,10 @@ Two oneAPI variants are provided, the first being a "release" version based on I
 
 !!! note
 
-    The 2023.2.0 release of oneAPI Toolkit does not support oneMKL or oneDPL on Nvidia.
+    The 2023.2.0 release of oneAPI Toolkit does not yet support oneMKL or oneDPL on Nvidia devices.
 
-The other variant being a build of main from the open source. This variant will be more up-to-date at the risk of bugs and breakages based on code that has not undergone a full release cycle.
-The documentation is located on the [SYCL](../programming-models/sycl-polaris.md) page.
+The other variant being a build from the open-source. This variant will be more up-to-date at the risk of bugs and breakages based on code that has not undergone a full release cycle.
+The documentation is located on the [SYCL](../programming-models/sycl-polaris.md) page. Most notable differences being, `icx/icpx` are the names of C/C++ compilers respectively when using the release version of the module where as `clang/clang++` are for open-source variant.
 
 
 ## Compile and Link
@@ -18,9 +18,7 @@ oneAPI uses the clang (or icx/icpx wrapper) for compiling and linking for the Nv
 
 
 ```
-module load PrgEnv-nvhpc
-module use /soft/compilers/oneapi/release/modulefiles
-module load compiler
+module load oneapi/release
 icpx -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 test.cpp
 ```
 
