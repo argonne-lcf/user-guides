@@ -16,6 +16,7 @@ This module (compilers, libraries) gets built periodically from the latest open-
 
 ## Components
 - These are the list of components associated with this module
+
 |-------------------|---------------------------------------------------------|
 | User Application  | Third-Party Library                                     |
 |-------------------|---------------------------------------------------------|
@@ -152,6 +153,7 @@ For further details regarding the arguments passed to `mpiexec` command shown ab
 [oneMKL Interfaces](https://github.com/oneapi-src/oneMKL) is an open-source implementation of the oneMKL Data Parallel C++ (DPC++) interface according to the [oneMKL specification](https://spec.oneapi.io/versions/latest/elements/oneMKL/source/index.html). It works with multiple devices (backends) using device-specific libraries underneath.
 
 oneMKL is part of oneAPI. Various backend supported are shown below. More Information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
+
 | User Application | Third-Party Library                                          |
 |------------------|--------------------------------------------------------------|
 |                  | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
@@ -285,6 +287,7 @@ int main() {
 ```
 
 Compile and Run
+
 The user would need to provide paths the math-libraris as shown below. Also please provide AOCL library for CPU GEMM by `module load aocl`.
 Environment variables `MKLROOT` is defined with `oneapi` module & `AOCL_ROOT` is defined with `aocl` module.
 Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
