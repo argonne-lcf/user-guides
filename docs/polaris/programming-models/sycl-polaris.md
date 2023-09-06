@@ -12,19 +12,17 @@ module load oneapi
 
 !!! note
 
-This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. As such, these compilers will get new features and updates quickly that may break on occasion. Please submit issues at the respective github repositories for the compilers and libraries.
+    This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. For more details on the release version of compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective github repositories for the compilers and libraries.
 
 ## Components
 - These are the list of components associated with this module
 
-|-------------------|---------------------------------------------------------|
-| User Application  | Third-Party Library                                     |
+| User Application  | Component                                               |
 |-------------------|---------------------------------------------------------|
 | Compilers         | [DPC++](https://docs.nvidia.com/cuda/cublas/index.html) |
 | oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
 | oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
 | SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
-|-------------------|---------------------------------------------------------|
 
 ## Dependencies
 - SYCL programming model is supported through `oneapi` compilers that were built from source-code
@@ -159,7 +157,6 @@ oneMKL is part of oneAPI. Various backend supported are shown below. More Inform
 |                  | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
 | oneMKL interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
 |                  | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
-
 
 ## Example (using onemkl::gemm)
 The following snippet shows how to compile and run a SYCL code with oneMKL library. For instance, a GPU-based GEMM is performed using `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional blas (e.g., AOCL-BLIS) library.
