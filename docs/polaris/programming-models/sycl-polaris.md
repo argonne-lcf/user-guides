@@ -10,14 +10,27 @@
 module load oneapi
 ```
 
-:warning: This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. As such, these compilers will get new features and updates quickly that may break on occasion.
+!!! note
+
+This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. As such, these compilers will get new features and updates quickly that may break on occasion. Please submit issues at the respective github repositories for the compilers and libraries.
+
+## Components
+- These are the list of components associated with this module
+|-------------------|---------------------------------------------------------|
+| User Application  | Third-Party Library                                     |
+|-------------------|---------------------------------------------------------|
+| Compilers         | [DPC++](https://docs.nvidia.com/cuda/cublas/index.html) |
+| oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
+| oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
+| SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
+|-------------------|---------------------------------------------------------|
 
 ## Dependencies
 - SYCL programming model is supported through `oneapi` compilers that were built from source-code
 - Loading this module switches the default programming environment to GNU and with the following dependencies
   - PrgEnv-gnu
   - cudatoolkit-standalone
-- Environment Variable set: `SYCL_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
+- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
 
 ## Example (memory intilization)
 
