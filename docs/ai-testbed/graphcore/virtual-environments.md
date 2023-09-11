@@ -23,12 +23,44 @@ If the Poplar SDK is not enabled, it can be enabled with
 source /software/graphcore/poplar_sdk/3.3.0/enable
 ```
 
-To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK,
+To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, follow the steps below. 
+This example assumes that the current installed SDK is 3.1.0 and you want to move to 3.3.0
 
-```bash
-unset POPLAR_SDK_ENABLED
-```
+1.  Check the current version
+   ```bash
+    $ popc --version
+    POPLAR version 3.1.0 (e12d5f9f01)
+    clang version 15.0.0 (bab932b4fc4cdb58bb009370384b2c41579bd9d9)
+   ```
+2. Unset the current version 
+  ```bash
+  unset POPLAR_SDK_ENABLED
+  ```
+3. Enable poplar and popart
+   ```bash
+   source /software/graphcore/poplar_sdk/3.3.0/poplar-ubuntu_20_04-3.3.0+7857-b67b751185/enable.sh 
+   source /software/graphcore/poplar_sdk/3.3.0/popart-ubuntu_20_04-3.3.0+7857-b67b751185/enable.sh 
+   ```
+4. Recheck for the new version.
+   ```bash
+   $popc --version
+   POPLAR version 3.3.0 (de1f8de2a7)
+   clang version 16.0.0 (2fce0648f3c328b23a6cbc664fc0dd0630122212)
+   ``` 
+6. Set SDK env variable
+   ```bash
+   POPLAR_SDK_ROOT=/software/graphcore/poplar_sdk/3.3.0/
+   export POPLAR_SDK_ROOT=$POPLAR_SDK_ROOT
+   ```
 
+7. Create a new virtual environment with this SDK and install popTorch and or other frameworks as needed.
+   ```bash
+   virtualenv ~/Graphcore/workspace/poptorch33_env
+   source ~/Graphcore/workspace/poptorch33_env/bin/activate
+   pip install $POPLAR_SDK_ROOT/poptorch-3.3.0+113432_960e9c294b_ubuntu_20_04-cp38-cp38-linux_x86_64.whl
+   export PYTHONPATH=$POPLAR_SDK_ROOT/python:$PYTHONPATH
+   ```
+   
 ## Miscellaneous Environment Variables
 
 ```bash
