@@ -1,7 +1,7 @@
 # Documentation links
 
  [Poplar SDK](https://docs.graphcore.ai/projects/sdk-overview/en/latest/overview.html?highlight=poptorch#introduction)<br>
- [PyTorch for the IPU: User Guide](https://docs.graphcore.ai/projects/poptorch-user-guide/en/3.2.0/index.html)<br>
+ [PyTorch for the IPU: User Guide](https://docs.graphcore.ai/projects/poptorch-user-guide/en/latest/index.html)<br>
  [Targetting the IPU from Tensorflow 2](https://docs.graphcore.ai/projects/tensorflow-user-guide/en/latest/index.html) <br>
  [IPU programming guide](https://docs.graphcore.ai/projects/ipu-programmers-guide/en/latest/index.html) <br>
  [Examples](https://docs.graphcore.ai/projects/tutorials/en/latest/intro.html) <br>
