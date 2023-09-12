@@ -1,11 +1,11 @@
-# Rapids on Polaris
+# RAPIDS on Polaris
 
 
-[Rapids](https://rapids.ai/) is a suite of software libraries by NVIDIA for "building end-to-end data science and analytics pipelines on GPUs". 
-For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, Numpy and Scikit-learn APIs, respectively, allowing to run them at scale on a GPU cluster, using [Dask](http://mpi.dask.org/en/latest/).
+[RAPIDS](https://rapids.ai/) is a suite of software libraries by NVIDIA for "building end-to-end data science and analytics pipelines on GPUs". 
+For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, Numpy and Scikit-learn APIs, respectively, allowing to run them at scale on a GPU cluster, using [Dask](http://mpi.dask.org/en/latest/).
 
 - [Install](#install)
-- [Start a Rapids cluster](#start)
+- [Start a RAPIDS cluster](#start)
 - [Access the cluster from JupyterLab](#jupyter)
 
 
@@ -15,10 +15,10 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
 1. Access one of Polaris' login nodes: `ssh username@polaris.alcf.anl.gov`. 
 
-1. Run the following bash script `install_rapids_polaris.sh` to create a conda environment with Rapids, Jupyter, and dashboard libraries to visualize the cluster and GPU activities. It will also create a Jupyter kernel for the environment and the script `activate_rapids_env_polaris.sh` to activate the environment.    
+1. Run the following bash script `install_rapids_polaris.sh` to create a conda environment with RAPIDS, Jupyter, and dashboard libraries to visualize the cluster and GPU activities. It will also create a Jupyter kernel for the environment and the script `activate_rapids_env_polaris.sh` to activate the environment.    
 **Before running the script**:
 
-    - check [Rapids' official website](https://rapids.ai/start.html) for the latest versions of the library and its dependencies, and edit the script's variables `RAPIDS_VERSION`, `CUDATOOLKIT_VERSION`, `PYTHON_VERSION` accordingly
+    - check [RAPIDS' official website](https://rapids.ai/start.html) for the latest versions of the library and its dependencies, and edit the script's variables `RAPIDS_VERSION`, `CUDATOOLKIT_VERSION`, `PYTHON_VERSION` accordingly
     
     - choose a directory to store the scripts to activate the RAPIDS envoronment, start the cluster, etc. This is the home directory by default. Edit `RAPIDS_WORKDIR=${HOME}` in the scripts to change it.
 
@@ -33,7 +33,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # install_rapids_polaris.sh
     
-    # Install Rapids on Polaris
+    # Install RAPIDS on Polaris
     # [check here for the latest version](https://rapids.ai/start.html)
     
     SYSTEM="polaris"
@@ -68,7 +68,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
 
 <a id="start"></a>
-## Start a Rapids cluster
+## Start a RAPIDS cluster
 
 1. `ssh` into one of Polaris' login nodes
 
@@ -209,7 +209,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 <a id="jupyter"></a>
 ## Access the cluster from JupyterLab
 
-1. [Start a Rapids cluster](#start)
+1. [Start a RAPIDS cluster](#start)
 
 
 1. Establish a [Multiplexed SSH Connection](https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing) to Polaris. Run the code below in your local machine after having edited `YourUsername`
@@ -245,8 +245,8 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
 1. On JupyterLab
     
-    - Select the kernel with your Rapids' eniroment name (something like `Python [conda env:rapids-23.04_polaris]`) from the Kernel menu in the top right corner. 
-        - if the Rapids' kernel is not present in the kernel menu, add it by activating the conda environment running `source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh`, then run the following commands
+    - Select the kernel with your RAPIDS' eniroment name (something like `Python [conda env:rapids-23.04_polaris]`) from the Kernel menu in the top right corner. 
+        - if the RAPIDS' kernel is not present in the kernel menu, add it by activating the conda environment running `source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh`, then run the following commands
             ```
             env=$(basename `echo $CONDA_PREFIX`) && \
             python -m ipykernel install --user --name "$env" --display-name "Python [conda env:"$env"]"
