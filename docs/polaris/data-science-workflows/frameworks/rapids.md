@@ -229,8 +229,8 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     RAPIDS_WORKDIR=${HOME}
     SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"
-    PORT=8675 && \
-    ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep \\`whoami\\` | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9 &>/dev/null  &&  rm ~/jupyter_pol.log"
+    PORT=8675
+    ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep \\`whoami\\` | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9 ; rm ~/jupyter_pol.log" 2>/dev/null
     ssh ${SSH_MULTIPLEX} "echo \$(hostname) | tee ~/jupyter_pol.log && \
     source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh 2> /dev/null  && \
     nohup jupyter lab --no-browser --port=${PORT} &>> ~/jupyter_pol.log & \
