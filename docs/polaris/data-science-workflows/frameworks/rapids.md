@@ -19,6 +19,8 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 **Before running the script**:
 
     - check [Rapids' official website](https://rapids.ai/start.html) for the latest versions of the library and its dependencies, and edit the script's variables `RAPIDS_VERSION`, `CUDATOOLKIT_VERSION`, `PYTHON_VERSION` accordingly
+    
+    - choose a directory to store the scripts to activate the RAPIDS envoronment, start the cluster, etc. This is the home directory by default. Edit `RAPIDS_WORKDIR=${HOME}` in the scripts to change it.
 
     - choose a directory where you want your conda environment to be created and store it in the `ENV_PATH` variable: for example, the conda environment in the example below will be created in `/path/to/conda/dir/rapids-23.04_polaris`
 
@@ -40,6 +42,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     PYTHON_VERSION=3.10
     ENV_PATH="/path/to/conda/dir"
     BASE_CONDA=2022-09-08
+    RAPIDS_WORKDIR=${HOME}
     
     module load conda/${BASE_CONDA} && \
     conda create -y -p ${ENV_PATH}/rapids-${RAPIDS_VERSION}_${SYSTEM} \
@@ -59,6 +62,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     EOF
     
     chmod 755 activate_rapids_env_polaris.sh
+    mv activate_rapids_env_polaris.sh ${RAPIDS_WORKDIR}
     ```
 
 
@@ -72,11 +76,11 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     ssh username@polaris.alcf.anl.gov
     ```
 
-1. Create the following script `start_rapids_cluster_rank.sh` and change its permissions with `chmod 755 start_rapids_cluster_rank.sh`.
+1. Create the following script `start_rapids_cluster_rank.sh` in the directory `RAPIDS_WORKDIR` and change its permissions with `chmod 755 start_rapids_cluster_rank.sh`.
 
     ```bash
     #start_rapids_cluster_rank.sh
-
+    
     ROLE=$1
     HOSTNAME=$HOSTNAME
     
@@ -91,7 +95,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     # POOL_SIZE="78GB"
     
     # Used for writing scheduler file to shared storage
-    LOCAL_DIRECTORY=$HOME/dask-local-directory
+    LOCAL_DIRECTORY=${HOME}/dask-local-directory
     SCHEDULER_FILE=$LOCAL_DIRECTORY/scheduler.json
     LOGDIR="$LOCAL_DIRECTORY/logs"
     WORKER_DIR="/tmp/dask-workers/"
@@ -158,41 +162,42 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     A shell opens up on one of the compute nodes
 
 
-1. Run the following script, `~/start_rapids_cluster_polaris.sh`. This will start the scheduler on one node and one worker per GPU on all nodes.  
+1. Run the following script, `${RAPIDS_WORKDIR}/start_rapids_cluster_polaris.sh`. This will start the scheduler on one node and one worker per GPU on all nodes.  
     
     ```bash
     #!/bin/bash
 
     # start_rapids_cluster_polaris.sh
-    
+
+    RAPIDS_WORKDIR=${HOME}
     NUM_NODES=$(cat $PBS_NODEFILE | wc -l)
     TMP_EXE=tmp_rpds.sh
     
     cat > ${TMP_EXE} << EOF
     #!/bin/bash
     if [ \$PMI_RANK == 0 ]; then
-        ~/activate_rapids_env_polaris.sh ~/start_rapids_cluster_rank.sh SCHEDULER
+        ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh ${RAPIDS_WORKDIR}/start_rapids_cluster_rank.sh SCHEDULER
     else
-        ~/activate_rapids_env_polaris.sh ~/start_rapids_cluster_rank.sh
+        ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh ${RAPIDS_WORKDIR}/start_rapids_cluster_rank.sh
     fi
     EOF
     
     chmod 755 ${TMP_EXE}
     sleep 5
     
-    mpiexec -n $NUM_NODES --ppn 1 ~/${TMP_EXE}
+    mpiexec -n $NUM_NODES --ppn 1 ${RAPIDS_WORKDIR}/${TMP_EXE}
     
-    rm ~/${TMP_EXE}
+    rm ${RAPIDS_WORKDIR}/${TMP_EXE}
     ```
 
 
-1. In case of errors and if the cluster does not start, check the file `~/dask-local-directory/scheduler.json` and the log files of scheduler and workers in `~/dask-local-directory/logs/`. 
+1. In case of errors and if the cluster does not start, check the file `${RAPIDS_WORKDIR}/dask-local-directory/scheduler.json` and the log files of scheduler and workers in `${RAPIDS_WORKDIR}/dask-local-directory/logs/`. 
 
 
 1. Example script to access the cluster from python and print information on scheduler and number of connected workers, then terminate the cluster:
 
     ```bash
-    source ~/activate_rapids_env_polaris.sh
+    source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh
     python -c "from dask.distributed import Client; \
     client = Client(scheduler_file='~/dask-local-directory/scheduler.json'); \
     print(client); client.shutdown()"
@@ -222,10 +227,12 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # open_jupyterlab_polaris.sh
 
+    RAPIDS_WORKDIR=${HOME}
     SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"
     PORT=8675 && \
+    ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep \\`whoami\\` | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9 &>/dev/null  &&  rm ~/jupyter_pol.log"
     ssh ${SSH_MULTIPLEX} "echo \$(hostname) | tee ~/jupyter_pol.log && \
-    source ~/activate_rapids_env_polaris.sh 2> /dev/null  && \
+    source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh 2> /dev/null  && \
     nohup jupyter lab --no-browser --port=${PORT} &>> ~/jupyter_pol.log & \
     JPYURL=''; while [ -z \${JPYURL} ]; do sleep 2; JPYURL=\$(sed -n '/[ ] .*localhost/p' ~/jupyter_pol.log | sed 's/^  *//g'); done; echo \${JPYURL}" > ~/jupyter_pol.log & \
     PORT=''; while [ -z ${PORT} ]; do sleep 2; PORT=$(sed -n 's/.*:\([0-9][0-9]*\)\/.*/\1/p' ~/jupyter_pol.log); done && \
@@ -238,7 +245,12 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
 1. On JupyterLab
     
-    - Select the kernel with your Rapids' eniroment name (something like `Python [conda env:rapids-23.04_polaris]`) from the Kernel menu in the top right corner 
+    - Select the kernel with your Rapids' eniroment name (something like `Python [conda env:rapids-23.04_polaris]`) from the Kernel menu in the top right corner. 
+        - if the Rapids' kernel is not present in the kernel menu, add it by activating the conda environment running `source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh`, then run the following commands
+            ```
+            env=$(basename `echo $CONDA_PREFIX`) && \
+            python -m ipykernel install --user --name "$env" --display-name "Python [conda env:"$env"]"
+            ```
     
     - Select and access the dashboards from the bar on the left side
 
@@ -262,6 +274,7 @@ For example, Rapids' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # close_jupyterlab_polaris.sh
 
+    RAPIDS_WORKDIR=${HOME}
     SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"  && \
     PORT=$(sed -n 's/.*:\([0-9][0-9]*\)\/.*/\1/p' ~/jupyter_pol.log)  && \
     RUNNING_ON=$(head -1 ~/jupyter_pol.log)  && \
