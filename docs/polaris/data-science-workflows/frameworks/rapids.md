@@ -20,7 +20,7 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     - check [RAPIDS' official website](https://rapids.ai/start.html) for the latest versions of the library and its dependencies, and edit the script's variables `RAPIDS_VERSION`, `CUDATOOLKIT_VERSION`, `PYTHON_VERSION` accordingly
     
-    - choose a directory to store the scripts to activate the RAPIDS envoronment, start the cluster, etc. This is the home directory by default. Edit `RAPIDS_WORKDIR=${HOME}` in the scripts to change it.
+    - choose a directory to store the scripts to activate the RAPIDS envoronment, start the cluster, etc. This is the home directory by default. Edit `RAPIDS_WORKDIR='~'` in the scripts to change it.
 
     - choose a directory where you want your conda environment to be created and store it in the `ENV_PATH` variable: for example, the conda environment in the example below will be created in `/path/to/conda/dir/rapids-23.04_polaris`
 
@@ -42,7 +42,7 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
     PYTHON_VERSION=3.10
     ENV_PATH="/path/to/conda/dir"
     BASE_CONDA=2022-09-08
-    RAPIDS_WORKDIR=${HOME}
+    RAPIDS_WORKDIR='~'
     
     module load conda/${BASE_CONDA} && \
     conda create -y -p ${ENV_PATH}/rapids-${RAPIDS_VERSION}_${SYSTEM} \
@@ -169,7 +169,7 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # start_rapids_cluster_polaris.sh
 
-    RAPIDS_WORKDIR=${HOME}
+    RAPIDS_WORKDIR='~'
     NUM_NODES=$(cat $PBS_NODEFILE | wc -l)
     TMP_EXE=tmp_rpds.sh
     
@@ -227,16 +227,16 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # open_jupyterlab_polaris.sh
 
-    RAPIDS_WORKDIR=${HOME}
+    RAPIDS_WORKDIR='~'
     SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"
     PORT=8675
-    ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep \\`whoami\\` | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9 ; rm ~/jupyter_pol.log" 2>/dev/null
+    ssh ${SSH_MULTIPLEX} "ps -ef | grep jupyter | grep -v grep | awk -F ' ' '{print \$2}' | xargs kill -9 2>/dev/null; rm ~/jupyter_pol.log" 2>/dev/null
     ssh ${SSH_MULTIPLEX} "echo \$(hostname) | tee ~/jupyter_pol.log && \
     source ${RAPIDS_WORKDIR}/activate_rapids_env_polaris.sh 2> /dev/null  && \
     nohup jupyter lab --no-browser --port=${PORT} &>> ~/jupyter_pol.log & \
-    JPYURL=''; while [ -z \${JPYURL} ]; do sleep 2; JPYURL=\$(sed -n '/[ ] .*localhost/p' ~/jupyter_pol.log | sed 's/^  *//g'); done; echo \${JPYURL}" > ~/jupyter_pol.log & \
+    JPYURL=''; while [ -z \${JPYURL} ]; do sleep 2; JPYURL=\$(sed -n '/] http:\/\/localhost/p' ~/jupyter_pol.log | sed 's/^.*\(http.*\)$/\1/g'); done; echo \${JPYURL}" > ~/jupyter_pol.log & \
     PORT=''; while [ -z ${PORT} ]; do sleep 2; PORT=$(sed -n 's/.*:\([0-9][0-9]*\)\/.*/\1/p' ~/jupyter_pol.log); done && \
-    ssh -O forward -L $PORT:localhost:$PORT ${SSH_MULTIPLEX} && \
+    ssh -O forward -L ${PORT}:localhost:${PORT} ${SSH_MULTIPLEX} && \
     echo "Open this url $(grep token ~/jupyter_pol.log)"
     ```
 
@@ -274,12 +274,12 @@ For example, RAPIDS' `cuDF`, `cuPY`, `cuML` libraries implement common Pandas, N
 
     # close_jupyterlab_polaris.sh
 
-    RAPIDS_WORKDIR=${HOME}
+    RAPIDS_WORKDIR='~'
     SSH_MULTIPLEX="-S ~/.ssh/multiplex:polaris.rapids YourUsername@polaris.alcf.anl.gov"  && \
     PORT=$(sed -n 's/.*:\([0-9][0-9]*\)\/.*/\1/p' ~/jupyter_pol.log)  && \
     RUNNING_ON=$(head -1 ~/jupyter_pol.log)  && \
     ssh -O cancel -L $PORT:localhost:$PORT ${SSH_MULTIPLEX}  && \
-    ssh ${SSH_MULTIPLEX} "ssh ${RUNNING_ON} \"ps -ef | grep jupyter | grep \\\`whoami\\\` | grep -v grep | awk -F ' ' '{print \\\$2}' | xargs kill -9  &&  rm ~/jupyter_pol.log\"" && \
+    ssh ${SSH_MULTIPLEX} "ssh ${RUNNING_ON} \"ps -ef | grep jupyter | grep -v grep | awk -F ' ' '{print \\\$2}' | xargs kill -9  2>/dev/null &&  rm ~/jupyter_pol.log\"" && \
     rm ~/jupyter_pol.log
     ```
 
