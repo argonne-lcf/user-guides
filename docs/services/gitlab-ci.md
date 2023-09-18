@@ -74,12 +74,12 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 ### Initial Login and Profile setup of Gitlab-CI
 * Login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
 * Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
-  * Click Profile icon on the upper right hand corner, then select Profile
+  * Click Profile icon on the upper right hand corner, then click "Edit Profile"
     <figure markdown>
     ![Gitlab Profile Dropdown](files/gitlab-ci/GitlabProfileDropDown.png){ width="200" }
     <figcaption>Gitlab Profile Dropdown screenshot</figcaption>
     </figure>
-  * Click SSH Keys on the left hand menu.
+  * Click "SSH Keys" on the left hand menu.
     <figure markdown>
     ![Gitlab Profile Add SSH Key](files/gitlab-ci/GitlabAddSSHKey.png){ width="700" }
     <figcaption>Gitlab Profile Add SSH Key screenshot</figcaption>
@@ -95,13 +95,20 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 
 To create a new `Gitlab Project`:
 
-* On the Upper left, click `Menu`, select `Groups`,and then choose `Your Groups` towards the bottom.
+* In the left pane, click "Groups", and then click "Explore groups" link on the right.
 <figure markdown>
-  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="500" }
-  <figcaption>Gitlab Your Groups Menu screenshot</figcaption>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="700" }
+  <figcaption>Gitlab Your Groups Page screenshot</figcaption>
 </figure>
 
-* From the list of `Gitlab Groups` click the group you were informed corresponds to your `ALCF Project`
+* From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`
+
+<figure markdown>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectFromExplore.png){ width="700" }
+  <figcaption>Gitlab Explore Groups Page screenshot</figcaption>
+</figure>
+
+
 * Click the `New project` button near the upper right.  If this is the first project you are creating you will have two large square buttons near the middle of the screen to create `Gitlab SubGroups` or `Gitlab Projects`
 <figure markdown>
   ![Gitlab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }
@@ -126,13 +133,20 @@ To create a new `Gitlab Project`:
 
 To create a new `Gitlab SubGroup`:
 
-* On the Upper left, click `Menu`, select `Groups`,and then choose `Your Groups` towards the bottom.
+* In the left pane, click "Groups", and then click "Explore groups" link on the right.
+
 <figure markdown>
-  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="500" }
-  <figcaption>Gitlab Your Groups Menu screenshot</figcaption>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="700" }
+  <figcaption>Gitlab Your Groups Page screenshot</figcaption>
 </figure>
 
-* From the list of `Gitlab Groups` click the group you were informed corresponds to your ALCF Project
+* From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`
+
+<figure markdown>
+  ![Gitlab Your Groups](files/gitlab-ci/GitlabSelectFromExplore.png){ width="700" }
+  <figcaption>Gitlab Explore Groups Page screenshot</figcaption>
+</figure>
+
 * Click the `New subgroup` button near the upper right.  If this is the first project you are creating you will have two large square buttons near the middle of the screen to create `Gitlab SubGroups` or `Gitlab Projects`
 <figure markdown>
   ![Gitlab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }

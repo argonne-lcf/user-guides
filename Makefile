@@ -8,7 +8,7 @@ install-dev:
 
 .PHONY: build-docs
 build-docs:
-	mkdocs build
+	mkdocs build --strict
 
 
 .PHONY: all

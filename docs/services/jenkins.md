@@ -1,7 +1,7 @@
 # Jenkins on Theta
 
 ## Jenkins to be decommissioned
-New projects should request access to use our GitLab-CI-based service.  You can learn how to request access in our documentation found [here](/services/gitlab-ci/#quickstart). 
+New projects should request access to use our GitLab-CI-based service.  You can learn how to request access in our documentation found [here](./gitlab-ci.md#quickstart). 
 
 Existing projects can continue to use Jenkins.  We will notify projects when we have the date it will be retired.  Projects will have ample notice to migrate their work to our GitLab-CI service.
 

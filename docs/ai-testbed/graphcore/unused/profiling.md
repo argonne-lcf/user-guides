@@ -69,7 +69,7 @@ cd /path/to/graph/analyser/directory
 
 ![Graph Analyser](files/Graph_Ananlyser_main.jpg "Graph Analyser")
 
-![Graphcore System View](files/image.png "Graphcore System View")
+![Graphcore System View](files/graphcore-sys-view.png "Graphcore System View")
 
 1. Click **Open a report...**;
 2. Click the **remote** tab;
