@@ -23,7 +23,7 @@ If the Poplar SDK is not enabled, it can be enabled with
 source /software/graphcore/poplar_sdk/3.3.0/enable
 ```
 
-To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, follow the steps below. 
+To disable the current Poplar SDK, e.g. if one wants to use a different Poplar SDK, follow the steps below. (Otherwise, skip to section [Miscellaneous Environment Variables](#miscellaneous-environment-variables).)
 This example assumes that the current installed SDK is 3.1.0 and you want to move to 3.3.0
 
 1.  Check the current version
