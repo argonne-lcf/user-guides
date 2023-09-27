@@ -5,6 +5,38 @@
 Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
 [Ways to port your model](https://docs.cerebras.net/en/latest/wsc/port/index.html)
 
+## Grafana WsJob Dashboard for Cerebras jobs
+See the Cerebras documentation for the [Job Information Dashboard](https://docs.cerebras.net/en/latest/wsc/getting-started/grafana.html#wsjob-dashboard)
+
+Here is a summary (tested to work on Ubuntu)<br>
+
+On your work machine with a web browser, e.g. your laptop,<br>
+edit /etc/hosts, using your editor of choice
+```console
+sudo nano /etc/hosts
+```
+Add this line
+```console
+127.0.0.1	grafana.cerebras1.lab.alcf.anl.gov
+```
+Save, and exit the editor
+
+
+On your work machine with a web browser, e.g. your laptop,<br>
+tunnel the grafana https port on the cerebras grafana host through to localhost
+```
+ssh -L 8443:grafana.cerebras1.lab.alcf.anl.gov:443 arnoldw@cer-login-03.ai.alcf.anl.gov
+```
+
+Point a browser at grafana. (Tested with Firefox and Chrome/Brave)<br>
+Open browser to a job grafana url shown in csctl get jobs, adding :8443 to hostname, e.g.<br>
+```console
+https://grafana.cerebras1.lab.alcf.anl.gov:8443/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-49b7uuojdelvtrcxu3cwbw&from=1684859330000&to=noww
+```
+
+Login to the dashboard with user admin, and password prom-operator
+
+
 <!---
 ## Determining the CS-2 version
 
