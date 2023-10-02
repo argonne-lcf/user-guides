@@ -8,7 +8,7 @@ Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
 ## Grafana WsJob Dashboard for Cerebras jobs
 See the Cerebras documentation for the [Job Information Dashboard](https://docs.cerebras.net/en/latest/wsc/getting-started/grafana.html#wsjob-dashboard)
 
-Here is a summary (tested to work on Ubuntu)<br>
+Here is a summary (tested to work on Ubuntu and MacOS)<br>
 
 On your work machine with a web browser, e.g. your laptop,<br>
 edit /etc/hosts, using your editor of choice
@@ -20,6 +20,13 @@ Add this line
 127.0.0.1	grafana.cerebras1.lab.alcf.anl.gov
 ```
 Save, and exit the editor
+
+Download the Grafana certificate present on the Cerebras node at /opt/cerebras/certs/grafana_tls.crt to your local machine. To add this certificate to your browser keychain, 
+
+1. On chrome, go to Settings->Privacy and security->Security->Manage device certificates
+2. Select System under "System Keychains" on the left hand side of your screen. Also select the "Certificate" tab.
+3. Drag and drop the downloaded certificate. Once it is added, it is visible as "lab.alcf.anl.gov"
+4. Select the certificate, and ensure that the "Trust" section is set to "Always Trust"
 
 
 On your work machine with a web browser, e.g. your laptop,<br>
