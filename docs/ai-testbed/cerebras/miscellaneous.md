@@ -26,9 +26,10 @@ Download the Grafana certificate present on the Cerebras node at /opt/cerebras/c
 1. On chrome, go to Settings->Privacy and security->Security->Manage device certificates
 2. Select System under "System Keychains" on the left hand side of your screen. Also select the "Certificate" tab.
 3. Drag and drop the downloaded certificate. Once it is added, it is visible as "lab.alcf.anl.gov"
+   ![Cerebras Wafer-Scale Cluster connection diagram](files/grafana_ctl.png)
 4. Select the certificate, and ensure that the "Trust" section is set to "Always Trust"
+   ![Cerebras Wafer-Scale Cluster connection diagram](files/Trust_ctl.png)
 
-![Cerebras Wafer-Scale Cluster connection diagram](files/grafana_ctl.png)
 
 On your work machine with a web browser, e.g. your laptop,<br>
 tunnel the grafana https port on the cerebras grafana host through to localhost
