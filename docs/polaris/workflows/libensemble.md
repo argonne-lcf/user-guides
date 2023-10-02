@@ -1,8 +1,8 @@
 # libEnsemble
 
-libEnsemble is a Python toolkit for running dynamic ensembles of calculations.
+[libEnsemble](https://libensemble.readthedocs.io/en/main/) is a Python toolkit for running dynamic ensembles of calculations.
 
-Users provide generator and simulator functions to express their ensembles, where the generator can steer the ensemble based on previous results. These functions can submit external executables at any scale and in a portable way.
+Users provide generator and simulator functions to express their ensembles, where the generator can steer the ensemble based on previous results. These functions can portably submit external executables at any scale.
 
 System details are detected, and dynamic resource management is provided. This includes automatically detecting, assigning, and reassigning
 GPUs for ensemble members.
