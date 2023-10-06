@@ -54,7 +54,7 @@ the server when resources are no longer required. Failing to do so will result
 in continued consumption of the allocated time until the predetermined runtime
 concludes. 
 
-### ThetaGPU
+## ThetaGPU
 
 The ThetaGPU JupyterHub instance can run either on an external server or
 directly on ThetaGPU compute nodes. After the authentication step, the user will
