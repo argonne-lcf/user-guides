@@ -202,7 +202,7 @@ sample configuration:
 After completing these steps, you will see `tf_env` kernel when you click new on
 the JupyterHub home page or when you use kernel menu on the Jupyter notebook.
 
-## Accessing Project Folders
+### Accessing Project Folders
 
 Jupyter file browser limits the user to view files and directories within their
 home directory. To access directories located outside of the user home directory
