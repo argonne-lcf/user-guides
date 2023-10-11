@@ -8,11 +8,17 @@ To publish technical reports and research papers using the ALCF AI testbeds, we 
 
 For guidance on acknowledgements, please see the following sample policies:
 
-## ALCF Only Acknowledgement
-This research used resources of the Argonne Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility supported under Contract DE-AC02-06CH11357.
+## ALCF Only Acknowledgement. 
+Users, and ALCF staff scientists without direct project funding, should acknowledge the ALCF in all publications and presentations that speak to work performed on ALCF resources. 
 
-## INCITE/ALCF Acknowledgement
-An award of computer time was provided by the Innovative and Novel Computational Impact on Theory and Experiment (INCITE) program. This research used resources of the Argonne Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility supported under Contract DE-AC02-06CH11357.
+This research used resources of the Argonne Leadership Computing Facility, a U.S. Department of Energy (DOE) Office of Science user facility at Argonne National Laboratory and is based on research supported by the U.S. DOE Office of Science-Advanced Scientific Computing Research Program, under Contract No. DE-AC02-06CH11357.
 
-## INCITE/ALCF/OLCF Acknowledgement
-An award of computer time was provided by the Innovative and Novel Computational Impact on Theory and Experiment (INCITE) program. This research used resources of the Argonne Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility supported under contract DE-AC02-06CH11357. This research also used resources of the Oak Ridge Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility supported under Contract DE-AC05-00OR22725.
+## INCITE/ALCF Acknowledgement. 
+Users should acknowledge the ALCF in all publications and presentations that speak to INCITE work performed on ALCF resources. 
+
+An award for computer time was provided by the U.S. Department of Energy’s (DOE) Innovative and Novel Computational Impact on Theory and Experiment (INCITE) Program. This research used resources from the Argonne Leadership Computing Facility, a U.S. DOE Office of Science user facility at Argonne National Laboratory, which is supported by the Office of Science of the U.S. DOE under Contract No. DE-AC02-06CH11357.
+
+## INCITE/ALCF/OLCF Acknowledgement. 
+Users should acknowledge the ALCF and OLCF in all publications and presentations that speak to INCITE work performed on ALCF and OLCF resources. 
+
+An award for computer time was provided by the U.S. Department of Energy’s (DOE) Innovative and Novel Computational Impact on Theory and Experiment (INCITE) Program. This research used supporting resources at the Argonne and the Oak Ridge Leadership Computing Facilities. The Argonne Leadership Computing Facility at Argonne National Laboratory is supported by the Office of Science of the U.S. DOE under Contract No. DE-AC02-06CH11357. The Oak Ridge Leadership Computing Facility at the Oak Ridge National Laboratory is supported by the Office of Science of the U.S. DOE under Contract No. DE-AC05-00OR22725.
