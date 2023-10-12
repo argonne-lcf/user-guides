@@ -1,7 +1,62 @@
 # Paraview on Polaris
 
-!!! note  
-	At this time, we only support client/server mode where the user must manually launch the server on Polaris.
+The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server (pvserver) on the Polaris compute nodes. There are two ways to accomplish this, detailed below. In both cases, the ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris.
+
+The most recent production version currently installed on Cooley is ParaView  5.11.1. Binary and source packages for Linux, MacOS, and Windows are available from the [ParaView Download Page](https://www.paraview.org/download/). (Run the 'module avail paraview' command on a Polaris login node to see earlier versions of ParaView that are available.)
+
+As mentioned, there are two ways to run ParaView in client/server mode. For more details, including advantages and disadvantages of each, see the section below on: Trade Offs
+
+The first, and arguably easier, way is to run the ParaView client locally, and have it launch the pvserver on Polaris, and connect back to your local client. For details see the section below on: Automated / Reverse Connection
+
+The other way is to first manually launch the pvserver on Polaris, and then launch the ParaView client locally and connect to your running pvserver. For details see the section below on: Manual / Forward Connection
+
+## Automated / Reverse Connection
+This section describes how to launch the pvserver on Polaris from a local ParaView client.
+
+### Start ParaView Client
+First, launch the ParaView client on your local resource. In order to launch the pvserver on Polaris and have it connect back to our local client, we will need to configure some server settings in the client. This initial set up should only need to be done once, and can be reused each time you want to run ParaView on Polaris.
+
+### Server Configuration
+
+#### 1. Select Connect
+From the ParaView client choose to connect to a server by either clicking on the "Connect" icon in the menu bar, or selecting:
+
+File->Connect
+
+From the main menu:
+
+<figure markdown>
+  ![Select connect](images/01-Pv3-connect.png){ width="700" }
+  <figcaption>Select connect</figcaption>
+</figure>
+
+#### 2. Set Up Servers (first time only)
+The first time we want to run a pvserver on Polaris and have it connect to our local ParaView client, we need to set up a Server. Once we set up this server, we can reuse it each time we run the ParaView client with the pvserver on Polaris.
+
+Kitware, the maintainers of ParaView, maintain a database of server configurations, which we can retrieve through the ParaView client. NOTE: At this time, Polaris is not available on the list maintained by Kitware, so you will need to download a file and load it manually.
+
+Download this file [Polaris server configuration](server_polaris.pvsc). This file contains settings in ASCII, so it is safe to download. If your browser renames it, the file extension should be .pvsc
+
+Click "Load Servers" and load the file downloaded in the previous step.
+
+<figure markdown>
+  ![Load servers](images/02-pv_gui_server_config.png){ width="700" }
+  <figcaption>Load servers</figcaption>
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Setting up Paraview 
