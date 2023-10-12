@@ -13,7 +13,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 * job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
 
 ### Reservations and Scheduling Policy
-Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the [regular form](/docs/theta/queueing-and-running-jobs/machine-reservations.md) no fewer than five (5) business days in advance.
+Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the [regular form](../../theta/queueing-and-running-jobs/machine-reservations.md) no fewer than five (5) business days in advance.
 
 ### Monday Maintenance
 When the ALCF is on a regular business schedule, preventitive maintenance is typically scheduled on alternate Mondays. The showres command may be used to view pending and active maintenance reservations.
@@ -67,12 +67,6 @@ Here are the initial queue limits. You may not violate either of these policies.
 - MaxRunning is 1 job
 
 The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill.
-
-#### Debug queues (currently unavailable)
-  - debug-node: submit to this queue if you need an entire node for your testing (for instance you are utilizing the NVLink)
-  - debug-gpu: submit to this queue if you need GPUs.
-
-Initially, we are relaxing our node restrictions to encourage early users.  Please be courteous to your fellow users and do not monopolize the machine.  We will tighten restrictions as required to manage the demonstrated workload. 
 
 ## Running Jobs On ThetaGPU
 **Note:** Users will need an allocation on ThetaGPU to utilize the GPU nodes. Request for an allocation by filling out this form: Allocation request. ThetaGPU is listed under Theta on the form.
@@ -165,7 +159,7 @@ mpirun -np 20 -npernode 10 ./my_app
 ```
 
 ## Job Submission on ThetaGPU
-The queuing system used on ThetaGPU is [Cobalt](https://xgitlab.cels.anl.gov/aig-public/cobalt). On ThetaGPU, Cobalt jobs may run either as script jobs or interactive mode jobs.
+The queuing system used on ThetaGPU is [Cobalt](https://git.cels.anl.gov/aig-public/cobalt). On ThetaGPU, Cobalt jobs may run either as script jobs or interactive mode jobs.
 
 ##  Script Method
 In the script method, Cobalt will execute a user-supplied script when running a user’s job. Following are the required flags to `qsub`, as well as some of the more common options. A complete list of options may be found as a part of the `qsub` manpage, available on any login node.
@@ -214,7 +208,7 @@ qsub -A YourProject -n 4 -t 30 -q full-node \
 –attrs filesystems=home,eagle \
 program.exe progarg1
 ```
-The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://xgitlab.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
+The syntax for Cobalt scripting is slightly different than that of a PBS script. For more information, see [Cobalt scripting](https://git.cels.anl.gov/aig-public/cobalt/-/wikis/cmdref/CommandReference).
 
 ## Interactive Method
 To run an “interactive mode” job on ALCF Cray resources, add the “-I” (uppercase "i", not a lowercase "L") flag or “--mode interactive” to your qsub line and omit any executable. Your qsub submission will then wait until nodes are allocated to your job and Cobalt will start a shell on a job-launch node on your behalf. You may aprun against your assigned resources and run other interactive commands from this node. It is important to note that your shell is executed from a launch node and not from your compute head-node. Once your allocation ends, all apruns will be terminated, but your shell will remain for any cleanup actions that you choose to take.

@@ -5,22 +5,22 @@ The sbank accounting system helps users manage their allocations and usage per j
 
 ## Getting Started with sbank
 
-[sbank Example Commands](sbank-examples.md) provides a set of example commands on how to use the most common commands. 
+[sbank Example Commands](not_in_nav/sbank-examples.md) provides a set of example commands on how to use the most common commands. 
 
 ## sbank Man Pages
 
 Use these sbank man pages to get information on how to use the commands.
 
-- [sbank](sbank-manpage.md)
-- [sbank-detail](sbank-detail.md)
-- [sbank-detail-allocations](sbank-detail-allocations.md)
-- [sbank-detail-jobs](sbank-detail-jobs.md)
-- [sbank-detail-projects](sbank-detail-projects.md)
-- [sbank-detail-transactions](sbank-detail-transactions.md)
-- [sbank-detail-users](sbank-detail-users.md)
-- [sbank-list](sbank-list.md)
-- [sbank-list-allocations](sbank-list-allocations.md)
-- [sbank-list-jobs](sbank-list-jobs.md)
-- [sbank-list-projects](sbank-list-projects.md)
-- [sbank-list-transactions](sbank-list-transactions.md)
-- [sbank-list-users](sbank-list-users.md)
+- [sbank](not_in_nav/sbank-manpage.md)
+- [sbank-detail](not_in_nav/sbank-detail.md)
+- [sbank-detail-allocations](not_in_nav/sbank-detail-allocations.md)
+- [sbank-detail-jobs](not_in_nav/sbank-detail-jobs.md)
+- [sbank-detail-projects](not_in_nav/sbank-detail-projects.md)
+- [sbank-detail-transactions](not_in_nav/sbank-detail-transactions.md)
+- [sbank-detail-users](not_in_nav/sbank-detail-users.md)
+- [sbank-list](not_in_nav/sbank-list.md)
+- [sbank-list-allocations](not_in_nav/sbank-list-allocations.md)
+- [sbank-list-jobs](not_in_nav/sbank-list-jobs.md)
+- [sbank-list-projects](not_in_nav/sbank-list-projects.md)
+- [sbank-list-transactions](not_in_nav/sbank-list-transactions.md)
+- [sbank-list-users](not_in_nav/sbank-list-users.md)

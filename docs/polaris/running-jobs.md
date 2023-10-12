@@ -2,15 +2,42 @@
 # Running Jobs on Polaris
 
 ##  <a name="Polaris-Queues"></a>Queues
+
+***SLINGSHOT 11 Upgrade: The upgrade will take place in three phases, with each phase taking place during one of the normally scheduled maintenance periods. During this time, there will be an additional queue, `ss11`. This queue will contain compute nodes that have been upgraded to Slingshot 11. The compute nodes in the `prod` queue will contain the Slingshot 10 nodes. The number of nodes in the `prod` queue will dwindle with each maintenance until all computes nodes have been upgraded to Slingshot 11. Once all compute nodes have been upgraded, the `prod` queue will once again have 496 nodes and the `ss11` queue will be removed.***
+
+***ATTENTION: From October 16th through November 13th, the Polaris nodes will be upgraded in 'chunks' to Slingshot 11. This will affect the prod queue sizes. Please read about the changes to the queues below.***
+
+*******
+
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max	 | Time Min                    | Time Max | Notes                                                                       |
-|---------------|----------|-----------|-----------------------------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2         | 10 min (5 min from 10/3/22) | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
-| debug-scaling | 1        | 10        | 10 min (5 min from 10/3/22) | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
-| prod          | 10       | 496       | 30 min (5 min from 10/3/22) | 24 hrs   | Routing queue; See below                                                    |
-| preemptable   | 1        | 10        | 5 min                       | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
-| demand        | 1        | 56        | 5 min                       | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+| Queue Name                     | Node Min | Node Max                   | Time Min | Time Max | Notes                                                                                                                                                                                                                                                 |
+|--------------------------------|----------|----------------------------|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| debug                          | 1        | 2                          | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                                                                                                                                                                                                    |
+| debug-scaling                  | 1        | 10                         | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                                                                                                                                                                                                        |
+| prod                           | 10       | 216-496 **see table below* | 5 min    | 24 hrs   | Routing queue; See below                                                                                                                                                                                                                              |
+| ss11 (available Oct 16-Nov 13) | 1        | 112-280 **see table below* | 5 min    | 24 hrs   | Temporary Slingshot 11 queue for newly upgraded compute nodes; max 1 job running, and 1 job queued **per user**; ***This queue will no longer be available after Nov 13th, at which time all nodes will be upgraded and returned to the prod queue*** | 
+| preemptable                    | 1        | 10                         | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below                                                                                                                                                                                   |
+| demand                         | 1        | 56                         | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                                                                                                                                                                           |
+
+*******
+
+***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 16th.***
+
+***The `debug` and `debug-scaling` queues will remain at Slingshot 10 until Nov. 13th, at which time they will be upgraded to Slingshot 11.***
+
+***The prod queue and Slingshot 11 (`ss11`) queue sizes will have the following max node counts during the upgrade period:***
+
+| Number of nodes in:  | prod queue (Slingshot 10) | prod queue (Slingshot 11) | ss11 queue (Slightshot 11) |
+|----------------------|---------------------------|---------------------------|----------------------------|
+| Now through Oct 16th | 496                       | 0                         | 0                          |
+| Oct 16th - Oct 30th  | 384                       | 0                         | 112                        |
+| Oct 30th - Nov 13th  | 216                       | 0                         | 280                        |
+| Nov 13th and onward  | 0                         | 496                       | N/A                        |
+
+***PBS "`insufficient resource`" ERROR:  If you do not account for this change in maximum job size in your job submissions you could have jobs that sit in the queue for four weeks with a comment of “`insufficient resources`”.  Once we come out of the maintenance on Nov 13th they would run.***
+
+******
 
 **Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
@@ -18,16 +45,16 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
-|Queue Name |Node Min |Node Max	| Time Min                     |Time Max | Notes                                  |
-|----|----|----|------------------------------|----|----------------------------------------|
-|small|10|24| 5 min  |6 hrs||
-|medium|25|49| 5 min  |12 hrs||
-|large|50|496| 5 min  |24 hrs||
-|backfill-small|10|24| 5 min   |6 hrs| low priority, negative project balance |
-|backfill-medium|25|49| 5 min  |12 hrs| low priority, negative project balance |
-|backfill-large|50|496| 5 min                     |24 hrs| low priority, negative project balance |
+| Queue Name      | Node Min | Node Max                   | Time Min | Time Max | Notes                                  |
+|-----------------|----------|----------------------------|----------|----------|----------------------------------------|
+| small           | 10       | 24                         | 5 min    | 3 hrs    ||
+| medium          | 25       | 99                         | 5 min    | 6 hrs    ||
+| large           | 100      | 216-496 **see table above* | 5 min    | 24 hrs   ||
+| backfill-small  | 10       | 24                         | 5 min    | 3 hrs    | low priority, negative project balance |
+| backfill-medium | 25       | 99                         | 5 min    | 6 hrs    | low priority, negative project balance |
+| backfill-large  | 100      | 216-496 **see table above* | 5 min    | 24 hrs   | low priority, negative project balance |
 
-- **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "prod".
+- **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "`prod`".
 - **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
 - **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**
 - **Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
@@ -91,6 +118,18 @@ This script can be placed just before the executable in the `mpiexec` command li
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
 Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
+
+
+## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
+
+Here is how to submit an interactive job to, for example, edit/build/test an application Polaris compute nodes:
+```
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug
+```
+
+This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
+
+**NOTE:** If you want to ```ssh``` or ```scp``` to one of your assigned compute nodes you will need to make sure your ```$HOME``` directory and your ```$HOME/.ssh``` directory permissions are both set to ```700```.
 
 ## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.

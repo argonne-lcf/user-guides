@@ -1,7 +1,7 @@
 # Jupyter Hub
 ## Using Jupyter Hub
 
-JupyterHub is an open-source application to allow multiple users to launch Jupyter Notebooks from a central location. At ALCF users can use the JupyterHub instances at https://jupyter.alcf.anl.gov to run notebooks on servers connect to the compute resource or on the compute resource itself.
+JupyterHub is an open-source application to allow multiple users to launch Jupyter Notebooks from a central location. At ALCF users can use the JupyterHub instances at [https://jupyter.alcf.anl.gov](https://jupyter.alcf.anl.gov) to run notebooks on servers connect to the compute resource or on the compute resource itself.
 
 The JupyterHub instance assigned to Cooley start notebooks on a login node.  The JupyterHub instance assigned to theta run notebooks a server external to Theta.  This instance does not have access to HPE/Cray programing environment and tools located in ``/opt/cray, opt/intel, etc.``.  These instances provide users access to their home (/home/$USER) and project folders on theta-lustre, grand and eagle file systems (/home/$USER, /project, /grand, /eagle) using symbolic links in the home directory.
 
@@ -16,8 +16,9 @@ For more information on how to manage conda environments, refer to this [page](h
 
 From a terminal:
 ```
-# Source required conda environment variables from appropriate install
-. /soft/systems/jupyterhub/miniconda3/etc/profile.d/conda.sh
+# Load a conda module
+module load conda
+conda activate base
 
 # set shell proxy variables to access external URL
 export http_proxy=http://proxy.alcf.anl.gov:3128
@@ -131,7 +132,7 @@ The Polaris JupyterHub instance does not have a “Local Host Process” option.
 
 <figure markdown>
   ![Add options](files/Jupyter-6-job-options.png){ width="700" }
-  <figcaption>Poalris Job options</figcaption>
+  <figcaption>Polaris Job options</figcaption>
 </figure>
 
 Once the appropriate information is provided the user will click the “Start” button and wait for the job to spawn.  In cases where the job queue is long the interface will time out and the job will be removed from the queue.

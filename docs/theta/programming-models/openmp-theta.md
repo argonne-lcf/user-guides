@@ -21,7 +21,7 @@ To enable OpenMP, use the following flags in your compile line, depending on the
 | LLVM | PrgEnv-llvm | “-fopenmp" |
 
 ## Running Jobs with OpenMP on Theta
-To run jobs on Theta with OpenMP threads, the OpenMP environment variable OMP_NUM_THREADS will need to be set to the desired number of threads per MPI rank, and certain flags in the aprun command will need to be set. Some examples are given below, and more information about running is here: [Affinity on Theta](/docs/theta/queueing-and-running-jobs/affinity-theta.md).
+To run jobs on Theta with OpenMP threads, the OpenMP environment variable `OMP_NUM_THREADS` will need to be set to the desired number of threads per MPI rank, and certain flags in the aprun command will need to be set. Some examples are given below, and more information about running is here: [Affinity on Theta](../queueing-and-running-jobs/affinity-theta.md).
 
 ### Source code for xthi.c:
 ```
@@ -94,11 +94,11 @@ int main(int argc, char *argv[])
 $ cc -qopenmp xthi.c -o xthi # PrgEnv-intel
 ```
 
-2. Run with aprun (either in a batch script that is submitted to the job scheduler a or on the command line as part of an interactive session. See [job scheduling](/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md) for more details about how to run.
+2. Run with `aprun` (either in a batch script that is submitted to the job scheduler a or on the command line as part of an interactive session. See [job scheduling](../queueing-and-running-jobs/job-and-queue-scheduling.md) for more details about how to run.
 
 Mapping of OpenMP threads to hardware threads on a KNL node can be achieved with the “--cc” option in aprun.
 
-One common option described in more detail on [Affinity on Theta](/docs/theta/queueing-and-running-jobs/affinity-theta.md)  is to use --cc depth with the -d and -j flags:
+One common option described in more detail on [Affinity on Theta](../queueing-and-running-jobs/affinity-theta.md)  is to use `--cc depth` with the `-d` and `-j` flags:
 
 ```
 $ aprun -n 1 -N 1 -d 8 -j 1 -cc depth -e OMP_NUM_THREADS=8 ./a.out
@@ -113,7 +113,7 @@ Hello from rank 0, thread 6, on nid03554. (core affinity = 6)
 Application 19165961 resources: utime ~1s, stime ~1s, Rss ~6284, inblocks ~0, outblocks ~8
 ```
 
-Another option is to use --cc none with OpenMP affinity controls:
+Another option is to use `--cc none` with OpenMP affinity controls:
 
 ```
 $ aprun -n 1 -N 1 -cc none -e OMP_NUM_THREADS=8 -e OMP_PROC_BIND=spread -e OMP_PLACES=cores ./a.out

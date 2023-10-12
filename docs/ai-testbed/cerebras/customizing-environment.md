@@ -1,28 +1,59 @@
 # Customizing Environments
 
-## Using a virtual python environment to customize an environment
+## Using virtual Python environments
 
-It is considered good practice to create and use a python virtual environment for python projects with dependencies not satisfied by the base environment.
-This prevents dependency conflicts between projects.
-Cerebras does not support conda, but python virtualenvs can be used instead.
+#### To make a PyTorch virtual environment for Cerebras
 
 ```console
-python3 -m venv ~/testp3env
-source ~/testp3env/bin/activate
-pip install --upgrade pip
-# sample pip install
-pip install wget
-# to exit the virtual env:
+#Make your home directory navigable
+chmod a+xr ~/
+mkdir ~/R_1.9.1
+chmod a+x ~/R_1.9.1/
+cd ~/R_1.9.1
+# Note: "deactivate" does not actually work in scripts.
+deactivate
+rm -r venv_pt
+/software/cerebras/python3.8/bin/python3.8 -m venv venv_pt
+source venv_pt/bin/activate
+pip3 install /opt/cerebras/wheels/cerebras_pytorch-1.9.1+1cf4d0632b-cp38-cp38-linux_x86_64.whl --find-links=/opt/cerebras/wheels
+pip install numpy==1.23.4
+pip install datasets transformers
+```
+
+#### To make a TensorFlow virtual environment for Cerebras
+
+```console
+chmod a+xr ~/
+mkdir ~/R_1.9.1
+chmod a+x ~/R_1.9.1/
+cd ~/R_1.9.1
+# Note: "deactivate" does not actually work in scripts.
+deactivate
+rm -r venv_tf
+/software/cerebras/python3.8/bin/python3.8 -m venv venv_tf
+source venv_tf/bin/activate
+#pip install tensorflow_datasets
+#pip install spacy
+pip3 install /opt/cerebras/wheels/cerebras_tensorflow-1.9.1+1cf4d0632b-cp38-cp38-linux_x86_64.whl --find-links=/opt/cerebras/wheels/
+pip install numpy==1.23.4
+```
+
+#### Activation and deactivation
+
+To activate one of these virtual environments,
+
+```console
+source ~/R_1.9.1/venv_pt/bin/activate
+```
+
+or
+
+```console
+source ~/R_1.9.1/venv_tf/bin/activate
+```
+
+To deactivate a virtual environment,
+
+```console
 deactivate
 ```
-
-To use this virtual env, e.g. in a script started with csrun_wse or csrun_cpu, or in a singularity shell:
-
-```console
-source testp3env/bin/activate
-```
-
-## Customizing the Cerebras singularity container
-
-See this section of the Cerebras documentation:
-[Adding Custom Packages To cbcore Container](https://docs.cerebras.net/en/latest/software-guides/adding-custom-pkgs-to-cbcore-container.html)
