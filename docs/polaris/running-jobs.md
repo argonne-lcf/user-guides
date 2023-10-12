@@ -22,7 +22,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 
 *******
 
-***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 16th.***
+***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 30th.***
 
 ***The `debug` and `debug-scaling` queues will remain at Slingshot 10 until Nov. 13th, at which time they will be upgraded to Slingshot 11.***
 
