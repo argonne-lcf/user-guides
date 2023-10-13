@@ -36,7 +36,7 @@ cd groqflow
 
 Create a groqflow conda environment, and activate it.<br>
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
-The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; redo just the pip install steps.
+The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; with a groqflow conda environment activated, redo just the pip install steps.
 
 #### Install conda
 If conda is not already installed:
@@ -51,7 +51,7 @@ exit
 #### Create and activate a groqflow conda environment
 Create a groqflow conda environment and activate it
 ```bash
-export PYTHON_VERSION=3.8.13
+export PYTHON_VERSION=3.10.12
 conda create -n groqflow python=$PYTHON_VERSION
 conda activate groqflow
 ```
@@ -62,10 +62,10 @@ Execute the following commands to install groqflow into the activated groqflow c
 # Alter this if you have cloned groqflow to some other location.
 cd ~/groqflow
 pip install --upgrade pip
-pip install -e .  --user
+pip install -e .
 pushd . 
 cd demo_helpers
-pip install -e . --user
+pip install -e .
 popd
 ```
 
@@ -84,6 +84,7 @@ Each groqflow sample directory in the `~/groqflow/proof_points` tree has a READM
 conda activate groqflow
 ```
 #### Run a sample
+This shows execution of the 
 ```bash
 cd ~/groqflow/proof_points/natural_language_processing/minilm
 pip install -r requirements.txt
@@ -113,10 +114,10 @@ python minilmv2.py
 (4) install groqflow
 - pip install --upgrade pip
 - pip install tqdm #[NOT SURE THIS IS NEEDED] ETA NOT NEEDED! Already installed.
-- pip install -e .  --user
+- pip install -e .
 - pushd . 
 - cd demo_helpers
-- pip install -e . --user
+- pip install -e .
 - popd
 --->
 
