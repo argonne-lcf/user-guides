@@ -77,7 +77,7 @@ Note: Always use a personal conda environment when installing packages on groq n
 Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler.<br>
 Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)
 For additional information, see 
-[https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/](https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/)
+[https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/](https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/)<br>
 Man pages are available:
 ```console
 # qsub - to submit a batch job to the specified queue using a script
