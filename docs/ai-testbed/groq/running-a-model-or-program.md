@@ -112,6 +112,16 @@ Then run the script as a batch job with PBS:
 qsub run_minilmv2.sh
 ```
 
+Job status can  be tracked with qstat:
+```console
+$ qstat
+Job id            Name             User              Time Use S Queue
+----------------  ---------------- ----------------  -------- - -----
+3084.groq-r01-co* run_minilmv2     user              0 R workq           
+$ 
+```
+
+
 Output will by default go to two files with names like the following, where the suffix is the job id. One standard output for the job. The other is the standard error for the job.
 ```console
 $ ls run_minilmv2.sh.*
