@@ -97,7 +97,6 @@ Each groqflow sample directory in the `~/groqflow/proof_points` tree has a READM
 ```console
 conda activate groqflow
 ```
-
 #### Run a sample using PBS
 Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was allowed to add it.
 ```bash
