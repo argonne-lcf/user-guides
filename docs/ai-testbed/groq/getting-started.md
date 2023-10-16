@@ -23,10 +23,7 @@ Verify that this full ssh command works, after editing it to use your argonne us
 ```bash
 ssh yourargonneusername@groq.ai.alcf.anl.gov
 ```
-
-
-You will automatically be logged in if you have done this before. Use
-the ssh "-v" switch to debug ssh problems.
+This randomly selects one of the login nodes, namely `groq-login-01.ai.alcf.anl.gov` or `groq-login-02.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
 
 TODO diagram here.
 <!--- ![Graphcore System View](files/graphcore_login.png "Graphcore System View") --->
