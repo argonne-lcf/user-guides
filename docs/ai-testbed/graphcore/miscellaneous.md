@@ -12,6 +12,12 @@ gc-monitor --no-card-info --all-partitions
 # or watch gc-monitor --no-card-info --all-partitions
 
 ```
+The IPUOF_VIPU_API_HOST environment variable can conflict with the running of poptorch programs. 
+The graphcore nodes have a convenience script that temporarily sets this environment variable.
+```console
+wrapped_gc_monitor.sh --no-card-info --all-partitions
+```
+
 > Note: if there are no partitions active, gc-monitor will core dump: `Segmentation fault (core dumped)`
 
 The output will look something like:
