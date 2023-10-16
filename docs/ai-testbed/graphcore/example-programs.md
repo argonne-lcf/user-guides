@@ -12,14 +12,13 @@ git clone https://github.com/graphcore/examples.git
 
 ### Activate PopTorch Environment
 ```bash
-source ~/venvs/graphcore/poptorch31_env/bin/activate
+source ~/venvs/graphcore/poptorch33_env/bin/activate
 ```
 
 ### Install Requirements
 Change directory:
 ```bash
 cd ~/graphcore/examples/tutorials/simple_applications/pytorch/mnist
-pip install torchvision==0.14.0
 ```
 
 ### Run MNIST
@@ -29,9 +28,11 @@ Execute the command:
 ```
 
 ### Output
-The expected output will start with downloads followed by:
+The expected output will resemble the following:
 
 ```console
+srun: job 10671 queued and waiting for resources
+srun: job 10671 has been allocated resources
 TrainingModelWithLoss(
   (model): Network(
     (layer1): Block(
@@ -52,10 +53,11 @@ TrainingModelWithLoss(
   )
   (loss): CrossEntropyLoss()
 )
-Epochs:   0%|
-...
-Graph compilation: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 100/100 [00:16<00:00]
-Accuracy on test set: 98.04%
+Epochs:   0%|          | 0/10 [00:00<?,[23:27:06.753] [poptorch:cpp] [warning] [DISPATCHER] Type coerced from Long to Int for tensor id 10
+Graph compilation: 100%|██████████| 100/100 [00:00<00:00]
+Epochs: 100%|██████████| 10/10 [01:17<00:00,  7.71s/it]
+Graph compilation: 100%|██████████| 100/100 [00:00<00:00]                          
+Accuracy on test set: 96.85%██████| 100/100 [00:00<00:00]
 ```
 
 ## MNIST - Tensorflow2
@@ -64,7 +66,7 @@ Accuracy on test set: 98.04%
 
 Create a TensorFlow2 environment as explained in the [tensorflow-2-environment-setup](https://github.com/argonne-lcf/user-guides/blob/feature/Graphcore001-DNP_edits/docs/ai-testbed/graphcore/virtual-environments.md#tensorflow-2-environment-setup) and activate the same.
 ```bash
-source ~/venvs/graphcore/tensorflow2_31_env/bin/activate
+source ~/venvs/graphcore/tensorflow2_33_env/bin/activate
 ```
 
 ### Install Requirements
@@ -83,25 +85,25 @@ Execute the command:
 
 ### Output
 
-The expected output will start with downloads followed by:
+The expected output will resemble the following:
 
 ```console
-2023-04-26 14:42:32.179566: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.1.0 (e12d5f9f01) Poplar package: 9c103dc348
-2023-04-26 14:42:34.517107: I tensorflow/compiler/plugin/poplar/driver/poplar_executor.cc:1619] TensorFlow device /device:IPU:0 attached to 1 IPU with Poplar device ID: 0
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz
-11493376/11490434 [==============================] - 0s 0us/step
-11501568/11490434 [==============================] - 0s 0us/step
-2023-04-26 14:42:35.673768: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
-2023-04-26 14:42:35.947832: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:210] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
-2023-04-26 14:42:46.953720: I tensorflow/compiler/jit/xla_compilation_cache.cc:376] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+srun: job 10672 queued and waiting for resources
+srun: job 10672 has been allocated resources
+2023-08-22 23:35:02.925033: I tensorflow/compiler/plugin/poplar/driver/poplar_platform.cc:43] Poplar version: 3.3.0 (de1f8de2a7) Poplar package: b67b751185
+2023-08-22 23:35:06.119772: I tensorflow/compiler/plugin/poplar/driver/poplar_executor.cc:1619] TensorFlow device /device:IPU:0 attached to 1 IPU with Poplar device ID: 0
+2023-08-22 23:35:07.087287: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
+2023-08-22 23:35:07.351132: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:210] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2023-08-22T23:35:09.469066Z PL:POPOPS    3545299.3545299 W: createOutputForElementWiseOp 'while/sparse_categorical_crossentropy/SparseSoftmaxCrossEntropyWithLogits/SparseSoftmaxCrossEntropyWithLogits/fusion.3/Op/Equal/Out' ({32,10}): No suitable input found, creating new variable with linear tile mapping
+2023-08-22 23:35:18.532415: I tensorflow/compiler/jit/xla_compilation_cache.cc:376] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
 Epoch 1/4
-2000/2000 [==============================] - 13s 7ms/step - loss: 0.6238
+2000/2000 [==============================] - 13s 6ms/step - loss: 0.6220
 Epoch 2/4
-2000/2000 [==============================] - 0s 222us/step - loss: 0.3361
+2000/2000 [==============================] - 1s 262us/step - loss: 0.3265
 Epoch 3/4
-2000/2000 [==============================] - 0s 225us/step - loss: 0.2894
+2000/2000 [==============================] - 1s 273us/step - loss: 0.2781
 Epoch 4/4
-2000/2000 [==============================] - 0s 226us/step - loss: 0.2601
+2000/2000 [==============================] - 1s 289us/step - loss: 0.2482
 ```
 
 <!---
@@ -158,9 +160,9 @@ Answer: southeast
 ## ResNet50
 
 ### Activate PopTorch Environment
-Create and activate a fresh PopTorch environment `poptorch31_resnet50_env` as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup), then activate it.
+Create and activate a fresh PopTorch environment `poptorch33_resnet50_env` as outlined in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup), then activate it.
 ```console
-source ~/venvs/graphcore/poptorch31_resnet50_env/bin/activate
+source ~/venvs/graphcore/poptorch33_resnet50_env/bin/activate
 ```
 
 ### Install Requirements
@@ -169,10 +171,7 @@ Change directory
 cd ~/graphcore/examples/vision/cnns/pytorch
 make install 
 make install-turbojpeg
-pip install torch==1.13.0
 ```
-> **Note**: For 3.1.0 sdk, use the torch=1.13.0 version for the compatible version.
-
 
 #### Update configs.yml
 Change directory:
@@ -270,20 +269,31 @@ Set the following environmental variables.
 mkdir -p ~/graphcore/tmp/pt_cache/
 export PYTORCH_CACHE_DIR=~/graphcore/tmp/pt_cache/
 ```
-The command to run 4 replicas (a total for 4 IPUs) of the ResNet50 model is as follows.
+To run 4 replicas (a total for 4 IPUs) of the ResNet50 model:
+Make a script with the following contents, called poprun_unet.sh<br>
+This script tells poprun to use the partition id of the partition created for the slurm job used to run the script.
 ```console
-/opt/slurm/bin/srun --ipus=4 poprun -vv --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
+#!/bin/bash
+poprun -vv --vipu-partition=slurm_${SLURM_JOBID} --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
 ```
+Then
+```console
+chmod +x poprun_unet.sh
+/opt/slurm/bin/srun --ipus=4 poprun_unet.sh
+```
+
 This model is run with the [imagenet dataset](https://image-net.org/).
 
-### Output 
+### Output
+The expected output starts with this:
 ```console
-04:22:59.948 3905692 POPRUN [I] V-IPU server address picked up from 'vipu': 10.1.3.101:8090
-04:22:59.950 3905692 POPRUN [I] Using V-IPU partition slurm_2657 as it is the only one available
-04:22:59.950 3905692 POPRUN [D] Connecting to 10.1.3.101:8090
-04:22:59.951 3905692 POPRUN [D] Status for partition slurm_2657: OK (error 0)
-04:22:59.951 3905692 POPRUN [I] Partition slurm_2657 already exists and is in state: PS_ACTIVE
-04:22:59.952 3905692 POPRUN [D] The reconfigurable partition slurm_2657 is OK
+srun: job 10675 queued and waiting for resources
+srun: job 10675 has been allocated resources
+23:48:29.160 3555537 POPRUN [I] V-IPU server address picked up from 'vipu': 10.1.3.101:8090
+23:48:29.160 3555537 POPRUN [D] Connecting to 10.1.3.101:8090
+23:48:29.162 3555537 POPRUN [D] Status for partition slurm_10673: OK (error 0)
+23:48:29.162 3555537 POPRUN [I] Partition slurm_10673 already exists and is in state: PS_ACTIVE
+23:48:29.163 3555537 POPRUN [D] The reconfigurable partition slurm_10673 is OK
  ===========================
 |      poprun topology      |
 |===========================|
@@ -295,42 +305,44 @@ This model is run with the [imagenet dataset](https://image-net.org/).
 |-----------|---------------|
 | replicas  | 0 | 1 | 2 | 3 |
  ---------------------------
-04:22:59.952 3905692 POPRUN [D] Target options from environment: {}
-04:22:59.952 3905692 POPRUN [D] Target options from V-IPU partition: {"ipuLinkDomainSize":"4","ipuLinkConfiguration":"default","ipuLinkTopology":"mesh","gatewayMode":"true","instanceSize":"4"}
-04:22:59.998 3905692 POPRUN [D] Found 1 devices with 4 IPUs
-04:23:00.689 3905692 POPRUN [D] Attached to device 6
-04:23:00.689 3905692 POPRUN [I] Preparing parent device 6
-04:23:00.689 3905692 POPRUN [D] Device 6 ipuLinkDomainSize=64, ipuLinkConfiguration=Default, ipuLinkTopology=Mesh, gatewayMode=true, instanceSize=4
-[1,0]<stdout>:[INFO] Total replicas: 4
-[1,0]<stdout>:[INFO] Global batch size: 16416
-[1,0]<stdout>:[INFO] Number of IPUs required: 4
-[1,0]<stdout>:[INFO] Loading the data
-Graph compilation: 100%|██████████| 100/100 [06:26<00:00][1,0]<stderr>:WARNING: The compile time engine option debug.branchRecordTile is set to "5887" when creating the Engine. (At compile-tile it was set to 1471)
-[1,0]<stderr>:2023-04-27T04:30:33.475912Z PO:ENGINE   3906481.3906481 W: WARNING: The compile time engine option debug.branchRecordTile is set to "5887" when creating the Engine. (At compile-tile it was set to 1471)
-[1,0]<stderr>:2023-04-27T04:30:36.928499Z popart:session 3906481.3906481 W: Rng state buffer was not serialized.You did not load poplar Engine.Remember that if you would like to run the model using the model runtime then you have to create your own buffer and callback in your model runtime application for rngStateTensor.
+23:48:29.163 3555537 POPRUN [D] Target options from environment: {}
+23:48:29.163 3555537 POPRUN [D] Target options from V-IPU partition: {"ipuLinkDomainSize":"4","ipuLinkConfiguration":"default","ipuLinkTopology":"mesh","gatewayMode":"true","instanceSize":"4"}
+23:48:29.207 3555537 POPRUN [D] Found 1 devices with 4 IPUs
+23:48:29.777 3555537 POPRUN [D] Attached to device 6
+23:48:29.777 3555537 POPRUN [I] Preparing parent device 6
+23:48:29.777 3555537 POPRUN [D] Device 6 ipuLinkDomainSize=64, ipuLinkConfiguration=Default, ipuLinkTopology=Mesh, gatewayMode=true, instanceSize=4
+23:48:33.631 3555537 POPRUN [D] Target options from Poplar device: {"ipuLinkDomainSize":"64","ipuLinkConfiguration":"default","ipuLinkTopology":"mesh","gatewayMode":"true","instanceSize":"4"}
+23:48:33.631 3555537 POPRUN [D] Using target options: {"ipuLinkDomainSize":"4","ipuLinkConfiguration":"default","ipuLinkTopology":"mesh","gatewayMode":"true","instanceSize":"4"}
+```
+Expected output ends with this:
+```console
+Graph compilation: 100%|██████████| 100/100 [00:04<00:00][1,0]<stderr>:2023-08-22T23:49:40.103248Z PO:ENGINE   3556102.3556102 W: WARNING: The compile time engine option debug.branchRecordTile is set to "5887" when creating the Engine. (At compile time it was set to 1471)
 [1,0]<stderr>:
-Loss:6.7615 | Accuracy:0.57%:  96%|█████████▌| 75/78 [11:07<00:10,  3.62s/it][1,0[1,0]<stdout>:[INFO] Epoch 1
-[1,0]<stdout>:[INFO] loss: 6.7508,
-[1,0]<stdout>:[INFO] accuracy: 0.61 %
-[1,0]<stdout>:[INFO] throughput: 1886.4 samples/sec
+Loss:6.7539 [1,0]<stdout>:[INFO] Epoch 1████▌| 75/78 [02:42<00:06,  2.05s/it][1,0]<stderr>:
+[1,0]<stdout>:[INFO] loss: 6.7462,
+[1,0]<stdout>:[INFO] accuracy: 0.62 %
+[1,0]<stdout>:[INFO] throughput: 7599.7 samples/sec
 [1,0]<stdout>:[INFO] Epoch 2/2
-Loss:6.7508 | Accuracy:0.61%: 100%|██████████| 78/78 [11:18<00:00,  8.70s/it][1,0]<stderr>:
-Loss:6.2860 | Accuracy:2.41%:  96%|█████████▌| 75/7[1,0]<stdout>:[INFO] Epoch 2,0]<stderr>:
-[1,0]<stdout>:[INFO] loss: 6.2747,
+Loss:6.7462 | Accuracy:0.62%: 100%|██████████| 78/78 [02:48<00:00,  2.16s/it][1,0]<stderr>:
+Loss:6.2821 | Accuracy:2.42%:  96%|█████████▌| 75/7[1,0]<stdout>:[INFO] Epoch 2,0]<stderr>:
+[1,0]<stdout>:[INFO] loss: 6.2720,
 [1,0]<stdout>:[INFO] accuracy: 2.48 %
-[1,0]<stdout>:[INFO] throughput: 4476.7 samples/sec
-[1,0]<stdout>:[INFO] Finished training. Time: 2023-04-27 04:40:05.821555. It took: 0:16:04.818638
-Loss:6.2747 | Accuracy:2.48%: 100%|██████████| 78/78 [04:46<00:00,  3.67s/it][1,0]<stderr>:
+[1,0]<stdout>:[INFO] throughput: 8125.8 samples/sec
+[1,0]<stdout>:[INFO] Finished training. Time: 2023-08-22 23:54:57.853508. It took: 0:05:26.090631
+Loss:6.2720 | Accuracy:2.48%: 100%|██████████| 78/78 [02:37<00:00,  2.02s/it][1,0]<stderr>:
+[1,0]<stderr>:/usr/lib/python3.8/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 14 leaked semaphore objects to clean up at shutdown
+[1,0]<stderr>:  warnings.warn('resource_tracker: There appear to be %d '
+23:55:02.722 3555537 POPRUN [I] mpirun (PID 3556098) terminated with exit code 0
 ```
 
 ## GPT-2 PyTorch - POD16 run
 
 The scripts to train a GPT-2 pytorch model on the POD16 are located at [https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch)
 
-In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch31_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup) and activate it.
+In order to run the GPT-2 Pytorch model, create a new popTorch virtual environment **poptorch33_gpt2** as described in the [virtual environment section](./virtual-environments.md#poptorch-environment-setup) and activate it.
 
 ```console
-source ~/venvs/graphcore/poptorch31_gpt2/bin/activate
+source ~/venvs/graphcore/poptorch33_gpt2/bin/activate
 ```
 ### Install Requirements
 Change directory:
@@ -350,7 +362,10 @@ The effective global batch size in this example is (micro)batch-size * gradient-
 The above example is running with `generated` or `synthetic data`. To use the same example with a real world dataset, refer to [data setup](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch#dataset-setup).
 
 ### Output
+Expected output starts with the following:
 ```console
+srun: job 10697 queued and waiting for resources
+srun: job 10697 has been allocated resources
 Building (if necessary) and loading remap_tensor_ce.
 Failed to find compiled extension; rebuilding.
 Building (if necessary) and loading residual_add_inplace_pattern.
@@ -370,74 +385,13 @@ Layer 9  --> IPU 3
 Layer 10 --> IPU 3
 Layer 11 --> IPU 3
 LM_head --> IPU 0
-Arguments: Namespace(async_dataloader=False, auto_loss_scaling=False, batch_size=1, checkpoint_input_dir='', checkpoint_output_dir=None, compile_only=False, custom_ops=True, dataset='generated', device_iterations=8, embedding_serialization_factor=4, enable_half_partials=True, enable_sequence_serialized=True, epochs=1, executable_cache_dir=None, gradient_accumulation=2048, input_files=None, ipus_per_replica=4, layers_per_ipu=[0, 4, 4, 4], learning_rate=0.00015, log_steps=1, loss_scaling=50000.0, lr_decay_steps=None, lr_schedule='cosine', lr_warmup=0.01, lr_warmup_steps=None, matmul_proportion=[0.15, 0.15, 0.15, 0.15], max_len=1024, model='gpt2', num_workers=4, optimizer='AdamW', optimizer_state_offchip=True, recompute_checkpoint_every_layer=True, recompute_checkpoint_layers=None, remap_logit=True, replicated_tensor_sharding=True, replication_factor=4, resume_training_from_checkpoint=False, save_per_epochs=1, save_per_steps=None, seed=1234, serialized_seq_len=128, stride=128, training_steps=10000, use_popdist=False, use_wandb=False, val_num=0, weight_decay=0.0)
-Model config: GPT2Config {
-  "activation_function": "gelu",
-  "architectures": [
-    "GPT2LMHeadModel"
-  ],
-  "attn_pdrop": 0.1,
-  "bos_token_id": 50272,
-  "embd_pdrop": 0.1,
-  "eos_token_id": 50272,
-  "gradient_checkpointing": false,
-  "initializer_range": 0.02,
-  "layer_norm_epsilon": 1e-05,
-  "model_type": "gpt2",
-  "n_ctx": 1024,
-  "n_embd": 768,
-  "n_head": 12,
-  "n_inner": null,
-  "n_layer": 12,
-  "n_positions": 1024,
-  "output_past": true,
-  "reorder_and_upcast_attn": false,
-  "resid_pdrop": 0.1,
-  "scale_attn_by_inverse_layer_idx": false,
-  "scale_attn_weights": true,
-  "summary_activation": null,
-  "summary_first_dropout": 0.1,
-  "summary_proj_to_labels": true,
-  "summary_type": "cls_index",
-  "summary_use_proj": true,
-  "task_specific_params": {
-    "text-generation": {
-      "do_sample": true,
-      "max_length": 400
-    }
-  },
-  "transformers_version": "4.26.1",
-  "use_cache": true,
-  "vocab_size": 50272
-}
-
-------------------- Data Loading Started ------------------
-loading training dataset and validating dataset
-Samples per epoch: 262144
-Steps per epoch: 4
-Data loaded in 2.358953586081043 secs
------------------------------------------------------------
---------------------- Training Started --------------------
-Graph compilation:   4%|▍         | 4/100 [00:29<11:57]2023-04-27T03:39:53.291853Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
-MatMuls() is deprecated! Use poplin::preplan() instead
-2023-04-27T03:39:55.159194Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
-2023-04-27T03:39:56.958834Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
-2023-04-27T03:39:58.748727Z PL:POPLIN    3888383.3888383 W: poplin::preplanMatMuls() is deprecated! Use poplin::preplan() instead
-
-Graph compilation: 100%|██████████| 100/100 [28:04<00:00]WARNING: The compile time engine option debug.branchRecordTile is set to "23551" when creating the Engine. (At compile-tile it was set to 5887)
-2023-04-27T04:07:29.993259Z PO:ENGINE   3888383.3888383 W: WARNING: The compile time engine option debug.branchRecordTile is set to "23551" when creating the Engine. (At compile-tile it was set to 5887)
-2023-04-27T04:07:42.941039Z popart:session 3888383.3888383 W: Rng state buffer was not serialized.You did not load poplar Engine.Remember that if you would like to run the model using the model runtime then you have to create your own buffer and callback in your model runtime application for rngStateTensor.
-
-[04:09:02.177] [poptorch::python] [warning] Ignoring unexpected optimizer attribute in ADAMW_NO_BIAS optimizer: ['step', '_step_count']
-Ignoring unexpected optimizer attribute in ADAMW_NO_BIAS optimizer: ['step', '_step_count']
-[04:09:02.179] [poptorch::python] [warning] Ignoring unexpected group 0 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
-Ignoring unexpected group 0 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
-[04:09:02.179] [poptorch::python] [warning] Ignoring unexpected group 1 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
-Ignoring unexpected group 1 attribute in ADAMW_NO_BIAS optimizer: ['initial_lr']
-step 0 of epoch 0, loss: 10.913212776184082, acc: 2.0116567611694336e-05, lr: 0.00012803300858899104, throughput: 36.69187444207895 samples/sec
-step 1 of epoch 0, loss: 10.836352348327637, acc: 1.9758939743041992e-05, lr: 7.5e-05, throughput: 1064.3232077940409 samples/sec
-step 2 of epoch 0, loss: 10.83123779296875, acc: 2.0459294319152832e-05, lr: 2.1966991411008938e-05, throughput: 1064.3064018230857 samples/sec
-step 3 of epoch 0, loss: 10.829036712646484, acc: 1.9878149032592773e-05, lr: 0.0, throughput: 1064.4397806661352 samples/sec
+```
+Expected output ends with the following:
+```console
+step 0 of epoch 0, loss: 10.913220405578613, acc: 2.0071864128112793e-05, lr: 0.00012803300858899104, throughput: 646.8439205981404 samples/sec
+step 1 of epoch 0, loss: 10.836345672607422, acc: 1.9788742065429688e-05, lr: 7.5e-05, throughput: 1058.0979097185766 samples/sec
+step 2 of epoch 0, loss: 10.831247329711914, acc: 2.0518898963928223e-05, lr: 2.1966991411008938e-05, throughput: 1058.7595523807183 samples/sec
+step 3 of epoch 0, loss: 10.829034805297852, acc: 1.990795135498047e-05, lr: 0.0, throughput: 1059.6762623043378 samples/sec
 ```
 > **Note**: The graph compilation for a large model like GPT-2 takes about half an hour. 
 
