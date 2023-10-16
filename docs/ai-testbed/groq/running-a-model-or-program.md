@@ -1,9 +1,5 @@
 # Running a Model/Program
 
-## Job submission and queuing
-
-Groq jobs in the AI Testbed's groqrack are currently not managed by a job scheduler. [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)-based job scheduling is under development. 
-
 ## Login nodes
 
 Jobs are launched from any groq node. <br>
@@ -76,6 +72,24 @@ conda activate groqflow
 Alternative, the activation command can be put in .bashrc.
 Note: Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into ~/.local and can cause problems when your shared home directory is used on other systems.
 
+### Job submission and queuing
+
+Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler.<br>
+Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)
+For additional information, see 
+[https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/](https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/)
+Man pages are available:
+```console
+# qsub - to submit a batch job to the specified queue using a script
+man qsub
+# qstat - to display queue information
+man qstat
+# qdel - to delete (cancel) a job:
+man qdel
+# qhold - to hold a job
+man qhold
+```
+
 ### Running a groqflow sample
 Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
 
@@ -83,8 +97,9 @@ Each groqflow sample directory in the `~/groqflow/proof_points` tree has a READM
 ```console
 conda activate groqflow
 ```
-#### Run a sample
-Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was alloed to add it.
+
+#### Run a sample using PBS
+Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was allowed to add it.
 ```bash
 #!/bin/bash
 # >>> conda initialize >>>
@@ -110,6 +125,31 @@ python minilmv2.py
 Then run the script as a batch job with PBS:
 ```bash
 qsub run_minilmv2.sh
+```
+
+If your `~/.bashrc` initializes conda, an alternative to copying the conda initilization script into your execution scripts is to comment out this section in your "~/.bashrc":
+```bash
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+```
+to
+```bash
+## If not running interactively, don't do anything
+#case $- in
+#    *i*) ;;
+#      *) return;;
+#esac
+```
+Then the execution script becomes:
+```bash
+#!/bin/bash
+conda activate groqflow
+cd ~/groqflow/proof_points/natural_language_processing/minilm
+pip install -r requirements.txt
+python minilmv2.py
 ```
 
 Job status can  be tracked with qstat:
