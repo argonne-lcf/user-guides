@@ -84,14 +84,40 @@ Each groqflow sample directory in the `~/groqflow/proof_points` tree has a READM
 conda activate groqflow
 ```
 #### Run a sample
-This shows execution of the 
+Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was alloed to add it.
 ```bash
+#!/bin/bash
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(${HOME}'/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="${HOME}/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+conda activate groqflow
 cd ~/groqflow/proof_points/natural_language_processing/minilm
 pip install -r requirements.txt
 python minilmv2.py
 ```
 
+Then run the script as a batch job with PBS:
+```bash
+qsub run_minilmv2.sh
+```
 
+Output will by default go to two files with names like the following, where the suffix is the job id. One standard output for the job. The other is the standard error for the job.
+```console
+$ ls run_minilmv2.sh.*
+-rw------- 1 user users   448 Oct 16 18:40 run_minilmv2.sh.e3082
+-rw------- 1 user users 50473 Oct 16 18:42 run_minilmv2.sh.o3082
+```
 
 <!---
 (0) remove the contents of .local, but preserve the directory path ~/.local/bin (be careful; some apps put stuff in .local)
