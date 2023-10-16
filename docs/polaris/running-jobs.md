@@ -5,7 +5,7 @@
 
 ***SLINGSHOT 11 Upgrade: The upgrade will take place in three phases, with each phase taking place during one of the normally scheduled maintenance periods. During this time, there will be an additional queue, `ss11`. This queue will contain compute nodes that have been upgraded to Slingshot 11. The compute nodes in the `prod` queue will contain the Slingshot 10 nodes. The number of nodes in the `prod` queue will dwindle with each maintenance until all computes nodes have been upgraded to Slingshot 11. Once all compute nodes have been upgraded, the `prod` queue will once again have 496 nodes and the `ss11` queue will be removed.***
 
-***ATTENTION: From October 16th through November 13th, the Polaris nodes will be upgraded in 'chunks' to Slingshot 11. This will affect the prod queue sizes. Please read about the changes to the queues below.***
+***ATTENTION: From October 30th through November 13th, the Polaris nodes will be upgraded in ‘chunks’ to Slingshot 11. This will affect the prod queue sizes. Please read about the changes to the queues below.***
 
 *******
 
@@ -22,7 +22,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 
 *******
 
-***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 16th.***
+***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 30th.***
 
 ***The `debug` and `debug-scaling` queues will remain at Slingshot 10 until Nov. 13th, at which time they will be upgraded to Slingshot 11.***
 
@@ -30,9 +30,9 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 
 | Number of nodes in:  | prod queue (Slingshot 10) | prod queue (Slingshot 11) | ss11 queue (Slightshot 11) |
 |----------------------|---------------------------|---------------------------|----------------------------|
-| Now through Oct 16th | 496                       | 0                         | 0                          |
-| Oct 16th - Oct 30th  | 384                       | 0                         | 112                        |
-| Oct 30th - Nov 13th  | 216                       | 0                         | 280                        |
+| Now through Oct 30th | 496                       | 0                         | 0                          |
+| Oct 30th - Nov 6th  | 384                       | 0                         | 112                        |
+| Nov 6th - Nov 13th  | 216                       | 0                         | 280                        |
 | Nov 13th and onward  | 0                         | 496                       | N/A                        |
 
 ***PBS "`insufficient resource`" ERROR:  If you do not account for this change in maximum job size in your job submissions you could have jobs that sit in the queue for four weeks with a comment of “`insufficient resources`”.  Once we come out of the maintenance on Nov 13th they would run.***
