@@ -1,15 +1,13 @@
 # Getting Started
 
-<!--- ## Allocations
+## Allocations
 
-TODO confirm all this
-Available for Director’s Discretionary(DD) allocations.
-[https://www.alcf.anl.gov/science/directors-discretionary-allocation-program](Allocation Request Form)
-Allocations also available under the [https://www.alcf.anl.gov/science/adsp-allocation-program](INCITE), [https://www.alcf.anl.gov/science/adsp-allocation-program](ALCC), and [https://www.alcf.anl.gov/science/adsp-allocation-program](ALCF DataScience) programs. --->
+If you do not already have an allocation, you will need to request one here:
+[https://accounts.alcf.anl.gov/#/allocationRequests](https://accounts.alcf.anl.gov/#/allocationRequests)
 
 ## Accounts
 
-If you do not have an ALCF account, request one here: [https://accounts.alcf.anl.gov/#/home](ALCF Account and Project Management)
+If you do not have an ALCF account (but have an allocation), request one here: [https://accounts.alcf.anl.gov/#/home](ALCF Account and Project Management)
 
 ## Setup
 
@@ -25,8 +23,10 @@ ssh yourargonneusername@groq.ai.alcf.anl.gov
 ```
 This randomly selects one of the login nodes, namely `groq-login-01.ai.alcf.anl.gov` or `groq-login-02.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
 
+
+<!---
 TODO diagram here.
-<!--- ![Graphcore System View](files/graphcore_login.png "Graphcore System View") --->
+![Graphcore System View](files/graphcore_login.png "Graphcore System View") --->
 
 ### Log in to a Groq compute node
 
