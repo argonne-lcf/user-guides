@@ -10,6 +10,7 @@ The `GroqWare suite SDK` uses a API based programming model and enables users to
 
 
 For more information refer to the following links:
+
 [GroqRack spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqRack%E2%84%A2-Compute-Cluster-Product-Brief-v1.0.pdf)<br>
 [GroqNode spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqNode%E2%84%A2-Server-GN1-B8C-Product-Brief-v1.5.pdf)<br>
 [GroqCard spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqCard%E2%84%A2-Accelerator-Product-Brief-v1.5-.pdf)<br>
