@@ -219,18 +219,18 @@ nav:
       - Virtual Environments: ai-testbed/groq/virtual-environments.md
       - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
     - SambaNova:
-      - System Overview: ai-testbed/sambanova_gen2/system-overview.md
-      - Getting Started: ai-testbed/sambanova_gen2/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova_gen2/virtual-environment.md
-      - Running a Model/Program: ai-testbed/sambanova_gen2/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova_gen2/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova_gen2/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
-      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
-      - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
-      # - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
+      - System Overview: ai-testbed/sambanova/system-overview.md
+      - Getting Started: ai-testbed/sambanova/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+      # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
