@@ -33,24 +33,6 @@ Follow the instructions in the [Virtual Environments](virtual-environments.md) <
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
 The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; with a groqflow conda environment activated, redo just the pip install steps.
 
-### Job submission and queuing
-
-Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler.<br>
-Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)
-For additional information, see 
-[https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/](https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/)<br>
-Man pages are available:
-```console
-# qsub - to submit a batch job to the specified queue using a script
-man qsub
-# qstat - to display queue information
-man qstat
-# qdel - to delete (cancel) a job:
-man qdel
-# qhold - to hold a job
-man qhold
-```
-
 ### Running a groqflow sample
 Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
 
@@ -60,6 +42,8 @@ conda activate groqflow
 ```
 
 #### Run a sample using PBS
+See [Job Queueing and Submission](job-queuing-and-submission.md) for more information about the PBS job scheduler.
+
 Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was allowed to add it.
 ```bash
 #!/bin/bash
