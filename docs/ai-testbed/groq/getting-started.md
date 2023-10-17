@@ -7,7 +7,7 @@ If you do not already have an allocation, you will need to request one here:
 
 ## Accounts
 
-If you do not have an ALCF account (but have an allocation), request one here: [https://accounts.alcf.anl.gov/#/home](ALCF Account and Project Management)
+If you do not have an ALCF account (but have an allocation), request one here: [ALCF Account and Project Management](https://accounts.alcf.anl.gov/#/home)
 
 ## Setup
 
