@@ -3,4 +3,5 @@ The GroqRack 42U compute cluster has 9 GroqNode servers, 8 compute nodes named s
 [GroqRack spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqRack%E2%84%A2-Compute-Cluster-Product-Brief-v1.0.pdf)<br>
 [GroqNode spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqNode%E2%84%A2-Server-GN1-B8C-Product-Brief-v1.5.pdf)<br>
 [GroqCard spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqCard%E2%84%A2-Accelerator-Product-Brief-v1.5-.pdf)<br>
+[GroqChip spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqChip%E2%84%A2-Processor-Product-Brief-v1.5.pdf)<br>
 ([via](https://groq.com/docs/))
