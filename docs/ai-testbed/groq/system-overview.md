@@ -1,4 +1,4 @@
-The GroqRack 42U compute cluster has 9 GroqNode servers, 8 compute nodes named sequentially from groq-r01-gn-01 to groq-r01-gn-08 and 1 redudant node (groq-r01-gn-09). Each node has 2 AMD EPYCTM 7313 processors, a total of 1TB of DRAM, and 8 GroqCard accelerators, with integrated chip-to-chip connections.
+The GroqRack 42U compute cluster has <!--9 GroqNode servers, and --> 9 compute nodes (GroqNodes) named sequentially from groq-r01-gn-01 to groq-r01-gn-09. <!--and 1 redudant node (groq-r01-gn-09)--> Each GroqNode has 2 AMD EPYCTM 7313 processors, a total of 1TB of DRAM, and 8 GroqCard accelerators, with integrated chip-to-chip connections.
 
 [GroqRack spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqRack%E2%84%A2-Compute-Cluster-Product-Brief-v1.0.pdf)<br>
 [GroqNode spec sheet](https://groq.com/wp-content/uploads/2022/10/GroqNode%E2%84%A2-Server-GN1-B8C-Product-Brief-v1.5.pdf)<br>
