@@ -3,7 +3,7 @@
 ## Allocations
 
 If you do not already have an allocation, you will need to request one here:
-[https://accounts.alcf.anl.gov/#/allocationRequests](https://accounts.alcf.anl.gov/#/allocationRequests)
+[Discretionary Allocation Request (New & Renewal)](https://accounts.alcf.anl.gov/#/allocationRequests)
 
 ## Accounts
 
