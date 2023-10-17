@@ -6,7 +6,7 @@ ALCF consists of a single `GroqRackTM compute cluster` that provides an extensib
 The `GroqWare suite SDK` uses a API based programming model and enables users to develop, compile, and run models on the GroqCard accelerator in a host server system. The SDK uses a ONNX/MLIR enabled DAG compiler and it consists of Groq Compiler, Groq API, and utility tools like GroqView™ profiler and groq-runtime. 
 
 
-<!--- The GroqRack 42U compute cluster has <!--9 GroqNode servers, and --> 9 compute nodes (GroqNodes) named sequentially from groq-r01-gn-01 to groq-r01-gn-09. <!--and 1 redudant node (groq-r01-gn-09)--> Each GroqNode has 2 AMD EPYCTM 7313 processors, a total of 1TB of DRAM, and 8 GroqCard accelerators, with integrated chip-to-chip connections. --->
+<!--- The GroqRack 42U compute cluster has ---> <!--9 GroqNode servers, and --> <!--- 9 compute nodes (GroqNodes) named sequentially from groq-r01-gn-01 to groq-r01-gn-09.---> <!--and 1 redudant node (groq-r01-gn-09)--> <!---Each GroqNode has 2 AMD EPYCTM 7313 processors, a total of 1TB of DRAM, and 8 GroqCard accelerators, with integrated chip-to-chip connections. --->
 
 
 For more information refer to the following links:
