@@ -1,9 +1,7 @@
 # Running a Model/Program
 
-## Login nodes
-
-Jobs are launched from any groq node. <br>
-If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific groq node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
+Jobs are launched from any GroqRack node, or from login nodes. <br>
+If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
 
 ```bash
 man screen
@@ -14,12 +12,12 @@ or online man pages: [screen](https://manpages.ubuntu.com/manpages/jammy/en/man1
 
 ## Running jobs on Groq nodes
 
-### Groqflow
+### GroqFlow
 
-Groqflow is the simplest way to port applications running inference to groq. The groqflow github repo includes many sample applications.</br>
+GroqFlow is the simplest way to port applications running inference to groq. The groqflow github repo includes many sample applications.</br>
 See [GroqFlow](https://github.com/groq/groqflow/tree/main).
 
-### Clone the Groqflow github repo
+### Clone the GroqFlow github repo
 
 Clone the groqflow github repo and change current directory to the clone:
 ```bash
@@ -28,7 +26,7 @@ git clone https://github.com/groq/groqflow.git
 cd groqflow
 ```
 
-### Groqflow conda environments
+### GroqFlow conda environments
 
 Create a groqflow conda environment, and activate it.<br>
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
@@ -65,12 +63,11 @@ pip install -e .
 popd
 ```
 
-For any new ssh session, to use groqfloq,
+To use groqfloq,
 ```bash
 conda activate groqflow
 ```
-Alternative, the activation command can be put in .bashrc.
-Note: Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into ~/.local and can cause problems when your shared home directory is used on other systems.
+Note: Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into ~/.local and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
 
 ### Job submission and queuing
 
@@ -93,10 +90,11 @@ man qhold
 ### Running a groqflow sample
 Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
 
-#### Activate your Groqflow conda environment
+#### Optionally activate your GroqFlow conda environment
 ```console
 conda activate groqflow
 ```
+
 #### Run a sample using PBS
 Create a script `run_minilmv2.sh` with the following contents. It assumes that conda was installed in the default location. The conda initialize section can also be copied from your .bashrc if the conda installer was allowed to add it.
 ```bash
@@ -167,34 +165,4 @@ $ ls run_minilmv2.sh.*
 -rw------- 1 user users   448 Oct 16 18:40 run_minilmv2.sh.e3082
 -rw------- 1 user users 50473 Oct 16 18:42 run_minilmv2.sh.o3082
 ```
-
-<!---
-(0) remove the contents of .local, but preserve the directory path ~/.local/bin (be careful; some apps put stuff in .local)
-(1) remove conda completely, including the stuff at the end of .bashrc. Then logout and back in
-- rm -r ~/.conda
-- edit .bashrc
-- exit ssh session, start a new ssh session
-(2) clone groqflow if it hasn't already been cloned:
-- git clone https://github.com/groq/groqflow.git
-- cd groqflow
-- rm Miniconda3-latest-Linux-x86_64.sh*
-- wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-- bash Miniconda3-latest-Linux-x86_64.sh
- - answer y/yes to all prompts
-- exit ssh session, start a new ssh session
-(3) create a groqflow conda environment and activate it
-- export PYTHON_VERSION=3.8.13
-- conda create -n groqflow python=$PYTHON_VERSION
-- conda activate groqflow
-(4) install groqflow
-- pip install --upgrade pip
-- pip install tqdm #[NOT SURE THIS IS NEEDED] ETA NOT NEEDED! Already installed.
-- pip install -e .
-- pushd . 
-- cd demo_helpers
-- pip install -e .
-- popd
---->
-
-
 

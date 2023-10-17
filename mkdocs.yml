@@ -246,7 +246,7 @@ nav:
       - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
       # - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
     - Groq:
-      #- System Overview: ai-testbed/groq/system-overview.md
+      - System Overview: ai-testbed/groq/system-overview.md
       - Getting Started: ai-testbed/groq/getting-started.md
       - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
       #- Example Programs: ai-testbed/groq/example-programs.md
