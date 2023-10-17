@@ -245,6 +245,13 @@ nav:
       - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
       # - Performance Tools: ai-testbed/sambanova_gen2/performance-tools.md
+    - Groq:
+      - System Overview: ai-testbed/groq/system-overview.md
+      - Getting Started: ai-testbed/groq/getting-started.md
+      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
+      #- Example Programs: ai-testbed/groq/example-programs.md
+      - Virtual Environments: ai-testbed/groq/virtual-environments.md
+      - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
