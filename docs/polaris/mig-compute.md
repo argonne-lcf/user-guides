@@ -36,21 +36,21 @@ Please study the following example of a valid configuration file:
 - a basic validator script is available at /soft/pbs/mig_conf_validate.sh.  it will check for simple errors in your config, and print the expected configuration.  example:
 > ascovel@polaris-login-02:~> /soft/pbs/mig_conf_validate.sh -h
 > usage: mig_conf_validate.sh -c CONFIG_FILE
-> ascovel@polaris-login-02:~> /soft/pbs/mig_conf_validate.sh -c ./polaris-mig/mig_config.json 
+> ascovel@polaris-login-02:~> /soft/pbs/mig_conf_validate.sh -c ./polaris-mig/mig_config.json
 > expected MIG configuration:
 > GPU     GPU_INST   COMPUTE_INST
 > -------------------------------
-> 0       7g.40gb    4c.7g.40gb    
-> 0       7g.40gb    3c.7g.40gb    
-> 1       7g.40gb    4c.7g.40gb    
-> 1       7g.40gb    3c.7g.40gb    
-> 2       2g.10gb    2g.10gb       
-> 2       4g.20gb    2c.4g.20gb    
-> 2       4g.20gb    2c.4g.20gb    
-> 3       2g.10gb    2g.10gb       
-> 3       4g.20gb    2c.4g.20gb    
-> 3       4g.20gb    2c.4g.20gb    
-> ascovel@polaris-login-02:~> 
+> 0       7g.40gb    4c.7g.40gb
+> 0       7g.40gb    3c.7g.40gb
+> 1       7g.40gb    4c.7g.40gb
+> 1       7g.40gb    3c.7g.40gb
+> 2       2g.10gb    2g.10gb
+> 2       4g.20gb    2c.4g.20gb
+> 2       4g.20gb    2c.4g.20gb
+> 3       2g.10gb    2g.10gb
+> 3       4g.20gb    2c.4g.20gb
+> 3       4g.20gb    2c.4g.20gb
+> ascovel@polaris-login-02:~>
 
 ## Example use of MIG compute instances
 
@@ -58,7 +58,7 @@ The following example demonstrates the use of MIG compute instances via the CUDA
 > ascovel@polaris-login-02:~/polaris-mig> qsub -l mig_config=/home/ascovel/polaris-mig/mig_config.json -l select=1 -l walltime=60:00 -l filesystems=home:grand:swift -A Operations -q R639752 -k doe -I
 > qsub: waiting for job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 > qsub: job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
-> 
+>
 > ascovel@x3209c0s19b0n0:~> cat ./polaris-mig/mig_config.json
 > {
 >   "group1": {
@@ -70,8 +70,8 @@ The following example demonstrates the use of MIG compute instances via the CUDA
 >     "gpus": [2,3],
 >     "mig_enabled": true,
 >     "instances": {"4g.20gb": ["2c.4g.20gb", "2c.4g.20gb"], "2g.10gb": ["2g.10gb"] }
->   } 
-> } 
+>   }
+> }
 > ascovel@x3209c0s19b0n0:~> nvidia-smi -L | grep -Po -e "MIG[0-9a-f\-]+"
 > MIG-63aa1884-acb8-5880-a586-173f6506966c
 > MIG-b86283ae-9953-514f-81df-99be7e0553a5
@@ -101,4 +101,4 @@ The following example demonstrates the use of MIG compute instances via the CUDA
 > |    3    1    1      17488      C   ./saxpy                          8313MiB |
 > |    3    5    0      17489      C   ./saxpy                          8313MiB |
 > +-----------------------------------------------------------------------------+
-> ascovel@x3209c0s19b0n0:~> 
+> ascovel@x3209c0s19b0n0:~>
