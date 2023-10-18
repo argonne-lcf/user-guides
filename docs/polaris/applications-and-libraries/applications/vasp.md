@@ -111,9 +111,10 @@ The follow modules will update the include and libraries paths used by the Cray 
 
 ```
 module purge
+module load nvhpc/23.3
 module load PrgEnv-nvhpc
 module load cray-libsci
-module load craype-accel-nvidia8
+module load craype-accel-nvidia80
 
 ```
 
@@ -159,7 +160,7 @@ chmod +x example-script.sh
 qsub  example-script.sh
 ```
 
-### Known issues versions: >= 6.4.0 in Polaris 
+### Known issues versions: >= 6.4.x in Polaris 
 ---
 
 * Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this
