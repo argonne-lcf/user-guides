@@ -86,6 +86,7 @@ nav:
     - Visualization:
         - Paraview: polaris/visualization/paraview.md
     - Workflows:
+        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
