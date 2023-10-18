@@ -1,6 +1,6 @@
-# MIG mode
+# Multi-Instance GPU (MIG) mode
 
-MIG mode can be enabled and configured on Polaris by passing a valid configuration file to qsub:
+MIG mode can be enabled and configured on Polaris by passing a valid configuration file to `qsub`:
 > qsub ... -l mig_config=/home/ME/path/to/mig_config.json ...
 
 You can find a concise explanation of MIG concepts and terms at https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html#concepts
@@ -21,19 +21,19 @@ Please study the following example of a valid configuration file:
 >   }
 > }
 
-### note:
-- group names are arbitrary, but must be unique
-- "gpus" must be an array of integers.  if only one physical gpu is being configured in a group, it must still be contained within an array(ex. "gpus": [0],)
-- only groups with mig_enabled set to true will be configured
-- instances denote the MIG gpu instances and the nested compute instances you wish to be configured
-  - syntax is {"gpu instance 1": ["cpu instance 1", "cpu instance 2"], ...}
-  - valid gpu instances are 1g.5gb, 1g.10gb, 2g.10gb, 3g.20gb, 4g.20gb, and 7g.40gb.  the first number denotes the number of slots used out of 7 total, and the second number denotes memory in GB
+### Notes
+- Group names are arbitrary, but must be unique
+- `"gpus"` must be an array of integers.  if only one physical gpu is being configured in a group, it must still be contained within an array(ex. `"gpus": [0],`)
+- Only groups with `mig_enabled` set to `true` will be configured
+- `instances` denote the MIG gpu instances and the nested compute instances you wish to be configured
+  - syntax is `{"gpu instance 1": ["cpu instance 1", "cpu instance 2"], ...}`
+  - valid gpu instances are `1g.5gb`, `1g.10gb`, `2g.10gb`, `3g.20gb`, `4g.20gb`, and `7g.40gb`.  the first number denotes the number of slots used out of 7 total, and the second number denotes memory in GB
   - the default cpu instance for any gpu instance has the same identifier as the gpu instance(in which case it will be the only one configurable)
-  - other cpu instances can be configured with the identifier syntax "Xc.Y", where X is the number of slots available in that gpu instance, and Y is the gpu instance identifier string
-  - some gpu instances cannot be configured adjacently, despite there being sufficient slots/memory remaining(ex. 3g.20gb and 4g.20gb).  please see nvidia MIG documentation for further details
-- currently, MIG configuration is only available in the debug, debug-scaling, and preemptable queues.  submissions to other queues will result in any MIG config files passed being silently ignored
-- files which do not match the above syntax will be silently rejected, and any invalid configurations in properly formatted files will be silently ignored.  please test any changes to your configuration in an interactive job session before use
-- a basic validator script is available at /soft/pbs/mig_conf_validate.sh.  it will check for simple errors in your config, and print the expected configuration.  example:
+  - other cpu instances can be configured with the identifier syntax `Xc.Y`, where `X` is the number of slots available in that gpu instance, and `Y` is the gpu instance identifier string
+  - some gpu instances cannot be configured adjacently, despite there being sufficient slots/memory remaining(ex. `3g.20gb` and `4g.20gb`). Please see NVIDIA MIG documentation for further details
+- Currently, MIG configuration is only available in the debug, debug-scaling, and preemptable queues.  submissions to other queues will result in any MIG config files passed being silently ignored
+- Files which do not match the above syntax will be silently rejected, and any invalid configurations in properly formatted files will be silently ignored. Please test any changes to your configuration in an interactive job session before use
+- A basic validator script is available at `/soft/pbs/mig_conf_validate.sh`. It will check for simple errors in your config, and print the expected configuration. For example:
 > ascovel@polaris-login-02:~> /soft/pbs/mig_conf_validate.sh -h
 > usage: mig_conf_validate.sh -c CONFIG_FILE
 > ascovel@polaris-login-02:~> /soft/pbs/mig_conf_validate.sh -c ./polaris-mig/mig_config.json
@@ -54,7 +54,7 @@ Please study the following example of a valid configuration file:
 
 ## Example use of MIG compute instances
 
-The following example demonstrates the use of MIG compute instances via the CUDA_VISIBLE_DEVICES environment variable:
+The following example demonstrates the use of MIG compute instances via the `CUDA_VISIBLE_DEVICES` environment variable:
 > ascovel@polaris-login-02:~/polaris-mig> qsub -l mig_config=/home/ascovel/polaris-mig/mig_config.json -l select=1 -l walltime=60:00 -l filesystems=home:grand:swift -A Operations -q R639752 -k doe -I
 > qsub: waiting for job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 > qsub: job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
