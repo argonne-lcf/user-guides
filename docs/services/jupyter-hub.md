@@ -32,7 +32,7 @@ menu of the available job options to start the Jupyter instance.
   on Polaris.
 - Number of Nodes: This field allows the user to select the number of compute
   nodes to be allocated.
-- Runtime (minutes:seconds) : This field allows the user to set the runtime of
+- Runtime (minutes:seconds): This field allows the user to set the runtime of
   the job in minutes and seconds. The user should refer to the [Polaris queue
   scheduling
   policy](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md)
