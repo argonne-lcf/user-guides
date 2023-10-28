@@ -21,8 +21,9 @@ in more detail.
 
 ## Polaris
 
-The Polaris JupyterHub instance runs on Polaris compute nodes through the job
-scheduler. After the authentication step, the user will be presented with the
+The Polaris JupyterHub server runs on a Polaris login node and launches individual 
+users' environments on the compute nodes through the PBS job scheduler. 
+After the authentication step, the user will be presented with the
 menu of the available job options to start the Jupyter instance.
 
 - Select a job profile:  This field lists the available profiles, which is
