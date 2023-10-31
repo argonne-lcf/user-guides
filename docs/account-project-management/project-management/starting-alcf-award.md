@@ -8,10 +8,9 @@ To get started using our resources, please visit:
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
-- [Theta and Cooley Overview](http://bit.ly/Getting_Started_On_Theta)
-- [Running on Theta](https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…) 
+- [Running on Polaris](https://docs.alcf.anl.gov/polaris/running-jobs/) 
 - [ThetaGPU Overview](https://www.youtube.com/watch?v=N0Xip1mUZY8)
-- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-an…)
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 - [Community Data Sharing with ACDC (using Eagle)](https://docs.alcf.anl.gov/data-management/acdc/acdc-overview/)
 
 ## Project Terminology
