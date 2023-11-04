@@ -25,20 +25,22 @@ Follow these instructions to compile and train the `fc_mnist` TensorFlow and PyT
 
 First, make virtual environments for Cerebras for PyTorch and/or TensorFlow.
 See [Customizing Environments](./customizing-environment.md) for the procedures for making PyTorch and/or TensorFlow virtual environments for Cerebras.
-If the environments are made in ```~/R_1.9.1/```, then they would be activated as follows:
+If the environments are made in ```~/R_1.9.2/```, then they would be activated as follows:
 ```console
-source ~/R_1.9.1/venv_pt/bin/activate
+source ~/R_1.9.2/venv_pt/bin/activate
 ```
 or
 ```console
-source ~/R_1.9.1/vent_tf/bin/activate
+source ~/R_1.9.2/vent_tf/bin/activate
 ```
 
 ### Clone the Cerebras modelzoo
 
+Note: For virtual environent R_1.9.2, the modelzoo is unchanged from R_1.9.1. 
+
 ```console
-mkdir ~/R_1.9.1
-cd ~/R_1.9.1
+mkdir ~/R_1.9.2
+cd ~/R_1.9.2
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
@@ -49,15 +51,15 @@ git checkout Release_1.9.1
 ### Activate your PyTorch virtual environment, and change to the working directory
 
 ```console
-source ~/R_1.9.1/venv_pt/bin/activate
-cd ~/R_1.9.1/modelzoo/modelzoo/fc_mnist/pytorch
+source ~/R_1.9.2/venv_pt/bin/activate
+cd ~/R_1.9.2/modelzoo/modelzoo/fc_mnist/pytorch
 ```
 
 Next, edit configs/params.yaml, making the following changes:
 
 ```text
  train_input:
--    data_dir: "./data/mnist/train"
+-    data_dir: "./mnist"
 +    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
 ```
 
@@ -65,7 +67,7 @@ and
 
 ```text
  eval_input:
--    data_dir: "./data/mnist/val"
+-    data_dir: "./mnist"
 +    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
 ```
 
@@ -79,7 +81,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.1/modelzoo --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.2/modelzoo --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
@@ -100,8 +102,8 @@ A successful fc_mnist PyTorch training run should finish with output resembling 
 ### Activate your TensorFlow virtual environment and change to the working directory
 
 ```console
-source ~/R_1.9.1/venv_tf/bin/activate
-cd ~/R_1.9.1/modelzoo/modelzoo/fc_mnist/tf/
+source ~/R_1.9.2/venv_tf/bin/activate
+cd ~/R_1.9.2/modelzoo/modelzoo/fc_mnist/tf/
 ```
 
 Next, edit configs/params.yaml, making the following change. Cerebras requires that the data_dir be an absolute path.
@@ -125,7 +127,7 @@ Next, edit configs/params.yaml, making the following change. Cerebras requires t
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX pipeline --job_labels name=tf_fc_mnist --params configs/params.yaml --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist TensorFlow training run should finish with output resembling the following:

@@ -4,12 +4,12 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_1.9.1
-cd ~/R_1.9.1
+mkdir ~/R_1.9.2
+cd ~/R_1.9.2
 git clone https://github.com/Cerebras/modelzoo.git
 ```
 <!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_1.9.1/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_1.9.2/anl_shared
 --->
 
 ## UNet
@@ -19,17 +19,17 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_1.9.1/venv_pt/bin/activate
+source ~/R_1.9.2/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.9.1/modelzoo/modelzoo/vision/pytorch/unet
+cd ~/R_1.9.2/modelzoo/modelzoo/vision/pytorch/unet
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 
 <!--- Appears to not have been ported to 1.7.1
@@ -43,7 +43,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_1.9.1/anl_shared/braggnn/tf
+cd ~/R_1.9.2/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -63,17 +63,17 @@ source /software/cerebras/venvs/venv_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_1.9.1/venv_pt/bin/activate
+source ~/R_1.9.2/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.9.1/modelzoo/modelzoo/transformers/pytorch/bert
+cd ~/R_1.9.2/modelzoo/modelzoo/transformers/pytorch/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -104,17 +104,17 @@ This BERT-large msl128 example uses a single sample dataset for both training an
 First, source a Cerebras TensorFlow virtual environment.
 
 ```console
-source ~/R_1.9.1/venv_tf/bin/activate
+source ~/R_1.9.2/venv_tf/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.9.1/modelzoo/modelzoo/transformers/tf/bert
+cd ~/R_1.9.2/modelzoo/modelzoo/transformers/tf/bert
 cp /software/cerebras/dataset/bert_large/params_bert_large_msl128_sampleds.yaml configs/params_bert_large_msl128_sampleds.yaml
 export MODEL_DIR=mytest
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_tf --max_steps 1000 --params configs/params_bert_large_msl128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -147,17 +147,17 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_1.9.1/venv_pt/bin/activate
+source ~/R_1.9.2/venv_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.9.1/modelzoo/modelzoo/transformers/pytorch/gptj
+cd ~/R_1.9.2/modelzoo/modelzoo/transformers/pytorch/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
@@ -187,17 +187,17 @@ source /software/cerebras/venvs/venv_tf/bin/activate
 # or your personal venv
 
 ```console
-source ~/R_1.9.1/venv_tf/bin/activate
+source ~/R_1.9.2/venv_tf/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_1.9.1/modelzoo/modelzoo/transformers/tf/gptj
+cd ~/R_1.9.2/modelzoo/modelzoo/transformers/tf/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj_tf
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_1.9.2/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
