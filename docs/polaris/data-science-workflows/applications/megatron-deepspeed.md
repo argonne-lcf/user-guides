@@ -55,7 +55,7 @@ strategies and various optimizations that are supported.
     # - other args: defined in ALCF/args.sh
     # ---------------------------------------------
     MODEL_SIZE_KEY="GPT25B" \
-        SEQ_LEN=128000 \ 
+        SEQ_LEN=4096 \ 
         USE_FLASH_ATTN_V2=1 \
         MICRO_BATCH=1 \
         GAS=1 \
@@ -67,25 +67,25 @@ strategies and various optimizations that are supported.
 
 ## Helper Scripts
 
-[`ALCF/train-gpt3.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/ALCF/train-gpt3.sh)
+[`ALCF/train-gpt3.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/train-gpt3.sh)
 
 :   Main entry point for training. This script will automatically source the
     rest of the required ALCF/*.sh scripts below
 
-[`ALCF/model.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/ALCF/model.sh)
+[`ALCF/model.sh`](https://github.com/saforem2/Megatron-DeepSpeed/blob/main/ALCF/model.sh)
 
 :   Contains some example model architectures for GPT3-style models
 
-[`ALCF/args.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/ALCF/args.sh)
+[`ALCF/args.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/args.sh)
 
 :   Logic for parsing / setting up runtime options for Megatron and DeepSpeed.
 
-[`ALCF/setup.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/ALCF/setup.sh)
+[`ALCF/setup.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/setup.sh)
 
 :   Locate and activate virtual environment to be used, ensure MPI
     variables are set properly
 
-[`ALCF/launch.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/ALCF/launch.sh):
+[`ALCF/launch.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/launch.sh)
 
 :   Identify available resources and build the command to be ran i.e.
     figure out how many: `{nodes, GPUs per node, GPUs total}`, to pass to
