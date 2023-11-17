@@ -3,39 +3,17 @@
 
 ##  <a name="Polaris-Queues"></a>Queues
 
-***SLINGSHOT 11 Upgrade: The upgrade will take place in three phases, with each phase taking place during one of the normally scheduled maintenance periods. During this time, there will be an additional queue, `ss11`. This queue will contain compute nodes that have been upgraded to Slingshot 11. The compute nodes in the `prod` queue will contain the Slingshot 10 nodes. The number of nodes in the `prod` queue will dwindle with each maintenance until all computes nodes have been upgraded to Slingshot 11. Once all compute nodes have been upgraded, the `prod` queue will once again have 496 nodes and the `ss11` queue will be removed.***
-
-***ATTENTION: From October 30th through November 13th, the Polaris nodes will be upgraded in ‘chunks’ to Slingshot 11. This will affect the prod queue sizes. Please read about the changes to the queues below.***
-
 *******
 
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name                     | Node Min | Node Max                   | Time Min | Time Max | Notes                                                                                                                                                                                                                                                 |
-|--------------------------------|----------|----------------------------|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| debug                          | 1        | 2                          | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                                                                                                                                                                                                    |
-| debug-scaling                  | 1        | 10                         | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                                                                                                                                                                                                        |
-| prod                           | 10       | 216-496 **see table below* | 5 min    | 24 hrs   | Routing queue; See below                                                                                                                                                                                                                              |
-| ss11 (available Oct 16-Nov 13) | 1        | 112-280 **see table below* | 5 min    | 24 hrs   | Temporary Slingshot 11 queue for newly upgraded compute nodes; max 1 job running, and 1 job queued **per user**; ***This queue will no longer be available after Nov 13th, at which time all nodes will be upgraded and returned to the prod queue*** | 
-| preemptable                    | 1        | 10                         | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below                                                                                                                                                                                   |
-| demand                         | 1        | 56                         | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                                                                                                                                                                           |
-
-*******
-
-***The `demand` and `preemtable` queues will be upgraded to Slingshot 11 on October 30th.***
-
-***The `debug` and `debug-scaling` queues will remain at Slingshot 10 until Nov. 13th, at which time they will be upgraded to Slingshot 11.***
-
-***The prod queue and Slingshot 11 (`ss11`) queue sizes will have the following max node counts during the upgrade period:***
-
-| Number of nodes in:  | prod queue (Slingshot 10) | prod queue (Slingshot 11) | ss11 queue (Slightshot 11) |
-|----------------------|---------------------------|---------------------------|----------------------------|
-| Now through Oct 30th | 496                       | 0                         | 0                          |
-| Oct 30th - Nov 6th  | 384                       | 0                         | 112                        |
-| Nov 6th - Nov 13th  | 216                       | 0                         | 280                        |
-| Nov 13th and onward  | 0                         | 496                       | N/A                        |
-
-***PBS "`insufficient resource`" ERROR:  If you do not account for this change in maximum job size in your job submissions you could have jobs that sit in the queue for four weeks with a comment of “`insufficient resources`”.  Once we come out of the maintenance on Nov 13th they would run.***
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
+|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
+| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
+| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                    |
+| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
+| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
 
 ******
 
@@ -45,14 +23,14 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
-| Queue Name      | Node Min | Node Max                   | Time Min | Time Max | Notes                                  |
-|-----------------|----------|----------------------------|----------|----------|----------------------------------------|
-| small           | 10       | 24                         | 5 min    | 3 hrs    ||
-| medium          | 25       | 99                         | 5 min    | 6 hrs    ||
-| large           | 100      | 216-496 **see table above* | 5 min    | 24 hrs   ||
-| backfill-small  | 10       | 24                         | 5 min    | 3 hrs    | low priority, negative project balance |
-| backfill-medium | 25       | 99                         | 5 min    | 6 hrs    | low priority, negative project balance |
-| backfill-large  | 100      | 216-496 **see table above* | 5 min    | 24 hrs   | low priority, negative project balance |
+| Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
+|-----------------|----------|----------|----------|----------|----------------------------------------|
+| small           | 10       | 24       | 5 min    | 3 hrs    ||
+| medium          | 25       | 99       | 5 min    | 6 hrs    ||
+| large           | 100      | 496      | 5 min    | 24 hrs   ||
+| backfill-small  | 10       | 24       | 5 min    | 3 hrs    | low priority, negative project balance |
+| backfill-medium | 25       | 99       | 5 min    | 6 hrs    | low priority, negative project balance |
+| backfill-large  | 100      | 496      | 5 min    | 24 hrs   | low priority, negative project balance |
 
 - **Note 1:** You cannot submit to these queues directly, you can only submit to the routing queue "`prod`".
 - **Note 2:** All of these queues have a limit of ten (10) jobs running/accruing **per-project**
