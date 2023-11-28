@@ -74,6 +74,7 @@ nav:
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
         - Applications:
+            - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
