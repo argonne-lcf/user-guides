@@ -124,52 +124,12 @@ python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_samp
 The last parts of the output should resemble the following:
 
 ```console
-2023-05-17 18:44:38,290 INFO:   Finished sending initial weights
-2023-05-17 18:51:03,551 INFO:   | Train Device=xla:0, Step=100, Loss=8.46875, Rate=33.83 samples/sec, GlobalRate=33.83 samples/sec
-2023-05-17 18:57:26,199 INFO:   | Train Device=xla:0, Step=200, Loss=8.06250, Rate=33.92 samples/sec, GlobalRate=33.90 samples/sec
-2023-05-17 19:03:48,354 INFO:   | Train Device=xla:0, Step=300, Loss=7.71875, Rate=33.98 samples/sec, GlobalRate=33.94 samples/sec
-2023-05-17 19:10:10,299 INFO:   | Train Device=xla:0, Step=400, Loss=7.46875, Rate=34.01 samples/sec, GlobalRate=33.96 samples/sec
-2023-05-17 19:16:32,156 INFO:   | Train Device=xla:0, Step=500, Loss=7.21875, Rate=34.03 samples/sec, GlobalRate=33.98 samples/sec
-2023-05-17 19:16:32,157 INFO:   Saving checkpoint at global step 500
-2023-05-17 19:27:12,834 INFO:   Saving step 500 in dataloader checkpoint
-2023-05-17 19:27:13,435 INFO:   Saved checkpoint at global step: 500
-2023-05-17 19:27:13,436 INFO:   Training Complete. Completed 65000 sample(s) in 2554.1804394721985 seconds.
+2023-11-29 20:59:19,223 INFO:   Beginning appliance run
+2023-11-29 21:03:53,875 INFO:   | Train Device=CSX, Step=100, Loss=8.43750, Rate=43.70 samples/sec, GlobalRate=43.70 samples/sec
+2023-11-29 21:08:28,779 INFO:   | Train Device=CSX, Step=200, Loss=8.12500, Rate=43.67 samples/sec, GlobalRate=43.67 samples/sec
+2023-11-29 21:08:28,781 INFO:   Saving checkpoint at step 200
+2023-11-29 21:13:56,695 INFO:   Saved checkpoint model_dir_gptj/checkpoint_200.mdl
+2023-11-29 21:14:30,135 INFO:   Heartbeat thread stopped for wsjob-kd4olqkhu6ya8qqzt88utd.
+2023-11-29 21:14:30,142 INFO:   Training completed successfully!
+2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
 ```
-<!---
-## GPT-J TensorFlow
-
-GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
-This TensorFlow GPT-J 6B parameter pretraining sample uses 2 CS2s.
-
-First, source a Cerebras TensorFlow virtual environment.
-
-
-source /software/cerebras/venvs/venv_tf/bin/activate
-# or your personal venv
-
-```console
-source ~/R_2.0.3/venv_tf/bin/activate
-```
-
-Then
-
-```console
-cd ~/R_2.0.3/modelzoo/modelzoo/transformers/tf/gptj
-cp /software/cerebras/dataset/gptj/params_gptj_6B_tf_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
-export MODEL_DIR=model_dir_gptj_tf
-if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_tf --max_steps 500 --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.0.3/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
-```
-
-The last parts of the output should resemble the following:
-
-```console
-INFO:root:About to send initial weights
-INFO:root:Finished sending initial weights
-INFO:tensorflow:global step 500: loss = 6.044921875 (0.17 steps/sec)
-INFO:root:Training complete. Completed 65000 sample(s) in 2960.4926776885986 seconds
-INFO:root:Taking final checkpoint at step: 500
-INFO:tensorflow:Saved checkpoint for global step 500 in 304.37238907814026 seconds: model_dir_gptj_tf/model.ckpt-500
-INFO:root:Monitoring is over without any issue
-```
---->
