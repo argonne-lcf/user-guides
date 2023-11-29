@@ -2,7 +2,7 @@
 
 The CS-2 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
 
-Jobs are started automatically through the **Python** frameworks in modelzoo.common.pytorch.run_utils and modelzoo.common.tf.run_utils
+Jobs are started automatically through the **Python** framework in modelzoo.common.pytorch.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
 
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
@@ -18,9 +18,9 @@ To view the grafana databoard for a job, follow the instructions at [Grafana WsJ
 Jobs can be canceled as shown:
 
 ```console
-(venv_tf) $ csctl cancel job wsjob-eyjapwgnycahq9tus4w7id
+(venv_cerebras_pt) $ csctl cancel job wsjob-eyjapwgnycahq9tus4w7id
 Job canceled successfully
-(venv_tf) $
+(venv_cerebras_pt) $
 ```
 
 Jobs can be labeled in the command line that launches them, if they are written with Cerebras's Python framework for running appliance jobs, by adding a command line option of this form:
