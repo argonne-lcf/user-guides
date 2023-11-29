@@ -8,10 +8,10 @@ Continuous job status for a job is output to stdout/stderr; redirect the output,
 Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
 
 ```console
-(venv_pt) $ csctl get jobs
+(venv_cerebras_pt) $ csctl get jobs
 NAME                          AGE  DURATION  PHASE    SYSTEMS     USER     LABELS        DASHBOARD
 wsjob-thjj8zticwsylhppkbmjqe  13s  1s        RUNNING  cer-cs2-01  username name=unet_pt  https://grafana.cerebras1.lab.alcf.anl.gov/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-thjj8zticwsylhppkbmjqe&from=1691705374000&to=now
-(venv_pt) $
+(venv_cerebras_pt) $
 ```
 To view the grafana databoard for a job, follow the instructions at [Grafana WsJob Dashboard for Cerebras jobs](./miscellaneous.md#grafana-wsjob-dashboard-for-cerebras-jobs)
 
@@ -30,16 +30,16 @@ Jobs can be labeled in the command line that launches them, if they are written 
 
 Jobs can also be labeled after they have been started as shown:
 ```console
-(venv_pt) $ csctl label job wsjob-ez6dyfronnsg2rz7f7fqw4 testlabel=test
+(venv_cerebras_pt) $ csctl label job wsjob-ez6dyfronnsg2rz7f7fqw4 testlabel=test
 job/wsjob-ez6dyfronnsg2rz7f7fqw4 was patched
-(venv_pt) $
+(venv_cerebras_pt) $
 ```
 
 Jobs with a particular label/label value can be listed as shown:
 ```console
-(venv_pt) $ csctl get jobs | grep "testlabel=test"
+(venv_cerebras_pt) $ csctl get jobs | grep "testlabel=test"
 wsjob-ez6dyfronnsg2rz7f7fqw4  19m SUCCEEDED  cer-cs2-02 username testlabel=test,user=username
-(venv_pt) $
+(venv_cerebras_pt) $
 ```
 
 See `csctl -h` for more options.<br>
