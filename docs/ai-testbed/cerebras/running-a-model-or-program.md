@@ -46,8 +46,7 @@ git checkout Release_2.0.3
 
 ```console
 source ~/R_2.0.3/venv_cerebras_pt/bin/activate
-cd ~/R_2.0.3/modelzoo
-pip install -r requirements.txt
+pip install -r ~/R_2.0.3/modelzoo/requirements.txt
 cd ~/R_2.0.3/modelzoo/modelzoo/fc_mnist/pytorch
 ```
 

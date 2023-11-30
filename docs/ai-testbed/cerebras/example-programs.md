@@ -19,10 +19,11 @@ cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.0.3/anl_shared
 
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
 To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset:<br>
-First, source a Cerebras PyTorch virtual environment.
+First, source a Cerebras PyTorch virtual environment and make sure that requirements are installed.
 
 ```console
 source ~/R_2.0.3/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.0.3/modelzoo/requirements.txt
 ```
 
 Then
@@ -59,7 +60,7 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 
 The modelzoo/modelzoo/transformers/pytorch/bert directory is a PyTorch implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
-First, source a Cerebras PyTorch virtual environment.
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
 <!---
 source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
@@ -67,6 +68,7 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 --->
 ```console
 source ~/R_2.0.3/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.0.3/modelzoo/requirements.txt
 ```
 
 Then
@@ -105,10 +107,11 @@ The last parts of the output should resemble the following, with messages about 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
 This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 
-First, source a Cerebras PyTorch virtual environment.
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
 ```console
 source ~/R_2.0.3/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.0.3/modelzoo/requirements.txt
 ```
 
 Then
