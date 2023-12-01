@@ -10,7 +10,7 @@ ssh <username>@bastion.alcf.anl.gov
 Then, type in the one-timepassword from your CRYPTOCard/MobilePASS+ token.
 
 This bastion node is a pass-through erected for security purposes, and is not
-meant to host files. Once on the bastion, SSH to `aurora.alcf.anl.gov`. It is
+meant to host files. Once on the bastion, SSH to `login.aurora.alcf.anl.gov`. It is
 round robin to the aurora login nodes.
 
 ```
@@ -25,9 +25,8 @@ An overview of the Aurora system including details on the compute node architect
 
 ### Home and Project Directories
 
-Home directories are `/home/username`, available on login and compute
-nodes. This is provided from `/lus/gecko/home`. Bastions have a different `/home` which is on Swift (shared with
-Polaris, Theta, and Cooley). The default `/home` quota on Aurora is 50 GB.
+Home directories on Aurora are `/home/username`, available on login and compute
+nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
 
 Lustre project directories are under `/lus/gecko/projects`. ALCF staff should
 use /lus/gila/projects/Aurora\_deployment project directory. ESP and ECP
