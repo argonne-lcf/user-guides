@@ -2,7 +2,7 @@
 
 ## Compiling on Aurora Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs.md#Interactive-Jobs-on-Compute-Nodes) or [batch](../running-jobs.md#Batch-Jobs-on-Compute-Nodes) job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
+If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs-aurora.md#Interactive-Jobs-on-Compute-Nodes) or [batch](../running-jobs-aurora.md#Batch-Jobs-on-Compute-Nodes) job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
 
 ## Filesystem
 

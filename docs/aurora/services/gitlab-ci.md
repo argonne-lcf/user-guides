@@ -7,8 +7,8 @@
 #### ALCF Specific Variables for Aurora and Sunspot:
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../aurora/getting-started.md) |
-| Sunspot | PBS       | ANL_SUNSPOT_SCHEDULER_PARAMETERS  | [Sunspot Getting Started](../sunspot/getting-started.md) |
+| Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../aurora/getting-started-on-aurora.md) |
+| Sunspot | PBS       | ANL_SUNSPOT_SCHEDULER_PARAMETERS  | [Sunspot Getting Started](../sunspot/getting-started-on-aurora.md) |
 
 
 
