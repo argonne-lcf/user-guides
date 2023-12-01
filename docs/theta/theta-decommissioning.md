@@ -8,7 +8,7 @@ Theta and Theta-fs0 will be retired at the end of calendar year 2023.  ThetaGPU 
  
 ## For Theta-fs0:
 
-**Step 1:** Update your scripts/workflows to switch all uses of theta-fs0 to the Grand filesystem as soon as possible. Data allocations on Grand will be provided. 
+**Step 1:** Update your scripts/workflows to switch all uses of theta-fs0 to the eagle filesystem as soon as possible. Data allocations on eagle will be provided. 
 
 **NOTE:** theta-fs0 will be mounted read-only on 10/30/2023 and will no longer be available starting 01/01/2024. Any jobs attempting to write to theta-fs0 on 10/30/2023 or later will fail.
  

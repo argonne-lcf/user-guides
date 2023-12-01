@@ -4,11 +4,11 @@ The Argonne Leadership Computing Facility (ALCF) is required to report the progr
 PIs of INCITE, ALCC, and ADSP projects are required to complete quarterly reports and a final end-of-project (EOY/EOP) report.
 
 ## Due dates
-### Due dates for the 2023 INCITE quarterly, EOY, and the EOP reports:
-- April 1, 2023 (CY2023 - Q1)
-- July 1, 2023 (CY2023 - Q2)
-- October 1, 2023 (CY2023 - Q3)
-- January 1, 2024 (CY2024 - EOY) or February 15, 2024 (entire allocation period - EOP)
+### Due dates for the 2024 INCITE quarterly, EOY, and the EOP reports:
+- April 1, 2024 (CY2024 - Q1)
+- July 1, 2024 (CY2024 - Q2)
+- October 1, 2024 (CY2024 - Q3)
+- January 1, 2025 (CY2025 - EOY) or February 15, 2025 (entire allocation period - EOP)
 
 ### Due dates for the 2023-2024 ALCC quarterly and the EOP reports:
 - October 1, 2023 (CY2023 - Q3)
@@ -38,9 +38,9 @@ Templates for the quarterly and the EOY reports can be found at the links on the
 
 Please modify the filename to replace PINAME with the last name of the PI of the INCITE/ALCC project, ALLOCATION to INCITE/ALCC, and YEAR to the corresponding calendar year.  For quarterly reports, please replace the X in the filename with the quarter number.
 
-For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in 2021-2022 cycle for ALCC, the filename will be Smith_ALCC_Q1.docx.
+For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in 2023-2024 cycle for ALCC, the filename will be Smith_ALCC_Q1.docx.
 
-For an EOY report, replace YEARS with the years associated with your allocation. For example, an ALCC 2021-2022 project with PI 'Joe Smith' would have a filename of Smith_ALCC_2021-2022_EOY.docx.
+For an EOY report, replace YEARS with the years associated with your allocation. For example, an ALCC 2023-2024 project with PI 'Joe Smith' would have a filename of Smith_ALCC_2023-2024_EOY.docx.
 
 ### Templates for INCITE and ALCC:
 - [Quarterly Report Template](files/PINAME_ALLOCATION_YEAR_QX.docx)

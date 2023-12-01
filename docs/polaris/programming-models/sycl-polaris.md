@@ -7,17 +7,29 @@
 - ALCF Tutorial: [https://github.com/argonne-lcf/sycltrain](https://github.com/argonne-lcf/sycltrain)
 
 ```
-module load oneapi
+module load oneapi/upstream
 ```
 
-:warning: This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. As such, these compilers will get new features and updates quickly that may break on occasion.
+!!! note
+
+This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. For more details on the release version of compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective github repositories for the compilers and libraries.
+
+## Components
+- These are the list of components associated with this module
+
+| User Application  | Component                                               |
+|-------------------|---------------------------------------------------------|
+| Compilers         | [DPC++](https://github.com/intel/llvm)		      |
+| oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
+| oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
+| SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
 
 ## Dependencies
 - SYCL programming model is supported through `oneapi` compilers that were built from source-code
 - Loading this module switches the default programming environment to GNU and with the following dependencies
   - PrgEnv-gnu
   - cudatoolkit-standalone
-- Environment Variable set: `SYCL_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
+- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
 
 ## Example (memory intilization)
 
@@ -139,12 +151,12 @@ For further details regarding the arguments passed to `mpiexec` command shown ab
 [oneMKL Interfaces](https://github.com/oneapi-src/oneMKL) is an open-source implementation of the oneMKL Data Parallel C++ (DPC++) interface according to the [oneMKL specification](https://spec.oneapi.io/versions/latest/elements/oneMKL/source/index.html). It works with multiple devices (backends) using device-specific libraries underneath.
 
 oneMKL is part of oneAPI. Various backend supported are shown below. More Information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
+
 | User Application | Third-Party Library                                          |
 |------------------|--------------------------------------------------------------|
 |                  | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
 | oneMKL interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
 |                  | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
-
 
 ## Example (using onemkl::gemm)
 The following snippet shows how to compile and run a SYCL code with oneMKL library. For instance, a GPU-based GEMM is performed using `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional blas (e.g., AOCL-BLIS) library.
@@ -243,7 +255,7 @@ int main() {
 
   // Resultant matrix: C_onemkl
   sycl::queue q(sycl::property_list{sycl::property::queue::in_order{}});
-  std::cout << "Device: " << q.get_device().get_info<info::device::name>() << std::endl << std::endl;
+  std::cout << "Device: " << q.get_device().get_info<sycl::info::device::name>() << std::endl << std::endl;
 
   double* A_dev        = sycl::malloc_device<double>(M*N, q);
   double* B_dev        = sycl::malloc_device<double>(N*P, q);
@@ -272,6 +284,7 @@ int main() {
 ```
 
 Compile and Run
+
 The user would need to provide paths the math-libraris as shown below. Also please provide AOCL library for CPU GEMM by `module load aocl`.
 Environment variables `MKLROOT` is defined with `oneapi` module & `AOCL_ROOT` is defined with `aocl` module.
 Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
