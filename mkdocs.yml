@@ -278,6 +278,7 @@ not_in_nav: |
   TODO.md
   notes.md
   theta/theta-decommissioning.md
+  aurora
 
 theme:
   name: 'material'
