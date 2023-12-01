@@ -2,24 +2,43 @@
 # Running Jobs on Aurora
 
 ##  <a name="Aurora-Queues"></a>Queues
-There are two production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
-|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2        | 5 min    | 1 hr    | max 1 job running/accruing/queued **per-user**  |                         
-| workq-route   | 1        | all      | 5 min    | 2 hrs   | Routing queue; max 30 jobs; See below   |
-| diag          | 1        | all      | 5 min    | 24 hrs  | Restricted access |
+There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
 
-Please use the following command to view details of a queue: ```qstat -Qf <queuename>```
+For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
-`workq-route` is a routing queue and routes your job to one of the following execution queues:
+```
+qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q EarlyAppAccess -I
+```
 
-| Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
-|-----------------|----------|----------|----------|----------|----------------------------------------|
-| workq           | 1        | all      | 5 min    | 2 hrs    | max 1 running/accruing/queued **per-user ** |
+Recommended PBSPro options follow.
 
+```
+#!/bin/sh
+#PBS -A [your_ProjectName]
+#PBS -N
+#PBS -l walltime=[requested_walltime_value]
+#PBS -k doe
+#PBS -l place=scatter
+#PBS -q EarlyAppAccess
+```
+
+## Working Around Node Failures
+
+As Aurora is still a pre-production supercomputer, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
+
+We recommend against useing `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
+
+1. Start your interactive job
+2. When the job transitions to Running state, run `pbsnodes -l | grep <jobid>`
+3. Manually REMOVE all nodes identified in that output from inclusion in your mpiexec
+4. Continue to execute
+5. If other nodes go down during your job, it will not be killed, and you can further exclude those nodes from your mpiexec as needed
+
+It is important to note that all nodes marked as faulty by PBX will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
+
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
 * `-n` total number of MPI ranks
@@ -34,7 +53,7 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 ```bash
 #!/bin/bash -l
 #PBS -N AFFINITY
-#PBS -l select=4:system=aurora
+#PBS -l select=4
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
 #PBS -q workq
