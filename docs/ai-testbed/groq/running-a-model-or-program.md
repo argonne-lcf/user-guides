@@ -116,7 +116,7 @@ $
 
 Output will by default go to two files with names like the following, where the suffix is the job id. One standard output for the job. The other is the standard error for the job.
 ```console
-$ ls run_minilmv2.sh.*
+$ ls -la run_minilmv2.sh.*
 -rw------- 1 user users   448 Oct 16 18:40 run_minilmv2.sh.e3082
 -rw------- 1 user users 50473 Oct 16 18:42 run_minilmv2.sh.o3082
 ```
