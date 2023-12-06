@@ -122,6 +122,13 @@ See [DAOS Overview](./daos/daos-overview.md) for more on using DAOS for I/O.
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
+Autotools and cmake are available by loading the following module files.
+
+```
+$ module use /soft/modulefiles
+$ module load spack-pe-gcc autoconf cmake
+```
+
 ## Python on Aurora
 
 Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
