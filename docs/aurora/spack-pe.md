@@ -1,6 +1,6 @@
 # Spack PE
 
-The Spack PE is a software stack which provides various build tools, utilities, and libraries. The Spack PE consists of two parts: `spack-pe-gcc` and `spack-pe-oneapi`. `spack-pe-gcc` contains commonly used software packages compiled with GCC. `spack-pe-oneapi` is dependent on both `spack-pe-gcc` and the OneAPI PE. It is based on the [E4S Project](https://e4s-project.github.io/) and provides performant HPC libraries built with the OneAPI PE.
+The Spack PE is a software stack which provides various build tools, utilities, and libraries. The Spack PE consists of two parts: `spack-pe-gcc` and `spack-pe-oneapi`. `spack-pe-gcc` contains commonly used software packages compiled with GCC. `spack-pe-oneapi` is based on the [E4S Project](https://e4s-project.github.io/) and provides performant HPC libraries built with the OneAPI PE. `spack-pe-oneapi` is dependent on both `spack-pe-gcc` and the OneAPI PE. 
 
 ## Using software from the Spack PE
 
