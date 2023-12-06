@@ -32,10 +32,15 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 1. Start your interactive job
 2. When the job transitions to Running state, run `pbsnodes -l | grep <jobid>`
 3. Manually REMOVE all nodes identified in that output from inclusion in your mpiexec
+```
+$ cat $PBS_NODEFILE > local.hostfile
+# edit local.hostfile to remove problem nodes
+$ mpiexec --hostfile local.hostfile [other mpiexec arguments]
+```
 4. Continue to execute
 5. If other nodes go down during your job, it will not be killed, and you can further exclude those nodes from your mpiexec as needed
 
-It is important to note that all nodes marked as faulty by PBX will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
+It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
