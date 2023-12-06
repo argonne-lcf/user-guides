@@ -256,7 +256,80 @@ nav:
     - Performance Tools:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
-  - Aurora/Sunspot: https://www.alcf.anl.gov/support-center/aurora-sunspot
+  - Aurora/Sunspot:
+      - Getting Started: aurora/getting-started-on-aurora.md
+      - Sunspot to Aurora: aurora/sunspot-to-aurora.md
+      - Known Issues: aurora/known-issues.md
+      - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Compiling and Linking:
+        - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
+        - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
+        - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
+        - oneAPI Compilers: aurora/compiling-and-linking/oneapi-compilers-aurora.md
+        - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
+        - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
+        - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
+        - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
+      - Build Tools:
+        - CMake: aurora/build-tools/cmake-aurora.md
+      - Running Jobs: aurora/running-jobs-aurora.md
+      - Data Management:
+        - DAOS: aurora/data-management/daos/daos-overview.md
+        - Lustre - Gecko: aurora/data-management/lustre/gecko.md
+      - Applications and Libraries:
+        - Applications:
+          - Gromacs: aurora/applications-and-libraries/applications/gromacs.md
+          - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
+          - NAMD: aurora/applications-and-libraries/applications/namd.md
+          - NWChemEx: aurora/applications-and-libraries/applications/nwchemex.md
+          - QMCPACK: aurora/applications-and-libraries/applications/qmcpack.md
+          - Quantum Espresso: aurora/applications-and-libraries/applications/quantum-espressp.md
+        - Libraries:
+          - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
+          - Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
+          - MKL: aurora/applications-and-libraries/libraries/mkl.md
+          - MPI: aurora/applications-and-libraries/libraries/mpi.md
+          - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+      - Data Science:
+        - Julia: aurora/data-science/julia.md
+        - Python: aurora/data-science/python.md
+        - Applications: 
+          - gpt-neox: aurora/data-science/applications/gpt-neox.md
+        - Containers: aurora/data-science/containers/containers.md
+        - Frameworks:
+          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          - Jax: aurora/data-science/frameworks/jax.md
+          - PyTorch: aurora/data-science/frameworks/pytorch.md
+          - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+        - Libraries:
+          - oneDNN: aurora/data-science/libraries/onednn.md
+      - Programming Models:
+        - Compatibility Tool: aurora/programming-models/compatibility-tool.md
+        - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
+        - Kokkos: aurora/programming-models/kokkos-aurora.md
+        - Level Zero: aurora/programming-models/level-0.md
+        - oneAPI: aurora/programming-models/one-api.md
+        - openCL: aurora/programming-models/opencl-aurora.md
+        - OpenMP: aurora/programming-models/openmp-aurora.md
+        - RAJA: aurora/programming-models/raja-aurora.md
+        - SYCL: aurora/programming-models/sycl-aurora.md
+      - Debugging Tools:
+        - Overview: aurora/debugging/debugging-overview.md
+        - gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
+      - Performance Tools:
+        - Overview: aurora/performance-tools/performance-overview.md
+        - Advisor: aurora/performance-tools/advisor.md
+        - VTune: aurora/performance-tools/vtune.md
+      - Visualization:
+        - Paraview: aurora/visualization/paraview.md
+      - Services:
+        - GitLab: aurora/services/gitlab-ci.md
+        - JupyterHub: aurora/services/jupyterhub.md
+      - Workflows:
+        - Balsam: aurora/workflows/balsam.md
+        - DeepHyper: aurora/workflows/deephyper.md
+        - libEnsemble: aurora/workflows/libensemble.md
+        - Parsl: aurora/workflows/parsl.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
@@ -278,7 +351,6 @@ not_in_nav: |
   TODO.md
   notes.md
   theta/theta-decommissioning.md
-  aurora
 
 theme:
   name: 'material'

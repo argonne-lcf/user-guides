@@ -1,3 +1,0 @@
-# WEST
-
-Placeholder

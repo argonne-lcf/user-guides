@@ -116,7 +116,7 @@ with the following information
 * Storage capacity (For ESP projects, if this is different than in the ESP
   proposal, please give brief justification)
 
-See [DAOS Overview](./daos/daos-overview.md) for more on using DAOS for I/O.
+See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using DAOS for I/O.
 
 ## Compiling Applications
 
