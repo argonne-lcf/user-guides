@@ -30,6 +30,7 @@ pushd .
 cd demo_helpers
 pip install -e .
 popd
+pip install soundfile
 ```
 
 To use groqfloq,
