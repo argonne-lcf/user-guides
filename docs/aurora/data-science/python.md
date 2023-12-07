@@ -46,7 +46,8 @@ of the most commonly used Python libraries for our users, you may still
 encounter a scenario in which you need to extend the functionality of the 
 environment (i.e. install additional packages)
 
-There are two different approaches that are currently recommended.
+You can use a virtual environment to extend/modify an existing frameworks 
+module. 
 
 ## Virtual environments via `venv`
 
@@ -98,27 +99,6 @@ pip install --ignore-installed ... # or -I
 The shared base environment is not writable, so it is impossible to remove or 
 uninstall packages from it. The packages installed with the above `pip` command 
 should shadow those installed in the base environment.
-
-## Cloning the base Anaconda environment
-
-If you need more flexibility, you can clone the `conda` environment into a 
-custom 
-path, which would then allow for root-like installations via 
-`conda install <module>` or `pip install <module>`. Unlike the `venv` approach, 
-using a cloned Anaconda environment requires you to copy the entirety of the 
-base environment, which can use significant storage space.
-
-This can be performed by:
-
-```
-$ module load frameworks/2023.10.15.001
-(/soft/datascience/aurora_nre_models_frameworks-2023.2) $ conda create --clone frameworks/2023.10.15.001 --prefix /path/to/envs/base-clone
-(/soft/datascience/aurora_nre_models_frameworks-2023.2) $ conda activate /path/to/envs/base-clone
-(base-clone) $ which python3
-/path/to/base-clone/bin/python3
-```
-
-The cloning process can be quite slow.
 
 ## Using `pip install --user` (not recommended)
 
