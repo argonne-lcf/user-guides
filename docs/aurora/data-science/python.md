@@ -2,17 +2,21 @@
 
 ## Framework Modules
 
-Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations. The following commands can be used
-both from an interactive session on a terminal and on a batch job script.
+Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations. The following commands can be used both from an interactive session on a terminal and on a batch job script.
+
+Note that the framework modules may load a different oneAPI than the default module.  The frameworks are updated on approximately a quarterly cadence at the moment.
 
 ```
 module use /soft/modulefiles
 module load frameworks
 ```
 These pre-built `conda` environments come with GPU-supported builds of PyTorch
-and TensorFlow in the form of framework modules. Both of these frameworks have
+and TensorFlow. Both of these frameworks have
 `Horovod` support for multi-node calculations. Many other commonly used Python
 modules are available through these modules.
+
+# TODO
+# For more information on pytorch and tensorflow please see their respective pages: [link!!]
 
 From a login node we can do the following commands to list the available 
 modules:
@@ -37,9 +41,8 @@ $ which python3
 $ which python
 /soft/datascience/aurora_nre_models_frameworks-2023.2/bin/python
 ```
-At the time of writing this module contains Python 3.9.16. Future modules may
-contain entirely different major versions of Python, PyTorch, TensorFlow, etc.; 
-however, the existing modules will be maintained as-is as long as feasible.
+At the time of writing this module contains Python 3.9.16. Future modules will
+contain updated versions of Python, PyTorch, TensorFlow, etc.
 
 While the shared Anaconda environment encapsulated in the module contains many 
 of the most commonly used Python libraries for our users, you may still 
@@ -61,7 +64,8 @@ python3 -m venv /path/to/new/virtual/environment
 This creates a new folder that is fairly lightweight folder (<20 MB) with its 
 own Python interpreter where you can install whatever packages you'd like. 
 First, you must activate the virtual environment to make this Python 
-interpreter the default interpreter in your shell session.
+interpreter the default interpreter in your shell session.  By default, this environment
+will not have access to the framework packages but instead will be empty.
 
 You activate the new environment whenever you want to start using it via 
 running the activate script in that folder:
@@ -107,6 +111,8 @@ With the conda environment setup, one can install common Python modules using
 `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` 
 environment variable is automatically set when you load the base `conda` 
 module, and is equal to `/home/$USER/.local/sunspot/frameworks/2023.10.15.001`
+
+# WHY IS IT SUNSPOT ^ ?
 
 Note, Python modules installed this way that contain command line binaries will 
 not have those binaries automatically added to the shell's `$PATH`. To manually 
