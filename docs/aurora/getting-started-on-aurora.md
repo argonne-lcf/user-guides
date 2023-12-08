@@ -1,5 +1,63 @@
 # Getting Started on Aurora
 
+## Overview
+
+*** ACCESS IS CURRENTLY ENABLED FOR ESP and ECP TEAM ONLY ***
+
+The pre-requisites required for Sunspot are applicable to Aurora as well. See this [page](https://www.alcf.anl.gov/support-center/aurorasunspot/getting-started-sunspot#pre-req) for more information.
+
+NOTE: Sharing of any results from Aurora publicly no longer requires a review or approval from Intel. However, anyone publishing these results should include the following in their materials: 
+
+*"This work was done on a pre-production supercomputer with early versions of the Aurora software development kit."*
+
+In addition, users should acknowledge the ALCF. Refer to the acknowledgement policy [page](https://docs.alcf.anl.gov/policies/alcf-acknowledgement-policy/#alcf-only-acknowledgement) for details. Please note that certain information on Aurora hardware and software is considered NDA and cannot be shared publicly.
+
+Aurora is in the very early stages of the system deployment - do not expect a production environment!
+
+**Expect to experience:**
+
+* Hardware instabilities - possible frequent downtime
+* Software instabilities - non-optimized compilers, libraries and tools; frequent software updates
+* Non-final configurations (storage, OS versions, etc...)
+* Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
+
+## Getting Help
+
+Email ALCF support at <support@alcf.anl.gov> for bugs, technical questions, software requests, reservations, priority boosts, etc...
+
+* ALCF's user support team will triage and forward the tickets to the appropriate technical SME as needed.
+* Expect turnaround times to be slower than on a production system as the technical team will be focused on stabilizing and debugging the system.
+
+For faster assistance, consider contacting your project's POC at ALCF (project catalyst or liaison)
+
+* They are an excellent source of assistance during this early period and will be aware of common bugs and known issues.
+
+ECP and ESP users will be added to a CNDA Slack workspace, where CNDA discussions may occur. An invite to the Slack workspace will be sent when a user is added to the Aurora resource.
+
+## Known Issues
+
+A known issues [page](https://wiki.jlse.anl.gov/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
+
+* Interim Filesystem: The early access filesystem is not highly performant. Intermittent hangs or pauses should be expected - waiting for IO to complete is recommended and IO completions should pass without failure. Jobs requiring significant filesystem performance must be avoided at this time.
+* Large number of Machine Check Events from the PVC, that causes nodes to panic and reboot.
+* HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking  at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
+
+## Allocation usage
+
+The allocation accounting system [sbank](https://docs.alcf.anl.gov/account-project-management/allocation-management/sbank-allocation-accounting-system/) is not yet installed on Aurora.
+
+To obtain the usage information for all your projects on Aurora, issue the sbank command on another ALCF resource where `sbank` is installed, such as Polaris.
+
+```
+$ sbank-list-allocations -r aurora
+```
+
+For more information, see this [page](https://docs.alcf.anl.gov/account-project-management/allocation-management/allocation-management/).
+
+## Transition to Aurora from Sunspot
+
+Some guidance is provided [here](./sunspot-to-aurora.md) to aid users in the process of moving their work from the Sunspot Test & Development System.
+
 ## Logging Into Aurora
 
 Logging into Aurora is a two-stage process. You must first login through the
@@ -58,11 +116,18 @@ with the following information
 * Storage capacity (For ESP projects, if this is different than in the ESP
   proposal, please give brief justification)
 
-See [DAOS Overview](./daos/daos-overview.md) for more on using DAOS for I/O.
+See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using DAOS for I/O.
 
 ## Compiling Applications
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+
+Autotools and cmake are available by loading the following module files.
+
+```
+$ module use /soft/modulefiles
+$ module load spack-pe-gcc autoconf cmake
+```
 
 ## Python on Aurora
 

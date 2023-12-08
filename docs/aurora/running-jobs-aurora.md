@@ -32,10 +32,15 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 1. Start your interactive job
 2. When the job transitions to Running state, run `pbsnodes -l | grep <jobid>`
 3. Manually REMOVE all nodes identified in that output from inclusion in your mpiexec
+```
+$ cat $PBS_NODEFILE > local.hostfile
+# edit local.hostfile to remove problem nodes
+$ mpiexec --hostfile local.hostfile [other mpiexec arguments]
+```
 4. Continue to execute
 5. If other nodes go down during your job, it will not be killed, and you can further exclude those nodes from your mpiexec as needed
 
-It is important to note that all nodes marked as faulty by PBX will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
+It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
@@ -75,17 +80,23 @@ mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env O
 ## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script.
 - The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers.
-- If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
+- If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `ZE_AFFINITY_MASK` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `ZE_AFFINITY_MASK=0,1` could be used.
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
-Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. One example is where each MPI rank is similarly bound to a single GPU tile with round-robin assignment.
+Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment. 
 
-A example `set_affinity_gpu_aurora.sh` script follows where GPU tiles are assigned round-robin to MPI ranks.
+This script can be placed just before the executable in an `mpiexec` command like so.
+
+```bash
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh ./hello_affinity
+```
+
+A simple version of this script is below to illustrate how `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
 
 ```bash
 #!/bin/bash -l
-num_gpus=6
-num_tiles=2
+num_gpu=6
+num_tile=2
 gpu_id=$(( (PALS_LOCAL_RANKID / num_tile ) % num_gpu ))
 tile_id=$((PALS_LOCAL_RANKID % num_tile))
 unset EnableWalkerPartition
@@ -94,12 +105,8 @@ export ZE_AFFINITY_MASK=$gpu_id.$tile_id
 #echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
 exec "$@"
 ```
-This script can be placed just before the executable in the `mpiexec` command like so.
-```bash
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_aurora.sh ./hello_affinity
-```
-Users with different needs, such as assigning multiple GPUs/tiles per MPI rank, can modify the above script to suit their needs. 
 
+Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` to suit their needs.
 
 ## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
 
