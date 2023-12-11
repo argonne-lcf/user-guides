@@ -301,6 +301,7 @@ nav:
           - Jax: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+          - LibTorch: aurora/data-science/frameworks/libtorch.md
         - Libraries:
           - oneDNN: aurora/data-science/libraries/onednn.md
       - Programming Models:
