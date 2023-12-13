@@ -330,6 +330,7 @@ nav:
         - DeepHyper: aurora/workflows/deephyper.md
         - libEnsemble: aurora/workflows/libensemble.md
         - Parsl: aurora/workflows/parsl.md
+        - SmartSim: aurora/workflows/smartsim.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
