@@ -140,7 +140,7 @@ module load frameworks
 
 ## Additional Software
 
-A variety of additional tools and software libraries are provided in the [Spack PE](spack-pe.md). For example, a user can load tmux through the `spack-pe-gcc` module:
+A variety of additional tools and software libraries are provided in the [Spack PE](./applications-and-libraries/libraries/spack-pe.md). For example, a user can load tmux through the `spack-pe-gcc` module:
 
 ```
 module use /soft/modulefiles
