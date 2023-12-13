@@ -36,3 +36,9 @@ This variable can be used to inspect software installations and find header or l
 
 For users who wish to use Spack to install their own software, we provide configuration files corresponding to the Spack PE deployments. These configuration files can be found in `/soft/packaging/spack/settings`, organized into directories by Aurora PE and Spack PE versions. Not all of these settings will be useful for all builds and it is not recommended to adopt these wholesale as global settings. The recommended method is to include these settings ad hoc in a spack environment to control what information spack uses for its builds. However, we highly recommend using or adapting the `aurora_packages_{spack-pe-version}.yaml` and `compilers_{spack-pe-version}.yaml` configurations, since these configurations are essential for Spack to recognize the OneAPI compiler and associated Aurora PE components such as MPICH.
 
+Support requests and feedback for ALCF-specific issues should be directed to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For general spack questions, users are encouraged to consult the following resources:
+
+- [Spack development website](https://github.com/spack/spack)
+- [Spack documentation](https://spack.readthedocs.io/en/latest/index.html)
+- [Spack tutorial](https://spack.readthedocs.io/en/latest/tutorial.html)
+- [Spack Slack channel](https://slack.spack.io)
