@@ -43,13 +43,13 @@ git clone https://github.com/CrayLabs/SmartSim.git
 cd SmartSim
 pip install -e .
 TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-smart build -v --device cpu --torch_dir $TORCH_PATH --no_tf 
+TF_PATH=$( python -c 'import tensorflow;print(tensorflow._site_packages_dirs[0]+"/tensorflow")' )
+smart build -v --device cpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
 cd ..
 ```
 Note:
 * The `pip install -e .` command returns some warnings regarding the version of `protobuf` and errors about the installation of `cloud-volume`, but these can be ignored for now.
 * The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing with the SmartRedis library on the CPU hardware with models stored within the database. This feature is not enabled on the Intel Max 1550 GPU.
-* The `--no_tf` flag specifies that the RedisAI backend is not built with support for TensorFlow models. Instructions on how to enable TensorFlow models will be added shortly.
 
 
 Finally, install the SmartRedis library
