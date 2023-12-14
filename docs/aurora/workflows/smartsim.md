@@ -43,7 +43,7 @@ git clone https://github.com/CrayLabs/SmartSim.git
 cd SmartSim
 pip install -e .
 TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-TF_PATH=$( python -c 'import tensorflow;print(tensorflow._site_packages_dirs[0]+"/tensorflow")' )
+TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split("/")[:-1]))' )
 smart build -v --device cpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
 cd ..
 ```
