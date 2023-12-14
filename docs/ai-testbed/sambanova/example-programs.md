@@ -272,7 +272,7 @@ inner train loop time : 374.6789753437042 for 10 epochs, number of global steps:
 ## Gpt 1.5B
 
 The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`.
-The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at [Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh") or at `/data/ANL/scripts/Gpt1.5B_single.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU.
+The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at the path `/data/ANL/scripts/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/Gpt1.5B_base_single_run.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. The scripts are provided for reference. 
 
 Change directory and copy files.
 
@@ -282,20 +282,21 @@ cd ~/apps/nlp/Gpt1.5B_single
 ```
 
 Copy and paste the contents of
-[Gpt1.5B_single.sh](./files/Gpt1.5B_single.sh "Gpt1.5B_single.sh")
-to a file with the same name into the current directory using your favorite editor.
+[Gpt1.5B_base_single_compile.sh](./files/Gpt1.5B_base_single_compile.sh "Gpt1.5B_base_single_compile.sh") and [Gpt1.5B_base_single_run.sh](./files/Gpt1.5B_base_single_run.sh "Gpt1.5B_base_single_run.sh") 
+to a file with the same names into the current directory using your favorite editor.
 
-or copy the contents from `/data/ANL/scripts/Gpt1.5B_single.sh`.
+or copy the contents from `/data/ANL/scripts/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/Gpt1.5B_base_single_run.sh`.
 
 ```bash
-cp /data/ANL/scripts/Gpt1.5B_single.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/Gpt1.5B_base_single_compile.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/Gpt1.5B_base_single_run.sh ~/apps/nlp/Gpt1.5B_single/
 ```
 
 Run the script.
 
 ```bash
-chmod +x Gpt1.5B_single.sh
-./Gpt1.5B_single.sh
+chmod +x Gpt1.5B_base_single_compile.sh 
+./Gpt1.5B_base_single_compile.sh <batch size>
 ```
 
 You can inspect the `compile` and `run` commands in the script to learn that this model trains with a batch size of 16 for 1 instance over 4 tiles. The human decision file and the compiler config file helps to optimize the compute and memory resources specific to this Gpt 1.5B model run.
