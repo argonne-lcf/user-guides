@@ -7,7 +7,15 @@ Two oneAPI variants are provided, the first being a "release" version based on I
 
 !!! note
 
-    The 2023.2.0 release of oneAPI Toolkit does not yet support oneMKL or oneDPL on Nvidia devices.
+    The 2023.2.1 release of oneAPI Toolkit does not yet support oneDPL on Nvidia devices. Though oneMKL is now added to 2023.2.1 release onwards
+
+## Components
+- These are the list of components associated with this module
+
+| User Application  | Component                                               |
+|-------------------|---------------------------------------------------------|
+| Compilers         | [DPC++](https://codeplay.com/portal/blogs/2023/07/13/oneapi-2023-2-release.html) |
+| oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
 
 The other variant being a build from the open-source. This variant will be more up-to-date at the risk of bugs and breakages based on code that has not undergone a full release cycle.
 The documentation is located on the [SYCL](../programming-models/sycl-polaris.md) page. Most notable differences being, `icx/icpx` are the names of C/C++ compilers respectively when using the release version of the module where as `clang/clang++` are for open-source variant.
@@ -23,12 +31,17 @@ icpx -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend 
 ```
 
 ```
-harms@polaris-login-04:~/working/polaris/oneapi> icpx --version
+harms@polaris-login-04:~/working/polaris/oneapi> icpx -v
 Intel(R) oneAPI DPC++/C++ Compiler 2023.2.0 (2023.2.0.20230721)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
 InstalledDir: /soft/compilers/oneapi/release/2023.2/compiler/2023.2.1/linux/bin-llvm
 Configuration file: /soft/compilers/oneapi/release/2023.2/compiler/2023.2.1/linux/bin-llvm/../bin/icpx.cfg
+Found candidate GCC installation: /usr/lib64/gcc/x86_64-suse-linux/7
+Selected GCC installation: /usr/lib64/gcc/x86_64-suse-linux/7
+Candidate multilib: .;@m64
+Selected multilib: .;@m64
+Found CUDA installation: /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/11.4, version 11.4
 ```
 
 ## Running

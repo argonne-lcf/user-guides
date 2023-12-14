@@ -13,14 +13,14 @@ The AI accelerators complement the ALCF's current and next-generation supercompu
 The platforms are equipped with architectural features that support AI and data-centric workloads, making them well suited for research tasks involving the growing deluge of scientific data produced by powerful tools, such as supercomputers, light sources, telescopes, particle accelerators, and sensors. In addition, the testbed will allow researchers to explore novel workflows that combine AI methods with simulation and experimental science to accelerate the pace of discovery.
 
 ## How to Get Access
-Researchers interested in using the AI Testbed’s `Cerebras CS-2`, `SambaNova DataScale SN30`  and `Graphcore Bow Pod64` platforms can now submit project proposals via the [ALCF’s Director’s Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Access to additional testbed resources, including `Groq`, and `Habana` accelerators, will be announced at a later date. 
+Researchers interested in using the AI Testbed’s `Cerebras CS-2`, `SambaNova DataScale SN30`, `Graphcore Bow Pod64` and `GroqRack` platforms can now submit project proposals via the [ALCF’s Director’s Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Access to additional testbed resources, including `Habana` accelerators, will be announced at a later date. 
 
 Submit your proposal requests at: [Allocation Request Page](https://accounts.alcf.anl.gov/allocationRequests){:target="_blank"}
 
 ## Getting Started
-1. Request a Director's Discretionary project on SambaNova/Cerebras/Graphcore.
+1. Request a Director's Discretionary project on SambaNova/Cerebras/Graphcore/Groq.
 
-2. Apply for an ALCF account after the project request is approved. Choose the SambaNova/Cerebras/Graphcore project that your PI has created at ALCF. If you have an active ALCF account, request to [join the project](https://accounts.alcf.anl.gov/joinProject){:target="_blank"} after your project is approved.
+2. Apply for an ALCF account after the project request is approved. Choose the SambaNova/Cerebras/Graphcore/Groq project that your PI has created at ALCF. If you have an active ALCF account, request to [join the project](https://accounts.alcf.anl.gov/joinProject){:target="_blank"} after your project is approved.
 
 3. Transfer data to ALCF using Globus after your account has been created.
 
@@ -28,7 +28,7 @@ Submit your proposal requests at: [Allocation Request Page](https://accounts.alc
 
     b. The endpoint for your home directory on the AI Testbeds in ALCF is ``` alcf#ai_testbed_home ```.
 
-4. Add/invite team members to your ALCF project on SambaNova/Cerebras/Graphcore. 
+4. Add/invite team members to your ALCF project on SambaNova/Cerebras/Graphcore/Groq. 
 
 ## How to Contribute to Documentation
 The documentation is based on [MkDocs](https://www.mkdocs.org/){:target="_blank"} and source files are

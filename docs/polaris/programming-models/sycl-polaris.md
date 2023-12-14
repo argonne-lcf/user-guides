@@ -7,7 +7,7 @@
 - ALCF Tutorial: [https://github.com/argonne-lcf/sycltrain](https://github.com/argonne-lcf/sycltrain)
 
 ```
-module load oneapi
+module load oneapi/upstream
 ```
 
 !!! note
@@ -19,7 +19,7 @@ This module (compilers, libraries) gets built periodically from the latest open-
 
 | User Application  | Component                                               |
 |-------------------|---------------------------------------------------------|
-| Compilers         | [DPC++](https://docs.nvidia.com/cuda/cublas/index.html) |
+| Compilers         | [DPC++](https://github.com/intel/llvm)		      |
 | oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
 | oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
 | SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
@@ -255,7 +255,7 @@ int main() {
 
   // Resultant matrix: C_onemkl
   sycl::queue q(sycl::property_list{sycl::property::queue::in_order{}});
-  std::cout << "Device: " << q.get_device().get_info<info::device::name>() << std::endl << std::endl;
+  std::cout << "Device: " << q.get_device().get_info<sycl::info::device::name>() << std::endl << std::endl;
 
   double* A_dev        = sycl::malloc_device<double>(M*N, q);
   double* B_dev        = sycl::malloc_device<double>(N*P, q);
