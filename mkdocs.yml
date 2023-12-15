@@ -85,7 +85,9 @@ nav:
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
+        - Visualization on Polaris: polaris/visualization/visualization.md
         - Paraview: polaris/visualization/paraview.md
+        - Visit: polaris/visualization/visit.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
