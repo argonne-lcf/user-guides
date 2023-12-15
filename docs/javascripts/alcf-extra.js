@@ -96,48 +96,48 @@ if (dropdowns.length > 0) {
 
 
 
-// Include the mobile dropdowns (unlike above, just writing it all here)
-// ----------------------------------------------------------------------------
+// // Include the mobile dropdowns (unlike above, just writing it all here)
+// // ----------------------------------------------------------------------------
 
 
-// open/close the big pane
-var mobileOpen  = document.getElementById('js-mobileOpen');
-var mobileClose = document.getElementById('js-mobileClose');
-var mobileMenu  = document.getElementById('js-mobileMenu');
+// // open/close the big pane
+// var mobileOpen  = document.getElementById('js-mobileOpen');
+// var mobileClose = document.getElementById('js-mobileClose');
+// var mobileMenu  = document.getElementById('js-mobileMenu');
 
-mobileOpen.addEventListener("click", function(e) {
-  mobileMenu .classList.replace("menu--closed", "menu--open");
-});
+// mobileOpen.addEventListener("click", function(e) {
+//   mobileMenu .classList.replace("menu--closed", "menu--open");
+// });
 
-mobileClose.addEventListener("click", function(e) {
-  mobileMenu .classList.replace("menu--open", "menu--closed");
-});
+// mobileClose.addEventListener("click", function(e) {
+//   mobileMenu .classList.replace("menu--open", "menu--closed");
+// });
 
 
-// open/close individual menus
+// // open/close individual menus
 
-var drawerHeads = document.getElementsByClassName('drawer-head'); 
+// var drawerHeads = document.getElementsByClassName('drawer-head'); 
 
-Array.prototype.forEach.call(drawerHeads, function(head){
+// Array.prototype.forEach.call(drawerHeads, function(head){
   
-  head.addEventListener("click", function(e){
-    var mobmenu = head.dataset.mobmenu;
-    mobmenu = document.getElementById(mobmenu);
-    var arrow = this.querySelector(".drawer-arrow");
+//   head.addEventListener("click", function(e){
+//     var mobmenu = head.dataset.mobmenu;
+//     mobmenu = document.getElementById(mobmenu);
+//     var arrow = this.querySelector(".drawer-arrow");
 
-    if (mobmenu.classList.contains('menu--closed')) {
-      mobmenu.classList.remove('menu--closed');
-      arrow.innerHTML = "&#9650;"
-    }
-    else {
-      mobmenu.classList.add('menu--closed');
-      arrow.innerHTML = "&#9660;"
-    }
+//     if (mobmenu.classList.contains('menu--closed')) {
+//       mobmenu.classList.remove('menu--closed');
+//       arrow.innerHTML = "&#9650;"
+//     }
+//     else {
+//       mobmenu.classList.add('menu--closed');
+//       arrow.innerHTML = "&#9660;"
+//     }
     
-  });
-});
+//   });
+// });
 
-// add listener to each of the links that toggles menus
+// // add listener to each of the links that toggles menus
 
 
 

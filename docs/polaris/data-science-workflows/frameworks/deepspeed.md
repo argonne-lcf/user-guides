@@ -29,8 +29,8 @@ DeepSpeed support.
     execution](../../../running-jobs/job-and-queue-scheduling.md) for
     additional information.
 
-
 1. Load `conda` module and activate base environment:
+
     ```bash
     module load conda ; conda activate base
     ```
@@ -38,44 +38,13 @@ DeepSpeed support.
 2. Clone
    [microsoft/DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples)
    and navigate into the directory:
+
     ```bash
     git clone https://github.com/microsoft/DeepSpeedExamples.git
     cd DeepSpeedExamples/cifar
     ```
 
-
 !!! example "Launching DeepSpeed"
-
-    === "Launching with DeepSpeed"
-
-        1. Create a DeepSpeed compliant `hostfile`, specifying the `hostname` and
-           number of GPUs (`slots`) for each of our available workers:
-        ```bash
-        cat $PBS_NODEFILE > hostfile
-        sed -e 's/$/ slots=4/' -i hostfile
-        ```
-
-        2. Create a `#!bash .deepspeed_env` containing the environment variables our
-           workers will need access to:
-        ```bash
-        echo "PATH=${PATH}" >> .deepspeed_env
-        echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> .deepspeed_env
-        echo "http_proxy=${http_proxy}" >> .deepspeed_env
-        echo "https_proxy=${https_proxy}" >> .deepspeed_env
-        ```
-
-        !!! warning
-
-            The `.deepspeed_env` file expects each line to be of the form
-            `KEY=VALUE`. Each of these will then be set as environment variables on
-            each available worker specified in our `hostfile`.
-
-        We can then run the `#!bash cifar10_deepspeed.py` module using DeepSpeed:
-        ```bash
-        deepspeed --hostfile=hostfile cifar10_deepspeed.py \
-            --deepspeed \
-            --deepspeed_config ds_config.json
-        ```
 
     === "Launching with MPICH"
 
@@ -96,9 +65,40 @@ DeepSpeed support.
           --envall \
           -n "${NGPUS}" \
           --ppn "${NGPU_PER_HOST}" \
-          --hostfile="${PBS_NODEFILE}" 
+          --hostfile="${PBS_NODEFILE}" \
           python3 \
             cifar10_deepspeed.py \
+            --deepspeed_config ds_config.json
+        ```
+
+    === "Launching with DeepSpeed"
+
+        1. Create a DeepSpeed compliant `hostfile`, specifying the `hostname` and
+           number of GPUs (`slots`) for each of our available workers:
+        ```bash
+        cat $PBS_NODEFILE > hostfile
+        sed -e 's/$/ slots=4/' -i hostfile
+        ```
+
+        2. Create a `#!bash .deepspeed_env` containing the environment
+           variables our workers will need access to:
+        ```bash
+        echo "PATH=${PATH}" >> .deepspeed_env
+        echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> .deepspeed_env
+        echo "http_proxy=${http_proxy}" >> .deepspeed_env
+        echo "https_proxy=${https_proxy}" >> .deepspeed_env
+        ```
+
+        !!! warning
+
+            The `.deepspeed_env` file expects each line to be of the form
+            `KEY=VALUE`. Each of these will then be set as environment
+            variables on each available worker specified in our `hostfile`.
+
+        We can then run the `#!bash cifar10_deepspeed.py` module using DeepSpeed:
+        ```bash
+        deepspeed --hostfile=hostfile cifar10_deepspeed.py \
+            --deepspeed \
             --deepspeed_config ds_config.json
         ```
 

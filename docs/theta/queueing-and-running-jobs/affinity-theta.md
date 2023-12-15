@@ -12,7 +12,7 @@ The numbers inside the quadrants identify the specific hardware threads in the c
   <figcaption>Visual representation of two tiles in a KNL</figcaption>
 </figure>
 
-Using the -j, -d, and --cc arguments to aprun and environment variables, MPI ranks and threads can be assigned to run on specific hardware threads. For more information about the flags to aprun, see  [Running Jobs on Theta](/docs/theta/queueing-and-running-jobs/job-and-queue-scheduling.md). Four examples of using aprun are given below followed by descriptions of two methods for displaying the mapping produced.
+Using the -j, -d, and --cc arguments to aprun and environment variables, MPI ranks and threads can be assigned to run on specific hardware threads. For more information about the flags to aprun, see  [Running Jobs on Theta](../queueing-and-running-jobs/job-and-queue-scheduling.md). Four examples of using aprun are given below followed by descriptions of two methods for displaying the mapping produced.
 
 **Note:** Logical core and hardware thread are used interchangeably below.
 

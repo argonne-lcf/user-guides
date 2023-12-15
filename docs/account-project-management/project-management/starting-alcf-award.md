@@ -8,11 +8,10 @@ To get started using our resources, please visit:
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
-- [Theta and Cooley Overview](http://bit.ly/Getting_Started_On_Theta)
-- [Running on Theta](https://www.alcf.anl.gov/events/best-practices-queueing-and-running-job…) 
+- [Running on Polaris](https://docs.alcf.anl.gov/polaris/running-jobs/) 
 - [ThetaGPU Overview](https://www.youtube.com/watch?v=N0Xip1mUZY8)
-- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-an…)
-- [Community Data Sharing with ACDC (using Eagle)](https://www.alcf.anl.gov/support/user-guides/data-management/acdc/acdc-overview/index.html)
+- [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
+- [Community Data Sharing with ACDC (using Eagle)](https://docs.alcf.anl.gov/data-management/acdc/acdc-overview/)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
@@ -106,7 +105,7 @@ The ALCF will send you a report template at the end of each quarter. Please comp
 Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
 ### Allocation Overburn Policy
-Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../../policies/queue-scheduling/queue-and-scheduling-policy/#incitealcc-overburn-policy)
+Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../policies/queue-scheduling/queue-and-scheduling-policy.md#incitealcc-overburn-policy)
 
 ### Acknowledgment In Publications
 Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy.md) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
