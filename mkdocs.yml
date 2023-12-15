@@ -305,6 +305,7 @@ nav:
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
         - Libraries:
           - oneDNN: aurora/data-science/libraries/onednn.md
+          - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Compatibility Tool: aurora/programming-models/compatibility-tool.md
         - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
