@@ -80,7 +80,9 @@ nav:
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
+        - Visualization on Polaris: polaris/visualization/visualization.md
         - Paraview: polaris/visualization/paraview.md
+        - Visit: polaris/visualization/visit.md
     - Workflows:
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
