@@ -85,7 +85,9 @@ nav:
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
+        - Visualization on Polaris: polaris/visualization/visualization.md
         - Paraview: polaris/visualization/paraview.md
+        - Visit: polaris/visualization/visit.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
@@ -304,6 +306,7 @@ nav:
           - LibTorch: aurora/data-science/frameworks/libtorch.md
         - Libraries:
           - oneDNN: aurora/data-science/libraries/onednn.md
+          - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Compatibility Tool: aurora/programming-models/compatibility-tool.md
         - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
