@@ -80,7 +80,7 @@ Example:
 
 **Account:** enter here the name of your ALCF allocation
 
-**Queue:** the name of the Polaris queue you would to use (i.e: `debug` for small, quick jobs, `prod`, `preemptable`)
+**Queue:** the name of the Polaris queue you would like to use (i.e: `debug` for small, quick jobs, `prod`, `preemptable`)
 
 **File Systems:** enter here the file systems you need for your job, separated with colons, no spaces. Keep in mind that your job may not run if one of these file systems is not available at that time, so enter these values carefully
 
