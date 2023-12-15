@@ -203,10 +203,10 @@ body {
 	display: block;
 }
 
-.md-nav {
-  font-size: 15px;
-  line-height: 1;
-}
+/* .md-nav { */
+/*   font-size: 15px; */
+/*   line-height: 1; */
+/* } */
 
 .md-nav__link {
 	margin-top: 6px;
@@ -912,4 +912,13 @@ footer a:hover {
 
 .js-dropdown-hidden {
 	display: none;
+}
+
+table {
+  table-layout: fixed;
+  max-width: 100%;
+}
+
+.md-typeset code {
+  overflow-wrap: break-word;
 }

@@ -1,5 +1,6 @@
 # Paraview on Polaris
 
+
 The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server (pvserver) on the Polaris compute nodes. There are two ways to accomplish this, detailed below. In both cases, the ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris.
 
 The most recent production version currently installed on Cooley is ParaView  5.11.1. Binary and source packages for Linux, MacOS, and Windows are available from the [ParaView Download Page](https://www.paraview.org/download/). (Run the 'module avail paraview' command on a Polaris login node to see earlier versions of ParaView that are available.)
@@ -43,6 +44,7 @@ Click "Load Servers" and load the file downloaded in the previous step.
   ![Load servers](images/02-pv_gui_server_config.png){ width="700" }
   <figcaption>Load servers</figcaption>
 </figure>
+
 
 
 

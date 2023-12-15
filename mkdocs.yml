@@ -25,7 +25,9 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since it is a dropdown. Only linked to in base docs/index.md
+  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
+    # it is a dropdown. Only linked to in base docs/index.md
+    - Getting Started: services/getting-started.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
@@ -49,6 +51,7 @@ nav:
       - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
+      - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
     - Running Jobs: polaris/running-jobs.md
@@ -62,6 +65,7 @@ nav:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
     - Data Science:
+        - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
         - Containers: polaris/data-science-workflows/containers/containers.md
         - Frameworks:
@@ -70,6 +74,7 @@ nav:
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
         - Applications:
+            - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
@@ -84,6 +89,7 @@ nav:
         - Paraview: polaris/visualization/paraview.md
         - Visit: polaris/visualization/visit.md
     - Workflows:
+        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
@@ -142,6 +148,7 @@ nav:
       - OpenMP: theta/programming-models/openmp-theta.md
       - Raja: theta/programming-models/raja.md
     - Debugging Tools:
+      - Overview: theta/debugging-tools/debugging-overview.md
       - Arm DDT: theta/debugging-tools/arm-ddt.md
       - ATP and STAT: theta/debugging-tools/atp-and-stat.md
       - GDB: theta/debugging-tools/gdb.md
@@ -188,43 +195,46 @@ nav:
       - Darshan: theta-gpu/performance-tools/darshan.md
       - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
   - AI Testbed:
-    - Getting Started: ai-testbed/index.md
+    - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
       - Getting Started: ai-testbed/cerebras/getting-started.md
-      - Steps to Run a Model/Program: ai-testbed/cerebras/steps-to-run-a-model-or-program.md
+      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
+      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
       - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
       - Example Programs: ai-testbed/cerebras/example-programs.md
-      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-    - SambaNova Gen1:
-      - System Overview: ai-testbed/sambanova_gen1/system-overview.md
-      - Getting Started: ai-testbed/sambanova_gen1/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova_gen1/virtual-environment.md
-      - Steps to Run a Model/Program: ai-testbed/sambanova_gen1/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova_gen1/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova_gen1/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova_gen1/example-multi-node-programs.md
-      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen1/tunneling-and-forwarding-ports.md
-      #- DataParallel: ai-testbed/sambanova_gen1/DataParallel.md
-      - Miscellaneous: ai-testbed/sambanova_gen1/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova_gen1/documentation.md
-    - SambaNova Gen2:
-      - System Overview: ai-testbed/sambanova_gen2/system-overview.md
-      - Getting Started: ai-testbed/sambanova_gen2/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova_gen2/virtual-environment.md
-      - Running a Model/Program: ai-testbed/sambanova_gen2/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova_gen2/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova_gen2/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
-      #- Running BERT Large on Sambanova DataScale SN30-8R: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
-      #- DataParallel: ai-testbed/sambanova_gen2/DataParallel.md
-      - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
+    - Graphcore:
+      - System Overview: ai-testbed/graphcore/system-overview.md
+      - Getting Started: ai-testbed/graphcore/getting-started.md
+      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
+      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/graphcore/example-programs.md
+      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
+      - Documentation: ai-testbed/graphcore/documentation.md
+    - Groq:
+      - System Overview: ai-testbed/groq/system-overview.md
+      - Getting Started: ai-testbed/groq/getting-started.md
+      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
+      #- Example Programs: ai-testbed/groq/example-programs.md
+      - Virtual Environments: ai-testbed/groq/virtual-environments.md
+      - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+    - SambaNova:
+      - System Overview: ai-testbed/sambanova/system-overview.md
+      - Getting Started: ai-testbed/sambanova/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+      # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Cooley:
     - Hardware Overview:
@@ -248,7 +258,80 @@ nav:
     - Performance Tools:
       - Darshan: cooley/performance-tools/darshan.md
       - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
-  - Aurora/Sunspot: https://www.alcf.anl.gov/support-center/aurora-sunspot
+  - Aurora/Sunspot:
+      - Getting Started: aurora/getting-started-on-aurora.md
+      - Sunspot to Aurora: aurora/sunspot-to-aurora.md
+      - Known Issues: aurora/known-issues.md
+      - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Compiling and Linking:
+        - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
+        - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
+        - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
+        - oneAPI Compilers: aurora/compiling-and-linking/oneapi-compilers-aurora.md
+        - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
+        - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
+        - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
+        - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
+      - Build Tools:
+        - CMake: aurora/build-tools/cmake-aurora.md
+      - Running Jobs: aurora/running-jobs-aurora.md
+      - Data Management:
+        - DAOS: aurora/data-management/daos/daos-overview.md
+        - Lustre - Gecko: aurora/data-management/lustre/gecko.md
+      - Applications and Libraries:
+        - Applications:
+          - Gromacs: aurora/applications-and-libraries/applications/gromacs.md
+          - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
+          - NAMD: aurora/applications-and-libraries/applications/namd.md
+          - NWChemEx: aurora/applications-and-libraries/applications/nwchemex.md
+          - QMCPACK: aurora/applications-and-libraries/applications/qmcpack.md
+          - Quantum Espresso: aurora/applications-and-libraries/applications/quantum-espressp.md
+        - Libraries:
+          - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
+          - Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
+          - MKL: aurora/applications-and-libraries/libraries/mkl.md
+          - MPI: aurora/applications-and-libraries/libraries/mpi.md
+          - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+      - Data Science:
+        - Julia: aurora/data-science/julia.md
+        - Python: aurora/data-science/python.md
+        - Applications: 
+          - gpt-neox: aurora/data-science/applications/gpt-neox.md
+        - Containers: aurora/data-science/containers/containers.md
+        - Frameworks:
+          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          - Jax: aurora/data-science/frameworks/jax.md
+          - PyTorch: aurora/data-science/frameworks/pytorch.md
+          - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+        - Libraries:
+          - oneDNN: aurora/data-science/libraries/onednn.md
+      - Programming Models:
+        - Compatibility Tool: aurora/programming-models/compatibility-tool.md
+        - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
+        - Kokkos: aurora/programming-models/kokkos-aurora.md
+        - Level Zero: aurora/programming-models/level-0.md
+        - oneAPI: aurora/programming-models/one-api.md
+        - openCL: aurora/programming-models/opencl-aurora.md
+        - OpenMP: aurora/programming-models/openmp-aurora.md
+        - RAJA: aurora/programming-models/raja-aurora.md
+        - SYCL: aurora/programming-models/sycl-aurora.md
+      - Debugging Tools:
+        - Overview: aurora/debugging/debugging-overview.md
+        - gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
+      - Performance Tools:
+        - Overview: aurora/performance-tools/performance-overview.md
+        - Advisor: aurora/performance-tools/advisor.md
+        - VTune: aurora/performance-tools/vtune.md
+      - Visualization:
+        - Paraview: aurora/visualization/paraview.md
+      - Services:
+        - GitLab: aurora/services/gitlab-ci.md
+        - JupyterHub: aurora/services/jupyterhub.md
+      - Workflows:
+        - Balsam: aurora/workflows/balsam.md
+        - DeepHyper: aurora/workflows/deephyper.md
+        - libEnsemble: aurora/workflows/libensemble.md
+        - Parsl: aurora/workflows/parsl.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
@@ -263,6 +346,13 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+not_in_nav: |
+  not_in_nav/
+  unused/
+  todo.md
+  TODO.md
+  notes.md
+  theta/theta-decommissioning.md
 
 theme:
   name: 'material'
@@ -303,7 +393,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
       # base_path: ["docs"]
-      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
   - pymdownx.superfences
@@ -317,6 +407,10 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'

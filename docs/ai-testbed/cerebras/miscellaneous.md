@@ -2,76 +2,85 @@
 
 ## Porting applications to the CS-2
 
-Cerebras’s mature Python support is built around [Cerebras Estimator](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/example-walk-through-cs-estimator.html?highlight=estimator), which inherits from [TensorFlow Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator).<br>
-A Keras model can be converted to TF Estimator, and hence to a Cerebras Estimator. See [https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator](https://www.tensorflow.org/tutorials/estimator/keras_model_to_estimator) for more information on conversion of Keras models.<br>
+Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
+[Ways to port your model](https://docs.cerebras.net/en/latest/wsc/port/index.html)
 
-Cerebras has recently introduced PyTorch support. The PyTorch support is documented at [Cerebras Software Documentation](https://docs.cerebras.net/en/latest/) in the section DEVELOP WITH PYTORCH. 
+## Grafana WsJob Dashboard for Cerebras jobs
+A Grafana dashboard provides support for visualizing, querying, and exploring the CS2 system’s metrics and enables to access system logs and traces.
+See the Cerebras documentation for the [Job Information Dashboard](https://docs.cerebras.net/en/latest/wsc/getting-started/grafana.html#wsjob-dashboard)
 
-Cerebras has guides for porting TensorFlow and PyTorch models:<br>
-[Port TensorFlow to Cerebras](https://docs.cerebras.net/en/latest/tensorflow-docs/porting-tf-to-cs/index.html)</br>
-[Porting PyTorch Model to CS](https://docs.cerebras.net/en/latest/pytorch-docs/adapting-pytorch-to-cs.html)<br>
-This is Cerebras's list of the TensorFlow layers that they support (for the current version): [Supported TensorFlow Layers](https://docs.cerebras.net/en/latest/tensorflow-docs/tf-layers/index.html)<br>
-This is Cerebras's list of the PyTorch operations supported (for the current version): [Supported PyTorch Ops](https://docs.cerebras.net/en/latest/pytorch-docs/pytorch-ops.html)
+Here is a summary (tested to work on Ubuntu and MacOS)<br>
+
+On your work machine with a web browser, e.g. your laptop,<br>
+edit /etc/hosts, using your editor of choice
+```console
+sudo nano /etc/hosts
+```
+Add this line
+```console
+127.0.0.1	grafana.cerebras1.lab.alcf.anl.gov
+```
+Save, and exit the editor
+
+Download the Grafana certificate present on the Cerebras node at /opt/cerebras/certs/grafana_tls.crt to your local machine. To add this certificate to your browser keychain, 
+
+1. On chrome, go to Settings->Privacy and security->Security->Manage device certificates
+2. Select System under "System Keychains" on the left hand side of your screen. Also select the "Certificate" tab.
+3. Drag and drop the downloaded certificate. Once it is added, it is visible as "lab.alcf.anl.gov"
+   ![Cerebras Wafer-Scale Cluster connection diagram](files/grafana_ctl.png)
+4. Select the certificate, and ensure that the "Trust" section is set to "Always Trust"
+   ![Cerebras Wafer-Scale Cluster connection diagram](files/Trust_ctl.png)
 
 
-When porting, it is often helpful to study a related example in the Cerebras modelzoo.<br>
-A copy of the modelzoo for the install release is at ```/software/cerebras/model_zoo/modelzoo/```<br>
-Both the `README.md` files and source code in the modelzoo can be quite helpful.
+On your work machine with a web browser, e.g. your laptop,<br>
+tunnel the grafana https port on the cerebras grafana host through to localhost
+```
+ssh -L 8443:grafana.cerebras1.lab.alcf.anl.gov:443 arnoldw@cer-login-03.ai.alcf.anl.gov
+```
 
+Point a browser at grafana. (Tested with Firefox and Chrome/Brave)<br>
+Open browser to a job grafana url shown in csctl get jobs, adding :8443 to hostname, e.g.<br>
+```console
+https://grafana.cerebras1.lab.alcf.anl.gov:8443/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-49b7uuojdelvtrcxu3cwbw&from=1684859330000&to=noww
+```
+
+Login to the dashboard with user admin, and password prom-operator
+
+
+<!---
 ## Determining the CS-2 version
 
-<!---
-[TODO should this API/auth string be made public? Alternative supplied that inspects the singularity container.]
-Note: replace the IP address with the CS_IP for the CS-2 cluster being used.<br>
-[TODO could use CS_IP environment variable if set.]<br>
-[balin: I was not able to make the `curl` command below run, even removing the `<br>` characters. Bill Arnold - checked with cerebras and this isn't working with the cs2-02 (does on cs2-01) that we're going live with, so commenting out.<br>
---->
-<!---
-```console
-...$ # Query the software level in the singularity image
-...$ singularity sif dump 1 /software/cerebras/cs2-02/container/cbcore_latest.sif | grep "from"
-from: cbcore:1.1.1-202203171919-5-6e2dbf07
-...# or singularity sif dump 1 /software/cerebras/cs2-01/container/cbcore_latest.sif | grep "from"
-...$
-```
---->
-
-These queries will only work on cs2-01 due to networking constraints:
+TODO
+Need another approach for the new worker nodes with general ANL access.
+These queries will only work on cer-usr-01 due to networking constraints:
 ```
 ...$ # Query the firmware level for cs2-01
-...$ curl -k -X GET 'https://192.168.120.30/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null  | python -m json.tool | grep FirmwareVersion
-"FirmwareVersion": "1.1.1-202203171919-5-879ff4ef",
+...$ curl -k -X GET 'https://10.140.89.251/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
+ "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
 ...$
 
-...$ # Query the firmware level for cs2-02 (from cs2-01)
-...$ curl -k -X GET 'https://192.168.120.50/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null  | python -m json.tool | grep FirmwareVersion
-"FirmwareVersion": "1.1.1-202203171919-5-879ff4ef",
+...$ # Query the firmware level for cs2-02
+...$ curl -k -X GET 'https://10.140.89.252/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
+ "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
 ...$
 
 ```
-<!---
-## Viewing the Cerebras V 1.3 documentation
-The Cerebras V 1.3 documentation is stored on the Cerebras systems and can be served to be viewed with a local browser by running the following in a command prompt on your workstation/laptop.<br>
-*Change the <strong>ALCFUserID</strong> to your id.*<br>
-If there is a port conflict, use a different port number in either the second and third port number instance, or all three of them.
-```console
-ssh -t -L localhost:8089:localhost:8089 ALCFUserID@cerebras.alcf.anl.gov  "cd /software/cerebras/docs/V1.3/;python3 -m http.server 8089"
-```
-To view the documentation, copy the url into your browser as indicated in the output of the above command (e.g., `http://0.0.0.0:8089/`).
-
-This v 1.3 documentation tree can also be copied to your laptop/workstation and the files can be viewed locally with a browser. The Cerebras system has a tar file at /software/cerebras/docs/Cerebras_ML_SW_Docs_V1.3.tar
 --->
-
+<!--- NO LONGER NEEDED; direct login.
 ## Copying files
-To copy a file to your CS-2 home dir (same on both CS2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
+To copy a file to your CS-2 home dir (same on both CS-2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
 ```console
 scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" filename ALCFUserID@cs2-01-master:~/
 ```
 
-To copy a file from your CS-2 home dir (same on both CS2 clusters) to the current local directory, replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
+To copy a file from your CS-2 home dir (same on both CS-2 clusters) to the current local directory, replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
 ```console
 scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" ALCFUserID@cs2-01-master:~/filename .
 ```
+--->
+
+<!---
+NO LONGER NEEDED - python environments are available, and singularity not available
 
 ## Downloading a Kaggle competition dataset to a CS-2 node using the command line
 
@@ -85,7 +94,7 @@ source env/bin/activate
 pip3 install kaggle
 ```
 
-Go to www.kaggle.com in a browser, log in (create account if first time). In user(icon upper right) -&gt; Account tab, there is a button (scroll down) to "Create New API Token". Click it. It will open a download window for a one line json. 
+Go to www.kaggle.com in a browser, log in (create account if first time). In user(icon upper right) -&gt; Account tab, there is a button (scroll down) to "Create New API Token". Click it. It will open a download window for a one line json.
 
 put the json in `~/.kaggle/kaggle.json`</br>
 e.g. scp the downloaded file, or single quote the json text and echo it as shown</br>
@@ -103,13 +112,10 @@ Paste the API command to the command line inside the singularity shell with the 
 kaggle datasets download -d mhskjelvareid/dagm-2007-competition-dataset-optical-inspection
 ```
 
-It will download as a zip file. 
+It will download as a zip file.
 
 Exit the singularity container (with `exit`), then unzip the dataset zip file.<br>
-`unzip` is available on the CS2 worker nodes.
+`unzip` is available on the CS-2 worker nodes.
 
 Note: the kaggle download shown above included two identical copies of the dataset; one copy was in a subdirectory.
-
-
-
-
+--->
