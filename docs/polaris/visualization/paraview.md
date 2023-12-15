@@ -31,7 +31,7 @@ or selecting File->Connect from the main menu
 #### 2. Set Up Servers (first time only)
 The first time you want to run a server on Polaris and have it connect to your local ParaView client, you will need to set up a Server. Once this server is set up, you can reuse it each time you run the ParaView client with the Paraview server on Polaris.
 
-Kitware, the developers of ParaView, maintain a database of server configurations which you can retrieve through the ParaView client. In the File->Connect menu press the button named "Fetch Servers" and select POLARIS@ANL. Press "Import Selected"
+Kitware, the developers of ParaView, maintain a database of server configurations which you can retrieve through the ParaView client. In the File->Connect menu press the button named "Fetch Servers" and select POLARIS@ANL. Windows users should select "windows to POLARIS@ANL". Press "Import Selected"
 
 <figure markdown>
   ![Load servers](images/ParaviewFetchServers.png){ width="700" }
@@ -86,47 +86,21 @@ Example:
 
 **Job name:** safe to use default value. The PBS scheduler will assign this name to your job
 
-Now you can press OK to establish the connection with a Paraview server on Polaris 
+Now you can press OK to establish the connection with a Paraview server on Polaris.
 
+An ssh connection will be established with a Polaris login node and a password will be requested in a terminal, similar to the process you normally use to connect and work on the system.
 
+After you enter your password, a job will be queued and you will see a window like this:
 
+<figure markdown>
+  ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
+</figure>
 
+When the job is launched on the compute nodes, the previous window will go away and Paraview will show it is connected to Polaris in its Pipeline Browser:
 
+<figure markdown>
+  ![Load servers](images/ParaviewConnected.png){ width="700" }
+</figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+At this point you can open datasets stored on the ALCF file systems and use Paraview normally.
 
