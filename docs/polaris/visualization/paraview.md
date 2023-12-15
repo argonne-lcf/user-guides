@@ -1,13 +1,13 @@
 # Paraview on Polaris
 
-The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server (pvserver) on the Polaris compute nodes. There are two ways to accomplish this, detailed below. In both cases, the ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris.
+The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server on the Polaris compute nodes. The ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris.
 
 There are multiple versions of Paraview installed on Polaris. To find the versions of Paraview currently available on Polaris run the following command on a login node: 
 ```
 module avail paraview
 ```
 
-The ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris. Binary and source packages for Linux, MacOS, and Windows are available from the [ParaView Download Page](https://www.paraview.org/download/). 
+Binary and source packages of the Paraview client for Linux, MacOS, and Windows are available from the [ParaView Download Page](https://www.paraview.org/download/). 
 
 ## Connecting to the Paraview server on Polaris
 This section describes how to launch the Paraview server on Polaris from a local ParaView client.
