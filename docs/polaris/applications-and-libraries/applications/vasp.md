@@ -3,7 +3,8 @@
 
 The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found [here](https://www.vasp.at).
 
-Users must have a license to use this code on ALCF systems. More information on how to get access to VASP binaries can be found [here](https://www.alcf.anl.gov/support-center/theta/vasp).
+Users must have a license to use this code on ALCF systems. More information on how to get access to VASP binaries can be found [here](
+https://docs.alcf.anl.gov/theta/applications-and-libraries/applications/vasp/).
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` could be found in the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
@@ -110,9 +111,10 @@ The follow modules will update the include and libraries paths used by the Cray 
 
 ```
 module purge
+module load nvhpc/23.3
 module load PrgEnv-nvhpc
 module load cray-libsci
-module load craype-accel-nvidia8
+module load craype-accel-nvidia80
 
 ```
 
@@ -158,7 +160,7 @@ chmod +x example-script.sh
 qsub  example-script.sh
 ```
 
-### Known issues versions: >= 6.4.0 in Polaris 
+### Known issues versions: >= 6.4.x in Polaris 
 ---
 
 * Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this
