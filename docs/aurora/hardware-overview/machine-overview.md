@@ -23,7 +23,7 @@ https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-
 
 | NODE COMPONENT | DESCRIPTION                       | PER NODE  | AGGREGATE           |
 |----------------|-----------------------------------|-----------|---------------------|
-| Processor      | 2000 mHz                          | 2         | 21,248              |
+| Processor      | 2000 MHz                          | 2         | 21,248              |
 | Cores/Threads  | Intel Xeon CPU Max 9470C Series   | 104/208   | 1,104,896/2,209,792 |
 | CPU HBM        | HBM2e                             | 64x2 GiB  | 1.328 PiB           |
 | CPU DRAM       | DDR5                              | 512x2 GiB | 10.375 PiB          |
