@@ -138,6 +138,16 @@ module use /soft/modulefiles
 module load frameworks
 ```
 
+## Additional Software
+
+A variety of additional tools and software libraries are provided in the [Spack PE](./applications-and-libraries/libraries/spack-pe.md). For example, a user can load tmux through the `spack-pe-gcc` module:
+
+```
+module use /soft/modulefiles
+module load spack-pe-gcc
+module load tmux
+```
+
 ## Submitting and Running Jobs
 
 Aurora uses the [PBSPro](../running-jobs/job-and-queue-scheduling.md) job
