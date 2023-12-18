@@ -23,8 +23,16 @@ execution and CUDA for GPU execution. To use it, run
 
 ```
 module use /soft/modulefiles
+module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap gcc/12.2.0 gcc/11.2.0
+module load cudatoolkit-standalone/11.8.0
 module load kokkos
 ```
+
+(Since the SlingShot 11 upgrade, you must use `PrgEnv-gnu` and the `gcc` and
+`cudatoolkit` version changes indicated, at least until some subsequent Polaris
+sytem updates have been completed.)
+
 This sets the following environment variables, some of which are used by
 `cmake`:
 
@@ -121,16 +129,18 @@ kokkos libraries on Polaris:
 #### Environment
 
 To match what was done in the centrally-built kokkos associated with the
-modules discussed above, use the default programming environment
-`PrgEnv-nvhpc`, and use the Cray wrapper `CC` as the C++ compiler. To build
-Kokkos, you'll need cmake. You may also use `PrgEnv-gnu` to build kokkos (also
-using the Cray wrapper `CC` as the C++ compiler).
-
-To use C++17, you'll need to work around a bug with the current
-`PrgEnv-nvhpc/8.3.3` environment by loading a cudatoolkit-standalone module:
+modules discussed above, use the programming environment
+`PrgEnv-gnu`, and use the Cray wrapper `CC` as the C++ compiler. You'll also
+need to back up from the default `gcc` compiler version and make a few other
+module adjustments to work correctly on Polaris following the SlingShot 11
+upgrade (and prior to some planned system upgrades that will make some of this
+environment tweaking unnecessary):
 
 ```
-module load cmake cudatoolkit-standalone/11.6.2
+module load cmake
+module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap gcc/12.2.0 gcc/11.2.0
+module load cudatoolkit-standalone/11.8.0
 ```
 
 #### CMake Configuration
@@ -158,7 +168,11 @@ cmake\
  -DKokkos_ENABLE_CUDA_LAMBDA=ON\
  -DKokkos_ENABLE_IMPL_DESUL_ATOMICS=OFF\
  -DCMAKE_CXX_STANDARD=17\
+ -DCMAKE_EXE_LINKER_FLAGS=-no-gcc-rpath\
  ..
 
 make -j16 -l16 install
 ```
+
+(The `-no-gcc-rpath` linker flag is to work around a bug in the
+post-SlingShot11 compiler environment on Polaris.)

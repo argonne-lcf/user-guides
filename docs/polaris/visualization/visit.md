@@ -1,4 +1,5 @@
 # Visit on Polaris
+
 ## Getting Started
 
 The latest Visit versions installed on Polaris are 3.3.3 and 3.4.0.
@@ -35,12 +36,4 @@ Additional information for using VisIt in client/server mode [here](https://visi
 ## Additional Information
 - [Visit user manual](https://visit-sphinx-github-user-manual.readthedocs.io/en/v3.4.0/index.html)
 - [Visit wiki](http://www.visitusers.org)
-
-
-
- 
-
-
-
-
 

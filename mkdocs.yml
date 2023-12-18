@@ -292,6 +292,7 @@ nav:
           - MKL: aurora/applications-and-libraries/libraries/mkl.md
           - MPI: aurora/applications-and-libraries/libraries/mpi.md
           - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+          - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
       - Data Science:
         - Julia: aurora/data-science/julia.md
         - Python: aurora/data-science/python.md
@@ -303,8 +304,10 @@ nav:
           - Jax: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+          - LibTorch: aurora/data-science/frameworks/libtorch.md
         - Libraries:
           - oneDNN: aurora/data-science/libraries/onednn.md
+          - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Compatibility Tool: aurora/programming-models/compatibility-tool.md
         - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
@@ -332,6 +335,7 @@ nav:
         - DeepHyper: aurora/workflows/deephyper.md
         - libEnsemble: aurora/workflows/libensemble.md
         - Parsl: aurora/workflows/parsl.md
+        - SmartSim: aurora/workflows/smartsim.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
