@@ -222,6 +222,7 @@ nav:
       #- Example Programs: ai-testbed/groq/example-programs.md
       - Virtual Environments: ai-testbed/groq/virtual-environments.md
       - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+      - Profiling with GroqView: ai-testbed/groq/groqview.md
     - SambaNova:
       - System Overview: ai-testbed/sambanova/system-overview.md
       - Getting Started: ai-testbed/sambanova/getting-started.md
