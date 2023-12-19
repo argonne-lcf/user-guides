@@ -46,7 +46,7 @@ ssh -L 8439:localhost:8439 arnoldw@groq-login-02.ai.alcf.anl.gov -t ssh -L 8439:
 ## Access the GroqView server for your application:
 
 Point a chrome-family web browser at this url, adjusting the port number if necessary.
-(Chrome, Brave, Vivaldi tested.)
+(Chrome, Brave, Vivaldi, Opera tested.)
 ```console
 http://localhost:8439
 ```
