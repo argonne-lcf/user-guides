@@ -88,11 +88,14 @@ nav:
         - Visualization on Polaris: polaris/visualization/visualization.md
         - Paraview: polaris/visualization/paraview.md
         - Visit: polaris/visualization/visit.md
+        - FFmpeg: polaris/visualization/ffmpeg.md
+        - ImageMagick: polaris/visualization/imagemagick.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
+        - SmartSim: polaris/workflows/smartsim.md
   - Theta:
     - Hardware Overview:
       - Theta Machine Overview: theta/hardware-overview/machine-overview.md
