@@ -16,7 +16,7 @@ At this time, it is suggested to update the `LD_PRELOAD` environment variable as
 export LD_PRELOAD=/opt/cray/pe/gcc/11.2.0/snos/lib64/libstdc++.so.6
 ```
 
-2. If your job fails to start with an `RPC launch` message like below, please forward the complete messages to support@alcf.anl.gov.
+2. If your job fails to start with an `RPC launch` message like below, please forward the complete messages to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ```bash
 launch failed on x3104c0s1b0n0: Couldn't forward RPC launch(ab751d77-e80a-4c54-b1c2-4e881f7e8c90) to child x3104c0s31b0n0.hsn.cm.polaris.alcf.anl.gov: Resource temporarily unavailable
