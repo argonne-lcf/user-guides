@@ -39,13 +39,13 @@ Then set up the environment variables
 export SMARTSIM_REDISAI=1.2.7
 export CC=cc
 export CXX=CC
-CUDA_DEPS_BASE=/soft/libraries
-CUDA_VERSION_MAJOR=11
-CUDNN_VERSION_MAJOR=8
-CUDNN_VERSION_MINOR=6
-CUDNN_VERSION_EXTRA=0.163
-CUDNN_VERSION=$CUDNN_VERSION_MAJOR.$CUDNN_VERSION_MINOR.$CUDNN_VERSION_EXTRA
-CUDNN_BASE=$CUDA_DEPS_BASE/cudnn/cudnn-$CUDA_VERSION_MAJOR-linux-x64-v$CUDNN_VERSION
+export CUDA_DEPS_BASE=/soft/libraries
+export CUDA_VERSION_MAJOR=11
+export CUDNN_VERSION_MAJOR=8
+export CUDNN_VERSION_MINOR=6
+export CUDNN_VERSION_EXTRA=0.163
+export CUDNN_VERSION=$CUDNN_VERSION_MAJOR.$CUDNN_VERSION_MINOR.$CUDNN_VERSION_EXTRA
+export CUDNN_BASE=$CUDA_DEPS_BASE/cudnn/cudnn-$CUDA_VERSION_MAJOR-linux-x64-v$CUDNN_VERSION
 export CUDNN_LIBRARY=$CUDNN_BASE/lib/
 export CUDNN_INCLUDE_DIR=$CUDNN_BASE/include/
 export LD_LIBRARY_PATH=$CUDNN_LIBRARY:$LD_LIBRARY_PATH
@@ -56,8 +56,8 @@ Now, install SmartSim and the GPU backend
 git clone https://github.com/CrayLabs/SmartSim.git
 cd SmartSim
 pip install -e .
-TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split("/")[:-1]))' )
+export TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
+export TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split("/")[:-1]))' )
 smart build -v --device gpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
 cd ..
 ```
