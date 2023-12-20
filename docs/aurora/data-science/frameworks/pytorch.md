@@ -36,6 +36,16 @@ print(f'Current tile = {current_tile}')
 print(f'Curent device ID = {torch.xpu.device(current_tile)}')
 print(f'Device name = {torch.xpu.get_device_name(current_tile)}')
 ```
+
+```
+# output of the above code block
+
+GPU availability: True
+Number of tiles = 12
+Current tile = 0
+Curent device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
+Device name = Intel(R) Data Center GPU Max 1550
+```
 Note that, along with importing the `torch` module, you need to import the
 `intel_extension_for_pytorch` module. The default mode in `ipex` for counting
 the available devices on a compute node treat each tile as a device, hence the
@@ -50,6 +60,10 @@ of GPUs available on an Aurora compute node. All the `API` calls involving
 `torch.cuda`, should be replaced with `torch.xpu`, as shown in the above 
 example.
 
+__Important__: It is highly recommended to import `intel_extension_for_pytorch` 
+right after `import torch`, prior to importing other packages, (from 
+[Intel's getting started doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
+
 Intel extension for PyTorch has been made publicly available as an open-source
 project at [Github](https://github.com/intel/intel-extension-for-pytorch)
 
@@ -62,6 +76,23 @@ tutorials.
 
 # PyTorch Best Practices on Aurora
 
+## Single Device Performance
+
+To expose one particular device out of the 6 available on a compute node, this
+environmental variable should be set
+
+```shell
+export ZE_AFFINITY_MASK=0.0,0.1
+
+# The values taken by this variable follows the syntax `Device.Sub-device`
+```
+In the example given above, an application is targeting the `Device:0` 
+and `Sub-devices: 0, 1`, i.e. *the two tiles of the GPU:0*. This is 
+particularly important in setting a performance benchmarking baseline.
+
+More information and details are available through the 
+[Level Zero Specification Documentation - Affinity Mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+
 ## Single Node Performance
 
 When running PyTorch applications, we have found the following practices to be 
@@ -69,7 +100,7 @@ generally, if not universally, useful and encourage you to try some of these
 techniques to boost performance of your own applications.
 
 1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and 
-is supported with PyTorch operations. n general, the way to do this is via the 
+is supported with PyTorch operations. In general, the way to do this is via the 
 PyTorch Automatic Mixed Precision package (AMP), as descibed in the 
 [mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In 
 PyTorch, users generally need to manage casting and loss scaling manually, 
@@ -77,9 +108,11 @@ though context managers and function decorators can provide easy tools to do
 this.
 
 2. PyTorch has a `JIT` module as well as backends to support op fusion, similar 
-to TensorFlow's tf.function tools. 
+to TensorFlow's `tf.function` tools. 
 Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more 
 information.
+
+3. `torch.compile` will be available through the next framework release.
 
 ## Multi-GPU / Multi-Node Scale Up
 
@@ -108,7 +141,7 @@ export FI_LOG_PROV=cxi
 export MPIR_CVAR_ENABLE_GPU=0
 # This is to disable certain GPU optimizations like the use of XeLinks between
 # GPUs, collectives with GPU-placed data etc., in order to reduce `MPI_Init`
-# overheads.
+# overheads. Benefits are application dependent.
 export CCL_KVS_GET_TIMEOUT=600
 ```
 
@@ -129,6 +162,62 @@ following way:
 ```shell
 export CPU_AFFINITY="verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203"
 ```
+
+### Distributed Training
+
+Distributed training with PyTorch on Aurora is facilitated through both DDP and
+Horovod. DDP training is accelerated using oneAPI Collective Communications 
+Library Bindings for Pytorch (oneCCL Bindings for Pytorch). 
+The extension supports FP32 and BF16 data types. 
+More detailed information and examples are available at the 
+[Intel oneCCL repo](https://github.com/intel/torch-ccl), formerly known as 
+`torch-ccl`.
+
+The key steps in performing distributed training using 
+`oneccl_bindings_for_pytorch` are the following:
+
+```python
+import os
+import torch
+import intel_extension_for_pytorch as ipex
+import torch.distributed as dist
+import torch.nn as nn
+from torch.nn.parallel import DistributedDataParallel as DDP
+import oneccl_bindings_for_pytorch as torch_ccl
+
+...
+
+# perform the necessary transforms
+# set up the training data set
+# set up the data loader
+# set the master address, ports, world size and ranks through os.environ module
+
+...
+# Initialize the process group for distributed training with oneCCL backend
+
+dist.init_process_group(backend='ccl', ... # arguments)
+
+model = YOUR_MODEL().to(device)         # device = 'cpu' or 'xpu:{os.environ['MPI_LOCALRANKID']}'
+criterion = torch.nn. ... .to(device)   # Choose a loss function 
+optimizer = torch.optim. ...            # Choose an optimizer
+# model.train()                         # Optional, model dependent
+
+# Off-load the model to ipex for additional optimization 
+model, optimizer = ipex.optimize(model, optimizer=optimizer)
+
+# Initialize DDP with your model for distributed processing
+if dist.get_world_size() > 1:
+     model = DDP(model, device_ids=[device] if (device != 'cpu') else None)
+
+for ...
+    # perform the training loop
+```
+
+A detailed example of the full procedure with a toy model is given here:
+
+- [Intel's oneCCL demo](https://github.com/intel/torch-ccl/blob/master/demo/demo.py)
+
+
 
 ## A Simple Job Script
 
@@ -201,6 +290,13 @@ module use /soft/modulefiles
 module load frameworks/2023.10.15.001
 
 export NUMEXPR_MAX_THREADS=1
+# This is to resolve an issue due to a package called "numexpr". 
+# It sets the variable 
+# 'numexpr.nthreads' to available number of threads by default, in this case 
+# to 208. However, the 'NUMEXPR_MAX_THREADS' is also set to 64 as a package 
+# default. The solution is to either set the 'NUMEXPR_NUM_THREADS' to less than 
+# or equal to '64' or to increase the 'NUMEXPR_MAX_THREADS' to the available 
+# number of threads. Both of these variables can be set manually.
 
 #####################################################################
 # End of environment setup section
