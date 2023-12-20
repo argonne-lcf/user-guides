@@ -6,20 +6,27 @@ This is a collection of known issues that have been encountered during Polaris's
 
 1. Since the Slingshot 11 and related software upgrade, users may encounter the following issue when running an application.
 
-```
+```bash
 /opt/cray/pe/gcc-libs/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by a.out)
 ```
 
 At this time, it is suggested to update the `LD_PRELOAD` environment variable as follows.
 
-```
+```bash
 export LD_PRELOAD=/opt/cray/pe/gcc/11.2.0/snos/lib64/libstdc++.so.6
 ```
 
-2. With `PrgEnv-nvhpc/8.3.3`, if you are using `nvcc` to indirectly invoke `nvc++` and compiling C++17 code (as, for example, in building Kokkos via `nvcc_wrapper`), you will get compilation errors with C++17 constructs. See [our documentation on NVIDIA Compilers](./compiling-and-linking/nvidia-compiler-polaris.md#known-issues-and-workarounds) for a workaround.
+2. If your job fails to start with an `RPC launch` message like below, please forward the complete messages to support@alcf.anl.gov.
 
-3. `PrgEnv-nvhpc/8.3.3` currently loads the `nvhpc/21.9` module, which erroneously has the following lines:
+```bash
+launch failed on x3104c0s1b0n0: Couldn't forward RPC launch(ab751d77-e80a-4c54-b1c2-4e881f7e8c90) to child x3104c0s31b0n0.hsn.cm.polaris.alcf.anl.gov: Resource temporarily unavailable
 ```
+
+3. With `PrgEnv-nvhpc/8.3.3`, if you are using `nvcc` to indirectly invoke `nvc++` and compiling C++17 code (as, for example, in building Kokkos via `nvcc_wrapper`), you will get compilation errors with C++17 constructs. See [our documentation on NVIDIA Compilers](./compiling-and-linking/nvidia-compiler-polaris.md#known-issues-and-workarounds) for a workaround.
+
+4. `PrgEnv-nvhpc/8.3.3` currently loads the `nvhpc/21.9` module, which erroneously has the following lines:
+
+```bash
 setenv("CC","/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/compilers/bin/nvc")
 setenv("CXX","/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/compilers/bin/nvc++")
 setenv("FC","/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/compilers/bin/nvfortran")
@@ -27,8 +34,10 @@ setenv("F90","/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/compilers/bin/nvfortran")
 setenv("F77","/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/compilers/bin/nvfortran")
 setenv("CC","cpp")
 ```
+
 In particular, the final line can cause issues for C-based projects (e.g. CMake may complain because the `cpp` C preprocessor is not a compiler). We recommend running the following in such cases:
-```
+
+```bash
 unset CC
 unset F77
 unset CXX
@@ -36,7 +45,7 @@ unset FC
 unset F90
 ```
 
-4. Cray MPICH may exhibit issues when MPI ranks call `fork()` and are distributed across multiple nodes. The process may hang or throw a segmentation fault. 
+5. Cray MPICH may exhibit issues when MPI ranks call `fork()` and are distributed across multiple nodes. The process may hang or throw a segmentation fault. 
 
     In particular, this can manifest in hangs with PyTorch+Horovod with a `DataLoader` with multithreaded workers and distributed data parallel training on multiple nodes. We have built a module `conda/2022-09-08-hvd-nccl` which includes a Horovod built without support for MPI. It uses NCCL for GPU-GPU communication and Gloo for coordination across nodes.
 
