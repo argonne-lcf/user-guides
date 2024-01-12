@@ -19,7 +19,8 @@ This will load and activate the base environment.
 
 !!! success
 
-    If you need a package that is already installed in the base environment,
+    If you need a package that is **not** already
+    installed in the `base` environment,
     this is generally the recommended approach.
 
 Creating your own (empty) virtual Python environment in a directory that is
