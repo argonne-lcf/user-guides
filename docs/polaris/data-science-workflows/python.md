@@ -19,8 +19,6 @@ This will load and activate the base environment.
 
 To install additional packages that are missing from the `base` environment,
 we can build a `venv` on top of it.
-<!-- To install any additional packages that we can build a `venv` -->
-<!-- on top of the `base` env -->
 
 !!! success "Conda `base` environment + `venv`"
 
