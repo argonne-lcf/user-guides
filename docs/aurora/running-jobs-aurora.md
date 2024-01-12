@@ -1,7 +1,7 @@
 
 # Running Jobs on Aurora
 
-## Queues
+## <a name="Aurora-Queues"></a>Queues
 
 There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
 
@@ -44,7 +44,7 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
-## Running MPI+OpenMP-Applications
+## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
@@ -79,7 +79,7 @@ cd /home/knight/affinity
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity
 ```
 
-## Running GPU-enabled Applications
+## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 GPU-enabled applications will similarly run on the compute nodes using the above example script.
 - The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers.
 - If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `ZE_AFFINITY_MASK` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `ZE_AFFINITY_MASK=0,1` could be used.
@@ -301,7 +301,7 @@ then the mapping is:
 
 Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. 
 
-### Binding MPI ranks to GPUs
+### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
 
 This script can be placed just before the executable in an `mpiexec` command like so.
@@ -327,7 +327,7 @@ exec "$@"
 
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` to suit their needs.
 
-## Interactive Jobs on Compute Nodes
+## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
 
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
@@ -340,7 +340,7 @@ This command requests 1 node for a period of 1 hour in the `workq` queue. After 
 **NOTE:** If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
 
 
-## Running Multiple MPI Applications on a node
+## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
 
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs and tiles. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `ZE_AFFINITY_MASK` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the simple example below, twelve instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-3 on CPU cores 0-3 and using GPU 0 tile 0.
 
