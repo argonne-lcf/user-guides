@@ -91,7 +91,7 @@ Each node on Aurora has 2 sockets, each with 2 CPUs and 3 PVC GPUs. Each CPU has
 A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two hardware threads. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
 
 <figure markdown>
-  ![Aurore node](files/aurora_node.png){ width="700" }
+  ![Aurore node](images/aurora_node_simple.png){ width="700" }
   <figcaption>Simplified representation of Aurora node </figcaption>
 </figure>
 
