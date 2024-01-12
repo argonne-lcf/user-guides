@@ -1,3 +1,0 @@
-# gpt-neox
-
-Placeholder
