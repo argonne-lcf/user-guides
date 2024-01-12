@@ -17,40 +17,21 @@ This will load and activate the base environment.
 
 ## Virtual environments via `venv`
 
-!!! success
+To install additional packages that are missing from the `base` environment,
+we can build a `venv` on top of it.
+<!-- To install any additional packages that we can build a `venv` -->
+<!-- on top of the `base` env -->
+
+!!! success "Conda `base` environment + `venv`"
 
     If you need a package that is **not** already
     installed in the `base` environment,
     this is generally the recommended approach.
 
-Creating your own (empty) virtual Python environment in a directory that is
-writable to you is simple:
-
-```bash
-python3 -m venv /path/to/new/virtual/environment
-```
-
-This creates a new folder that is fairly lightweight folder (`<20 MB`) with its
-own Python interpreter where you can install whatever packages you'd like.
-
-First, you must activate the virtual environment to make this Python
-interpreter the default interpreter in your shell session.
-
-You activate the new environment whenever you want to start using it via
-running the activate script in that folder:
-
-```bash
-source /path/to/new/virtual/environment/bin/activate
-```
-
-In many cases, you do not want an empty virtual environment, but instead want
-to start from the `conda` base environment's installed packages, only adding
-and/or changing a few modules.
-
-!!! example "Create a `venv`"
-
-    We can create a `venv` on top of the base Anaconda environment
-    (with `#!bash  --system-site-packaes` to inherit the `base` packaes):
+    We can create a `venv` on top of the base
+    Anaconda environment (with
+    `#!bash  --system-site-packaes` to inherit
+    the `base` packaes):
 
     ```bash
     module load conda; conda activate
@@ -60,9 +41,9 @@ and/or changing a few modules.
     source "${VENV_DIR}/bin/activate"
     ```
 
-You can always retroactively change the `--system-site-packages` flag state for
-this virtual environment by editing `my_env/pyvenv.cfg` and changing the value
-of the line `include-system-site-packages = false`.
+You can always retroactively change the `#!bash --system-site-packages` flag
+state for this virtual environment by editing `#!bash ${VENV_DIR}/pyvenv.cfg` and
+changing the value of the line `#!bash include-system-site-packages=false`.
 
 To install a different version of a package that is already installed in the
 base environment, you can use:
@@ -83,29 +64,27 @@ should shadow those installed in the base environment.
     use significant storage space.
 
 If you need more flexibility, you can clone the conda environment into a custom
-path, which would then allow for root-like installations via `conda install
-<module>` or `pip install <module>`.
+path, which would then allow for root-like installations via `#!bash conda install
+<module>` or `#!bash pip install <module>`.
 
 Unlike the `venv` approach, using a cloned Anaconda environment requires you to
 copy the entirety of the base environment, which can use significant storage
 space.
 
-- This can be performed by:
+To clone the `base` environment:
 
-  ```bash
-  $ module load conda ; conda activate base
-  $ conda create --clone base --prefix /path/to/envs/base-clone
-  $ conda activate /path/to/envs/base-clone
-  (base-clone) $ which python3
-  /path/to/base-clone/bin/python3
-  ```
+```bash
+module load conda ; conda activate base
+conda create --clone base --prefix /path/to/envs/base-clone
+conda activate /path/to/envs/base-clone
+```
 
-  where, `path/to/envs/base-clone` should be replaced by a suitably chosen
-  path.
+where, `#!bash path/to/envs/base-clone` should be replaced by a suitably chosen
+path.
 
 **Note**: The cloning process can be _quite_ slow.
 
-### Using `pip install --user` (not recommended)
+## Using `pip install --user` (not recommended)
 
 !!! danger
 
@@ -131,4 +110,4 @@ Be sure to remove this location from `#!bash $PATH` if you deactivate the base
 Anaconda environment or unload the module.
 
 Cloning the Anaconda environment, or using `venv` are both more flexible and
-transparent when compared to `--user` installs.
+transparent when compared to `#!bash --user` installs.
