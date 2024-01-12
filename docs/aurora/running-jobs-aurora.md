@@ -141,6 +141,13 @@ MPI ranks 0,1,2,3,4,5,6,7 map to hardware threads 0,1,2,3 on each of the two nod
 
 - MPI rank 7 → node 1, hardware thread 3
 
+The figure below shows the mapping, where the different colors are different MPI ranks.
+
+<figure markdown>
+  ![Example1](images/example1.png){ width="700" }
+  <figcaption>Example 1 Mapping </figcaption>
+</figure>
+
 
 #### Example 2: 2 nodes, 2 ranks/node, 2 thread/rank
 
@@ -181,6 +188,12 @@ Assuming the job was allocated on node 0 and node 1:
 
 - MPI rank 3, OpenMP thread 1 → node 1, hardware thread 3
 
+The figure below shows the mapping, where the different colors are different MPI ranks.
+
+<figure markdown>
+  ![Example2](images/example2.png){ width="700" }
+  <figcaption>Example 2 Mapping </figcaption>
+</figure>
 
 #### Example 3: 2 nodes, 2 ranks/node, 1 thread/rank, compact fashion
 
@@ -200,6 +213,13 @@ Assuming the job was allocated on node 0 and node 1:
 - MPI rank 2 → node 1, hardware thread 0
 
 - MPI rank 3 → node 1, hardware thread 104
+
+The figure below shows the mapping, where the different colors are different MPI ranks.
+
+<figure markdown>
+  ![Example3](images/example3.png){ width="700" }
+  <figcaption>Example 3 Mapping </figcaption>
+</figure>
 
 #### Example 4: 1 node, 12 ranks/node
 
@@ -240,6 +260,13 @@ Assuming the job was allocated on node 0 and node 1, the mapping looks like:
 - MPI rank 11 → node 0, socket 1, hardware thread 92-99
 
 The important point here is that with explicit binding, we were able to ensure socket 0 had 6 ranks and socket 1 has 6 ranks. Note how MPI rank 5 ends at hardware thread 47, but MPI rank 6 begins with hardware thread 52, so this involves leaving several cores empty. However, it allows the cores to be spread evenly across the two sockets.   
+
+The figure below shows the mapping, where the different colors are different MPI ranks.
+
+<figure markdown>
+  ![Example4](images/example4.png){ width="700" }
+  <figcaption>Example 4 Mapping </figcaption>
+</figure>
 
 If instead we used "--depth" as so:
 ```
