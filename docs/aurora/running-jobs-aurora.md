@@ -223,7 +223,7 @@ The figure below shows the mapping, where the different colors are different MPI
 
 #### Example 4: 1 node, 12 ranks/node
 
-This setup is a possible binding for 12 ranks/node for applications that may use 1 MPI rank per GPU tile. Note that explicit list binding is needed here to avoid binding a MPI rank to a hardware thread on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used). 
+This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding is needed here to avoid binding a MPI rank to a hardware thread on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used). 
 
 ```
 mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 <app> <app_args>
