@@ -1,6 +1,9 @@
 
 # Running Jobs on Aurora
 
+
+HIHIHIHI
+
 ## <a name="Aurora-Queues"></a>Queues
 
 There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
@@ -91,7 +94,7 @@ Each node on Aurora has 2 sockets, each with 2 CPUs and 3 PVC GPUs. Each CPU has
 A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two hardware threads. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
 
 <figure markdown>
-  ![Aurore node](images/aurora_node_simple.png){ width="700" }
+  ![Aurore node](images/aurora_node_simple.png){ width="1000" }
   <figcaption>Simplified representation of Aurora node </figcaption>
 </figure>
 
