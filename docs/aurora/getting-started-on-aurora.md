@@ -75,6 +75,32 @@ round robin to the aurora login nodes.
 ssh <username>@login.aurora.alcf.anl.gov
 ```
 
+## Proxies for outbound connections: Git, ssh, etc...
+
+The Aurora login nodes don't currently have outbound network connectivity enabled by default. Setting the following environment variables will provide access to the proxy host. This is necessary, for example, to clone remote git repos.
+
+```bash
+# proxy settings
+export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
+export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
+export http_proxy="http://proxy.alcf.anl.gov:3128"
+export https_proxy="http://proxy.alcf.anl.gov:3128"
+```
+
+## SSH to other machines
+
+To ssh to another machine from an Aurora login node, it can be helpful to add a proxyjump through Bastion in your `.ssh/config` file. The first password prompt would be for bastion, followed by a prompt for the remote machine.
+
+```bash
+$ cat .ssh/config
+Host my.awesome.machine.edu
+    ProxyJump bastion.alcf.anl.gov
+
+$ ssh me@my.awesome.machine.edu
+```
+
+Additional guidance on scp and transfering files to Aurora is available [here](./sunspot-to-aurora.md#Transferring-files-to-Aurora).
+
 ## Hardware Overview
 
 An overview of the Aurora system including details on the compute node architecture is available on the [Machine Overview](./hardware-overview/machine-overview.md) page.

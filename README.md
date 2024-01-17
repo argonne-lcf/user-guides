@@ -21,8 +21,10 @@ $ source env/bin/activate
 ### Git
 
 Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub account:
+
 ```
 $ git clone git@github.com:argonne-lcf/user-guides.git
+$ cd user-guides
 $ git submodule init; git submodule update
 ```
 
