@@ -299,7 +299,12 @@ then the mapping is:
 
 - MPI rank 11 → node 0, socket 1, hardware thread 88-95
 
-Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. 
+Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. This is shown in the image below. Node that the pink MPI rank (rank 6) is split between socket 0 and socket 1.
+
+<figure markdown>
+  ![Example4](images/example4_bad.png){ width="700" }
+  <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
+</figure>
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
@@ -326,6 +331,52 @@ exec "$@"
 ```
 
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` to suit their needs.
+
+One example below shows a common mapping of MPI ranks to cores and GPUs.
+
+#### Example 1: 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU
+
+```
+mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh <app> <app_args>
+```
+
+- The "-n 12" argument says to use 12 MPI ranks in total and "-ppn 12" places 12 ranks per node.
+- The "--cpu-bind list" argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0, Tile 0, rank 1 maps to GPU 0, Tile 1, rank 2 naps to GPU 1, Tile 0 etc. in a round-robin compact fashion.  
+
+#### Resulting mapping
+This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A figure representing this is below. The different MPI ranks are represented by different colors. Assuming the job was allocated on node 0 and node 1, the mapping looks like:
+
+
+- MPI rank 0 → node 0, socket 0, hardware threads 0-7, GPU 0, Tile 0
+
+- MPI rank 1 → node 0, socket 0, hardware thread 8-15, GPU 0, Tile 1
+
+- MPI rank 2 → node 0, socket 0, hardware thread 16-23, GPU 1, Tile 0
+
+- MPI rank 3 → node 0, socket 0, hardware thread 24-31, GPU 1, Tile 1
+
+- MPI rank 4 → node 0, socket 0, hardware thread 32-39, GPU 2, Tile 0
+
+- MPI rank 5 → node 0, socket 0, hardware thread 40-47, GPU 2, Tile 1
+
+- MPI rank 6 → node 0, socket 1, hardware thread 52-59, GPU 3, Tile 0
+
+- MPI rank 7 → node 0, socket 1, hardware thread 60-67, GPU 3, Tile 1
+
+- MPI rank 8 → node 0, socket 1, hardware thread 68-75, GPU 4, Tile 0
+
+- MPI rank 9 → node 0, socket 1, hardware thread 76-83, GPU 4, Tile 1
+
+- MPI rank 10 → node 0, socket 1, hardware thread 84-91, GPU 5, Tile 0
+
+- MPI rank 11 → node 0, socket 1, hardware thread 92-99, GPU 5, Tile 1
+
+
+<figure markdown>
+  ![Example5](images/example5.png){ width="700" }
+  <figcaption>Example 1 GPU Tile Mapping </figcaption>
+</figure>
 
 ## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
 
