@@ -19,7 +19,7 @@ export FI_CXI_OVFLOW_BUF_SIZE=8388608
 export FI_CXI_CQ_FILL_PERCENT=20
 ```
 
-The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something smaller if issues persist.
+The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues persist. This is directly impacted by the number of unexpected messages sent and so may need to be increased as the scale of the job increases. 
 
 ## Submitting Jobs
 
