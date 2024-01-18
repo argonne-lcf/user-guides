@@ -222,4 +222,46 @@ An object class which is <something>[SG]X is distributed across all of the targe
 * S1/G1 will provide good performance for small data with need for high IOps as it places data only on 1 target.
 
 
+# Porting I/O to DAOS
+There is no need to specifically modify code to use DAOS, however, DAOS can be used in several different modes so some consideration should be given on where to start.
+The diagram below provides a suggested path to testing an application beginning at the green downward arrow.
 
+![DAOS Porting Stragegy](daos-porting-strategy.pdf "DAOS Porting Strategy")
+
+## dFuse
+The first suggested step to test with dFuse.
+dFuse utilizes the linux FUSE layer to provide a POSIX compatible API layer for any application that uses POSIX directly or indirectly though an I/O library.
+The dFuse component provides a simple method for using DAOS with no modifications.
+Once the DAOS container is mounted via dFuse, applications and utilities can access data as before.
+dFuse will scale as more compute nodes are added, but is not efficient on a per-node basis so will not provide ideal results at small scale.
+dFuse doesn't provide ideal metadata performance either but it does have the advatange of utilizing the Linux page cache, so workloads that benefit from caching may see better performance than other methods.
+
+## Interception Library
+The interception library (IL) is a next step in improving DAOS performance.
+The IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse.
+The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and communicates with DAOS directly in userspace.
+It will also take advantage of the multiple NICs on the node based on who many MPI processes are running on the node and which CPU socket they are on.
+
+## MPI-IO
+The ROMIO MPI-IO layer provides multiple I/O backends including a custom DAOS backend.
+MPI-IO can be used with dFuse and the interception library when using the `ufs` backend but the `daos` backend will provide optimal performance.
+In order to use this, one can prefix the file names with `daos:` which will tell MPI-IO to use the DAOS backend.
+
+## HDF DAOS VOL
+The HDF5 library can be used with POSIX or MPI-IO layers utilizing dFuse, IL or MPI-IO with DAOS.
+The first suggestion would be to start with dFuse and then move to MPI-IO.
+Once the performance of these methods has been evaluated, using the custom DAOS VOL can be attempted.
+The DAOS VOL will provide a performance improvement under certain types of HDF workloads.
+Using the VOL has other complications/benefits which should be considered as well.
+The VOL maps a single HDF file into a single container.
+This means a workload that tries to use multiple HDF files per checkpoint, will create one DAOS container for each one.
+This is not ideal and will likely lead to performance issues.
+The HDF code should be such that a single HDF file is used per checkpoint/analysis file/etc.
+An entire campaign might generate thousands of containers which might be some overhead on an individual to manage so many containers.
+As such, it might be beneficial to convert the code to write each checkpoint/time step into a HDF Group and then a single HDF file can be used for the entire campaign.
+This solution is more DAOS specific, as it will be functionally compatible on any system, however a traditinoal PFS may loose the entire contents of the file if a failure occurs during write while DAOS will be resilent to those failures and rollback to a previous good version.
+
+## DFS
+DFS is the user level API for DAOS.
+This API is very similar to POSIX but still has many differences that would require code changes to utilize DFS directly.
+The DFS API can provide the best overall performance for any scenario other than workloads which benefit from caching.
