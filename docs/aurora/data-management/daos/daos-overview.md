@@ -169,8 +169,47 @@ Job Submission
 This job script above expects two environment variables which you set to the relevant pool and container.
 The -ldaos=default switch will ensure that DAOS is available on the compute node.
 
-`qsub -v DAOS_POOL=<name>,DAOS_CONT=<name> -ldaos=deafult ./job-script.sh`
+`qsub -v DAOS_POOL=<name>,DAOS_CONT=<name> -ldaos=default ./job-script.sh`
 
 ## oneScratch
 The current DAOS system is configured with 20 server nodes.
-The remaining balance of server nodes is still reserved for testing.
+The remaining balance of server nodes is still reserved for internal testing.
+
+### Hardware
+Each DAOS server nodes is based on the Intel Coyote Pass platform.
+* (2) Xeon 5320 CPU (Ice Lake)
+* (16) 32GB DDR4 DIMMs
+* (16) 512GB Intel Optane Persistent Memory 200
+* (16) 15.3TB Samsung PM1733 NVMe
+* (2) HPE Slingshot NIC
+
+### Performance
+The peak performance of the oneScratch storage is approximately 800 GB/s to 1000 GB/s.
+Obtaining this performance should be possible from a job running in the available user partition but there are many considerations to understand achieving good performance.
+
+#### Single Node
+First is to consider the throughput you can obtain from a single compute node in the test case.
+* dfuse is a single process and will therefore attach to a single NIC, limiting throughput to ~20 GB/s per compute node.
+* dfuse offers caching and can thus show performance greater than theoretical due to cache effects based on the workload running.
+* MPI-IO, Intercept Library, or other interfaces that use libdfs will bond to a NIC per-process.
+  * DAOS will bond to NICs in a round-robin fashion to NICs which are located on the same socket.
+  * For Aurora, DAOS processes running on socket 0 will only use 4 NICs assuming at least four processes are used but will not use more until the second socket is used.
+  * IF running with a lower process count such as 24, the processes should be distributed between socket 0 and socket 1 for best I/O performance.
+
+#### Dragonfly Groups
+The next element is to consider how many dragonfly groups the job is running within.
+Each dragonfly groups has 2 links to each I/O group and the current DAOS servers are distributed amoung the full 8 I/O groups.
+* If a single compute group is used, that limits performance to 8 groups 2 links/group * 25 GB/s/link = 400 GB/s
+* Thus it requires at least 2 compute groups to reach max performance.
+* However, Slingshot support dynamic routing allowing traffic to use non-minimal routes via other compute groups which will result in performance greater that the theoretical peak of the number of compute groups being used.
+  * Dynamic routing performance will be sensitive to other workloads running on the system and not be consistent.
+
+#### Object Class
+The object class selected for your container will influence the performance potential of I/O.
+An object class which is <something>[SG]X is distributed across all of the targets in the system.
+* All pools in the test system are enabled to use 100% of the targets.
+* SX/GX will provide best performance for large data which distributes on all server targets but will lower IOp performance for metadata as each target must be communicated with.
+* S1/G1 will provide good performance for small data with need for high IOps as it places data only on 1 target.
+
+
+
