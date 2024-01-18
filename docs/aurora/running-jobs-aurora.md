@@ -1,9 +1,6 @@
 
 # Running Jobs on Aurora
 
-
-HIHIHIHI
-
 ## <a name="Aurora-Queues"></a>Queues
 
 There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
