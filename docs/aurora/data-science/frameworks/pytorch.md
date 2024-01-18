@@ -12,10 +12,10 @@ the frameworks module. To use it from a compute node, please do:
 
 ```
 module use /soft/modulefiles/
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 ```
 Then you can load PyTorch as usual, the following is an output from the
-`frameworks/2023.10.15.001` module
+`frameworks/2023.12.15.001` module
 
 ```
 >>> import torch
