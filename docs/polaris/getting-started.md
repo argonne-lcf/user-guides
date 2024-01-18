@@ -29,9 +29,9 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 ## Proxy
 
-If the node you are on doesn’t have outbound network connectivity, add the following to your ~/.bash_profile file to access the proxy host
+If the node you are on doesn’t have outbound network connectivity, add the following to your ~/.bash_profile file to access the proxy host. 
 
-```
+```bash
 # proxy settings
 export HTTP_PROXY="http://proxy-01.pub.alcf.anl.gov:3128"
 export HTTPS_PROXY="http://proxy-01.pub.alcf.anl.gov:3128"
