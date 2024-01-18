@@ -15,8 +15,11 @@ and TensorFlow. Both of these frameworks have
 `Horovod` support for multi-node calculations. Many other commonly used Python
 modules are available through these modules.
 
-# TODO
-# For more information on pytorch and tensorflow please see their respective pages: [link!!]
+For more information on pytorch and tensorflow please see their respective 
+pages: 
+
+- [PyTorch](https://pytorch.org/)
+- [TensorFlow](https://www.tensorflow.org/)
 
 From a login node we can do the following commands to list the available 
 modules:
@@ -30,18 +33,19 @@ are many frameworks modules available. The latest
 frameworks release could be used using:
 
 ```
-$ module load frameworks/2023.10.15.001
+$ module load frameworks/2023.12.15.001
 
 The following have been reloaded with a version change:
-  1) gcc/11.2.0 => gcc/12.2.0     2) intel_compute_runtime/release/agama-devel-551 => intel_compute_runtime/release/agama-devel-682.20
+  1) gcc/11.2.0 => gcc/12.2.0     2) intel_compute_runtime/release/agama-devel-551 => intel_compute_runtime/release/stable-736.25
 
 $ which python3
-/soft/datascience/aurora_nre_models_frameworks-2023.2/bin/python3
+/soft/datascience/aurora_nre_models_frameworks-2024.0/bin/python3
 
 $ which python
-/soft/datascience/aurora_nre_models_frameworks-2023.2/bin/python
+/soft/datascience/aurora_nre_models_frameworks-2024.0/bin/python
 ```
-At the time of writing this module contains Python 3.9.16. Future modules will
+At the time of writing this module contains Python 3.9.18.
+Future modules will
 contain updated versions of Python, PyTorch, TensorFlow, etc.
 
 While the shared Anaconda environment encapsulated in the module contains many 
@@ -84,7 +88,7 @@ directory) and inherit the base enviroment packages, one can use the
 
 ```
 module use /soft/modulefiles/
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 python3 -m venv --system-site-packages my_env
 source my_env/bin/activate
 
@@ -110,9 +114,7 @@ With the conda environment setup, one can install common Python modules using
 `pip install --users <module-name>` which will install packages in 
 `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` 
 environment variable is automatically set when you load the base `conda` 
-module, and is equal to `/home/$USER/.local/sunspot/frameworks/2023.10.15.001`
-
-# WHY IS IT SUNSPOT ^ ?
+module, and is equal to `/home/$USER/.local/aurora/frameworks/2023.12.15.001`
 
 Note, Python modules installed this way that contain command line binaries will 
 not have those binaries automatically added to the shell's `$PATH`. To manually 
