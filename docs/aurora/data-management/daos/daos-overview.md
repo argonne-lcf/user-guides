@@ -226,7 +226,7 @@ An object class which is <something>[SG]X is distributed across all of the targe
 There is no need to specifically modify code to use DAOS, however, DAOS can be used in several different modes so some consideration should be given on where to start.
 The diagram below provides a suggested path to testing an application beginning at the green downward arrow.
 
-![DAOS Porting Stragegy](daos-porting-strategy.pdf "DAOS Porting Strategy")
+![DAOS Porting Stragegy](daos-porting-strategy.png "DAOS Porting Strategy")
 
 ## dFuse
 The first suggested step to test with dFuse.
