@@ -1,3 +1,9 @@
+# DAOS Architecture
+DAOS is a high performance storage system for storing checkpoints and analysis files.
+DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
+
+![Aurora Storage Architecture](aurora-storage-architecture.png "Aurora Storage Architecture")
+
 # DAOS Overview
 Users should submit a request as noted below to have a DAOS pool created for their project.
 Once created, users may create and manage containers within the pool as they wish.
@@ -183,6 +189,8 @@ Each DAOS server nodes is based on the Intel Coyote Pass platform.
 * (16) 15.3TB Samsung PM1733 NVMe
 * (2) HPE Slingshot NIC
 
+![DAOS Node](daos-node.png "DAOS CYP Node")
+
 ### Performance
 The peak performance of the oneScratch storage is approximately 800 GB/s to 1000 GB/s.
 Obtaining this performance should be possible from a job running in the available user partition but there are many considerations to understand achieving good performance.
@@ -203,6 +211,8 @@ Each dragonfly groups has 2 links to each I/O group and the current DAOS servers
 * Thus it requires at least 2 compute groups to reach max performance.
 * However, Slingshot support dynamic routing allowing traffic to use non-minimal routes via other compute groups which will result in performance greater that the theoretical peak of the number of compute groups being used.
   * Dynamic routing performance will be sensitive to other workloads running on the system and not be consistent.
+
+![Aurora Interconnect](daos-ss-dragonfly.png "Aurora Slingshot Dragonfly")
 
 #### Object Class
 The object class selected for your container will influence the performance potential of I/O.
