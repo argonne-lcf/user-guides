@@ -8,7 +8,7 @@ Aurora, please contact support@alcf.anl.gov.
 ## Installation on Aurora
 
 PyTorch is already installed on Aurora with GPU support and available through
-the frameworks module. To use it from a compute node, please do:
+the frameworks module. To use it from a compute node, please load the following modules:
 
 ```
 module use /soft/modulefiles/
