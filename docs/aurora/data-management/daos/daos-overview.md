@@ -7,7 +7,7 @@ DAOS is fully integrated with the wider Aurora compute fabric as can be seen in 
 # DAOS Overview
 Users should submit a request as noted below to have a DAOS pool created for their project.
 Once created, users may create and manage containers within the pool as they wish.
-If you need assistance 
+
 
 ### Note
 This is an initial test DAOS configuration and as such, any data on the DAOS system will envtually be deleted when
