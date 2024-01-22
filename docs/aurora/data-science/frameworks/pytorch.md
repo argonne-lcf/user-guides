@@ -14,7 +14,7 @@ the frameworks module. To use it from a compute node, please load the following 
 module use /soft/modulefiles/
 module load frameworks/2023.12.15.001
 ```
-Then you can load PyTorch as usual, the following is an output from the
+Then you can `import` PyTorch as usual, the following is an output from the
 `frameworks/2023.12.15.001` module
 
 ```
@@ -156,12 +156,39 @@ done through `intel_extension_for_pytorch` module.
 
 ### CPU Affinity
 
-The CPU affinity should be set manually through `mpiexec`. You can do this the 
-following way:
+The CPU affinity should be set manually through mpiexec. 
+You can do this the following way:
 
-```shell
-export CPU_AFFINITY="verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203"
+```bash
+export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
+mpiexec ... --cpu-bind=${CPU_BIND}
 ```
+
+These bindings should be use along with the following oneCCL and Horovod 
+environment variable settings:
+
+```bash
+HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
+CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
+```
+
+When running 12 ranks per node with these settings the `framework`s use 3 cores, 
+with Horovod tightly coupled with the `framework`s using one of the 3 cores, and 
+oneCCL using a separate core for better performance, eg. with rank 0 the 
+`framework`s would use cores 2,3,4, Horovod would use core 4, and oneCCL would 
+use core 5.
+
+Each workload may perform better with different settings. 
+The criteria for choosing the cpu bindings are:
+
+- Binding for GPU and NIC affinity – To bind the ranks to cores on the proper 
+    socket or NUMA nodes.
+- Binding for cache access – This is the part that will change per application 
+    and some experimentation is needed.
+
+__Important__: This setup is a work in progress, and based on observed 
+performance. The recommended settings are likely to changed with new `framework`
+releases.
 
 ### Distributed Training
 
@@ -287,7 +314,7 @@ export IPEX_FP32_MATH_MODE=TF32
 #####################################################################
 
 module use /soft/modulefiles
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 
 export NUMEXPR_MAX_THREADS=1
 # This is to resolve an issue due to a package called "numexpr". 
@@ -307,13 +334,15 @@ export NUMEXPR_MAX_THREADS=1
 ######################################################################
 
 export CCL_LOG_LEVEL="WARN"
-export CPU_AFFINITY="verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203"
+export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
+HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
+CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
 
 ulimit -c 0
 
 # Launch the script
 mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
---cpu-bind ${CPU_AFFINITY} \
+--cpu-bind ${CPU_BIND} \
 python path/to/application.py
 
 ```
