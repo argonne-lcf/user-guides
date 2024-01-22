@@ -44,10 +44,10 @@ $ sambatune_ui --directory $DUMP_ROOT/artifact_root/sambatune_gen --port $ST_POR
 
 Copy the password shown (e.g. to your clipboard). The userid is always admin. The password is different for every sambatune_ui run. 
 
-In a fresh console on your working machine where you will run the browser, set up a two-hop ssh tunnel to the target node:
+In a fresh console on your working machine where you will run the browser, set up a two-hop ssh tunnel to the target node. Replace the `ALCFUserID` in the ssh command line with your ALCF userid.
 ```{console}
 $ export ST_PORT=8576
-$ ssh -L $ST_PORT:localhost:$ST_PORT arnoldw@sambanova.alcf.anl.gov  -t ssh -L $ST_PORT:localhost:$ST_PORT -N sn30-r1-h1
+$ ssh -L $ST_PORT:localhost:$ST_PORT ALCFUserID@sambanova.alcf.anl.gov  -t ssh -L $ST_PORT:localhost:$ST_PORT -N sn30-r1-h1
 ```
 
 Put localhost:8576 in the url bar of a Chrome-family browser. (Chrome, Brave, Vivaldi, Opera tested.)</br>

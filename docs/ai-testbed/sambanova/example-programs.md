@@ -8,6 +8,8 @@ mkdir apps
 cp -r /opt/sambaflow/apps/starters apps/starters
 ```
 
+Deactivate any active conda environment. If you have conda installed and a conda environment is active, you will see something like `(base)` at the beginning of the command prompt. If so, you will need to deactivate it with `conda deactivate`. Conda is not used on the SambaNova SN30 cluster. 
+
 ## LeNet
 
 Change directory
