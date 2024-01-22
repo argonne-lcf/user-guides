@@ -86,22 +86,22 @@ GPU-enabled applications will similarly run on the compute nodes using the above
 
 ## MPI rank and thread binding to cores and GPUs
 
-Each node on Aurora has 2 sockets, each with 2 CPUs and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 hardware threads per physical core, for a total of 104 physical cores and 208 hardware threads on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 hardware threads and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
+Each node on Aurora has 2 sockets, each with 2 CPUs and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
 
-A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two hardware threads. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
+A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
 
 <figure markdown>
-  ![Aurore node](images/aurora_node_simple.png){ width="700" }
+  ![Aurore node](images/aurora_node_simple.png){ width="1000" }
   <figcaption>Simplified representation of Aurora node </figcaption>
 </figure>
 
-For the two CPUs, the numbers inside the boxes identify the specific hardware threads in the core. That is, hardware threads 0 and 104 are the 2 hardware threads on the first physical core. Hardware threads 1 and 105 are the 2 hardware threads that share the second physical core. Since there are 208 hardware threads (or logical cores), the numbers run from 0 to 207. For i from 0 to 51, hardware threads i and i+104 share a physical core. 
+For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core. 
 
 For the six GPUs, the GPU number identifies the GPU, and the tile numbers identify the tile in the GPU, with tiles from 0 to 5 with each GPU have two tiles each $gpu.0 and $gpu.1.
 
 ### Binding MPI ranks and threads to cores
 
-Using the –cpu-bind argument to mpiexec, MPI ranks and threads can be assigned to run on specific hardware threads on the CPUs. For more information about the flags to mpiexec, see [Running MPI+OpenMP-Applications](#running-mpi+openmp-applications). Four examples of using mpiexec are given below to show how the cpu-bind=depth, cpu-bind=list, --depth arguments affect where MPI ranks and OpenMP threads are mapped.
+Using the –cpu-bind argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to mpiexec, see [Running MPI+OpenMP-Applications](#running-mpi+openmp-applications). Four examples of using mpiexec are given below to show how the cpu-bind=depth, cpu-bind=list, --depth arguments affect where MPI ranks and OpenMP threads are mapped.
 
 #### Example 1: 2 nodes, 4 ranks/node, 1 thread/rank
 
@@ -110,8 +110,8 @@ mpiexec -n 8 -ppn 4 --depth 1 --cpu-bind=depth <app> <app_args>
 ```
 
 - The "-n 8" argument says to use 8 MPI ranks in total and "-ppn 4" places 4 ranks per node.
-- The "--depth 1" argument says to use 1 hardware thread for each MPI rank.
-- The "--cpu-bind depth" argument says to spread out the ranks in a round robbin manner across the hardware threads, first putting one rank on the first hardware thread of one physical core, and then looping back to put a second one on the second hardware thread. This is done such that there's N hardware threads for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
+- The "--depth 1" argument says to use 1 logical processor for each MPI rank.
+- The "--cpu-bind depth" argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
 
 This is the same as
 
@@ -119,27 +119,27 @@ This is the same as
 mpiexec -n 8 -ppn 4 --cpu-bind=list:0:1:2:3 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which hardware thread to bind to per node. Each MPI rank is bound to the hardware threads that are listed between ":". So here, rank 0 to hardware thread 0, rank 1 to hardware thread 1, etc.
+- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processor 0, rank 1 to logical processor 1, etc.
 
 
 #### Resulting mapping
-MPI ranks 0,1,2,3,4,5,6,7 map to hardware threads 0,1,2,3 on each of the two nodes. Assuming the job was allocated on node 0 and node 1:
+MPI ranks 0,1,2,3,4,5,6,7 map to logical processors 0,1,2,3 on each of the two nodes. Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0 → node 0, hardware thread 0
+- MPI rank 0 → node 0, logical processor 0
 
-- MPI rank 1 → node 0, hardware thread 1
+- MPI rank 1 → node 0, logical processor 1
 
-- MPI rank 2 → node 0, hardware thread 2
+- MPI rank 2 → node 0, logical processor 2
 
-- MPI rank 3 → node 0, hardware thread 3
+- MPI rank 3 → node 0, logical processor 3
 
-- MPI rank 4 → node 1, hardware thread 0
+- MPI rank 4 → node 1, logical processor 0
 
-- MPI rank 5 → node 1, hardware thread 1
+- MPI rank 5 → node 1, logical processor 1
 
-- MPI rank 6 → node 1, hardware thread 2
+- MPI rank 6 → node 1, logical processor 2
 
-- MPI rank 7 → node 1, hardware thread 3
+- MPI rank 7 → node 1, logical processor 3
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -156,10 +156,10 @@ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --depth 2 --cpu-bind=de
 ```
 
 - The "-n 4" argument says to use 4 MPI ranks in total and "-ppn 2" places 2 ranks per node.
-- The "--depth 2" argument says to use 2 hardware thread for each MPI rank.
-- The "--cpu-bind depth" argument says to spread out the ranks in a round robbin manner across the hardware threads, first putting one rank on the first hardware thread of one physical core, and then looping back to put a second one on the second hardware thread. This is done such that there's N hardware threads for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
+- The "--depth 2" argument says to use 2 logical processor for each MPI rank.
+- The "--cpu-bind depth" argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
 - OMP_NUM_THREADS=2 launches two threads per MPI rank
-- OMP_PLACES=threads says to bind the OpenMP threads to hardware threads
+- OMP_PLACES=threads says to bind the OpenMP threads to logical processors
 
 This is the same as
 
@@ -167,26 +167,26 @@ This is the same as
 OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --cpu-bind=list:0,1:2,3 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which hardware thread to bind to. Each MPI rank is bound to the hardware threads that are listed between ":". Between ":", the hardware threads to bind to are listed in a comma-separated manner. So here, rank 0 is bound to hardware threads 0 and 1, rank 2 to hardware threads 2 and 3. OMP_PLACES=threads then binds the specific threads to the hardware threads in the list.
+- The "--cpu-bind list" argument explicitly lists which logical processor to bind to. Each MPI rank is bound to the logical processors that are listed between ":". Between ":", the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 0 and 1, rank 2 to logical processors 2 and 3. OMP_PLACES=threads then binds the specific threads to the logical processors in the list.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0, OpenMP thread 0 → node 0, hardware thread 0
+- MPI rank 0, OpenMP thread 0 → node 0, logical processor 0
 
-- MPI rank 0, OpenMP thread 1 → node 0, hardware thread 1
+- MPI rank 0, OpenMP thread 1 → node 0, logical processor 1
 
-- MPI rank 1, OpenMP thread 0 → node 0, hardware thread 2
+- MPI rank 1, OpenMP thread 0 → node 0, logical processor 2
 
-- MPI rank 1, OpenMP thread 1 → node 0, hardware thread 3
+- MPI rank 1, OpenMP thread 1 → node 0, logical processor 3
 
-- MPI rank 2, OpenMP thread 0 → node 1, hardware thread 0
+- MPI rank 2, OpenMP thread 0 → node 1, logical processor 0
 
-- MPI rank 2, OpenMP thread 1 → node 1, hardware thread 1
+- MPI rank 2, OpenMP thread 1 → node 1, logical processor 1
 
-- MPI rank 3, OpenMP thread 0 → node 1, hardware thread 2
+- MPI rank 3, OpenMP thread 0 → node 1, logical processor 2
 
-- MPI rank 3, OpenMP thread 1 → node 1, hardware thread 3
+- MPI rank 3, OpenMP thread 1 → node 1, logical processor 3
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -201,18 +201,18 @@ The figure below shows the mapping, where the different colors are different MPI
 mpiexec -n 4 -ppn 2 --cpu-bind=list:0:104 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which hardware thread to bind to per node. Each MPI rank is bound to the hardware threads that are listed between ":". So here, rank 0 to hardware thread 0, rank 1 to hardware thread 104, which share the same physical core.
+- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processor 0, rank 1 to logical processor 104, which share the same physical core.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0 → node 0, hardware thread 0
+- MPI rank 0 → node 0, logical processor 0
 
-- MPI rank 1 → node 0, hardware thread 104
+- MPI rank 1 → node 0, logical processor 104
 
-- MPI rank 2 → node 1, hardware thread 0
+- MPI rank 2 → node 1, logical processor 0
 
-- MPI rank 3 → node 1, hardware thread 104
+- MPI rank 3 → node 1, logical processor 104
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -223,43 +223,43 @@ The figure below shows the mapping, where the different colors are different MPI
 
 #### Example 4: 1 node, 12 ranks/node
 
-This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding is needed here to avoid binding a MPI rank to a hardware thread on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used). 
+This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding is needed here to avoid binding a MPI rank to a logical processor on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used). 
 
 ```
 mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which hardware thread to bind to per node. Each MPI rank is bound to the hardware threads that are listed between ":". So here, rank 0 to hardware threads 0-7, rank 1 to hardware threads 8-15, etc.
+- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processors 0-7, rank 1 to logical processors 8-15, etc.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1, the mapping looks like:
 
 
-- MPI rank 0 → node 0, socket 0, hardware threads 0-7
+- MPI rank 0 → node 0, socket 0, logical processors 0-7
 
-- MPI rank 1 → node 0, socket 0, hardware thread 8-15
+- MPI rank 1 → node 0, socket 0, logical processor 8-15
 
-- MPI rank 2 → node 0, socket 0, hardware thread 16-23
+- MPI rank 2 → node 0, socket 0, logical processor 16-23
 
-- MPI rank 3 → node 0, socket 0, hardware thread 24-31
+- MPI rank 3 → node 0, socket 0, logical processor 24-31
 
-- MPI rank 4 → node 0, socket 0, hardware thread 32-39
+- MPI rank 4 → node 0, socket 0, logical processor 32-39
 
-- MPI rank 5 → node 0, socket 0, hardware thread 40-47
+- MPI rank 5 → node 0, socket 0, logical processor 40-47
 
-- MPI rank 6 → node 0, socket 1, hardware thread 52-59
+- MPI rank 6 → node 0, socket 1, logical processor 52-59
 
-- MPI rank 7 → node 0, socket 1, hardware thread 60-67
+- MPI rank 7 → node 0, socket 1, logical processor 60-67
 
-- MPI rank 8 → node 0, socket 1, hardware thread 68-75
+- MPI rank 8 → node 0, socket 1, logical processor 68-75
 
-- MPI rank 9 → node 0, socket 1, hardware thread 76-83
+- MPI rank 9 → node 0, socket 1, logical processor 76-83
 
-- MPI rank 10 → node 0, socket 1, hardware thread 84-91
+- MPI rank 10 → node 0, socket 1, logical processor 84-91
 
-- MPI rank 11 → node 0, socket 1, hardware thread 92-99
+- MPI rank 11 → node 0, socket 1, logical processor 92-99
 
-The important point here is that with explicit binding, we were able to ensure socket 0 had 6 ranks and socket 1 has 6 ranks. Note how MPI rank 5 ends at hardware thread 47, but MPI rank 6 begins with hardware thread 52, so this involves leaving several cores empty. However, it allows the cores to be spread evenly across the two sockets.   
+The important point here is that with explicit binding, we were able to ensure socket 0 had 6 ranks and socket 1 has 6 ranks. Note how MPI rank 5 ends at logical processor 47, but MPI rank 6 begins with logical processor 52, so this involves leaving several cores empty. However, it allows the cores to be spread evenly across the two sockets.   
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -275,31 +275,36 @@ mpiexec -n 12 -ppn 12 --depth 8 --cpu-bind=depth <app> <app_args>
 then the mapping is:
 
 
-- MPI rank 0 → node 0, socket 0, hardware threads 0-7
+- MPI rank 0 → node 0, socket 0, logical processors 0-7
 
-- MPI rank 1 → node 0, socket 0, hardware thread 8-15
+- MPI rank 1 → node 0, socket 0, logical processor 8-15
 
-- MPI rank 2 → node 0, socket 0, hardware thread 16-23
+- MPI rank 2 → node 0, socket 0, logical processor 16-23
 
-- MPI rank 3 → node 0, socket 0, hardware thread 24-31
+- MPI rank 3 → node 0, socket 0, logical processor 24-31
 
-- MPI rank 4 → node 0, socket 0, hardware thread 32-39
+- MPI rank 4 → node 0, socket 0, logical processor 32-39
 
-- MPI rank 5 → node 0, socket 0, hardware thread 40-47
+- MPI rank 5 → node 0, socket 0, logical processor 40-47
 
-- MPI rank 6 → node 0, socket 0 and socket 1, hardware thread 48-55
+- MPI rank 6 → node 0, socket 0 and socket 1, logical processor 48-55
 
-- MPI rank 7 → node 0, socket 1, hardware thread 56-63
+- MPI rank 7 → node 0, socket 1, logical processor 56-63
 
-- MPI rank 8 → node 0, socket 1, hardware thread 64-71
+- MPI rank 8 → node 0, socket 1, logical processor 64-71
 
-- MPI rank 9 → node 0, socket 1, hardware thread 72-79
+- MPI rank 9 → node 0, socket 1, logical processor 72-79
 
-- MPI rank 10 → node 0, socket 1, hardware thread 80-87
+- MPI rank 10 → node 0, socket 1, logical processor 80-87
 
-- MPI rank 11 → node 0, socket 1, hardware thread 88-95
+- MPI rank 11 → node 0, socket 1, logical processor 88-95
 
-Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. 
+Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. This is shown in the image below. Node that the pink MPI rank (rank 6) is split between socket 0 and socket 1.
+
+<figure markdown>
+  ![Example4](images/example4_bad.png){ width="700" }
+  <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
+</figure>
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
@@ -326,6 +331,52 @@ exec "$@"
 ```
 
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` to suit their needs.
+
+One example below shows a common mapping of MPI ranks to cores and GPUs.
+
+#### Example 1: 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU
+
+```
+mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh <app> <app_args>
+```
+
+- The "-n 12" argument says to use 12 MPI ranks in total and "-ppn 12" places 12 ranks per node.
+- The "--cpu-bind list" argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0, Tile 0, rank 1 maps to GPU 0, Tile 1, rank 2 naps to GPU 1, Tile 0 etc. in a round-robin compact fashion.  
+
+#### Resulting mapping
+This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A figure representing this is below. The different MPI ranks are represented by different colors. Assuming the job was allocated on node 0 and node 1, the mapping looks like:
+
+
+- MPI rank 0 → node 0, socket 0, logical processors 0-7, GPU 0, Tile 0
+
+- MPI rank 1 → node 0, socket 0, logical processor 8-15, GPU 0, Tile 1
+
+- MPI rank 2 → node 0, socket 0, logical processor 16-23, GPU 1, Tile 0
+
+- MPI rank 3 → node 0, socket 0, logical processor 24-31, GPU 1, Tile 1
+
+- MPI rank 4 → node 0, socket 0, logical processor 32-39, GPU 2, Tile 0
+
+- MPI rank 5 → node 0, socket 0, logical processor 40-47, GPU 2, Tile 1
+
+- MPI rank 6 → node 0, socket 1, logical processor 52-59, GPU 3, Tile 0
+
+- MPI rank 7 → node 0, socket 1, logical processor 60-67, GPU 3, Tile 1
+
+- MPI rank 8 → node 0, socket 1, logical processor 68-75, GPU 4, Tile 0
+
+- MPI rank 9 → node 0, socket 1, logical processor 76-83, GPU 4, Tile 1
+
+- MPI rank 10 → node 0, socket 1, logical processor 84-91, GPU 5, Tile 0
+
+- MPI rank 11 → node 0, socket 1, logical processor 92-99, GPU 5, Tile 1
+
+
+<figure markdown>
+  ![Example5](images/example5.png){ width="700" }
+  <figcaption>Example 1 GPU Tile Mapping </figcaption>
+</figure>
 
 ## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
 
