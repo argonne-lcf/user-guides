@@ -16,6 +16,7 @@ pip install openvino==2023.2
 pip install openvino-dev==2023.2
 pip install onnx
 ```
+
 Note that `/path/to/` can either be a user's home or project directory.
 
 To use OpenVINO in the future, simply load the frameworks module and source the virtual environment.
@@ -53,7 +54,9 @@ Note that by default, both `ovc` and `openvino.save_model()` perform compression
 ```
 ov.save_model(ov_model, 'resnet50.xml', compress_to_fp16=False)
 ```
+
 or
+
 ```
 ovc </path/to/model.onnx> --compress_to_fp16=False
 ```
@@ -66,7 +69,9 @@ A minimal example to run on a single PVC tile is shown below
 ```
 benchmark_app -m resnet50.xml -hint latency -d GPU.0 -data_shape [1,3,224,224]
 ```
+
 which returns a series of information on the parameters set for the benchmark tests and the performance of the tests. The last few lines of the output are shown below.
+
 ```
 [ INFO ] Execution Devices:['OCL_GPU.0']
 [ INFO ] Count:            6424 iterations
