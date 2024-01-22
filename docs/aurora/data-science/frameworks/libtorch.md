@@ -95,7 +95,9 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 ```
+
 and the `CMakeLists.txt` file
+
 ```
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 project(inference-example)
@@ -108,6 +110,7 @@ target_link_libraries(inference-example "${TORCH_LIBRARIES}" "${INTEL_EXTENSION_
 
 set_property(TARGET inference-example PROPERTY CXX_STANDARD 14)
 ```
+
 to build the inference example.
 
 Finally, create a build directory with `mkdir build; cd build` and execute the `doConfig.sh` script below

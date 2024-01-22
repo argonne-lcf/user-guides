@@ -88,112 +88,14 @@ nav:
         - Visualization on Polaris: polaris/visualization/visualization.md
         - Paraview: polaris/visualization/paraview.md
         - Visit: polaris/visualization/visit.md
+        - FFmpeg: polaris/visualization/ffmpeg.md
+        - ImageMagick: polaris/visualization/imagemagick.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
-  - Theta:
-    - Hardware Overview:
-      - Theta Machine Overview: theta/hardware-overview/machine-overview.md
-      - Theta Memory Modes: theta/hardware-overview/theta-memory-modes.md
-      - Aries Network: theta/hardware-overview/aries-network.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: theta/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
-      - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
-      - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
-    - Queueing and Running Jobs on Theta:
-      - The Gronkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
-      - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Example Job Scripts: theta/queueing-and-running-jobs/example-job-scripts.md
-      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
-      - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
-    - Applications and Libraries:
-      - Applications:
-        - ELPA: theta/applications-and-libraries/applications/elpa.md
-        - Gromacs: theta/applications-and-libraries/applications/gromacs.md
-        - LAMMPS: theta/applications-and-libraries/applications/lammps.md
-        - NAMD: theta/applications-and-libraries/applications/namd.md
-        - NwChem: theta/applications-and-libraries/applications/nwchem.md
-        - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
-        - QBox: theta/applications-and-libraries/applications/qbox.md
-        - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
-        - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
-        - VASP: theta/applications-and-libraries/applications/vasp.md
-        - WEST: theta/applications-and-libraries/applications/west.md
-      - Libraries:
-        - Boost: theta/applications-and-libraries/libraries/boost.md
-        - Spack: theta/applications-and-libraries/libraries/spack.md
-      - Visualization:
-        - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
-    - Data Science:
-      - Machine Learning Tools: theta/data-science-workflows/machine-learning-tools.md
-      - Data Science Modules: theta/data-science-workflows/data-science-modules.md
-      - Apache Spark: theta/data-science-workflows/apache-spark.md
-      - Balsam: theta/data-science-workflows/balsam.md
-      - Conda: theta/data-science-workflows/conda.md
-      - DeepHyper: theta/data-science-workflows/deephyper.md
-      - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
-      - HDF5: theta/data-science-workflows/hdf5.md
-      - Keras: theta/data-science-workflows/keras.md
-      - MongoDB: theta/data-science-workflows/mongo-db.md
-      - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
-      - PyTorch: theta/data-science-workflows/pytorch.md
-      - Containers: theta/data-science-workflows/containers/containers.md
-      - TensorFlow: theta/data-science-workflows/tensorflow.md
-    - Programming Models:
-      - Kokkos: theta/programming-models/kokkos.md
-      - MPI: theta/programming-models/mpi-on-theta.md
-      - OpenMP: theta/programming-models/openmp-theta.md
-      - Raja: theta/programming-models/raja.md
-    - Debugging Tools:
-      - Overview: theta/debugging-tools/debugging-overview.md
-      - Arm DDT: theta/debugging-tools/arm-ddt.md
-      - ATP and STAT: theta/debugging-tools/atp-and-stat.md
-      - GDB: theta/debugging-tools/gdb.md
-    - Performance Tools:
-      - Arm MAP: theta/performance-tools/arm-map.md
-      - CrayPat: theta/performance-tools/craypat.md
-      - Darshan: theta/performance-tools/darshan.md
-      - HPCToolkit: theta/performance-tools/hpctoolkit.md
-      - Intel Advisor: theta/performance-tools/intel-advisor.md
-      - Intel Vtune: theta/performance-tools/intel-vtune.md
-      - PAPI: theta/performance-tools/papi.md
-      - TAU: theta/performance-tools/tau.md
-  - ThetaGPU:
-    - Getting Started: theta-gpu/getting-started.md
-    - Hardware Overview:
-      - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: theta-gpu/compiling-and-linking/compiling-and-linking-overview.md
-      - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration.md
-    - Queueing and Running Jobs on ThetaGPU:
-      - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
-    - Applications and Libraries:
-      - Applications:
-        - Gromacs: theta-gpu/applications-and-libraries/applications/gromacs.md
-    - Data Science:
-      - Data Science Software Availability: theta-gpu/data-science-workflows/data-science-software-availability.md
-      - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
-      - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
-      - GPU Node Queue and Policy: theta-gpu/data-science-workflows/gpu-node-queue-and-policy.md
-      - Python/C++ Code Interoperability: theta-gpu/data-science-workflows/pythonc-code-interoperability.md
-      - Containers: theta-gpu/data-science-workflows/containers/containers.md
-      - Deep Learning Frameworks:
-        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md
-        - DeepSpeed on ThetaGPU: theta-gpu/data-science-workflows/dl-frameworks/deepspeed.md
-        - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
-        - Running TensorFlow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
-        - TensorBoard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
-    - Programming Models:
-      - Kokkos: theta-gpu/programming-models/kokkos.md
-      - OpenMP: theta-gpu/programming-models/openmp.md
-      - Raja: theta-gpu/programming-models/raja.md
-    - Performance Tools:
-      - Darshan: theta-gpu/performance-tools/darshan.md
-      - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
+        - SmartSim: polaris/workflows/smartsim.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
@@ -233,32 +135,11 @@ nav:
       - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
       # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
       - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
       - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
       - SambaNova Documentation: ai-testbed/sambanova/documentation.md
       # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
-  - Cooley:
-    - Hardware Overview:
-      - Cooley Machine Overview: cooley/cooley-overview.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
-    - Queueing and Running Jobs:
-      - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
-    - Software and Libraries:
-      - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
-      - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
-      - ParaView: cooley/software-and-libraries/paraview.md
-      - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
-      - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
-      - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
-    - Programming Models:
-      - Kokkos: cooley/programming-models/kokkos.md
-      - OpenCL: cooley/programming-models/opencl.md
-      - OpenMP: cooley/programming-models/openmp.md
-      - Raja: cooley/programming-models/raja.md
-    - Performance Tools:
-      - Darshan: cooley/performance-tools/darshan.md
-      - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
   - Aurora/Sunspot:
       - Getting Started: aurora/getting-started-on-aurora.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
@@ -358,6 +239,9 @@ not_in_nav: |
   TODO.md
   notes.md
   theta/theta-decommissioning.md
+  theta/
+  theta-gpu/
+  cooley/
 
 theme:
   name: 'material'
