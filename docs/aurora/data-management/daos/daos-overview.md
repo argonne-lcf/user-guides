@@ -45,12 +45,12 @@ Example output
 
 ## Container
 The container is the basic unit of storage.
-A POSIX container can contain hundres of millions of files, you can use it to store all of your date.
+A POSIX container can contain hundreds of millions of files, you can use it to store all of your data.
 You only need a small set of containers perhaps just one per major unit of project work.
 
 ### Create a container
 ALCF has provided a script, `mkcont`, to help create a container with reasonable defaults.
-You can of course use the `daos` command to create a contaienr directly.
+You can of course use the `daos` command to create a container directly.
 
 `mkcont --type POSIX --pool <pool name> --user $USER --group <group> <container name>`
 
@@ -259,7 +259,7 @@ This is not ideal and will likely lead to performance issues.
 The HDF code should be such that a single HDF file is used per checkpoint/analysis file/etc.
 An entire campaign might generate thousands of containers which might be some overhead on an individual to manage so many containers.
 As such, it might be beneficial to convert the code to write each checkpoint/time step into a HDF Group and then a single HDF file can be used for the entire campaign.
-This solution is more DAOS specific, as it will be functionally compatible on any system, however a traditinoal PFS may loose the entire contents of the file if a failure occurs during write while DAOS will be resilent to those failures and rollback to a previous good version.
+This solution is more DAOS specific, as it will be functionally compatible on any system, however a traditinoal PFS may lose the entire contents of the file if a failure occurs during write while DAOS will be resilent to those failures and rollback to a previous good version.
 
 ## DFS
 DFS is the user level API for DAOS.
