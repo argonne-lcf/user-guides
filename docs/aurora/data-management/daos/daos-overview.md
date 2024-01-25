@@ -82,13 +82,13 @@ We provide some scripts to help perform this from within your job script.
 More examples are available in /soft/daos/examples.
 The following examples uses two support scripts to startup dfuse on each compute node and then shut it down at job end.
 
-Job Script Example
+Jon Script Example 
 > #!/bin/bash
-> #PBS -A <project>  
-> #PBS -lselect=1  
-> #PBS -lwalltime=30:00  
-> #PBS -k doe  
-> \#  
+> #PBS -A <project>
+> #PBS -lselect=1
+> #PBS -lwalltime=30:00
+> #PBS -k doe
+> \#
 > \# Test case for MPI-IO code example  
 >   
 > \# ranks per node  
