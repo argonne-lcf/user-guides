@@ -2,20 +2,22 @@
 
 SmartSim is an open source tool developed by the Hewlett Packard Enterprise (HPE) designed to facilitate the integration of traditional HPC simulation applications with machine learning workflows.
 There are two core components to SmartSim:
-- Infrastructure library (IL)
-  - Provides API to start, stop and monitor HPC applications from Python
-  - Interfaces with the scheduler launch jobs (PBSPro on Polaris and Cobalt on Theta/ThetaGPU)
-  - Deploys a distributed in-memory database called the Orchestrator
-- SmartRedis client library
-  - Provides clients that connect to the Orchestrator from Fortran, C, C++, Python code
-  - The client API library enables data transfer to/from database and ability to load and run JIT-traced Python and ML runtimes acting on stored data
+
+* Infrastructure library (IL)
+	* Provides API to start, stop and monitor HPC applications from Python
+	* Interfaces with the scheduler launch jobs (PBSPro on Polaris and Cobalt on Theta/ThetaGPU)
+	* Deploys a distributed in-memory database called the Orchestrator
+* SmartRedis client library
+	* Provides clients that connect to the Orchestrator from Fortran, C, C++, Python code
+	* The client API library enables data transfer to/from database and ability to load and run JIT-traced Python and ML runtimes acting on stored data
 
 For more resources on SmartSim, follow the links below:
-- [Source code](https://github.com/CrayLabs/SmartSim)
-- [Documentation](https://www.craylabs.org/docs/overview.html)
-- [Zoo of examples](https://github.com/CrayLabs/SmartSim-Zoo)
-- [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
-- [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
+
+* [Source code](https://github.com/CrayLabs/SmartSim)
+* [Documentation](https://www.craylabs.org/docs/overview.html)
+* [Zoo of examples](https://github.com/CrayLabs/SmartSim-Zoo)
+* [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
+* [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
 
 ## Installation
 
@@ -47,7 +49,9 @@ TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split
 smart build -v --device cpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
 cd ..
 ```
+
 Note:
+
 * The `pip install -e .` command returns some warnings regarding the version of `protobuf` and errors about the installation of `cloud-volume`, but these can be ignored for now.
 * The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing with the SmartRedis library on the CPU hardware with models stored within the database. This feature is not enabled on the Intel Max 1550 GPU.
 
