@@ -99,7 +99,7 @@ Host my.awesome.machine.edu
 $ ssh me@my.awesome.machine.edu
 ```
 
-Additional guidance on scp and transfering files to Aurora is available [here](./sunspot-to-aurora.md#Transferring-files-to-Aurora).
+Additional guidance on scp and transfering files to Aurora is available and [here](./data-management/lustre/gecko.md).
 
 ## Working with Git repos
 
