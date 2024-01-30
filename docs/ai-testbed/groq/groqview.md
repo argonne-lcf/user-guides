@@ -1,4 +1,4 @@
-# Groqview profiler and visualizer tool. 
+# GroqView profiler and visualizer tool
 
 This section covers how to remotely use the GroqView profiler and visualizer tool.
 
