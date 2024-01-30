@@ -1,11 +1,11 @@
-# Groqview profiler and visualizer tool. 
+# GroqView profiler and visualizer tool
 
 This section covers how to remotely use the GroqView profiler and visualizer tool.
 
-## Groqview sample
+## GroqView sample
 
 Groq compiles produce an accurate and detailed model of the performance of a model's execution ongroq cards. There is no need to run a model on groqcards to use groqview.<br>
-The groqview example adds the "groqview=True" parameter to the groqit call, then calls the groqview() method on the model returned by groqit.<br>
+The GroqView example adds the "groqview=True" parameter to the `groqit` call, then calls the `groqview()` method on the model returned by `groqit`.
 This is the relevant code when using groqflow: It tries to retrieve the compiled model from the cache, compiles the model on a cache miss, then calls groqview().<br>
 From `groqflow/examples/pytorch/groqview.py`: <br>
 ```{python}
@@ -45,7 +45,7 @@ ssh -L 8439:localhost:8439 arnoldw@groq-login-02.ai.alcf.anl.gov -t ssh -L 8439:
 
 ## Access the GroqView server for your application:
 
-Point a chrome-family web browser at this url, adjusting the port number if necessary.
+Point a Google Chrome-family web browser at this url, adjusting the port number if necessary.
 (Chrome, Brave, Vivaldi, Opera tested.)
 ```console
 http://localhost:8439
