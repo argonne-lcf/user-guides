@@ -1,6 +1,8 @@
 # Manually launching a Paraview server on Polaris
 
-Sometimes it is convenient to manually launch an instance of the Paraview server. In this section we will explain an alternative method to run the Paraview server on Polaris using an interactive job.
+Sometimes it is convenient to manually launch an instance of the Paraview server. In this section we will explain an alternative method to run the Paraview server on Polaris using an interactive job, where the user can launch the Paraview server from the command line interface.
+
+Note: this is a method better suited for experienced users. If you are just starting with Paraview, we recommend the [**client/server**](paraview.md) mode as your primary method for using this tool.
 
 ## Setting up Paraview 
 
