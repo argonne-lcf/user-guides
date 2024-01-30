@@ -99,7 +99,42 @@ Host my.awesome.machine.edu
 $ ssh me@my.awesome.machine.edu
 ```
 
-Additional guidance on scp and transfering files to Aurora is available [here](./sunspot-to-aurora.md#Transferring-files-to-Aurora).
+Additional guidance on scp and transfering files to Aurora is available and [here](./data-management/lustre/gecko.md).
+
+## Working with Git repos
+
+The default SSH port is currently blocked on Aurora; by default, this prevents communicate with Git remotes that are SSH URLs such as the following.
+
+```
+git clone [user@]server:project.git
+```
+For a workaround for GitHub, GitLab, and Bitbucket, the following can be added to your `~.ssh/config` file. This requires updating your environment with the above proxy settings.
+
+```
+Host github.com
+	User git
+	hostname ssh.github.com
+
+Host gitlab.com
+	User git
+	hostname altssh.gitlab.com
+
+Host bitbucket.org
+	User git
+	hostname altssh.bitbucket.org
+
+Host github.com gitlab.com bitbucket.org
+	Port 443
+	ProxyCommand /user/bin/socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
+```
+
+If you need to use soemthing besides your default SSH key on Aurora for authentication to GitHub in conjunction with the above SSH workaround, you may set
+
+```
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/specialGitKey -F /dev/null"
+```
+
+where specialGitKey is the name of the private key in your `.ssh` directory, for which you have uploaded the public key to GitHub.
 
 ## Hardware Overview
 
