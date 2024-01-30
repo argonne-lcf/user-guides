@@ -91,6 +91,7 @@ nav:
         - FFmpeg: polaris/visualization/ffmpeg.md
         - ImageMagick: polaris/visualization/imagemagick.md
         - Paraview tutorial: polaris/visualization/paraview-tutorial.md
+        - Launching manually the Paraview server: polaris/visualization/paraview-manual-launch.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
