@@ -1,4 +1,4 @@
-# ParaView Tutorialy
+# ParaView Tutorial
 ## Overview
 This tutorial is intended to be a hands-on resource for users interested in learning the basic concepts of ParaView. The examples can easily be run on a laptop, using the example data set provided.
 
@@ -26,7 +26,7 @@ The data used for this tutorial is:
 - Courtesy of George Karniadakis and Leopold Grinberg of Brown University
 
 The data is available for download here (~27MB compressed, ~39MB uncompressed):
-[Data set for ParaView Red Blood Cell Tutorial](http://alcf.anl.gov/sites/default/files/2019-11/BLOODFLOW_TUTORIAL_DATA.tar_.gz)
+[Data set for ParaView Red Blood Cell Tutorial](https://web.cels.anl.gov/projects/alcf_vis_internal/MISC/BLOODFLOW_TUTORIAL_DATA.tar.gz)
 
 ## 1. Load Multi-component Dataset
 - From the Filemenu, (you can also click the file folder icon, shown above) open each of the following data sets (select then click "OK")
