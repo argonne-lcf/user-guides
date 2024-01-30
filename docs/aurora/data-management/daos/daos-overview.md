@@ -48,7 +48,7 @@ Rebuild done, 4 objs, 0 recs
 ## Container
 The container is the basic unit of storage.
 A POSIX container can contain hundreds of millions of files, you can use it to store all of your data.
-You only need a small set of containers; perhaps just one per major unit of project work is.
+You only need a small set of containers; perhaps just one per major unit of project work is sufficient.
 
 ### Create a container
 ALCF has provided a script, `mkcont`, to help create a container with reasonable defaults.
