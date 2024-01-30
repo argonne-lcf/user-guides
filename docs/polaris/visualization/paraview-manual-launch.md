@@ -1,10 +1,10 @@
-# Manually launching a Paraview server on Polaris
+# Manually launching a ParaView server on Polaris
 
-Sometimes it is convenient to manually launch an instance of the Paraview server. In this section we will explain an alternative method to run the Paraview server on Polaris using an interactive job, where the user can launch the Paraview server from the command line interface.
+Sometimes it is convenient to manually launch an instance of the ParaView server. In this section we will explain an alternative method to run the ParaView server on Polaris using an interactive job, where the user can launch the ParaView server from the command line interface.
 
-Note: this is a method better suited for experienced users. If you are just starting with Paraview, we recommend the [**client/server**](paraview.md) mode as your primary method for using this tool.
+Note: this is a method better suited for experienced users. If you are just starting with ParaView, we recommend the [**client/server**](paraview.md) mode as your primary method for using this tool.
 
-## Setting up Paraview 
+## Setting up ParaView 
 
 From your local client select Connect, either from the File menu, or by clicking on the icon circled below:
 
@@ -18,11 +18,11 @@ Give your server a name, select Client/Server, localhost, and a TCP port (8000 i
 
 ![Edit server](images/edit-server.png)
 
-Click "Configure". In the next window there is an option to set up how Paraview server will be launched, and the default is "Manual". Leave it on "Manual" and click "Save".
+Click "Configure". In the next window there is an option to set up how ParaView server will be launched, and the default is "Manual". Leave it on "Manual" and click "Save".
 
 You will use these settings when establishing the connection.
 
-## Launching the Paraview server on Polaris
+## Launching the ParaView server on Polaris
 
 You can launch an interactive session on Polaris compute nodes with the following command (adjust parameters as needed to match your allocation, desired number of nodes, queue, walltime, and filesystems):
 
@@ -39,7 +39,7 @@ username@x3005c0s7b0n0:~>
 Make a note of the node hostname (`x3005c0s7b0n0` in the example above). You can also get this information from `qstat -fx jobID`
 
 
-Now load the Paraview module
+Now load the ParaView module
 
 ```
 username@x3005c0s7b0n0:~> module load paraview
@@ -47,14 +47,14 @@ username@x3005c0s7b0n0:~> module load paraview
 Lmod is automatically replacing "nvhpc/21.9" with "gcc/11.2.0".
 
 ----------------------------------------------------------------------------------
-     Paraview v5.11.0 successfully loaded
+     ParaView v5.11.0 successfully loaded
 ----------------------------------------------------------------------------------
 
 Due to MODULEPATH changes, the following have been reloaded:
   1) cray-mpich/8.1.16
 ```
 
-and launch the Paraview server with
+and launch the ParaView server with
 
 ```
 srizzi@x3005c0s7b0n0:~> mpirun -n 8 pvserver --server-port=8000
@@ -83,11 +83,11 @@ debug1: Local connections to LOCALHOST:8000 forwarded to remote address x3005c0s
 
 Keep this terminal open for the duration of your session to keep the ssh tunnel active.
 
-Now you are ready to launch your Paraview client locally. Keep in mind that client and servers versions must match. The Paraview version currently deployed on Polaris is 5.11.0
+Now you are ready to launch your ParaView client locally. Keep in mind that client and servers versions must match. The ParaView version currently deployed on Polaris is 5.11.0
 
-## Connecting to Paraview server
+## Connecting to ParaView server
 
-Connect your Paraview client to the server configuration you created above. You can select Connect, either from the File menu, or the icon circled in the figure:
+Connect your ParaView client to the server configuration you created above. You can select Connect, either from the File menu, or the icon circled in the figure:
 
 ![Connect icon](images/connect-icon.png)  
 
@@ -99,7 +99,7 @@ The connection should point to:
 localhost:8000
 ```
 
-In the terminal where you launched the server you will see now that the connection is established. Note that Paraview may take a few seconds to connect. This is normal behavior.
+In the terminal where you launched the server you will see now that the connection is established. Note that ParaView may take a few seconds to connect. This is normal behavior.
 
 ```
 username@x3005c0s7b0n0:~> mpirun -n 8 pvserver --server-port=8000
@@ -109,7 +109,7 @@ Accepting connection(s): x3005c0s7b0n0:8000
 Client connected.
 ```
 
-At this point you can use Paraview normally.
+At this point you can use ParaView normally.
 
 
 

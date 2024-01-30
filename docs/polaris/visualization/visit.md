@@ -1,20 +1,20 @@
-# Visit on Polaris
+# VisIt on Polaris
 
 ## Getting Started
 
-The latest Visit versions installed on Polaris are 3.3.3 and 3.4.0.
+The latest VisIt versions installed on Polaris are 3.3.3 and 3.4.0.
 
-Please note that at the time of this writing Visit version 3.4.0 does not yet have a client for Mac available. 
+Please note that at the time of this writing VisIt version 3.4.0 does not yet have a client for Mac available. 
 
 
-Follow these steps to install Visit on your local machine:
+Follow these steps to install VisIt on your local machine:
 
   
-  - Download and install Visit for your local platform (MacOS, Windows, Linux). The version you download must match the server version installed on Polaris. [Use this page](https://visit-dav.github.io/visit-website/releases-as-tables/)
+  - Download and install VisIt for your local platform (MacOS, Windows, Linux). The version you download must match the server version installed on Polaris. [Use this page](https://visit-dav.github.io/visit-website/releases-as-tables/)
   - Download the [Polaris host profile for VisIt](scripts/host_anl_polaris.xml) (you may need to right-click and choose "Save link as..." or "Save target as...")
   - Copy this file to a file called ~/.visit/hosts/host_anl_polaris.xml on Mac or Linux. [ We need to also specify this path for for Windows]
 
-Note: Visit allows the user to download host profiles for ANL, but all these settings are outdated. We are working with the Visit developers to update the ANL host list.
+Note: VisIt allows the user to download host profiles for ANL, but all these settings are outdated. We are working with the VisIt developers to update the ANL host list.
 
 Additional information for using VisIt in client/server mode [here](https://visit-sphinx-github-user-manual.readthedocs.io/en/v3.4.0/using_visit/ClientServer/index.html)
 
@@ -34,6 +34,6 @@ Additional information for using VisIt in client/server mode [here](https://visi
     - If you'd like these changes to be used as your default, be sure to save them using Save Settings under the Options menu.
 
 ## Additional Information
-- [Visit user manual](https://visit-sphinx-github-user-manual.readthedocs.io/en/v3.4.0/index.html)
-- [Visit wiki](http://www.visitusers.org)
+- [VisIt user manual](https://visit-sphinx-github-user-manual.readthedocs.io/en/v3.4.0/index.html)
+- [VisIt wiki](http://www.visitusers.org)
 
