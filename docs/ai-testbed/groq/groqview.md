@@ -4,9 +4,9 @@ This section covers how to remotely use the GroqView profiler and visualizer too
 
 ## GroqView sample
 
-Groq compiles produce an accurate and detailed model of the performance of a model's execution ongroq cards. There is no need to run a model on groqcards to use groqview.<br>
-The GroqView example adds the "groqview=True" parameter to the `groqit` call, then calls the `groqview()` method on the model returned by `groqit`.
-This is the relevant code when using groqflow: It tries to retrieve the compiled model from the cache, compiles the model on a cache miss, then calls groqview().<br>
+Groq compiles produce an accurate and detailed model of the performance of a model's execution on groq cards. There is no need to run a model on groqcards to use GroqView.<br>
+The GroqView example adds the "groqview=True" parameter to the `groqit` call, then calls the `groqview()` method on the model returned by `groqit`.<br>
+This is the relevant code when using GroqFlow. It tries to retrieve the compiled model from the cache, compiles the model on a cache miss, then calls `groqview()`.<br>
 From `groqflow/examples/pytorch/groqview.py`: <br>
 ```{python}
 # Build model
@@ -16,7 +16,7 @@ gmodel.groqview()
 ```
 
 ## Run the sample
-On a groq node, run the groqview.py sample (or any script that includes similar code). Note the port number chosen by groqview.<br>
+On a groq node, run the groqview.py sample (or any script that includes similar code). Note the port number chosen by GroqView.<br>
 ```console
 conda activate groqflow
 cd ~/groqflow/examples/pytorch
@@ -34,8 +34,8 @@ On your laptop/user machine with a display, set up a 2-hop ssh tunnel.<br>
 Set `$GN_HOSTNAME` to the name of the host where job is running<br>
 ```console
 export GN_HOSTNAME=groq-r01-gn-09
-# Modify the port number if groqview has chosen a different port.
-# This might happen if another user is also using groqflow.
+# Modify the port number if GroqView has chosen a different port.
+# This might happen if another user is also using GroqView.
 # Also, another user may be using the port on the login host.
 # `groq-login-01.ai.alcf.anl.gov` can be used as well.
 ssh -L 8439:localhost:8439 arnoldw@groq-login-02.ai.alcf.anl.gov -t ssh -L 8439:localhost:8439 -N $GN_HOSTNAME
