@@ -18,12 +18,11 @@ LAMMPS is an open-source code, which can be downloaded from the LAMMPS [website]
 
 After LAMMPS has been downloaded and unpacked an ALCF filesystem, users should see a directory whose name is of the form `lammps-<version>`. One should then see the Makefile `lammps-<version>/src/MAKE/MACHINES/Makefile.polaris` in recent versions that can be used for compilation on Polaris. A copy of the Makefile is also available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For older versions of LAMMPS, you may need to take an existing Makefile (e.g. Makefile.mpi) for your specific version of LAMMPS used and edit the top portion appropratiately to create a new Makefile.polaris files.
 
-The top portion of `Makefile.polaris_kokkos_nvidia` used to build LAMMPS with the KOKKOS package using the NVIDIA compilers is shown as an example.
+The top portion of `Makefile.polaris_nvhpc_kokkos` used to build LAMMPS with the KOKKOS package using the NVIDIA compilers is shown as an example.
 
 ```
-# polaris_nvidia = Flags for NVIDIA A100, NVIDIA Compiler, Cray MPICH, CUDA
-# module load craype-accel-nvidia80
-# make polaris_kokkos_nvidia -j 16
+# polaris_nvhpc_kokkos = Flags for NVIDIA A100, NVIDIA Compiler, MPICH, CUDA
+# make polaris_nvhpc_kokkos -j 16
 
 SHELL = /bin/sh
 
@@ -34,30 +33,33 @@ SHELL = /bin/sh
 KOKKOS_DEVICES = Cuda,OpenMP
 KOKKOS_ARCH = Ampere80
 KOKKOS_ABSOLUTE_PATH = $(shell cd $(KOKKOS_PATH); pwd)
+KOKKOS_CUDA_OPTIONS = "enable_lambda,disable_malloc_async"
 export NVCC_WRAPPER_DEFAULT_COMPILER = nvc++
 
 CRAY_INC = $(shell CC --cray-print-opts=cflags)
 CRAY_LIB = $(shell CC --cray-print-opts=libs)
 
+#$(info CRAY_INC = ${CRAY_INC})
+#$(info CRAY_LIB = ${CRAY_LIB})
+
 CC =        $(KOKKOS_ABSOLUTE_PATH)/bin/nvcc_wrapper
-CCFLAGS =  -g -O3 -mp -DLAMMPS_MEMALIGN=64 -DLAMMPS_BIGBIG
+CCFLAGS =  -g -O3 -mp -DLAMMPS_MEMALIGN=64
 CCFLAGS += $(CRAY_INC)
 SHFLAGS =   -fPIC
 DEPFLAGS =  -M
 
 LINK =      $(CC)
-LINKFLAGS = $(CCFLAGS)
-LIB = $(CRAY_LIB)
+LIB =
+LIB += $(CRAY_LIB)
 SIZE =      size
 ```
 
 With the appropriate LAMMPS Makefile in place an executable can be compiled as in the following example, which uses the NVIDIA compilers.
 
 ```
-module load craype-accel-nvidia80
 cd lammps-<version>/src
 make yes-KOKKOS
-make polaris_kokkos_nvidia -j 16
+make polaris_nvhpc_kokkos -j 16
 ``` 
 
 [//]: # (ToDo: get all LAMMPS Makefiles into repos and update links)
@@ -88,7 +90,7 @@ NGPUS=4
 
 NTOTRANKS=$(( NNODES * NRANKS ))
 
-EXE=/home/knight/bin/lammps_polaris_kokkos_nvidia
+EXE=/home/knight/bin/lmp_polaris_nvhpc_kokkos
 EXE_ARG="-in in.reaxc.hns -k on g ${NGPUS} -sf kk -pk kokkos neigh half neigh/qeq full newton on "
 
 # OMP settings mostly to quiet Kokkos messages
