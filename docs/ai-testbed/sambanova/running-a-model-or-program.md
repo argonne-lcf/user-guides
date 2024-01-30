@@ -7,6 +7,8 @@ For example, consider running larger jobs in the evening or on weekends
 If you run your code directly using the 'python' command, it may cause conflicts
 on the system.
 
+> **Note**: If you have conda installed and a conda environment is active, you will see something like `(base)` at the beginning of the command prompt. If so, you will need to deactivate it with `conda deactivate`. Conda is not used on the SambaNova SN30 cluster.
+
 ## Introduction
 
 The SambaNova workflow includes the following main steps to run a model.
