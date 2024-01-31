@@ -104,3 +104,6 @@ When the job is launched on the compute nodes, the previous window will go away 
 
 At this point you can open datasets stored on the ALCF file systems and use ParaView normally.
 
+## Additional Information
+- [ParaView Documentation](https://docs.paraview.org/en/latest/)
+- [ParaView Community Support](https://discourse.paraview.org/)
