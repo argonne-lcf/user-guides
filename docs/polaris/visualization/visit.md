@@ -23,10 +23,18 @@ Additional information for using VisIt in client/server mode [here](https://visi
 ## Running VisIt 
   - Start up VisIt on your local machine 
   - Click File -> Open File and choose "ANL Polaris" from the "Host" dropdown
+
+  ![Open File](images/Visit-ANL-Polaris.png) 
+
+
   - You'll be prompted for your password; enter your ALCF authenticator app response
   - When you open a selected file, it will launch a job on Polaris
     - You will need to specify the "Bank" (Project) to use when VisIt submits jobs to the queue on Polaris. Specify a project in the Options box.
     - If your environment doesn't get sourced correctly with non-interactive SSH, you can set the default project to use under Options -> Host profiles
+
+  ![Open File](images/Visit-options.png)
+
+
     - **Note:** Don't change the contents of the "Machine file" field (it should be $PBS_NODEFILE)
     - **Note:** The default Launch Profile is set to serial.  We recommend leaving this setting in its default value, but using the parallel method to launch jobs on Polaris.
     - **Note:** Don't change the contents of "launchMethod". It must be `qsub/aprun` even though Polaris does not use `aprun`.
