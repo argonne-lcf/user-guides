@@ -86,12 +86,12 @@ nav:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
         - Visualization on Polaris: polaris/visualization/visualization.md
-        - ParaView: polaris/visualization/paraview.md
+        - ParaView (Launch from Client): polaris/visualization/paraview.md
+        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
         - VisIt: polaris/visualization/visit.md
         - FFmpeg: polaris/visualization/ffmpeg.md
         - ImageMagick: polaris/visualization/imagemagick.md
         - ParaView tutorial: polaris/visualization/paraview-tutorial.md
-        - Launching manually the ParaView server: polaris/visualization/paraview-manual-launch.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
