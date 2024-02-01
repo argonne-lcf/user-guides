@@ -308,6 +308,9 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
   <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
 </figure>
 
+
+**NOTE:** For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
+
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
 
