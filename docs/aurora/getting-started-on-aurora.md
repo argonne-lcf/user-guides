@@ -2,7 +2,7 @@
 
 ## Overview
 
-*** ACCESS IS CURRENTLY ENABLED FOR ESP and ECP TEAM ONLY ***
+*** ACCESS IS CURRENTLY ENABLED FOR ESP and ECP TEAMS ONLY ***
 
 The pre-requisites required for Sunspot are applicable to Aurora as well. See this [page](https://www.alcf.anl.gov/support-center/aurorasunspot/getting-started-sunspot#pre-req) for more information.
 
@@ -36,11 +36,9 @@ ECP and ESP users will be added to a CNDA Slack workspace, where CNDA discussion
 
 ## Known Issues
 
-A known issues [page](https://wiki.jlse.anl.gov/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
+See this [page](https://docs.alcf.anl.gov/aurora/known-issues/) for known issues.
 
-* Interim Filesystem: The early access filesystem is not highly performant. Intermittent hangs or pauses should be expected - waiting for IO to complete is recommended and IO completions should pass without failure. Jobs requiring significant filesystem performance must be avoided at this time.
-* Large number of Machine Check Events from the PVC, that causes nodes to panic and reboot.
-* HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking  at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
+A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access. See [page](https://docs.alcf.anl.gov/aurora/known-issues/) for other known issues.
 
 ## Allocation usage
 
