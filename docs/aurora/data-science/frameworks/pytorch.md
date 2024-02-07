@@ -316,7 +316,7 @@ export IPEX_FP32_MATH_MODE=TF32
 module use /soft/modulefiles
 module load frameworks/2023.12.15.001
 
-export NUMEXPR_MAX_THREADS=1
+export NUMEXPR_NUM_THREADS=64
 # This is to resolve an issue due to a package called "numexpr". 
 # It sets the variable 
 # 'numexpr.nthreads' to available number of threads by default, in this case 
