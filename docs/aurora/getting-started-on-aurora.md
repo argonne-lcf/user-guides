@@ -123,7 +123,7 @@ Host bitbucket.org
 
 Host github.com gitlab.com bitbucket.org
 	Port 443
-	ProxyCommand /user/bin/socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
+	ProxyCommand /usr/bin/socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
 ```
 
 If you need to use soemthing besides your default SSH key on Aurora for authentication to GitHub in conjunction with the above SSH workaround, you may set
