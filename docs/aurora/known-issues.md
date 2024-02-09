@@ -24,7 +24,12 @@ The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues p
 
 ## Submitting Jobs
 
-Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xf [JOBID]`.
+Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xf [JOBID] | grep comment`.
+
+```
+$ qstat -xf 1258860 | grep comment
+comment = Not Running: Insufficient amount of resource: demand
+```
 
 1. In the event that you find your job placed on hold, you may find the message `comment = job held, too many failed attempts to run`. This does not indicate a problem with your script, but indicates PBS made several attempts to find a set of nodes to run your job and was not able too. Users are encouraged to delete the held job and try resubmitting.
 
