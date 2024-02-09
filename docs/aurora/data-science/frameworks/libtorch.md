@@ -212,6 +212,11 @@ make
 ./inference-example ./resnet50_jit.pt
 ```
 
+## Known Issues
+
+* The LibTorch introspection API that are available for CUDA devices, such as `torch::cuda::is_available()`, are still under development for Intel Max 1550 GPU.
+
+
 
 
 
