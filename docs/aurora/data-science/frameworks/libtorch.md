@@ -11,7 +11,7 @@ During compilation, Intel optimizations will be activated automatically once the
 To use LibTorch on Aurora, load the ML frameworks module
 ```
 module use /soft/modulefiles
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 ```
 which will also load the consistent oneAPI SDK and `cmake`.
 
@@ -99,7 +99,8 @@ int main(int argc, const char* argv[]) {
 and the `CMakeLists.txt` file
 
 ```
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_policy(SET CMP0074 NEW)
 project(inference-example)
 
 find_package(Torch REQUIRED)
@@ -108,23 +109,25 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} -Wl,--no-as-needed")
 add_executable(inference-example inference-example.cpp)
 target_link_libraries(inference-example "${TORCH_LIBRARIES}" "${INTEL_EXTENSION_FOR_PYTORCH_PATH}/lib/libintel-ext-pt-gpu.so")
 
-set_property(TARGET inference-example PROPERTY CXX_STANDARD 14)
+set_property(TARGET inference-example PROPERTY CXX_STANDARD 17)
 ```
 
 to build the inference example.
 
-Finally, create a build directory with `mkdir build; cd build` and execute the `doConfig.sh` script below
+Finally, execute the `doConfig.sh` script below
 ```
 #!/bin/bash
 
 cmake \
     -DCMAKE_PREFIX_PATH=`python -c 'import torch;print(torch.utils.cmake_prefix_path)'` \
     -DINTEL_EXTENSION_FOR_PYTORCH_PATH=`python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'` \
-    ..
+    ./
 
 make
 ./inference-example ../resnet50_jit.pt
 ```
+
+
 
 
 
