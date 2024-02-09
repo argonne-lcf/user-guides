@@ -9,7 +9,7 @@ This page contains build and run instructions for Python and C/C++ examples, but
 OpenVINO does not come with the default frameworks module on Aurora, but it can be installed manually within a virtual environment as shown below
 ```
 module use /soft/modulefiles
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 python -m venv --clear /path/to/_ov_env --system-site-packages
 source /path/to/_ov_env/bin/activate
 pip install openvino==2023.2
@@ -22,7 +22,7 @@ Note that `/path/to/` can either be a user's home or project directory.
 To use OpenVINO in the future, simply load the frameworks module and source the virtual environment.
 ```
 module use /soft/modulefiles
-module load frameworks/2023.10.15.001
+module load frameworks/2023.12.15.001
 source /path/to/_ov_env/bin/activate
 ```
 
@@ -89,23 +89,29 @@ Note that `benchmark_app` takes a number of additional configuration options as 
 
 ## Inference with Python OpenVINO API
 
-Inference can be performed invoking the compiled model directly or using the OpenVINO Runtime API explicitly.
+Inference can be performed invoking the compiled model directly or using the OpenVINO Runtime API explicitly to create inference requests.
 
 An example of performing direct inference with the compiled model is shown below. 
 This leads to compact code, but it performs a single synchronous inference request. 
 Future calls to the model will reuse the same inference request created, thus will experience less overhead.
-Note that the output of the model is a numpy array.
 ```
 import openvino as ov
+import openvino.properties.hint as hints
 import torch
 
 core = ov.Core()
-compiled_model = core.compile_model("resnet50.xml",device_name='GPU.0')
+config = {hints.inference_precision: 'f32'}
+compiled_model = core.compile_model("resnet50.xml",device_name='GPU.0', config=config)
 input_data = torch.rand((1, 3, 224, 224))
 results = compiled_model(input_data)[0]
 ```
 
-The Runtime API can be called explicitly to have more control over the requests.
+Note:
+
+* The output of the direct call to the compiled model is a numpy array
+* By default, OpenVINO performs inference with FP16 precision on GPU, therefore the precision type must be specified as a hint during model compilation if FP32 or other precisions are desired.
+
+Other than the direct call to the model, the Runtime API can be used to create inference requests and control their execution.
 For this approach we refer the user to the OpenVINO [documentation page](https://docs.openvino.ai/2023.2/openvino_docs_OV_UG_Integrate_OV_with_your_application.html), which clearly outlines the steps involved. 
 
 
