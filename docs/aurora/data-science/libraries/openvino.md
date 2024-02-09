@@ -5,7 +5,7 @@ This page contains build and run instructions for Python and C/C++ examples, but
 
 
 
-## Instlling OpenVINO
+## Instlling the OpenVINO Python Runtime and CLI Tools
 OpenVINO does not come with the default frameworks module on Aurora, but it can be installed manually within a virtual environment as shown below
 ```
 module use /soft/modulefiles
@@ -117,6 +117,25 @@ For this approach we refer the user to the OpenVINO [documentation page](https:/
 
 
 ## Inference with C++ OpenVINO API
-This feature is still under testing on Aurora.
+
+Currently, the C++ OpenVINO API on Aurora is enabled through a pre-built set of libraries.
+The environment is set as follows, with `/path/to/openvino` being a placeholder for the user to specify
+```
+module use /soft/modulefiles
+module load spack-pe-gcc
+module load cmake
+
+export OV_PATH=/path/to/openvino
+cp /home/balin/OpenVINO/SLES15.3/openvino-suse.tar.gz $OV_PATH
+tar -xzvf $OV_PATH/openvino-suse.tar.gz -C $OV_PATH
+source $OV_PATH/openvino/setupvars.sh
+
+# Need to add a path to the libtbb.so.2 library needed by OpenVINO
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/datascience/llm_ds/basekit_2023_0_25537/vtune/2023.0.0/lib64
+export ONEAPI_DEVICE_SELECTOR=opencl:gpu
+export ZE_AFFINITY_MASK=0.0
+```
+
+
 
 
