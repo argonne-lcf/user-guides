@@ -3,7 +3,9 @@
 
 ## <a name="Aurora-Queues"></a>Queues
 
-There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
+There is a single routing queue in place called `EarlyAppAccess` which submits to the `LustreApps` queue. The total number of nodes available on this queue is changing often.
+
+Queue Policy: 1 RUNNING job per user.
 
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
