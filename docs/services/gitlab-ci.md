@@ -22,7 +22,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 _Example: `.gitlab-ci.yml` file_
 ```
 variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-l select=2:system=polaris -l place=scatter -l walltime=0:15:00 -l filesystems=home -q debug -A PolarisQueueName"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
 stages:
   - stage1
   - stage2
