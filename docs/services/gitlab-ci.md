@@ -19,33 +19,6 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 * When ready to run CI/CD jobs, users will add add a `.gitlab-ci.yml` file to your git repositories.
 * They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
-_Example: A `.gitlab-ci.yml` file for a Theta project_
-```
-variables:
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
-stages:
-  - stage1
-  - stage2
-  - stage3
-shell_test1:
-  stage: stage1
-  tags:
-    - ecp-theta
-    - shell
-  script:
-    - echo "Shell Job 1"
-batch_test:
-  stage: stage2
-  tags:
-    - ecp-theta
-    - batch
-  script:
-    - echo "Job 2 start"
-    - aprun -n 1 id
-    - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
-    - echo "Job end"
-```
 
 ## Glossary
 * **Group** - A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When a ALCF Project is allocated resources on the GitLab-CI environment we will create a GitLab `Group` that will map to your ALCF Project allocation.
@@ -187,8 +160,6 @@ _Cluster Tag(s)_
 
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
-| Theta     | ecp-theta | This tag will send jobs to the Theta HPC runners    |
-| ThetaGPU  | thetagpu  | This tag will send jobs to the ThetaGPU HPC runners |
 | Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
@@ -236,26 +207,7 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Theta     | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS    | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
-| ThetaGPU  | Cobalt    | ANL_THETAGPU_SCHEDULER_PARAMETERS | [ThetaGPU Job Queue and Scheduling](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md) |
 | Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
-
-_Example: Running a batch job on Theta HPC_
-```
-variables:
- ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q myQueue --attrs filesystems=home"
-
-batch_test:
-  tags:
-    - ecp-theta
-    - batch
-  script:
-    - echo "Job start"
-    - aprun -n 1 id
-    - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
-    - echo "Job end"
-```
 
 #### Stages
 Jobs can be organized into `stages`. Jobs in the next stage will not start until all dependencies in the previous stage have completed. This is often used if there building and testing steps required before code may be ran or packaged. These stages are assembled in a `Pipeline`, a directed graph of `stages`. By default GitLab includes the following stages executed in the below order :
@@ -277,39 +229,6 @@ stages:
   - stage3
 ```
 
-_Example: Theta pipeline with custom stages_
-```
-variables:
-  ANL_THETA_PROJECT_SERVICE_USER: "ecpcisvc"
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q build --attrs filesystems=home"
-
-stages:
-  - stage1
-  - stage2
-
-test1:
-  stage: stage1
-  tags:
-    - ecp-theta
-    - shell
-  script:
-    - export
-    - id
-    - hostname
-    - echo "Running on theta with setuid shell runner" 
-    - echo test > test.txt
-test2:
-  stage: stage2
-  tags:
-    - ecp-theta
-    - batch
-  script:
-    - echo "Job 2 start"
-    - aprun -n 1 id
-    - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
-    - echo "Job 2 end"
-```
 
 #### Rules
   GitLab allows for CI/CD jobs to be launched only if certain conditions are met. GitLab sets a series of variables in addition to any the user explicitly sets when a job launches. A job can check these variables and choose to run or not based on the results. This is often used to ensure certain jobs only run on commits, merge requests, and/or merges. By default if any rule matches it will run. You can override this behavior with commands like `when: never` when a conditional matches.
@@ -337,7 +256,7 @@ test1:
     - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 1"
@@ -361,7 +280,7 @@ test1:
   extends: .MR_rules
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 1"
@@ -369,7 +288,7 @@ test2:
   extends: .MR_rules
   stage: stage2
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 2"
