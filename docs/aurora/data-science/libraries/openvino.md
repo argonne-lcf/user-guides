@@ -248,7 +248,10 @@ make
 ./inference_openvino_sycl
 ```
 
+Note:
 
+* OpenVINO does not currently support the level zero backend. OpenCL must be used istead, which can be set on Aurora with `export ONEAPI_DEVICE_SELECTOR=opencl:gpu`
+* The [Remote Tensor API](https://docs.openvino.ai/2023.3/openvino_docs_OV_UG_supported_plugins_GPU_RemoteTensor_API.html) must be used to share the SYCL OpenCL context with OpenVINO
 
 
 
