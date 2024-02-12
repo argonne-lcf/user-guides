@@ -22,7 +22,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 _Example: `.gitlab-ci.yml` file_
 ```
 variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q QueueName --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
   - stage1
   - stage2
@@ -239,7 +239,7 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 _Example: Running a batch job_
 ```
 variables:
- ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q myQueue --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 batch_test:
   tags:
     - polaris
@@ -275,7 +275,7 @@ stages:
 _Example: Pipeline with custom stages_
 ```
 variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q build --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
   - stage1
   - stage2
