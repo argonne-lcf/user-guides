@@ -22,7 +22,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 _Example: `.gitlab-ci.yml` file_
 ```
 variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q QueueName --attrs filesystems=home"
 stages:
   - stage1
   - stage2
@@ -248,7 +248,7 @@ batch_test:
     - echo "Job start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running with setuid batch runner"
     - echo "Job end"
 ```
 
@@ -272,10 +272,10 @@ stages:
   - stage3
 ```
 
-_Example: Theta pipeline with custom stages_
+_Example: Pipeline with custom stages_
 ```
 variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q build --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q build --attrs filesystems=home"
 stages:
   - stage1
   - stage2
@@ -293,7 +293,7 @@ test1:
 test2:
   stage: stage2
   tags:
-    - ecp-theta
+    - polaris
     - batch
   script:
     - echo "Job 2 start"
