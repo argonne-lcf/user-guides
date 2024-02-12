@@ -136,6 +136,119 @@ export ONEAPI_DEVICE_SELECTOR=opencl:gpu
 export ZE_AFFINITY_MASK=0.0
 ```
 
+An example performing inference with the C++ OpenVINO API is shown below.
+This simple program loads the ResNet50 model in OpenVINO IR format to the GPU (see instructions above on how to download and convert the model), creates an input vector and offloads it to the GPU with SYCL, and finally executes a single synchronous inference request on the GPU.
+
+```
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include "sycl/sycl.hpp"
+#include "openvino/openvino.hpp"
+#include "openvino/runtime/intel_gpu/ocl/ocl.hpp"
+
+const int N_BATCH = 1;
+const int N_CHANNELS = 3;
+const int N_PIXELS = 224;
+const int INPUTS_SIZE = N_BATCH*N_CHANNELS*N_PIXELS*N_PIXELS;
+
+int main(int argc, const char* argv[])
+{
+  // Print some information about OpenVINO and start the runtime
+  std::cout << "Running with " << ov::get_openvino_version() << "\n\n";
+  ov::Core core;
+  std::vector<std::string> availableDevices = core.get_available_devices();
+  char device_str[] = "GPU";
+  bool found_device = false;
+  for (auto&& device : availableDevices) {
+    if (strcmp(device.c_str(),device_str)==0) {
+      std::cout << "Found device " << device << " \n\n";
+      found_device = true;
+    }
+  }
+  if (not found_device) {
+    std::cout << "Input device not found \n";
+    std::cout << "Available devices are: \n";
+    for (auto&& device : availableDevices) {
+      std::cout << device << std::endl;
+    }
+    return -1;
+  }
+
+  // Load the model
+  std::shared_ptr<ov::Model> model = core.read_model("./resnet50.xml");
+  std::cout << "Loaded model \n\n";
+
+  // Create the input data on the host
+  std::vector<float> inputs(INPUTS_SIZE);
+  srand(12345);
+  for (int i=0; i<INPUTS_SIZE; i++) {
+    inputs[i] = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+  }
+  std::cout << "Generated input data on the host \n\n";
+
+  // Move input data to the device with SYCL
+  sycl::queue Q(sycl::gpu_selector_v, sycl::property::queue::in_order{}); // oneDNN needs in order queues
+  std::cout << "SYCL running on "
+            << Q.get_device().get_info<sycl::info::device::name>()
+            << "\n\n";
+  float *d_inputs = sycl::malloc_device<float>(INPUTS_SIZE, Q);
+  Q.memcpy((void *) d_inputs, (void *) inputs.data(), INPUTS_SIZE*sizeof(float));
+  Q.wait();
+
+  // Share the SYCL queue and context with the GPU plugin and compile the model
+  auto queue = sycl::get_native<sycl::backend::opencl>(Q);
+  auto remote_context = ov::intel_gpu::ocl::ClContext(core, queue);
+  auto compiled_model = core.compile_model(model, remote_context,
+                                           ov::hint::inference_precision("f32"));
+
+  // Convert input array to OpenVINO Tensor
+  ov::element::Type input_type = ov::element::f32;
+  ov::Shape input_shape = {N_BATCH, N_CHANNELS, N_PIXELS, N_PIXELS};
+  //ov::Tensor input_tensor = ov::Tensor(input_type, input_shape, d_inputs);
+  auto input_tensor = remote_context.create_tensor(input_type, input_shape, (void *) d_inputs);
+
+  // Run inference
+  ov::InferRequest infer_request = compiled_model.create_infer_request();
+  infer_request.set_input_tensor(input_tensor);
+  infer_request.infer();
+  std::cout << "Performed inference \n\n";
+
+  // Output the predicted Torch tensor
+  ov::Tensor output_tensor = infer_request.get_output_tensor();
+  std::cout << "Size of output tensor " << output_tensor.get_shape() << std::endl;
+  std::cout << "Predicted tensor is : \n";
+  for (int i=0; i<10; i++) {
+    std::cout << output_tensor.data<float>()[i] << "\n";
+  }
+  std::cout << "\n";
+
+  return 0;
+}
+```
+
+To build the example program, use the `CMakeLists.txt` file below
+```
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+project(inference_openvino_sycl_example)
+
+find_package(OpenVINO REQUIRED COMPONENTS Runtime)
+set(ov_link_libraries openvino::runtime)
+
+add_executable(inference_openvino_sycl inference_openvino_sycl.cpp)
+target_link_libraries(inference_openvino_sycl ${ov_link_libraries} -lOpenCL)
+
+set_property(TARGET inference_openvino_sycl PROPERTY CXX_STANDARD 17)
+```
+
+and execute
+```
+cmake -DCMAKE_CXX_FLAGS="-std=c++17 -fsycl" ./
+make
+./inference_openvino_sycl
+```
+
+
 
 
 
