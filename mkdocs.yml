@@ -151,7 +151,6 @@ nav:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
         - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
-        - oneAPI Compilers: aurora/compiling-and-linking/oneapi-compilers-aurora.md
         - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
         - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
         - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
@@ -183,14 +182,11 @@ nav:
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
         - Libraries:
-          - oneDNN: aurora/data-science/libraries/onednn.md
           - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
-        - Compatibility Tool: aurora/programming-models/compatibility-tool.md
-        - Heterogenous Models: aurora/programming-models/heterogeneous-models.md
+        - Porthing Paths to Aurora: aurora/programming-models/porting-paths-to-Aurora.md
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
-        - oneAPI: aurora/programming-models/one-api.md
         - openCL: aurora/programming-models/opencl-aurora.md
         - OpenMP: aurora/programming-models/openmp-aurora.md
         - RAJA: aurora/programming-models/raja-aurora.md
