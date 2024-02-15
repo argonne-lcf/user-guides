@@ -5,7 +5,10 @@
 
  GitLab-CI is meant to provide CI/CD services for projects using GitLab-CI to store your git repositories and executing code on our HPC clusters. ALCF does not allow users to join your own private runners to our existing GitLab CI/CD environment and provides dedicated runners for our supported systems.
 
-Additional information, technical and user documentation, and community support can be found on the [GitLab's Runner website](https://docs.gitlab.com/runner/).
+Additional information, technical and user documentation, and community support can be found on [GitLab's Runner website](https://docs.gitlab.com/runner/).
+
+Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ee/ci/yaml) for the full list of keywords supported by GitLab CI.
+
 
 ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
@@ -16,6 +19,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 * ALCF Support will reply back to the user and inform them that the project is created.
 * User(s) will need to login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure their initial GitLab profile. Users will add an SSH key so they can pull/push code to the gitlab server.
 * User will then need to create a `GitLab Project` in your assigned `GitLab Group/SubGroup`.
+* CI/CD needs to be enabled for the GitLab Project.
 * When ready to run CI/CD jobs, users will add add a `.gitlab-ci.yml` file to your git repositories.
 * They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
@@ -125,6 +129,7 @@ To create a new `GitLab Project`:
   <figcaption>GitLab Create New Project screenshot</figcaption>
 </figure>
 * Click `Create project` button near the bottom
+* After creating the project, navigate to "Settings" > "General", Expand the "Visibility, project features, permissions" section and enable the "CI/CD" toggle.
 
 ### GitLab Groups/SubGroups (Folders)
   GitLab organizes `GitLab Projects` into "folders" called `Groups` or `SubGroups`. When an ALCF Project is granted access to GitLab-CI a GitLab `Group` will be created with access for all members of that ALCF Project. Users will then be able to create arbitrary GitLab `Projects`. 
@@ -199,6 +204,8 @@ _Job Type Tag(s)_
 
 #### Variables
   Variables can be stored two ways, inline in the `.gitlab-ci.yml` file or as a setting in the GitLab `Group` or `Project` itself. Variables are exported as environment variables by gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
+
+GitLab also has a list of [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) available in every GitLab CI/CD pipeline.
 
 To set a variable directly in the `.gitlab-ci.yml` file, declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line. `variables:` can be declared globally or in individual jobs.
 
@@ -334,6 +341,10 @@ test1:
   script:
     - echo "Run test 1"
 ```
+
+#### Job Scheduling
+  GitLab provides pipeline scheduling functionality to support recurring pipelines, specified using a Cron-like syntax. Pipeline scheduling is available in the project sidebar under "Build" > "Pipeline schedules". For more details, see the [upstream documentation](https://gitlab-ci.alcf.anl.gov/help/ci/pipelines/schedules).
+
 
 #### Template Jobs
   GitLab allows you to create `template jobs`, these are pieces of job specifications which can be included in jobs. Each `template job` name must begin with a period (.) and follow the same syntax as normal jobs. To instantiate a job based on the `template job` use the keyword `extends`. If your specific job declares a key/value already in the template, the specific job will overwrite it.
