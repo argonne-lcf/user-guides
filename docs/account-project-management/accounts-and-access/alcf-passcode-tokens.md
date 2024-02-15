@@ -6,16 +6,11 @@ Please note: An account can be associated with a single token only (Mobile or Ph
 The SafeNet MobilePass+ Mobile Token allows access to ALCF systems. This security mobile token uses one-time passwords combined with your PIN for controlled access to the login systems. The mobile token utilizes an app that is keyed to your user account and for which you are responsible on your Android, iPhone or Windows mobile device. Please safeguard your phone as you would your credit cards or house keys: Do not store username, PIN, or other account-related records with the token. Sharing of mobile tokens is strictly forbidden. A mobile token can be associated with a single device only.
 
 ### Step 1. Download the SafeNet MobilePass+ app for your device:
-The SafeNet MobilePASS+ app turns your mobile phone into a two-factor authentication device, removing the need to carry an additional hardware token. As a SafeNet MobilePASS+ user, you can generate passcodes on your mobile device and use those passcodes to authenticate on ALCF computing resources. See supported [OS and platforms](https://cpl.thalesgroup.com/access-management/authenticators/software-authentication/mobilepass-plus-push-authentication) for more information.
+The SafeNet MobilePASS+ app turns your device into a two-factor authentication device, removing the need to carry an additional hardware token. As a SafeNet MobilePASS+ user, you can generate passcodes on your mobile device and use those passcodes to authenticate on ALCF computing resources. See supported [OS and platforms](https://cpl.thalesgroup.com/access-management/authenticators/software-authentication/mobilepass-plus-push-authentication) for more information.
 
-**SafeNet MobilePass+ for Android** can be found here: [https://play.google.com/store/apps/details?id=com.gemalto.mpassplus](https://play.google.com/store/apps/details?id=com.gemalto.mpassplus)
-
-**SafeNet MobilePass+ for iPhone** can be found here: [https://itunes.apple.com/us/app/safenet-mobilepass/id1056481326?mt=8](https://itunes.apple.com/us/app/safenet-mobilepass/id1056481326?mt=8)
-
-**SafeNet MobilePass+ for Windows** can be found here: [https://www.microsoft.com/en-us/p/safenet mobilepass/9nblggh10pdq?activetab=pivot%3Aoverviewtab](https://www.microsoft.com/en-us/p/safenet%20mobilepass/9nblggh10pdq?activetab=pivot%3Aoverviewtab)
 
 ### Step 2. Enroll your MobilePass+ mobile token:
-After you’ve been provisioned a mobile token, you will receive a notification email with the subject line "ALCF Mobile Token Self-Enrollment" which you must access from your mobile phone.
+After you’ve been provisioned a mobile token, you will receive a notification email with the subject line "ALCF Mobile Token Self-Enrollment" which you must access from the device on  which you wish to install the token.
 
 **Auto-Enrollment** (to enroll SafeNet MobilePass+ token automatically):
 
@@ -40,7 +35,7 @@ After you’ve been provisioned a mobile token, you will receive a notification 
 
 ## Logging in to an ALCF System using a Mobile Token
 
-1. Open the MobilePASS+ (MobilePASS for Windows) app on your device. Then initiate an SSH session and type the following:
+1. Open the MobilePASS+ app on your device. Then initiate an SSH session and type the following:
 
 ```
 ssh <ALCF username>@<system_name>.alcf.anl.gov
@@ -48,7 +43,7 @@ ssh <ALCF username>@<system_name>.alcf.anl.gov
 
  2. When prompted for a password, click the SafeNet MobilePASS+ app on your phone. Click on the token name listed within the app, and enter your PIN.
 
- 3. The app will display your passcode immediately.  Enter the passcode as the login password for the system within the SSH session. Please **Note:** You do NOT have to enter the PIN on the SSH screen when logging into a resource. This only needs to be done to access the passcode within the SafeNet MobilePASS+ (MobilePASS for Windows) app.
+ 3. The app will display your passcode immediately.  Enter the passcode as the login password for the system within the SSH session. Please **Note:** You do NOT have to enter the PIN on the SSH screen when logging into a resource. This only needs to be done to access the passcode within the SafeNet MobilePASS+ app.
 
  4. Each generated passcode is valid on the SafeNet MobilePass+ app window until your mobile device screen times out.
 
@@ -59,19 +54,19 @@ ssh <ALCF username>@<system_name>.alcf.anl.gov
 
 **Case 3:** PIN Change: While logged in to the mobile token, click on token settings then tap change PIN. Enter the current PIN followed by the new PIN and confirm.
 
-**Case 4:** Re-Sync: If you are unable to log in to a resource after entering the correct PIN and passcode your token may be out of sync with the server. Please email ALCF Service Desk at support at alcf.anl.gov for assistance.
+**Case 4:** Re-Sync: If you are unable to log in to a resource after entering the correct PIN and passcode your token may be out of sync with the server. Please email ALCF Service Desk at accounts at alcf.anl.gov for assistance.
 
-**Case 5:** New Mobile Device: If you have a new mobile device, please email the ALCF Service Desk at support at alcf.anl.gov to have a new mobile token provisioned. 
+**Case 5:** New Mobile Device: If you have a new mobile device, please email the ALCF Service Desk at accounts at alcf.anl.gov to have a new mobile token provisioned. 
 
 ## Physical Token
 The physical token allows access to the ALCF systems. This security token uses one-time passwords combined with your PIN for controlled access to the login systems. The physical token is a tracked asset for which you are responsible and is keyed to your use. Please safeguard your token as you would your credit cards or house keys: Do not store username, PIN, or other account-related records with the token. Sharing of tokens is strictly forbidden. Please do not mark on the token or alter it in any way.
 
 ## Enabling Your ALCF Physical Token
-Upon receipt of CRYPTOCard token, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov) must verify identity and activate token. If this step is not performed the CRYPTOCard token will not be able to log on to the ALCF resource.
+Upon receipt of CRYPTOCard token, contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to verify your identity and activate the token. If this step is not performed the CRYPTOCard token will not be able to log on to the ALCF resource.
 
-**ALCF Support Desk Info**
+**ALCF Accounts Service Desk Info**
 **Hours:** Monday-Friday 9 a.m. - 5 p.m. (Central time);
-**Email:** [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
+**Email:** [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov)
 
 ## Logging in to an ALCF System using a Physical Token
 When the physical token is activated, an initial PIN will be provided. This will be a four-digit number that will prepend to the one-time password string generated by the token.
@@ -147,7 +142,7 @@ If you are unsuccessful, you will be presented with another challenge string.
 At this point, you may need to perform the re-sync instructions again.
 ```
 
-If there are still problems after completing the re-synchronization procedures, please email us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov) so we can run a test on the physical token to determine if it is defective. 
+If there are still problems after completing the re-synchronization procedures, please email us at [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) so we can run a test on the physical token to determine if it is defective. 
 
 If it is found to be defective we will promptly replace it. Physical tokens are the property of Argonne National Laboratory.
 
