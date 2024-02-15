@@ -19,10 +19,10 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 * When ready to run CI/CD jobs, users will add add a `.gitlab-ci.yml` file to your git repositories.
 * They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
-_Example: A `.gitlab-ci.yml` file for a Theta project_
+_Example: `.gitlab-ci.yml` file_
 ```
 variables:
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
   - stage1
   - stage2
@@ -30,20 +30,20 @@ stages:
 shell_test1:
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Shell Job 1"
 batch_test:
   stage: stage2
   tags:
-    - ecp-theta
+    - polaris
     - batch
   script:
     - echo "Job 2 start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running on polaris with setuid batch runner"
     - echo "Job end"
 ```
 
@@ -187,8 +187,6 @@ _Cluster Tag(s)_
 
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
-| Theta     | ecp-theta | This tag will send jobs to the Theta HPC runners    |
-| ThetaGPU  | thetagpu  | This tag will send jobs to the ThetaGPU HPC runners |
 | Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
@@ -236,24 +234,21 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Theta     | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS    | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
-| ThetaGPU  | Cobalt    | ANL_THETAGPU_SCHEDULER_PARAMETERS | [ThetaGPU Job Queue and Scheduling](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md) |
 | Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
 
-_Example: Running a batch job on Theta HPC_
+_Example: Running a batch job_
 ```
 variables:
- ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q myQueue --attrs filesystems=home"
-
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 batch_test:
   tags:
-    - ecp-theta
+    - polaris
     - batch
   script:
     - echo "Job start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running with setuid batch runner"
     - echo "Job end"
 ```
 
@@ -277,37 +272,34 @@ stages:
   - stage3
 ```
 
-_Example: Theta pipeline with custom stages_
+_Example: Pipeline with custom stages_
 ```
 variables:
-  ANL_THETA_PROJECT_SERVICE_USER: "ecpcisvc"
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q build --attrs filesystems=home"
-
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
   - stage1
   - stage2
-
 test1:
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - export
     - id
     - hostname
-    - echo "Running on theta with setuid shell runner" 
+    - echo "Running with setuid shell runner" 
     - echo test > test.txt
 test2:
   stage: stage2
   tags:
-    - ecp-theta
+    - polaris
     - batch
   script:
     - echo "Job 2 start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running with setuid batch runner"
     - echo "Job 2 end"
 ```
 
@@ -337,7 +329,7 @@ test1:
     - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 1"
@@ -361,7 +353,7 @@ test1:
   extends: .MR_rules
   stage: stage1
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 1"
@@ -369,7 +361,7 @@ test2:
   extends: .MR_rules
   stage: stage2
   tags:
-    - ecp-theta
+    - polaris
     - shell
   script:
     - echo "Run test 2"
