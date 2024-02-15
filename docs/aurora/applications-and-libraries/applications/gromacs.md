@@ -1,3 +1,0 @@
-# GROMACS
-
-Placeholder
