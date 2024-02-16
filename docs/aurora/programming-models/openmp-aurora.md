@@ -31,7 +31,7 @@ However, additional versions of oneAPI with newer compiler versions can be found
 ------------------------------------------------------------------------- /opt/aurora/23.073.0/modulefiles -------------------------------------------------------------------------\
    oneapi/eng-compiler/2022.12.30.003 (L)    oneapi/release/2022.12.30.001
 ```
-The additional oneAPI modules can be loaded with 'module load oneapi/eng-compiler/2023.10.15.002' for example.
+The additional oneAPI modules can be loaded with `module load oneapi/eng-compiler/2023.10.15.002`, for example.
 
 ## Building on Aurora
 
