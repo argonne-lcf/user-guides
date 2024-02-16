@@ -39,9 +39,9 @@ The following table shows the compiler and flags
 
 |language | MPI wrapper compiler (underlying compiler) | flag to turn on OpenMP support and target CPU threads | additional flags to target GPU devices
 | --- | --- | --- | --- |
-| Fortran | mpifort (ifx) | -fiopenmp | -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"
-| C | mpicc (icx) | -fiopenmp | -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"
-| C++ | mpicxx (icpx) | -fiopenmp | -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"
+| Fortran | mpifort (ifx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"`
+| C | mpicc (icx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"`
+| C++ | mpicxx (icpx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"`
 
 ## Running on Aurora
 
