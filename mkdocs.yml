@@ -183,7 +183,6 @@ nav:
         - Libraries:
           - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
-        - Porthing Paths to Aurora: aurora/programming-models/porting-paths-to-Aurora.md
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
         - openCL: aurora/programming-models/opencl-aurora.md
