@@ -31,7 +31,6 @@ nav:
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
-      - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
   - Running Jobs with PBS at the ALCF:
       - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
