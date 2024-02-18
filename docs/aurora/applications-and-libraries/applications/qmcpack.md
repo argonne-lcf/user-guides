@@ -1,3 +1,0 @@
-# QMCPack
-
-Placeholder
