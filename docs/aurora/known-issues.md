@@ -26,31 +26,29 @@ The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues p
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.
 
-* User has placed the job on hold; user can `qrls` the job when ready.
-
 ```
 comment = Job held by [USER] on Tue Feb 6 05:20:00 2024 and terminated
 ```
+The user has placed the job on hold; user can `qrls` the job when ready for it to be queued again.
 
-* User has submitted to a queue that is not currently running; user should `qmove` to appropriate queue.
 
 ```
 comment = Not Running: Queue not started. and terminated
 ```
 
-* Job tried and failed to start; this does not indicate an issue with contents of batch script and user can `qrls` the job to try again.
+User has submitted to a queue that is not currently running; user should `qmove` the job to an appropriate queue.
 
 ```
 comment = job held, too many failed attempts to run
 ```
 
-* Insufficient number of nodes are online and free for job to start
+The job tried and failed to start. In this scenario, the user should find that their job was placed on hold. This does not indicate a problem the users' job script, but indicates PBS made several attempts to find a set of nodes to run the job and was not able too. Users can `qdel` the job and resubmit or `qrls` the job to try running it again.
 
 ```
 comment = Not Running: Node is in an ineligible state: down and terminated
 ```
 
-In the event that you find your job placed on hold, you may find the message `comment = job held, too many failed attempts to run`. This does not indicate a problem with your script, but indicates PBS made several attempts to find a set of nodes to run your job and was not able too. Users are encouraged to delete the held job and try resubmitting.
+There are an insufficient number of nodes are online and free for the job to start
 
 In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
 
