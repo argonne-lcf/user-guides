@@ -1,1 +1,0 @@
-Intel oneAPI Compilers Aurora

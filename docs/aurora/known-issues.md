@@ -24,13 +24,36 @@ The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues p
 
 ## Submitting Jobs
 
-Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xf [JOBID]`.
+Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.
 
-1. In the event that you find your job placed on hold, you may find the message `comment = job held, too many failed attempts to run`. This does not indicate a problem with your script, but indicates PBS made several attempts to find a set of nodes to run your job and was not able too. Users are encouraged to delete the held job and try resubmitting.
+```
+comment = Job held by [USER] on Tue Feb 6 05:20:00 2024 and terminated
+```
+The user has placed the job on hold; user can `qrls` the job when ready for it to be queued again.
 
-2. In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
+
+```
+comment = Not Running: Queue not started. and terminated
+```
+
+User has submitted to a queue that is not currently running; user should `qmove` the job to an appropriate queue.
+
+```
+comment = job held, too many failed attempts to run
+```
+
+The job tried and failed to start. In this scenario, the user should find that their job was placed on hold. This does not indicate a problem the users' job script, but indicates PBS made several attempts to find a set of nodes to run the job and was not able too. Users can `qdel` the job and resubmit or `qrls` the job to try running it again.
+
+```
+comment = Not Running: Node is in an ineligible state: down and terminated
+```
+
+There are an insufficient number of nodes are online and free for the job to start
+
+In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
 
 To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
+
 ## Other issues
 
 * Interim Filesystem: The early access filesystem is not highly performant. Intermittent hangs or pauses should be expected - waiting for IO to complete is recommended and IO completions should pass without failure. Jobs requiring significant filesystem performance must be avoided at this time.
