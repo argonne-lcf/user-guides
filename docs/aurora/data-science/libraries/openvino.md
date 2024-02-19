@@ -108,7 +108,7 @@ results = compiled_model(input_data)[0]
 
 Note:
 
-* The output of the direct call to the compiled model is a numpy array
+* The output of the direct call to the compiled model is a NumPy array
 * By default, OpenVINO performs inference with FP16 precision on GPU, therefore the precision type must be specified as a hint during model compilation if FP32 or other precisions are desired.
 
 Other than the direct call to the model, the Runtime API can be used to create inference requests and control their execution.
