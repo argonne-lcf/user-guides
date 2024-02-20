@@ -8,7 +8,7 @@ Currently, scp and SFTP are the only ways to transfer data to/from Aurora.
 
 As an expedient for initiating ssh sessions to Aurora login nodes via the bastion indirect nodes, and to enable scp from remote (non ALCF) hosts to Aurora login nodes, follow these steps:
 
-1. Create SSH keys on the laptop/desktop/remote machine. See "Creating SSH Keys" section on this page.
+1. Create SSH keys on the laptop/desktop/remote machine. See "Creating SSH Keys" section on [this page](https://help.cels.anl.gov/docs/linux/ssh/):
 2. Add the lines listed below to your ~/.ssh/config file on the remote host. That is, you should do this on your laptop/desktop, from which you are initiating ssh login sessions to Aurora via bastion, and on other non-ALCF host systems from which you want to copy files to Aurora login nodes using scp.
 
 ```
