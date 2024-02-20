@@ -1,6 +1,6 @@
 # Containers on Polaris
 
-### *Containerized workloads are currently unavailable on Polaris due to a configuration issue.*
+### *Containerized workloads are currently unavailable on Polaris.*
 
 Since Polaris is using NVIDIA A100 GPUs, there can be portability advantages with other NVIDIA-based systems if your workloads use containers.  In this document, we'll outline some information about containers on Polaris including how to build custom containers, how to run containers at scale, and common gotchas. 
 
