@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Compiling and Linking on Cooley
 ## Compilers and MPI
 GNU compilers, version 4.4.7, are installed and are available in your default environment. To use version 4.8.1 of the GNU compilers instead, add ```+gcc-4.8.1 to .soft.cooley``` in your home directory.

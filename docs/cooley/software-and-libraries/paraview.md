@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Paraview on Cooley
 The recommended way of running ParaView on Cooley is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server (pvserver) on the Cooley visualization nodes. There are two ways to accomplish this, detailed below. In both cases, the ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Cooley.
 

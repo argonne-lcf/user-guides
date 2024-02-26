@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Library and Compiler Tracking on Theta
 
 ## Overview

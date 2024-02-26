@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # DeepSpeed
 
 The base `#!bash conda` environment on ThetaGPU comes with Microsoft's

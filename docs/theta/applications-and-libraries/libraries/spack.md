@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Spack
 
 Spack is a package manager developed for HPC which supports combinatorial versioning, i.e. it allows for multiple versions of packages to be built. These builds can vary with canonical version number, build options, compilers, and processor architectures. Each of a package’s dependencies can be similarly versioned, and a built version is fully specified by a concretized spack spec, and referenced by a hash generated from the specified options.

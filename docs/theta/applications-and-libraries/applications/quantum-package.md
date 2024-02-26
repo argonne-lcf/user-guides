@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Quantum Package
 ## What Is Quantum Package?
 Quantum Package (QP) is a Fortran/MPI scalable parallel implementation of selected Configuration Interaction (sCI), approaching the full CI answer when fully converged,. Quantum Package is currently interfaced to Pyscf and QMCPACK and allows the generation of high accuracy trial wavefunctions for small to medium size molecules and solids.  A more complete description of the methods implemented in the code can be found on the QP website [https://quantumpackage.github.io/qp](https://quantumpackage.github.io/qp2/) and in the publication [https://doi.org/10.26434/chemrxiv.7749485.v2](https://doi.org/10.26434/chemrxiv.7749485.v2). While the code is highly scalable, the method underneath sCI scales O(N!) with number of orbitals N. Therefore it’s usage applies to systems smaller than 800 orbitals.

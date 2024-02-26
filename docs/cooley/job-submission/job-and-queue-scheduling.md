@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Queueing and Job Submission on Cooley
 ## Overview
 Like our other computing resources, Cooley uses the Cobalt job scheduler. 

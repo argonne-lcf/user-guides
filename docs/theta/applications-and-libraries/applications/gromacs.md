@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Gromacs on Theta
 
 ## What is Gromacs?

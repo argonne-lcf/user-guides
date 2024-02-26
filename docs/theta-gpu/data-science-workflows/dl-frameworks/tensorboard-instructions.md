@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # TensorBoard Instructions
 If you are able to install TensorBoard on your local machine, it is often easiest to copy the requisite files from ALCF file systems (via `sftp`, `scp`, Globus, etc.) to your local machine and run a TensorBoard there. 
 

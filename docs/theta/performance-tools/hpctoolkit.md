@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # HPCToolkit on Theta
 ## Introduction
 HPCToolkit is an open-source suite of tools for profile-based performance analysis of applications. Below is a brief description on how to use the HPCToolkit on the ALCF XC40 system. For more detailed information on using HPCToolkit and its capabilities, see the [HPCToolkit website](http://hpctoolkit.org/).

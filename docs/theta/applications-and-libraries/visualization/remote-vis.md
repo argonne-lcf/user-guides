@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Remote Visualization on Theta Using VNC
 
 For visualization and analysis applications that do not support a client/server mode, VNC can be used for remotely accessing such applications running on Theta.

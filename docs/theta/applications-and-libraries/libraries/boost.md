@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Boost on Theta
 
 [Boost](http://www.boost.org/), a collection of modern, peer-reviewed C++ libraries, is installed on Theta and can be accessed by loading the module corresponding to the appropriate C++ compiler:

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # MPI on Theta
 
 ## What is MPI?
