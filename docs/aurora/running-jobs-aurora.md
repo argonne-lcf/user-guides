@@ -46,6 +46,18 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
+## <a name="Aurora-MPICH"></a>Aurora MPICH
+
+The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
+
+There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in
+
+```
+$MPI_ROOT/share/doc/mpich/README.envvar
+```
+
+This includes, for example, settings to select different optional sub-algorithms used in MPI collective operations.
+
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
