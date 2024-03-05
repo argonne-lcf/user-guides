@@ -35,7 +35,7 @@ nav:
   - Running Jobs with PBS at the ALCF:
       - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
-      - Machine Reservations: running-jobs/machine-reservations-polaris.md
+      - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
