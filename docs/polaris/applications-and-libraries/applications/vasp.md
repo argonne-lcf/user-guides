@@ -142,6 +142,9 @@ An example of a submission script could be found here `/soft/applications/vasp/s
 module load PrgEnv-nvhpc
 module load cray-libsci
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/nvidia/hpc_sdk/Linux_x86_64/22.11/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/libraries/aocl/3.2.0/lib
+
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=2
