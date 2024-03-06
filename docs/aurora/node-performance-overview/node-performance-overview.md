@@ -19,8 +19,8 @@ This page's goal is to give you a high-level overview of some key performance nu
 |            | One Tile   | Full Node  |
 | -----------|------------|------------|
 | Douple precission Peak    | 17 TFlop/S  | 203 TFlop/S| 
-| Memory Bandwidth (triad)  | 1TB/S | 12TB/s | 
-| PCIe Bidirectional Bandwitch  | 76GB/s | 356GB/s |
+| Memory Bandwidth (triad)  | 1TB/S | 12 TB/s | 
+| PCIe Bidirectional Bandwitch  | 76 GB/s | 356 GB/s |
 
 ### How to run and compile
 
