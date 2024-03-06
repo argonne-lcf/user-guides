@@ -22,6 +22,16 @@ export FI_CXI_CQ_FILL_PERCENT=20
 
 The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues persist. This is directly impacted by the number of unexpected messages sent and so may need to be increased as the scale of the job increases. 
 
+2. `double free detected` output while running with the mpich/52.2/* modules
+
+A core dump might indicate communicator cleanup e.g. after calling MPI_Comm_split_type. A workaround is to unset a few config-file related variables: 
+```
+unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_CH4_POSIX_COLL_SELECTION_TUNING_JSON_FILE
+```
+Additional information is here: https://github.com/pmodels/mpich/pull/6730 
+
 ## Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.
