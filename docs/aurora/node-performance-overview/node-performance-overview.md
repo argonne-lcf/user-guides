@@ -18,7 +18,7 @@ This page's goal is to give you a high-level overview of some key performance nu
 
 |            | One Tile   | Full Node  |
 | -----------|------------|------------|
-| DP-FLOPS   | 17 TFlops  | 203 TFlops| 
+| Douple precission Peak    | 17 TFlop/S  | 203 TFlop/S| 
 | Memory Bandwidth (triad)  | 1TB/S | 12TB/s | 
 | PCIe Bidirectional Bandwitch  | 76GB/s | 356GB/s |
 
@@ -37,12 +37,12 @@ $ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact
 
 |          | One Tile   | Full Node   |
 | ---------|------------|-------------|
-| DGEMM    | 14 TFlops  |  173 TFlops |
-| SGEMM    | 21 TFlops  |  257 TFlops |
-| HGEMM    | 224 TFlops | 2094 TFlops | 
-| BF16GEMM | 238 TFlops | 2439 TFlops |
-| TF32GEMM | 98 TFlops  | 1204 TFlops |
-| I8GEMM   | 520 TFlops | 4966 TFfOPS |
+| DGEMM    | 14 TFlops  |  173 TFlop/S |
+| SGEMM    | 21 TFlops  |  257 TFlop/S |
+| HGEMM    | 224 TFlops | 2094 TFlop/S | 
+| BF16GEMM | 238 TFlops | 2439 TFlop/S |
+| TF32GEMM | 98 TFlops  | 1204 TFlop/S |
+| I8GEMM   | 520 TFlops | 4966 TFlop/S |
 
 ### How to run and compile
 
