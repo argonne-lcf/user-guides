@@ -22,4 +22,15 @@ This page's goal is to give you a high-level overview of some key performance nu
 | Memory Bandwidth (triad)  | 1TB/S | 12TB/s | 
 | PCIe Bidirectional Bandwitch  | 76GB/s | 356GB/s |
 
+### How to run and compile
+
+```bash
+$ mpicxx  -fiopenmp -fopenmp-targets=spir64 foo.cpp
+# or
+$ mpicxx  -fsycl foo.cpp
+# Then
+$ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56 -- gpu_tile_compact.sh ./a.out
+$ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56 -- gpu_tile_compact.sh ./a.out
+```
+
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise. 
