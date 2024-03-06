@@ -2,37 +2,38 @@
 
 > This work was done on a pre-production supercomputer with early versions of the Aurora software development kit
 
-This page's goal is to give you a high-level overview of some key performance numbers of a single node of Aurora. 
+This page aims to give you a high-level overview of key performance numbers for a single Aurora node. 
 
 - We will provide both 1 Tile and Full Node numbers.
   - The Full Node numbers are the Weak scaling version of the single node one.
-  - The Full Node numbers have been achieved by one Rank per Tile, 12 Ranks
-- The source code and launch options of all the benchmarks are included so you can tweak them as required
-   - We are not exhaustive. Please assume we cherry-picked the correct size to get the best numbers
-   -  We will *not* compare the results to some “theoretical” value.  Theoretical values are full of assumptions, and we want to keep this page short.
-   -  We will *not* compare the results to other hardware. Feel free to do it yourself 🙂
-   - To improve reproducibility, only the “best” numbers are reported (we take the minimum of the time). When doing "real" science, please perform better statistical analysis.
-   -  The code will use a mixture of OpenMP and SYCL in C++.  (sorry, Fortran, Python, and Level Zero lovers)
+  - The Full Node numbers have been achieved by one Rank per Tile, 12 Ranks.
+- All benchmarks' source code and launch options are included so you can tweak them as needed.
+   - We are not exhaustive. Please assume we cherry-picked the correct size to get the best numbers.
+   - We will *not* compare the results to some “theoretical” value.  Theoretical values are full of assumptions, and we want to keep this page short.
+   - We will *not* compare the results to other hardware. Feel free to do it yourself 🙂
+   - To improve reproducibility, only the “best” numbers are reported (e.g., we take the minimum time of repetition step). When doing "real" science, please perform better statistical analysis.
+   - The code will use a mixture of OpenMP and SYCL in C++ (sorry, Fortran, Python, and Level Zero lovers).
 
-## Micro-benchmark
+## Micro-benchmarks
 
 |            | One Tile   | Full Node  |
 | -----------|------------|------------|
 | Douple precission Peak    | 17 TFlop/S  | 203 TFlop/S| 
-| Memory Bandwidth (triad)  | 1TB/S | 12 TB/s | 
+| Memory Bandwidth (triad)  | 1 TB/S | 12 TB/s | 
 | PCIe Bidirectional Bandwitch  | 76 GB/s | 356 GB/s |
 
-### How to run and compile
+<details>
+  <summary>
+    How to run and compile
+  </summary>
 
 ```bash
-$ mpicxx  -fiopenmp -fopenmp-targets=spir64 foo.cpp
-# or
-$ mpicxx  -fsycl foo.cpp
-# Then
+$ mpicxx -fiopenmp -fopenmp-targets=spir64  -fsycl foo.cpp
 $ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
 $ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
 ```
-
+</details>
+  
 ## GEMM
 
 |          | One Tile   | Full Node   |
@@ -44,13 +45,16 @@ $ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact
 | TF32GEMM | 98 TFlop/S  | 1204 TFlop/S |
 | I8GEMM   | 520 TFlop/S | 4966 TFlop/S |
 
-### How to run and compile
+<details>
+  <summary>
+    How to run and compile
+  </summary>
 
 ```bash
-$ mpicxx  -fsycl -qmkl foo.cpp
+$ mpicxx -fsycl -qmkl foo.cpp
 $ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
 $ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
-
 ```
+</details>
 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise. 
