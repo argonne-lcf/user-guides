@@ -17,7 +17,7 @@ This page's goal is to give you a high-level overview of some key performance nu
 ## Micro-benchmark
 
 |            | One Tile   | Full Node  |
-| ---------- | -----------|------------|
+| -----------|------------|------------|
 | DP-FLOPS   | 17 TFlops  | 203 TFlops| 
 | Memory Bandwidth (triad)  | 1TB/S | 12TB/s | 
 | PCIe Bidirectional Bandwitch  | 76GB/s | 356GB/s |
@@ -29,8 +29,28 @@ $ mpicxx  -fiopenmp -fopenmp-targets=spir64 foo.cpp
 # or
 $ mpicxx  -fsycl foo.cpp
 # Then
-$ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56 -- gpu_tile_compact.sh ./a.out
-$ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56 -- gpu_tile_compact.sh ./a.out
+$ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
+$ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
+```
+
+## GEMM
+
+|          | One Tile   | Full Node   |
+| ---------|------------|-------------|
+| DGEMM    | 14 TFlops  |  173 TFlops |
+| SGEMM    | 21 TFlops  |  257 TFlops |
+| HGEMM    | 224 TFlops | 2094 TFlops | 
+| BF16GEMM | 238 TFlops | 2439 TFlops |
+| TF32GEMM | 98 TFlops  | 1204 TFlops |
+| I8GEMM   | 520 TFlops | 4966 TFfOPS |
+
+### How to run and compile
+
+```bash
+$ mpicxx  -fsycl -qmkl foo.cpp
+$ mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
+$ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact.sh ./a.out
+
 ```
 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise. 
