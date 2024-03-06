@@ -37,12 +37,12 @@ $ mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- gpu_tile_compact
 
 |          | One Tile   | Full Node   |
 | ---------|------------|-------------|
-| DGEMM    | 14 TFlops  |  173 TFlop/S |
-| SGEMM    | 21 TFlops  |  257 TFlop/S |
-| HGEMM    | 224 TFlops | 2094 TFlop/S | 
-| BF16GEMM | 238 TFlops | 2439 TFlop/S |
-| TF32GEMM | 98 TFlops  | 1204 TFlop/S |
-| I8GEMM   | 520 TFlops | 4966 TFlop/S |
+| DGEMM    | 14 TFlop/S  |  173 TFlop/S |
+| SGEMM    | 21 TFlop/S  |  257 TFlop/S |
+| HGEMM    | 224 TFlop/S | 2094 TFlop/S | 
+| BF16GEMM | 238 TFlop/S | 2439 TFlop/S |
+| TF32GEMM | 98 TFlop/S  | 1204 TFlop/S |
+| I8GEMM   | 520 TFlop/S | 4966 TFlop/S |
 
 ### How to run and compile
 
