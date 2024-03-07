@@ -146,6 +146,7 @@ nav:
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
       - Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Node Performance Overvier: aurora/node-performance-overview/node-performance-overview.md
       - Compiling and Linking:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
