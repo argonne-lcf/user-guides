@@ -35,17 +35,12 @@ int main() {
   sycl::queue Q(sycl::gpu_selector_v);
   const int N = 1 << 28;
   const int N_byte = N * sizeof(int);
-  const int num_iteration{10};
 
   int *a_cpu = sycl::malloc_host<int>(N, Q);
   int *b_cpu = sycl::malloc_host<int>(N, Q);
 
   int *a_gpu = sycl::malloc_device<int>(N, Q);
   int *b_gpu = sycl::malloc_device<int>(N, Q);
-
-  double min_time_h2d = std::numeric_limits<double>::max();
-  double min_time_d2h = std::numeric_limits<double>::max();
-  double min_time_h2d_d2h = std::numeric_limits<double>::max();
 
   auto H2D_time = datatransfer(Q, N_byte, {{a_gpu, a_cpu}});
   const double H2D_bw = (N_byte * world_size) / H2D_time;
