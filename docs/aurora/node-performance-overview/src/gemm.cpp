@@ -23,46 +23,33 @@ void run_gemm_example(
   auto transA = oneapi::mkl::transpose::nontrans;
   auto transB = oneapi::mkl::transpose::nontrans;
 
-  int m = size;
-  int n = size;
-  int k = size;
-
-  int ldA = m;
-  int ldB = k;
-  int ldC = m;
-  int sizea, sizeb, sizec = ldC * n;
-
   fp_scalar alpha = fp_scalar(1.0);
   fp_scalar beta = fp_scalar(0.0);
 
-  sizea = (transA == oneapi::mkl::transpose::nontrans) ? ldA * k : ldA * m;
-  sizeb = (transB == oneapi::mkl::transpose::nontrans) ? ldB * n : ldB * k;
-
-  auto A = sycl::malloc_shared<fp_ab>(sizea, Q);
-  auto B = sycl::malloc_shared<fp_ab>(sizeb, Q);
-  auto C = sycl::malloc_shared<fp_c>(sizec, Q);
+  auto A = sycl::malloc_shared<fp_ab>(size*size, Q);
+  auto B = sycl::malloc_shared<fp_ab>(size*size, Q);
+  auto C = sycl::malloc_shared<fp_c>(size*size, Q);
 
   if (!A || !B || !C)
     throw std::runtime_error("Failed to allocate USM memory.");
 
   fp_ab max_ab = std::numeric_limits<fp_ab>::max();
-  fp_ab min_ab = std::numeric_limits<fp_ab>::min();
-  std::int64_t limit = 0;
+
   // Workaround for some type
   if (max_ab == 0)
     max_ab = 100;
 
-  fp_c max_c_array_value = std::sqrt(std::numeric_limits<fp_c>::max() / k);
+  fp_c max_c_array_value = std::sqrt(std::numeric_limits<fp_c>::max() / size);
   // assumes fp_c is bigger
   fp_ab max_array_value = std::min((fp_c)max_c_array_value, (fp_c)max_ab / 2);
 
-  // A(M, N) (m,k)
-  for (size_t i = 0; i < (m * k); i++) {
+  // A(size, size)
+  for (size_t i = 0; i < (size*size); i++) {
     A[i] = fp_ab(max_array_value) * double((std::rand() / (double)RAND_MAX));
   }
 
-  // B(N, P) (k,n)
-  for (size_t i = 0; i < (k * n); i++) {
+  // B(size,size)
+  for (size_t i = 0; i < (size*size); i++) {
     B[i] = fp_ab(max_array_value) * double((std::rand() / (double)RAND_MAX));
   }
 
@@ -72,13 +59,13 @@ void run_gemm_example(
   for (int i = 0; i < niter; i++) {
     MPI_Barrier(MPI_COMM_WORLD);
     const unsigned long l_start =
-        std::chrono::high_resolution_clock::now().time_since_epoch().count();
+      std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 
-    oneapi::mkl::blas::column_major::gemm(Q, transA, transB, m, n, k, alpha, A, ldA, B, ldB, beta,
-                                          C, ldC, mode)
+    oneapi::mkl::blas::column_major::gemm(Q, transA, transB, size, size, size, alpha, A, size, B, size, beta,
+                                          C, size, mode)
         .wait();
     const unsigned long l_end =
-        std::chrono::high_resolution_clock::now().time_since_epoch().count();
+      std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
     unsigned long start, end;
     MPI_Reduce(&l_start, &start, 1, MPI_UNSIGNED_LONG, MPI_MIN, 0, MPI_COMM_WORLD);
     MPI_Reduce(&l_end, &end, 1, MPI_UNSIGNED_LONG, MPI_MAX, 0, MPI_COMM_WORLD);
@@ -114,4 +101,5 @@ int main(int argc, char **argv) {
   run_gemm_example<float, float, float>(Q, size, "TF32GEMM",
                                         oneapi::mkl::blas::compute_mode::float_to_tf32);
   run_gemm_example<std::int8_t, float, float>(Q, size, "I8GEMM");
+  MPI_Finalize();
 }
