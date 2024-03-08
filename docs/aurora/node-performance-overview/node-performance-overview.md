@@ -22,13 +22,13 @@ The asterisk (`*`) Means run on sunspot...
 | -----------|------------|------------|
 | Double precision Peak    | 17 TFlop/S  | 203 TFlop/S|
 | Memory Bandwidth (triad)  | 1 TB/S | 12 TB/s |
-| PCIe Unidirectional Bandwitch (H2D)* | 50 GB/s | 173 GB/s |
-| PCIe Unidirectional Bandwitch (D2H)* | 49 GB/s | 122 GB/s |
-| PCIe Bidirectional Bandwitch  | 76 GB/s | 356 GB/s |
-| Tile2Tile Unidirectional Bandwitch* | 73 GB/s | 438 GB/s |
-| Tile2Tile Bidirectional Bandwitch* | 134 GB/s | 802 GB/s |
-| GPU2GPU Unidirectional Bandwitch* | 29 GB/s | 174 GB/s |
-| GPU2GPU Bidirectional Bandwitch* | 57 GB/s | 316 GB/s |
+| PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
+| PCIe Unidirectional Bandwidth (D2H)* | 49 GB/s | 122 GB/s |
+| PCIe Bidirectional Bandwidth  | 76 GB/s | 356 GB/s |
+| Tile2Tile Unidirectional Bandwidth* | 73 GB/s | 438 GB/s |
+| Tile2Tile Bidirectional Bandwidth* | 134 GB/s | 802 GB/s |
+| GPU2GPU Unidirectional Bandwidth* | 29 GB/s | 174 GB/s |
+| GPU2GPU Bidirectional Bandwidth* | 57 GB/s | 316 GB/s |
 
 ## GEMM
 
