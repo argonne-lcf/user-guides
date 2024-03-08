@@ -87,6 +87,7 @@ python lenet.py run --pef="pef/lenet/lenet.pef"
 Then
 
 ```bash
+mkdir -p pef/lenet
 sbatch --output=pef/lenet/output.log submit-lenet-job.sh
 ```
 
@@ -134,6 +135,7 @@ python ffn_mnist.py  run -b 1 -p out/ffn_mnist/ffn_mnist.pef
 ```
 
 ```bash
+mkdir -p pef/ffn_mnist
 sbatch --output=pef/ffn_mnist/output.log submit-ffn_mnist-job.sh
 ```
 
@@ -190,6 +192,7 @@ python logreg.py run --pef="pef/logreg/logreg.pef"
 Then
 
 ```bash
+mkdir -p pef/logreg
 sbatch --output=pef/logreg/output.log submit-logreg-job.sh
 ```
 
