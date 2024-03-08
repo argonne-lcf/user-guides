@@ -1,6 +1,21 @@
 #include <cstdint>
+#include <limits>
 #include <mpi.h>
+#include <numeric>
+#include <random>
 #include <sycl/sycl.hpp>
+#include <vector>
+
+void fill_randomly(sycl::queue Q, int N, std::vector<int *> ptrs) {
+  std::vector<int> v(N);
+  std::iota(v.begin(), v.end(), 0);
+
+  std::minstd_rand g;
+  for (auto &ptr : ptrs) {
+    std::shuffle(v.begin(), v.end(), g);
+    Q.memcpy(ptr, v.data(), N * sizeof(int)).wait();
+  }
+}
 
 unsigned long datatransfer(sycl::queue Q, int N_byte, std::vector<std::pair<int *, int *>> ptrs) {
 
@@ -32,15 +47,15 @@ int main() {
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
-  sycl::queue Q(sycl::gpu_selector_v);
+  sycl::queue Q;
   const int N = 1 << 28;
   const int N_byte = N * sizeof(int);
 
   int *a_cpu = sycl::malloc_host<int>(N, Q);
   int *b_cpu = sycl::malloc_host<int>(N, Q);
-
   int *a_gpu = sycl::malloc_device<int>(N, Q);
   int *b_gpu = sycl::malloc_device<int>(N, Q);
+  fill_randomly(Q, N, {a_cpu, b_cpu, a_gpu, b_gpu});
 
   auto H2D_time = datatransfer(Q, N_byte, {{a_gpu, a_cpu}});
   const double H2D_bw = (N_byte * world_size) / H2D_time;

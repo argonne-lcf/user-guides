@@ -1,6 +1,20 @@
 #include <cstdint>
+#include <limits>
 #include <mpi.h>
+#include <random>
 #include <sycl/sycl.hpp>
+#include <vector>
+
+void fill_randomly(sycl::queue Q, int N, std::vector<int *> ptrs) {
+  std::vector<int> v(N);
+  std::iota(v.begin(), v.end(), 0);
+
+  std::minstd_rand g;
+  for (auto &ptr : ptrs) {
+    std::shuffle(v.begin(), v.end(), g);
+    Q.memcpy(ptr, v.data(), N * sizeof(int)).wait();
+  }
+}
 
 unsigned long datatransfer(int N, std::vector<std::pair<int, int *>> &sends,
                            std::vector<std::pair<int, int *>> &recvs) {
@@ -52,6 +66,7 @@ int main() {
   const int N = 1 << 28;
   const int N_byte = N * sizeof(int);
   int *a_gpu = sycl::malloc_device<int>(N, Q);
+  fill_randomly(Q, N, {a_gpu});
 
   std::vector<std::pair<int, int *>> sends;
   std::vector<std::pair<int, int *>> recvs;

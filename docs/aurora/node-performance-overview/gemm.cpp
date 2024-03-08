@@ -48,7 +48,7 @@ void run_gemm_example(
   fp_ab max_ab = std::numeric_limits<fp_ab>::max();
   fp_ab min_ab = std::numeric_limits<fp_ab>::min();
   std::int64_t limit = 0;
-  // Workarround for one type
+  // Workaround for some type
   if (max_ab == 0)
     max_ab = 100;
 
