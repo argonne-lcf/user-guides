@@ -2,7 +2,7 @@
 
 > This work was done on a pre-production supercomputer with early versions of the Aurora software development kit
 
-This page aims to give you a high-level overview of key performance numbers for a single Aurora node. 
+This page aims to give you a high-level overview of key performance numbers for a single Aurora node.
 
 - We are providing both 1 Tile and Full Node numbers.
   - The Full Node numbers are the Weak scaling version of the single node one.
@@ -20,8 +20,8 @@ The asterisk (`*`) Means run on sunspot...
 
 |            | One Tile   | Full Node  |
 | -----------|------------|------------|
-| Double precision Peak    | 17 TFlop/S  | 203 TFlop/S|
-| Memory Bandwidth (triad)  | 1 TB/S | 12 TB/s |
+| Double precision Peak    | 17 TFlop/s  | 203 TFlop/s|
+| Memory Bandwidth (triad)  | 1 TB/s | 12 TB/s |
 | PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
 | PCIe Unidirectional Bandwidth (D2H)* | 49 GB/s | 122 GB/s |
 | PCIe Bidirectional Bandwidth  | 76 GB/s | 356 GB/s |
@@ -34,11 +34,11 @@ The asterisk (`*`) Means run on sunspot...
 
 |          | One Tile   | Full Node   |
 | ---------|------------|-------------|
-| DGEMM    | 14 TFlop/S  |  173 TFlop/S |
-| SGEMM    | 21 TFlop/S  |  257 TFlop/S |
-| HGEMM    | 224 TFlop/S | 2094 TFlop/S | 
-| BF16GEMM | 238 TFlop/S | 2439 TFlop/S |
-| TF32GEMM | 98 TFlop/S  | 1204 TFlop/S |
-| I8GEMM   | 520 TFlop/S | 4966 TFlop/S |
+| DGEMM    | 14 TFlop/s  |  173 TFlop/s |
+| SGEMM    | 21 TFlop/s  |  257 TFlop/s |
+| HGEMM    | 224 TFlop/s | 2094 TFlop/s |
+| BF16GEMM | 238 TFlop/s | 2439 TFlop/s |
+| TF32GEMM | 98 TFlop/s  | 1204 TFlop/s |
+| I8GEMM   | 520 TFlop/s | 4966 TFlop/s |
 
-Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise. 
+Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise.
