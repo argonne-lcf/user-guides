@@ -17,8 +17,7 @@ void fft_c2c_batch_onemkl(descriptor_t *desc, int size, int howmany, std::string
 
   size_t n_elem = size * howmany;
   auto *gpu_dpcpp = sycl::malloc_device<std::complex<float>>(n_elem, Q);
-  auto *cpu_dpcpp =
-      (std::complex<float> *)malloc(n_elem * sizeof(std::complex<float>));
+  auto *cpu_dpcpp = (std::complex<float> *)malloc(n_elem * sizeof(std::complex<float>));
 
   desc->commit(Q);
 
@@ -37,16 +36,13 @@ void fft_c2c_batch_onemkl(descriptor_t *desc, int size, int howmany, std::string
     Q.copy(cpu_dpcpp, gpu_dpcpp, n_elem).wait();
     MPI_Barrier(MPI_COMM_WORLD);
 
-    const long long l_start = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                  std::chrono::high_resolution_clock::now().time_since_epoch())
-                                  .count();
-    auto t0 = std::chrono::high_resolution_clock::now();
+    const unsigned long l_start = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                      std::chrono::high_resolution_clock::now().time_since_epoch())
+                                      .count();
     compute_forward(*desc, gpu_dpcpp).wait();
-    auto t1 = std::chrono::high_resolution_clock::now();
-
-    const long long l_end = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                                std::chrono::high_resolution_clock::now().time_since_epoch())
-                                .count();
+    const unsigned long l_end = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                    std::chrono::high_resolution_clock::now().time_since_epoch())
+                                    .count();
 
     unsigned long start, end;
 
