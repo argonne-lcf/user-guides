@@ -26,9 +26,9 @@ void run_gemm_example(
   fp_scalar alpha = fp_scalar(1.0);
   fp_scalar beta = fp_scalar(0.0);
 
-  auto A = sycl::malloc_shared<fp_ab>(size*size, Q);
-  auto B = sycl::malloc_shared<fp_ab>(size*size, Q);
-  auto C = sycl::malloc_shared<fp_c>(size*size, Q);
+  auto A = sycl::malloc_shared<fp_ab>(size * size, Q);
+  auto B = sycl::malloc_shared<fp_ab>(size * size, Q);
+  auto C = sycl::malloc_shared<fp_c>(size * size, Q);
 
   if (!A || !B || !C)
     throw std::runtime_error("Failed to allocate USM memory.");
@@ -44,12 +44,12 @@ void run_gemm_example(
   fp_ab max_array_value = std::min((fp_c)max_c_array_value, (fp_c)max_ab / 2);
 
   // A(size, size)
-  for (size_t i = 0; i < (size*size); i++) {
+  for (size_t i = 0; i < (size * size); i++) {
     A[i] = fp_ab(max_array_value) * double((std::rand() / (double)RAND_MAX));
   }
 
   // B(size,size)
-  for (size_t i = 0; i < (size*size); i++) {
+  for (size_t i = 0; i < (size * size); i++) {
     B[i] = fp_ab(max_array_value) * double((std::rand() / (double)RAND_MAX));
   }
 
@@ -58,14 +58,16 @@ void run_gemm_example(
   int niter = 100;
   for (int i = 0; i < niter; i++) {
     MPI_Barrier(MPI_COMM_WORLD);
-    const unsigned long l_start =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    const unsigned long l_start = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                      std::chrono::high_resolution_clock::now().time_since_epoch())
+                                      .count();
 
-    oneapi::mkl::blas::column_major::gemm(Q, transA, transB, size, size, size, alpha, A, size, B, size, beta,
-                                          C, size, mode)
+    oneapi::mkl::blas::column_major::gemm(Q, transA, transB, size, size, size, alpha, A, size, B,
+                                          size, beta, C, size, mode)
         .wait();
-    const unsigned long l_end =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    const unsigned long l_end = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                    std::chrono::high_resolution_clock::now().time_since_epoch())
+                                    .count();
     unsigned long start, end;
     MPI_Reduce(&l_start, &start, 1, MPI_UNSIGNED_LONG, MPI_MIN, 0, MPI_COMM_WORLD);
     MPI_Reduce(&l_end, &end, 1, MPI_UNSIGNED_LONG, MPI_MAX, 0, MPI_COMM_WORLD);

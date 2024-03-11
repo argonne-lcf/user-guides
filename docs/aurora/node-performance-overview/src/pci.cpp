@@ -63,12 +63,13 @@ int main() {
     std::cout << "H2D " << H2D_bw << "GB/s" << std::endl;
 
   auto D2H_time = datatransfer(Q, N_byte, {{a_cpu, a_gpu}});
-  const double D2H_bw = (N_byte * world_size) / D2H_time;
-  if (world_rank == 0)
+  if (world_rank == 0) {
+    const double D2H_bw = (N_byte * world_size) / D2H_time;
     std::cout << "D2H " << D2H_bw << "GB/s" << std::endl;
-
+  }
   auto H2D_D2H_time = datatransfer(Q, N_byte, {{a_gpu, a_cpu}, {b_cpu, b_gpu}});
-  const double H2D_D2H_bw = (2L * N_byte * world_size) / H2D_D2H_time;
-  if (world_rank == 0)
+  if (world_rank == 0) {
+    const double H2D_D2H_bw = (2L * N_byte * world_size) / H2D_D2H_time;
     std::cout << "H2D+D2H " << H2D_D2H_bw << "GB/s" << std::endl;
+  }
 }

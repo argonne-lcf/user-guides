@@ -17,7 +17,7 @@ void fft_c2c_batch_onemkl(descriptor_t *desc, int size, int howmany, std::string
 
   size_t n_elem = size * howmany;
   auto *gpu_dpcpp = sycl::malloc_device<std::complex<float>>(n_elem, Q);
-  std::complex<float> *cpu_dpcpp =
+  auto *cpu_dpcpp =
       (std::complex<float> *)malloc(n_elem * sizeof(std::complex<float>));
 
   desc->commit(Q);
@@ -61,9 +61,9 @@ void fft_c2c_batch_onemkl(descriptor_t *desc, int size, int howmany, std::string
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
-  // min_time is in nanseconds. Flop value is from http://www.fftw.org/speed/method.html
-  const double flops = (5. * size * log2(size) * howmany * world_size) / min_time;
   if (world_rank == 0) {
+    // min_time is in nanseconds. Flop value is from http://www.fftw.org/speed/method.html
+    const double flops = (5. * size * log2(size) * howmany * world_size) / min_time;
     std::cout << input_string << " " << flops << " GFlops" << std::endl;
   }
 

@@ -77,17 +77,18 @@ int main() {
     recvs.push_back({world_rank - 1, a_gpu});
 
   auto unitime = datatransfer(N, sends, recvs);
-  const double unitime_bw = (N_byte * world_size) / unitime;
-  if (world_rank == 0)
+  if (world_rank == 0) {
+    const double unitime_bw = (N_byte * world_size) / unitime;
     std::cout << "Tile2Tile Unidirectional: " << unitime_bw << "GB/s" << std::endl;
-
+  }
   if (world_rank % 2 == 0)
     recvs.push_back({world_rank + 1, a_gpu});
   else
     sends.push_back({world_rank - 1, a_gpu});
 
   auto bitime = datatransfer(N, sends, recvs);
-  const double bitime_bw = (2L * N_byte * world_size) / bitime;
-  if (world_rank == 0)
+  if (world_rank == 0) {
+    const double bitime_bw = (2L * N_byte * world_size) / bitime;
     std::cout << "Tile2Tile Bidirectional: " << bitime_bw << "GB/s" << std::endl;
+  }
 }
