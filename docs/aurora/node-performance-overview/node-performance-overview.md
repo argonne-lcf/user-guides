@@ -46,6 +46,6 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 |          | One Tile   | Full Node   |
 | ---------|------------|-------------|
 | Single-precision C2C 1D* | 2.3 TFlop/s  | 25 TFlop/s |
-| Single-precision C2C 1D* | 2.1 TFlop/s | 21 TFlops/s |
+| Single-precision C2C 2D* | 2.1 TFlop/s | 21 TFlops/s |
 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise.
