@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Distributed Learning with Horovod
 
 There are two schemes for distributed learning: 

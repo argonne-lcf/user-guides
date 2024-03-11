@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # ParaView Tutorial on Cooley
 ## Overview
 This tutorial is intended to be a hands-on resource for users interested in learning the basic concepts of ParaView. The examples can easily be run on a laptop, using the example data set provided.

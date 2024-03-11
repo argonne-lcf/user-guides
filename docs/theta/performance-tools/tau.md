@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # TAU
 ## Introduction
 The TAU (Tuning and Analysis Utilities) Performance System is a portable profiling and tracing toolkit for performance analysis of parallel programs written in Fortran, C, C++, Java, and Python. TAU gathers performance information while a program executes through instrumentation of functions, methods, basic blocks, and statements. The instrumentation consists of calls to TAU library routines, which can be incorporated into a program in several ways:

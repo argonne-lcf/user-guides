@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Data Science Software Availability
 On ThetaGPU, currently we support the major deep learning frameworks through two paths: Singularity containers, based off of NVIDIA's Docker containers, and through bare-metal source builds. The bare-metal builds are for TensorFlow 2.X PyTorch. TensorFlow 1.X is supported only via NVIDIA's containers at this time.
 

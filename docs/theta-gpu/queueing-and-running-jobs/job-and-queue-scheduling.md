@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Job and Queue Scheduling on ThetaGPU
 ## Queues and Job Scheduling
 

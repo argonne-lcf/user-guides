@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # PAPI on Theta
 ## Introduction
 The Performance Application Programming Interface (PAPI) provides a standardized user level API for accessing processor and other system programmer counter information (such as instruction counts, cache misses, etc.).

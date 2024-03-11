@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Machine Learning Tools on Cooley
 Cooley is designed as a visualization cluster, because of the support for Nvidia GPUs. However,  it is also possible to run machine learning workflows on Cooley. 
 

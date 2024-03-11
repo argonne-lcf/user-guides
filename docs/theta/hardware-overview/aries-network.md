@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Aries Network on Theta
 The Cray Aries network is the high-speed interconnect used on Theta. This network is a 3-level Dragonfly topology. The Dragonfly topology consists of the first level as a small number of nodes connected on the same switch. The next level is a full-mesh connectivity of two racks of nodes. The last level is a set of links that interconnect all of the 2-rack groups.
 

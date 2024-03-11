@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Python/C++ Code Interoperability
 These are the steps to build code that has Python/C++ code interoperability. 
 

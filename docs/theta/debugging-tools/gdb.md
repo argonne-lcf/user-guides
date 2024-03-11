@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # GDB
 ## Introduction
 GDB4HPC is a command-line debugging tool provided by Cray. It works similarly to [GBD](https://www.gnu.org/software/gdb/), but allows the user to debug multiple parallel processes without multiple windows. GDB4HPC can be used to investigate deadlocked code, segfaults, and other errors for C/C++ and Fortran code. Users can single-step code and focus on specific processes groups to help identify unexpected code behavior.

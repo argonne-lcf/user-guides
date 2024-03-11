@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # QMCPACK on Theta
 ## Overview
 QMCPACK is a modern, high-performance, open-source Quantum Monte Carlo (QMC) simulation code. Its main applications are electronic structure calculations of molecular, quasi-2D, and solid-state systems.

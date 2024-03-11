@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Theta
 
 Theta is a Cray XC40 and consists of several types of nodes. Table 1 summarizes the system’s capabilities.

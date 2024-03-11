@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # CrayPat
 ## Introduction
 The Cray Performance Measurement and Analysis Tools (or CrayPat) are a suite of utilities that enable the user to capture and analyze performance data generated during the execution of a program on a Cray system. It includes CrayPat, CrayPat-lite, Cray Apprentices2, Reveal and the Cray PAPI components. 

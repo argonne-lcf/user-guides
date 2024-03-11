@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Job Scheduling and Submission on Theta 
 
 ## Job and Queue Scheduling for Theta

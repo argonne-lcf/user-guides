@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # GPU Node Queue and Policy
 
 **Note:** Users will need an allocation on ThetaGPU to utilize the GPU nodes. Request for an allocation by filling out this form: [Allocation Request](https://accounts.alcf.anl.gov/#!/allocationRequest).

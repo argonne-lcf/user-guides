@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Theta and Theta-fs0 Decommissioning
 
 Theta and Theta-fs0 will be retired at the end of calendar year 2023.  ThetaGPU will go offline for a short time, but then will come back online as an independent system running the PBS scheduler to be in line with the current standard for the ALCF.  Here are additional details:

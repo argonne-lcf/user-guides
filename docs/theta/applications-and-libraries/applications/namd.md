@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # NAMD
 
 ## What Is NAMD?
