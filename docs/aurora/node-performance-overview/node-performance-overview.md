@@ -7,7 +7,7 @@ This page aims to give you a high-level overview of key performance numbers for 
 - We are providing both 1 Tile and Full Node numbers.
   - The Full Node numbers are the Weak scaling version of the single node one.
   - The Full Node numbers have been achieved by one Rank per Tile, 12 Ranks.
-- All benchmarks' source code and launch options [are included](src/) so you can tweak them as needed.
+- All benchmarks' source code and launch options [are included](https://github.com/argonne-lcf/user-guides/tree/node-performance-overview/docs/aurora/node-performance-overview/src) so you can tweak them as needed.
    - We are not exhaustive. Please assume we cherry-picked the correct size to get the best numbers.
    - We will *not* compare the results to some “theoretical” value.  Theoretical values are full of assumptions, and we want to keep this page short.
    - We will *not* compare the results to other hardware. Feel free to do it yourself 🙂
