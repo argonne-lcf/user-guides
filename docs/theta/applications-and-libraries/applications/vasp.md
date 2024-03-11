@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # VASP
 
 ## What is VASP?

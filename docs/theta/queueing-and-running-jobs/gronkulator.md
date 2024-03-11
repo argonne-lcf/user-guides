@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # The Gronkulator: Job Status Display
 
 ## Overview 

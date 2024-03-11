@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Containers on Theta(KNL)
 Containers are a method for shipping software that is pre-built inside a pre-defined static software environment. 
 At ALCF, users must run [Singularity](https://sylabs.io/guides/3.8/user-guide/index.html) containers. Singularity is a container technology built for supercomputers with security in mind. 

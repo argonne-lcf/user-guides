@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # ATP and STAT on Theta
 ## Introduction
 

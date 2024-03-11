@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Remote Visualization on Cooley Using VNC
 When running graphics applications on Cooley, it is best to use the client/server mode when available. 
 

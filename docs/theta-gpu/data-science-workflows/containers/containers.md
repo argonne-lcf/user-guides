@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Containers on Theta(GPU)
 
 On Theta(GPU), container creation can be achieved by using Docker on your local machine as mentioned in [Example `Dockerfile`](../../../theta/data-science-workflows/containers/containers.md#example-dockerfile), or using a Singularity recipe file and building on a Theta(GPU) worker node.

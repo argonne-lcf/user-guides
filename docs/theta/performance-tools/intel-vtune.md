@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Intel Vtune
 VTune is an advanced profiling tool which helps you to optimize your code for various architectures. It allows you to track how well your code is threaded and vectorized to take advantage of multiple CPUs/FPUs and how well the code is utilizing the non-uniform memory architecture and caches.
 

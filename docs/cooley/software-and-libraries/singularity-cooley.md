@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Singularity on Cooley
 ## Singularity on ALCF Resources
 Singularity is a software container solution to enable fine grained control over application environments on a diverse set of hardware systems.  For details on singularity, please see the Singularity [documentation](https://www.sylabs.io/guides/3.0/user-guide/index.html).

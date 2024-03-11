@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Clang Compiler on Theta
 
 ## Using Clang Compiler

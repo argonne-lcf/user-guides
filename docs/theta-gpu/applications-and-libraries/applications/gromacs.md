@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Gromacs on ThetaGPU
 
 ## What is Gromacs?

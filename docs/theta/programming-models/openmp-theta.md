@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # OpenMP on Theta
 ## Overview
 The OpenMP API is an open standard for parallel programming. The specification document can be found here: [https://www.openmp.org](https://www.openmp.org/). 

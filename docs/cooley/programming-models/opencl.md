@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # OpenCL on Cooley
 ## Overview
 OpenCL (Open Computing Language) is an open standard from the Khronos group that enables heterogeneous device programming (e.g. CPUS, GPUs, and FPGAs). Complete descriptions of the API, memory hierarchy, and usage can be found in OpenCL documentation and technical specifications found on the Khronos website.

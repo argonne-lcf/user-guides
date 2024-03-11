@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Example Job Scripts
 
 This page contains a small collection of example job scripts users may find useful for submitting their jobs on Theta. Additional information on Cobalt and how to submit these job scripts is available [here](./job-and-queue-scheduling.md). A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Theta/compilation/submit.sh).

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Intel Advisor
 ## Introduction
 Advisor is an advanced profiling tool which helps you to optimize your code on KNL architecture. It allows you to analyze the vectorization efficiency of your code and compares your code’s performance to the theoretical limits of the hardware. See [1] for more details on the roofline model.

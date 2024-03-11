@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Getting Started on ThetaGPU
 ## References
 In addition to the content below, here is a [getting started video](https://youtu.be/N0Xip1mUZY8) covering the basics of using ThetaGPU and a  related video on Lustre File Striping Basics. This should help you get up and running quickly on the GPU nodes.

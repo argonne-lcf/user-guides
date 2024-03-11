@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # TensorFlow
 TensorFlow is an open source software library for machine learning and deep learning. It is one of the widely used [frameworks](https://www.tensorflow.org/). It supports a large variety of state-of-the-art neural network layers, activation functions, optimizers and tools for analyzing, profiling and debugging deep neural networks.
 

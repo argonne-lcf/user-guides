@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Building Python Packages
 To build Python packages for ThetaGPU, there are two options: build on top of a bare-metal build or build on top of (and within) a singularity container. Additionally, you can build a new container from NVIDIA's docker images.
 

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # MongoDB
 
 MongoDB is a NoSQL database which stores information as binary JSON's (BSONS). All of the details mentioned in this document has been tested against MongoDB version 3.4. Kindly consult the official online manual in case you would like to port another version of the MongoDB.In this section, we will see how to setup MongoDB on ALCF machines (i.e. Cooley and Theta). The central aspect of running MongoDB involves the definition of the server and the client. In the following sections, we will see how to:

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # NVIDIA Nsight
 ## References
 - [NVIDIA Nsight Systems Documentation](https://docs.nvidia.com/nsight-systems/)

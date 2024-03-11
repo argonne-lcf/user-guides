@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Compiling and Linking Overview on Theta
 
 **Note:** ThetaGPU have very different programming environment. [See webpages dedicated to ThetaGPU](../../theta-gpu/compiling-and-linking/compiling-and-linking-overview.md).

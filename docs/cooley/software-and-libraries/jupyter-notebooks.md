@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Jupyter Notebooks on Cooley
 ## Jupyter Notebooks on Cooley
 Frequently, it's very useful for prototyping, analysis, or debugging to have an interactive session on Cooley using jupyter notebooks to debug your python scripts. The single node containers supported by the ALCF datascience group have jupyter and common python packages installed, and so it is possible to use jupyter notebooks with the production ML/DL software in an interactive way.

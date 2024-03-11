@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # HDF5
 [HDF5 (Hierarchical Data Format 5)](https://www.hdfgroup.org/solutions/hdf5/) is a high-performance I/O technology suite, designed for complex data sets.  The HDF5 technology suite is composed of a data model, a file format, an API, a library, and a set of software tools.
 

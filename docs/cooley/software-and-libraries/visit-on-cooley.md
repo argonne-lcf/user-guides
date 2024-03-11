@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Visit on Cooley
 ## Getting Started
 
