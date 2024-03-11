@@ -14,7 +14,7 @@ This page aims to give you a high-level overview of key performance numbers for 
    - To improve reproducibility, only the “best” numbers are reported (e.g., we take the minimum time of repetition step). When doing "real" science, please perform better statistical analysis.
    - The code will use a mixture of OpenMP and SYCL in C++ (sorry, Fortran, Python, and Level Zero lovers).
 
-The asterisk (`*`) Means run on sunspot...
+The asterisk (`*`) means that the data was collected on sunspot with older software stack...
 
 ## Micro-benchmarks
 
@@ -25,8 +25,8 @@ The asterisk (`*`) Means run on sunspot...
 | PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
 | PCIe Unidirectional Bandwidth (D2H)* | 49 GB/s | 122 GB/s |
 | PCIe Bidirectional Bandwidth  | 76 GB/s | 356 GB/s |
-| Tile2Tile Unidirectional Bandwidth* | 73 GB/s | 438 GB/s |
-| Tile2Tile Bidirectional Bandwidth* | 134 GB/s | 802 GB/s |
+| Tile2Tile Unidirectional Bandwidth* | 296 GB/s | 1766 GB/s |
+| Tile2Tile Bidirectional Bandwidth* | 147 GB/s | 689 GB/s |
 | GPU2GPU Unidirectional Bandwidth* | 29 GB/s | 174 GB/s |
 | GPU2GPU Bidirectional Bandwidth* | 57 GB/s | 316 GB/s |
 
@@ -40,5 +40,12 @@ The asterisk (`*`) Means run on sunspot...
 | BF16GEMM | 238 TFlop/s | 2439 TFlop/s |
 | TF32GEMM | 98 TFlop/s  | 1204 TFlop/s |
 | I8GEMM   | 520 TFlop/s | 4966 TFlop/s |
+
+## FFT
+
+|          | One Tile   | Full Node   |
+| ---------|------------|-------------|
+| Single-precision C2C 1D* | 2.3 TFlop/s  | 25 TFlop/s |
+| Single-precision C2C 1D* | 2.1 TFlop/s | 21 TFlops/s |
 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise.
