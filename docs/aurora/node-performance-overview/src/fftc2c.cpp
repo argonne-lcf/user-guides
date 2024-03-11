@@ -80,14 +80,12 @@ int main(int argc, char *argv[]) {
   int howmany_1d = 20000;
   int howmany_2d = 10;
 
-  descriptor_t desc(size);
-  desc.set_value(oneapi::mkl::dft::config_param::NUMBER_OF_TRANSFORMS, howmany_1d);
-  desc.set_value(oneapi::mkl::dft::config_param::FWD_DISTANCE, size);
-  desc.set_value(oneapi::mkl::dft::config_param::BWD_DISTANCE, size);
+  descriptor_t desc_1d(size);
+  desc_1d.set_value(oneapi::mkl::dft::config_param::NUMBER_OF_TRANSFORMS, howmany_1d);
+  desc_1d.set_value(oneapi::mkl::dft::config_param::FWD_DISTANCE, size);
+  desc_1d.set_value(oneapi::mkl::dft::config_param::BWD_DISTANCE, size);
 
-  fft_c2c_batch_onemkl(&desc, size, howmany_1d, "Single-precision FFT C2C 1D");
-
-  MPI_Barrier(MPI_COMM_WORLD);
+  fft_c2c_batch_onemkl(&desc_1d, size, howmany_1d, "Single-precision FFT C2C 1D");
 
   descriptor_t desc_2d({size, size});
   std::int64_t rstrides[3] = {0, size, 1};
