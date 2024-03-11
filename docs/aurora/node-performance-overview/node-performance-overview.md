@@ -20,7 +20,7 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 
 |            | One Tile   | Full Node  |
 | -----------|------------|------------|
-| Double precision Peak    | 17 TFlop/s  | 203 TFlop/s|
+| Double Precision Peak Flops  | 17 TFlop/s  | 203 TFlop/s|
 | Memory Bandwidth (triad)  | 1 TB/s | 12 TB/s |
 | PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
 | PCIe Unidirectional Bandwidth (D2H)* | 49 GB/s | 122 GB/s |
@@ -29,6 +29,18 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 | Tile2Tile Bidirectional Bandwidth* | 147 GB/s | 689 GB/s |
 | GPU2GPU Unidirectional Bandwidth* | 29 GB/s | 174 GB/s |
 | GPU2GPU Bidirectional Bandwidth* | 57 GB/s | 316 GB/s |
+
+### Benchmark description
+ 
+- Double Precision Peak Flops: Chain of FMA.
+- Memory Bandwidth (triad): Triad, 2 load, 1 store
+- PCIe Unidirectional Bandwidth (H2D): Host to Device data-transfert
+- PCIe Unidirectional Bandwidth (H2D): Device to Host data-transfert
+- PCIe Unidirectional Bandwidth (H2D): Concurent Host to Device and Device to Host data-transfert
+- Tile2Tile Unidirectional Bandwidth: MPI Rank 0 (GPU N, Tile 0) will send a GPU buffer to Rank 1 (GPU N, Tile 1)
+- Tile2Tile Unidirectional Bandwidth: MPI Rank 0 (GPU N, Tile 0) will send a GPU buffer to Rank 1 (GPU N, Tile 1). Concurently, Rank 1 will also send a buffer to Rank 0
+- GPU2GPU Unidirectional Bandwidth: MPI Rank 0 (GPU 0,Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0).
+- GPU2GPU Bidirectional Bandwidth: MPI Rank 0 (GPU 0,Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0). Concurently, Rank 1 will also send a buffer to Rank 0
 
 ## GEMM
 
