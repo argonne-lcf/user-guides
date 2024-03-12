@@ -2,7 +2,7 @@
 
 This is a collection of known issues that have been encountered during Aurora's early user phase. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
 
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
+A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
 
 ## Running Applications
 
@@ -22,6 +22,44 @@ export FI_CXI_CQ_FILL_PERCENT=20
 
 The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues persist. This is directly impacted by the number of unexpected messages sent and so may need to be increased as the scale of the job increases. 
 
+2. `double free detected` output while running with the mpich/52.2/* modules
+
+A core dump might indicate communicator cleanup e.g. after calling MPI_Comm_split_type. A workaround is to unset a few config-file related variables: 
+```
+unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_CH4_POSIX_COLL_SELECTION_TUNING_JSON_FILE
+```
+Additional information is here: https://github.com/pmodels/mpich/pull/6730 
+
+3. Slower-than expected GPU-Aware MPI:
+You can try one of those 2 set of env:
+- RDMA
+```
+            export MPIR_CVAR_CH4_OFI_ENABLE_HMEM=1
+            export MPIR_CVAR_CH4_OFI_ENABLE_MR_HMEM=0
+            export MPIR_CVAR_CH4_OFI_ENABLE_MULTI_NIC_STRIPING=0
+            export MPIR_CVAR_CH4_OFI_MAX_NICS=8
+            export MPIR_CVAR_CH4_OFI_GPU_RDMA_THRESHOLD=0
+```
+
+- Pipelining
+```
+            export MPIR_CVAR_CH4_OFI_ENABLE_GPU_PIPELINE=1
+            export MPIR_CVAR_CH4_OFI_GPU_PIPELINE_THRESHOLD=0
+            export MPIR_CVAR_CH4_OFI_GPU_PIPELINE_BUFFER_SZ=4194304
+            export MPIR_CVAR_CH4_OFI_GPU_PIPELINE_NUM_BUFFERS_PER_CHUNK=256
+            export MPIR_CVAR_CH4_OFI_GPU_PIPELINE_MAX_NUM_BUFFERS=256
+            export MPIR_CVAR_CH4_OFI_GPU_PIPELINE_D2H_ENGINE_TYPE=0
+```
+
+4. Compiler error like
+```
+_libm_template.c:(.text+0x7): failed to convert GOTPCREL relocation against '__libm_acos_chosen_core_func_x'; relink with --no-relax
+```
+in SYCL
+- Please try linking with `-flink-huge-device-code`
+  
 ## Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.
