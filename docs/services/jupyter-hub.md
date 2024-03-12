@@ -35,8 +35,7 @@ menu of the available job options to start the Jupyter instance.
   nodes to be allocated.
 - Runtime (minutes:seconds): This field allows the user to set the runtime of
   the job in minutes and seconds. The user should refer to the [Polaris queue
-  scheduling
-  policy](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md)
+  scheduling policy](../polaris/running-jobs.md)
   for minimum and maximum runtime allowed for the selected queue.
 - File Systems: This field allows the user to select the file systems to be
   mounted. By default all the file systems are selected.
@@ -55,44 +54,6 @@ the server when resources are no longer required. Failing to do so will result
 in continued consumption of the allocated time until the predetermined runtime
 concludes. 
 
-## ThetaGPU
-
-The ThetaGPU JupyterHub instance can run either on an external server or
-directly on ThetaGPU compute nodes. After the authentication step, the user will
-be presented with a drop-down menu to "Select a job profile", with the options
-“Local Host Process” and “ThetaGPU Compute Node” as shown below.
-
-<figure markdown>
-  ![Select a job profile](files/Jupyter-1-job-profile.png){ width="700" }
-  <figcaption>Select a job profile</figcaption>
-</figure>
-
-"Local Host Process” will start the Jupyter Notebook on the JupyterHub server
-(external to the compute resource).
-
-"ThetaGPU Compute Node" will allow a user to start a Jupyter Notebook instance
-on an available compute node by requesting a node via the job scheduler, Cobalt.
-When a user selects this option additional options will appear as shown below.
-
-- ThetaGPU Queue (MinTime/MaxTime): This field provide a list of available
-  queues on the system with the minimum and maximum times allowed for each
-  queue.
-- Project List:  This field displays the active projects associated with the
-  user on the given system (ThetaGPU).
-- Runtime (minutes):  This field allows the user to set the runtime of the job
-  in minutes. Please note that minimum and maximum times are shown on the menu.
-  You may refer to the [ThetaGPU queue scheduling
-  policy](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md)
-  for more details.
-
-<figure markdown>
-  ![Add options](files/Jupyter-2-job-options.png){ width="700" }
-  <figcaption>ThetaGPU Job options</figcaption>
-</figure>
-
-Once the appropriate information is provided the user will click the “Start”
-button and wait for the job to spawn. In cases where the job queue is long the
-interface will time out and the job will be removed from the queue.
 
 <figure markdown>
   ![Job queued](files/Jupyter-3-job-queued.png){ width="700" }
@@ -102,15 +63,6 @@ interface will time out and the job will be removed from the queue.
 > **_NOTE:_** If you would like to change your selection about where to run the
 > Jupyter instance after the Notebook started, you need to stop the server to be
 > able to see the drop-down menu again.
-
-## Theta and Cooley
-JupyterHub for Cooley and Theta deploy notebooks on an external server that
-mounts the same home directory
-([swift-home](../data-management/filesystem-and-storage/file-systems.md)) as
-used in these systems. However, users cannot directly access the compute nodes
-for these systems. We would like to note that both Cooley and Theta will be
-retired by the end of 2023, therefore we recommend our users to switch to
-Polaris and ThetaGPU instead.
 
 
 ## Additional Notes
@@ -123,8 +75,7 @@ installed. This can be achieved by first creating custom Python environments
 either through [venv](https://docs.python.org/3/library/venv.html) or
 [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 More information on creating custom Python environments can be found in our
-documentation for [Polaris](../polaris/data-science-workflows/python.md) and
-[ThetaGPU](../theta-gpu/data-science-workflows/building-python-packages.md).
+documentation for [Polaris](../polaris/data-science-workflows/python.md).
 After activating the custom environment, `ipykernel` package needs to be
 installed with the following command:
 ```bash
