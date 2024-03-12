@@ -75,8 +75,7 @@ installed. This can be achieved by first creating custom Python environments
 either through [venv](https://docs.python.org/3/library/venv.html) or
 [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 More information on creating custom Python environments can be found in our
-documentation for [Polaris](../polaris/data-science-workflows/python.md) and
-[ThetaGPU](../theta-gpu/data-science-workflows/building-python-packages.md).
+documentation for [Polaris](../polaris/data-science-workflows/python.md).
 After activating the custom environment, `ipykernel` package needs to be
 installed with the following command:
 ```bash

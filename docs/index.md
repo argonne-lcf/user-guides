@@ -21,8 +21,6 @@ If you'd like to get started using our ALCF resources, our [Getting Started webp
 
 If you have an account and an award for Polaris, we suggest visiting on [Getting on Polaris webpage](polaris/getting-started.md).
 
-If you'd like to user ThetaGPU, visit our [Getting Started on ThetaGPU webpage](theta-gpu/getting-started.md).
-
 If you'd like to user our AI accelerators, visit our [Getting Started on AI Testbed webpage](https://argonne-lcf.github.io/ai-testbed-userdocs/#getting-started).
 
 Please send feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
