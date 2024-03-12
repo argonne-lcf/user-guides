@@ -20,6 +20,7 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 
 |            | One Tile   | Full Node  |
 | -----------|-----------:|-----------:|
+| Single Precision Peak Flops* | 23 TFlop/s  | 264 TFlop/s|
 | Double Precision Peak Flops  | 17 TFlop/s  | 203 TFlop/s|
 | Memory Bandwidth (triad)  | 1 TB/s | 12 TB/s |
 | PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
