@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # GPU Monitoring
 Each GPU on ThetaGPU hosts 8 A100 GPUs. You can see information about these GPUs via the command ```nvidia-smi```.
 

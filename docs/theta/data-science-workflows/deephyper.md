@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # DeepHyper
 
 ## DeepHyper: Scalable Hyperparameter Search for Deep Neural Networks

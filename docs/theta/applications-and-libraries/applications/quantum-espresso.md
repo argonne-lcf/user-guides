@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Quantum ESPRESSO on Theta
 ## What Is Quantum ESPRESSO?
 Quantum ESPRESSO (QE) is a suite of codes for electronic structure calculations and materials research. This code uses Density Functional Theory calculations with periodic boundary conditions to estimate energies, forces, and other properties of atomic scale systems. QE runs in parallel (MPI and OpenMP) and is based on plane waves basis functions and pseudopotentials. QE is an open-source project at [http://www.quantum-espresso.org/](http://www.quantum-espresso.org/).

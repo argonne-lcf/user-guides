@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Qbox on Theta
 ## What is Qbox?
 Qbox is a C++/MPI scalable parallel implementation of first-principles molecular dynamics based on the plane-wave, pseudopotential formalism. As described on the Qbox website http://qboxcode.org/index.htm, Qbox is designed for operation on large parallel computers.

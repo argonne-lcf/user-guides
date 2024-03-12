@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Compiling and Linking on ThetaGPU
 ## Overview
 ThetaGPU has AMD processors on the service nodes (thetagpusn1,2) and AMD processors and NVIDIA A100 GPUs on the compute nodes [see overview page]. The service nodes can be used to create containers and launch jobs.

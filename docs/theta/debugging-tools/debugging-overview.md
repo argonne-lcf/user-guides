@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Introduction of Debugging
 ## Initial Setups
 - **Submitting an interactive job** – Save time by queuing once and running multiple times.

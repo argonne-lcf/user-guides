@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # LAMMPS on Theta
 ## Overview
 LAMMPS is a general-purpose molecular dynamics software package for massively parallel computers. It is written in an exceptionally clean style that makes it one of the most popular codes for users to extend and it currently has dozens of user-developed extensions.

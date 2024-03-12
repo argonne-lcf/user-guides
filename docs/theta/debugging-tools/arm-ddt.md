@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Arm DDT on Theta
 ## Availability
 You can use the latest Arm (Allinea) DDT debugger on the XC40 system (Theta).

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # NWChem
 NWChem is a parallel quantum chemistry mainly written in Fortran77 and that uses MPI and OpenMP for distributed and multicore computing. NWChem was designed to solve large-scale  electronic structure calculations with Hartree-Fock, Density Functional Theory, and other wavefunction correlated methods. See full features at [http://www.nwchem-sw.org](http://www.nwchem-sw.org).
 

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # OpenMP on ThetaGPU
 ## OpenMP threading on CPU
 All the compilers available on ThetaGPU supports OpenMP threading.

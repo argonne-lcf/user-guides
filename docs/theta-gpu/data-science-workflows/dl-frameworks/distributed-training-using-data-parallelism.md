@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Distributed Training on ThetaGPU Using Data Parallelism
 There are two schemes for distributed learning:
 

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Example Program and Makefile for Theta
 
 Here is a simple example program and makefile for building on the ALCF's Theta system. When you compile your code for Theta, you are normally cross-compiling for the compute nodes (Intel Xeon Phi 2nd Generation [KNL]), rather than directly compiling for the login nodes (non-KNL). The default, you are using the Intel compiler suite. We also provide the Cray, GNU, and Clang compiler suites via modules.

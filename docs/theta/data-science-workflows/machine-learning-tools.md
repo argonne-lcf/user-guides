@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 ## Machine Learning Tools on Theta
 
 The ALCF is working to support scalable machine learning on Theta. Our focus has been supporting TensorFlow on Theta as it has broad support from Cray & Intel giving large performance boosts on the Intel KNL architecture versus other frameworks. 

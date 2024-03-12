@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # WEST on Theta
 ## What Is WEST?
 WEST is a Fortran/MPI scalable parallel implementation of large-scale electronic structure calculations within many-body perturbation theory. WEST is currently interfaced with Quantum Espresso planewave DFT software. As described on the WEST website [http://west-code.org](http://west-code.org/), WEST is highly scalable and is used for calculations of solids, liquids, nanostructures, molecules, and interfaces, including samples with ~2000 electrons.

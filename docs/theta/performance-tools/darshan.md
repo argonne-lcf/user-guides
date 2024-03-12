@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Darshan
 ## Introduction
 Darshan is a lightweight I/O instrumentation library that can be used to investigate the I/O behavior of production applications. It records statistics, such as the number of files opened, time spent performing I/O, and the amount of data accessed by an application.

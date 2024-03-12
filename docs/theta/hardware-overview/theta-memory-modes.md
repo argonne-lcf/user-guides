@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Theta Memory Modes
 
 The Intel Xeon Phi Generation 2 (KNL) has the ability to change the memory and clustering modes. The memory and cluster mode affect the overall performance of memory access. While many combinations of the memory and clustering modes exist, this discussion will address only the most commonly used configurations.

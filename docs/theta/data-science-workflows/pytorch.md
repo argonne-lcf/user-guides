@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # PyTorch
 
 PyTorch is an open source python-based library built to provide flexibility as a deep learning development platform. The workflow of PyTorch is as close as you can get to python’s scientific computing library – numpy. For detailed instruction of PyTorch package, please visit <https://pytorch.org>. 

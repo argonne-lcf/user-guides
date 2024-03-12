@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Running PyTorch with Conda
 Be aware that these builds use CUDA and will not work on login nodes, which do not have CUDA installed as there are no GPUs.
 

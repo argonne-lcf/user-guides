@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Arm MAP
 ## Introduction
 Build reliable and optimized code for the right results on multiple Server and HPC architectures, from the latest compilers and C++ standards to Intel, 64-bit Arm, AMD, OpenPOWER and Nvidia GPU hardware. Arm Forge combines Arm DDT, the leading debugger for time-saving high performance application debugging, Arm MAP, the trusted performance profiler for invaluable optimization advice across native and Python HPC codes, and Arm Performance Reports for advanced reporting capabilities. Arm DDT and Arm MAP are also available as standalone products.

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Darshan on ThetaGPU
 ## Overview
 Darshan instrumentation on ThetaGPU is not automatically included into the binary like Theta. The user must set the ```LD_PRELOAD``` variable as part of running the job.
