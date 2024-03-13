@@ -5,7 +5,6 @@
     * [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf): This is the users guide.
     * [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf): This is the Reference Guide.  It shows every option and gives you details on how to format various elements on the command line.
 * [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md): shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
-* `qsub2pbs`: Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the `--directives` option, and it will output an executable script.  Note that it outputs `-l select=system=None`.  You would need to change the `None` to whatever system you wanted to target (`polaris`, `aurora`, etc.).
 
 ## Introduction
 At a high level, getting computational tasks run on an HPC system is a two-step process:

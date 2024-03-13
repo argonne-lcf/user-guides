@@ -1,4 +1,4 @@
-# Continuous Integration on Theta
+# Continuous Integration
 
 ## Continuous Integration
 Continuous Integration (CI) in software development is the practice of committing code changes regularly to a version control system and having automated processes perform build, test, package, and deploy activities.
