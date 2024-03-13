@@ -2,8 +2,7 @@
 
 JupyterHub is an open-source service application that enables users to launch
 separate Jupyter instances on a remote server. [ALCF
-JupyterHub](https://jupyter.alcf.anl.gov) provides access to Polaris, ThetaGPU,
-Theta, and Cooley with the same [authentication
+JupyterHub](https://jupyter.alcf.anl.gov) provides access to Polaris with the same [authentication
 protocol](../account-project-management/accounts-and-access/alcf-passcode-tokens.md)
 that is used to access these systems, but through a web interface rather than a
 terminal. On the [ALCF JupyterHub home page](https://jupyter.alcf.anl.gov),
@@ -16,8 +15,7 @@ token](../account-project-management/accounts-and-access/alcf-passcode-tokens.md
   <figcaption>ALCF JupyterHub home page and sign-in screen</figcaption>
 </figure>
 
-We describe below how to use JupyterHub on Polaris, ThetaGPU, Theta, and Cooley
-in more detail.
+We describe below how to use JupyterHub on Polaris in more detail.
 
 ## Polaris
 
