@@ -24,8 +24,6 @@ Lustre : Current Project Quota information for projects you're a member of:
  
 Name                       Type        Filesystem          Used             Quota           Grace
 ==============================================================================================================
-projectX                  Project      theta-fs0            354.4T             700T            -
-projectY                  Project      theta-fs0            916k                 1T            -
 projectZ                  Project      grand                  8k              1000T            -
 projectX                  Project      eagle                1.87T             1000T            -
 ```
