@@ -9,7 +9,6 @@ To get started using our resources, please visit:
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
 - [Running on Polaris](https://docs.alcf.anl.gov/polaris/running-jobs/) 
-- [ThetaGPU Overview](https://www.youtube.com/watch?v=N0Xip1mUZY8)
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 - [Community Data Sharing with ACDC (using Eagle)](https://docs.alcf.anl.gov/data-management/acdc/acdc-overview/)
 
@@ -84,7 +83,7 @@ If your project members have ALCF accounts that are no longer active, please ask
 If you project members have active ALCF accounts but have not been added to your project, they should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
 
 ## Moving Your Data
-We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see Using Globus on Theta.
+We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see [Using Globus](../../data-management/data-transfer/using-globus.md).
 
 ## Project Status Reports for INCITE, ALCC, and ADSP
 **Note:** PIs that are awarded a Director's Discretionary will not receive weekly status project reports.
@@ -116,10 +115,10 @@ Facility policies have been established to provide consistent and reliable servi
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
 
-- myprojectquotas: log into Theta and type this command to view the project directory quotas for all your projects
-- myquota: log into Theta and type this command to view your home directory quota
+- myprojectquotas: log into Polaris and type this command to view the project directory quotas for all your projects
+- myquota: log into Polaris and type this command to view your home directory quota
 
-You can use the following command to check your project balance on Theta:
+You can use the following command to check your project balance on Polaris:
 - sbank-list-allocations -p <Project Shortname> -r <system name>
 
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).
