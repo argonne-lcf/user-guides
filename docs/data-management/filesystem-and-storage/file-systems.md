@@ -1,5 +1,5 @@
 # ALCF File Systems
-Our HPC systems have three discrete file systems for project data: Grand and Eagle. 
+Our HPC systems have discrete file systems for project data: Grand and Eagle. 
 Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively. 
 For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
 

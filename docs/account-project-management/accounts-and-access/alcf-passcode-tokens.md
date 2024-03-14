@@ -91,7 +91,7 @@ For example, if your PIN is 1234 and you received the one-time password string A
 
 **Case 2:** You have a PIN for your physical token: Once a PIN has been set for your physical token, you will need to prepend your PIN to the token password. Otherwise you will not be able to log in. If you do not remember your PIN, please email us so we can verify your identity and reset your Initial PIN.
 
-**Case 3:** It does not say "locked" but still does not work: It is likely that your token has fallen out of sync with the server. If you have pushed the button on your physical token more than 10 times without successfully logging in, it will fail to authenticate because it has lost synchronization with the server. Please try connecting to Theta first. If it still fails, please follow the re-sync instructions below.
+**Case 3:** It does not say "locked" but still does not work: It is likely that your token has fallen out of sync with the server. If you have pushed the button on your physical token more than 10 times without successfully logging in, it will fail to authenticate because it has lost synchronization with the server. Please try connecting to Polaris first. If it still fails, please follow the re-sync instructions below.
 
 ## Re-Sync Instructions
 
@@ -104,7 +104,7 @@ with the server. You can re-synchronize your token using the following procedure
 
 2. Obtain a challenge sequence:
     - Initiate an SSH session to a host that allows token
-      authentication (such as theta.alcf.anl.gov). At the password
+      authentication (such as polaris.alcf.anl.gov). At the password
       prompt, just hit 'Enter'. This will cause the Cryptocard service
       to produce a challenge string consisting of 8 numbers.
 
