@@ -172,8 +172,3 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-
 ![GPU memory latency](images/mem-latency-01.png "GPU memory latency")
 
 
-
-
-
-
-
