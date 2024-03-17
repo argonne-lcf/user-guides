@@ -106,8 +106,13 @@ Step 4: Check if the login nodes of Step 2 and Step 3 are the same or not. If no
 $ ssh aurora-uan-xxxx
 ```
 
-Step 5: Open the URL printed by VTune server in firefox web browser on your local computer.
-For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
+Step 5: Open the URL printed by VTune server in firefox web browser on your local computer. For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
+
+* Accept VTune server certificate:
+When you open VTune GUI, your web browser will complain about VTune self-signed certificate. You either need to tell web browser to proceed or install VTune server certificate on you client machine so that browser trusts it. To install the certificate note the path to the public part of the certificate printed by VTune server in the output, copy it to you client machine and add to the trusted certificates.
+
+* Set the passphrase:
+When you run the server for the first time the URL that it outputs contains a one-time-token. When you open such URL in the browser VTune server prompts you to set a passphrase. Other users can't access your VTune server without knowing this passphrase. The hash of the passphase will be persisted on the server. Also, a secure HTTP cookie will be stored in your browser so that you do not need to enter the passphrase each time you open VTune GUI.
 
 ![vtune-backend warning](images/FireFox-VTune02.png "Security warning (click 'Advanced...' and then 'Accept the Risk and Continue' ")
 
