@@ -2,9 +2,9 @@
 
 ## References  
 [Intel Advisor User Guide](https://www.intel.com/content/www/us/en/docs/advisor/user-guide/current/overview.html)
+
 [Intel Advisor Performance Optimization Cookbook](https://www.intel.com/content/www/us/en/docs/advisor/cookbook/current/overview.html)
 
-[Downloadable documents for VTune Profiler](https://d1hdbi2t0py8f.cloudfront.net/vtune-docs/index.html)
 
 ## Introduction
 

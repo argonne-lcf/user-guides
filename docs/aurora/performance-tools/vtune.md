@@ -2,6 +2,7 @@
 
 ## References  
 [Intel VTune Profiler User Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/current/overview.html)
+
 [Downloadable documents for VTune Profiler](https://d1hdbi2t0py8f.cloudfront.net/vtune-docs/index.html)
 
 ## Introduction
