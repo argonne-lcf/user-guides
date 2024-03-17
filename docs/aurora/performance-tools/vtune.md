@@ -44,6 +44,7 @@ The GPU Compute/Media Hotspots analysis is a good next step if you have already 
 * a performance-critical kernel for further analysis and optimization;
 * a performance-critical kernel that it is tightly connected with other kernels in the program and may slow down their performance.
 
+For source level in-kernal profiling, applications should to be bulit with __*-fdebug-info-for-profiling -gline-tables-only*__.
 
 
 ## A quick instruction for VTune analysis on Intel GPUs
