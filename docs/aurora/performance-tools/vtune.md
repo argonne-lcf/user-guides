@@ -147,11 +147,11 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_gpu-hot
 $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob characterization-mode=instruction-count -r VTune_inst-count ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
-![GPU instruction count 1](images/inst-count-01.png "GPU instruction count 1")
+![GPU instruction count 1](images/Inst-count-01.png "GPU instruction count 1")
 
-![GPU instruction count 2](images/inst-count-02.png "GPU instruction count 2")
+![GPU instruction count 2](images/Inst-count-02.png "GPU instruction count 2")
 
-![GPU instruction count 3](images/inst-count-03.png "GPU instruction count 3")
+![GPU instruction count 3](images/Inst-count-03.png "GPU instruction count 3")
 
 
 ### VTune source analysis
