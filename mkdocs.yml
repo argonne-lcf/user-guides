@@ -298,6 +298,9 @@ extra:
   social:
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/alcf-userguide'
+  analytics:
+    provider: google
+    property: G-4M48E2L33R
 
 plugins:
   - include-markdown
