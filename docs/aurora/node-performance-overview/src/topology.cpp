@@ -28,8 +28,10 @@ int main() {
   auto devices = sycl::device::get_devices(sycl::info::device_type::gpu);
 
   using d_sd_t = std::pair<int, int>;
-  std::unordered_map<zes_fabric_port_id_t, std::set<d_sd_t>> h;
+  using connection_t = std::set<d_sd_t>;
 
+  // Get Disjoint Connection
+  std::unordered_map<zes_fabric_port_id_t, connection_t> h;
   for (int i = 0; i < devices.size(); i++) {
     zes_device_handle_t hDevice =
         sycl::get_native<sycl::backend::ext_oneapi_level_zero>(devices[i]);
@@ -47,16 +49,16 @@ int main() {
       h[hState.remotePortId].insert({i, hProperties.subdeviceId});
     }
   }
-  // Merge overlaping set
-  std::set<std::set<d_sd_t>> disjoin_connections;
-  for (auto &[_, v] : h) {
+  std::set<connection_t> disjoin_connections;
+  for (auto &[_, v] : h)
     disjoin_connections.insert(v);
-  }
-  std::vector<std::set<d_sd_t>> connections;
+
+  // Join Connection
+  std::vector<connection_t> connections;
   for (auto &disjoin_connection : disjoin_connections) {
     for (auto &connection : connections)
-      for (auto &d : disjoin_connection)
-        if (connection.count(d) != 0) {
+      for (auto &dsd : disjoin_connection)
+        if (connection.count(dsd) != 0) {
           connection.insert(disjoin_connection.begin(), disjoin_connection.end());
           goto next;
         }
