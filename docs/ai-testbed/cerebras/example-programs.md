@@ -141,7 +141,7 @@ The last parts of the output should resemble the following:
 ```
 --->
 
-##Llama-7B 
+## Llama-7B 
 The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and it's overview at https://github.com/Cerebras/modelzoo/tree/main/modelzoo/transformers/pytorch/llama#configs-included-for-this-model. 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
