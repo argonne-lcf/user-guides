@@ -15,6 +15,7 @@ git checkout Release_2.1.1
 cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.1.1/anl_shared
 --->
 
+<!---
 ## UNet
 
 An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
@@ -35,6 +36,7 @@ export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.1.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
+--->
 
 <!--- Appears to not have been ported to 1.7.1
 ## BraggNN
@@ -102,7 +104,7 @@ The last parts of the output should resemble the following, with messages about 
 2023-11-29 20:13:25,691 INFO:   Training completed successfully!
 2023-11-29 20:13:25,691 INFO:   Processed 1024000 sample(s) in 336.373620536 seconds.
 ```
-
+<!---
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
@@ -137,3 +139,4 @@ The last parts of the output should resemble the following:
 2023-11-29 21:14:30,142 INFO:   Training completed successfully!
 2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
 ```
+--->
