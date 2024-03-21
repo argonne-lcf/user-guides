@@ -4,15 +4,15 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_2.0.3
-cd ~/R_2.0.3
+mkdir ~/R_2.1.1
+cd ~/R_2.1.1
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.0.3
+git checkout Release_2.1.1
 ```
 <!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.0.3/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.1.1/anl_shared
 --->
 
 ## UNet
@@ -22,18 +22,18 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment and make sure that requirements are installed.
 
 ```console
-source ~/R_2.0.3/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.0.3/modelzoo/requirements.txt
+source ~/R_2.1.1/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.1.1/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.0.3/modelzoo/modelzoo/vision/pytorch/unet
+cd ~/R_2.1.1/modelzoo/modelzoo/vision/pytorch/unet
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.0.3/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.1.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 
 <!--- Appears to not have been ported to 1.7.1
@@ -47,7 +47,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_2.0.3/anl_shared/braggnn/tf
+cd ~/R_2.1.1/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -67,20 +67,20 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_2.0.3/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.0.3/modelzoo/requirements.txt
+source ~/R_2.1.1/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.1.1/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.0.3/modelzoo/modelzoo/transformers/pytorch/bert
+cd ~/R_2.1.1/modelzoo/modelzoo/transformers/pytorch/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.0.3/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.1.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
-Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.0.3/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
+Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.1.1/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
@@ -111,18 +111,18 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
 ```console
-source ~/R_2.0.3/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.0.3/modelzoo/requirements.txt
+source ~/R_2.1.1/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.1.1/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.0.3/modelzoo/modelzoo/transformers/pytorch/gptj
+cd ~/R_2.1.1/modelzoo/modelzoo/transformers/pytorch/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.0.3/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.1.1/modelzoo/ --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
