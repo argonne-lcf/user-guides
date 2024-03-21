@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <level_zero/ze_api.h>
 #include <level_zero/zes_api.h>
@@ -22,12 +23,13 @@ bool operator==(const zes_fabric_port_id_t &lhs, const zes_fabric_port_id_t &rhs
   return lhs.fabricId == rhs.fabricId && lhs.attachId == rhs.attachId &&
          lhs.portNumber == rhs.portNumber;
 };
-
-int main() {
+// Without arguments print plane connectivity (groups of GPU Tile direcly connected)
+// Is argment X is passed, print the X Tiles.
+int main(int argc, char **argv) {
 
   auto devices = sycl::device::get_devices(sycl::info::device_type::gpu);
 
-  using d_sd_t = std::pair<int, int>;
+  using d_sd_t = std::string;
   using connection_t = std::set<d_sd_t>;
 
   // Get Disjoint Connection
@@ -42,11 +44,12 @@ int main() {
     for (auto &hPort : fp_handles) {
       zes_fabric_port_properties_t hProperties;
       zesFabricPortGetProperties(hPort, &hProperties);
-      h[hProperties.portId].insert({i, hProperties.subdeviceId});
+      std::string id = std::to_string(i) + "." + std::to_string(hProperties.subdeviceId);
+      h[hProperties.portId].insert(id);
 
       zes_fabric_port_state_t hState;
       zesFabricPortGetState(hPort, &hState);
-      h[hState.remotePortId].insert({i, hProperties.subdeviceId});
+      h[hState.remotePortId].insert(id);
     }
   }
   std::set<connection_t> disjoin_connections;
@@ -63,12 +66,20 @@ int main() {
           goto next;
         }
     connections.push_back(disjoin_connection);
-  next : {}
+  next: {}
   }
+  // Prints
+  if (argc < 2) {
+    for (auto &connection : connections) {
+      for (auto &d : connection)
+        std::cout << d << " ";
+      std::cout << std::endl;
+    }
+  } else {
+    std::vector<d_sd_t> flatten_connections;
+    for (auto &connection : connections)
+      flatten_connections.insert(flatten_connections.begin(), connection.begin(), connection.end());
 
-  for (auto &connection : connections) {
-    for (auto &[d, sd] : connection)
-      std::cout << d << ":" << sd << " ";
-    std::cout << std::endl;
+    std::cout << flatten_connections[atoi(argv[1])] << std::endl;
   }
 }

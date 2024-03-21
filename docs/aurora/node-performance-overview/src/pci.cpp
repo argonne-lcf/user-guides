@@ -58,10 +58,10 @@ int main() {
   fill_randomly(Q, N, {a_cpu, b_cpu, a_gpu, b_gpu});
 
   auto H2D_time = datatransfer(Q, N_byte, {{a_gpu, a_cpu}});
-  const double H2D_bw = (N_byte * world_size) / H2D_time;
-  if (world_rank == 0)
+  if (world_rank == 0) {
+    const double H2D_bw = (N_byte * world_size) / H2D_time;
     std::cout << "H2D " << H2D_bw << "GB/s" << std::endl;
-
+  }
   auto D2H_time = datatransfer(Q, N_byte, {{a_cpu, a_gpu}});
   if (world_rank == 0) {
     const double D2H_bw = (N_byte * world_size) / D2H_time;
