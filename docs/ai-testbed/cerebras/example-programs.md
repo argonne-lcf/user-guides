@@ -142,7 +142,9 @@ The last parts of the output should resemble the following:
 --->
 
 ## Llama-7B 
-The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and it's overview at https://github.com/Cerebras/modelzoo/tree/main/modelzoo/transformers/pytorch/llama#configs-included-for-this-model. 
+The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and it's overview at https://github.com/Cerebras/modelzoo/tree/main/modelzoo/transformers/pytorch/llama#configs-included-for-this-model. This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
+
+
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
 source ~/R_2.1.1/venv_cerebras_pt/bin/activate
