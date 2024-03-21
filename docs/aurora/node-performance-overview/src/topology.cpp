@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
   for (auto &[_, v] : h)
     disjoin_connections.insert(v);
 
-  // Join Connection
+  // Join Connection (assume fully connected plan)
   std::vector<connection_t> connections;
   for (auto &disjoin_connection : disjoin_connections) {
     for (auto &connection : connections)
