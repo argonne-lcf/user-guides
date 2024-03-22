@@ -104,7 +104,7 @@ The last parts of the output should resemble the following, with messages about 
 2023-11-29 20:13:25,691 INFO:   Training completed successfully!
 2023-11-29 20:13:25,691 INFO:   Processed 1024000 sample(s) in 336.373620536 seconds.
 ```
-<!---
+
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
@@ -139,7 +139,6 @@ The last parts of the output should resemble the following:
 2023-11-29 21:14:30,142 INFO:   Training completed successfully!
 2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
 ```
---->
 
 ## Llama-7B 
 The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and it's overview at https://github.com/Cerebras/modelzoo/tree/main/modelzoo/transformers/pytorch/llama#configs-included-for-this-model. This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
