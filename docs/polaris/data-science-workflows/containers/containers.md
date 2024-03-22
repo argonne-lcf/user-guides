@@ -1,7 +1,5 @@
 # Containers on Polaris
 
-### *Containerized workloads are currently unavailable on Polaris.*
-
 Since Polaris is using NVIDIA A100 GPUs, there can be portability advantages with other NVIDIA-based systems if your workloads use containers.  In this document, we'll outline some information about containers on Polaris including how to build custom containers, how to run containers at scale, and common gotchas. 
 
 Container creation can be achieved one of two ways either by using Docker on your local machine and publishing it to DockerHub, or by using a Singularity recipe file and building on a Polaris worker node. If you are not interested in building a container and only want to use the available containers, you can read the section on [available containers](#available-containers).
