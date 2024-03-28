@@ -37,11 +37,12 @@ popd
 pip install soundfile
 ```
 
-Note: if you encounter problems trying to update an existing groqflow conda environment, consider removing the existing environment with the following command, and recreating it. 
-```bash
-conda remove --name groqflow --all -y
-```
+Note: if you encounter problems trying to update an existing groqflow conda environment, consider removing the existing environment with the following command, and recreating it. Make sure you deactivate the environment before removing it. 
+    ```bash
+      conda remove --name groqflow --all -y
+    ```
 
+### Use Groqflow
 To use groqfloq,
 ```bash
 conda activate groqflow
