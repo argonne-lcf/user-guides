@@ -75,7 +75,7 @@ template <typename T> void bench(std::string precision) {
 int main(int argc, char **argv) {
 
   MPI_Init(NULL, NULL);
-  bench<float>("single precision flops");
-  bench<double>("double precision flops");
+  bench<float>("Single Precision Peak Flops");
+  bench<double>("Double Precision Peak Flops");
   MPI_Finalize();
 }

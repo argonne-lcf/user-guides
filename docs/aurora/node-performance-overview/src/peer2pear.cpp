@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
   auto unitime = datatransfer(N, sends, recvs);
   if (world_rank == 0) {
     const double unitime_bw = (N_byte * world_size) / unitime;
-    std::cout << mode << " Unidirectional: " << unitime_bw << " GB/s" << std::endl;
+    std::cout << mode << " Unidirectional Bandwidth: " << unitime_bw << " GB/s" << std::endl;
   }
   if (world_rank % 2 == 0)
     recvs.push_back({world_rank + 1, a_gpu});
@@ -91,6 +91,6 @@ int main(int argc, char *argv[]) {
   auto bitime = datatransfer(N, sends, recvs);
   if (world_rank == 0) {
     const double bitime_bw = (2L * N_byte * world_size) / bitime;
-    std::cout << mode << " Bidirectional: " << bitime_bw << " GB/s" << std::endl;
+    std::cout << mode << " Bidirectional Bandwidth: " << bitime_bw << " GB/s" << std::endl;
   }
 }
