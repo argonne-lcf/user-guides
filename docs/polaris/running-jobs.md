@@ -12,8 +12,8 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 | debug         | 1        | 2        | 5 min    | 1 hr     | max 16 nodes in use by this queue ay any given time; Only 8 nodes are exclusive (see **Note** below) |
 | debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                                                       |
 | prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                                             |
-| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
-| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                          |
+| *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
+| *demand*        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                          |
 
 ******
 
