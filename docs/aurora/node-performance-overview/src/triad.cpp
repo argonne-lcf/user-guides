@@ -44,7 +44,7 @@ int main() {
 #pragma omp target exit data map(from : Aptr[ : globalWI])
   const double bw = (3 * sizeof(double) * globalWI * world_size * 1E-9) / min_time;
   if (world_rank == 0)
-    std::cout << "GB/s BW reached: " << bw << std::endl;
+    std::cout << "Triad: " << bw << " GB/s"<< std::endl;
 
   for (int i = 0; i < globalWI; i++) {
     assert(almost_equal(Aptr[i], 2.0 * Bptr[i] + Cptr[i], 0.01));

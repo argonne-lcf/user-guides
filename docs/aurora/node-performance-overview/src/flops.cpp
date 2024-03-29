@@ -69,13 +69,13 @@ template <typename T> void bench(std::string precision) {
   const double workPerWI{128 * 16 * 2}; // Indicates flops executed per work-item
   const double gflops = (workPerWI * globalWI * world_size * 1E-9) / min_time;
   if (world_rank == 0)
-    std::cout << precision << " gflops: " << gflops << std::endl;
+    std::cout << precision << ": " << gflops << " GFlop/s"<< std::endl;
 }
 
 int main(int argc, char **argv) {
 
   MPI_Init(NULL, NULL);
-  bench<float>("single precision");
-  bench<double>("double precision");
+  bench<float>("single precision flops:");
+  bench<double>("double precision flops:");
   MPI_Finalize();
 }

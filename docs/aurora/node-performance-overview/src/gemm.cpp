@@ -86,7 +86,7 @@ void run_gemm_example(
 
   const double flops = (2. * size * size * size * world_size) / min_time;
   if (world_rank == 0) {
-    std::cout << name << " " << flops << " GFlops" << std::endl;
+    std::cout << name << ": " << flops << " GFlop/s" << std::endl;
   }
 }
 

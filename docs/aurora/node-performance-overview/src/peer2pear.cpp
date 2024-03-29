@@ -56,7 +56,9 @@ unsigned long datatransfer(int N, std::vector<std::pair<int, int *>> &sends,
   return min_time;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+
+  std::string mode = (argc == 1) ? "Tile2Tile" : argv[1];
   MPI_Init(NULL, NULL);
   int world_size, world_rank;
   MPI_Comm_size(MPI_COMM_WORLD, &world_size);
@@ -79,7 +81,7 @@ int main() {
   auto unitime = datatransfer(N, sends, recvs);
   if (world_rank == 0) {
     const double unitime_bw = (N_byte * world_size) / unitime;
-    std::cout << "Tile2Tile Unidirectional: " << unitime_bw << "GB/s" << std::endl;
+    std::cout << mode << " Unidirectional: " << unitime_bw << " GB/s" << std::endl;
   }
   if (world_rank % 2 == 0)
     recvs.push_back({world_rank + 1, a_gpu});
@@ -89,6 +91,6 @@ int main() {
   auto bitime = datatransfer(N, sends, recvs);
   if (world_rank == 0) {
     const double bitime_bw = (2L * N_byte * world_size) / bitime;
-    std::cout << "Tile2Tile Bidirectional: " << bitime_bw << "GB/s" << std::endl;
+    std::cout << mode << " Bidirectional: " << bitime_bw << " GB/s" << std::endl;
   }
 }
