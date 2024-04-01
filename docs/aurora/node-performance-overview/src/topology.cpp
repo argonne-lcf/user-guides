@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <iostream>
-#include <level_zero/ze_api.h>
 #include <level_zero/zes_api.h>
 #include <set>
 #include <unordered_map>
@@ -52,12 +51,11 @@ int main(int argc, char **argv) {
   {
     std::unordered_map<zes_fabric_port_id_t, connection_t> h;
     for (int i = 0; i < hDevices.size(); i++) {
-
       uint32_t numPorts;
       zesDeviceEnumFabricPorts(hDevices[i], &numPorts, nullptr);
-      std::vector<zes_fabric_port_handle_t> fp_handles(numPorts);
-      zesDeviceEnumFabricPorts(hDevices[i], &numPorts, fp_handles.data());
-      for (auto &hPort : fp_handles) {
+      std::vector<zes_fabric_port_handle_t> hFabricPorts(numPorts);
+      zesDeviceEnumFabricPorts(hDevices[i], &numPorts, hFabricPorts.data());
+      for (auto &hPort : hFabricPorts) {
         zes_fabric_port_properties_t hProperties;
         zesFabricPortGetProperties(hPort, &hProperties);
         std::string id =
