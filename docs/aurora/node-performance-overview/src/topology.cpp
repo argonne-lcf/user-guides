@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <level_zero/ze_api.h>
 #include <level_zero/zes_api.h>
 #include <set>
 #include <unordered_map>
@@ -25,21 +26,21 @@ bool operator==(const zes_fabric_port_id_t &lhs,
 // Without arguments print plane connectivity (groups of GPU Tile direcly
 // connected) Is argment X is passed, print the X Tiles.
 int main(int argc, char **argv) {
-  zesInit(0);
+  zeInit(0);
 
   // Get devices
   std::vector<zes_device_handle_t> hDevices;
   {
     uint32_t driverCount;
-    zesDriverGet(&driverCount, NULL);
+    zeDriverGet(&driverCount, NULL);
     std::vector<zes_driver_handle_t> hDrivers(driverCount);
-    zesDriverGet(&driverCount, hDrivers.data());
+    zeDriverGet(&driverCount, hDrivers.data());
     for (auto hDriver : hDrivers) {
       uint32_t deviceCount;
-      zesDeviceGet(hDriver, &deviceCount, NULL);
+      zeDeviceGet(hDriver, &deviceCount, NULL);
       int s = hDevices.size();
       hDevices.resize(s + deviceCount);
-      zesDeviceGet(hDriver, &deviceCount, hDevices.data() + s);
+      zeDeviceGet(hDriver, &deviceCount, hDevices.data() + s);
     }
   }
 
