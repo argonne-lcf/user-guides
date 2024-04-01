@@ -24,7 +24,7 @@ mpirun -n 2 -- ./gpu_tile_compact.sh ./peer2pear "Tile2Tile"
 mpirun -n 12 -- ./gpu_tile_compact.sh ./peer2pear "Tile2Tile"
 
 # Gpu 2 Gpu (same plan)
-icpx -fsycl -lze_loader topology.cpp -o topology
+icpx -lze_loader topology.cpp -o topology
 mpirun -n 2 -- ./gpu_tile_plan_compact.sh ./peer2pear "GPU2GPU"
 mpirun -n 12 -- ./gpu_tile_plan_compact.sh ./peer2pear "GPU2GPU"
 
