@@ -90,8 +90,8 @@ int main(int argc, char *argv[]) {
   desc_2d.set_value(oneapi::mkl::dft::config_param::NUMBER_OF_TRANSFORMS, howmany_2d);
   desc_2d.set_value(oneapi::mkl::dft::config_param::FWD_DISTANCE, size * size);
   desc_2d.set_value(oneapi::mkl::dft::config_param::BWD_DISTANCE, size * size);
-  desc_2d.set_value(oneapi::mkl::dft::config_param::INPUT_STRIDES, rstrides);
-  desc_2d.set_value(oneapi::mkl::dft::config_param::OUTPUT_STRIDES, cstrides);
+  desc_2d.set_value(oneapi::mkl::dft::config_param::FWD_STRIDES, rstrides);
+  desc_2d.set_value(oneapi::mkl::dft::config_param::BWD_STRIDES, cstrides);
 
   fft_c2c_batch_onemkl(&desc_2d, size * size, howmany_2d, "Single-precision FFT C2C 2D");
 
