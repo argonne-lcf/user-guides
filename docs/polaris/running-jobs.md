@@ -23,6 +23,8 @@ This means jobs in the preemptable queue may be preempted (killed without any wa
 Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
 Please use the following command to view details of a queue: ```qstat -Qf <queuename>```
 
+To make your job re-runable add the following PBS directive: ```#PBS -r y``` This will ensure your job will restart once the demand job is complete. 
+
 **Note:** The debug queue has 8 exclusively dedicated nodes.
 If there are free nodes in production, then debug jobs can take another 8 nodes for a total of 16.
 
