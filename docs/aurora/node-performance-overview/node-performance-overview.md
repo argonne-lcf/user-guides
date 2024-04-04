@@ -26,10 +26,10 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 | PCIe Unidirectional Bandwidth (H2D) |    54 GB/s |    329 GB/s |     6.1 |
 | PCIe Unidirectional Bandwidth (D2H) |    55 GB/s |    263 GB/s |     4.8 |
 |        PCIe Bidirectional Bandwidth |    76 GB/s |    357 GB/s |     4.7 |
-|  Tile2Tile Unidirectional Bandwidth |    74 GB/s |    442 GB/s |     6.0 |
-|   Tile2Tile Bidirectional Bandwidth |   135 GB/s |    810 GB/s |     6.0 |
-|    GPU2GPU Unidirectional Bandwidth |    31 GB/s |    187 GB/s |     6.0 |
-|     GPU2GPU Bidirectional Bandwidth |    47 GB/s |    285 GB/s |     6.1 |
+|  Tile2Tile Unidirectional Bandwidth |   196 GB/s |      1 TB/s |     6.0 |
+|   Tile2Tile Bidirectional Bandwidth |   287 GB/s |      2 TB/s |     5.9 |
+|    GPU2GPU Unidirectional Bandwidth |    15 GB/s |     95 GB/s |     6.3 |
+|     GPU2GPU Bidirectional Bandwidth |    23 GB/s |    142 GB/s |     6.2 |
 
 ### Benchmark description
  

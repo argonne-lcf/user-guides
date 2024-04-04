@@ -33,7 +33,7 @@ unsigned long datatransfer(int N, std::vector<std::pair<int, float *>> &sends,
 
     for (auto &[dest, ptr] : sends) {
       MPI_Request request = MPI_REQUEST_NULL;
-      MPI_Isend(ptr, N, MPI_INT, dest, 0, MPI_COMM_WORLD, &request);
+      MPI_Isend(ptr, N, MPI_FLOAT, dest, 0, MPI_COMM_WORLD, &request);
       requests.push_back(request);
     }
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
   int num_pair = world_size / 2;
 
   sycl::queue Q(sycl::gpu_selector_v);
-  const int N = 1 << 28;
+  const int N = 1 << 25;
   const int N_byte = N * sizeof(float);
   auto *a_gpu = sycl::malloc_device<float>(N, Q);
   fill_randomly(Q, N, {a_gpu});
