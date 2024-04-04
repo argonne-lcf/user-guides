@@ -22,7 +22,6 @@ unsigned long datatransfer(int N, std::vector<std::pair<int, float *>> &sends,
 
   unsigned long min_time = std::numeric_limits<unsigned long>::max();
   int num_iteration = 10;
-  sycl::queue Q(sycl::gpu_selector_v);
 
   for (int r = 0; r < num_iteration; r++) {
     MPI_Barrier(MPI_COMM_WORLD);
