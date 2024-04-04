@@ -43,8 +43,7 @@ unsigned long datatransfer(int N, std::vector<std::pair<int, float *>> &sends,
       requests.push_back(request);
     }
 
-    for (auto &request : requests)
-      MPI_Wait(&request, MPI_STATUS_IGNORE);
+    MPI_Waitall(requests.size(), requests.data(), MPI_STATUS_IGNORE);
 
     const unsigned long l_end =
         std::chrono::high_resolution_clock::now().time_since_epoch().count();
