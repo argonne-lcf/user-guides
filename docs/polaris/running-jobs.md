@@ -109,7 +109,7 @@ Users with different needs, such as assigning multiple GPUs per MPI rank, can mo
 
 Here is how to submit an interactive job to, for example, edit/build/test an application Polaris compute nodes:
 ```
-qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
 ```
 
 This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.

@@ -50,8 +50,7 @@ from the queue. If not, the job kicks off and it begins to use up the user's
 allocation based on the chosen job options. It's crucial for users to shut down
 the server when resources are no longer required. Failing to do so will result
 in continued consumption of the allocated time until the predetermined runtime
-concludes. 
-
+concludes.
 
 <figure markdown>
   ![Job queued](files/Jupyter-3-job-queued.png){ width="700" }
@@ -61,6 +60,14 @@ concludes.
 > **_NOTE:_** If you would like to change your selection about where to run the
 > Jupyter instance after the Notebook started, you need to stop the server to be
 > able to see the drop-down menu again.
+
+## Known Issues
+
+### Spawn Failed: Timeout
+
+This happens when the queue is backed up. Since Jupyter is interactive, it expects an immediate connect. 
+Therefore, it waits 5 minutes for your job to begin before throwing this error. 
+You can monitor the queue usage with [Gronk](https://status.alcf.anl.gov/#/polaris) and submit when there isn't a wait. 
 
 
 ## Additional Notes
