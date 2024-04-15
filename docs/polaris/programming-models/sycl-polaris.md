@@ -29,7 +29,7 @@ This module (compilers, libraries) gets built periodically from the latest open-
 - Loading this module switches the default programming environment to GNU and with the following dependencies
   - PrgEnv-gnu
   - cudatoolkit-standalone
-- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
+- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=cuda:gpu`
 
 ## Example (memory intilization)
 
