@@ -39,6 +39,7 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
+    - System Updates: polaris/system-updates.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
