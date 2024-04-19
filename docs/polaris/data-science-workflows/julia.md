@@ -300,12 +300,11 @@ Verify that `JULIA_DEPOT_PATH` is set to the correct path and `JULIA_PATH`
 points to the Julia executable. When using `juliaup`, the Julia executable is
 located in the `juliaup` folder of your `JULIA_DEPOT_PATH`.
 
-### Multi-node jobs
+### Large-scale parallelism
 
-The default `TMPDIR` in a job on Polaris is set to a temp directory that only exists on the head node of a job. `CUDA.jl` uses the `nvcc` compiler to compile GPU kernels, which are placed in `TMPDIR` resulting in MPI ranks on other nodes of a job reporting errors that the directory does not exist. To avoid this, we recommend setting the `TMPDIR` to a directory in your home or project directory, which are accessible by all compute nodes.
-
+`CUDA.jl` uses the `nvcc` compiler to compile GPU kernels. This will create object files in the `TEMP` filesystem. The default `TMPDIR` in a job on Polaris is set to a temp directory that only exists on the head node of a job. We recommend setting `TEMPDIR` to a local directory on each compute node.
 ```bash
-export TMPDIR=${HOME}/julia-tmp
+export TMPDIR=/local/scratch
 ```
 
 A simple example to test gpu-aware MPI on multiple nodes is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/Julia/test_mpi).
