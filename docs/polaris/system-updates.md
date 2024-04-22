@@ -29,26 +29,25 @@ ALCF-managed software is accessible to users via modules.
 
 The base suite of software tools and libraries can be accessed by loading the
 `spack-pe-base` module. This adds a path to `$MODULEPATH` which contains
-numerous modules that can be viewed with `module avail`. There are also
-many hidden modules which can be viewed with `module --show-hidden avail`; these
-hidden modules are dependencies of installed packages which can be loaded
-independently.
+numerous modules. 
 
-For example, to load `cmake` starting from the default environment, a user would
-run the following commands:
+For example, to load `cmake` starting from the default environment, a user
+should run the following commands:
 ```
 module use /soft/modulefiles
 module load spack-pe-base
 module load cmake
 ```
-Running `module avail` would reveal further available modules. 
+Other modules in `spack-pe-base` can be browsed by running `module avail` or
+`module --show-hidden avail`. The latter shows hidden modules which are
+installed as dependencies of the un-hidden modules.
 
-In addition to the base suite, a suite of higher-level libraries are installed
+In addition to the base stack, a suite of higher-level libraries are installed
 in the `spack-pe-gnu` module. These are built with and are dependent on
 `PrgEnv-gnu`. A `PrgEnv-nvidia`-compatible stack will be available in the
 future.
 
 Note that not all software is installed through Spack; many applications and
-libraries will still be installed as standalone packages in `/soft`. Users are
-encouraged to browse the available modules with `module avail` to see what
-software is installed on the system.
+libraries are installed as standalone packages in `/soft`. Users are encouraged
+to browse the available modules with `module avail` to see what software is
+installed on the system.
