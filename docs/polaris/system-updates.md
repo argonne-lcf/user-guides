@@ -22,4 +22,32 @@ More to come
 
 ### Spack
 
-More to come
+We have newly installed Spack deployments in `/soft`. Spack is an HPC-oriented
+package manager which ALCF uses to install software for the user environment.
+However, no knowledge of Spack is necessary to use these software offerings. All
+ALCF-managed software is accessible to users via modules.
+
+The base suite of software tools and libraries can be accessed by loading the
+`spack-pe-base` module. This adds a path to `$MODULEPATH` which contains
+numerous modules. 
+
+For example, to load `cmake` starting from the default environment, a user
+should run the following commands:
+```
+module use /soft/modulefiles
+module load spack-pe-base
+module load cmake
+```
+Other modules in `spack-pe-base` can be browsed by running `module avail` or
+`module --show-hidden avail`. The latter shows hidden modules which are
+installed as dependencies of the un-hidden modules.
+
+In addition to the base stack, a suite of higher-level libraries are installed
+in the `spack-pe-gnu` module. These are built with and are dependent on
+`PrgEnv-gnu`. A `PrgEnv-nvidia`-compatible stack will be available in the
+future.
+
+Note that not all software is installed through Spack; many applications and
+libraries are installed as standalone packages in `/soft`. Users are encouraged
+to browse the available modules with `module avail` to see what software is
+installed on the system.
