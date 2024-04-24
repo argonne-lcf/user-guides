@@ -18,7 +18,7 @@ The second step is to log in to a SambaNova node from the **login node**.
 
 ### Log in to Login Node
 
-Log in to the SambaNova **login node** from your local machine using the below command. This uses the **MobilePASS+** token generated every time you log in to the system. This is the same passcode used to authenticate into other ALCF systems, such as **Polaris**,  **Theta** and **Cooley**.
+Log in to the SambaNova **login node** from your local machine using the below command. This uses the **MobilePASS+** token generated every time you log in to the system. This is the same passcode used to authenticate into other ALCF systems, such as **Polaris**.
 
 *In the examples below, replace* ***ALCFUserID*** *with your ALCF user id.*
 
