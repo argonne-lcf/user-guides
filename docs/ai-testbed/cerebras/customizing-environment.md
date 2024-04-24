@@ -7,16 +7,16 @@
 ```console
 #Make your home directory navigable
 chmod a+xr ~/
-mkdir ~/R_2.1.1
-chmod a+x ~/R_2.1.1/
-cd ~/R_2.1.1
+mkdir ~/R_2.2.0
+chmod a+x ~/R_2.2.0/
+cd ~/R_2.2.0
 # Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_cerebras_pt
 /software/cerebras/python3.8/bin/python3.8 -m venv venv_cerebras_pt
 source venv_cerebras_pt/bin/activate
 pip install --upgrade pip
-pip install cerebras_pytorch==2.1.1
+pip install cerebras_pytorch==2.2.0
 ```
 
 <!--- No longer any TensorFlow wheel
@@ -28,7 +28,7 @@ pip install cerebras_pytorch==2.1.1
 To activate a virtual environments
 
 ```console
-source ~/R_2.1.1/venv_cerebras_pt/bin/activate
+source ~/R_2.2.0/venv_cerebras_pt/bin/activate
 ```
 
 To deactivate a virtual environment,
