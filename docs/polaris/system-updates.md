@@ -143,3 +143,11 @@ To avoid this you can either:
  - Reduce the parallelism of your compile, such as using `-j` or `-j4` flags
  - Request a debug node and run your compile there where you will have the full resources of the node at your disposal
 
+### Datascience Anaconda Module Updates
+We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
+
+To use the new environment, type:
+```
+module use /soft/modulefiles 
+module load conda; conda activate
+```
