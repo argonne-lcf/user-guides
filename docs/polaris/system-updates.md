@@ -2,19 +2,19 @@
 
 ## 2024-04-22
 
-We will have a multi-day outage on Polaris to upgrade management software to HPCM 1.10 from April 22-25, 2024.
-These version changes will take place with the upgrade to HPCM 1.10:
+The management software on Polaris has been upgraded to HPCM 1.10
+The following version changes are in place with the upgrade to HPCM 1.10:
 
 - HPE Cray Programming Environment (CPE) 23.12
+- SlingShot version 2.1.2
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
 - SUSE 15 SP5
 
-We intend to keep Grand and Eagle operational during the upgrade. 
-Users should use Globus to access their project data. 
-For more information, visit: https://docs.alcf.anl.gov/data-management/data-transfer/using-globus/
 
+### Re-building user codes ###
+Many user codes will need to be re-built and/or re-linked against the newer version of the programming environment (23.12) and spack provided dependencies.
 
 ### Changes to the user software environment
 
@@ -22,7 +22,7 @@ In addition to the system upgrades, several changes have been made to the user
 software environment which may impact user workflows.
 
 #### Older PE versions are deprecated
-Older versions of the Cray PE are deprecated as they are incompatible with the
+Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
 upgraded system stack.
 
 #### `/soft` refresh and default `$MODULEPATH` change
@@ -85,11 +85,6 @@ The following modules have been newly installed:
 Note that `spack-pe-base` and `spack-pe-gnu` are metamodules which contain
 further software offerings. See the [Spack](#spack) section below for details.
 
-#### `/soft` is mounted read-only
-`/soft` is now mounted as a read-only filesystem. This means that users can no
-longer directly install software onto `/soft` on Polaris. Authorized users
-should install and test software on `/soft` on Sirius prior to requesting a
-`/soft` sync with Polaris.
 
 ### Spack
 
