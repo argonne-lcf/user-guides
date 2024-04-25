@@ -173,7 +173,7 @@ nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note
 Lustre project directories are under `/lus/gecko/projects`. ALCF staff should
 use /lus/gecko/projects/Aurora\_deployment project directory. ESP and ECP
 project members should use their corresponding project directories. The
-project name is similar to the name on Theta/Polaris with an \_CNDA suffix
+project name is similar to the name on Polaris with an \_CNDA suffix
 (e.g.: projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The
 project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if
 their project requires additional storage.

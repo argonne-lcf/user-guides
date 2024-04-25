@@ -5,7 +5,7 @@ There are two core components to SmartSim:
 
 * Infrastructure library (IL)
 	* Provides API to start, stop and monitor HPC applications from Python
-	* Interfaces with the scheduler launch jobs (PBSPro on Polaris and Cobalt on Theta/ThetaGPU)
+	* Interfaces with the PBSpro scheduler launch jobs
 	* Deploys a distributed in-memory database called the Orchestrator
 * SmartRedis client library
 	* Provides clients that connect to the Orchestrator from Fortran, C, C++, Python code

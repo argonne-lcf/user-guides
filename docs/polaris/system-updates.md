@@ -2,19 +2,27 @@
 
 ## 2024-04-22
 
-We will have a multi-day outage on Polaris to upgrade management software to HPCM 1.10 from April 22-25, 2024.
-These version changes will take place with the upgrade to HPCM 1.10:
+The management software on Polaris has been upgraded to HPCM 1.10
+The following version changes are in place with the upgrade to HPCM 1.10:
 
 - HPE Cray Programming Environment (CPE) 23.12
+- SlingShot version 2.1.2
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
 - SUSE 15 SP5
 
-We intend to keep Grand and Eagle operational during the upgrade. 
-Users should use Globus to access their project data. 
-For more information, visit: https://docs.alcf.anl.gov/data-management/data-transfer/using-globus/
+### Releasing jobs
+Jobs that were queued before the upgrade have been restored to the appropriate queues but are placed on user hold. 
+Jobs are not expected to complete successfully due to the changes made to the system and software environments resulting from the upgrade. 
+We recommend you review your jobs and either release the hold (`qrls <jobid>`) or delete it (`qdel <jobid>`) and resubmit as appropriate.
+- Users need to rebuild for the new PE environment and major OS upgrade. Existing binaries are unlikely to run successfully.
+- We have held all jobs submitted prior to the upgrade as a user hold. Users may release their existing jobs with `qrls` to run after they have rebuilt their binaries.
+- PBS does cache the job execution script.  If a change to the script is required due to a path changing post rebuild, the job will have to be resubmitted.
+- All application binaries should be rebuilt prior to further job submissions.
 
+### Re-building user codes
+Many user codes will need to be re-built and/or re-linked against the newer version of the programming environment (23.12) and Spack provided dependencies.
 
 ### Changes to the user software environment
 
@@ -22,7 +30,7 @@ In addition to the system upgrades, several changes have been made to the user
 software environment which may impact user workflows.
 
 #### Older PE versions are deprecated
-Older versions of the Cray PE are deprecated as they are incompatible with the
+Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
 upgraded system stack.
 
 #### `/soft` refresh and default `$MODULEPATH` change
@@ -85,11 +93,6 @@ The following modules have been newly installed:
 Note that `spack-pe-base` and `spack-pe-gnu` are metamodules which contain
 further software offerings. See the [Spack](#spack) section below for details.
 
-#### `/soft` is mounted read-only
-`/soft` is now mounted as a read-only filesystem. This means that users can no
-longer directly install software onto `/soft` on Polaris. Authorized users
-should install and test software on `/soft` on Sirius prior to requesting a
-`/soft` sync with Polaris.
 
 ### Spack
 
@@ -122,3 +125,21 @@ Note that not all software is installed through Spack; many applications and
 libraries are installed as standalone packages in `/soft`. Users are encouraged
 to browse the available modules with `module avail` to see what software is
 installed on the system.
+
+
+### Changes to Memory Limits on Login Nodes
+
+Memory limits were lowered on the logins due to resource contention to 8GB of memory, and 8 cores per user. 
+This might result in error messages indicating abnormal process termination for user processes run on logins.
+
+Examples of the error messages people might see are:
+
+ - `nvcc error   : 'cudafe++' died due to signal 9 (Kill signal)`
+ - `g++-12: fatal error: Killed signal terminated program cc1plus`
+
+These errors are likely due to exhausting the per-user resources on a login node as each user is allocated 8 cores and 8GB memory.
+To avoid this you can either:
+
+ - Reduce the parallelism of your compile, such as using `-j` or `-j4` flags
+ - Request a debug node and run your compile there where you will have the full resources of the node at your disposal
+

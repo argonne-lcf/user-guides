@@ -6,7 +6,7 @@ Container creation can be achieved one of two ways either by using Docker on you
 
 ## Singularity
 
-The container system on Polaris is `singularity`.  You can set up singularity with a module (this is different than, for example, ThetaGPU!):
+The container system on Polaris is `singularity`.  You can set up singularity with a module:
 
 ```bash
 # To see what versions of singularity are available:
