@@ -17,6 +17,8 @@ rm -r venv_cerebras_pt
 source venv_cerebras_pt/bin/activate
 pip install --upgrade pip
 pip install cerebras_pytorch==2.2.0
+# Patch to fix a mount problem; a future release will not need this.
+cp /software/cerebras/venvs/R_2_2.0_patch/appliance_manager.py ~/R_2.2.0/venv_cerebras_pt/lib/python3.8/site-packages/cerebras/appliance/appliance_manager.py
 ```
 
 <!--- No longer any TensorFlow wheel

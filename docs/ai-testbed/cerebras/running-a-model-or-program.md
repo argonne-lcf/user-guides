@@ -39,6 +39,9 @@ git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
 git checkout Release_2.2.0
+# Cerebras requires that the source tree be accessible to other users.
+find ~/R_2.2.0 -type d -exec chmod a+rx {} \;
+find ~/R_2.2.0 -type f -exec chmod a+r {} \;
 ```
 ## Running a Pytorch sample
 
@@ -47,7 +50,7 @@ git checkout Release_2.2.0
 ```console
 source ~/R_2.2.0/venv_cerebras_pt/bin/activate
 pip install -r ~/R_2.2.0/modelzoo/requirements.txt
-cd ~/R_2.2.0/modelzoo/modelzoo/fc_mnist/pytorch
+cd ~/R_2.2.0/modelzoo/src/cerebras/modelzoo/fc_mnist/pytorch
 ```
 
 Next, edit configs/params.yaml, making the following changes:
@@ -76,7 +79,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=pt_smoketest --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.2.0/modelzoo --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=fc_mnist --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.2.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
@@ -90,4 +93,7 @@ A successful fc_mnist PyTorch training run should finish with output resembling 
 2023-11-29 18:13:55,523 INFO:   Training completed successfully!
 2023-11-29 18:13:55,523 INFO:   Processed 4000 sample(s) in 51.230697212 seconds.
 ```
+
+
+
 
