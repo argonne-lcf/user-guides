@@ -39,9 +39,6 @@ git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
 git checkout Release_2.2.0
-# Cerebras requires that the source tree be accessible to other users.
-find ~/R_2.2.0 -type d -exec chmod a+rx {} \;
-find ~/R_2.2.0 -type f -exec chmod a+r {} \;
 ```
 ## Running a Pytorch sample
 
