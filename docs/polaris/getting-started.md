@@ -17,6 +17,19 @@ An overview of the Polaris system including details on the compute node architec
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
+## Accessing Additional Software
+
+In addition to the Cray PE, ALCF installs software in `/soft` which can be
+accessed via module commands by altering your `$MODULEPATH`:
+```
+module use /soft/modulefiles
+```
+The available software can then be queried with `module avail`.
+
+Additionally, a suite of software packages are provided via Spack deployments,
+detailed on the [Spack PE](applications-and-libraries/libraries/spack-pe.md)
+page.
+
 ## Submitting and Running Jobs
 
 Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](../running-jobs/example-job-scripts.md) page as well.
