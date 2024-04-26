@@ -60,6 +60,8 @@ nav:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
+            - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
+            - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
