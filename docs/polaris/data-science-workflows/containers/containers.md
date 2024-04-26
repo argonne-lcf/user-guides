@@ -1,79 +1,52 @@
 # Containers on Polaris
-
 Since Polaris is using NVIDIA A100 GPUs, there can be portability advantages with other NVIDIA-based systems if your workloads use containers.  In this document, we'll outline some information about containers on Polaris including how to build custom containers, how to run containers at scale, and common gotchas. 
 
-Container creation can be achieved one of two ways either by using Docker on your local machine and publishing it to DockerHub, or by using a Singularity recipe file and building on a Polaris worker node. If you are not interested in building a container and only want to use the available containers, you can read the section on [available containers](#available-containers).
+Container creation can be achieved one of two ways either by using Docker on your local machine and publishing it to DockerHub, or by using a Apptainer recipe file and building on a Polaris worker node. If you are not interested in building a container and only want to use the available containers, you can you can `pull` existing containers from any of the container registries like DockerHub and run them on Polaris.
 
-## Singularity
+## Apptainer
 
-The container system on Polaris is `singularity`.  You can set up singularity with a module:
+The container system on Polaris is now upgraded to `apptainer` previously called as `singularity`.  You can set up apptainer as follows:
 
 ```bash
-# To see what versions of singularity are available:
-module avail singularity
-
-# To load the Default version:
-module load singularity
-
-# To load a specific version:
-module load singularity/3.8.7 # the default at the time of writing these docs.
-
+module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module load apptainer
+apptainer version #1.2.2
 ```
 
-### Which Singularity?
-
-There used to be a single `singularity` tool, but the project split in 2021. There are now two `singularity`s: one developed by Sylabs, and the other as part of the Linux Foundation.  Both are open source, and the split happened around version 3.10.  The version on Polaris is from [Sylabs](https://sylabs.io/docs/) but for completeness, here is the [Linux Foundation's version](https://github.com/apptainer/apptainer).  Note that the Linux Foundation version is renamed to `apptainer` - different name, roughly the same thing though divergence may happen after 2021's split.
-
+The version of apptainer installed on Polaris is `1.2.2`. You can find user documentation [here](https://apptainer.org/docs/user/1.2/)
 
 ## Build from Docker Images or Argonne Github container registry
 
-Docker containers require root privileges, which users do not have on Polaris.  That doesn't mean all your docker containers aren't useful, though.  If you have an existing docker container, you can convert it to singularity pretty easily on the login node. To build the latest NVIDIA container for PyTorch you can run the following:
+Docker containers require root privileges, which users do not have on Polaris.  That doesn't mean all your docker containers aren't useful, though.  If you have an existing docker container, you can convert it to apptainer pretty easily. For example, to build the latest NVIDIA container for PyTorch you can run the following on a Polaris compute node:
 
 ```bash
-module load singularity
-singularity build pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
-```
-
-Note that `latest` here mean when these docs were written, summer 2022.  It may be useful to get a newer container if you need the latest features.  You can find the PyTorch container site [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers).
-
-You can also use our custom built containers using Github OCI container [registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry). Here's a list of [containers](https://github.com/orgs/argonne-lcf/packages) distributed by ALCF staff tailored for Polaris.
-
-```bash
-module load singularity
-singularity pull IMAGE_NAME oras://ghcr.io/argonne-lcf/IMAGE_NAME:latest
-```
-
-## Build with a Recipe
-
-You can also build a singularity container using a recipe file. Detailed instructions for recipe construction are available on the [Singularity Recipe Page](https://sylabs.io/guides/2.6/user-guide/container_recipes.html). You can also check our [singularity recipe example](https://github.com/argonne-lcf/container-registry/blob/main/containers/mpi/Polaris/mpich.def) for building a mpich version 4 container on Polaris.
-
-Once you have a recipe file, you can build it on Polaris, but only on compute nodes. You can launch an interactive job using the attribute `singularity_fakeroot=true` to build on a compute node. 
-
-```bash
-qsub -I -A <project_name> -q <queue> -l select=1 -l walltime=60:00 -l singularity_fakeroot=true -l filesystems=home:eagle:grand
-```
-
-You need to replace the `<project_name>` with the appropriate project to charge and `<queue>` with `debug`, or `preemptable` queues since we only request a single node. 
-
-After your interactive job has started, you need to load the `singularity` module on the compute node and export the proxy variables for internet access. Then you can build the container as shown below.
-
-```bash
-module load singularity
+qsub -I -A <Project> -q debug -l select=1 -l walltime=01:00:00 -l filesystems=home:eagle -l singularity_fakeroot=true
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
-singularity build --fakeroot <image_name>.sif <def_filename>.def 
+module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module load apptainer
+apptainer build --fakeroot pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
 ```
 
-Alternatively, you can just pull the mpich 4 image distributed by us and build on top of it
+ You can find the latest PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The Tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers).
 
-```bash
-singularity pull oras://ghcr.io/argonne-lcf/mpich-4:latest
-```
+You can also use our custom built containers hosted on a Github OCI container registry. Here's a list of [containers](https://github.com/orgs/argonne-lcf/packages) distributed by ALCF staff tailored for Polaris. You can also find instructions to build and run containers [here](https://github.com/argonne-lcf/container-registry)
 
 
-## Running Singularity container on Polaris
+> **Note:** Currently container build and executions are only supported on the Polaris compute nodes
+
+## Build with a Recipe
+
+You can also build an apptainer container using a recipe file. Detailed instructions for recipe construction are available on the [Apptainer Recipe Page](https://apptainer.org/docs/user/1.2/build_a_container.html#building-containers-from-apptainer-definition-files). You can also check our [apptainer recipe example](https://github.com/argonne-lcf/container-registry/blob/main/containers/mpi/Polaris/mpich.def) for building a MPICH container on Polaris.Alternatively, you can just pull `apptainer pull oras://ghcr.io/argonne-lcf/mpich-4:latest` the MPICH image distributed by us and build a container by using the MPICH image as a base image. 
+
+
+
+
+
+
+## Running Apptainer on Polaris
 
 ### Example submission script on Polaris
 
@@ -93,11 +66,12 @@ cd ${PBS_O_WORKDIR}
 echo $CONTAINER
 ```
 
-We move to current working directory and enable network access at run time by setting the proxy. We also load singularity.
+We move to current working directory and enable network access at run time by setting the proxy. We also load apptainer.
 
 ```bash
 # SET proxy for internet access
-module load singularity
+module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module load apptainer
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
@@ -107,9 +81,9 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 This is important for system (Polaris - Cray) mpich to bind to containers mpich. Set the following environment variables
 
 ```bash
-ADDITIONAL_PATH=/opt/cray/pe/pals/1.1.7/lib/
+ADDITIONAL_PATH=/opt/cray/pe/pals/1.2.12/lib
 module load cray-mpich-abi
-export SINGULARITYENV_LD_LIBRARY_PATH="$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:$ADDITIONAL_PATH"
+export APPTAINERENV_LD_LIBRARY_PATH="$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:$ADDITIONAL_PATH"
 ```
 
 Set the number of ranks per node spread as per your scaling requirements
@@ -126,10 +100,10 @@ Finally launch your script
 
 ```bash
 echo C++ MPI
-mpiexec -hostfile $PBS_NODEFILE -n $PROCS -ppn $PPN singularity exec -B /opt -B /var/run/palsd/ $CONTAINER /usr/source/mpi_hello_world
+mpiexec -hostfile $PBS_NODEFILE -n $PROCS -ppn $PPN apptainer exec -B /opt -B /var/run/palsd/ $CONTAINER /usr/source/mpi_hello_world
 
 echo Python MPI
-mpiexec -hostfile $PBS_NODEFILE -n $PROCS -ppn $PPN singularity exec -B /opt -B /var/run/palsd/ $CONTAINER python3 /usr/source/mpi_hello_world.py
+mpiexec -hostfile $PBS_NODEFILE -n $PROCS -ppn $PPN apptainer exec -B /opt -B /var/run/palsd/ $CONTAINER python3 /usr/source/mpi_hello_world.py
 ```
 
 The job can be submitted using:
@@ -154,12 +128,12 @@ The latest containers are updated periodically. If you have trouble using contai
 
 1. **Permission Denied Error**: One may get a `permission denied` error during the build process, due to a nasty permission setting, quota limitations, or simply due to an unresolved symbolic link. You can try one of the solutions below:
 	- Check your quota and delete any unnecessary files. 
-	- Clean-up singularity cache, `~/.singularity/cache`, and set the singularity tmp and cache directories as below:
+	- Clean-up apptainer cache, `~/.apptainer/cache`, and set the apptainer tmp and cache directories as below:
 		```bash
- 		export SINGULARITY_TMPDIR=/tmp/singularity-tmpdir
- 		mkdir $SINGULARITY_TMPDIR
- 		export SINGULARITY_CACHEDIR=/tmp/singularity-cachedir/
- 		mkdir $SINGULARITY_CACHEDIR
+ 		export APPTAINER_TMPDIR=/tmp/apptainer-tmpdir
+ 		mkdir $APPTAINER_TMPDIR
+ 		export APPTAINER_CACHEDIR=/tmp/apptainer-cachedir/
+ 		mkdir $APPTAINER_CACHEDIR
 		``` 
 	- Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
 	- If any of the above doesn't work, try running the build in your home directory.
@@ -169,10 +143,10 @@ The latest containers are updated periodically. If you have trouble using contai
  ```bash
  ADDITIONAL_PATH=/opt/cray/pe/pals/1.1.7/lib/
  module load cray-mpich-abi
- export SINGULARITYENV_LD_LIBRARY_PATH="$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:$ADDITIONAL_PATH"
- singularity exec -B /opt -B /var/run/palsd/
+ export APPTAINERENV_LD_LIBRARY_PATH="$CRAY_LD_LIBRARY_PATH:$LD_LIBRARY_PATH:$ADDITIONAL_PATH"
+ apptainer exec -B /opt -B /var/run/palsd/
  ```
 
-3. **libmpi.so.40 not found**: This may be due to mpich binding to the wrong system mpich. Try removing .conda & .cache & .local folders from your home directory. Also rebuild your container and try again.
+3. **libmpi.so.40 not found**: This may be due to containers MPI is not binding correctly to the system MPI. You can also try removing .conda & .cache & .local folders from your home directory. Rebuild your container and try again.
 
 4. Containers built with openmpi may not work correctly. Please ensure your container is built with mpich and the base image is of Debian architecture (For e.g. Ubuntu) image.
