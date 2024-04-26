@@ -1,6 +1,7 @@
 # LLVM Compilers on Polaris
 
 This page is not about LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but about open source LLVM compilers.
+
 If LLVM compilers are needed without MPI support, simply load the `llvm` module.
 
 Cray Programming Environment does not offer LLVM compiler support.
@@ -13,6 +14,8 @@ To use Clang with MPI, one can load the `mpiwrappers/cray-mpich-llvm` module whi
 
 
 **Limitation** There is no GPU-aware MPI library linking support by default. If needed, users should manually add the GTL (GPU Transport Layer) library to the application link line.
+
+**Update 04/25/2024** To access LLVM modules, `module use /soft/modulefiles` is required.
 
 [//]: # (ToDo: Lack of support for PrgEnv-cray is based on man page; should confirm)
 
