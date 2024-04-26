@@ -42,25 +42,24 @@ default `$MODULEPATH`. To access modules installed in `/soft`, users should run
 The following modules have been removed:
 
 ```
-   aocl/3.2.0                                                        hpctoolkit/2023.03.27                                                    (D)
-   aocl/4.0                                                   (D)    imagemagick/imagemagick-7.1.1-11
-   ascent/develop/2024-01-08-492f9b0                                 kokkos/kokkos-3.6.01
-   boost/1.80.0                                                      kokkos/3.7.00-cuda
-   boost/1.81.0                                               (D)    kokkos/3.7.00-sycl
-   cabana/cabana-20220723                                            kokkos/3.7.01-cuda
-   cabana/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)    kokkos/4.2.00/shared/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)
-   cmake/3.23.2                                                      llvm/release-15.0.0
-   conda/2022-07-19                                                  llvm/release-16.0.0
-   conda/2022-09-08-hvd-nccl                                         llvm/release-17.0.0                                                      (D)
+   aocl/3.2.0                                                        hpctoolkit/2022.07.27
+   aocl/4.0                                                   (D)    hpctoolkit/2023.03.27                                                    (D)
+   ascent/develop/2024-01-08-492f9b0                                 imagemagick/imagemagick-7.1.1-11
+   boost/1.80.0                                                      kokkos/kokkos-3.6.01
+   boost/1.81.0                                               (D)    kokkos/3.7.00-cuda
+   cabana/cabana-20220723                                            kokkos/3.7.00-sycl
+   cabana/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)    kokkos/3.7.01-cuda
+   cmake/3.23.2                                                      kokkos/4.2.00/shared/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)
+   conda/2022-07-19                                                  llvm/release-15.0.0
+   conda/2022-09-08-hvd-nccl                                         llvm/release-16.0.0
    conda/2022-09-08                                                  magma/2.6.2
    conda/2023-01-10-unstable                                         magma/2.7.0                                                              (D)
-   conda/2023-10-04-openmpi                                          mpiwrappers/cray-mpich-llvm
-   conda/2023-10-04                                           (D)    mpiwrappers/cray-mpich-oneapi                                            (D)
-   cudatoolkit-standalone/11.2.2                                     oneapi/release/2023.2.1
-   cudatoolkit-standalone/11.4.4                                     oneapi/release/2024.0
-   cudatoolkit-standalone/11.6.2                                     oneapi/upstream                                                          (D)
-   cudatoolkit-standalone/11.7.1                                     paraview/paraview-5.11.1-mesa
-   cudatoolkit-standalone/11.8.0                              (D)    paraview/paraview-5.11.2-EGL-test
+   conda/2023-10-04-openmpi                                          mpiwrappers/cray-mpich-oneapi                                            (D)
+   conda/2023-10-04                                           (D)    oneapi/release/2023.2.1
+   cudatoolkit-standalone/11.2.2                                     oneapi/release/2024.0
+   cudatoolkit-standalone/11.4.4                                     oneapi/upstream
+   cudatoolkit-standalone/11.6.2                                     paraview/paraview-5.11.1-mesa
+   cudatoolkit-standalone/11.7.1                                     paraview/paraview-5.11.2-EGL-test
    cudatoolkit-standalone/12.0.0                                     paraview/paraview-5.11.2-mesa
    e4s/22.05/mvapich2                                                paraview/paraview-5.12.0-RC1-mesa
    e4s/22.05/PrgEnv-gnu                                       (D)    paraview/paraview-5.12.0-mesa                                            (D)
@@ -72,7 +71,6 @@ The following modules have been removed:
    ginkgo/20230314/ginkgo                                     (D)    vmd/vmd-1.9.4a55
    gnu-parallel/2021-09-22                                           xalt/3.0.1-202308151751
    gsl/2.7                                                           xalt/3.0.1-202308261842                                                  (D)
-   hpctoolkit/2022.07.27
 ```
 
 The following modules have been newly installed:
