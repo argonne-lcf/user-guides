@@ -64,7 +64,7 @@ nav:
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
-            - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
+            - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
     - Data Science:
         - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
