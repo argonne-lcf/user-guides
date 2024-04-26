@@ -5,8 +5,6 @@
 #### To make a PyTorch virtual environment for Cerebras
 
 ```console
-#Make your home directory navigable
-chmod a+xr ~/
 mkdir ~/R_2.2.0
 cd ~/R_2.2.0
 # Note: "deactivate" does not actually work in scripts.
