@@ -13,6 +13,7 @@ The following version changes are in place with the upgrade to HPCM 1.10:
 - SUSE 15 SP5
 
 ### Releasing jobs
+
 Jobs that were queued before the upgrade have been restored to the appropriate queues but are placed on user hold. 
 Jobs are not expected to complete successfully due to the changes made to the system and software environments resulting from the upgrade. 
 We recommend you review your jobs and either release the hold (`qrls <jobid>`) or delete it (`qdel <jobid>`) and resubmit as appropriate.
@@ -23,8 +24,8 @@ We recommend you review your jobs and either release the hold (`qrls <jobid>`) o
 - All application binaries should be rebuilt prior to further job submissions.
 
 ### Re-building user codes
+
 Many user codes will need to be re-built and/or re-linked against the newer version of the programming environment (23.12) and Spack provided dependencies.
-Adding `module use /soft/modulefiles` to your profile should approximate the old behavior.
 
 ### Changes to the user software environment
 
@@ -32,6 +33,7 @@ In addition to the system upgrades, several changes have been made to the user
 software environment which may impact user workflows.
 
 #### Older PE versions are deprecated
+
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
 upgraded system stack.
 
@@ -48,10 +50,13 @@ module load conda; conda activate
 ```
 
 #### `/soft` refresh and default `$MODULEPATH` change
+
 Due to the new system software stack, `/soft` has been purged to allow for
 software to be rebuilt. In addition, `/soft/modulefiles` is no longer in the
 default `$MODULEPATH`. To access modules installed in `/soft`, users should run
-`module use /soft/modulefiles`.
+`module use /soft/modulefiles`. 
+
+Adding `module use /soft/modulefiles` to your profile should approximate the old behavior.
 
 The following modules have been removed:
 
