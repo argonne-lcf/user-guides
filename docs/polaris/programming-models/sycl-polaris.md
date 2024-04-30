@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
   int thread_id = 0;
 
   if(num_devices == 0){
-#pragma omp parallel
+#pragma omp parallel default(shared) private(hwthread, thread_id)
     {
       thread_id = omp_get_thread_num();
       hwthread = sched_getcpu();
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]){
       rt_gpu_id_list.append(std::to_string(i));
     }
 
-#pragma omp parallel
+#pragma omp parallel default(shared) private(hwthread, thread_id)
     {
 #pragma omp critical
       {
