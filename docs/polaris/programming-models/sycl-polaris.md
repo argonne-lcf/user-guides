@@ -31,7 +31,7 @@ module load oneapi/upstream
   - cuda-PrgEnv-nvidia
 - Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=cuda:gpu`
 
-## Example (memory intilization)
+## Example: How to use SYCL with MPI and OpenMP 
 
 <details>
 <summary>Toggle for SYCL example with OpenMP & MPI for CPU-side</summary>
