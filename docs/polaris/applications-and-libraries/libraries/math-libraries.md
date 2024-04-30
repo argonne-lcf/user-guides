@@ -2,12 +2,12 @@
 
 ## BLAS, LAPACK, and ScaLAPACK for CPUs
 
-Some math libraries targeting CPUs are made available as part of the `nvhpc` modules and are based on the OpenBLAS project. Additional documentation is available from [NVIDIA](https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-user-guide/#lib-use-lapack-blas-ffts). 
+Some math libraries targeting CPUs are made available as part of the `nvhpc` modules and are based on the OpenBLAS project. Additional documentation is available from [NVIDIA](https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-user-guide/#lib-use-lapack-blas-ffts).
 
 - BLAS & LAPACK can be found in the `$NVIDIA_PATH/compilers/lib` directory.
 - ScaLAPACK can be found in the `$NVIDIA_PATH/comm_libs` directory.
-- GNU Scientific Library, [GSL-2.7](https://www.gnu.org/software/gsl/) available as `module help gsl`
-- AMD Optiming CPU Libraries, [AOCL v4.0](https://www.amd.com/en/developer/aocl.html) available as `module help aocl`
+- GNU Scientific Library, [GSL-2.7](https://www.gnu.org/software/gsl/) available as `module help math_libs/gsl`
+- AMD Optiming CPU Libraries, [AOCL v4.2](https://www.amd.com/content/dam/amd/en/documents/developer/version-4-2-documents/aocl/aocl-4-2-user-guide.pdf) available as `module help math_libs/aocl`
 - Other Cray-based math libs such as Libsci, FFTW were made available by `module load cray-libsci` & `module load cray-fftw`
 [//]: # (ToDo: Need to test if these libraries are usable by gfortran, otherwise we need something compatible; AOCL might be solution)
 
