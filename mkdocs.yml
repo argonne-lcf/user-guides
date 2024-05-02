@@ -86,10 +86,12 @@ nav:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
         - Visualization on Polaris: polaris/visualization/visualization.md
-        - Paraview: polaris/visualization/paraview.md
-        - Visit: polaris/visualization/visit.md
+        - ParaView (Launch from Client): polaris/visualization/paraview.md
+        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
+        - VisIt: polaris/visualization/visit.md
         - FFmpeg: polaris/visualization/ffmpeg.md
         - ImageMagick: polaris/visualization/imagemagick.md
+        - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
@@ -124,6 +126,7 @@ nav:
       #- Example Programs: ai-testbed/groq/example-programs.md
       - Virtual Environments: ai-testbed/groq/virtual-environments.md
       - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+      - Profiling with GroqView: ai-testbed/groq/groqview.md
     - SambaNova:
       - System Overview: ai-testbed/sambanova/system-overview.md
       - Getting Started: ai-testbed/sambanova/getting-started.md
