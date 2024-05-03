@@ -17,7 +17,7 @@ To join a project, please go to [https://accounts.alcf.anl.gov](http://accounts.
 ## How do I request a reservation?
 Reservation requests must include information detailed here: 
 
-- [Machine Reservations](../../theta/queueing-and-running-jobs/machine-reservations.md): Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
+- [Machine Reservations](../../running-jobs/machine-reservations.md): Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
 
 ## How do I apply for a new account?
 **Note:** All ALCF accounts must be associated with an allocated project.

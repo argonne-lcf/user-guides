@@ -2,9 +2,34 @@
 
 ## Overview
 
-*** ACCESS IS CURRENTLY ENABLED FOR ESP and ECP TEAM ONLY ***
+*** ACCESS IS CURRENTLY ENABLED FOR ESP and ECP TEAMS ONLY ***
 
-The pre-requisites required for Sunspot are applicable to Aurora as well. See this [page](https://www.alcf.anl.gov/support-center/aurorasunspot/getting-started-sunspot#pre-req) for more information.
+
+## How to Get Access to Aurora (for New Users)
+
+### If You Already Have Access to Sunspot
+
+If you already have access to Sunspot, all you need to do to gain access to Aurora is send an email to support@alcf.anl.gov requesting access to Aurora. In your email, include
+
+* Your ALCF username
+* Your institutional email address
+* The ESP or ECP project in which you are a member
+
+### For Aurora Early Science Program (ESP) Team Members
+
+If you have never had access to Sunspot, here are the steps to gain access to Aurora:
+
+1. Verify that your institution has signed a CNDA with Intel that covers you.
+2. If you do not have an active ALCF account, request one using the [ALCF Account request webpage](https://accounts.alcf.anl.gov/#/accountRequest). When you come to the part about joining a project, request the `ProjectName_aesp_CNDA` project.
+3. Acknowledge the Intel Terms of Use agreement (TOU) for the Aurora Software Development Kit (SDK) by submitting [this form](https://events.cels.anl.gov/event/147/surveys/7).
+
+Getting a new ALCF account typically takes anywhere from a few days to a few weeks (processing new access for foreign nationals is what can take weeks). After you acknowledge the TOU, there is a manual step that typically takes a few days. You will receive an email notifying you when Aurora access is granted, including some getting started instructions.
+
+### For Aurora Exascale Computing Project (ECP) Team Members
+
+See this [page](https://www.alcf.anl.gov/support-center/aurorasunspot/getting-started-sunspot#pre-req) for instructions.
+
+## Caveats About Using Aurora and Reporting Findings
 
 NOTE: Sharing of any results from Aurora publicly no longer requires a review or approval from Intel. However, anyone publishing these results should include the following in their materials: 
 
@@ -36,11 +61,9 @@ ECP and ESP users will be added to a CNDA Slack workspace, where CNDA discussion
 
 ## Known Issues
 
-A known issues [page](https://wiki.jlse.anl.gov/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
+See this [page](https://docs.alcf.anl.gov/aurora/known-issues/) for known issues.
 
-* Interim Filesystem: The early access filesystem is not highly performant. Intermittent hangs or pauses should be expected - waiting for IO to complete is recommended and IO completions should pass without failure. Jobs requiring significant filesystem performance must be avoided at this time.
-* Large number of Machine Check Events from the PVC, that causes nodes to panic and reboot.
-* HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking  at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
+A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access. See [page](https://docs.alcf.anl.gov/aurora/known-issues/) for other known issues.
 
 ## Allocation usage
 
@@ -125,7 +148,7 @@ Host bitbucket.org
 
 Host github.com gitlab.com bitbucket.org
 	Port 443
-	ProxyCommand /user/bin/socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
+	ProxyCommand /usr/bin/socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
 ```
 
 If you need to use soemthing besides your default SSH key on Aurora for authentication to GitHub in conjunction with the above SSH workaround, you may set
@@ -148,9 +171,9 @@ Home directories on Aurora are `/home/username`, available on login and compute
 nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
 
 Lustre project directories are under `/lus/gecko/projects`. ALCF staff should
-use /lus/gila/projects/Aurora\_deployment project directory. ESP and ECP
+use /lus/gecko/projects/Aurora\_deployment project directory. ESP and ECP
 project members should use their corresponding project directories. The
-project name is similar to the name on Theta/Polaris with an \_CNDA suffix
+project name is similar to the name on Polaris with an \_CNDA suffix
 (e.g.: projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The
 project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if
 their project requires additional storage.

@@ -3,7 +3,9 @@
 
 ## <a name="Aurora-Queues"></a>Queues
 
-There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
+There is a single routing queue in place called `EarlyAppAccess` which submits to the `LustreApps` queue. The total number of nodes available on this queue is changing often.
+
+Queue Policy: 1 RUNNING job per user.
 
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
@@ -43,6 +45,18 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 5. If other nodes go down during your job, it will not be killed, and you can further exclude those nodes from your mpiexec as needed
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
+
+## <a name="Aurora-MPICH"></a>Aurora MPICH
+
+The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
+
+There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in
+
+```
+$MPI_ROOT/share/doc/mpich/README.envvar
+```
+
+This includes, for example, settings to select different optional sub-algorithms used in MPI collective operations.
 
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
@@ -307,6 +321,9 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
   ![Example4](images/example4_bad.png){ width="700" }
   <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
 </figure>
+
+
+**NOTE:** For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.

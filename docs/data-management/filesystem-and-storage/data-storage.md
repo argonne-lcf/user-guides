@@ -16,16 +16,6 @@ A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with
 
 Also see [ALCF Data Policies](../../policies/data-and-software-policies/data-policy.md) and [Data Transfer](../data-transfer/using-globus.md)
 
-### theta-fs0
-A Lustre file system residing on an HPE Sonexion 3000 storage array with a usable capacity of 9.2PB and an aggregate data transfer rate of 240GB/s.  This is a legacy file system.  No new allocations are granted on theta-fs0.
-
-Also see [ALCF Data Policies](../../policies/data-and-software-policies/data-policy.md) and [Data Transfer](../data-transfer/using-globus.md)
-
-### theta-fs1
-A GPFS file system that resides on an IBM Elastic Storage System (ESS) cluster with a usable capacity of 7.9PB and an aggregate data transfer rate of 400GB/s.  This is a legacy file system.  No new allocations are granted on theta-fs1.
-
-Also see [ALCF Data Policies](../../policies/data-and-software-policies/data-policy.md) and [Data Transfer](../data-transfer/using-globus.md)
-
 ## Tape Storage
 ALCF operates three 10,000 slot Spectralogic tape libraries.  We are currently running a combination of LTO6 and LTO8 tape technology.  The LTO tape drives have built-in hardware compression which typically achieve compression ratios between 1.25:1 and 2:1 depending on the data yielding an effective capacity of approximately 65PB.
 
@@ -34,13 +24,9 @@ HPSS is a data archive and retrieval system that manages large amounts of data o
 
 HPSS is currently configured with a disk and tape tier. The disk tier has a capacity of 1.2PB on a DataDirect Networks SFA12K-40 storage array. By default, all archived data is initially written to the disk tier. The tape tier consists of 3 SpectraLogic T950 robotic tape libraries containing a total of 72 LTO6 tape drives with total uncompressed capacity 64 PB. Archived data is migrated to the tape tier at regular intervals, then deleted from the disk tier to create space for future archives.
 
-Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients, HSI and HTAR.  These are installed on the login nodes of Theta and Cooley. In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under subdirectory .hpss. The file name will be in the format .ktb_<userid>.
+Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients, HSI and HTAR. In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under subdirectory .hpss. The file name will be in the format .ktb_<userid>.
 
 ### HSI General Usage
-Before you can use HSI on XC40 systems such as Theta, you must load a module:
-
-`module load hsi`
-
 HSI can be invoked by simply entering hsi at your normal shell prompt. Once authenticated, you will enter the hsi command shell environment:
 
 ```
@@ -121,7 +107,6 @@ Example retrieval
 htar -xf hpssfile.tar localfile2
 ```
 
-**NOTE:** On Theta you must first load the HSI module to make HSI and HTAR available. "module load hsi"  
 **NOTE:**  The current version of HTAR has a 64GB file size limit as well as a path length limit.  The recommended client is HSI.
 
 ### Globus

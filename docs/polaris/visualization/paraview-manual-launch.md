@@ -75,7 +75,9 @@ debug1: Local connections to LOCALHOST:8000 forwarded to remote address x3005c0s
 
 Keep this terminal open for the duration of your session to keep the ssh tunnel active.
 
+
 Now you are ready to launch your ParaView client locally. Keep in mind that client and servers versions must match. The ParaView version currently deployed on Polaris is 5.12.0
+
 
 ## Connecting to ParaView server
 

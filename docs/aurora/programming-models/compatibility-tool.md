@@ -1,3 +1,0 @@
-# Compatibility Tool
-
-Placeholder

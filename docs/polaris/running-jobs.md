@@ -7,19 +7,26 @@
 
 There are five production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                       |
-|---------------|----------|----------|----------|----------|-----------------------------------------------------------------------------|
-| debug         | 1        | 2        | 5 min    | 1 hr     | max 8 nodes in use by this queue ay any given time                          |
-| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                              |
-| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                    |
-| preemptable   | 1        | 10       | 5 min    | 72 hrs   | max 20 jobs running/accruing/queued **per-project**; see note below         |
-| demand        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project** |
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
+|---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 16 nodes in use by this queue ay any given time; Only 8 nodes are exclusive (see **Note** below) |
+| debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                                                       |
+| prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                                             |
+| *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
+| *demand*        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                          |
 
 ******
 
-**Note:** Jobs in the demand queue take priority over jobs in the preemptable queue.
+**Note:** Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.
+Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
+Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
 Please use the following command to view details of a queue: ```qstat -Qf <queuename>```
+
+To make your job re-runable add the following PBS directive: ```#PBS -r y``` This will ensure your job will restart once the demand job is complete. 
+
+**Note:** The debug queue has 8 exclusively dedicated nodes.
+If there are free nodes in production, then debug jobs can take another 8 nodes for a total of 16.
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
@@ -102,7 +109,7 @@ Users with different needs, such as assigning multiple GPUs per MPI rank, can mo
 
 Here is how to submit an interactive job to, for example, edit/build/test an application Polaris compute nodes:
 ```
-qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
 ```
 
 This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
