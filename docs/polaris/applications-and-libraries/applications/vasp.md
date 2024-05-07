@@ -165,14 +165,16 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 # Provide full path to VASP binary
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
 
+cd $PBS_O_WORKDIR
+
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} $bin
 ```
 
 Submission scripts should have executable attibutes to be used with `qsub` script mode.
 
 ```
-chmod +x example-script.sh
-qsub  example-script.sh
+chmod +x script.sh
+qsub script.sh
 ```
 
 ### Known issues versions: >= 6.4.x in Polaris (OLD)
