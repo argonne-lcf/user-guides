@@ -4,6 +4,7 @@ The recommended way of running ParaView on Polaris is in client/server mode. Thi
 
 There are multiple versions of ParaView installed on Polaris. To find the versions of ParaView currently available on Polaris run the following command on a login node: 
 ```
+module use /soft/modulefiles
 module avail paraview
 ```
 
@@ -61,11 +62,11 @@ There are a number of parameters that you must enter manually here:
 
 **Username:** your ALCF user name
 
-**ParaView version:** the version of ParaView that you want to use. Verify first that this version is installed on the system (as described at the top of this document). You will also need to add a `-mesa` suffix.
+**ParaView version:** the version of Paraview that you want to use. Verify first that this version is installed on the system (as described at the top of this document). You will also need to add a `-EGL` suffix.
 
 Example:
 ```
-5.11.2-mesa
+5.12.0-EGL
 ```
 
 **Client port:** it is safe to use the default value

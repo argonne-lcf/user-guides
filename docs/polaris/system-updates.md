@@ -32,10 +32,10 @@ Many user codes will need to be re-built and/or re-linked against the newer vers
 In addition to the system upgrades, several changes have been made to the user
 software environment which may impact user workflows.
 
-#### Older PE versions are deprecated
+#### Older PE versions removed
 
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
-upgraded system stack.
+upgraded system stack and are no longer available for use.
 
 ### Datascience Anaconda Module Updates
 
@@ -57,6 +57,8 @@ default `$MODULEPATH`. To access modules installed in `/soft`, users should run
 `module use /soft/modulefiles`. 
 
 Adding `module use /soft/modulefiles` to your profile should approximate the old behavior.
+
+#### Modules removed
 
 The following modules have been removed:
 
@@ -93,6 +95,8 @@ The following modules have been removed:
    gsl/2.7                                                           xalt/3.0.1-202308261842                                                  (D)
    hpctoolkit/2022.07.27
 ```
+
+#### Modules newly installed
 
 The following modules have been newly installed:
 
@@ -143,6 +147,12 @@ Note that not all software is installed through Spack; many applications and
 libraries are installed as standalone packages in `/soft`. Users are encouraged
 to browse the available modules with `module avail` to see what software is
 installed on the system.
+
+### ParaView and Visit
+ParaView module has been updated. For more information, see [https://docs.alcf.anl.gov/polaris/visualization/paraview/](https://github.com/argonne-lcf/user-guides/assets/93623920/10b4da82-ec8f-4507-844c-3d210d77b7da) and [https://docs.alcf.anl.gov/polaris/visualization/paraview-manual-launch/](https://github.com/argonne-lcf/user-guides/assets/93623920/f8b35652-e2b1-44af-9525-f90c9a717332)
+
+Visit module is in the process of being updated.
+
 
 ### Changes to Memory Limits on Login Nodes
 

@@ -1,5 +1,10 @@
 # FFmpeg on Polaris
 
+## NOTE: FFmpeg module is currently missing on Polaris after a recent upgrade. A spack build of ffmpeg will be available soon
+
+
+
+
 To use FFmpeg on Polaris first load the corresponding module:
 
 ```
