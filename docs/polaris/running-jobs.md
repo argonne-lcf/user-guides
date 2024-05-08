@@ -141,9 +141,9 @@ wait
 Currently, the only access the internet is via a proxy.  Here are the proxy environment variables for Polaris:
 
 ```bash
-export http_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export https_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
+export http_proxy="http://proxy.alcf.anl.gov:3128"
+export https_proxy="http://proxy.alcf.anl.gov:3128"
+export ftp_proxy="http://proxy.alcf.anl.gov:3128"
 ```
 
 In the future, though we don't have a timeline on this because it depends on future features in slingshot and internal software development, we intend to have public IP addresses be a schedulable resource.  For instance, if only your head node needed public access your select statement might looks something like: `-l select=1:pubnet=True+63`.
