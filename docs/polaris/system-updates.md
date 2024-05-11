@@ -32,10 +32,10 @@ Many user codes will need to be re-built and/or re-linked against the newer vers
 In addition to the system upgrades, several changes have been made to the user
 software environment which may impact user workflows.
 
-#### Older PE versions are deprecated
+#### Older PE versions removed
 
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
-upgraded system stack.
+upgraded system stack and are no longer available for use.
 
 ### Datascience Anaconda Module Updates
 
@@ -58,28 +58,29 @@ default `$MODULEPATH`. To access modules installed in `/soft`, users should run
 
 Adding `module use /soft/modulefiles` to your profile should approximate the old behavior.
 
+#### Modules removed
+
 The following modules have been removed:
 
 ```
-   aocl/3.2.0                                                        hpctoolkit/2023.03.27                                                    (D)
-   aocl/4.0                                                   (D)    imagemagick/imagemagick-7.1.1-11
-   ascent/develop/2024-01-08-492f9b0                                 kokkos/kokkos-3.6.01
-   boost/1.80.0                                                      kokkos/3.7.00-cuda
-   boost/1.81.0                                               (D)    kokkos/3.7.00-sycl
-   cabana/cabana-20220723                                            kokkos/3.7.01-cuda
-   cabana/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)    kokkos/4.2.00/shared/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)
-   cmake/3.23.2                                                      llvm/release-15.0.0
-   conda/2022-07-19                                                  llvm/release-16.0.0
-   conda/2022-09-08-hvd-nccl                                         llvm/release-17.0.0                                                      (D)
+   aocl/3.2.0                                                        hpctoolkit/2022.07.27
+   aocl/4.0                                                   (D)    hpctoolkit/2023.03.27                                                    (D)
+   ascent/develop/2024-01-08-492f9b0                                 imagemagick/imagemagick-7.1.1-11
+   boost/1.80.0                                                      kokkos/kokkos-3.6.01
+   boost/1.81.0                                               (D)    kokkos/3.7.00-cuda
+   cabana/cabana-20220723                                            kokkos/3.7.00-sycl
+   cabana/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)    kokkos/3.7.01-cuda
+   cmake/3.23.2                                                      kokkos/4.2.00/shared/PrgEnv-gnu/8.3.3/gnu/11.2.0/cuda_cudatoolkit_11.8.0 (D)
+   conda/2022-07-19                                                  llvm/release-15.0.0
+   conda/2022-09-08-hvd-nccl                                         llvm/release-16.0.0
    conda/2022-09-08                                                  magma/2.6.2
    conda/2023-01-10-unstable                                         magma/2.7.0                                                              (D)
-   conda/2023-10-04-openmpi                                          mpiwrappers/cray-mpich-llvm
-   conda/2023-10-04                                           (D)    mpiwrappers/cray-mpich-oneapi                                            (D)
-   cudatoolkit-standalone/11.2.2                                     oneapi/release/2023.2.1
-   cudatoolkit-standalone/11.4.4                                     oneapi/release/2024.0
-   cudatoolkit-standalone/11.6.2                                     oneapi/upstream                                                          (D)
-   cudatoolkit-standalone/11.7.1                                     paraview/paraview-5.11.1-mesa
-   cudatoolkit-standalone/11.8.0                              (D)    paraview/paraview-5.11.2-EGL-test
+   conda/2023-10-04-openmpi                                          mpiwrappers/cray-mpich-oneapi                                            (D)
+   conda/2023-10-04                                           (D)    oneapi/release/2023.2.1
+   cudatoolkit-standalone/11.2.2                                     oneapi/release/2024.0
+   cudatoolkit-standalone/11.4.4                                     oneapi/upstream
+   cudatoolkit-standalone/11.6.2                                     paraview/paraview-5.11.1-mesa
+   cudatoolkit-standalone/11.7.1                                     paraview/paraview-5.11.2-EGL-test
    cudatoolkit-standalone/12.0.0                                     paraview/paraview-5.11.2-mesa
    e4s/22.05/mvapich2                                                paraview/paraview-5.12.0-RC1-mesa
    e4s/22.05/PrgEnv-gnu                                       (D)    paraview/paraview-5.12.0-mesa                                            (D)
@@ -91,8 +92,9 @@ The following modules have been removed:
    ginkgo/20230314/ginkgo                                     (D)    vmd/vmd-1.9.4a55
    gnu-parallel/2021-09-22                                           xalt/3.0.1-202308151751
    gsl/2.7                                                           xalt/3.0.1-202308261842                                                  (D)
-   hpctoolkit/2022.07.27
 ```
+
+#### Modules newly installed
 
 The following modules have been newly installed:
 
@@ -143,6 +145,12 @@ Note that not all software is installed through Spack; many applications and
 libraries are installed as standalone packages in `/soft`. Users are encouraged
 to browse the available modules with `module avail` to see what software is
 installed on the system.
+
+### ParaView and Visit
+ParaView module has been updated. For more information, see [https://docs.alcf.anl.gov/polaris/visualization/paraview/](https://github.com/argonne-lcf/user-guides/assets/93623920/10b4da82-ec8f-4507-844c-3d210d77b7da) and [https://docs.alcf.anl.gov/polaris/visualization/paraview-manual-launch/](https://github.com/argonne-lcf/user-guides/assets/93623920/f8b35652-e2b1-44af-9525-f90c9a717332)
+
+Visit module is in the process of being updated.
+
 
 ### Changes to Memory Limits on Login Nodes
 

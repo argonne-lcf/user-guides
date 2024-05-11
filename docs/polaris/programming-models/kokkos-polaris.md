@@ -18,20 +18,21 @@ spaces. By convention, Kokkos only allows one GPU backend at a time.
 
 ### Kokkos on Polaris
 
+Following the [Polaris upgrade to HPCM
+1.10](https://www.alcf.anl.gov/support-center/facility-updates/polaris-upgraded-hpcm-110-0),
+the module setup to use the prebuilt Kokkos changed.
+
 The prebuilt Kokkos on polaris includes 3 backends: Serial and OpenMP for CPU
 execution and CUDA for GPU execution. To use it, run
 
 ```
-module use /soft/modulefiles
+module load craype-x86-milan
+module load craype-accel-nvidia80
 module swap PrgEnv-nvhpc PrgEnv-gnu
-module swap gcc/12.2.0 gcc/11.2.0
-module load cudatoolkit-standalone/11.8.0
+module use /soft/modulefiles
+module load cuda-PrgEnv-nvidia/12.2.91
 module load kokkos
 ```
-
-(Since the SlingShot 11 upgrade, you must use `PrgEnv-gnu` and the `gcc` and
-`cudatoolkit` version changes indicated, at least until some subsequent Polaris
-sytem updates have been completed.)
 
 This sets the following environment variables, some of which are used by
 `cmake`:
@@ -131,16 +132,16 @@ kokkos libraries on Polaris:
 To match what was done in the centrally-built kokkos associated with the
 modules discussed above, use the programming environment
 `PrgEnv-gnu`, and use the Cray wrapper `CC` as the C++ compiler. You'll also
-need to back up from the default `gcc` compiler version and make a few other
-module adjustments to work correctly on Polaris following the SlingShot 11
-upgrade (and prior to some planned system upgrades that will make some of this
-environment tweaking unnecessary):
+need to explicitly load the Cuda toolkit version 12.2.91 as shown:
 
 ```
-module load cmake
+module restore
+module load craype-x86-milan
+module load craype-accel-nvidia80
 module swap PrgEnv-nvhpc PrgEnv-gnu
-module swap gcc/12.2.0 gcc/11.2.0
-module load cudatoolkit-standalone/11.8.0
+module use /soft/modulefiles
+module load cuda-PrgEnv-nvidia/12.2.91
+module load spack-pe-base cmake
 ```
 
 #### CMake Configuration
@@ -171,8 +172,5 @@ cmake\
  -DCMAKE_EXE_LINKER_FLAGS=-no-gcc-rpath\
  ..
 
-make -j16 -l16 install
+make -j8 install
 ```
-
-(The `-no-gcc-rpath` linker flag is to work around a bug in the
-post-SlingShot11 compiler environment on Polaris.)

@@ -42,16 +42,8 @@ Make a note of the node hostname (`x3005c0s7b0n0` in the example above). You can
 Now load the ParaView module
 
 ```
-username@x3005c0s7b0n0:~> module load paraview
-
-Lmod is automatically replacing "nvhpc/21.9" with "gcc/11.2.0".
-
-----------------------------------------------------------------------------------
-     ParaView v5.11.0 successfully loaded
-----------------------------------------------------------------------------------
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.16
+username@x3005c0s7b0n0:~> module use /soft/modulefiles 
+username@x3005c0s7b0n0:~> module load visualization/paraview/paraview-5.12.0-EGL
 ```
 
 and launch the ParaView server with
@@ -83,7 +75,9 @@ debug1: Local connections to LOCALHOST:8000 forwarded to remote address x3005c0s
 
 Keep this terminal open for the duration of your session to keep the ssh tunnel active.
 
-Now you are ready to launch your ParaView client locally. Keep in mind that client and servers versions must match. The ParaView version currently deployed on Polaris is 5.11.0
+
+Now you are ready to launch your ParaView client locally. Keep in mind that client and servers versions must match. The ParaView version currently deployed on Polaris is 5.12.0
+
 
 ## Connecting to ParaView server
 
