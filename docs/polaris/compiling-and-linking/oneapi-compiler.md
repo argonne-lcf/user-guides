@@ -47,11 +47,11 @@ Found CUDA installation: /opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/11.4, versio
 ## Running
 The library should select the GPU by default, but selection of the GPUs can be forced via the ONEAPI_DEVICE_SELECTOR
 ```
-$ ONEAPI_DEVICE_SELECTOR=ext_oneapi_cuda:gpu ./a.out
+$ ONEAPI_DEVICE_SELECTOR=cuda:gpu ./a.out
 ```
 or a specific GPU.
 ```
-$ ONEAPI_DEVICE_SELECTOR=ext_oneapi_cuda:gpu:3 ./a.out
+$ ONEAPI_DEVICE_SELECTOR=cuda:gpu:3 ./a.out
 ```
 
 ## sycl-ls
