@@ -148,7 +148,7 @@ module load PrgEnv-nvhpc
 module load cray-libsci
 module load craype-accel-nvidia80
 
-NVROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/23.9
+NVROOT=${NVIDIA_PATH}
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
