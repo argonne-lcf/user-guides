@@ -62,11 +62,13 @@ Below are some of the common arguments used across most of the models in the exa
 |                        | data'     |                                |
 |                        |           |                                |
 
+<!---
 Establish the Environment
 
 ```bash
 source /opt/sambaflow/apps/starters/lenet/venv/bin/activate
 ```
+--->
 
 > **Note**:  If you receive an \"HTTP error\" message on any of the
 following commands, run the command again. Such errors (e.g 503) are
@@ -111,12 +113,13 @@ cat pef/lenet/output.log
 ```
 
 ## MNIST - Feed Forward Network
-
+<!---
 Establish the Environment
 
 ```bash
 source /opt/sambaflow/apps/starters/ffn_mnist/venv/bin/activate
 ```
+--->
 
 Change directory
 
@@ -146,11 +149,13 @@ sbatch --output=pef/ffn_mnist/output.log submit-ffn_mnist-job.sh
 
 ## Logistic Regression
 
+<!---
 Establish the Environment
 
 ```bash
 source /opt/sambaflow/apps/starters/logreg/venv/bin/activate
 ```
+--->
 
 Change directory
 
