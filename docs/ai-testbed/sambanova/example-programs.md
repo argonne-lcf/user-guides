@@ -1,6 +1,6 @@
 # Example Programs
 
-You can use the to the tutorials on the SambaNova GitHub site or the examples on the node.
+You can use the link to the tutorials on the SambaNova GitHub site or the examples on the node.
 
 * Find the tutorials on the [SambaNova GitHub site](https://github.com/sambanova/tutorials/tree/main). If you use those instructions, ensure that you still use the processes for accessing the test environment and compiling and running the mode. 
 * Use the examples of well-known simple AI applications under the path: `/opt/sambaflow/apps/starters`, on all SambaNova compute nodes, as discussed on this page.  
