@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Aurora Programming Environment (Aurora PE) is Aurora's default software environment and consists of the OneAPI, MPICH, and the Spack PE. The Aurora PE is loaded in the user environment through a default module set. Alternative versions of the Aurora PE, as well as Aurora PE components not loaded by default, are available through the module interface.
+The Aurora Programming Environment (Aurora PE) is Aurora's default software environment and consists of the OneAPI SDK, MPICH, and the Spack PE. The Aurora PE is loaded in the user environment through a default module set. Alternative versions of the Aurora PE, as well as Aurora PE components not loaded by default, are available through the module interface.
 
 As of May 2024, the default modules are
 ```
