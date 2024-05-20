@@ -202,15 +202,28 @@ with the following information
 
 See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using DAOS for I/O.
 
+## Software Environment
+
+The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
+```
+module load cmake
+```
+More details are on the [Aurora PE page](./aurora-pe.md).
+
+Additional software is installed in `/soft` and can be accessed by adding `/soft/modulefiles` to the module search path.
+```
+module use /soft/modulefiles
+```
+This will make available a handful of additional software modules, such as `kokkos`.
+
 ## Compiling Applications
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
-Autotools and cmake are available by loading the following module files.
+Autotools and cmake are available in the default Aurora PE environment and can be loaded via modules.
 
 ```
-$ module use /soft/modulefiles
-$ module load spack-pe-gcc autoconf cmake
+$ module load autoconf cmake
 ```
 
 ## Python on Aurora
@@ -218,19 +231,10 @@ $ module load spack-pe-gcc autoconf cmake
 Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
 
 ```
-module use /soft/modulefiles
 module load frameworks
 ```
 
-## Additional Software
-
-A variety of additional tools and software libraries are provided in the [Spack PE](./applications-and-libraries/libraries/spack-pe.md). For example, a user can load tmux through the `spack-pe-gcc` module:
-
-```
-module use /soft/modulefiles
-module load spack-pe-gcc
-module load tmux
-```
+Note that there is a separate Python installation in `spack-pe-gcc` which is used as a dependency of a number of Spack PE packages. Users will need to exercise caution when loading both `frameworks` and `python` from the Spack PE.
 
 ## Submitting and Running Jobs
 
