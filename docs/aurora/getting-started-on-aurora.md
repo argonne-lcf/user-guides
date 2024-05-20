@@ -204,7 +204,11 @@ See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using D
 
 ## Software Environment
 
-The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. More details are on the [Aurora PE page](./aurora-pe.md).
+The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
+```
+module load cmake
+```
+More details are on the [Aurora PE page](./aurora-pe.md).
 
 Additional software is installed in `/soft` and can be accessed by adding `/soft/modulefiles` to the module search path.
 ```

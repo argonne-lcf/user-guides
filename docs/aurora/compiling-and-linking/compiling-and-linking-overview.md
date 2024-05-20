@@ -32,24 +32,10 @@ For applications consisting of a mix of programming languages that use MPI, it i
 
 ## Additional software and build tools
 
-Additional software is available on Aurora as modules that are not currently available in the default environment to reduce load on the filesystem. Once a shell has opened on the login or compute nodes (i.e. inside of a job script), users can access additional software in `/soft/modulefiles`. 
+A suite of build tools and libraries are available in the default Aurora PE environment. Users can look at the list of available modules with `module avail` to find build tools such as `cmake`.
 
 ```
-$ module use /soft/modulefiles
-```
-
-This will make available builds of the frameworks, Kokkos, additional MPICH builds, and also some spack modules, which provide access to additional tools. The `module use /soft/modulefiles` command only needs to be executed once per session, but is repeated below for clarity.
-
-```
-$ module use /soft/modulefiles
-$ module load spack-pe-gcc
-```
-
-Looking at the available modules (`module avail`) now in this expanded list one can find additional build tools, such as `cmake`.
-
-```
-$ module use /soft/modulefiles
-$ module load spack-pe-gcc cmake
+$ module load cmake
 $ cmake --version
-cmake version 3.26.4
+cmake version 3.27.7
 ```
