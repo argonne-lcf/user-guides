@@ -64,7 +64,7 @@ in SYCL
 
 Similar to Issue #1, it maybe be useful to use other libfabric environment settings.
 In particular, the setting below may be useful to try. These are what what Cray MPI sets by default
-(https://cpe.ext.hpe.com/docs/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
+[Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
 ```
 export FI_CXI_RDZV_THRESHOLD=16384
 export FI_CXI_RDZV_EAGER_SIZE=2048
