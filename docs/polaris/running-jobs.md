@@ -54,7 +54,8 @@ Once a submitted job is running calculations can be launched on the compute node
 * `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
 * `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
 
-A sample submission script with directives is below for a 4-node job with 32 MPI ranks on each node and 8 OpenMP threads per rank (1 per CPU).
+A sample submission script with directives is below for a 4-node job with 8 MPI ranks on each node and 8 OpenMP threads per rank. Each hardware thread runs a single OpenMP thread since there are 64 hardware threads on the CPU (2 per core).
+You can download and compile `hello_affinity` from this [link](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity).
 
 ```bash
 #!/bin/bash -l
@@ -62,10 +63,10 @@ A sample submission script with directives is below for a 4-node job with 32 MPI
 #PBS -l select=4:ncpus=256
 #PBS -l walltime=0:10:00
 #PBS -q debug-scaling
-#PBS -A Catalyst
+#PBS -A Catalyst  # Replace with your project
 
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=32 # Number of MPI ranks to spawn per node
+NRANKS=8 # Number of MPI ranks to spawn per node
 NDEPTH=8 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
 NTHREADS=8 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
 
@@ -73,7 +74,8 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
 
-cd /home/knight/affinity
+# Change the directory to work directory, which is the directory you submit the job.
+cd $PBS_O_WORKDIR
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
 ```
 
