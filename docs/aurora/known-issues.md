@@ -59,7 +59,28 @@ _libm_template.c:(.text+0x7): failed to convert GOTPCREL relocation against '__l
 ```
 in SYCL
 - Please try linking with `-flink-huge-device-code`
-  
+
+5. General MPI Error
+
+Similar to Issue #1, it maybe be useful to use other libfabric environment settings.
+In particular, the setting below may be useful to try. These are what what Cray MPI sets by default
+(https://cpe.ext.hpe.com/docs/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
+```
+export FI_CXI_RDZV_THRESHOLD=16384
+export FI_CXI_RDZV_EAGER_SIZE=2048
+export FI_CXI_DEFAULT_CQ_SIZE=131072
+export FI_CXI_DEFAULT_TX_SIZE=1024
+export FI_CXI_OFLOW_BUF_SIZE=12582912
+export FI_CXI_OFLOW_BUF_COUNT=3
+export FI_CXI_RX_MATCH_MODE=hardware
+export FI_CXI_REQ_BUF_MIN_POSTED=6
+export FI_CXI_REQ_BUF_SIZE=12582912
+export FI_MR_CACHE_MAX_SIZE=-1
+export FI_MR_CACHE_MAX_COUNT=524288
+export FI_CXI_REQ_BUF_MAX_CACHED=0
+export FI_CXI_REQ_BUF_MIN_POSTED=6
+```
+
 ## Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.
@@ -91,6 +112,8 @@ There are an insufficient number of nodes are online and free for the job to sta
 In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
 
 To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
+
+
 
 ## Other issues
 
