@@ -10,7 +10,8 @@ OUTPUT_PATH=/data/ANL/results/$(hostname)/${USER}/${LOGDIR}/${MODEL_NAME}.out
 echo "Using ${OUTPUT_PATH} for output"
 mkdir -p /data/ANL/results/$(hostname)/${USER}/${LOGDIR}
 
-ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
+# Base python env now supports this, including in sbatch mode
+#ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
 #######################
 # Edit these variables.
 #######################
@@ -22,7 +23,7 @@ SECONDS=0
 DIRECTORY=$$
 OUTDIR=/data/scratch/${USER}/${MODEL_NAME}
 mkdir -p ${OUTDIR}
-source ${ACTIVATE}
+#source ${ACTIVATE}
 echo "Model: " ${MODEL_NAME} >> ${OUTPUT_PATH} 2>&1
 echo "Date: " $(date +%m/%d/%y) >> ${OUTPUT_PATH} 2>&1
 echo "Time: " $(date +%H:%M) >> ${OUTPUT_PATH} 2>&1
@@ -44,7 +45,7 @@ export REQUESTS_CA_BUNDLE=/usr/local/lib/python3.8/site-packages/certifi/cacert.
 export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
 export SAMBA_CCL_HIERARCHICAL_ALLREDUCE=1
       
-COMMAND="/usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b $1 --data_dir /data/ANL/ss1024 --pef=${OUTDIR}/${MODEL_NAME}/${MODEL_NAME}.pef --output_dir=${OUTDIR}/hf_gpt1dot5b_ss1k_gas_1_bs16 --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size $1 --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --logging_steps 1 --max_steps 75000 --learning_rate 0.00025 --steps_this_run 100"  >> ${OUTPUT_PATH} 2>&1
+COMMAND="/usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b $1 --data_dir /data/ANL/ss1024 --pef=${OUTDIR}/${MODEL_NAME}/${MODEL_NAME}.pef --output_dir=${OUTDIR}/hf_gpt1dot5b_ss1k_gas_1_bs16 --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size $1 --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --logging_steps 1 --max_steps 100 --learning_rate 0.00025 --steps_this_run 100"  >> ${OUTPUT_PATH} 2>&1
 
 echo "COMMAND= $COMMAND" >> ${OUTPUT_PATH} 2>&1
 eval $COMMAND >> ${OUTPUT_PATH} 2>&1

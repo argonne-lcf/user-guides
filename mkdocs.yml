@@ -39,6 +39,7 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
+    - System Updates: polaris/system-updates.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -59,10 +60,13 @@ nav:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
+            - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
+            - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
+            - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
     - Data Science:
         - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
@@ -143,6 +147,7 @@ nav:
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Aurora/Sunspot:
       - Getting Started: aurora/getting-started-on-aurora.md
+      - Aurora PE: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
       - Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
@@ -246,6 +251,7 @@ theme:
     - instant
     - search.highlight
     - search.suggest
+    - content.code.copy
   logo: 'images/Argonne_wireframe_white_transparent.png'
   favicon: 'images/alcf_favicon.ico'
 

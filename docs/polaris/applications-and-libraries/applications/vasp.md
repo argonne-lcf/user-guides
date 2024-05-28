@@ -44,13 +44,13 @@ DEBUG      = -Mfree -O0 -traceback
 NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $$1 }')
 # ...or set NVROOT manually
 NVHPC      ?= /opt/nvidia/hpc_sdk
-NVVERSION  = 20.9
-#NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
+NVVERSION  = 23.9
+NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
 
 # Use NV HPC-SDK provided BLAS and LAPACK libraries
 LIBAOCL=/soft/libraries/aocl/3.2.0
-BLAS       = ${LIBAOCL}/lib/libblis-mt.a
-LAPACK     = ${LIBAOCL}/lib/libflame.a
+BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.a
+LAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
 
 BLACS      =
 SCALAPACK  =
@@ -66,14 +66,14 @@ QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
 
-#INCS       += -I/usr/include/linux 
-#INCS       += -I/usr/include/c++/7/tr1 
-#INCS       += -I/usr/include/c++/7 
+#INCS       += -I/usr/include/linux
+#INCS       += -I/usr/include/c++/7/tr1
+#INCS       += -I/usr/include/c++/7
 #INCS       += -I/usr/include/x86_64-linux-gnu/c++/7
 #INCS       += -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/
 
 # Use the FFTs from fftw
-FFTW       ?= ${LIBAOCL}
+FFTW       = /soft/applications/vasp/aol-libs/3.2/amd-fftw
 LLIBS      += -L$(FFTW)/lib -lfftw3 -lfftw3_omp -lomp
 #INCS       += -I/soft/libraries/aocl/3.2.0/include_LP64/
 INCS       += -I$(FFTW)/include
@@ -95,10 +95,10 @@ FREE_LIB   = $(FREE)
 OBJECTS_LIB= linpack_double.o getshmem.o
 
 # For the parser library
-#CXX_PARS   = nvc++ --no_warnings -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/ -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-s
-les15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc
-/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
-CXX_PARS   = nvc++ --no_warnings 
+#CXX_PARS   = nvc++ --no_warnings -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/ -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3nax
+d5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/
+spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
+CXX_PARS   = nvc++ --no_warnings
 
 # Normally no need to change this
 SRCDIR     = ../../src
@@ -110,11 +110,15 @@ BINDIR     = ../../bin
 The follow modules will update the include and libraries paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
 ```
-module purge
-module load nvhpc/23.3
+module restore
 module load PrgEnv-nvhpc
 module load cray-libsci
 module load craype-accel-nvidia80
+export NVROOT=${NVIDIA_PATH}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
 
 ```
 
@@ -127,23 +131,29 @@ make -j1
 
 ### Running VASP in Polaris
 
-An example of a submission script could be found here `/soft/applications/vasp/submit-polaris2023-2.sh` , which would looks something similar to:
+An example of a submission script could be found here ` /soft/applications/vasp/script.sh` , which would looks something similar to:
 
 
 ``` example-script.sh
 #!/bin/sh
-#PBS -l select=1:system=polaris  
+#!/bin/sh
+#PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=home:grand:eagle
 #PBS -q debug
-#PBS -A Catalyst
+#PBS -A MYPROJECT
 
 module load PrgEnv-nvhpc
 module load cray-libsci
+module load craype-accel-nvidia80
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/nvidia/hpc_sdk/Linux_x86_64/22.11/compilers/extras/qd/lib
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/libraries/aocl/3.2.0/lib
+NVROOT=${NVIDIA_PATH}
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
@@ -152,18 +162,22 @@ NDEPTH=4
 NTHREADS=4
 NGPUS=2
 NTOTRANKS=$(( NNODES * NRANKS ))
+# Provide full path to VASP binary
+bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /path_to_vasp/bin/vasp_std
+cd $PBS_O_WORKDIR
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} $bin
 ```
 
 Submission scripts should have executable attibutes to be used with `qsub` script mode.
 
 ```
-chmod +x example-script.sh
-qsub  example-script.sh
+chmod +x script.sh
+qsub script.sh
 ```
 
-### Known issues versions: >= 6.4.x in Polaris 
+### Known issues versions: >= 6.4.x in Polaris (OLD)
 ---
 
 * Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this

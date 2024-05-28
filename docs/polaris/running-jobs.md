@@ -23,6 +23,8 @@ This means jobs in the preemptable queue may be preempted (killed without any wa
 Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
 Please use the following command to view details of a queue: ```qstat -Qf <queuename>```
 
+To make your job re-runable add the following PBS directive: ```#PBS -r y``` This will ensure your job will restart once the demand job is complete. 
+
 **Note:** The debug queue has 8 exclusively dedicated nodes.
 If there are free nodes in production, then debug jobs can take another 8 nodes for a total of 16.
 
@@ -52,7 +54,8 @@ Once a submitted job is running calculations can be launched on the compute node
 * `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
 * `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
 
-A sample submission script with directives is below for a 4-node job with 32 MPI ranks on each node and 8 OpenMP threads per rank (1 per CPU).
+A sample submission script with directives is below for a 4-node job with 8 MPI ranks on each node and 8 OpenMP threads per rank. Each hardware thread runs a single OpenMP thread since there are 64 hardware threads on the CPU (2 per core).
+You can download and compile `hello_affinity` from this [link](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity).
 
 ```bash
 #!/bin/bash -l
@@ -60,10 +63,10 @@ A sample submission script with directives is below for a 4-node job with 32 MPI
 #PBS -l select=4:ncpus=256
 #PBS -l walltime=0:10:00
 #PBS -q debug-scaling
-#PBS -A Catalyst
+#PBS -A Catalyst  # Replace with your project
 
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=32 # Number of MPI ranks to spawn per node
+NRANKS=8 # Number of MPI ranks to spawn per node
 NDEPTH=8 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
 NTHREADS=8 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
 
@@ -71,7 +74,8 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
 
-cd /home/knight/affinity
+# Change the directory to work directory, which is the directory you submit the job.
+cd $PBS_O_WORKDIR
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
 ```
 
@@ -107,7 +111,7 @@ Users with different needs, such as assigning multiple GPUs per MPI rank, can mo
 
 Here is how to submit an interactive job to, for example, edit/build/test an application Polaris compute nodes:
 ```
-qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
 ```
 
 This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
@@ -139,9 +143,9 @@ wait
 Currently, the only access the internet is via a proxy.  Here are the proxy environment variables for Polaris:
 
 ```bash
-export http_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export https_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy-01.pub.alcf.anl.gov:3128"
+export http_proxy="http://proxy.alcf.anl.gov:3128"
+export https_proxy="http://proxy.alcf.anl.gov:3128"
+export ftp_proxy="http://proxy.alcf.anl.gov:3128"
 ```
 
 In the future, though we don't have a timeline on this because it depends on future features in slingshot and internal software development, we intend to have public IP addresses be a schedulable resource.  For instance, if only your head node needed public access your select statement might looks something like: `-l select=1:pubnet=True+63`.

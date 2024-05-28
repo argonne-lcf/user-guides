@@ -10,8 +10,6 @@ If your build system does not require GPUs for the build process, as is usually 
 
 Is it helpful to realize that there is a single `HOME` filesystem for users that can be accessed from the login and computes of each production resource at ALCF. Thus, users should be mindful of modifications to their environments (e.g. `.bashrc`) that may cause issues to arise due to differences between the systems. 
 
-An example is creating an alias for the `qstat` command to, for example, change the order of columns printed to screen. Users with such an alias that works well on Theta may run into issues using `qstat` on Polaris as the two system use different schedulers: Cobalt (Theta) and PBS (Polaris). Users with such modifications to their environments are encouraged to modify their scripts appropriately depending on `$hostname`.
-
 ## Cray Programming Environment
 
 The Cray Programming Environment (PE) uses three compiler wrappers for building software. These compiler wrappers should be used when building MPI-enabled applications.

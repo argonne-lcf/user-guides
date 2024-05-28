@@ -97,13 +97,13 @@ $ vtune-backend --data-directory=<location of precollected VTune results>
 ```
 Step 3: Open a new terminal with SSH port forwarding enabled (need 2 hops)
 ```
-$ ssh -L 127.0.0.1:<port printed by VTune>:127.0.0.1:<port printed by vtune-backend> <username>@bastion.alcf.anl.gov
-$ ssh -L 127.0.0.1:<port printed by VTune>:127.0.0.1:<port printed by vtune-backend> <username>@login.aurora.alcf.anl.gov
+$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@bastion.alcf.anl.gov
+$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@login.aurora.alcf.anl.gov
 ```
 
 Step 4: Check if the login nodes of Step 2 and Step 3 are the same or not. If not (e.g., aurora-uan-0009 from Step 2 and aurora-uan-0010 from Step 3), do `ssh` on the terminal for Step 3 to the login node of Step 2
 ```
-$ ssh aurora-uan-xxxx
+$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> aurora-uan-xxxx
 ```
 
 Step 5: Open the URL printed by VTune server in firefox web browser on your local computer. For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
