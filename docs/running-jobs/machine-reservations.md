@@ -12,14 +12,17 @@ To request a reservation, e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.
 
     *NOTE: We can only gate a reservation on an explicit list of users or a list of groups, we can’t mix them both. So users must specify either a project/unixgroup name or a list of usernames, not both.*
 
-4. Length of reservation:
-5. Earliest date you could start:
-6. Deadline for the run(s),
-7. Details on the Run: Can it run anytime, day or night?
-8. Your local time zone (e.g., US/Central):
-9. Total number of jobs to be run:
-10. Total amount of data generated during reservation:
-11. For each job, indicate: Node count (Note: not processor count)
+4. Length of reservation :
+   
+    *NOTE: If this is a multi-day request, provide the start and end dates along with the start and end times for each day*
+
+6. Earliest date you could start (date and time):
+7. Deadline for the run(s),
+8. Details on the reservation's constraints (can it run anytime, day or night?)
+9. Your local time zone (e.g., US/Central):
+10. Total number of jobs to be run:
+11. Total amount of data generated during reservation:
+12. For each job, indicate: Node count (Note: not processor count)
     1. Run time whether this job depends on any other jobs to finish before it can start
     2. Briefly describe the goals for this run: (Example: We are doing a scaling run of code XXXX to determine YYYY)
     3. Please provide a detailed explanation of why this workload cannot be accomplished with the existing queues: (Requests omitting this response will be not be processed)
