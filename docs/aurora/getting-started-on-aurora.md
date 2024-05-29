@@ -157,7 +157,7 @@ If you need to use something besides your default SSH key on Aurora for authenti
 export GIT_SSH_COMMAND="ssh -i ~/.ssh/specialGitKey"
 ```
 
-where specialGitKey is the name of the private key in your `.ssh` directory, for which you have uploaded the public key to GitHub. The `-F` option can be used to specify a different ssh config file if needed.
+where specialGitKey is the name of the private key in your `.ssh` directory, for which you have uploaded the public key to GitHub. The `-F` option can be used to specify a different SSH config file if needed; for example, `-F none` will completely ignore your config file, including the above workaround. 
 
 ## Hardware Overview
 
