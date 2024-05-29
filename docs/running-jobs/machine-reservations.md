@@ -18,7 +18,7 @@ To request a reservation, e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.
 
 6. Earliest date you could start (date and time):
 7. Deadline for the run(s),
-8. Details on the Run: Can it run anytime, day or night?
+8. Details on the reservation's constraints (can it run anytime, day or night?)
 9. Your local time zone (e.g., US/Central):
 10. Total number of jobs to be run:
 11. Total amount of data generated during reservation:
