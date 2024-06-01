@@ -3,8 +3,18 @@
 
 The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found [here](https://www.vasp.at).
 
-Users must have a license to use this code on ALCF systems. More information on how to get access to VASP binaries can be found [here](
-https://docs.alcf.anl.gov/theta/applications-and-libraries/applications/vasp/).
+### Using VASP at ALCF
+VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
+
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license.
+
+Information to provide:
+- User’s full name:
+- User’s ALCF username:
+- Name of organization that purchased the VASP license:
+- Principal investigator who is the POC for the VASP license:
+- VASP license number:
+- Version of VASP requested (VASP5, VASP6): 
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` could be found in the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
