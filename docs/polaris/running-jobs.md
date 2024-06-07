@@ -9,7 +9,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
-| debug         | 1        | 2        | 5 min    | 1 hr     | max 16 nodes in use by this queue ay any given time; Only 8 nodes are exclusive (see **Note** below) |
+| debug         | 1        | 2        | 5 min    | 1 hr     | max 24 nodes in use by this queue ay any given time; Only 8 nodes are exclusive (see **Note** below) |
 | debug-scaling | 1        | 10       | 5 min    | 1 hr     | max 1 job running/accruing/queued **per-user**                                                       |
 | prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                                             |
 | *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
@@ -26,7 +26,7 @@ Please use the following command to view details of a queue: ```qstat -Qf <queue
 To make your job re-runable add the following PBS directive: ```#PBS -r y``` This will ensure your job will restart once the demand job is complete. 
 
 **Note:** The debug queue has 8 exclusively dedicated nodes.
-If there are free nodes in production, then debug jobs can take another 8 nodes for a total of 16.
+If there are free nodes in production, then debug jobs can take another 16 nodes for a total of 24.
 
 `prod` is routing queue and routes your job to one of the following six execution queues:
 
