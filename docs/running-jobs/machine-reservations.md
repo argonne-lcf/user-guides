@@ -11,7 +11,9 @@ Lead time for approval is **5 business days**. If approved, scheduling is contin
 **Early Completion Policy:** If you have finished running your jobs before your reservation has ended, please reach out to the support team (support@alcf.anl.gov) to have to release it for other users.
 At this time, there is no way for a user to release a reservation early.
 
-[Fill out the Reservation Form](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u)
+----
+### [-> Fill out the Reservation Form <-](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u)
+----
 
 # Querying Reservations via Command Line
 
