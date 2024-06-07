@@ -7,21 +7,21 @@ The Vienna Ab initio Simulation Package (VASP) is a software package for perform
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
 
-To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license. These waiting times are longer than usual due to the impact of COVID-19.
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license.
 
 Information to provide:
-- User’s Full Name:
+- User’s full name:
 - User’s ALCF username:
-- Name of Organization that purchased the VASP license:
-- Principal Investigator who is the POC for the VASP license:
+- Name of organization that purchased the VASP license:
+- Principal investigator who is the POC for the VASP license:
 - VASP license number:
 - Version of VASP requested (VASP5, VASP6): 
-- ALCF resource which you plan to run VASP on: [Theta, ThetaGPU, Polaris other]
 
-## VASP Support Policy
-ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
+## VASP support policy
+ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. 
+Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
 
-## How to Obtain the Code
+## How to obtain the code
 The VASP souce can only be obtained by an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
 ## VASP 6.x.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
