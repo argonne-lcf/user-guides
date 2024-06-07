@@ -28,18 +28,22 @@ To request a reservation, e-mail [support@alcf.anl.gov](mailto:support@alcf.anl.
     3. Please provide a detailed explanation of why this workload cannot be accomplished with the existing queues: (Requests omitting this response will be not be processed)
     4. After a reservation is granted, you will receive a reservation name by e-mail. Use the command `pbs_rstat` to verify the reservation attributes.
 
-**For example:**
 
+### Submitting to a reservation
+Use `pbs_rstat` command on the login node to view the list of all reservations.
 ```
 pbs_rstat
 Resv ID      Queue     User     State               Start / Duration / End             
 ---------------------------------------------------------------------------
 A123456.po   A123456   smith@   CO       Mon Aug 18 09:00 / 43200 / Tue Aug 19 11:00
-
-qsub -q A123456 walltime=60:00 -l select=1024:system=polaris -l filesystems=eagle myprog.exe
 ```
 
+Use `pbs_rstat -f <reservation_queue_name>` command to view the details for a specific reservation.
+
 Once the reservation is set up, jobs can be submitted to the reservation queue prior to the reservation start time.
+```
+qsub -q A123456 walltime=60:00 -l select=1024:system=polaris -l filesystems=eagle myprog.exe
+```
 
 For recurring reservations, the ```reserve_start``` and ```reserve_end``` are always the first instance. 
 ```reserve_index``` and ```reserve_count``` tell you where you are in the recurrence.
@@ -53,5 +57,6 @@ Keep in mind that a job won't start unless enough time is left in the reservatio
 When the reservation ends all jobs are terminated, deleted, and the reservation queue is deleted. 
 If a routing queue is used for the reservation, then jobs may be preserved, but any running job(s) are still terminated.***
 
+### Releasing a reservation
 If you have finished running your jobs before your reservation has ended, please reach out to the support team to have to release it for other users.
 At this time, there is no way for a user to release a reservation early.
