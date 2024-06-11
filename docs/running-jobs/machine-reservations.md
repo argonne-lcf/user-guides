@@ -24,6 +24,8 @@ A **score boost** means we give your job(s) a boost in score to help it move ahe
 
 You can see reservations using the `pbs_rstat` command:
 
+### Submitting to a reservation
+Use `pbs_rstat` command on the login node to view the list of all reservations.
 ```
 pbs_rstat
 Resv ID      Queue     User     State               Start / Duration / End             
