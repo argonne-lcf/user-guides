@@ -2,17 +2,22 @@
 
 To get a reservation, you must first demonstrate a need to run outside of the normal queueing policies. Reservations are available only to projects with a positive allocation. 
 
-Lead time for approval is **5 business days**. If approved, scheduling is contingent on machine availability.
+**5 business day** lead time is recommended to ensure timely approval. Scheduling is contingent on machine availability.
 
 **Disclaimer:** Approval for reservation requests are subject to their appropriateness and machine availability. Not all requests will be approved. It is particularly difficult to accommodate reservation requests during busy times of the year, e.g. Supercomputing, end of the ALCC and INCITE allocation cycles.
 
 **Kindness Policy:** We do monitor reservation utilization. The Scheduling Committee reserves the right to cancel reservations without notice if we decide a reservation is underutilized, not being properly utilized, or otherwise wasting resources. For instance, requesting a 12 hour reservation for interactive work, but then going to lunch leaving the reservation empty with no work.
 
-**Early Completion Policy:** If you have finished running your jobs before your reservation has ended, please reach out to the support team (support@alcf.anl.gov) to have to release it for other users.
-At this time, there is no way for a user to release a reservation early.
+**Early Completion Policy:** If you have finished running your jobs before your reservation has ended, please reach out to the support team (support@alcf.anl.gov) to have to release it for other users. At this time, there is no way for a user to release a reservation early.
+
+
+### Some definitions
+A **reservation** means we set aside some number of nodes on a system for a limited time. Only certain users or projects can submit to the queues assigned to the reservation.
+
+A **score boost** means we give your job(s) a boost in score to help it move ahead in the queue, but it still allows the scheduler to more efficiently fill the machine. 
 
 ----
-### [-> Fill out the Reservation Form <-](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u)
+### [-> Fill out the Form <-](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u)
 ----
 
 # Querying Reservations via Command Line
