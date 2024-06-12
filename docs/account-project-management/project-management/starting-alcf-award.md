@@ -76,11 +76,11 @@ PI/proxies with active ALCF accounts can also approve new account requests, proj
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
 
-Members that do not have an ALCF account should request one at: [https://accounts.alcf.anl.gov/accountRequest](https://accounts.alcf.anl.gov/accountRequest). When prompted for project name, they should select your project short name.
+Members that **do not have an ALCF account** should request one at: [https://accounts.alcf.anl.gov/#/accountRequest](https://accounts.alcf.anl.gov/#/accountRequest). When prompted for project name, they should select your project short name.
 
-If your project members have ALCF accounts that are no longer active, please ask them to submit a reactivation request here: [https://accounts.alcf.anl.gov/accountReactivate](https://accounts.alcf.anl.gov/accountReactivate). When prompted for project name, they should select your project short name.
+Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://accounts.alcf.anl.gov/#/accountReactivate](https://accounts.alcf.anl.gov/#/accountReactivate). When prompted for project name, they should select your project short name.
 
-If you project members have active ALCF accounts but have not been added to your project, they should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
+Members with **active ALCF accounts but have not been added to your project** should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject). They should search for your project and click the "Request Membership" button for that project.
 
 ## Moving Your Data
 We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see [Using Globus](../../data-management/data-transfer/using-globus.md).
