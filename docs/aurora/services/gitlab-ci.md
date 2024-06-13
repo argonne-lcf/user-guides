@@ -17,6 +17,13 @@
 
 _Example: A `.gitlab-ci.yml` file for an Aurora project_
 ```
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 variables:
   ANL_AURORA_SCHEDULER_PARAMETERS: "-A ProjectName -l walltime=0:30:00  -q AuroraQueueName"
 stages:
@@ -24,16 +31,13 @@ stages:
   - stage2
 shell_test1:
   stage: stage1
-  tags:
-    - shell
-    - aurora
+  extends: .aurora-shell-runner
   script:
     - echo "Shell Job 1"
 batch_test:
   stage: stage2
   tags:
-    - batch
-    - aurora
+  extends: .aurora-batch-runner
   script:
     - echo "Job 2 start"
     - echo "Job end"
@@ -41,13 +45,18 @@ batch_test:
 
 _Example: Running a batch job on the Aurora HPC_
 ```
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 variables:
  ANL_AURORA_SCHEDULER_PARAMETERS: "-A ProjectName -l walltime=0:30:00  -q AuroraQueueName"
 
 batch_test:
-  tags:
-    - aurora
-    - batch
+  extends: .aurora-batch-runner
   script:
     - echo "Job start"
     - echo "Job end"
@@ -56,6 +65,13 @@ batch_test:
 
 _Example: Aurora pipeline with custom stages_
 ```
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 variables:
  ANL_AURORA_SCHEDULER_PARAMETERS: "-A ProjectName -l walltime=0:30:00  -q AuroraQueueName"
 
@@ -65,9 +81,7 @@ stages:
 
 test1:
   stage: stage1
-  tags:
-    - aurora
-    - shell
+  extends: .aurora-shell-runner
   script:
     - export
     - id
@@ -76,9 +90,7 @@ test1:
     - echo test > test.txt
 test2:
   stage: stage2
-  tags:
-    - aurora
-    - batch
+  extends: .aurora-batch-runner
   script:
     - echo "Job 2 start"
     - echo "Job 2 end"
@@ -87,6 +99,12 @@ test2:
 
 _Example: Gitlab job designed to only run on merge requests_
 ```
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
 test1:
   rules:
     - if: $CI_COMMIT_TAG                    # Do not execute jobs for tag context
@@ -95,9 +113,7 @@ test1:
       when: never
     - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
   stage: stage1
-  tags:
-    - aurora
-    - shell
+  extends: .aurora-batch-runner
   script:
     - echo "Run test 1"
 ```
