@@ -13,6 +13,7 @@ libEnsemble can be used in a consistent manner on laptops, clusters, and superco
 
 libEnsemble is provided on Polaris in the **conda** module:
 
+    module use /soft/modulefiles
     module load conda
     conda activate base
 
