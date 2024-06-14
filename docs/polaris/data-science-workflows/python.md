@@ -10,7 +10,7 @@ then activating the base environment.
 Explicitly (either from an interactive job, or inside a job script):
 
 ```bash
-module load conda ; conda activate base
+module use /soft/modulefiles; module load conda ; conda activate base
 ```
 
 This will load and activate the base environment.
