@@ -16,3 +16,22 @@ This is a collection of known issues that have been encountered on Polaris. Docu
    ```bash
    launch failed on x3104c0s1b0n0: Couldn't forward RPC launch(ab751d77-e80a-4c54-b1c2-4e881f7e8c90) to child x3104c0s31b0n0.hsn.cm.polaris.alcf.anl.gov: Resource temporarily unavailable
    ```
+   
+## `ssh`'ing between Polaris Compute Nodes
+
+1. You should be able to `ssh` freely (without needing a password) between your assigned compute nodes on Polaris. If you are running into `ssh` issues check for the following causes:
+
+   1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 /home/<username>`)
+   2. Confirm the following files exist in your `.ssh` directory and the permissions are set to the following:
+         1. `-rw-------  (600)  authorized_keys`
+         2. `-rw-r--r--  (644)  config`
+         3. `-rw-------  (600)  id_rsa`
+         4. `-rw-r--r--  (644)  id_rsa.pub`
+   5. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`
+
+
+
+
+
+
+
