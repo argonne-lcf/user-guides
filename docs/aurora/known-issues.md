@@ -81,6 +81,16 @@ export FI_CXI_REQ_BUF_MAX_CACHED=0
 export FI_CXI_REQ_BUF_MIN_POSTED=6
 ```
 
+5. SYCL Device Free Memory Query Error
+
+Note that if you are querying the free memory on a device with the Intel SYCL extension "get_info<sycl::ext::intel::info::device::free_memory>();", you will need to set `export ZES_ENABLE_SYSMAN=1`. Otherwise you may see an error like:
+
+```
+x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
+x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: terminate called after throwing an instance of 'sycl::_V1::invalid_object_error'
+  what():  The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
+```
+
 ## Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw [JOBID] | grep comment`. Some example comments follow.

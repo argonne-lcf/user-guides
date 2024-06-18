@@ -10,7 +10,7 @@ then activating the base environment.
 Explicitly (either from an interactive job, or inside a job script):
 
 ```bash
-module load conda ; conda activate base
+module use /soft/modulefiles; module load conda ; conda activate base
 ```
 
 This will load and activate the base environment.
@@ -32,8 +32,9 @@ we can build a `venv` on top of it.
     the `base` packaes):
 
     ```bash
-    module load conda; conda activate
-    VENV_DIR="venvs/polaris"
+    module use /soft/modulefiles ; module load conda; conda activate base
+    CONDA_NAME=$(echo ${CONDA_PREFIX} | tr '\/' '\t' | sed -E 's/mconda3|\/base//g' | awk '{print $NF}')
+    VENV_DIR="$(pwd)/venvs/${CONDA_NAME}"
     mkdir -p "${VENV_DIR}"
     python -m venv "${VENV_DIR}" --system-site-packages
     source "${VENV_DIR}/bin/activate"
