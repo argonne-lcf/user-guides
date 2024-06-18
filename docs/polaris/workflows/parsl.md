@@ -10,8 +10,9 @@ For many applications, managing an ensemble of jobs into a workflow is a critica
 
 You can install parsl building off of the ``conda`` modules.  You have some flexibility in how you want to extend the ``conda`` module to include parsl, but here is an example way to do it:
 
-```python
+```shell
 # Load the Conda Module (needed everytime you use parsl)
+module use /soft/modulefiles
 module load conda
 conda activate
 

@@ -16,7 +16,7 @@ As a workaround, the following environment variables can be set to try alleviati
 
 ```bash
 export FI_CXI_DEFAULT_CQ_SIZE=131072
-export FI_CXI_OVFLOW_BUF_SIZE=8388608
+export FI_CXI_OFLOW_BUF_SIZE=8388608
 export FI_CXI_CQ_FILL_PERCENT=20
 ```
 
@@ -79,6 +79,16 @@ export FI_MR_CACHE_MAX_SIZE=-1
 export FI_MR_CACHE_MAX_COUNT=524288
 export FI_CXI_REQ_BUF_MAX_CACHED=0
 export FI_CXI_REQ_BUF_MIN_POSTED=6
+```
+
+5. SYCL Device Free Memory Query Error
+
+Note that if you are querying the free memory on a device with the Intel SYCL extension "get_info<sycl::ext::intel::info::device::free_memory>();", you will need to set `export ZES_ENABLE_SYSMAN=1`. Otherwise you may see an error like:
+
+```
+x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
+x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: terminate called after throwing an instance of 'sycl::_V1::invalid_object_error'
+  what():  The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
 ```
 
 ## Submitting Jobs
