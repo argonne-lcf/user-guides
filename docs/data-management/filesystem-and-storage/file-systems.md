@@ -47,13 +47,13 @@ chmod -R o+Xr /home/username/subdirectoryname
 First, a one-time-only change to your top-level /home/username directory. To share files/directories with user gilgamesh, for example:
 
 ```
-setfacl -m u:gilgamesh:x /home/username
+setfacl -m u:gilgamesh:X /home/username
 ```
 
 Then you may permission individual files and/or subdirectories with read access. For example, to recursively change permissions on /home/username/subdirectoryname so that all files in that subdirectory and any subdirectory trees within it are readable to user gilgamesh, you would use
 
 ```
-setfacl -R -m -u gilgamesh:m:rx,d:u:gilgamesh:rx /home/username/subdirectoryname
+setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 ```
 
 
