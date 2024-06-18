@@ -16,7 +16,7 @@ As a workaround, the following environment variables can be set to try alleviati
 
 ```bash
 export FI_CXI_DEFAULT_CQ_SIZE=131072
-export FI_CXI_OVFLOW_BUF_SIZE=8388608
+export FI_CXI_OFLOW_BUF_SIZE=8388608
 export FI_CXI_CQ_FILL_PERCENT=20
 ```
 
