@@ -113,13 +113,13 @@ transparent when compared to `#!bash --user` installs.
 
 ## Existing issue and solution
 
-There is an issue with current conda environment. One may encounter the following issue
+There is an issue with the current conda environment. One may encounter the following error message: 
 ```bash
 aborting job:
 MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
 ```
 
-To addresss this. Please add the following line in the very begging of your python script. 
+To addresss this, please add the following line in the very begging of your python script. 
 ```python
 from mpi4py import MPI
 ```
