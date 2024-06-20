@@ -110,3 +110,18 @@ Anaconda environment or unload the module.
 
 Cloning the Anaconda environment, or using `venv` are both more flexible and
 transparent when compared to `#!bash --user` installs.
+
+## Existing issue and solution
+
+There is an issue with the current conda environment. One may encounter the following error message: 
+
+```bash
+aborting job:
+MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
+```
+
+To addresss this, please add the following line in the very beginning of your python script. 
+
+```python
+from mpi4py import MPI
+```
