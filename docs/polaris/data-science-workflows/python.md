@@ -10,7 +10,7 @@ then activating the base environment.
 Explicitly (either from an interactive job, or inside a job script):
 
 ```bash
-module load conda ; conda activate base
+module use /soft/modulefiles; module load conda ; conda activate base
 ```
 
 This will load and activate the base environment.
@@ -32,8 +32,9 @@ we can build a `venv` on top of it.
     the `base` packaes):
 
     ```bash
-    module load conda; conda activate
-    VENV_DIR="venvs/polaris"
+    module use /soft/modulefiles ; module load conda; conda activate base
+    CONDA_NAME=$(echo ${CONDA_PREFIX} | tr '\/' '\t' | sed -E 's/mconda3|\/base//g' | awk '{print $NF}')
+    VENV_DIR="$(pwd)/venvs/${CONDA_NAME}"
     mkdir -p "${VENV_DIR}"
     python -m venv "${VENV_DIR}" --system-site-packages
     source "${VENV_DIR}/bin/activate"
@@ -109,3 +110,18 @@ Anaconda environment or unload the module.
 
 Cloning the Anaconda environment, or using `venv` are both more flexible and
 transparent when compared to `#!bash --user` installs.
+
+## Existing issue and solution
+
+There is an issue with the current conda environment. One may encounter the following error message: 
+
+```bash
+aborting job:
+MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
+```
+
+To addresss this, please add the following line in the very beginning of your python script. 
+
+```python
+from mpi4py import MPI
+```
