@@ -11,6 +11,7 @@ mpirun ... -x LD_PRELOAD=$DARSHAN_PRELOAD
 ```
 
 ## More information
-See the [Theta documentation](../../theta/performance-tools/darshan.md) for more ALCF specific Darshan usage.  
+<!-- Needs updating for sophia: -->
+<!-- See the [Theta documentation](../../theta/performance-tools/darshan.md) for more ALCF specific Darshan usage.   -->
   
   
