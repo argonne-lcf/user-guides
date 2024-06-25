@@ -233,10 +233,7 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  theta/theta-decommissioning.md
-  theta/
-  theta-gpu/
-  cooley/
+  sophia/
 
 theme:
   name: 'material'
