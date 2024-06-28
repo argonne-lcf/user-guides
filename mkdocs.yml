@@ -213,6 +213,39 @@ nav:
         - libEnsemble: aurora/workflows/libensemble.md
         - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
+  - Sophia:
+    - Getting Started: sophia/getting-started.md
+    - Applications and Libraries:
+      - Applications:
+        - GROMACS: sophia/applications-and-libraries/applications/gromacs.md
+    - Compiling and Linking:
+      - Overview: sophia/compiling-and-linking/compiling-and-linking-overview.md
+      - Continuous Integration: sophia/compiling-and-linking/continuous-integration.md
+    - Data Science Workflows:
+      - Building Python Packages: sophia/data-science-workflows/building-python-packages.md
+      - Containers:
+        - Containers: sophia/data-science-workflows/containers/containers.md
+      - Data Science Software Availability: sophia/data-science-workflows/data-science-software-availability.md
+      - DL Frameworks:
+        - DeepSpeed: sophia/data-science-workflows/dl-frameworks/deepspeed.md 
+        - Distributed Training Using Data Parallelism: sophia/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md 
+        - Running PyTorch Conda: sophia/data-science-workflows/dl-frameworks/running-pytorch-conda.md 
+        - Running TensorFlow Conda: sophia/data-science-workflows/dl-frameworks/running-tensorflow-conda.md 
+        - TensorBoard Instructions: sophia/data-science-workflows/dl-frameworks/tensorboard-instructions.md 
+      - GPU Monitoring: sophia/data-science-workflows/gpu-monitoring.md 
+      - GPU Node Queue and Policy: sophia/data-science-workflows/gpu-node-queue-and-policy.md 
+      - PythonC Code Interoperability: sophia/data-science-workflows/pythonc-code-interoperability.md 
+    - Hardware Overview: 
+      - Theta GPU Machine Overview: sophia/hardware-overview/theta-gpu-machine-overview.md 
+    - Performance Tools: 
+      - Darshan: sophia/performance-tools/darshan.md 
+      - NVIDIA-Nsight: sophia/performance-tools/nvidia-nsight.md 
+    - Programming Models:
+      - Kokkos: sophia/programming-models/kokkos.md 
+      - OpenMP: sophia/programming-models/openmp.md 
+      - RAJA: sophia/programming-models/raja.md 
+    - Queueing and Running Jobs:
+      - Job and Queue Scheduling : sophia/queueing-and-running-jobs/job-and-queue-scheduling.md 
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
@@ -233,7 +266,6 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  sophia/
 
 theme:
   name: 'material'
