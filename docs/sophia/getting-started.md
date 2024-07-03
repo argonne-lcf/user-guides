@@ -19,11 +19,11 @@ in, you land on one of the sophia login nodes (sophia-login-01, sophia-login-02)
 
 An overview of the Sophia system including details on the compute node architecture is available on the [Machine Overview](./hardware-overview/machine-overview.md) page.
 
-## Setup Sophia environment
+<!-- ## Setup Sophia environment -->
 
-Generally you will be working on the Sophia compute nodes, a.k.a. GPU
-nodes. (NEEDS UPDATING; NEEDS INFO ABOUT PRIMARY USE CASES (JupyterHub and
-large inference (?))
+<!-- Generally you will be working on the Sophia compute nodes, a.k.a. GPU -->
+<!-- nodes. (NEEDS UPDATING; NEEDS INFO ABOUT PRIMARY USE CASES (JupyterHub and -->
+<!-- large inference (?)) -->
 
 ## Compiling Applications
 

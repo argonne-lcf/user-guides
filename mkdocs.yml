@@ -101,8 +101,8 @@ nav:
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
         - SmartSim: polaris/workflows/smartsim.md
-  - Sophia:
-    - Getting Started: sophia/getting-started.md
+  # - Sophia:
+  #   - Getting Started: sophia/getting-started.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
