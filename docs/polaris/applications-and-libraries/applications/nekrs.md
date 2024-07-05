@@ -5,7 +5,7 @@
 nekRS is a fast and scaleable computational fluid dynamics (CFD) software package targeting massively parallel computers. It is based on the high-order spectral element method and is capable of solving incompressible and low Mach-number fluid flow problems. 
 nekRS uses the [OCCA](https://github.com/libocca/occa) portability layer for offloading compute kernels to GPU devices.
 
-For details about the code and its usage, see the [nekRS](https://nekrsdoc.readthedocs.io/en/latest/) home page. This page provides information specific to running on Polaris at the ALCF.
+For details about the code and its usage, see the [nekRS](https://github.com/Nek5000/nekRS/blob/master/README.md) home page. This page provides information specific to running on Polaris at the ALCF.
 
 ## Using nekRS at ALCF
 
@@ -68,7 +68,7 @@ module load spack-pe-base cmake
 
 ## Running Jobs on Polaris
 
-An example submission script for running a 2-node nekRS job is shown below as an example. Additional information on nekRS input files and application setup options is described on the nekRS [website](https://nekrsdoc.readthedocs.io/en/latest/input_files.html).
+An example submission script for running a 2-node nekRS job is shown below as an example. Additional information on nekRS input files and application setup options is described [here](https://github.com/Nek5000/nekRS/blob/master/doc/parHelp.txt).
 ```
 #!/bin/bash
 : ${PROJ_ID:=""}
@@ -203,7 +203,9 @@ qsub -q $QUEUE $SFILE
 
 ```
 
-
-
 ## Just-in-time (JIT) compilation
 nekRS uses the OCCA library to translate, compile, and run GPU-targetted functions and kernels. Some useful notes on the cached object files can be found [here](https://nekrsdoc.readthedocs.io/en/latest/just_in_time_compilation.html).
+
+
+## Discussion Group
+Users can visit the [Github Discussions](https://github.com/Nek5000/nekRS/discussions) page to seek help, find solutions, share ideas, and follow discussions on several application-specific topics.
