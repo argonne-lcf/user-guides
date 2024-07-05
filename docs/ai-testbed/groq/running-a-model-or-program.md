@@ -67,7 +67,7 @@ pip install -r requirements.txt
 python minilmv2.py
 ```
 
-Then run the script as a batch job with PBS. This will reserve a full node.
+Then run the script as a batch job with PBS. This will reserve a full eight-card(chip) node.
 ```bash
 qsub -l  select=1,place=excl run_minilmv2.sh
 ```
@@ -122,7 +122,7 @@ $ ls -la run_minilmv2.sh.*
 ```
 
 #### Run a sample using PBS in interactive mode
-An alternative is to use an interactive PBS job. This may be useful when debugging new or changed code. Here is an example that starts a 24 hour interactive job. It reserves a full node. 
+An alternative is to use an interactive PBS job. This may be useful when debugging new or changed code. Here is an example that starts a 24 hour interactive job. It reserves a full eight-card(chip) node. 
 ```bash
 qsub -IV -l walltime=24:00:00 -l select=1,place=excl
 ```
