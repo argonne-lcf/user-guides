@@ -1,81 +1,65 @@
-# Compiling and Linking on ThetaGPU
+# Compiling and Linking on Sophia
+
 ## Overview
-ThetaGPU has AMD processors on the service nodes (thetagpusn1,2) and AMD processors and NVIDIA A100 GPUs on the compute nodes [see overview page]. The service nodes can be used to create containers and launch jobs.
+Sophia has AMD processors on the login nodes (sophia-login-01,02) and AMD
+processors and NVIDIA A100 GPUs on the compute nodes (see [Machine
+Overview](../hardware-overview/machine-overview.md) page). The login nodes can
+be used to create containers and launch jobs.
 
-**Note:** Until the cross-compiling environment is set up or dedicated build nodes get added, the compute nodes will have to be used for compiling. Do not compile codes on service nodes (thetagpusn1,2).
+**Note:** Until the cross-compiling environment is set up or dedicated build
+nodes get added, the compute nodes will have to be used for compiling. Do not
+compile codes on the login nodes. To launch an interactive job and acquire a
+compute node for compiling, use
 
-The default programming environment on the ThetaGPU compute nodes is the GNU compiler tools coupled with NVIDIA’s CUDA toolkit. 
+```
+qsub -I -q workq -A myProjectShortName -n 1 -t HH:MM:SS
+```
 
-**Note:** Symlinks to the project directories are not available on the compute nodes. Use the full path (eg: /lus/theta-fs0/projects/<projectname>) to access the project directory.
+The default programming environment on the Sophia compute nodes is the GNU compiler tools coupled with NVIDIA’s CUDA toolkit. 
 
 For non-GPU codes:
-  - gcc – for C compiler
-  - g++ – for C++
-  - gfortran – for Fortran
 
-For CUDA codes, please note that there is a new driver(v470) and default cuda toolkit(v11.4); the old toolkit is still available on the compute nodes at /usrlocal/cuda-11.3
-  - nvcc
+- gcc
+- g++
+- gfortran
 
-For MPI, the latest MPI is in /lus/theta-fs0/software/thetagpu/openmpi-4.0.5.  
+For CUDA codes, please note that there is a new driver(v470) and default cuda
+toolkit (v12.4)
+
+- nvcc
+
+Default Nvidia installed software will just be in your PATH on compute nodes
+(not on login nodes).
+
+```which nvcc```
+
+
+
+***NEEDS UPDATING: everything from here down:***
+
+
+For MPI, the latest MPI is in /usr/mpi/gcc/openmpi-4.1.5a1
+
   - mpicc
-  - mpicxx
-  - mpif77/mpif90 not configured yet
+  - mpicxx/mpic++/mpiCC
+  - mpifort/mpif77/mpif90
 
-mpirun is a wrapper in /usr/local/bin that sets the appropriate options and uses the mpirun in the MPI directory above.
+On the login nodes, GNU compilers are available.
 
-On the service nodes, GNU compilers are available.
-  
-## Modules on ThetaGPU
-Available modules can be listed (on thetagpusn1,2) via the command:
+
+## Modules on Sophia
+Available modules can be listed via the command:
 ```
-user@thetagpusn1:~$ module avail
-
-
------------------------ /usr/local/lmod/lmod/modulefiles -----------------------
-
-   Core/lmod    Core/settarg
-
-
--------- /lus/theta-fs0/software/environment/thetagpu/lmod/modulefiles ---------
-
-   Core/StdEnv                 (L,D)    conda/tensorflow/2021-01-08
-
-   aocl/blis-3.0                        conda/tensorflow/2021-03-02      (D)
-
-   conda/pytorch/2020-11-25             nccl/nccl-v2.8.4-1_CUDA11
-
-   conda/pytorch/2021-03-02    (D)      openmpi/openmpi-4.0.5            (L)
-
-   conda/tensorflow/2020-11-11          openmpi/openmpi-4.1.0_ucx-1.10.0
-
-   conda/tensorflow/2020-12-17          openmpi/openmpi-4.1.0            (D)
-
-   conda/tensorflow/2020-12-23
-
-
--- /lus/theta-fs0/software/spack/share/spack/modules/linux-ubuntu18.04-x86_64 --
-
-   autoconf-2.69-gcc-7.5.0-wmttzuv
-
-   autoconf-archive-2019.01.06-gcc-7.5.0-bdyarrk
-
-....
+module avail
 ```
-Loaded modules in your environment can be listed (on thetagpusn1,2) via the command:
-  
+Loaded modules in your environment can be listed via the command:
 ```
-user@thetagpusn1:~$ module list
-
-
-Currently Loaded Modules:
-
-1) openmpi/openmpi-4.0.5   2) Core/StdEnv
+module list
 ```
 To load new modules use:
 ```
-user@thetagpusn1:~$ module load <module_name>
+module load <module_name>
 ```
-There are few modules available at this time, but the number will grow as more packages become available.
 
 **Usage:** csh and zsh users do not have to do anything special to their environments. bash users, however, will need to add the following to any job scripts:
 ```
