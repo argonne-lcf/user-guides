@@ -104,7 +104,7 @@ nav:
   - Sophia:
     - Machine Overview: sophia/hardware-overview/machine-overview.md
     - Getting Started: sophia/getting-started.md
-    - Running Jobs: sophia/running-jobs.md
+    - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
     - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
