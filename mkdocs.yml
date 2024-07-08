@@ -103,6 +103,12 @@ nav:
         - SmartSim: polaris/workflows/smartsim.md
   - Sophia:
     - Getting Started: sophia/getting-started.md
+    - Hardware Overview: 
+      - Sophia Machine Overview: sophia/hardware-overview/sophia-machine-overview.md
+    - Compiling and Linking:
+      - Overview: sophia/compiling-and-linking/compiling-and-linking-overview.md
+    - Queueing and Running Jobs:
+      - Job and Queue Scheduling : sophia/queueing-and-running-jobs/job-and-queue-scheduling.md 
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
