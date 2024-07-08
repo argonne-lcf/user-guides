@@ -69,7 +69,7 @@ The available software can then be queried with `module avail`.
 Please read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts.
 
 For more information on Sophia queues and job submission visit: [Running Jobs
-on Sophia](./running-jobs.md)
+on Sophia](./queueing-and-running-jobs/running-jobs.md)
 
 
 ## Lustre File Striping

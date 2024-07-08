@@ -3,7 +3,7 @@
 The base `#!bash conda` environment on ThetaGPU comes with Microsoft's
 [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions
 for using / cloning the base environment can be found
-[here](../../../polaris/data-science-workflows/python.md).
+<!-- broken sophia link [here](docs/polaris/data-science-workflows/python.md).-->
 
 We describe below the steps needed to get started with DeepSpeed on ThetaGPU.
 
