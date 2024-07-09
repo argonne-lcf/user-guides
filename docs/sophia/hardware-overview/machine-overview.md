@@ -3,7 +3,7 @@ Sophia is comprised of 24 NVIDIA DGX A100 nodes. Each DGX A100 node comprises ei
 
 A 15-terabyte solid-state drive offers up to 25 gigabits per second in bandwidth. The dedicated compute fabric comprises 20 Mellanox QM9700 HDR200 40-port switches wired in a fat-tree topology.
 
-## Table 1 summarizes the capabilities of a Sophia compute node.
+Table 1 summarizes the capabilities of a Sophia compute node:
 | COMPONENT | COMPONENT | AGGREGATE |
 | --- | ----------- | ----------- |
 | AMD Rome 64-core CPU | 2 | 48 |
