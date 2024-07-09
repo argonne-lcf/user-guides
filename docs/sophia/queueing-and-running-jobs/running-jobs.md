@@ -18,21 +18,21 @@ Here are the initial queue limits. You may not violate any of these policies whe
 - MinTime is 5 minutes
 - MaxTime is 12 hours
 - Max GPUs is 1
-- MaxQueued will be 20 running jobs (per project)
+- MaxQueued will be 20 queued or running jobs (per project)
 - MaxRunning will be 5 concurrent jobs (per project)
 
 #### single-node queue:
 - MinTime is 5 minutes
 - MaxTime is 12 hours
 - Max nodes is 1
-- MaxQueued will be 20 running jobs (per project)
+- MaxQueued will be 20 queued or running jobs (per project)
 - MaxRunning will be 5 concurrent jobs (per project)
 
 #### bigmem queue:
 - MinTime is 5 minutes
 - MaxTime is 12 hours
 - Max nodes is 1
-- MaxQueued will be 20 running jobs (per project)
+- MaxQueued will be 20 queued or running jobs (per project)
 - MaxRunning will be 5 concurrent jobs (per project)
 
 The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill. Single-queue and single-gpu queues target non-bigmem nodes.
