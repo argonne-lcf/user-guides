@@ -7,6 +7,7 @@ If it has node in the name, you will get nodes. If it has GPU in the name, you w
 ##  <a name="Sophia-Queues"></a>Queues
 
 There are three primary queues:
+
 - `single-gpu`: This is the general production queue for jobs that operate best on a single GPU. The `-n` parameter in your `qsub` command should always be 1 as you can only submit to a single GPU. If you need more than 1 GPU, use the `single-node` queue.
 - `single-node`: This is the general production queue for jobs that require a full node. The `-n` parameter in your `qsub` command should always be 1 as you can only submit to a single node.
 - `bigmem`:  2 of the nodes have 640 GB of aggregate GPU memory compared to the other 22 nodes with 320 GB. Use this queue to access one of these 2 nodes by specifying ```-q bigmem``` in your script. A max of 1 node (`-n 1`) can be requested in this queue.
