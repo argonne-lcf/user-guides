@@ -94,6 +94,10 @@ ftn -mp=gpu -gpu=cc80 hello.F90
 mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda --offload-arch=sm_80 hello.cpp 
 ```
 
+Note that if you want to force the code to error out if it cannot run on
+the GPU (instead of falling back to run on host, which is the default), you can
+additionally compile with `-fopenmp-offload-mandatory`.
+
 ### For PrgEnv-gnu, after loading the modules as discussed above we would use:
 
 ```
