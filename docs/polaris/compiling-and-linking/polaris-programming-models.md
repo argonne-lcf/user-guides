@@ -28,7 +28,7 @@ A summary of available GPU programming models and relevant compiler flags is sho
 | HIP* | -- | -- | -- | -- |
 | OpenACC | -- | -acc | -- | -- |
 | OpenCL* | -- | -- | -- | -- |
-| OpenMP | --| -mp=gpu | -fopenmp-targets=nvptx64 | -- |
+| OpenMP | --| -mp=gpu | -fopenmp-targets=nvptx64 --offload-arch=sm_80 -fopenmp-offload-mandatory | -- |
 | SYCL | -- | -- | -- | -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 |
 
 Note, the `llvm` and `oneapi` modules are provided by ALCF to complement the compilers provided by the Cray PE on Polaris.

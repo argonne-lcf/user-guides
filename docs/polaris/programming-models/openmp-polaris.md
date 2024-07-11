@@ -75,7 +75,7 @@ The following table shows what compiler and flags to use with which PrgEnv:
 |module | compiler | flags
 | --- | --- | --- |
 | PrgEnv-nvhpc | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
-| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda | 
+| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda --offload-arch=sm_80 -fopenmp-offload-mandatory | 
 | PrgEnv-gnu | cc/CC/ftn (gcc/g++/gfortran) | -fopenmp |
 | PrgEnv-cray | cc/CC/ftn | -fopenmp |
 
@@ -91,7 +91,7 @@ ftn -mp=gpu -gpu=cc80 hello.F90
 ### For LLVM, after loading the modules as discussed above:
 
 ```
-mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda hello.cpp 
+mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda --offload-arch=sm_80 -fopenmp-offload-mandatory hello.cpp 
 ```
 
 ### For PrgEnv-gnu, after loading the modules as discussed above we would use:
