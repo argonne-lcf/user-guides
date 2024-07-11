@@ -75,7 +75,7 @@ The following table shows what compiler and flags to use with which PrgEnv:
 |module | compiler | flags
 | --- | --- | --- |
 | PrgEnv-nvhpc | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
-| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda --offload-arch=sm_80 | 
+| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp --offload-arch=sm_80 | 
 | PrgEnv-gnu | cc/CC/ftn (gcc/g++/gfortran) | -fopenmp |
 | PrgEnv-cray | cc/CC/ftn | -fopenmp |
 
@@ -91,7 +91,7 @@ ftn -mp=gpu -gpu=cc80 hello.F90
 ### For LLVM, after loading the modules as discussed above:
 
 ```
-mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda --offload-arch=sm_80 hello.cpp 
+mpicxx -fopenmp --offload-arch=sm_80 hello.cpp 
 ```
 
 Note that if you want to force the code to error out if it cannot run on
