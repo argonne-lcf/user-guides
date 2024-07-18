@@ -9,15 +9,17 @@ For details about the code and its usage, see the [nekRS](https://github.com/Nek
 
 ## Using nekRS at ALCF
 
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles and submission scripts are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For questions, contact us at <support@alcf.anl.gov>.
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). For questions, contact us at <support@alcf.anl.gov>.
 
 ## How to Obtain the Code
 
-nekRS is an open-source code and can be downloaded from the [website](https://github.com/Nek5000/nekRS/archive/refs/tags/v23.0.tar.gz). Alternatively, the user can clone from the [nekRS Github](https://github.com/Nek5000/nekRS/tree/master) repository.
+nekRS is an open-source code and can be downloaded from the [website](https://github.com/Nek5000/nekRS/archive/refs/tags/v24.0.tar.gz). Alternatively, the user can clone from the [nekRS Github](https://github.com/Nek5000/nekRS/tree/master) repository. We recommend using the [next](https://github.com/Nek5000/nekRS/tree/next) branch since it is the most updated branch with some of the latest features, including the in-situ visualization capability. 
 
 ```
 git clone https://github.com/Nek5000/nekRS.git
+git checkout next
 ```
+The rest of this documentation is based on building and running using the `next` branch. Users who are interested to run the default `master` branch can contact <support@alcf.anl.gov> for additional support. 
 
 ## Building on Polaris 
 
@@ -39,7 +41,7 @@ module load spack-pe-base cmake
 
 To build and install the code run:
 ```
-CC=cc CXX=CC FC=ftn ./nrsconfig -DCMAKE_INSTALL_PREFIX=/path/to/installation/directory
+CC=cc CXX=CC FC=ftn ./build.sh -DCMAKE_INSTALL_PREFIX=/path/to/installation/directory
 ```
 During the installation process, you will be prompted to verify the configuration options. If everything was done correctly, you should see the correct compilers and the `Default backend : CUDA` in the `Summary` section of the output. If you see this, press `Enter` to continue with the build and installation process.
 
@@ -51,7 +53,6 @@ export PATH=$NEKRS_HOME/bin:$PATH
 ```
 
 Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `source $HOME/.bashrc` in the current terminal window.
-
 
 
 ### Building using NVHPC compilers
