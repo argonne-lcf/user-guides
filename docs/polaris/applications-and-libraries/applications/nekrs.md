@@ -70,6 +70,11 @@ module load spack-pe-base cmake
 ## Running Jobs on Polaris
 
 An example submission script for running a 2-node nekRS job is shown below as an example. Additional information on nekRS input files and application setup options is described [here](https://github.com/Nek5000/nekRS/blob/master/doc/parHelp.txt).
+The correct options to execute the script is as follows:
+
+> NEKRS_HOME= *</path/to/nekrs/install>* PROJ_ID=*<Your_Project_ID>* QUEUE=*<queue_to_submit>* ./run.sh *<casename>* *<number_of_nodes_requested>* *<walltime(hh:mm:ss)>* `
+
+Users can copy the script below into a file `run.sh` and execute it using the command above.
 ```
 #!/bin/bash
 : ${PROJ_ID:=""}
