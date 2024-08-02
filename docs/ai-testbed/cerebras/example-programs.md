@@ -248,3 +248,104 @@ Please find a sample output
 2024-03-21 17:42:45,646 INFO:   | Train Device=CSX, Step=1500, Loss=5.68750, Rate=20.45 samples/sec, GlobalRate=20.45 samples/sec
 2024-03-21 17:50:50,110 INFO:   | Train Device=CSX, Step=1600, Loss=5.85938, Rate=20.44 samples/sec, GlobalRate=20.45 samples/sec
 ```
+
+## ESM-2
+Evolutionary Scale Modeling ([ESM-2](https://www.science.org/doi/abs/10.1126/science.ade2574)) is a transformer protein language models from the Meta Fundamental AI Research Protein Team (FAIR). 
+The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/nlp/esm2`. Configs available are listed at [https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model). This example will use the Uniref 50 dataset, preprocessed at path /software/datasets/ESM-2/, to train a small 35M parameter model.
+
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
+```bash
+source ~/R_2.3.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+```
+Instructions for training (for 400 steps):
+```bash
+cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+export MODEL_DIR=model_dir_esm2
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+```
+
+Sample output
+```bash
+2024-08-02 20:53:25,927 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "model_dir_esm2" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
+2024-08-02 20:53:25,928 INFO:   No checkpoints were found in "model_dir_esm2".
+2024-08-02 20:53:25,928 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
+2024-08-02 20:53:25,930 INFO:   Starting training loop 1, from global step 0 to 400
+2024-08-02 20:53:26,257 WARNING:   Passing an absolute path as the compile directory may lead to undesirably long paths as the directory is used on the server side, not on the client side. Please consider passing in a relative directory instead.
+2024-08-02 20:53:26,488 INFO:   Saving checkpoint at step 0
+2024-08-02 20:53:35,010 INFO:   Saved checkpoint model_dir_esm2/checkpoint_0.mdl
+2024-08-02 20:53:45,962 INFO:   Compiling the model. This may take a few minutes.
+2024-08-02 20:53:47,482 INFO:   Initiating a new image build job against the cluster server.
+2024-08-02 20:53:47,488 INFO:   Custom worker image build is disabled from server.
+2024-08-02 20:53:47,492 WARNING:   Passing an absolute path as the compile directory may lead to undesirably long paths as the directory is used on the server side, not on the client side. Please consider passing in a relative directory instead.
+2024-08-02 20:53:47,658 INFO:   Initiating a new compile wsjob against the cluster server.
+2024-08-02 20:53:47,672 INFO:   Compile job id: wsjob-4jm7wrbl6lfnjf9hc2qukx, remote log path: /n1/wsjob/workdir/job-operator/wsjob-4jm7wrbl6lfnjf9hc2qukx
+2024-08-02 20:53:57,709 INFO:   Poll ingress status: Waiting for job running, current job status: Initializing, msg: job initializing with config generation. 
+2024-08-02 20:54:07,710 INFO:   Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1. 
+2024-08-02 20:54:17,724 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
+2024-08-02 20:54:20,821 INFO:   Pre-optimization transforms...
+2024-08-02 20:54:24,168 INFO:   Optimizing layouts and memory usage...
+2024-08-02 20:54:24,181 INFO:   Gradient accumulation enabled
+2024-08-02 20:54:24,188 INFO:   Gradient accumulation trying micro batch size 64...
+2024-08-02 21:06:59,403 INFO:   Exploring floorplans
+2024-08-02 21:07:13,655 INFO:   Exploring data layouts
+2024-08-02 21:08:06,235 INFO:   Optimizing memory usage
+2024-08-02 21:09:37,526 INFO:   Gradient accumulation showed a benefit
+2024-08-02 21:09:37,658 INFO:   Post-layout optimizations for <microbatch=64, lanes=7>...
+2024-08-02 21:09:37,679 INFO:   Post-layout optimizations for <microbatch=64, lanes=10>...
+2024-08-02 21:09:37,680 INFO:   Post-layout optimizations for <microbatch=64, lanes=8>...
+2024-08-02 21:09:37,681 INFO:   Post-layout optimizations for <microbatch=64, lanes=11>...
+2024-08-02 21:09:37,682 INFO:   Post-layout optimizations for <microbatch=64, lanes=5>...
+2024-08-02 21:09:40,830 INFO:   Allocating buffers for <microbatch=64, lanes=7>...
+2024-08-02 21:09:41,943 INFO:   Allocating buffers for <microbatch=64, lanes=8>...
+2024-08-02 21:09:41,977 INFO:   Allocating buffers for <microbatch=64, lanes=11>...
+2024-08-02 21:09:42,011 INFO:   Allocating buffers for <microbatch=64, lanes=10>...
+2024-08-02 21:09:42,014 INFO:   Allocating buffers for <microbatch=64, lanes=5>...
+2024-08-02 21:09:42,657 INFO:   Code generation for <microbatch=64, lanes=7>...
+2024-08-02 21:09:43,821 INFO:   Code generation for <microbatch=64, lanes=8>...
+2024-08-02 21:09:43,986 INFO:   Code generation for <microbatch=64, lanes=5>...
+2024-08-02 21:09:44,039 INFO:   Code generation for <microbatch=64, lanes=11>...
+2024-08-02 21:09:44,059 INFO:   Code generation for <microbatch=64, lanes=10>...
+2024-08-02 21:09:52,882 INFO:   Gradient accumulation picked micro batch size 64
+2024-08-02 21:10:08,744 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_3997308062121820062
+2024-08-02 21:10:08,780 INFO:   Compile was successful!
+2024-08-02 21:10:08,780 INFO:   Waiting for weight initialization to complete
+2024-08-02 21:10:08,781 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
+2024-08-02 21:10:08,946 INFO:   Initiating a new execute wsjob against the cluster server.
+2024-08-02 21:10:08,968 INFO:   Execute job id: wsjob-bzlmwdcyywzfu7bttr9gz9, remote log path: /n1/wsjob/workdir/job-operator/wsjob-bzlmwdcyywzfu7bttr9gz9
+2024-08-02 21:10:18,994 INFO:   Poll ingress status: Waiting for job running, current job status: Initializing, msg: job initializing with config generation. 
+2024-08-02 21:10:29,016 INFO:   Poll ingress status: Waiting for all Worker pods to be running, current running: 0/1. 
+2024-08-02 21:10:39,024 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 48/59. 
+2024-08-02 21:10:49,036 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 17/20. 
+2024-08-02 21:10:59,048 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
+2024-08-02 21:11:09,060 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
+2024-08-02 21:11:19,067 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
+2024-08-02 21:11:49,095 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
+2024-08-02 21:11:59,105 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
+2024-08-02 21:12:09,117 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
+2024-08-02 21:12:19,138 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
+2024-08-02 21:12:19,380 INFO:   Preparing to execute using 1 CSX
+2024-08-02 21:12:52,993 INFO:   About to send initial weights
+2024-08-02 21:12:59,491 INFO:   Finished sending initial weights
+2024-08-02 21:12:59,492 INFO:   Finalizing appliance staging for the run
+2024-08-02 21:13:20,532 INFO:   Waiting for device programming to complete
+2024-08-02 21:14:35,817 INFO:   Device programming is complete
+2024-08-02 21:14:36,774 INFO:   Using network type: ROCE
+2024-08-02 21:14:36,775 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2024-08-02 21:14:36,792 INFO:   Input workers have begun streaming input data
+2024-08-02 21:14:38,044 INFO:   Appliance staging is complete
+2024-08-02 21:14:38,044 INFO:   Beginning appliance run
+2024-08-02 21:20:22,200 INFO:   | Train Device=CSX, Step=100, Loss=4.71332, Rate=595.23 samples/sec, GlobalRate=595.23 samples/sec
+2024-08-02 21:26:13,253 INFO:   | Train Device=CSX, Step=200, Loss=10.34700, Rate=588.13 samples/sec, GlobalRate=589.25 samples/sec
+2024-08-02 21:26:13,260 INFO:   Saving checkpoint at step 200
+2024-08-02 21:26:29,525 INFO:   Saved checkpoint model_dir_esm2/checkpoint_200.mdl
+2024-08-02 21:32:04,197 INFO:   | Train Device=CSX, Step=300, Loss=4.17420, Rate=585.39 samples/sec, GlobalRate=587.34 samples/sec
+2024-08-02 21:37:56,370 INFO:   | Train Device=CSX, Step=400, Loss=4.12672, Rate=583.08 samples/sec, GlobalRate=585.88 samples/sec
+2024-08-02 21:37:56,377 INFO:   Saving checkpoint at step 400
+2024-08-02 21:38:13,224 INFO:   Saved checkpoint model_dir_esm2/checkpoint_400.mdl
+2024-08-02 21:38:42,917 INFO:   Training completed successfully!
+2024-08-02 21:38:42,923 INFO:   Processed 819200 training sample(s) in 2716.994790088 seconds.
+```
+
