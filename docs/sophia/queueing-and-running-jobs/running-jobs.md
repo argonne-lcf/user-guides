@@ -8,21 +8,23 @@ If it has node in the name, you will get nodes. If it has GPU in the name, you w
 
 There are three primary queues:
 
-- `single-gpu`: This is the general production queue for jobs that operate best on a single GPU. The `-n` parameter in your `qsub` command should always be 1 as you can only submit to a single GPU. If you need more than 1 GPU, use the `single-node` queue.
-- `single-node`: This is the general production queue for jobs that require a full node. The `-n` parameter in your `qsub` command should always be 1 as you can only submit to a single node.
-- `bigmem`:  2 of the nodes have 640 GB of aggregate GPU memory compared to the other 22 nodes with 320 GB. Use this queue to access one of these 2 nodes by specifying ```-q bigmem``` in your script. A max of 1 node (`-n 1`) can be requested in this queue.
+- `by-node`: This is the **default^1^** production queue and is targeted at jobs that can utilize more than 8 GPUs. The number of "chunks" you specify in your `qsub` (i.e. `-l select=4`) will be the number of Sophia DGX nodes (with 8 GPUs each) you are allocated.  Valid values are 1-22 in your select statement.  If you request more than 22 your job will never run due to lack of resources.
+- `by-gpu`: This is the general production queue for jobs that can utilize 1-8 GPUs.  The number of "chunks" you specify in your `qsub` (i.e. `-l select=4`) will be the number of GPUs you are allocated and they will all be on the same node.  Valid values are 1,2,4, or 8 in your select statement.  These restrictions ensure you get a sane set of resources (RAM is in the same NUMA node as the cores, the GPU has the minimal hops to the GPU, etc).  If you specify a different value your qsub will issue an error and fail. 
+- `bigmem`:  2 of the nodes have 80GB of RAM per GPU, while the other 22 have 40GB of RAM per GPU (640 GB of aggregate GPU memory per node vs 320 aggregate GPU memory per node). Use this queue to access one of these 2 nodes by specifying ```-q bigmem``` in your script. A max of 1 node (`-l select=1`) can be requested in this queue.
 
+**1:** The default queue is where your job will be submitted if you don't have `-q <queue name>` in your qsub 
 
 Here are the initial queue limits. You may not violate any of these policies when submitting a job:
 
-#### single-gpu queue:
+#### by-gpu queue:
 - MinTime is 5 minutes
 - MaxTime is 12 hours
-- Max GPUs is 1
+- Max nodes is 1
+- Max GPUs is 8
 - MaxQueued will be 20 queued or running jobs (per project)
 - MaxRunning will be 5 concurrent jobs (per project)
 
-#### single-node queue:
+#### by-node queue:
 - MinTime is 5 minutes
 - MaxTime is 12 hours
 - Max nodes is 1
@@ -36,5 +38,4 @@ Here are the initial queue limits. You may not violate any of these policies whe
 - MaxQueued will be 20 queued or running jobs (per project)
 - MaxRunning will be 5 concurrent jobs (per project)
 
-The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill. Single-queue and single-gpu queues target non-bigmem nodes.
-
+The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill. `by-queue` and `by-gpu` queues target non-bigmem nodes.
