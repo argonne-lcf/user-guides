@@ -88,3 +88,21 @@ python rdu_generate_text.py \
   checkpoint.model_name_or_path=/home/arnoldw/github.com/sambanova/modelzoo/Llama-2-7b-hf \
   samba_run.pef=$(find ~/output_llama/ -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
 ```
+
+The end of the console output should resemble the following:
+```
+Generating 32 tokens ...
+Decoding ...
+Completion:
+[', there was a little boy who lived in a small town.\nHe was a good boy, but sometimes he had a hard time following the rules.\n']
+
+latencies
+    time to first token 1.1981s
+    tokens,  excluding first token 0.3330s
+    tokens,  overall 0.3600s
+    Total Latency 1.5310s
+throughputs
+    tokens/second excluding first token 3.0032
+    tokens/second overall 2.7777
+Singularity> 
+```
