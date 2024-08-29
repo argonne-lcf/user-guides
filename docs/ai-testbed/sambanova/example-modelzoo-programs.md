@@ -4,7 +4,6 @@ The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is Sa
 
 In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity containers. The singularity image includes support for compiling and runninbg models.
 
-
 ## Cloning the Model Zoo Repository
 
 Clone the repo in your usual location. 
@@ -60,15 +59,31 @@ pip install --upgrade pip
 pip install -e . 
 ```
 
-## Compile a sample
+## Optionally, download the Hugging Face model for Llama-2-7b
 
-Compile a llama 7b text generation sample (using the huggingface model). This will take 20 minutes
+This model is also avaiable in `/software/models/Llama-2-7b-hf/`<br>
+First, create a Hugging Face account at https://huggingface.co/join if you do not already have one.<br>
+Go to https://huggingface.co/meta-llama/Llama-2-7b-hf[meta-llama/Llama-2-7b-hf] and accept the terms of use for Llama2 7B.<br>
+You will need to wait (minutes at least) until the request is proccessed.<br>
+In your https://huggingface.co/settings/tokens[Hugging Face account settings], generate a link:https://huggingface.co/docs/hub/en/security-tokens[user access token]. A read-only token works. Record the token in a way that can be copy-pasted in the future.
+```
+# if working in an environment (e.g. laptop) where git-lfs is not installed, 
+# sudo apt install git-lfs 
+git lfs install # Only needs to be done once 
+cd ~/sambanova
+git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
+# Enter (copy;paste) your user access token when prompted.
+```
+
+## Compile a sample that uses the HF mode
+
+Compile a llama 7b text generation sample (using the Hugging Face model). This will take 20 minutes
 
 ```
 cd ~/sambanova/modelzoo/examples/nlp/text_generation/
 python rdu_generate_text.py \
 command=compile \
-checkpoint.model_name_or_path=/home/$(whoami)/sambanova/Llama-2-7b-hf \
+checkpoint.model_name_or_path=/software/models/Llama-2-7b-hf/ \
 samba_compile.output_folder=/home/arnoldw/output_llama \
 +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.18.7
 ```
