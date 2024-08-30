@@ -4,6 +4,9 @@ The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is Sa
 
 In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity containers. The singularity image includes support for compiling and runninbg models.
 
+The procedure in this section is drawn from the inference part of (Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat)(https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
+The Model Zoo sample used as an example in this section is describe in more detail here: [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). That readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
+
 ## Cloning the Model Zoo Repository
 
 Clone the repo in your usual location. 
@@ -20,9 +23,12 @@ Change directory to your modelzoo clone, and set an environment variable to be  
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
 echo $TARGET_SAMBAFLOW_VERSION
-# should be of the forms 1.18.7
-~/github.com/sambanova/modelzoo$ ./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software/models/:/opt/ckpts/ /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
-APP_ROOT: /home/arnoldw/github.com/sambanova/modelzoo
+# should be of the form 1.19.1
+./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software/models/:/opt/ckpts/ /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+```
+Container startup output should look like:
+```
+APP_ROOT: /home/arnoldw/sambanova/modelzoo
 Using singularity with image /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
 
 Running singularity instance with name: devbox_arnoldw_1724873417
@@ -35,13 +41,13 @@ Singularity>
 
 To list all running containers:
 ```
-$ ~/github.com/sambanova/modelzoo$ singularity instance list
+$ ~/sambanova/modelzoo$ singularity instance list
 INSTANCE NAME                PID        IP    IMAGE
 devbox_arnoldw_1724873417    1649294          /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
 ```
 To re-enter an exited but still-running container:
 ```
-arnoldw@sn30-r2-h2:~/github.com/sambanova/modelzoo$ singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
+arnoldw@sn30-r2-h2:~/sambanova/modelzoo$ singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
 Singularity> 
 ```
 
@@ -63,9 +69,9 @@ pip install -e .
 
 This model is also avaiable in `/software/models/Llama-2-7b-hf/`<br>
 First, create a Hugging Face account at https://huggingface.co/join if you do not already have one.<br>
-Go to https://huggingface.co/meta-llama/Llama-2-7b-hf[meta-llama/Llama-2-7b-hf] and accept the terms of use for Llama2 7B.<br>
+Go to [meta-llama/Llama-2-7b-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf[meta-llama/Llama-2-7b-hf) and accept the terms of use for Llama2 7B.<br>
 You will need to wait (minutes at least) until the request is proccessed.<br>
-In your https://huggingface.co/settings/tokens[Hugging Face account settings], generate a link:https://huggingface.co/docs/hub/en/security-tokens[user access token]. A read-only token works. Record the token in a way that can be copy-pasted in the future.
+In your [Hugging Face account settings](https://huggingface.co/settings/tokens), generate a [user access token](link:https://huggingface.co/docs/hub/en/security-tokens). A read-only token works. Record the token such that it can easily be copy-pasted in the future.
 ```
 # if working in an environment (e.g. laptop) where git-lfs is not installed, 
 # sudo apt install git-lfs 
@@ -75,7 +81,7 @@ git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
 # Enter (copy;paste) your user access token when prompted.
 ```
 
-## Compile a sample that uses the HF mode
+## Compile a text generation sample that uses the HF mode
 
 Compile a llama 7b text generation sample (using the Hugging Face model). This will take 20 minutes
 
@@ -85,10 +91,10 @@ python rdu_generate_text.py \
 command=compile \
 checkpoint.model_name_or_path=/software/models/Llama-2-7b-hf/ \
 samba_compile.output_folder=/home/arnoldw/output_llama \
-+samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.18.7
++samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.19.1
 ```
 
-## Run the sample
+## Run the text generation sample 
 
 Run the sample, using the .pef binary created by the compile.
 Note: The expression in the command line finds the most recent pef file.
