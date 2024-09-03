@@ -1,5 +1,10 @@
 # Polaris System Updates
 
+## 2024-09-09
+
+### XALT
+The library tracking software XALT has been enabled for all Polaris users.
+
 ## 2024-04-22
 
 The management software on Polaris has been upgraded to HPCM 1.10
