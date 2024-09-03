@@ -1,9 +1,9 @@
 # Polaris System Updates
 
-## 2024-09-09
+## 2024-09-11
 
 ### XALT
-The library tracking software XALT has been enabled for all Polaris users.
+The XALT library tracking software has been enabled for all Polaris users. More information on the Polaris XALT deployment can be found here: ?
 
 ## 2024-04-22
 
