@@ -72,6 +72,8 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 * `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with gpu-enabled MPI libraries as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building cpu-only applications may find it useful to unload this module to silence "gpu code generation" warnings.
 
+* `xalt`: This module enables library tracking. More information on XALT can be found here: ?
+
 ## Mixed C/C++ & Fortran Applications
 
 For applications consisting of a mix of C/C++ and Fortran that also uses MPI, it is suggested that the programming environment chosen for Fortran be used to build the full application because of mpi.mod (and similar) incompatibilities. 
