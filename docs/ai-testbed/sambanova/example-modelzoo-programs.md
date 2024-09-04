@@ -2,12 +2,20 @@
 
 The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is SambaNova's new github repository for delivering RDU-compatible source code, including example applications for compiling and running models on SambaNova hardware.
 
-In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity containers. The singularity image includes support for compiling and runninbg models.
+In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity containers. The singularity image includes support for compiling and running models.
 
-The procedure in this section is drawn from the inference part of (Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat)(https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
-The Model Zoo sample used as an example in this section is describe in more detail here: [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). That readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
+The procedures in this section are drawn from [Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
+The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
+The original python scripts and scripts converted to run on rdu are also supplied in the modelzoo.<br>
+[cpu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/cpu_generate_text.py)<br>
+[rdu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/rdu_generate_text.py)<br>
+and<br>
+[cpu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/cpu_train_llm.py)<br>
+[rdu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm.py)<br>
+[rdu_train_llm_dp.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm_dp.py)<br>
 
-## Cloning the Model Zoo Repository
+## Setup
+### Cloning the Model Zoo Repository
 
 Clone the repo in your usual location. 
 ```
@@ -16,7 +24,7 @@ git clone https://github.com/sambanova/modelzoo.git
 ```
 Note: your home directory is mounted by default in the singularity containers.
 
-## Starting a container:
+### Starting a container:
 
 Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runtime version, then start the container. This example binds a directory containing an openwebtext dataset. 
 ```
@@ -56,7 +64,7 @@ To stop all your running containers:
 singularity instance stop devbox_<youruserid>_*
 ```
 
-## Set up the python environment in the container
+### Set up the python environment in the container
 
 ```
 cd ~/sambanova/modelzoo/
@@ -65,7 +73,7 @@ pip install --upgrade pip
 pip install -e . 
 ```
 
-## Optionally, download the Hugging Face model for Llama-2-7b
+### Optionally, download the Hugging Face model for Llama-2-7b
 
 This model is also avaiable in `/software/models/Llama-2-7b-hf/`<br>
 First, create a Hugging Face account at https://huggingface.co/join if you do not already have one.<br>
@@ -81,33 +89,36 @@ git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
 # Enter (copy;paste) your user access token when prompted.
 ```
 
-## Compile a text generation sample that uses the HF mode
+## Text generation sample
+### Compile a text generation sample that uses the HF model
 
 Compile a llama 7b text generation sample (using the Hugging Face model). This will take 20 minutes
 
 ```
-cd ~/sambanova/modelzoo/examples/nlp/text_generation/
-python rdu_generate_text.py \
+cd ~/sambanova 
+python ./modelzoo/examples/nlp/text_generation/rdu_generate_text.py \
 command=compile \
 checkpoint.model_name_or_path=/software/models/Llama-2-7b-hf/ \
-samba_compile.output_folder=/home/arnoldw/output_llama \
+samba_compile.output_folder=./out_generation \
 +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.19.1
 ```
 
-## Run the text generation sample 
+### Run the text generation sample 
 
 Run the sample, using the .pef binary created by the compile.
 Note: The expression in the command line finds the most recent pef file.
 <!--
-$(find ~/output_llama/ -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
-$(find ~/output_llama/$(ls -lart ~/output_llama/ | grep rdu | tail -n 1 | awk '{print $9}') -name "*.pef")
+$(find ./out_generation/ -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+$(find ./out_generation/$(ls -lart ~/output_llama/ | grep rdu | tail -n 1 | awk '{print $9}') -name "*.pef")
 -->
 
 ```
-python rdu_generate_text.py \
+cd ~/sambanova
+export PEF=$(find ./out_generation -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+python ./modelzoo/examples/nlp/text_generation/rdu_generate_text.py \
   command=run \
   checkpoint.model_name_or_path=/home/arnoldw/github.com/sambanova/modelzoo/Llama-2-7b-hf \
-  samba_run.pef=$(find ~/output_llama/ -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+  samba_run.pef=${PEF}
 ```
 
 The end of the console output should resemble the following:
@@ -125,5 +136,133 @@ latencies
 throughputs
     tokens/second excluding first token 3.0032
     tokens/second overall 2.7777
+Singularity> 
+```
+
+## Model Finetuning Sample
+
+Fine-tune the Llama2 7B model using a chat dataset.
+
+
+### Data preparation
+These steps should be performed On a SambaNova node, and not in a singularity container.
+#### Install the Generative Data Prep package in a virtualenv
+```
+cd ~/sambanova
+git clone https://github.com/sambanova/generative_data_prep.git
+cd generative_data_prep
+python -m venv gdp_venv
+source gdp_venv/bin/activate
+pip install .
+cd ~/sambanova
+
+```
+
+#### Download UltraChat from its Hugging Face page
+Make sure that you have git lfs installed, with `git lfs install`
+```
+cd ~/sambanova
+git clone https://huggingface.co/datasets/stingning/ultrachat
+```
+
+#### Convert the dataset to the .jsonl format
+```
+source gdp_venv/bin/activate
+cd ~/sambanova
+python ./modelzoo/examples/nlp/training/utils/convert_ultrachat.py -src ultrachat/ -dest ultrachat_processed.jsonl
+deactivate
+```
+
+### Compile a sample that finetunes the HF model
+
+#### Start container
+Start a new modelzoo singularity container with
+```
+cd ~/sambanova/modelzoo
+export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
+echo $TARGET_SAMBAFLOW_VERSION
+# should be of the form 1.19.1
+./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software/models/:/opt/ckpts/ /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+```
+or run an existing container with instructions in a previous section TODO add link
+
+#### Install pre-reqs
+Then install the pre-reqs into the container with
+```
+cd ~/sambanova/modelzoo/
+pip install -r requirements/requirements.txt 
+pip install --upgrade pip
+pip install -e . 
+```
+
+#### Compile the sample for fine tuning
+```
+cd ~/sambanova
+export CHECKPOINT=./Llama-2-7b-hf
+export MAX_SEQ_LENGTH=4096
+export BATCH_SIZE=8
+export ARCH=sn30
+python modelzoo/examples/nlp/training/rdu_train_llm.py \
+    command=compile \
+    checkpoint.config_name=${CHECKPOINT} \
+    model.max_seq_length=${MAX_SEQ_LENGTH} \
+    training.batch_size=${BATCH_SIZE} \
+    samba_compile.arch=${ARCH} \
+    samba_compile.output_folder=./out_train \
+    +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION
+```
+
+#### Run finetuning using generated pef file
+
+This will run for 1 full epoch and takes most of a day, using a single RDU.
+It uses the config file modelzoo/examples/nlp/training/config/base_config_rdu.yaml
+
+```
+cd ~/sambanova
+export CHECKPOINT=./Llama-2-7b-hf
+export MAX_SEQ_LENGTH=4096
+export DATASET=./ultrachat_dialogue;  # or container path to dataset
+# Finds most recent pef file in tree
+export PEF=$(find ./out_train -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+python -u modelzoo/examples/nlp/training/rdu_train_llm.py \
+    command=run \
+    checkpoint.model_name_or_path=${CHECKPOINT} \
+    model.max_seq_length=${MAX_SEQ_LENGTH} \
+    samba_run.pef=${PEF} \
+    training.dataset=${DATASET}
+
+```
+
+```
+Targeting samba-runtime v4.2.5. Samba is running with --target-runtime-version=1.3.10 on a system with installed runtime None.
+
+Log ID initialized to: [arnoldw][python][1003] at /var/log/sambaflow/runtime/sn.log
+Loading dataset for epoch 1...
+
+Number of epochs: 1
+Batch size: 8
+Number of batches (steps): 1,143
+
+Starting training for epoch 1...
+Epoch [1/1], Step [1/1143], Loss: 0.8184
+Epoch [1/1], Step [2/1143], Loss: 0.2452
+Epoch [1/1], Step [3/1143], Loss: 0.3727
+Epoch [1/1], Step [4/1143], Loss: 0.2945
+...
+Epoch [1/1], Step [1134/1143], Loss: 0.2529
+Epoch [1/1], Step [1135/1143], Loss: 0.2713
+Epoch [1/1], Step [1136/1143], Loss: 0.2669
+Epoch [1/1], Step [1137/1143], Loss: 0.2144
+Epoch [1/1], Step [1138/1143], Loss: 0.2129
+Epoch [1/1], Step [1139/1143], Loss: 0.2229
+Epoch [1/1], Step [1140/1143], Loss: 0.2263
+Epoch [1/1], Step [1141/1143], Loss: 0.2434
+Epoch [1/1], Step [1142/1143], Loss: 0.2131
+Epoch [1/1], Step [1143/1143], Loss: 0.1626
+Finished training.
+Saving checkpoint...
+Checkpoint saved at finetuned_model/
+Saving summary...
+Summary saved at finetuned_model/summary.txt
 Singularity> 
 ```
