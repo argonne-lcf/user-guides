@@ -103,6 +103,8 @@ samba_compile.output_folder=./out_generation \
 +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.19.1
 ```
 
+Note: each compile will add a new subdirectory to the ouput folder (`./out_generation`), containing compile artifcats. The folder can be deleted when testing is complete;
+
 ### Run the text generation sample 
 
 Run the sample, using the .pef binary created by the compile.
@@ -114,12 +116,16 @@ $(find ./out_generation/$(ls -lart ~/output_llama/ | grep rdu | tail -n 1 | awk 
 
 ```
 cd ~/sambanova
-export PEF=$(find ./out_generation -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+export PEF=$(find /home/$(whoami)/sambanova/out_generation -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
 python ./modelzoo/examples/nlp/text_generation/rdu_generate_text.py \
   command=run \
   checkpoint.model_name_or_path=/home/arnoldw/github.com/sambanova/modelzoo/Llama-2-7b-hf \
   samba_run.pef=${PEF}
 ```
+<!---
+Note, 2024/09/04, relative path to pef file is not working. Can't find file, thought the full pathname
+in the error message exists according to ls
+--->
 
 The end of the console output should resemble the following:
 ```
@@ -184,7 +190,7 @@ echo $TARGET_SAMBAFLOW_VERSION
 # should be of the form 1.19.1
 ./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software/models/:/opt/ckpts/ /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
 ```
-or run an existing container with instructions in a previous section TODO add link
+or use an existing container with instructions at [starting a container](#starting-a-container)
 
 #### Install pre-reqs
 Then install the pre-reqs into the container with
@@ -212,6 +218,8 @@ python modelzoo/examples/nlp/training/rdu_train_llm.py \
     +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION
 ```
 
+Note: each compile will add a new subdirectory to the ouput folder (`./out_train`), containing compile artifcats. The folder can be deleted when testing is complete;
+
 #### Run finetuning using generated pef file
 
 This will run for 1 full epoch and takes most of a day, using a single RDU.
@@ -233,6 +241,7 @@ python -u modelzoo/examples/nlp/training/rdu_train_llm.py \
 
 ```
 
+The end of the console output should resemble the following if run for a full epoch:
 ```
 Targeting samba-runtime v4.2.5. Samba is running with --target-runtime-version=1.3.10 on a system with installed runtime None.
 
