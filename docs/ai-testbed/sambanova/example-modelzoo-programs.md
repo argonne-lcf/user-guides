@@ -6,7 +6,7 @@ In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity contai
 
 The procedures in this section are drawn from [Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
 The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
-The original python scripts and scripts converted to run on rdu are also supplied in the modelzoo.<br>
+The original python scripts and scripts converted to run on an RDU are also supplied in the modelzoo.<br>
 [cpu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/cpu_generate_text.py)<br>
 [rdu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/rdu_generate_text.py)<br>
 and<br>
@@ -19,20 +19,21 @@ and<br>
 
 Clone the repo in your usual location. 
 ```
-mkdir -p ~/sambanova/modelzoo
+mkdir ~/sambanova
+cd ~/sambanova
 git clone https://github.com/sambanova/modelzoo.git
 ```
 Note: your home directory is mounted by default in the singularity containers.
 
 ### Starting a container:
 
-Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runtime version, then start the container. This example binds a directory containing an openwebtext dataset. 
+Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runts version, then start the container. This example binds a directory containing an openwebtext dataset. 
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
 echo $TARGET_SAMBAFLOW_VERSION
 # should be of the form 1.19.1
-./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software/models/:/opt/ckpts/ /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software:/software / /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
 ```
 Container startup output should look like:
 ```
@@ -47,21 +48,21 @@ Run command: singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
 Singularity> 
 ```
 
-To list all running containers:
+To list all running containers (while outside a container, e.g. a different ssh session):
 ```
-$ ~/sambanova/modelzoo$ singularity instance list
+$ singularity instance list
 INSTANCE NAME                PID        IP    IMAGE
 devbox_arnoldw_1724873417    1649294          /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
 ```
-To re-enter an exited but still-running container:
+To re-enter an exited but still-running container (while outside a container):
 ```
-arnoldw@sn30-r2-h2:~/sambanova/modelzoo$ singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
+$ singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
 Singularity> 
 ```
 
-To stop all your running containers:
+To stop all your running containers (while outside a container):
 ```
-singularity instance stop devbox_<youruserid>_*
+$ singularity instance stop devbox_<youruserid>_*
 ```
 
 ### Set up the python environment in the container
@@ -86,7 +87,7 @@ In your [Hugging Face account settings](https://huggingface.co/settings/tokens),
 git lfs install # Only needs to be done once 
 cd ~/sambanova
 git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
-# Enter (copy;paste) your user access token when prompted.
+# Enter your HF user name and user access token (copy;paste) when prompted.
 ```
 
 ## Text generation sample
@@ -95,15 +96,16 @@ git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
 Compile a llama 7b text generation sample (using the Hugging Face model). This will take 20 minutes
 
 ```
-cd ~/sambanova 
+cd ~/sambanova
+# or ./Llama-2-7b-hf if downloaded
 python ./modelzoo/examples/nlp/text_generation/rdu_generate_text.py \
 command=compile \
 checkpoint.model_name_or_path=/software/models/Llama-2-7b-hf/ \
-samba_compile.output_folder=./out_generation \
+samba_compile.output_folder=/home/$(whoami)/sambanova/out_generation \
 +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION #     =1.19.1
 ```
 
-Note: each compile will add a new subdirectory to the ouput folder (`./out_generation`), containing compile artifcats. The folder can be deleted when testing is complete;
+Note: each compile will add a new subdirectory to the ouput folder (`/home/$(whoami)/sambanova/out_generation`), containing compile artifacts. The folder can be deleted when testing is complete;
 
 ### Run the text generation sample 
 
@@ -117,9 +119,10 @@ $(find ./out_generation/$(ls -lart ~/output_llama/ | grep rdu | tail -n 1 | awk 
 ```
 cd ~/sambanova
 export PEF=$(find /home/$(whoami)/sambanova/out_generation -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+# or ./Llama-2-7b-hf if downloaded
 python ./modelzoo/examples/nlp/text_generation/rdu_generate_text.py \
   command=run \
-  checkpoint.model_name_or_path=/home/arnoldw/github.com/sambanova/modelzoo/Llama-2-7b-hf \
+  checkpoint.model_name_or_path=/software/models/Llama-2-7b-hf/ \
   samba_run.pef=${PEF}
 ```
 <!---
@@ -151,7 +154,7 @@ Fine-tune the Llama2 7B model using a chat dataset.
 
 
 ### Data preparation
-These steps should be performed On a SambaNova node, and not in a singularity container.
+NOTE: These data preparation steps should be performed on a SambaNova node, **and not in a singularity container**.
 #### Install the Generative Data Prep package in a virtualenv
 ```
 cd ~/sambanova
@@ -173,16 +176,22 @@ git clone https://huggingface.co/datasets/stingning/ultrachat
 
 #### Convert the dataset to the .jsonl format
 ```
-source gdp_venv/bin/activate
 cd ~/sambanova
+source generative_data_prep/gdp_venv/bin/activate
+# This step makes a single jsonl file
 python ./modelzoo/examples/nlp/training/utils/convert_ultrachat.py -src ultrachat/ -dest ultrachat_processed.jsonl
+export TOKENIZER="./Llama-2-7b-hf"
+export MAX_SEQ_LENGTH=4096
+# This step makes a directory of hdf5 files from the single jsonl file
+python -m generative_data_prep pipeline --input_file_path=./ultrachat_processed.jsonl --output_path=./ultrachat_dialogue --pretrained_tokenizer=${TOKENIZER} --max_seq_length=${MAX_SEQ_LEN}
 deactivate
 ```
 
 ### Compile a sample that finetunes the HF model
 
 #### Start container
-Start a new modelzoo singularity container with
+If you are not already in a singularity container (with the pre-reqs installed),<br>
+start a new modelzoo singularity container with
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
@@ -204,7 +213,7 @@ pip install -e .
 #### Compile the sample for fine tuning
 ```
 cd ~/sambanova
-export CHECKPOINT=./Llama-2-7b-hf
+export CHECKPOINT=/software/models/Llama-2-7b-hf/ # or ./Llama-2-7b-hf
 export MAX_SEQ_LENGTH=4096
 export BATCH_SIZE=8
 export ARCH=sn30
@@ -214,11 +223,11 @@ python modelzoo/examples/nlp/training/rdu_train_llm.py \
     model.max_seq_length=${MAX_SEQ_LENGTH} \
     training.batch_size=${BATCH_SIZE} \
     samba_compile.arch=${ARCH} \
-    samba_compile.output_folder=./out_train \
+    samba_compile.output_folder=/home/$(whoami)/sambanova/out_train \
     +samba_compile.target_sambaflow_version=$TARGET_SAMBAFLOW_VERSION
 ```
 
-Note: each compile will add a new subdirectory to the ouput folder (`./out_train`), containing compile artifcats. The folder can be deleted when testing is complete;
+Note: each compile will add a new subdirectory to the ouput folder (`/home/$(whoami)/sambanova/out_train`), containing compile artifacts. The folder can be deleted when testing is complete;
 
 #### Run finetuning using generated pef file
 
@@ -227,11 +236,11 @@ It uses the config file modelzoo/examples/nlp/training/config/base_config_rdu.ya
 
 ```
 cd ~/sambanova
-export CHECKPOINT=./Llama-2-7b-hf
+export CHECKPOINT=/software/models/Llama-2-7b-hf/ # or ./Llama-2-7b-hf
 export MAX_SEQ_LENGTH=4096
 export DATASET=./ultrachat_dialogue;  # or container path to dataset
 # Finds most recent pef file in tree
-export PEF=$(find ./out_train -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
+export PEF=$(find /home/$(whoami)/sambanova/out_train -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
 python -u modelzoo/examples/nlp/training/rdu_train_llm.py \
     command=run \
     checkpoint.model_name_or_path=${CHECKPOINT} \
