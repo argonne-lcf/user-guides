@@ -180,9 +180,12 @@ cd ~/sambanova
 source generative_data_prep/gdp_venv/bin/activate
 # This step makes a single jsonl file
 python ./modelzoo/examples/nlp/training/utils/convert_ultrachat.py -src ultrachat/ -dest ultrachat_processed.jsonl
+# get a small subset to keep the 1 epoch runtime down.
+mv ~/sambanova/ultrachat_processed.jsonl ~/sambanova/ultrachat_processed_full.jsonl
+head -1000 ~/sambanova/ultrachat_processed_full.jsonl > ~/sambanova/ultrachat_processed.jsonl
+# This step makes a directory of hdf5 files from the single jsonl file
 export TOKENIZER="./Llama-2-7b-hf"
 export MAX_SEQ_LENGTH=4096
-# This step makes a directory of hdf5 files from the single jsonl file
 python -m generative_data_prep pipeline --input_file_path=./ultrachat_processed.jsonl --output_path=./ultrachat_dialogue --pretrained_tokenizer=${TOKENIZER} --max_seq_length=${MAX_SEQ_LEN}
 deactivate
 ```
@@ -247,7 +250,6 @@ python -u modelzoo/examples/nlp/training/rdu_train_llm.py \
     model.max_seq_length=${MAX_SEQ_LENGTH} \
     samba_run.pef=${PEF} \
     training.dataset=${DATASET}
-
 ```
 
 The end of the console output should resemble the following if run for a full epoch:
