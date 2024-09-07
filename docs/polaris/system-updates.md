@@ -3,7 +3,7 @@
 ## 2024-09-09
 
 ### XALT
-The XALT library tracking software has been enabled for all Polaris users. More information on the Polaris XALT deployment can be found here: ?
+The XALT library tracking software has been enabled for all Polaris users. More information can be found on the [XALT](./applications-and-libraries/libraries/xalt.md) page.
 
 ## 2024-04-22
 
