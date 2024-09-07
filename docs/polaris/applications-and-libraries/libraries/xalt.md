@@ -1,0 +1,23 @@
+# XALT
+
+## What is XALT?
+
+XALT is a user build and execution tracking framework; it is installed at ALCF on Polaris to track library usage.
+
+When xalt is enabled during builds:
+- An xalt watermark is added to the elf binary of the executable(s)
+- An xalt link record containing information about the build is created
+  
+When xalt is enabled during application executions:
+- An xalt start run record containing information about the execution is created; some link data is also included if the executable was built with xalt
+- If the execution exits normally, an xalt end run record containing information about the end of the process is created; if the process exits abnormally no end run record is created
+- For mpi jobs, xalt run records are produced only for rank 0
+
+## XALT implementation details
+
+- XALT uses an ld wrapper script to add the watermark to executables
+- XALT interposes a LD_PRELOAD library into the execution of the user's application. XALT runs as the user, with the user's primary and supplementary groups
+
+## How to disable XALT
+- Execute the command "module unload xalt"
+- If you disable xalt please send email to support@alcf.anl.gov detailing the reason you are disabling it
