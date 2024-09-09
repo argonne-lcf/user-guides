@@ -8,7 +8,7 @@ When xalt is enabled during builds:
 - An xalt watermark is added to the elf binary of the executable(s)
 - An xalt link record containing information about the build is created
   
-When xalt is enabled during application executions:
+When XALT is enabled during application executions:
 - An xalt start run record containing information about the execution is created; some link data is also included if the executable was built with xalt
 - If the execution exits normally, an xalt end run record containing information about the end of the process is created; if the process exits abnormally no end run record is created
 - For mpi jobs, xalt run records are produced only for rank 0
