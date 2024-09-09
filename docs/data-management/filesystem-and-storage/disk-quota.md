@@ -1,6 +1,6 @@
 # Disk Quota
 ## Overview
-Disk quotas are enabled on project directories. ALCF's HPC systems use the agile-home file system located at /lus/agile/home where quotas are also enforced. Details on the home file system are listed in [file systems](file-systems.md). Following are descriptions and examples for the home file system, as well as the grand and eagle project filesystems.
+Disk quotas are enabled on project directories. ALCF's HPC systems use the agile-home file system located at `/lus/agile/home` where quotas are also enforced. Details on the home file system are listed in [file systems](file-systems.md). Following are descriptions and examples for the home file system, as well as the Grand and Eagle project filesystems.
 
 ## Home Directory Quotas
 By default, each home directory is assigned a default of 50GB. File ownership determines disk space usage.
