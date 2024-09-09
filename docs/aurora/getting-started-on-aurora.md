@@ -170,17 +170,15 @@ An overview of the Aurora system including details on the compute node architect
 Home directories on Aurora are `/home/username`, available on login and compute
 nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
 
-Lustre project directories are under `/lus/gecko/projects`. ALCF staff should
-use /lus/gecko/projects/Aurora\_deployment project directory. ESP and ECP
+Lustre project directories are under `/lus/flare/projects`. ALCF staff should
+use `/lus/flare/projects/Aurora_deployment` project directory. ESP and ECP
 project members should use their corresponding project directories. The
 project name is similar to the name on Polaris with an \_CNDA suffix
 (e.g.: projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The
 project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if
 their project requires additional storage.
 
-Gecko is a small Lustre system for early Aurora use on login and compute
-nodes. Eventually, production file systems Eagle and Grand will be mounted on
-Aurora login nodes.
+**Note:** The Project Lustre File system has changed from Gecko to Flare. Project data from `/lus/gecko/projects/*` has been copied over to `/lus/flare/projects/*`.  `/lus/gecko/projects` is only available on the User Access Nodes (UANs).
 
 #### DAOS
 
