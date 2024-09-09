@@ -6,13 +6,13 @@ In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity contai
 
 The procedures in this section are drawn from [Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
 The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
-The original python scripts and scripts converted to run on an RDU are also supplied in the modelzoo.<br>
-[cpu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/cpu_generate_text.py)<br>
-[rdu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/rdu_generate_text.py)<br>
-and<br>
-[cpu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/cpu_train_llm.py)<br>
-[rdu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm.py)<br>
-[rdu_train_llm_dp.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm_dp.py)<br>
+The original python scripts and scripts converted to run on an RDU are also supplied in the modelzoo.  
+[cpu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/cpu_generate_text.py)  
+[rdu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/rdu_generate_text.py)  
+and  
+[cpu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/cpu_train_llm.py)  
+[rdu_train_llm.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm.py)  
+[rdu_train_llm_dp.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/training/rdu_train_llm_dp.py)  
 
 ## Setup
 ### Cloning the Model Zoo Repository
@@ -27,7 +27,7 @@ Note: your home directory is mounted by default in the singularity containers.
 
 ### Starting a container:
 
-Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runts version, then start the container. This example binds a directory containing an openwebtext dataset. 
+Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runtime version, then start the container. This example binds a directory containing an openwebtext dataset. 
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
@@ -48,7 +48,7 @@ Run command: singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
 Singularity> 
 ```
 
-To list all running containers (while outside a container, e.g. a different ssh session):
+To list all running containers (while outside a container, e.g. a different SSH session):
 ```
 $ singularity instance list
 INSTANCE NAME                PID        IP    IMAGE
@@ -194,7 +194,7 @@ deactivate
 
 #### Start container
 If you are not already in a singularity container (with the pre-reqs installed),<br>
-start a new modelzoo singularity container with
+start a new Model Zoo singularity container with
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
