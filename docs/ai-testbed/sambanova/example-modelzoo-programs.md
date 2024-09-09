@@ -48,7 +48,7 @@ Run command: singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
 Singularity> 
 ```
 
-To list all running containers (while outside a container, e.g. a different ssh session):
+To list all running containers (while outside a container, e.g. a different SSH session):
 ```
 $ singularity instance list
 INSTANCE NAME                PID        IP    IMAGE
