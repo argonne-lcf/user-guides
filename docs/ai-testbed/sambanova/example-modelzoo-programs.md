@@ -194,7 +194,7 @@ deactivate
 
 #### Start container
 If you are not already in a singularity container (with the pre-reqs installed),<br>
-start a new modelzoo singularity container with
+start a new Model Zoo Singularity container with
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
