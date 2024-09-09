@@ -19,5 +19,5 @@ When xalt is enabled during application executions:
 - XALT interposes a LD_PRELOAD library into the execution of the user's application. XALT runs as the user, with the user's primary and supplementary groups
 
 ## How to disable XALT
-- Execute the command "module unload xalt"
+- Execute the command `module unload xalt`
 - If you disable xalt please send email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) detailing the reason you are disabling it
