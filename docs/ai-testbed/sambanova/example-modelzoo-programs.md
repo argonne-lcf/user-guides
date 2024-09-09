@@ -27,7 +27,7 @@ Note: your home directory is mounted by default in the singularity containers.
 
 ### Starting a container:
 
-Change directory to your modelzoo clone, and set an environment variable to be  host sambanova runtime version, then start the container. This example binds a directory containing an openwebtext dataset. 
+Change directory to your Model Zoo clone, and set an environment variable to be host SambaNova runts version, then start the container. This example binds a directory containing an OpenWebText dataset. 
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
@@ -193,8 +193,8 @@ deactivate
 ### Compile a sample that finetunes the HF model
 
 #### Start container
-If you are not already in a singularity container (with the pre-reqs installed),<br>
-start a new Model Zoo singularity container with
+If you are not already in a singularity container (with the pre-reqs installed),  
+start a new Model Zoo Singularity container with
 ```
 cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
