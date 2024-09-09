@@ -50,7 +50,7 @@ PIs with data and compute allocations will have access to the required compute-s
   <figcaption>Terminal Window</figcaption>
 </figure> --->
 
-## Creating a Guest Collection
+## <a name="Creating-a-Guest-Collection"></a>Creating a Guest Collection
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections. 
 
 > PIs with an "Inactive/Deleted" ALCF account, should submit a reactivation request by filling out this form: [Re-activation Form](https://accounts.alcf.anl.gov/#/accountReactivate)
@@ -130,7 +130,7 @@ Globus supports setting permissions at a folder level, so there is no need to cr
 
 7. All RW actions are performed as the PI, when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
 
-## Creating a group
+## <a name="Creating-a-group"></a>Creating a group
 1. Go to Groups on the left panel
 2. Click on ‘Create a new group’ at the top
 3. Give the group a descriptive name and add Description for more information
@@ -341,7 +341,7 @@ If you are a PI and you see this error, it could mean that a sharing policy for 
 No, project proxies cannot create guest collections, only the PI can.
 
 **11. Who can create groups?**
-A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. For more information, refer to: [Creating a Group](#Creating a Group)
+A PI (and an Access Manager) can create new groups, add members to them and share a guest collection with a group of collaborators. For more information, refer to: [Creating a group](#Creating-a-group)
 
 **12. What happens when the PI of a project changes? What happens to the guest collection endpoint?**
 
