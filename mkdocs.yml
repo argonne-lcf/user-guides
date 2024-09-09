@@ -68,6 +68,7 @@ nav:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
             - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+            - XALT: polaris/applications-and-libraries/libraries/xalt.md
     - Data Science:
         - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
@@ -299,6 +300,8 @@ validation:
   omitted_files: warn
   absolute_links: warn
   unrecognized_links: warn
+  anchors: warn
+  not_found: warn
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
