@@ -15,7 +15,7 @@ When XALT is enabled during application executions:
 
 ## XALT implementation details
 
-- XALT uses an`ld` wrapper script to add the watermark to executables
+- XALT uses an `ld` wrapper script to add the watermark to executables
 - XALT interposes a `LD_PRELOAD` library into the execution of the user's application. XALT runs as the user, with the user's primary and supplementary groups
 
 ## How to disable XALT
