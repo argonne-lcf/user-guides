@@ -6,7 +6,7 @@ XALT is a user build and execution tracking framework; it is installed at ALCF o
 
 When xalt is enabled during builds:
 - An XALT watermark is added to the ELF binary of the executable(s)
-- An xalt link record containing information about the build is created
+- An XALT link record containing information about the build is created
   
 When XALT is enabled during application executions:
 - An xalt start run record containing information about the execution is created; some link data is also included if the executable was built with xalt
