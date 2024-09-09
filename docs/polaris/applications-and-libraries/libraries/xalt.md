@@ -4,7 +4,7 @@
 
 XALT is a user build and execution tracking framework; it is installed at ALCF on Polaris to track library usage.
 
-When xalt is enabled during builds:
+When XALT is enabled during builds:
 - An XALT watermark is added to the ELF binary of the executable(s)
 - An XALT link record containing information about the build is created
   
