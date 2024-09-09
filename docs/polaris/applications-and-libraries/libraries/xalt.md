@@ -10,7 +10,7 @@ When xalt is enabled during builds:
   
 When XALT is enabled during application executions:
 - An xalt start run record containing information about the execution is created; some link data is also included if the executable was built with xalt
-- If the execution exits normally, an xalt end run record containing information about the end of the process is created; if the process exits abnormally no end run record is created
+- If the execution exits normally, an XALT end run record containing information about the end of the process is created; if the process exits abnormally no end run record is created
 - For MPI jobs, XALT run records are produced only for rank 0
 
 ## XALT implementation details
