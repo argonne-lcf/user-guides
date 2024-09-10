@@ -93,7 +93,7 @@ git clone https://huggingface.co/meta-llama/Llama-2-7b-hf
 ## Text generation sample
 ### Compile a text generation sample that uses the HF model
 
-Compile a llama 7b text generation sample (using the Hugging Face model). This will take 20 minutes
+Compile a LLaMA-7b text generation sample (using the Hugging Face model). This will take 20 minutes
 
 ```
 cd ~/sambanova
