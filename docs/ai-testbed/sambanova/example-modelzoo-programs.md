@@ -5,7 +5,7 @@ The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is Sa
 In the ALCF SN30 cluster, the Model Zoo samples run inside of Singularity containers. The Singularity image includes support for compiling and running models.
 
 The procedures in this section are drawn from [Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
-The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
+The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on GitHub) also describes the changes made to a CPU mode sample to run on an RDU.
 The original python scripts and scripts converted to run on an RDU are also supplied in the modelzoo.  
 [cpu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/cpu_generate_text.py)  
 [rdu_generate_text.py](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/text_generation/rdu_generate_text.py)  
