@@ -193,7 +193,7 @@ deactivate
 ### Compile a sample that finetunes the HF model
 
 #### Start container
-If you are not already in a singularity container (with the pre-reqs installed),  
+If you are not already in a Singularity container (with the pre-reqs installed),  
 start a new Model Zoo Singularity container with
 ```
 cd ~/sambanova/modelzoo
