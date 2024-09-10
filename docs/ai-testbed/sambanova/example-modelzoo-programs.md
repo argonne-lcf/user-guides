@@ -2,7 +2,7 @@
 
 The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is SambaNova's new github repository for delivering RDU-compatible source code, including example applications for compiling and running models on SambaNova hardware.
 
-In the ALCF SN30 cluster, the Model Zoo samples run inside of singularity containers. The singularity image includes support for compiling and running models.
+In the ALCF SN30 cluster, the Model Zoo samples run inside of Singularity containers. The Singularity image includes support for compiling and running models.
 
 The procedures in this section are drawn from [Walkthrough—​Inference and Fine-tuning with Llama2 7B for Chat](https://github.com/sambanova/modelzoo/blob/main/examples/nlp/README.adoc). 
 The Model Zoo inference sample used as an example in this section is described in more detail here [About the Generation Example Apps](https://github.com/sambanova/modelzoo/tree/main/examples/nlp/text_generation). This readme (on github) also describes the changes made to a cpu mode sample to run on an RDU.
