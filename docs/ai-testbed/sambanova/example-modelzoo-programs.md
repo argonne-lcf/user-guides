@@ -109,7 +109,7 @@ Note: each compile will add a new subdirectory to the ouput folder (`/home/$(who
 
 ### Run the text generation sample 
 
-Run the sample, using the .pef binary created by the compile.
+Run the sample, using the `.pef` binary created by the compile.
 Note: The expression in the command line finds the most recent pef file.
 <!--
 $(find ./out_generation/ -type f -name "*.pef" -printf "%T@ %p\n" | sort -n | tail -n1 | awk '{print $2}')
