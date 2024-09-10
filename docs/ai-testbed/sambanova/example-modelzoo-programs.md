@@ -65,7 +65,7 @@ To stop all your running containers (while outside a container):
 $ singularity instance stop devbox_<youruserid>_*
 ```
 
-### Set up the python environment in the container
+### Set up the Python environment in the container
 
 ```
 cd ~/sambanova/modelzoo/
