@@ -174,7 +174,7 @@ cd ~/sambanova
 git clone https://huggingface.co/datasets/stingning/ultrachat
 ```
 
-#### Convert the dataset to the .jsonl format
+#### Convert the dataset to the `.jsonl` format
 ```
 cd ~/sambanova
 source generative_data_prep/gdp_venv/bin/activate
