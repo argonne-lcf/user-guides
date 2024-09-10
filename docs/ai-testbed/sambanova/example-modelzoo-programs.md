@@ -234,7 +234,7 @@ Note: each compile will add a new subdirectory to the ouput folder (`/home/$(who
 
 #### Run finetuning using generated pef file
 
-This will run for 1 full epoch and takes 1 hour TODO, using a single RDU.
+This will run for 1 full epoch and takes 1 hour to execute, using a single RDU.
 It uses the config file modelzoo/examples/nlp/training/config/base_config_rdu.yaml
 
 ```
