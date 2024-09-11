@@ -14,7 +14,7 @@ userX                         User     /lus/agile         44.13G          50.00G
 ```
 
 ## Project Directory Quotas
-The amount of data stored under /lus/grand/projects/PROJECT_NAME cannot exceed the approved project quota limit approved during the allocation period. The total data usage under the project directory is used to calculate the disk quota.
+The amount of data stored under `/lus/grand/projects/PROJECT_NAME` cannot exceed the approved project quota limit approved during the allocation period. The total data usage under the project directory is used to calculate the disk quota.
 
 To check project quota usage on the file systems, enter this command:
 ```
