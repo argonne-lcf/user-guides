@@ -15,7 +15,7 @@ nav:
       - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-    - Sharing on Grand and Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+    - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
     - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
     - Data Transfer:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md

@@ -36,7 +36,7 @@ Cloning the Anaconda environment, or using `venv` are both more flexible and tra
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via `conda install <module>` or `pip install <module>`.
 
 1. Setup the conda environment you want to use as instructed above.
-2. Create/edit your `$HOME/.condarc` file to include this these lines, replacing `<project-name>` with your project name. `<path-to-your-project>` is the path to the file system your project is on (e.g. `/lus/theta-fs0` or `/grand `or `/eagle`). By default, Conda will your `$HOME/.conda/*` area for caching files. 
+2. Create/edit your `$HOME/.condarc` file to include this these lines, replacing `<project-name>` with your project name. `<path-to-your-project>` is the path to the file system your project is on (e.g. `/lus/theta-fs0` or `/eagle`). By default, Conda will your `$HOME/.conda/*` area for caching files. 
 
 **Note:** Since home directories are limited to 100GB, this fills up quickly. This addition tells Conda to use your project space for cache storage instead.
 

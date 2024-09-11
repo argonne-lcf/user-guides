@@ -225,7 +225,7 @@ Users should add ```-M <email address>``` if they want notifications as a best p
 
 `qsub: Resource: filesystems is required to be set.`
 
-Valid filesystems are `home`, `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command.
+Valid filesystems are `home` and `eagle`.For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command.
 
 If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailable, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
 
@@ -233,7 +233,7 @@ If a job requesting a filesystem that is marked down is already in the queue, th
 
 An example of a job requesting filesystems:
 
-`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
+`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=eagle:home -A ProjectX -q prod my_job.sh`
 
 To update the filesystems list for your job, use `qalter`.
 

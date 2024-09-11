@@ -1,4 +1,4 @@
-# Sharing Data on Grand/Eagle Using Globus Guest Collections
+# Sharing Data on Eagle Using Globus Guest Collections
 ## Overview
 
 Collaborators throughout the scientific community have the ability to write data to and read scientific data from the Eagle filesystem using Globus sharing capability. This capability provides PIs with a natural and convenient storage space for collaborative work.
@@ -26,7 +26,7 @@ Type or scroll down to "Argonne LCF" in the "Use your existing organizational lo
 
 You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and password.
 
-## Accessing your Grand/Eagle Project Directory ##
+## Accessing your Eagle Project Directory ##
 <!--- There are two ways for a PI to access their project directory on Eagle. 
 
 1. **Web Interface:** By logging in to Globus interface directly and navigating to the ALCF Eagle endpoint. -->
@@ -61,8 +61,8 @@ A project PI needs to have an 'active' ALCF account in place to create and share
 
 There are multiple ways to Navigate to the Collections tab in "Endpoints":
 1. [Click the link to get started](https://app.globus.org/file-manager/collections/05d2c76a-e867-4f67-aa57-76edeb0beda0/shares). It will take you to the Collections tab for Eagle. **OR**
-2. Click on 'Endpoints' located in the left panel of the [Globus web app](https://app.globus.org/endpoints). Type "alcf#dtn_eagle" (for Eagle) or "alcf#dtn_grand" (for Grand) in the search box located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" or "alcf#dtn_grand" from the search results. Click on the  Collections tab. **OR**
-3. Click on 'File Manager' located in the left panel of the Globus web app. Search for 'alcf#dtn_Eagle' (or "alcf#dtn_grand") and select it in the Collection field. Select your project directory or a sub directory that you would like to share with collaborators as a Globus guest collection. Click on 'Share' on the right side of the panel, which will take you to the Collections tab.
+2. Click on 'Endpoints' located in the left panel of the [Globus web app](https://app.globus.org/endpoints). Type "alcf#dtn_eagle" (for Eagle) or "alcf#dtn_eagle" (for Eagle) in the search box located at the top of the page and click the magnifying glass to search. Click on the Managed Public Endpoint "alcf#dtn_eagle" or "alcf#dtn_eagle" from the search results. Click on the  Collections tab. **OR**
+3. Click on 'File Manager' located in the left panel of the Globus web app. Search for 'alcf#dtn_Eagle' (or "alcf#dtn_eagle") and select it in the Collection field. Select your project directory or a sub directory that you would like to share with collaborators as a Globus guest collection. Click on 'Share' on the right side of the panel, which will take you to the Collections tab.
 
 **Note:** <!--- Shared endpoints always remain active.---> When you select an endpoint to transfer data to/from, you may be asked to authenticate  with  that endpoint. Follow the instructions on screen to activate the endpoint and to authenticate. You may also have to provide Authentication/Consent for the Globus web app to manage collections on this endpoint
 
@@ -142,8 +142,8 @@ Globus supports setting permissions at a folder level, so there is no need to cr
   <figcaption>Create new group</figcaption>
 </figure>
 
-## Transferring data from Grand/Eagle 
-Log in to [Globus](https://app.globus.org) using your ALCF credentials. After authenticating, you will be taken to the Globus File Manager tab. In the 'Collection' box, type the name of Eagle/Grand managed endpoint (```alcf#dtn_eagle``` or ```alcf#dtn_grand```). Navigate to the folder/file you want to transfer. HTTPS access (read-only) is enabled so you can download files by clicking the "Download" button.
+## Transferring data from Eagle 
+Log in to [Globus](https://app.globus.org) using your ALCF credentials. After authenticating, you will be taken to the Globus File Manager tab. In the 'Collection' box, type the name of Eagle managed endpoint (```alcf#dtn_eagle```) Navigate to the folder/file you want to transfer. HTTPS access (read-only) is enabled so you can download files by clicking the "Download" button.
 
 Click on 'Download' to download the required file. 
 
@@ -241,7 +241,7 @@ Alternatively, you can encrypt the files before transfer using any method on you
 
 ## FAQs
 ### General FAQs: 
-**1. What are Eagle and Grand file systems?**
+**1. What is the Eagle file system?**
 
 They are Lustre file systems residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8480 disk drives. Each ClusterStor platform also provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650GB/s. 
  
@@ -249,7 +249,7 @@ They are Lustre file systems residing on an HPE ClusterStor E1000 platform equip
 
 - Guest collections: A Guest collection is a logical construct that a PI sets up on their project directory in Globus that makes it accessible to collaborators. The PI creates a guest collection at or below their project and shares it with the Globus account holders.
 - Shared collection: A guest collection becomes a shared collection when it is shared with a user/group.
-- Mapped Collections: Mapped Collections are created by the endpoint administrators. In the case of Eagle/Grand, these are created by ALCF.
+- Mapped Collections: Mapped Collections are created by the endpoint administrators. In the case of Eagle, these are created by ALCF.
  
 **3. Who can create Guest collections?**
 
@@ -289,18 +289,18 @@ Yes. The PI needs to have an 'active' ALCF account in place to create and share 
  
 **3. What endpoint should the PI use?**
 
-```alcf#dtn_eagle``` (project on Eagle) or ```alcf#dtn_eagle``` (project on Grand)
+```alcf#dtn_eagle``` (project on Eagle)
 
 **4. What are the actions a PI can perform?**
 
 - Create and delete guest collections, groups
 - Create, delete and share the data with ALCF users and external collaborators
 - Specify someone as a Proxy (Access Manager) for the guest collections
-- Transfer data between the guest collection on Eagle/Grand and other Globus endpoints/collections
+- Transfer data between the guest collection on Eagle and other Globus endpoints/collections
 
 **5. How can a PI specify someone as a Proxy on the Globus side?**
 
-Go to alcf#dtn_eagle (or alcf#dtn_grand) -> collections -> shared collection -> roles -> select 'Access Manager'
+Go to alcf#dtn_eagle (or alcf#dtn_eagle) -> collections -> shared collection -> roles -> select 'Access Manager'
 
 <figure markdown>
   ![Roles](files/roles.png){ width="700" }
@@ -317,7 +317,7 @@ Go to alcf#dtn_eagle (or alcf#dtn_grand) -> collections -> shared collection -> 
 1.  PI requests a compute or data-only allocation project.
 2. Once the request is approved, ALCF staff sets up a project, unixgroup, and project directory.
 3. A Globus sharing policy is created for the project with appropriate access controls, provided the PI has an active ALCF account.
-4. PI creates a guest collection for the project, using the Globus mapped collection for the file system (alcf#dtn_eagle or alcf#dtn_grand).
+4. PI creates a guest collection for the project, using the Globus mapped collection for the file system (alcf#dtn_eagle)
 
     - **Note:** PI needs to have an active ALCF Account and will need to log in to Globus using their ALCF credentials.
     - If PI has an existing Globus account, it needs to be linked to their ALCF account.
@@ -326,7 +326,7 @@ Go to alcf#dtn_eagle (or alcf#dtn_grand) -> collections -> shared collection -> 
 
 **7. How can project members with ALCF accounts access the project directory via Globus?**
 
- Users that have active ALCF accounts and are part of the project in the ALCF Account and Project Management system will automatically have access to the project directory which they can access by browsing the Globus endpoint ```alcf#dtn_eagle or alcf#dtn_grand```. If they want to access the files using the Globus guest collection set up by the PI, the PI will need to explicitly give them permissions to that guest collection. The purpose of Globus guest collections is to share the data with collaborators that don't have ALCF accounts or are not part of the project in the ALCF Account and Project Management system. 
+ Users that have active ALCF accounts and are part of the project in the ALCF Account and Project Management system will automatically have access to the project directory which they can access by browsing the Globus endpoint ```alcf#dtn_eagle``` . If they want to access the files using the Globus guest collection set up by the PI, the PI will need to explicitly give them permissions to that guest collection. The purpose of Globus guest collections is to share the data with collaborators that don't have ALCF accounts or are not part of the project in the ALCF Account and Project Management system. 
 
 **8. Who has the permissions to create a guest collection?**
 
@@ -386,7 +386,7 @@ No. An access manager cannot create a collection, only a PI can do that. The acc
 
 **7. Can an Access Manager leave a globus group or withdraw membership request for collaborators?**
 
-Yes.[Go to alcf#dtn_eagle (or alcf#dtn_grand)-> Groups > group_name -> Members -> click on specific user -> Role & Status -> Set the appropriate status]
+Yes.[Go to alcf#dtn_eagle -> Groups > group_name -> Members -> click on specific user -> Role & Status -> Set the appropriate status]
 
 <figure markdown>
   ![Permission denied](files/roles.png){ width="700" }

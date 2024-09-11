@@ -150,7 +150,7 @@ echo "#PBS -A $PROJ_ID" >>$SFILE
 echo "#PBS -N nekRS_$case" >>$SFILE
 echo "#PBS -q $QUEUE" >>$SFILE
 echo "#PBS -l walltime=$time" >>$SFILE
-echo "#PBS -l filesystems=home:eagle:grand" >>$SFILE
+echo "#PBS -l filesystems=home:eagle" >>$SFILE
 echo "#PBS -l select=$nodes:system=polaris" >>$SFILE
 echo "#PBS -l place=scatter" >>$SFILE
 echo "#PBS -k doe" >>$SFILE #write directly to the destination, doe=direct, output, error

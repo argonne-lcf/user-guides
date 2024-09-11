@@ -31,7 +31,7 @@ Host polaris.alcf.anl.gov
      user knight
 ```
 
-From an Aurora login-node, this readily enables one to transfer files from Sunspot's gila filesystem or one of the production filesystems at ALCF (home, grand, and eagle). With the use of ProxyJump here, entering the MobilePass+ or Cryptocard passcode twice will be needed (once for bastion and once for the other resource).
+From an Aurora login-node, this readily enables one to transfer files from Sunspot's gila filesystem or one of the production filesystems at ALCF (home and eagle). With the use of ProxyJump here, entering the MobilePass+ or Cryptocard passcode twice will be needed (once for bastion and once for the other resource).
 
 This simple example transfers a file from Sunspot.
 
@@ -49,10 +49,10 @@ knight@aurora-uan-0009:~> cat test.txt
 from_sunspot gila
 ```
 
-This simple example transfers a file from the grand filesystem via Polaris.
+This simple example transfers a file from the eagle filesystem via Polaris.
 
 ```
-knight@aurora-uan-0009:~> scp knight@polaris.alcf.anl.gov:/grand/catalyst/proj-shared/knight/test.txt ./
+knight@aurora-uan-0009:~> scp knight@polaris.alcf.anl.gov:/eagle/catalyst/proj-shared/knight/test.txt ./
 ---------------------------------------------------------------------------
                             Notice to Users
 ...
@@ -62,7 +62,7 @@ knight@aurora-uan-0009:~> scp knight@polaris.alcf.anl.gov:/grand/catalyst/proj-s
 ... 
 [Password:
 knight@aurora-uan-0009:~> cat test.txt 
-from_polaris grand
+from_polaris eagle 
 ```
 
 ## Default software environment

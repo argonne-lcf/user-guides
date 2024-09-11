@@ -20,7 +20,7 @@ The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -93,7 +93,7 @@ This example is similar to the previous, but it exhausts all 64 logical cores av
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -346,7 +346,7 @@ In the example job script `submit.sh` below, MPS is first enabled on all nodes i
 #PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 cd ${PBS_O_WORKDIR}
 
@@ -387,7 +387,7 @@ An example is available in the [Getting Started Repo](https://github.com/argonne
 #PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 #cd ${PBS_O_WORKDIR}
 
@@ -426,7 +426,7 @@ To run multiple concurrent applications on distinct sets of nodes, one simply ne
 #PBS -l walltime=0:30:00
 #PBS -q debug-scaling
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 cd ${PBS_O_WORKDIR}
 
@@ -473,7 +473,7 @@ An example job array submission script:
 #PBS -l walltime=0:10:00
 #PBS -q preemptable
 #PBS -A datascience
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 #PBS -j oe
 #PBS -r y
 #PBS -J 0-7:2
