@@ -31,7 +31,7 @@ Host polaris.alcf.anl.gov
      user knight
 ```
 
-From an Aurora login-node, this readily enables one to transfer files from Sunspot's gila filesystem or one of the production filesystems at ALCF (home and eagle). With the use of ProxyJump here, entering the MobilePass+ or Cryptocard passcode twice will be needed (once for bastion and once for the other resource).
+From an Aurora login-node, this readily enables one to transfer files from Sunspot's `gila` filesystem or one of the production filesystems at ALCF (`home` and `eagle`). With the use of `ProxyJump` here, entering the MobilePass+ or Cryptocard passcode twice will be needed (once for bastion and once for the other resource).
 
 This simple example transfers a file from Sunspot.
 
