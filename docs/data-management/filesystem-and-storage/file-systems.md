@@ -1,6 +1,6 @@
 # ALCF File Systems
 Our HPC systems store project data in a file system called Eagle. 
-Eagle is a Lustre file system mounted as /eagle. 
+Eagle is a Lustre file system mounted as` /eagle`. 
 For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
 
 * [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
