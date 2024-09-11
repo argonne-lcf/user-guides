@@ -54,7 +54,7 @@ by default in `~/.julia`. However, that NFS filesystem is not meant for
 high-speed access. Therefore, this Julia depot folder should be located on a
 fast filesystem of your choice. The Julia depot directory is
 set via the environment variable `JULIA_DEPOT_PATH`. For example, you can set
-the Julia depot to a directory on Polaris eagle filesystem by adding the following line
+the Julia depot to a directory on Polaris's Eagle filesystem by adding the following line
 to your `~/.bashrc` file:
 
 ```bash
