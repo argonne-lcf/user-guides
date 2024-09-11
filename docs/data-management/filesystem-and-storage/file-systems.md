@@ -1,6 +1,6 @@
 # ALCF File Systems
-Our HPC systems have discrete file systems for project data: Grand and Eagle. 
-Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively. 
+Our HPC systems store project data in a file system called Eagle. 
+Eagle is a Lustre file system mounted as` /eagle`. 
 For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
 
 * [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
@@ -14,7 +14,6 @@ The agile-home file system is regularly backed up to tape. The data file system 
 | Name                                 | Accessible From | Type   | Path                                                                                  | Production                                    | Backed-up | Usage                                                                  |
 |--------------------------------------|----------|--------|---------------------------------------------------------------------------------------|-----------------------------------------------|-----------|------------------------------------------------------------------------| 
 | agile-home                           | Polaris  | Lustre | /home or /lus/agile/home	                                                          | Yes                                           | Yes | General use                                                            |
-| Grand                                | Polaris	 | Lustre | /grand or /lus/grand/projects	                                                      | Yes	                                          | No  | Intensive job output, large files                                      |
 | Eagle	                               | Polaris	 | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                          | No  | Community sharing via Globus; <br /> Intensive job output, large files | 
 | Node SSD <br /><br /> (Compute node only)	 | Polaris	 | xfs	   | /local/scratch (Polaris) | Yes | No  | Local node scratch during run                                          |
 
@@ -59,9 +58,8 @@ setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 
 
 ### Project Directories
-- Directories on Grand or Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests) to submit requests for an allocation on Eagle. 
+- Directories on Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests) to submit requests for an allocation on Eagle. 
 - Directory paths:
-    - Grand: /grand or /lus/grand/projects
     - Eagle: /eagle or /lus/eagle/projects
 
 These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](disk-quota.md).

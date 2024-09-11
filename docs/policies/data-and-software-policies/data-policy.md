@@ -41,11 +41,11 @@ The home file system (/home) is intended to hold your executable files, configur
 /home shared across the ALCF AI testbed systems, including the ai testbed's login and compute nodes, is different from mira-home. Default user quota on the ai testbed's home is 1 TB storage and 1,000,000 files. This space is backed up.
 
 ### Team Project or Campaign File System
-**Grand and Eagle**
+**Eagle**
 
 The team project/campaign file system is intended primarily for results output from your computational runs on the ALCF computing systems. This space is accessible to the team members of your project that have an ALCF account. Default storage quota is 1 TB. Consider this space intermediate-term storage. Once any active production and/or analysis is complete and you no longer need regular access to the data, archive it within the ALCF (explained below) or transfer it to your home institution or move it to Eagle to share it with the broader community (explained below). 
 
-This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Grand and Eagle are Lustre global parallel file systems. All new projects will be given storage allocations on either Grand or Eagle. More information on Lustre File Striping Basics: Lustre File Striping Basics  
+This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Eagle is a Lustre global parallel file system. All new projects will be given storage allocations on Eagle. More information on Lustre File Striping Basics: Lustre File Striping Basics  
 
 **_Pullback Policy:_** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
@@ -76,23 +76,23 @@ The archive space is intended for offline storage of results you wish to retain 
 
 ### Disk Capacity and Retention Policies
 
-| ----                                           | /home       | /lus/grand/projects or /grand         | lus/eagle/projects or /eagle                                                                             |
-|------------------------------------------------|-------------|---------------------------------------|----------------------------------------------------------------------------------------------------------|
-| Default Quota ^1^                              | 50 GB       | 1 TB / 1 million files                | 1 TB / 1 million files                                                                                   |
-| Quota Enforcement ^2^                          | hard/soft   | hard/soft                             | hard/soft                                                                                                |
-| Disk Redundancy ^3^                            | dual parity | dual parity                           | dual parity                                                                                              |
-| File Server Snapshots ^6^ (frequency/retained) | none        | none                                  | none                                                                                                     |
-| File Server Metadata Redundancy                | yes         | yes                                   | yes                                                                                                      |
-| File Server Metadata Replication ^4^           | yes         | yes                                   | yes                                                                                                      |
-| File Server Data Replication ^5^               | yes         | no                                    | no                                                                                                       |
-| Data Purged from Disk                          | n/a         | 6 months after project completion ^8^ | After 6 months of inactivity (see Eagle Access termination policy listed in the Eagle section above) ^8^ |
+| ----                                           | /home       | lus/eagle/projects or /eagle                                                                             |
+|------------------------------------------------|-------------|----------------------------------------------------------------------------------------------------------|
+| Default Quota ^1^                              | 50 GB       | 1 TB / 1 million files                                                                                   |
+| Quota Enforcement ^2^                          | hard/soft   | hard/soft                                                                                                |
+| Disk Redundancy ^3^                            | dual parity | dual parity                                                                                              |
+| File Server Snapshots ^6^ (frequency/retained) | none        | none                                                                                                     |
+| File Server Metadata Redundancy                | yes         | yes                                                                                                      |
+| File Server Metadata Replication ^4^           | yes         | yes                                                                                                      |
+| File Server Data Replication ^5^               | yes         | no                                                                                                       |
+| Data Purged from Disk                          | n/a         | After 6 months of inactivity (see Eagle Access termination policy listed in the Eagle section above) ^8^ |
 
 
 ### Tape Capacity and Retention Policies
-| ----                                           | /home | /lus/grand/projects or /grand | lus/eagle/projects or /eagle |
-|------------------------------------------------|-------|-------------------------------|------------------------------|
-| Automatic Backup to Tape? ^7^                  | yes   | no                            | no                           |
-| Archived to Tape Before Deleted from Disk? ^9^ | yes   | no                            | no                           |
+| ----                                           | /home | lus/eagle/projects or /eagle |
+|------------------------------------------------|-------|------------------------------|
+| Automatic Backup to Tape? ^7^                  | yes   | no                           |
+| Archived to Tape Before Deleted from Disk? ^9^ | yes   | no                           |
 
 1. While quotas are subject to negotiation on a case-by-case basis, disk space is a finite resource and projects must exercise good data management practices for their own sake and the sake of other users of the facility.  With Lustre, it has become necessary to enforce file quotas as well, which are also negotiable.
 2. “Hard quota enforcement” means a job will fail when writing output if you exceed the hard quota limit.  "Soft quota enforcement" means you may exceed the soft quota limit (but never the higher hard quota value) for up to seven days.  If you do not drop back below the soft quota limit within seven days, writes will begin to fail.

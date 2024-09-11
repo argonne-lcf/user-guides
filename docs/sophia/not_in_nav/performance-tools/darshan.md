@@ -2,7 +2,7 @@
 ## Overview
 Darshan instrumentation on ThetaGPU is not automatically included into the binary like Theta. The user must set the ```LD_PRELOAD``` variable as part of running the job.
 
-Logs will be generated in the directory: /lus/grand/logs/darshan/thetagpu/<YEAR>/<MONTH>/<DAY>
+Logs will be generated in the directory: /lus/eagle/logs/darshan/thetagpu/<YEAR>/<MONTH>/<DAY>
 
 In order to view a log, use the darshan-parser utility.
 ```

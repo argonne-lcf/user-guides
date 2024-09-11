@@ -140,7 +140,7 @@ An example submission script for running a 64-node KOKKOS-enabled LAMMPS executa
 #PBS -l select=64:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:15:00
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 #PBS -q prod
 #PBS -A Catalyst
 

@@ -213,7 +213,7 @@ qrls <jobid>
 ```
 A job may also be put into a user hold immediately upon submission by passing `qsub` the `-h` flag.
 ```
-qsub -n 8 -t 60 --attrs filesystems=home,grand -A MyProject -h myExe
+qsub -n 8 -t 60 --attrs filesystems=home,eagle-A MyProject -h myExe
 ```
 ### Dependency Holds
 For jobs in the `dep_hold` or `dep_fail` state, see the section on job dependencies.
@@ -227,11 +227,11 @@ Jobs may temporarily enter the state `maxrun_hold` if the user has reached the l
 ## Job Dependencies
 To submit a job that waits until another job or jobs have completed, use the dependencies argument to qsub. For example, to submit a job that depends on job 12345:
 ```
-qsub -n 2 -t 10 --attrs filesystems=theta-fs0,grand,home -A yourproject --dependencies 12345 a.out
+qsub -n 2 -t 10 --attrs filesystems=theta-fs0,eagle,home -A yourproject --dependencies 12345 a.out
 ```
 For multiple dependencies, list and separate with colons.
 ```
-qsub -n 2 -t 30 -A yourproject --attrs filesystems=theta-fs0,grand,home --dependencies 12345:12346 a.out
+qsub -n 2 -t 30 -A yourproject --attrs filesystems=theta-fs0,eagle,home --dependencies 12345:12346 a.out
 ```
 Jobs submitted with dependencies will remain in the state `dep_hold` until all the dependencies are fulfilled, then will proceed to the state queued.
 
@@ -324,7 +324,7 @@ In rare cases, there may be a need to target specific hardware. This may be acco
 
 ### Example
 ```
-qsub -t 10 -n 2 --attrs filesystems=grand location=thetagpu01:thetagpu02 myprog.exe 
+qsub -t 10 -n 2 --attrs filesystems=eagle location=thetagpu01:thetagpu02 myprog.exe 
 ```
 This will force the job to run on those specific nodes. Should that location become unschedulable, for instance, due to a failed node, the job will not be allowed to run anywhere else, without resetting the location attribute. If more nodes are specified in the location field than are required to fill a job’s requested node count, then the first n nodes available in the location set will be used.
 
@@ -333,7 +333,7 @@ Sometimes it is useful to allow other users to run Cobalt commands on a given jo
 
 ### Example
 ```
-qsub -t 10 -n 16 --attrs filesystems=grand,eagle,home location=thetagpu01:thetagpu02 --run_users frodo:sam:pippin myprog.exe
+qsub -t 10 -n 16 --attrs filesystems=eagle,eagle,home location=thetagpu01:thetagpu02 --run_users frodo:sam:pippin myprog.exe
 ```
 As a convenience, all users belonging to the project under which a job was submitted can be added to a list of users that may control a job by using the `--run_project` flag.
 
@@ -362,7 +362,7 @@ Use `qsub -A <project_name>` to charge a job to a particular project.
 
 To run `jobscript.sh` with 2 nodes for a maximum of 15 minutes and charge the job to MyProject:
 ```
-qsub -n 2 -t 15 --attrs filesystems=grand,home -A MyProject jobscript.sh
+qsub -n 2 -t 15 --attrs filesystems=eagle,home -A MyProject jobscript.sh
 ```
 To see which projects you are a member of:
 ```
@@ -409,7 +409,7 @@ thetagpu18       CompBioAffin:backfill:full-node             allocated  -
 ## Specifying Filesystems
 On ThetaGPU and other systems running Cobalt at the ALCF your job submission should specify which filesystems your will be using.  In the event that a filesystem becomes unavailable, this information is used to preserve jobs that would use that filesystem while allowing other jobs that are not using an affected filesystem to proceed to run normally.
 
-You may specify your filesystem by adding ```filesystems=<list of filesystems>``` to the ```--attrs``` argument of qsub in Cobalt. Valid filesystems are `home`, `eagle`, `grand`, and `theta-fs0`. The list is comma-delimited. 
+You may specify your filesystem by adding ```filesystems=<list of filesystems>``` to the ```--attrs``` argument of qsub in Cobalt. Valid filesystems are `home`, `eagle`, and `theta-fs0`. The list is comma-delimited. 
 
 For example, to request the `home` and `eagle` filesystems for your job you would add `filesystems=home,eagle` to your `qsub` command. If this is not specified a warning will be printed and then **the job will be tagged as requesting all filesystems and may be held unnecessarily if a filesystem is not currently available**. The warnings are written to stderr of `qsub` and `qalter` commands that change the value of the `--attrs` flag.  Scripts that are parsing stderr from these utilities may encounter errors from the additional warnings if filesystems are not specified in these commands.
 
@@ -417,7 +417,7 @@ If a job is submitted while a filesystem it requested is marked down, the job wi
 
 If a job requesting a filesystem that is marked down is already in the queue, it will be placed on `admin_hold` status and will be released once the filesystem is operational.
 ```
-qsub -n 1 -t 30 -q full-node --attrs filesystems=home,grand -A Project ./my_job.sh
+qsub -n 1 -t 30 -q full-node --attrs filesystems=home,eagle -A Project ./my_job.sh
 ```
 To update the filesystems list for your job, use `qalter`. Note that `qalter --attrs` is a replace and not an update operation. This means that you should once again specify all the attributes that you had in the original `qsub` command.
 ```
