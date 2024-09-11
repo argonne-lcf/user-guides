@@ -21,7 +21,7 @@ DeepSpeed support.
 
     ```bash
     qsub-gpu -A <project> -n 2 -t 01:00 -q full-node \
-        --attrs="filesystems=home,grand,eagle,theta-fs0:ssds=required" \
+        --attrs="filesystems=home,eagle,theta-fs0:ssds=required" \
         -I
     ```
 

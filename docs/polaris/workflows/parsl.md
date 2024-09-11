@@ -47,11 +47,11 @@ from parsl.addresses import address_by_interface
 from parsl.utils import get_all_checkpoints
 
 # Adjust your user-specific options here:
-run_dir="/lus/grand/projects/yourproject/yourrundir/"
+run_dir="/lus/eagle/projects/yourproject/yourrundir/"
 
 user_opts = {
     "worker_init":      f"source /path/to/your/virtualenv/bin/activate; cd {run_dir}", # load the environment where parsl is installed
-    "scheduler_options":"#PBS -l filesystems=home:eagle:grand" , # specify any PBS options here, like filesystems
+    "scheduler_options":"#PBS -l filesystems=home:eagle" , # specify any PBS options here, like filesystems
     "account":          "YOURPROJECT",
     "queue":            "debug-scaling",
     "walltime":         "1:00:00",

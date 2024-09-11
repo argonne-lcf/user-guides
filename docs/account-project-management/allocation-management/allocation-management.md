@@ -72,7 +72,7 @@ Note: `hourstomove` must be greater than or equal to the available balance for t
 
 Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
 
-`Eg: qsub -l select=10,walltime=30:00,filesystems=grand:home -A <suballoctionID> -q demand test.sh`
+`Eg: qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <suballoctionID> -q demand test.sh`
 
 Note: Once submanagement is enabled for a project allocation, all job submissions must specify the `suballocationID`
 

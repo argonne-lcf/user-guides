@@ -19,7 +19,7 @@ Before your project begins, you will receive an email with the following project
 - **Project Proxies**: Project members designated by PIs that are authorized to add or renew project members on your behalf.
 - **Allocation System(s) and Allocation Amount**: The approved system(s) and amount of your award in node hours.
 - **Approved Quota**: The approved amount of disk space for your project directory.
-- **File System**: The file system where your project directory will reside. For information on the Grand and Eagle file systems, see Storage and Networking.
+- **File System**: The file system where your project directory will reside. For information on the Eagle file system, see Storage and Networking.
 - **Assigned Catalyst**: INCITE projects will have ALCF staff members that are assigned to the projects who are available to assist the team throughout the duration of the INCITE allocation.
 - **Allocation Start Date**: The start date of your award.
 - **Allocation End Date**: The end date of your award.
