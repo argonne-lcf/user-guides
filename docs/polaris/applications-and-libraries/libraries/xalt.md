@@ -5,10 +5,12 @@
 XALT is a user build and execution tracking framework; it is installed at ALCF on Polaris to track library usage.
 
 When XALT is enabled during builds:
+
 - An XALT watermark is added to the ELF binary of the executable(s)
 - An XALT link record containing information about the build is created
   
 When XALT is enabled during application executions:
+
 - An XALT start run record containing information about the execution is created; some link data is also included if the executable was built with XALT
 - If the execution exits normally, an XALT end run record containing information about the end of the process is created; if the process exits abnormally no end run record is created
 - For MPI jobs, XALT run records are produced only for rank 0
