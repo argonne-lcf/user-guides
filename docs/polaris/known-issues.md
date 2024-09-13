@@ -16,6 +16,10 @@ This is a collection of known issues that have been encountered on Polaris. Docu
    ```bash
    launch failed on x3104c0s1b0n0: Couldn't forward RPC launch(ab751d77-e80a-4c54-b1c2-4e881f7e8c90) to child x3104c0s31b0n0.hsn.cm.polaris.alcf.anl.gov: Resource temporarily unavailable
    ```
+2. The message below is an XALT-related warning that can be ignored when running `apptainer`. For other commands, please forward the complete message to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) so we are aware of your use case.
+
+   ```ERROR: ld.so: object '/soft/xalt/3.0.2-202408282050/lib64/libxalt_init.so' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
+   ```
    
 ## `ssh`'ing between Polaris Compute Nodes
 
