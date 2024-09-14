@@ -1,10 +1,10 @@
-#VNC on Polaris
+# VNC on Polaris
 
 ## Overview
 
 VNC (Virtual Network Computing) is available on Polaris to run graphics applications. To avoid slowing down login nodes, please run VNC on compute nodes.
 
-##Password for VNC
+## Password for VNC
 
 Create a unique password for VNC and store it in a secure directory.
 
