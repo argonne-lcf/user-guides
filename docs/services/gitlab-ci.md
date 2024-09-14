@@ -5,7 +5,10 @@
 
  GitLab-CI is meant to provide CI/CD services for projects using GitLab-CI to store your git repositories and executing code on our HPC clusters. ALCF does not allow users to join your own private runners to our existing GitLab CI/CD environment and provides dedicated runners for our supported systems.
 
-Additional information, technical and user documentation, and community support can be found on the [GitLab's Runner website](https://docs.gitlab.com/runner/).
+Additional information, technical and user documentation, and community support can be found on [GitLab's Runner website](https://docs.gitlab.com/runner/).
+
+Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ee/ci/yaml) for the full list of keywords supported by GitLab CI.
+
 
 ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
@@ -16,36 +19,35 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 * ALCF Support will reply back to the user and inform them that the project is created.
 * User(s) will need to login to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure their initial GitLab profile. Users will add an SSH key so they can pull/push code to the gitlab server.
 * User will then need to create a `GitLab Project` in your assigned `GitLab Group/SubGroup`.
+* CI/CD needs to be enabled for the GitLab Project.
 * When ready to run CI/CD jobs, users will add add a `.gitlab-ci.yml` file to your git repositories.
 * They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
-_Example: A `.gitlab-ci.yml` file for a Theta project_
+_Example: `.gitlab-ci.yml` file_
 ```
-variables:
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q ThetaQueueName --attrs filesystems=home"
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 stages:
-  - stage1
-  - stage2
-  - stage3
-shell_test1:
-  stage: stage1
-  tags:
-    - ecp-theta
-    - shell
+  - polaris_batch # stages may have any name
+
+# the below submits a batch job to the scheduler
+submit_batch: # CI jobs may have any name
+  stage: polaris_batch  # from the stages list above
+  extends: .polaris-batch-runner # this includes the defaults provided in the 'anl/ci-resources/defaults' project
+  variables:  # scheduler parameters must be included, adjust the below to match your values
+    ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
-    - echo "Shell Job 1"
-batch_test:
-  stage: stage2
-  tags:
-    - ecp-theta
-    - batch
-  script:
-    - echo "Job 2 start"
-    - aprun -n 1 id
-    - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
-    - echo "Job end"
+    - id
+    - hostname
+    - echo "Running on $(hostname) with setuid shell runner"
+
 ```
+For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml?ref_type=heads) file in the [large-example](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example) project.
 
 ## Glossary
 * **Group** - A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When a ALCF Project is allocated resources on the GitLab-CI environment we will create a GitLab `Group` that will map to your ALCF Project allocation.
@@ -125,6 +127,7 @@ To create a new `GitLab Project`:
   <figcaption>GitLab Create New Project screenshot</figcaption>
 </figure>
 * Click `Create project` button near the bottom
+* After creating the project, navigate to "Settings" > "General", Expand the "Visibility, project features, permissions" section and enable the "CI/CD" toggle.
 
 ### GitLab Groups/SubGroups (Folders)
   GitLab organizes `GitLab Projects` into "folders" called `Groups` or `SubGroups`. When an ALCF Project is granted access to GitLab-CI a GitLab `Group` will be created with access for all members of that ALCF Project. Users will then be able to create arbitrary GitLab `Projects`. 
@@ -179,6 +182,7 @@ To create a new `GitLab SubGroup`:
 
 #### Tags
   Tags are used to select which runner a job will be sent to. Improper tags can prevent your job from running and result in a failed job.
+Tags should be added by extending the defaults in the 'anl/ci-resources/defaults' runner.yml file. ALCF specific tags are described here in case overrides are needed.
 
 ##### ALCF Specific tags
   Two tags are necessary to run on our systems. One tag will select which cluster the jobs are sent to. The other will determine if the job is to be run locally on the gitlab runner host, or if it is to be submitted to a job scheduler on an HPC cluster.
@@ -187,8 +191,6 @@ _Cluster Tag(s)_
 
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
-| Theta     | ecp-theta | This tag will send jobs to the Theta HPC runners    |
-| ThetaGPU  | thetagpu  | This tag will send jobs to the ThetaGPU HPC runners |
 | Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
@@ -201,6 +203,8 @@ _Job Type Tag(s)_
 
 #### Variables
   Variables can be stored two ways, inline in the `.gitlab-ci.yml` file or as a setting in the GitLab `Group` or `Project` itself. Variables are exported as environment variables by gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
+
+GitLab also has a list of [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) available in every GitLab CI/CD pipeline.
 
 To set a variable directly in the `.gitlab-ci.yml` file, declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line. `variables:` can be declared globally or in individual jobs.
 
@@ -236,24 +240,25 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Theta     | Cobalt    | ANL_THETA_SCHEDULER_PARAMETERS    | [Theta Job Queue and Scheduling](../theta/queueing-and-running-jobs/job-and-queue-scheduling.md) |
-| ThetaGPU  | Cobalt    | ANL_THETAGPU_SCHEDULER_PARAMETERS | [ThetaGPU Job Queue and Scheduling](../theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md) |
 | Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
 
-_Example: Running a batch job on Theta HPC_
+_Example: Running a batch job_
 ```
-variables:
- ANL_THETA_SCHEDULER_PARAMETERS: "-A ProjectName -n 1  -t 10 -q myQueue --attrs filesystems=home"
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
 
 batch_test:
-  tags:
-    - ecp-theta
-    - batch
+  extends: .polaris-batch-runner
+  variables:
+    ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
     - echo "Job start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running with setuid batch runner"
     - echo "Job end"
 ```
 
@@ -277,37 +282,37 @@ stages:
   - stage3
 ```
 
-_Example: Theta pipeline with custom stages_
+_Example: Pipeline with custom stages_
 ```
-variables:
-  ANL_THETA_PROJECT_SERVICE_USER: "ecpcisvc"
-  ANL_THETA_SCHEDULER_PARAMETERS: "-A Operations -n 1  -t 10 -q build --attrs filesystems=home"
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
 
+variables:
+  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
   - stage1
   - stage2
-
 test1:
   stage: stage1
-  tags:
-    - ecp-theta
-    - shell
+  extends: .polaris-shell-runner
   script:
     - export
     - id
     - hostname
-    - echo "Running on theta with setuid shell runner" 
+    - echo "Running with setuid shell runner" 
     - echo test > test.txt
 test2:
   stage: stage2
-  tags:
-    - ecp-theta
-    - batch
+  extends: .polaris-batch-runner
   script:
     - echo "Job 2 start"
     - aprun -n 1 id
     - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on theta with setuid batch runner"
+    - aprun -n 1 echo "Running with setuid batch runner"
     - echo "Job 2 end"
 ```
 
@@ -336,12 +341,14 @@ test1:
       when: never
     - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
   stage: stage1
-  tags:
-    - ecp-theta
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 1"
 ```
+
+#### Job Scheduling
+  GitLab provides pipeline scheduling functionality to support recurring pipelines, specified using a Cron-like syntax. Pipeline scheduling is available in the project sidebar under "Build" > "Pipeline schedules". For more details, see the [upstream documentation](https://gitlab-ci.alcf.anl.gov/help/ci/pipelines/schedules).
+
 
 #### Template Jobs
   GitLab allows you to create `template jobs`, these are pieces of job specifications which can be included in jobs. Each `template job` name must begin with a period (.) and follow the same syntax as normal jobs. To instantiate a job based on the `template job` use the keyword `extends`. If your specific job declares a key/value already in the template, the specific job will overwrite it.
@@ -360,17 +367,13 @@ Example: Use a job template so two tests will only run on merge requests
 test1:
   extends: .MR_rules
   stage: stage1
-  tags:
-    - ecp-theta
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 1"
 test2:
   extends: .MR_rules
   stage: stage2
-  tags:
-    - ecp-theta
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 2"
 ```   

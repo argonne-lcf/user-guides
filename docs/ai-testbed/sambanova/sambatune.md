@@ -25,7 +25,7 @@ export DUMP_ROOT=~/Sambatune
 ```
 
 If running a large model, the profiling information can be hundreds of gigabytes or more, and the DUMP_ROOT should be set to some location with more storage than your home directory (which has a quota).<br>
-E.g. somewhere that you have write access to in ```/srv/projects```
+E.g. somewhere that you have write access to in ```/projects```
 
 Optionally, examine the sample yaml file. You will see that it has 5 top-level sections: `app:`, `model-args:`, `compile-args:`, `run-args:`, `env:`
 

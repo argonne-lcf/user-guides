@@ -10,7 +10,7 @@ If you want to learn how to get started, visit the Get Started Guide: [Get Start
 Those who are interested in having an account on a ALCF resource must first request an allocation and provide a detailed description of the work, including computational requirements and coding capabilities for the Blue Gene platform. Another means of acquiring an allocation on the ALCF system is to be part of a project team that already has an active allocation. Once an allocation has been granted, new users should complete an account request. A project’s Principal Investigator (PI) must sponsor these accounts—if the PI is the user, an ALCF staff member must serve as sponsor. Sponsors are asked annually to evaluate the accounts they have sponsored to determine whether or not these accounts should be kept active.
 
 ## Account Abilities
-A user with an active account can login to the ALCF login servers (e.g theta.alcf.anl.gov or cooley.alcf.anl.gov.) This account will have some home directory space, where file transfer can occur from that space via the login nodes, and where development activities, such as editing and compiling, can also occur.
+A user with an active account can login to the ALCF login servers (e.g., polaris.alcf.anl.gov) This account will have some home directory space, where file transfer can occur from that space via the login nodes, and where development activities, such as editing and compiling, can also occur.
 
 ## Account States
 Accounts are classified in one of the following categories:

@@ -10,8 +10,6 @@ If your build system does not require GPUs for the build process, as is usually 
 
 Is it helpful to realize that there is a single `HOME` filesystem for users that can be accessed from the login and computes of each production resource at ALCF. Thus, users should be mindful of modifications to their environments (e.g. `.bashrc`) that may cause issues to arise due to differences between the systems. 
 
-An example is creating an alias for the `qstat` command to, for example, change the order of columns printed to screen. Users with such an alias that works well on Theta may run into issues using `qstat` on Polaris as the two system use different schedulers: Cobalt (Theta) and PBS (Polaris). Users with such modifications to their environments are encouraged to modify their scripts appropriately depending on `$hostname`.
-
 ## Cray Programming Environment
 
 The Cray Programming Environment (PE) uses three compiler wrappers for building software. These compiler wrappers should be used when building MPI-enabled applications.
@@ -73,6 +71,8 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 * `craype-x86-rome`: While the Polaris compute nodes currently have Milan CPUs, this module is loaded by default to avoid the `craype-x86-milan` module from adding a `zen3` target not supported in the default `nvhpc/21.9` compilers. The `craype-x86-milan` module is expected to be made default once a newer `nvhpc` version (e.g. 22.5) is made the default.
 
 * `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with gpu-enabled MPI libraries as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building cpu-only applications may find it useful to unload this module to silence "gpu code generation" warnings.
+
+* `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 
 ## Mixed C/C++ & Fortran Applications
 

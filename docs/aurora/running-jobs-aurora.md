@@ -3,8 +3,13 @@
 
 ## <a name="Aurora-Queues"></a>Queues
 
-There is a single routing queue in place called `EarlyAppAccess` which currently has a node count of 2,844, but we recommend a max job size of 2048 or 2560. This will be replaced by new queues during an upcoming PM.
+There is a single routing queue in place called `EarlyAppAccess` which submits to the `lustre_scaling` queue. The total number of nodes available on this queue is changing often.
 
+### Queue Policy ### 
+- `EarlyAppAccess` (routing queue) : 100 queued jobs per-user 
+- `lustre_scaling` (execution queue) : 10 running jobs per-user; max walltime : 6 hours; max nodecount : 9090 (subject to change)
+
+### Submitting a job ###
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
 ```bash
@@ -43,6 +48,18 @@ We recommend against useing `-W tolerate_node_failures=all` in your qsub command
 5. If other nodes go down during your job, it will not be killed, and you can further exclude those nodes from your mpiexec as needed
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
+
+## <a name="Aurora-MPICH"></a>Aurora MPICH
+
+The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
+
+There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in
+
+```
+$MPI_ROOT/share/doc/mpich/README.envvar
+```
+
+This includes, for example, settings to select different optional sub-algorithms used in MPI collective operations.
 
 ## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
 
@@ -101,7 +118,7 @@ For the six GPUs, the GPU number identifies the GPU, and the tile numbers identi
 
 ### Binding MPI ranks and threads to cores
 
-Using the –cpu-bind argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to mpiexec, see [Running MPI+OpenMP-Applications](#running-mpi+openmp-applications). Four examples of using mpiexec are given below to show how the cpu-bind=depth, cpu-bind=list, --depth arguments affect where MPI ranks and OpenMP threads are mapped.
+Using the `–cpu-bind` argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to `mpiexec`, see [Running MPI+OpenMP Applications](#Running-MPI+OpenMP-Applications). Four examples of using `mpiexec` are given below to show how the `cpu-bind=depth`, `cpu-bind=list`, `--depth` arguments affect where MPI ranks and OpenMP threads are mapped.
 
 #### Example 1: 2 nodes, 4 ranks/node, 1 thread/rank
 
@@ -109,9 +126,9 @@ Using the –cpu-bind argument to mpiexec, MPI ranks and threads can be assigned
 mpiexec -n 8 -ppn 4 --depth 1 --cpu-bind=depth <app> <app_args>
 ```
 
-- The "-n 8" argument says to use 8 MPI ranks in total and "-ppn 4" places 4 ranks per node.
-- The "--depth 1" argument says to use 1 logical processor for each MPI rank.
-- The "--cpu-bind depth" argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
+- The `-n 8` argument says to use 8 MPI ranks in total and `-ppn 4` places 4 ranks per node.
+- The `--depth 1` argument says to use 1 logical processor for each MPI rank.
+- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
 
 This is the same as
 
@@ -119,7 +136,7 @@ This is the same as
 mpiexec -n 8 -ppn 4 --cpu-bind=list:0:1:2:3 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processor 0, rank 1 to logical processor 1, etc.
+- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processor 0, rank 1 to logical processor 1, etc.
 
 
 #### Resulting mapping
@@ -155,9 +172,9 @@ The figure below shows the mapping, where the different colors are different MPI
 OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --depth 2 --cpu-bind=depth <app> <app_args>
 ```
 
-- The "-n 4" argument says to use 4 MPI ranks in total and "-ppn 2" places 2 ranks per node.
-- The "--depth 2" argument says to use 2 logical processor for each MPI rank.
-- The "--cpu-bind depth" argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
+- The `-n 4` argument says to use 4 MPI ranks in total and `-ppn 2` places 2 ranks per node.
+- The `--depth 2` argument says to use 2 logical processor for each MPI rank.
+- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
 - OMP_NUM_THREADS=2 launches two threads per MPI rank
 - OMP_PLACES=threads says to bind the OpenMP threads to logical processors
 
@@ -167,7 +184,7 @@ This is the same as
 OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --cpu-bind=list:0,1:2,3 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which logical processor to bind to. Each MPI rank is bound to the logical processors that are listed between ":". Between ":", the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 0 and 1, rank 2 to logical processors 2 and 3. OMP_PLACES=threads then binds the specific threads to the logical processors in the list.
+- The `--cpu-bind list` argument explicitly lists which logical processor to bind to. Each MPI rank is bound to the logical processors that are listed between `:`. Between `:`, the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 0 and 1, rank 2 to logical processors 2 and 3. OMP_PLACES=threads then binds the specific threads to the logical processors in the list.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
@@ -201,7 +218,7 @@ The figure below shows the mapping, where the different colors are different MPI
 mpiexec -n 4 -ppn 2 --cpu-bind=list:0:104 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processor 0, rank 1 to logical processor 104, which share the same physical core.
+- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processor 0, rank 1 to logical processor 104, which share the same physical core.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
@@ -229,7 +246,7 @@ This setup is a common case for applications: 12 ranks/node, where each rank wil
 mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 <app> <app_args>
 ```
 
-- The "--cpu-bind list" argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between ":". So here, rank 0 to logical processors 0-7, rank 1 to logical processors 8-15, etc.
+- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processors 0-7, rank 1 to logical processors 8-15, etc.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1, the mapping looks like:
@@ -269,7 +286,7 @@ The figure below shows the mapping, where the different colors are different MPI
 </figure>
 
 
-If instead we used "--depth" as so:
+If instead we used `--depth` as so:
 ```
 mpiexec -n 12 -ppn 12 --depth 8 --cpu-bind=depth <app> <app_args>
 ```
@@ -308,6 +325,9 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
   <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
 </figure>
 
+
+**NOTE:** For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
+
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
 
@@ -342,8 +362,8 @@ One example below shows a common mapping of MPI ranks to cores and GPUs.
 mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh <app> <app_args>
 ```
 
-- The "-n 12" argument says to use 12 MPI ranks in total and "-ppn 12" places 12 ranks per node.
-- The "--cpu-bind list" argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The `-n 12` argument says to use 12 MPI ranks in total and `-ppn 12` places 12 ranks per node.
+- The `--cpu-bind list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
 - The /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0, Tile 0, rank 1 maps to GPU 0, Tile 1, rank 2 naps to GPU 1, Tile 0 etc. in a round-robin compact fashion.  
 
 #### Resulting mapping

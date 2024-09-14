@@ -19,67 +19,81 @@ For more resources on SmartSim, follow the links below:
 * [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
 * [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
 
-## Installation
+## Installation with PyTorch GPU Backend
 
-SmartSim on Polaris can be installed creating a virtual environment based on the ML conda module
+SmartSim on Polaris can be installed creating a virtual environment based on the ML conda module. 
+From a compute node, execute
 ```
-module load conda/2023-10-04
-conda activate
-module load cmake
-module load gcc/11.2.0
-module load cudatoolkit-standalone/11.8.0
+module use /soft/modulefiles
+module load conda/2024-04-29
+conda activate base
 python -m venv --clear /path/to/_ssim_env --system-site-packages
 source /path/to/_ssim_env/bin/activate
-pip install --upgrade pip
 ```
 Note that `/path/to/` can either be a user's home or project directory.
 
-To use SmartSim in the future, simply load the same modules and source the virtual environment.
-
 Then set up the environment variables
 ```
-export SMARTSIM_REDISAI=1.2.7
 export CC=cc
 export CXX=CC
-export CUDA_DEPS_BASE=/soft/libraries
-export CUDA_VERSION_MAJOR=11
-export CUDNN_VERSION_MAJOR=8
-export CUDNN_VERSION_MINOR=6
-export CUDNN_VERSION_EXTRA=0.163
-export CUDNN_VERSION=$CUDNN_VERSION_MAJOR.$CUDNN_VERSION_MINOR.$CUDNN_VERSION_EXTRA
-export CUDNN_BASE=$CUDA_DEPS_BASE/cudnn/cudnn-$CUDA_VERSION_MAJOR-linux-x64-v$CUDNN_VERSION
+export CUDNN_BASE=/soft/libraries/cudnn/cudnn-12-linux-x64-v9.1.0.70
 export CUDNN_LIBRARY=$CUDNN_BASE/lib/
 export CUDNN_INCLUDE_DIR=$CUDNN_BASE/include/
 export LD_LIBRARY_PATH=$CUDNN_LIBRARY:$LD_LIBRARY_PATH
+export TORCH_CMAKE_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
 ```
 
-Now, install SmartSim and the GPU backend
+Now, install SmartSim and the PyTorch GPU backend
 ```
-git clone https://github.com/CrayLabs/SmartSim.git
+git clone https://github.com/rickybalin/SmartSim.git
 cd SmartSim
 pip install -e .
-export TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-export TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split("/")[:-1]))' )
-smart build -v --device gpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
+smart build -v --device gpu --torch_dir $TORCH_CMAKE_PATH --no_tf
 cd ..
+```
+
+and validate the build with
+```
+smart validate
 ```
 
 Finally, install the SmartRedis library
 ```
-export LDFLAGS=-L/opt/cray/pe/gcc/11.2.0/snos/lib64/libstdc++.so.6
-git clone https://github.com/CrayLabs/SmartRedis.git
+git clone https://github.com/rickybalin/SmartRedis.git
 cd SmartRedis
+make lib DEP_CC=cc DEP_CXX=CC
 pip install -e .
-make lib
 cd ..
 ```
+
+To use SmartSim in the future, simply source the following environment. Note that the Torch libraries need to be prepended to `LD_LIBRARY_PATH`.
+```
+module use /soft/modulefiles
+module load conda/2024-04-29
+conda activate base
+source /path/to/_ssim_env/bin/activate
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+```
+
+## Installation with TensorFlow GPU Backend
+
+To use the TensorFlow backend to the SmartSim Orchestrator, the install steps are very similar but require downgrading the TensorFlow version to 1.13.1.
+Follow the same instructions outlined above for the PyTorch backend, with the following exceptions:
+
+* After creating and sourcing the Python virtual environment, downgrade TensorFlow with `pip install tensorflow==2.13.1`. Note that this will also downgrade typing-extensions, which will cause compatibility issues with the PyTorch in the conda module.
+* No need to export `TORCH_CMAKE_PATH` and `TORCH_PATH`, or modify `LD_LIBRARY_PATH`
+* Build the SmartSim backend with `smart build -v --device gpu --no_pt`
+
 
 ## Examples
 
 You can find examples of in situ training and inference of ML models from an ongoing CFD simulation at the [NekRs-ML](https://github.com/argonne-lcf/nekRS-ML) repository. 
-The `smartredis` and `onlineGNN` branches have instructions on how to build and run the examples on Polaris.
+The `smartredis` branch has instructions on how to build and run the examples on Polaris.
 
-The [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML) repository also contains information on how to use SmartSim and NekRS-ML on Polaris, but note the instructions are specfic to the Fall of 2023.
+The [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML) repository also contains information on how to use SmartSim and NekRS-ML on Polaris, but note that some of the instructions are specfic to the Fall of 2023.
 
 ## Notes
 

@@ -1,5 +1,12 @@
 # Accounts and Access FAQ
 
+## I am unable to sign in to the Accounts website. What do I do?
+Only users with active ALCF accounts can sign in to the Account and Project Management website. If you have an active account, verify that you are using the correct ALCF username. Note that username is case-sensitive. If you forgot your username, contact support@alcf.anl.gov. For passcode token issues, please review the troubleshooting information on this page: [Passcode Tokens](https://docs.alcf.anl.gov/account-project-management/accounts-and-access/alcf-passcode-tokens/).
+
+If your account is inactive, please submit a reactivation request here: [https://accounts.alcf.anl.gov/#/accountReactivate](https://accounts.alcf.anl.gov/#/accountReactivate).
+
+If you never had an ALCF account, please apply for one here: [https://accounts.alcf.anl.gov/#/accountRequest](https://accounts.alcf.anl.gov/#/accountRequest). Note that all ALCF accounts must be associated with a project with an active allocation.
+
 ## How do I request a new project/allocation?
 There are 3 allocation opportunities at ALCF. Please see How to Get an Allocation on how to get time on our systems.
 
@@ -17,7 +24,7 @@ To join a project, please go to [https://accounts.alcf.anl.gov](http://accounts.
 ## How do I request a reservation?
 Reservation requests must include information detailed here: 
 
-- [Machine Reservations](../../theta/queueing-and-running-jobs/machine-reservations.md): Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
+- [Machine Reservations](../../running-jobs/machine-reservations.md): Please email the completed reservation request to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). We will contact you after your request is reviewed by our reservations committee.
 
 ## How do I apply for a new account?
 **Note:** All ALCF accounts must be associated with an allocated project.

@@ -10,7 +10,7 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 - job duration - shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
 
 ## Reservations and Scheduling Policy
-Some work will require use of Theta that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular form no fewer than five (5) business days in advance.
+Some work will require use of Polaris that requires deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular form no fewer than five (5) business days in advance.
 
 ## Big Run Mondays
 As part of our regular maintenance procedures on Mondays, we will promote to the highest priority any jobs in the queued state requesting 802 nodes or more. Promotion is subject to operational discretion.

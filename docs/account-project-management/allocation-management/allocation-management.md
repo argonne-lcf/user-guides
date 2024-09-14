@@ -2,7 +2,7 @@
 Allocations require management – balance checks, resource allocation, requesting more time, etc.
 
 ## Checking for an Active Allocation
-To determine if there is an active allocation, check [Job Submission](../../theta/queueing-and-running-jobs/job-and-queue-scheduling.md#submit-a-job).
+To determine if there is an active allocation, check [Job Submission](../../running-jobs/job-and-queue-scheduling.md#qsub).
 
 For information on how to run the query, look at our documentation on our [sbank Allocations Accounting System](sbank-allocation-accounting-system.md) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
 
@@ -72,7 +72,7 @@ Note: `hourstomove` must be greater than or equal to the available balance for t
 
 Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list 
 
-`Eg: qsub -l select=10,walltime=30:00,filesystems=grand:home -A <suballoctionID> -q demand test.sh`
+`Eg: qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <suballoctionID> -q demand test.sh`
 
 Note: Once submanagement is enabled for a project allocation, all job submissions must specify the `suballocationID`
 

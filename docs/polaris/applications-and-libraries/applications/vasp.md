@@ -1,10 +1,30 @@
+# VASP
+
+## What is VASP?
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found here:
+[https://www.vasp.at](https://www.vasp.at)
+
+## Using VASP at ALCF
+VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
+
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license.
+
+Information to provide:
+- User’s full name:
+- User’s ALCF username:
+- Name of organization that purchased the VASP license:
+- Principal investigator who is the POC for the VASP license:
+- VASP license number:
+- Version of VASP requested (VASP5, VASP6): 
+
+## VASP support policy
+ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. 
+Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
+
+## How to obtain the code
+The VASP souce can only be obtained by an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
 ## VASP 6.x.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
-
-The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found [here](https://www.vasp.at).
-
-Users must have a license to use this code on ALCF systems. More information on how to get access to VASP binaries can be found [here](
-https://docs.alcf.anl.gov/theta/applications-and-libraries/applications/vasp/).
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` could be found in the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
@@ -44,13 +64,13 @@ DEBUG      = -Mfree -O0 -traceback
 NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $$1 }')
 # ...or set NVROOT manually
 NVHPC      ?= /opt/nvidia/hpc_sdk
-NVVERSION  = 20.9
-#NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
+NVVERSION  = 23.9
+NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
 
 # Use NV HPC-SDK provided BLAS and LAPACK libraries
 LIBAOCL=/soft/libraries/aocl/3.2.0
-BLAS       = ${LIBAOCL}/lib/libblis-mt.a
-LAPACK     = ${LIBAOCL}/lib/libflame.a
+BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.a
+LAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
 
 BLACS      =
 SCALAPACK  =
@@ -66,14 +86,14 @@ QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
 
-#INCS       += -I/usr/include/linux 
-#INCS       += -I/usr/include/c++/7/tr1 
-#INCS       += -I/usr/include/c++/7 
+#INCS       += -I/usr/include/linux
+#INCS       += -I/usr/include/c++/7/tr1
+#INCS       += -I/usr/include/c++/7
 #INCS       += -I/usr/include/x86_64-linux-gnu/c++/7
 #INCS       += -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/
 
 # Use the FFTs from fftw
-FFTW       ?= ${LIBAOCL}
+FFTW       = /soft/applications/vasp/aol-libs/3.2/amd-fftw
 LLIBS      += -L$(FFTW)/lib -lfftw3 -lfftw3_omp -lomp
 #INCS       += -I/soft/libraries/aocl/3.2.0/include_LP64/
 INCS       += -I$(FFTW)/include
@@ -95,10 +115,7 @@ FREE_LIB   = $(FREE)
 OBJECTS_LIB= linpack_double.o getshmem.o
 
 # For the parser library
-#CXX_PARS   = nvc++ --no_warnings -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/ -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-s
-les15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc
-/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
-CXX_PARS   = nvc++ --no_warnings 
+CXX_PARS   = nvc++ --no_warnings
 
 # Normally no need to change this
 SRCDIR     = ../../src
@@ -110,11 +127,15 @@ BINDIR     = ../../bin
 The follow modules will update the include and libraries paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
 ```
-module purge
-module load nvhpc/23.3
+module restore
 module load PrgEnv-nvhpc
 module load cray-libsci
 module load craype-accel-nvidia80
+export NVROOT=${NVIDIA_PATH}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
 
 ```
 
@@ -127,20 +148,29 @@ make -j1
 
 ### Running VASP in Polaris
 
-An example of a submission script could be found here `/soft/applications/vasp/submit-polaris2023-2.sh` , which would looks something similar to:
+An example of a submission script could be found here ` /soft/applications/vasp/script.sh` , which would looks something similar to:
 
 
 ``` example-script.sh
 #!/bin/sh
-#PBS -l select=1:system=polaris  
+#!/bin/sh
+#PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 #PBS -q debug
-#PBS -A Catalyst
+#PBS -A MYPROJECT
 
 module load PrgEnv-nvhpc
 module load cray-libsci
+module load craype-accel-nvidia80
+
+NVROOT=${NVIDIA_PATH}
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
@@ -149,18 +179,22 @@ NDEPTH=4
 NTHREADS=4
 NGPUS=2
 NTOTRANKS=$(( NNODES * NRANKS ))
+# Provide full path to VASP binary
+bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /path_to_vasp/bin/vasp_std
+cd $PBS_O_WORKDIR
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} $bin
 ```
 
 Submission scripts should have executable attibutes to be used with `qsub` script mode.
 
 ```
-chmod +x example-script.sh
-qsub  example-script.sh
+chmod +x script.sh
+qsub script.sh
 ```
 
-### Known issues versions: >= 6.4.x in Polaris 
+### Known issues versions: >= 6.4.x in Polaris (OLD)
 ---
 
 * Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this

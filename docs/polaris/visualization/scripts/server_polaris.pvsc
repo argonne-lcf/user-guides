@@ -39,7 +39,7 @@
           <String default="debug"/>
 	</Option>
 	<Option name="FILE_SYSTEMS" label="File Systems" save="true">
-          <String default="home:eagle:grand"/>
+          <String default="home:eagle"/>
         </Option>
         <Option name="JOBNAME" label="Job name" save="true">
           <String default="paraview_server"/>

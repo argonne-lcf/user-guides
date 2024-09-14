@@ -7,6 +7,7 @@ PyTorch is a popular, open source deep learning framework developed and released
 PyTorch is installed on Polaris already, available in the `conda` module.  To use it from a compute node, please do:
 
 ```bash
+module use /soft/modulefiles
 module load conda
 conda activate
 ```
