@@ -243,6 +243,7 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
+  account-project-management/index.md
 
 theme:
   name: 'material'
