@@ -1,7 +1,7 @@
 site_name: ALCF User Guides
 nav:
   - Home: index.md
-  - Account and Project Management: account-project-management/accounts-and-access/user-account-overview.md
+  - Account and Project Management:
     - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
     - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
     - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
