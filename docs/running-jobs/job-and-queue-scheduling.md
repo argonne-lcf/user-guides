@@ -69,7 +69,7 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * PBS Documentation: Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
 4. `qdel`: cancel a job that you don't need. This will also kill a running job
     * `qdel <jobid>`
-    * Occasionally, the job will will still show up in qstat after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
+    * Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
 **Note: The page numbers in the PBS guides are unique.  If you search for the specified page number it will take you directly to the relevant page.**
@@ -307,7 +307,7 @@ Basically takes the same options as `qsub`;  Say you typoed and set the walltime
 
 `qdel <jobid> [<jobid> <jobid>...]`
 
-Occasionally, the job will will still show up in qstat after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov>  and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
+Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov>  and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
 
 
 ## <a name="qmove"></a>`qmove`: Move a job to a different queue
