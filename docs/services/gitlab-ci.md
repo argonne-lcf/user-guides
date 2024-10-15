@@ -25,31 +25,29 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 
 _Example: `.gitlab-ci.yml` file_
 ```
-variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 stages:
-  - stage1
-  - stage2
-  - stage3
-shell_test1:
-  stage: stage1
-  tags:
-    - polaris
-    - shell
+  - polaris_batch # stages may have any name
+
+# the below submits a batch job to the scheduler
+submit_batch: # CI jobs may have any name
+  stage: polaris_batch  # from the stages list above
+  extends: .polaris-batch-runner # this includes the defaults provided in the 'anl/ci-resources/defaults' project
+  variables:  # scheduler parameters must be included, adjust the below to match your values
+    ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
-    - echo "Shell Job 1"
-batch_test:
-  stage: stage2
-  tags:
-    - polaris
-    - batch
-  script:
-    - echo "Job 2 start"
-    - aprun -n 1 id
-    - aprun -n 1 hostname
-    - aprun -n 1 echo "Running on polaris with setuid batch runner"
-    - echo "Job end"
+    - id
+    - hostname
+    - echo "Running on $(hostname) with setuid shell runner"
+
 ```
+For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml?ref_type=heads) file in the [large-example](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example) project.
 
 ## Glossary
 * **Group** - A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When a ALCF Project is allocated resources on the GitLab-CI environment we will create a GitLab `Group` that will map to your ALCF Project allocation.
@@ -184,6 +182,7 @@ To create a new `GitLab SubGroup`:
 
 #### Tags
   Tags are used to select which runner a job will be sent to. Improper tags can prevent your job from running and result in a failed job.
+Tags should be added by extending the defaults in the 'anl/ci-resources/defaults' runner.yml file. ALCF specific tags are described here in case overrides are needed.
 
 ##### ALCF Specific tags
   Two tags are necessary to run on our systems. One tag will select which cluster the jobs are sent to. The other will determine if the job is to be run locally on the gitlab runner host, or if it is to be submitted to a job scheduler on an HPC cluster.
@@ -245,12 +244,16 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 
 _Example: Running a batch job_
 ```
-variables:
-  ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 batch_test:
-  tags:
-    - polaris
-    - batch
+  extends: .polaris-batch-runner
+  variables:
+    ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
     - echo "Job start"
     - aprun -n 1 id
@@ -281,6 +284,13 @@ stages:
 
 _Example: Pipeline with custom stages_
 ```
+# this include allows us to reference defaults in anl/ci-resource/defaults
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
 variables:
   ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
 stages:
@@ -288,9 +298,7 @@ stages:
   - stage2
 test1:
   stage: stage1
-  tags:
-    - polaris
-    - shell
+  extends: .polaris-shell-runner
   script:
     - export
     - id
@@ -299,9 +307,7 @@ test1:
     - echo test > test.txt
 test2:
   stage: stage2
-  tags:
-    - polaris
-    - batch
+  extends: .polaris-batch-runner
   script:
     - echo "Job 2 start"
     - aprun -n 1 id
@@ -335,9 +341,7 @@ test1:
       when: never
     - if: $CI_MERGE_REQUEST_IID             # CI_MERGE_REQUEST_IID exists, so run job
   stage: stage1
-  tags:
-    - polaris
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 1"
 ```
@@ -363,17 +367,13 @@ Example: Use a job template so two tests will only run on merge requests
 test1:
   extends: .MR_rules
   stage: stage1
-  tags:
-    - polaris
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 1"
 test2:
   extends: .MR_rules
   stage: stage2
-  tags:
-    - polaris
-    - shell
+  extends: .polaris-shell-runner
   script:
     - echo "Run test 2"
 ```   

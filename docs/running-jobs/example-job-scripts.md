@@ -20,7 +20,7 @@ The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -93,7 +93,7 @@ This example is similar to the previous, but it exhausts all 64 logical cores av
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A Catalyst
 
@@ -346,7 +346,7 @@ In the example job script `submit.sh` below, MPS is first enabled on all nodes i
 #PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 cd ${PBS_O_WORKDIR}
 
@@ -387,7 +387,7 @@ An example is available in the [Getting Started Repo](https://github.com/argonne
 #PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 #cd ${PBS_O_WORKDIR}
 
@@ -426,7 +426,7 @@ To run multiple concurrent applications on distinct sets of nodes, one simply ne
 #PBS -l walltime=0:30:00
 #PBS -q debug-scaling
 #PBS -A Catalyst
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 cd ${PBS_O_WORKDIR}
 
@@ -455,3 +455,91 @@ done
 
 wait
 ```
+
+## Job array example
+
+In situations where you wish to repeat a job multiple times with a small change each time, such as in a parameter space study, a job array may be an option.  Unlike the multi-node ensemble case above, each subjob in a job array is its own job and will have its own initialization and tear-down by PBS.  Also, a job array will not block all nodes for the length of the longest running task, as is the case for an ensemble job.  Jobs on polaris cannot share nodes with other jobs, so job arrays on Polaris cannot be used to distribute work to different cpu cores or gpus on a node.  In that case, an ensemble job or using `mpiexec` as a parallel launcher can accomplish that goal.
+
+Both ensemble jobs and job arrays become unwieldy and inefficient for very large numbers of tasks.  They either have limits to the number of tasks that can be created at once (job arrays) or are unable to refill idle nodes when tasks complete (ensemble jobs).  In such cases, a [workflow management tool](../polaris/workflows/balsam.md) that can manage the running of tasks is recommended.
+
+### Job array submission scripts
+
+An example job array submission script:
+
+```bash
+#!/bin/bash -l
+#PBS -l select=1:system=polaris
+#PBS -l place=scatter
+#PBS -l walltime=0:10:00
+#PBS -q preemptable
+#PBS -A datascience
+#PBS -l filesystems=home:eagle
+#PBS -j oe
+#PBS -r y
+#PBS -J 0-7:2
+
+cd ${PBS_O_WORKDIR}
+
+# Create a unique subdirectory for subjob with PBS_ARRAY_INDEX
+SUBDIRECTORY="${PBS_ARRAY_INDEX}"
+mkdir -p ${SUBDIRECTORY}
+cd ${SUBDIRECTORY}
+
+# File name where stdout and stderr of application will be directed in subjob subdirectory
+OUT_FILE="subjob_${PBS_ARRAY_INDEX}.out"
+
+echo "Running subjob ${SUBDIRECTORY}"
+echo "Directing application output to ${SUBDIRECTORY}/${OUT_FILE}"
+
+# MPI example w/ 16 MPI ranks per node spread evenly across cores
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS_PER_NODE=16
+NDEPTH=4
+NTHREADS=1
+
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
+
+APP_PATH=${PBS_O_WORKDIR}/hello_affinity
+
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ${APP_PATH} &> ${OUT_FILE}
+```
+There are two required options for job arrays in PBS: `-r` and `-J`.  
+
+The `-r` option must be set like this:
+```bash
+#PBS -r y
+```
+
+The `-J` option sets the number of subjobs in the array and the value of their array indices.  The example script above will run 4 subjobs and space their array indices in increments of 2, so the array indices will be 0, 2, 4 and 6.
+
+The form the `-J` option takes is
+```bash
+#PBS -J <start_index>-<end_index>:<skip_index>%<num_concurrent>
+```
+* `<start_index>` is the index of the first job in the array
+* `<end_index>` is the index of the last job in the array
+* `<skip_index>` is the number of index integers to skip between subjobs
+* `<num_concurrent>` is the maximum number of subjobs that will run concurrently at one time
+
+
+The within a subjob the environment variable `PBS_ARRAY_INDEX` will contains the index of the subjob in the array.  It can be used in the job script to set the value or paths of inputs or outputs.
+
+### Interacting with job arrays
+
+The status of job arrays can be queried with the command:
+```shell
+qstat -t
+```
+
+When interacting with a job array with commands like `qdel` or `qalter`, include the brackets with the jobid, e.g.:
+```shell
+qdel 1991684[]
+```
+
+### Limits on job arrays
+The number of subjobs in a job array is limited by the number of jobs that can be submitted to the queue.
+
+On Polaris, for the debug queue, that is 1, for preemptable, that is 20, and for prod that is 10.  
+
+The limit for prod on Polaris is 10 because 10 is the maximum number of jobs that can be routed by prod to one of the execution queues (small, medium, or large).  One note, PBS will allow job array submissions of up to 100 subjobs in prod, however, these job arrays will not run because they will not route to an execution queue.  This is a known issue on Polaris.

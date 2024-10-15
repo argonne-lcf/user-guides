@@ -18,18 +18,18 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 
 ## Micro-benchmarks
 
-|            | One Tile   | Full Node  |
-| -----------|-----------:|-----------:|
-| Single Precision Peak Flops* | 23 TFlop/s  | 264 TFlop/s|
-| Double Precision Peak Flops  | 17 TFlop/s  | 203 TFlop/s|
-| Memory Bandwidth (triad)  | 1 TB/s | 12 TB/s |
-| PCIe Unidirectional Bandwidth (H2D)* | 50 GB/s | 173 GB/s |
-| PCIe Unidirectional Bandwidth (D2H)* | 49 GB/s | 122 GB/s |
-| PCIe Bidirectional Bandwidth  | 76 GB/s | 356 GB/s |
-| Tile2Tile Unidirectional Bandwidth* | 296 GB/s | 1766 GB/s |
-| Tile2Tile Bidirectional Bandwidth* | 147 GB/s | 689 GB/s |
-| GPU2GPU Unidirectional Bandwidth* | 29 GB/s | 174 GB/s |
-| GPU2GPU Bidirectional Bandwidth* | 57 GB/s | 316 GB/s |
+|                                     |   One Tile |   Full Node | Scaling |
+|                                  ---|-----------:| -----------:|    ----:|
+|         Single Precision Peak Flops | 23 TFlop/s | 267 TFlop/s |    11.8 |
+|         Double Precision Peak Flops | 17 TFlop/s | 187 TFlop/s |    10.9 |
+|            Memory Bandwidth (triad) |     1 TB/s |     12 TB/s |    11.9 |
+| PCIe Unidirectional Bandwidth (H2D) |    54 GB/s |    329 GB/s |     6.1 |
+| PCIe Unidirectional Bandwidth (D2H) |    55 GB/s |    263 GB/s |     4.8 |
+|        PCIe Bidirectional Bandwidth |    76 GB/s |    357 GB/s |     4.7 |
+|  Tile2Tile Unidirectional Bandwidth |   196 GB/s |      1 TB/s |     6.0 |
+|   Tile2Tile Bidirectional Bandwidth |   287 GB/s |      2 TB/s |     5.9 |
+|    GPU2GPU Unidirectional Bandwidth |    15 GB/s |     95 GB/s |     6.3 |
+|     GPU2GPU Bidirectional Bandwidth |    23 GB/s |    142 GB/s |     6.2 |
 
 ### Benchmark description
  
@@ -45,20 +45,20 @@ The asterisk (`*`) means that the data was collected on sunspot with older softw
 
 ## GEMM
 
-|          | One Tile   | Full Node   |
-| ---------|------------|-------------|
-| DGEMM    | 14 TFlop/s  |  173 TFlop/s |
-| SGEMM    | 21 TFlop/s  |  257 TFlop/s |
-| HGEMM    | 224 TFlop/s | 2094 TFlop/s |
-| BF16GEMM | 238 TFlop/s | 2439 TFlop/s |
-| TF32GEMM | 98 TFlop/s  | 1204 TFlop/s |
-| I8GEMM   | 520 TFlop/s | 4966 TFlop/s |
+|          |    One Tile |    Full Node | Scaling |
+|       ---| -----------:|  -----------:|    ----:|
+|    DGEMM |  15 TFlop/s |  179 TFlop/s |    11.9 |
+|    SGEMM |  22 TFlop/s |  258 TFlop/s |    11.7 |
+|    HGEMM | 263 TFlop/s | 2606 TFlop/s |     9.9 |
+| BF16GEMM | 273 TFlop/s | 2645 TFlop/s |     9.7 |
+| TF32GEMM | 110 TFlop/s | 1311 TFlop/s |    11.9 |
+|   I8GEMM | 577 TFlop/s | 5394 TFlop/s |     9.4 |
 
 ## FFT
 
-|          | One Tile   | Full Node   |
-| ---------|------------|-------------|
-| Single-precision C2C 1D* | 2.3 TFlop/s  | 25 TFlop/s |
-| Single-precision C2C 2D* | 2.1 TFlop/s | 21 TFlops/s |
+|                             |   One Tile |  Full Node | Scaling |
+|                          ---|-----------:|-----------:|    ----:|
+| Single-precision FFT C2C 1D |  3 TFlop/s | 34 TFlop/s |    10.8 |
+| Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.4 |
 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise.

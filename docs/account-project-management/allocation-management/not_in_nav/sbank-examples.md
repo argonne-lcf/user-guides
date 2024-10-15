@@ -30,16 +30,16 @@ Totals:
     Jobs             : 3 
 ```
 
-### List your project's quota on Grand and/or Eagle File system
+### List your project's quota on Eagle File system
 ```
-> sbank-list-allocations -p ProjectX -r grand
+> sbank-list-allocations -p ProjectX -r eagle
  Allocation  Suballocation  Start       End         Resource  Project      Quota
  ----------  -------------  ----------  ----------  --------  -----------  -----
- 6687        6555           2020-12-16  2022-01-01  grand     ProjectX    1.0
+ 6687        6555           2020-12-16  2022-01-01  eagle     ProjectX    1.0
 
 Totals:
   Rows: 1
-  Grand:
+   Eagle: 
     Quota: 1.0 TB
 
 > sbank-list-allocations -p ProjectX -r eagle

@@ -11,7 +11,8 @@ echo "Using ${OUTPUT_PATH} for output"
 mkdir -p /data/ANL/results/$(hostname)/${USER}/${LOGDIR}
 export SN_NUM_THREADS=32
 
-ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
+# Base environment now supports this
+#ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
 #######################
 # Edit these variables.
 #######################
@@ -23,7 +24,8 @@ SECONDS=0
 DIRECTORY=$$
 OUTDIR=/data/scratch/${USER}/GPT_RUN
 mkdir -p ${OUTDIR}
-source ${ACTIVATE}
+# Base environment now supports this
+#source ${ACTIVATE}
 echo "Model: " ${MODEL_NAME} >> ${OUTPUT_PATH} 2>&1
 echo "Date: " $(date +%m/%d/%y) >> ${OUTPUT_PATH} 2>&1
 echo "Time: " $(date +%H:%M) >> ${OUTPUT_PATH} 2>&1
@@ -46,7 +48,7 @@ fi
 #######################
 echo "RUN" >> ${OUTPUT_PATH} 2>&1
 export CCL_TIMEOUT=3600
-/usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data-parallel --reduce-on-rdu --data_dir /data/ANL/ss1024 --data_dir /data/ANL/ss1024  --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 800 --pef=${OUTDIR}/gpt15/gpt15.pef >> ${OUTPUT_PATH} 2>&1
+/usr/local/bin/srun --mpi=pmi2 python /opt/sambaflow/apps/nlp/transformers_on_rdu/transformers_hook.py run  -b 16  --module_name gpt2_pretrain --task_name clm --max_seq_length 1024  --overwrite_output_dir --do_train  --per_device_train_batch_size 16 --cache_dir ${OUTDIR}/cache/  --tokenizer_name gpt2 --model_name gpt2 --non_split_head --skip_broadcast_patch --no_index_select_patch --output_dir=${OUTDIR}/hf_output --config_name /opt/sambaflow/apps/nlp/transformers_on_rdu/customer_specific/mv/configs/gpt2_config_xl_50260.json --max_grad_norm_clip 1.0 --skip_checkpoint --data-parallel --reduce-on-rdu --data_dir /data/ANL/ss1024 --data_dir /data/ANL/ss1024  --logging_steps 1 --max_steps 900000 --learning_rate 0.00025 --steps_this_run 400 --pef=${OUTDIR}/gpt15/gpt15.pef >> ${OUTPUT_PATH} 2>&1
 
 #######################
 echo "Machine state After: " >> ${OUTPUT_PATH} 2>&1

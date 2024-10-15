@@ -13,6 +13,7 @@ libEnsemble can be used in a consistent manner on laptops, clusters, and superco
 
 libEnsemble is provided on Polaris in the **conda** module:
 
+    module use /soft/modulefiles
     module load conda
     conda activate base
 
@@ -64,7 +65,7 @@ A simple example batch script for a libEnsemble use case that runs five workers 
     #!/bin/bash -l
     #PBS -l select=1:system=polaris
     #PBS -l walltime=00:15:00
-    #PBS -l filesystems=home:grand
+    #PBS -l filesystems=home:eagle
     #PBS -q debug
     #PBS -A <myproject>
 
@@ -79,7 +80,7 @@ The script can be run with:
 
 Or you can run an interactive session with:
 
-    qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:grand -qdebug -I
+    qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
 
 ## Further links
 

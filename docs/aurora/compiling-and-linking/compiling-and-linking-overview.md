@@ -2,11 +2,11 @@
 
 ## Compiling on Aurora Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs-aurora.md#Interactive-Jobs-on-Compute-Nodes) or [batch](../running-jobs-aurora.md#Batch-Jobs-on-Compute-Nodes) job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
+If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs-aurora.md#Interactive-Jobs-on-Compute-Nodes) or batch job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
 
 ## Filesystem
 
-It is helpful to realize that currently there is a single _temporary_ filesystem `gecko` mounted on the Aurora login and compute nodes available to users, where both `home` and `project` spaces reside. It is important to realize that this filesystem is not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `grand` and `eagle` filesystems).
+It is helpful to realize that currently there is a single _temporary_ filesystem `gecko` mounted on the Aurora login and compute nodes available to users, where both `home` and `project` spaces reside. It is important to realize that this filesystem is not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `eagle` filesystem).
 
 ## OneAPI Programming Environment
 
@@ -32,24 +32,10 @@ For applications consisting of a mix of programming languages that use MPI, it i
 
 ## Additional software and build tools
 
-Additional software is available on Aurora as modules that are not currently available in the default environment to reduce load on the filesystem. Once a shell has opened on the login or compute nodes (i.e. inside of a job script), users can access additional software in `/soft/modulefiles`. 
+A suite of build tools and libraries are available in the default Aurora PE environment. Users can look at the list of available modules with `module avail` to find build tools such as `cmake`.
 
 ```
-$ module use /soft/modulefiles
-```
-
-This will make available builds of the frameworks, Kokkos, additional MPICH builds, and also some spack modules, which provide access to additional tools. The `module use /soft/modulefiles` command only needs to be executed once per session, but is repeated below for clarity.
-
-```
-$ module use /soft/modulefiles
-$ module load spack-pe-gcc
-```
-
-Looking at the available modules (`module avail`) now in this expanded list one can find additional build tools, such as `cmake`.
-
-```
-$ module use /soft/modulefiles
-$ module load spack-pe-gcc cmake
+$ module load cmake
 $ cmake --version
-cmake version 3.26.4
+cmake version 3.27.7
 ```

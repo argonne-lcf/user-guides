@@ -1,7 +1,8 @@
 #! /bin/bash 
 set -e 
 export SOFTWARE_HOME=/opt
-ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
+# Base python env now supports this, including in sbatch mode
+#ACTIVATE=/opt/sambaflow/apps/nlp/transformers_on_rdu/venv/bin/activate
 LOGDIR=`date +%m%d%y.%H`
 if [ "$2" ] ; then
 LOGDIR=$2
@@ -25,7 +26,7 @@ SECONDS=0
 DIRECTORY=$$
 OUTDIR=/data/scratch/${USER}/${MODEL_NAME}
 mkdir -p ${OUTDIR}
-source ${ACTIVATE}
+#source ${ACTIVATE}
 echo "Model: " ${MODEL_NAME} > ${OUTPUT_PATH} 2>&1
 echo "Date: " $(date +%m/%d/%y) >> ${OUTPUT_PATH} 2>&1
 echo "Time: " $(date +%H:%M) >> ${OUTPUT_PATH} 2>&1
@@ -67,7 +68,7 @@ if [ ! -e  ${OUTDIR}/${MODEL_NAME}/${MODEL_NAME}.pef ] ; then
 fi
 #######################
 echo "RUN" >> ${OUTPUT_PATH} 2>&1
-/usr/local/bin/sbatch --output=${HOME}/slurm-%A.out --ntasks 1 --gres=rdu:8 --ntasks-per-node 16  --nodes 1 --nodelist $(hostname) --cpus-per-task=8  /data/ANL/scripts/Gpt1.5B_base_single_run.sh $BATCH_SIZE $2 >> ${OUTPUT_PATH} 2>&1
+/usr/local/bin/sbatch --output=${HOME}/slurm-%A.out --ntasks 1 --gres=rdu:8 --ntasks-per-node 16  --nodes 1 --nodelist $(hostname) --cpus-per-task=8  /home/$(whoami)/apps/nlp/Gpt1.5B_single/Gpt1.5B_base_single_run.sh $BATCH_SIZE $2 >> ${OUTPUT_PATH} 2>&1
 
 echo "Machine state After: " >> ${OUTPUT_PATH} 2>&1
 /opt/sambaflow/bin/snfadm -l inventory >> ${OUTPUT_PATH} 2>&1

@@ -14,6 +14,5 @@ to automatically generate Makefiles.
 To use CMake on Aurora, run
 
 ```
-module use /soft/modulefiles
-module load spack-pe-gcc cmake
+module load cmake
 ```

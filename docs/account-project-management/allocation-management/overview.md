@@ -19,7 +19,6 @@ While requesting an allocation, users can choose from:
 * Polaris
 
 **File System:** 
-* Grand
 * Eagle (Community Sharing)
 
 ## Policy Information Related to Allocations

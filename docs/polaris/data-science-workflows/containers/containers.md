@@ -50,7 +50,7 @@ To run a container on Polaris you can use the submission script described [here]
 #PBS -q debug
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -A <project_name>
 cd ${PBS_O_WORKDIR}
 echo $CONTAINER

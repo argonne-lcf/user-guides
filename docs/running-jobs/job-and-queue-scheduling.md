@@ -69,6 +69,7 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * PBS Documentation: Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
 4. `qdel`: cancel a job that you don't need. This will also kill a running job
     * `qdel <jobid>`
+    * Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
 **Note: The page numbers in the PBS guides are unique.  If you search for the specified page number it will take you directly to the relevant page.**
@@ -225,7 +226,7 @@ Users should add ```-M <email address>``` if they want notifications as a best p
 
 `qsub: Resource: filesystems is required to be set.`
 
-Valid filesystems are `home`, `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command.
+Valid filesystems are `home` and `eagle`.For example, to request the home and Eagle filesystems for your job you would add `-l filesystems=home:eagle` to your `qsub` command.
 
 If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailable, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
 
@@ -233,7 +234,7 @@ If a job requesting a filesystem that is marked down is already in the queue, th
 
 An example of a job requesting filesystems:
 
-`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
+`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=eagle:home -A ProjectX -q prod my_job.sh`
 
 To update the filesystems list for your job, use `qalter`.
 
@@ -305,6 +306,9 @@ Basically takes the same options as `qsub`;  Say you typoed and set the walltime
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 
 `qdel <jobid> [<jobid> <jobid>...]`
+
+Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov>  and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
+
 
 ## <a name="qmove"></a>`qmove`: Move a job to a different queue
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175

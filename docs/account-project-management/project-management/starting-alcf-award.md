@@ -19,7 +19,7 @@ Before your project begins, you will receive an email with the following project
 - **Project Proxies**: Project members designated by PIs that are authorized to add or renew project members on your behalf.
 - **Allocation System(s) and Allocation Amount**: The approved system(s) and amount of your award in node hours.
 - **Approved Quota**: The approved amount of disk space for your project directory.
-- **File System**: The file system where your project directory will reside. For information on the Grand and Eagle file systems, see Storage and Networking.
+- **File System**: The file system where your project directory will reside. For information on the Eagle file system, see Storage and Networking.
 - **Assigned Catalyst**: INCITE projects will have ALCF staff members that are assigned to the projects who are available to assist the team throughout the duration of the INCITE allocation.
 - **Allocation Start Date**: The start date of your award.
 - **Allocation End Date**: The end date of your award.
@@ -76,11 +76,11 @@ PI/proxies with active ALCF accounts can also approve new account requests, proj
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
 
-Members that do not have an ALCF account should request one at: [https://accounts.alcf.anl.gov/accountRequest](https://accounts.alcf.anl.gov/accountRequest). When prompted for project name, they should select your project short name.
+Members that **do not have an ALCF account** should request one at: [https://accounts.alcf.anl.gov/#/accountRequest](https://accounts.alcf.anl.gov/#/accountRequest). When prompted for project name, they should select your project short name.
 
-If your project members have ALCF accounts that are no longer active, please ask them to submit a reactivation request here: [https://accounts.alcf.anl.gov/accountReactivate](https://accounts.alcf.anl.gov/accountReactivate). When prompted for project name, they should select your project short name.
+Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://accounts.alcf.anl.gov/#/accountReactivate](https://accounts.alcf.anl.gov/#/accountReactivate). When prompted for project name, they should select your project short name.
 
-If you project members have active ALCF accounts but have not been added to your project, they should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
+Members with **active ALCF accounts but have not been added to your project** should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject). They should search for your project and click the "Request Membership" button for that project.
 
 ## Moving Your Data
 We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see [Using Globus](../../data-management/data-transfer/using-globus.md).

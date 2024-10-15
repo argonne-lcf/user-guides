@@ -52,13 +52,13 @@ The Julia built-in package manager allows you to create a project and enable
 project-specific dependencies. Julia manages packages in the Julia depot located
 by default in `~/.julia`. However, that NFS filesystem is not meant for
 high-speed access. Therefore, this Julia depot folder should be located on a
-fast filesystem of your choice (grand, eagle). The Julia depot directory is
+fast filesystem of your choice. The Julia depot directory is
 set via the environment variable `JULIA_DEPOT_PATH`. For example, you can set
-the Julia depot to a directory on Polaris grand filesystem by adding the following line
+the Julia depot to a directory on Polaris's Eagle filesystem by adding the following line
 to your `~/.bashrc` file:
 
 ```bash
-export JULIA_DEPOT_PATH=/grand/$PROJECT/$USER/julia_depot
+export JULIA_DEPOT_PATH=/eagle/$PROJECT/$USER/julia_depot
 ```
 
 ## Programming Julia on Polaris
@@ -131,7 +131,7 @@ $ julia --project -e 'using Pkg; Pkg.add("CUDA")'
 The GPUs are not currently usable on the Polaris login nodes, so one can confirm the version of CUDA being used by testing in a batch or interactive job on a compute node.
 
 ```
-$ qsub -I -l select=1,walltime=1:00:00,filesystems=home:grand:eagle -A [PROJECT] -q debug
+$ qsub -I -l select=1,walltime=1:00:00,filesystems=home:eagle -A [PROJECT] -q debug
 
 $ julia --project -e "using CUDA; CUDA.versioninfo()"
 CUDA runtime 12.4, artifact installation
@@ -330,7 +330,7 @@ This example can be run on Polaris with the following job submission script:
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand
+#PBS -l filesystems=home:eagle
 #PBS -q debug
 #PBS -A PROJECT
 
@@ -364,7 +364,7 @@ module load craype-accel-nvidia80
 module load cray-hdf5-parallel
 
 export PATH=/home/knight/.juliaup/bin:${PATH}
-export JULIA_DEPOT_PATH=/grand/catalyst/proj-shared/knight/polaris/julia/depot
+export JULIA_DEPOT_PATH=/eagle/catalyst/proj-shared/knight/polaris/julia/depot
 
 export JULIA_HDF5_PATH=$HDF5_DIR
 

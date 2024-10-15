@@ -36,11 +36,12 @@ if [ ! -d ${CACHE_DIR} ] ; then
   mkdir -p ${CACHE_DIR}
 fi
 export OMP_NUM_THREADS=16
-if [ -e /opt/sambaflow/apps/image/segmentation/venv/bin/activate ] ; then
-  source /opt/sambaflow/apps/image/segmentation/venv/bin/activate
-  else
-  source /opt/sambaflow/venv/bin/activate
-fi
+# The base python env now supports Unet2D, including batch mode
+#if [ -e /opt/sambaflow/apps/image/segmentation/venv/bin/activate ] ; then
+#  source /opt/sambaflow/apps/image/segmentation/venv/bin/activate
+#  else
+#  source /opt/sambaflow/venv/bin/activate
+#fi
 if [ -e /opt/sambaflow/apps/image/unet ] ; then
     UNET=/opt/sambaflow/apps/image/unet
 elif [ -e /opt/sambaflow/apps/image/segmentation ] ; then
@@ -107,8 +108,7 @@ elif [ "${1}" == "run" ] ; then
    export SF_RNT_DMA_POLL_BUSY_WAIT=1
    #run single 
    if [ -e ${UNET}/hook.py ] ; then
-     #orig srun --nodelist $(hostname) python ${UNET}/hook.py  run --data-transform-config /opt/sambaflow/apps/image/segmentation/segmentation/datasets/data_transforms_config.yaml --data-cache-dir ${CACHE_DIR}  --num-workers=${NUM_WORKERS} --mode train --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 -b ${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${3} --pef=$(pwd)/out/unet_train_${BS}_${2}_single/unet_train_${BS}_${2}_single.pef > run_unet_${BS}_${2}_16_sl.log 2>&1
-    COMMAND="srun --nodelist $(hostname) python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=${OUTDIR}/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef"
+    COMMAND="srun --nodelist $(hostname) python /opt/sambaflow/apps/image/segmentation//hook.py run --data-cache=${CACHE_DIR}  --data-in-memory --num-workers=${NUM_WORKERS} --enable-tiling  --min-throughput 395 --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --max-epochs 10 --data-dir ${DS} --log-dir log_dir_unet_${2}_${BS}_single_${NUM_TILES} --pef=${OUTDIR}/unet_train_${BS}_${2}_single_${NUM_TILES}/unet_train_${BS}_${2}_single_${NUM_TILES}.pef"
 
    else
      COMMAND="srun --nodelist $(hostname) python ${UNET}/unet_hook.py  run --num-workers=${NUM_WORKERS} --do-train --in-channels=3 --in-width=${2} --in-height=${2} --init-features 32 --batch-size=${BS} --epochs 10  --data-dir ${DS} --log-dir log_dir_unet_${2}_${3} --pef=${OUTDIR}/unet_train_${BS}_${2}_single/unet_train_${BS}_${2}_single.pef --use-sambaloader"

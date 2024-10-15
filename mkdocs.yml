@@ -15,7 +15,7 @@ nav:
       - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
   - Data Management:
     - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-    - Sharing on Grand and Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+    - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
     - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
     - Data Transfer:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
@@ -59,6 +59,7 @@ nav:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - NekRS: polaris/applications-and-libraries/applications/nekrs.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
             - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
             - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
@@ -67,6 +68,7 @@ nav:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
             - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+            - XALT: polaris/applications-and-libraries/libraries/xalt.md
     - Data Science:
         - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
@@ -95,12 +97,19 @@ nav:
         - FFmpeg: polaris/visualization/ffmpeg.md
         - ImageMagick: polaris/visualization/imagemagick.md
         - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
+        - VNC: polaris/visualization/vnc.md
     - Workflows:
         - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
         - SmartSim: polaris/workflows/smartsim.md
+  - Sophia:
+    - Machine Overview: sophia/hardware-overview/machine-overview.md
+    - Getting Started: sophia/getting-started.md
+    - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
+    - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
+    - Data Science: sophia/data-science/python.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
@@ -139,6 +148,7 @@ nav:
       - Example Programs: ai-testbed/sambanova/example-programs.md
       - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
       # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+      - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
       - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
       - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
       - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
@@ -147,6 +157,7 @@ nav:
     - Data Management: ai-testbed/data-management/data-management-overview.md
   - Aurora/Sunspot:
       - Getting Started: aurora/getting-started-on-aurora.md
+      - Aurora PE: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
       - Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
@@ -232,10 +243,7 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  theta/theta-decommissioning.md
-  theta/
-  theta-gpu/
-  cooley/
+  account-project-management/index.md
 
 theme:
   name: 'material'
@@ -250,6 +258,7 @@ theme:
     - instant
     - search.highlight
     - search.suggest
+    - content.code.copy
   logo: 'images/Argonne_wireframe_white_transparent.png'
   favicon: 'images/alcf_favicon.ico'
 
@@ -294,6 +303,8 @@ validation:
   omitted_files: warn
   absolute_links: warn
   unrecognized_links: warn
+  anchors: warn
+  not_found: warn
 
 repo_name: 'argonne-lcf/alcf-userguide'
 repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
