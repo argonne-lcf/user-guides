@@ -34,7 +34,7 @@ You can find the latest prebuilt Nvidia PyTorch containers [here](https://catalo
 
 ## Recipe-Based Container Building
 
-As mentioned earlier, you can build Apptainer containers from recipe files. Instructions are available [here](https://apptainer.org/docs/user/1.3/build_a_container.html#building-containers-from-apptainer-definition-files). See [available containers](#available-containers) for more recipes. 
+As mentioned earlier, you can build Apptainer containers from recipe files. Instructions are available [here](https://apptainer.org/docs/user/1.3/build_a_container.html#building-containers-from-apptainer-definition-files).
 
 > Note: You can also build custom recipes by bootstrapping from prebuilt images. For e.g the first two lines in a recipe to use our custom Tensorflow implementation would be `Bootstrap: oras` followed by `From: ghcr.io/argonne-lcf/tf2-mpich-nvidia-gpu:latest`
 
