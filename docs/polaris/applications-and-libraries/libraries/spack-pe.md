@@ -4,7 +4,8 @@ Spack is an HPC-oriented package manager which ALCF uses to install software for
 the user environment.
 
 Users should depend on libraries in the Spack PE over libraries on the system 
-when possible, as system libraries may change without warning.
+when possible, as system libraries may slightly differ between compute nodes and
+login nodes.
 
 ALCF's Spack PE is a Spack-managed software stack which provides various build
 tools, utilities, and libraries. It consists of a base stack (`spack-pe-base`)
