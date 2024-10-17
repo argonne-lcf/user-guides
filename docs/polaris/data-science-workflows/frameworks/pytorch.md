@@ -30,7 +30,7 @@ $ echo $CUDA_HOME
 
 If you need to build applications that use this version of PyTorch and CUDA, we recommend using these cuda libraries to ensure compatibility.  We periodically update the PyTorch release, though updates will come in the form of new versions of the `conda` module.
 
-PyTorch is also available through nvidia containers that have been translated to Singularity containers.  For more information about containers, please see the [containers](../containers/containers.md) documentation page.
+PyTorch is also available through nvidia containers that have been translated to Singularity containers.  For more information about containers, please see the [containers](../../containers/containers.md) documentation page.
 
 ## PyTorch Best Practices on Polaris
 

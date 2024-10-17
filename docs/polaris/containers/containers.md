@@ -114,18 +114,21 @@ The latest containers are updated periodically. If you have trouble using contai
  
 
 ## Troubleshooting Common Issues
-1. **Permission Denied Error**: If you encounter permission errors during the build
+
+- **Permission Denied Error**: If you encounter permission errors during the build
 	- Check your quota and delete any unnecessary files. 
-	- Clean-up apptainer cache, `~/.apptainer/cache`, and set the apptainer tmp and cache directories as below:
+	- Clean-up apptainer cache, `~/.apptainer/cache`, and set the apptainer tmp and cache directories as below. If your home directory is full and if you are building your container on a compute node, then set the tmpdir and cachedir to local scratch 
 		```bash
- 		export APPTAINER_TMPDIR=/tmp/apptainer-tmpdir
- 		mkdir $APPTAINER_TMPDIR
- 		export APPTAINER_CACHEDIR=/tmp/apptainer-cachedir/
- 		mkdir $APPTAINER_CACHEDIR
-		``` 
+		export APPTAINER_TMPDIR=/local/scratch/apptainer-tmpdir
+		mkdir $APPTAINER_TMPDIR
+ 		export APPTAINER_CACHEDIR=/local/scratch apptainer-cachedir/
+		mkdir $APPTAINER_CACHEDIR
+		```
 	- Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
 	- If any of the above doesn't work, try running the build in your home directory.
 
-2. **Mapping to rank 0 on all nodes**: Ensure that the container's MPI aligns with the system MPI. Follow the additional steps outlined in the [container registry documentation for MPI on Polaris](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
+- **Mapping to rank 0 on all nodes**: Ensure that the container's MPI aligns with the system MPI. Follow the additional steps outlined in the [container registry documentation for MPI on Polaris](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
 
-3. **libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the containers base environment is not debian architecture like Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing .conda, .cache, and .local folders from your home directory and rebuild the container.
+- **libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the containers base environment is not debian architecture like Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing .conda, .cache, and .local folders from your home directory and rebuild the container.
+
+- **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
