@@ -26,8 +26,8 @@ The base suite of software tools and libraries can be accessed by loading the
 numerous modules. 
 
 For example, to load `cmake` starting from the default environment, a user
-should run the following commands: 
-``` 
+should run the following commands:
+```
 module use /soft/modulefiles
 module load spack-pe-base
 module load cmake
@@ -47,9 +47,10 @@ updated to integrate the package into the user's environment. Additionally, the
 `PACKAGE_ROOT` variable is set to the path to the installation prefix of the
 package. For example, after loading `cmake` as above:
 
-``` $ echo $CMAKE_ROOT
+```
+$ echo $CMAKE_ROOT
 /soft/spack/gcc/0.6.1/install/linux-sles15-x86_64/gcc-12.3.0/cmake-3.27.7-a435jtzvweeos2es6enirbxdjdqhqgdp/
-$ ls -a $CMAKE_ROOT 
+$ ls -a $CMAKE_ROOT
 .  ..  bin  doc  share  .spack
 ```
 
