@@ -3,6 +3,9 @@
 Spack is an HPC-oriented package manager which ALCF uses to install software for
 the user environment.
 
+Users should not depend on libraries present in the system, but instead load
+them from `/soft` using Spack as described below.
+
 ALCF's Spack PE is a Spack-managed software stack which provides various build
 tools, utilities, and libraries. It consists of a base stack (`spack-pe-base`)
 and PrgEnv-dependent stacks (currently `spack-pe-gnu`).
@@ -23,14 +26,14 @@ The base suite of software tools and libraries can be accessed by loading the
 numerous modules. 
 
 For example, to load `cmake` starting from the default environment, a user
-should run the following commands:
-```
-module use /soft/modulefiles
-module load spack-pe-base
-module load cmake
-```
+should run the following commands: ``` module use /soft/modulefiles module load
+spack-pe-base module load cmake ```
 
-The `spack-pe-base` module adds paths to the user's `MODULEPATH`; individual packages are subsequently loaded through the newly available modules. The full list of available packages can be viewed by running `module avail` or `module --show-hidden avail` for a complete listing. Packages are loaded in the same way from `spack-pe-gnu`.
+The `spack-pe-base` module adds paths to the user's `MODULEPATH`; individual
+packages are subsequently loaded through the newly available modules. The full
+list of available packages can be viewed by running `module avail` or `module
+--show-hidden avail` for a complete listing. Packages are loaded in the same way
+from `spack-pe-gnu`.
 
 
 ## Inspecting packages
@@ -40,12 +43,9 @@ updated to integrate the package into the user's environment. Additionally, the
 `PACKAGE_ROOT` variable is set to the path to the installation prefix of the
 package. For example, after loading `cmake` as above:
 
-```
-$ echo $CMAKE_ROOT
+``` $ echo $CMAKE_ROOT
 /soft/spack/gcc/0.6.1/install/linux-sles15-x86_64/gcc-12.3.0/cmake-3.27.7-a435jtzvweeos2es6enirbxdjdqhqgdp/
-$ ls -a $CMAKE_ROOT
-.  ..  bin  doc  share  .spack
-```
+$ ls -a $CMAKE_ROOT .  ..  bin  doc  share  .spack ```
 
 This variable can be used to inspect software installations and find header or
 library paths. Additionally, Spack packages have a `.spack` directory in the
