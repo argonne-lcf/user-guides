@@ -6,7 +6,8 @@ Polaris, powered by NVIDIA A100 GPUs, benefits from container-based workloads fo
 Polaris employs Apptainer (formerly known as Singularity) for container management. To set up Apptainer, run:
 
 ```bash
-module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module use /soft/modulefiles
+module load spack-pe-base/0.6.2 
 module load apptainer
 apptainer version #1.2.2
 ```
@@ -26,19 +27,14 @@ export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
-module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module use /soft/modulefiles
+module load spack-pe-base/0.6.2 
 module load apptainer
 apptainer build --fakeroot pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
 ```
 You can find the latest prebuilt Nvidia PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The Tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers). For custom containers tailored for Polaris, visit [ALCF's GitHub container registry](https://github.com/argonne-lcf/container-registry/tree/main)
 
 > **Note:** Currently container build and executions are only supported on the Polaris compute nodes
-
-## Recipe-Based Container Building
-
-As mentioned earlier, you can build Apptainer containers from recipe files. Instructions are available [here](https://apptainer.org/docs/user/1.2/build_a_container.html#building-containers-from-apptainer-definition-files). See [available containers](#available-containers) for more recipes. 
-
-> Note: You can also build custom recipes by bootstrapping from prebuilt images. For e.g the first two lines in a recipe to use our custom Tensorflow implementation would be `Bootstrap: oras` followed by `From: ghcr.io/argonne-lcf/tf2-mpich-nvidia-gpu:latest`
 
 ## Running Containers on Polaris
 
@@ -60,7 +56,8 @@ We move to current working directory and enable network access at run time by se
 
 ```bash
 # SET proxy for internet access
-module use /soft/spack/gcc/0.6.1/install/modulefiles/Core
+module use /soft/modulefiles
+module load spack-pe-base/0.6.2 
 module load apptainer
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
@@ -102,12 +99,22 @@ The job can be submitted using:
 qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 ```
 
+--8<-- [start:commoncontainerdoc]
+
+## Recipe-Based Container Building
+
+As mentioned earlier, you can build Apptainer containers from recipe files. Instructions are available [here](https://apptainer.org/docs/user/1.2/build_a_container.html#building-containers-from-apptainer-definition-files). See [available containers](#available-containers) for more recipes. 
+
+> Note: You can also build custom recipes by bootstrapping from prebuilt images. For e.g the first two lines in a recipe to use our custom Tensorflow implementation would be `Bootstrap: oras` followed by `From: ghcr.io/argonne-lcf/tf2-mpich-nvidia-gpu:latest`
+
 ## Available containers
 
 If you just want to know what containers are available, here you go. 
 
-* For running mpich/MPI containers on Polaris, it can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
-* For running databases on Polaris. It can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/databases)
+* Examples for running mpich/MPI containers can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
+
+* Examples for running databases can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/databases)
+
 * For using shpc - that allows for running containers as modules. It can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/shpc)
 
 The latest containers are updated periodically. If you have trouble using containers, or request a newer or a different container please contact ALCF support at `support@alcf.anl.gov`.
@@ -115,20 +122,28 @@ The latest containers are updated periodically. If you have trouble using contai
 
 ## Troubleshooting Common Issues
 
-- **Permission Denied Error**: If you encounter permission errors during the build
-	- Check your quota and delete any unnecessary files. 
-	- Clean-up apptainer cache, `~/.apptainer/cache`, and set the apptainer tmp and cache directories as below. If your home directory is full and if you are building your container on a compute node, then set the tmpdir and cachedir to local scratch 
-		```bash
-		export APPTAINER_TMPDIR=/local/scratch/apptainer-tmpdir
-		mkdir $APPTAINER_TMPDIR
- 		export APPTAINER_CACHEDIR=/local/scratch apptainer-cachedir/
-		mkdir $APPTAINER_CACHEDIR
-		```
-	- Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
-	- If any of the above doesn't work, try running the build in your home directory.
+**Permission Denied Error**: If you encounter permission errors during the build
 
-- **Mapping to rank 0 on all nodes**: Ensure that the container's MPI aligns with the system MPI. Follow the additional steps outlined in the [container registry documentation for MPI on Polaris](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
+* Check your quota and delete any unnecessary files. 
 
-- **libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the containers base environment is not debian architecture like Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing .conda, .cache, and .local folders from your home directory and rebuild the container.
+* Clean up Apptainer cache, `~/.apptainer/cache`, and set the Apptainer tmp and cache directories as below. If your home directory is full and if you are building your container on a compute node, then set the tmpdir and cachedir to local scratch 
+```bash
+export BASE_SCRATCH_DIR=/local/scratch/ # FOR POLARIS
+#export BASE_SCRATCH_DIR=/raid/scratch/ # FOR SOPHIA
+export APPTAINER_TMPDIR=$BASE_SCRATCH_DIR/apptainer-tmpdir
+mkdir $APPTAINER_TMPDIR
+export APPTAINER_CACHEDIR=$BASE_SCRATCH_DIR/apptainer-cachedir/
+mkdir $APPTAINER_CACHEDIR
+```
 
-- **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
+* Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
+
+* If any of the above doesn't work, try running the build in your home directory.
+
+**Mapping to rank 0 on all nodes**: Ensure that the container's MPI aligns with the system MPI. For e.g. follow the additional steps outlined in the [container registry documentation for MPI on Polaris](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
+
+**libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the containers base environment is not a Debian-based architecture such as Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing `.conda/`, `.cache/`, and `.local/` folders from your home directory and rebuilding the container.
+
+**Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
+
+--8<-- [end:commoncontainerdoc]

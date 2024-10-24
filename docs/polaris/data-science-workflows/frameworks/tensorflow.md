@@ -29,7 +29,7 @@ $ echo $CUDA_HOME
 
 If you need to build applications that use this version of TensorFlow and CUDA, we recommend using these cuda libraries to ensure compatibility.  We periodically update the TensorFlow release, though updates will come in the form of new versions of the `conda` module.
 
-TensorFlow is also available through NVIDIA containers that have been translated to Singularity containers.  For more information about containers, please see the [Containers](../../containers/containers.md) documentation page.
+TensorFlow is also available through NVIDIA containers that have been translated to Apptainer containers.  For more information about containers, please see the [Containers](../../containers/containers.md) documentation page.
 
 ## TensorFlow Best Practices on Polaris
 
