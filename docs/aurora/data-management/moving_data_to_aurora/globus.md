@@ -7,6 +7,6 @@ Currently only Globus personal is supported
 
 /soft/tools/proxychains/bin/proxychains4 -f /soft/tools/proxychains/etc/proxychains.conf /soft/tools/globusconnect/globusconnect -start &
 
-You can also add -restrict-paths /lus/gecko/projects/YOURPROJECT  to access folders outside of your home
+You can also add -restrict-paths /lus/flare/projects/YOURPROJECT  to access folders outside of your home
 
 ```

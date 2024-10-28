@@ -164,9 +164,7 @@ ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 
 clean-dfuse.sh  ${DAOS_POOL_NAME}:${DAOS_CONT_NAME} # To unmount on all nodes 
 ```
-DAOS Data mover instruction is provided at [here](./data-management/moving_data_to_aurora/daos_datamover.md).
-
-
+DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
 ## Job Submission
 

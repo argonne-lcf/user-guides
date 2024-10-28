@@ -148,7 +148,7 @@ Host my.awesome.machine.edu
 $ ssh me@my.awesome.machine.edu
 ```
 
-Additional guidance on scp and transfering files to Aurora is available and [here](./data-management/lustre/gecko.md).
+Additional guidance on scp and transfering files to Aurora is available and [here](./data-management/lustre/flare.md).
 
 ## Working with Git repos
 
