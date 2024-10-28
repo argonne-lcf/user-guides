@@ -98,6 +98,32 @@ round robin to the aurora login nodes.
 ssh <username>@login.aurora.alcf.anl.gov
 ```
 
+### As an expedient for initiating ssh sessions to Aurora login nodes via the bastion indirect nodes. 
+
+Note: Here remote machine means your laptop/desktop. 
+1. Create SSH keys on the laptop/desktop/remote machine. See "Creating SSH Keys" section on [this page](https://help.cels.anl.gov/docs/linux/ssh/):
+2. Add the lines listed below to your ~/.ssh/config file on the remote host. That is, you should do this on your laptop/desktop, from which you are initiating ssh login sessions to Aurora via bastion, and on other non-ALCF host systems from which you want to login to Aurora.
+
+```
+$ cat ~/.ssh/config
+Host *.aurora.alcf.anl.gov aurora.alcf.anl.gov
+	ProxyCommand ssh <your_ALCF_username>@bastion.alcf.anl.gov -q -W %h:%p
+	User <your_ALCF_username>
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p
+```
+
+3. Transfering your remote public key to bastion and aurora. 
+
+```
+Copy the public key (*.pub) from ~/.ssh/*.pub folder on the remote machine (your laptop) and append it to ~/.ssh/authorized_keys file on bastion (bastion.alcf.anl.gov)
+Copy the public key (*.pub) from ~/.ssh/*.pub folder on the remote machine (your laptop) and append it to ~/.ssh/authorized_keys file on Aurora UAN. (login.aurora.alcf.anl.gov)
+
+If you are trying to scp from other ALCF system (example Polaris) to Aurora , you need to do the above step replacing the remote machine (your laptop) with Polaris. 
+```
+
+When you use an SSH proxy, it takes the authentication mechanism from the local host and applies it to the farthest-remote host, while prompting you for the “middle host” separately. So, when you run the ssh <your_ALCF_username>@login.aurora.alcf.anl.gov  command on your laptop/desktop, you'll be prompted for two ALCF authentication codes - first the Mobilepass+ or Cryptocard passcode for the bastion, and then the SSH passphrase for Aurora. Likewise, when you run scp from a remote host to copy files to Aurora login nodes, you'll be prompted for two ALCF authentication codes codes - first the Mobilepass+ or Cryptocard passcode and then the SSH passphrase.
+
 ## Proxies for outbound connections: Git, ssh, etc...
 
 The Aurora login nodes don't currently have outbound network connectivity enabled by default. Setting the following environment variables will provide access to the proxy host. This is necessary, for example, to clone remote git repos.
