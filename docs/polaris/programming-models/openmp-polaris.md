@@ -43,11 +43,8 @@ To switch from PrgEnv-nvhpc to PrgEnv-gnu you can run:
 module switch PrgEnv-nvhpc PrgEnv-gnu
 ```
 
-The gcc/gfortran on Polaris was not built with GPU support. To use OpenMP on the CPU, you need to unload craype-accel-nvidia80:
+The gcc/gfortran on Polaris was not built with GPU support.
 
-```
-module unload craype-accel-nvidia80
-```
 
 ### Using PrgEnv-cray
 
@@ -55,12 +52,6 @@ To switch from PrgEnv-nvhpc to PrgEnv-cray you can run:
 
 ```
 module switch PrgEnv-nvhpc PrgEnv-cray
-```
-
-To use OpenMP on the CPU only, also unload craype-accel-nvidia80:
-
-```
-module unload craype-accel-nvidia80
 ```
 
 To use OpenMP on the GPU, load cudatoolkit-standalone, although this is not recommended at the moment.
