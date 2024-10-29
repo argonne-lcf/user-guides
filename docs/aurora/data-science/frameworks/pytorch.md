@@ -130,7 +130,7 @@ script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
 **oneCCL optimal setup**
 
-Please refer to [oneCCL](./oneccl.md) for details. 
+Please refer to [oneCCL](./oneCCL.md) for details. 
 
 ```shell
 # This is a fix for running over 16 nodes:
@@ -354,7 +354,7 @@ export IPEX_FP32_MATH_MODE=TF32
 #####################################################################
 
 module use /soft/modulefiles
-module load frameworks/2023.12.15.001
+module load frameworks
 
 export NUMEXPR_NUM_THREADS=64
 # This is to resolve an issue due to a package called "numexpr". 

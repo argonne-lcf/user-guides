@@ -215,8 +215,65 @@ export MPIR_CVAR_ENABLE_GPU=0
 # This is to disable certain GPU optimizations like the use of XeLinks between
 # GPUs, collectives with GPU-placed data etc., in order to reduce `MPI_Init`
 # overheads. Benefits are application dependent.
-export CCL_KVS_GET_TIMEOUT=600
 ```
+
+**oneCCL optimal setup**
+
+Please refer to [oneCCL](./oneCCL.md) for details. 
+
+```shell
+# This is a fix for running over 16 nodes:
+export FI_CXI_DEFAULT_CQ_SIZE=131072
+export FI_CXI_OVFLOW_BUF_SIZE=8388608
+export FI_CXI_CQ_FILL_PERCENT=20
+
+export FI_LOG_LEVEL=warn
+#export FI_LOG_PROV=tcp
+export FI_LOG_PROV=cxi
+
+export CCL_KVS_GET_TIMEOUT=600
+
+export LD_LIBRARY_PATH=$CCL_ROOT/lib:$LD_LIBRARY_PATH
+export CPATH=$CCL_ROOT/include:$CPATH
+export LIBRARY_PATH=$CCL_ROOT/lib:$LIBRARY_PATH
+
+export CCL_PROCESS_LAUNCHER=pmix  
+export CCL_ATL_TRANSPORT=mpi
+export CCL_ALLREDUCE=topo
+export CCL_ALLREDUCE_SCALEOUT=rabenseifner  # currently best allreduce algorithm at large scale
+export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
+
+export CCL_KVS_MODE=mpi
+export CCL_CONFIGURATION_PATH=""
+export CCL_CONFIGURATION=cpu_gpu_dpcpp
+export CCL_KVS_CONNECTION_TIMEOUT=600 
+
+export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
+export CCL_KVS_USE_MPI_RANKS=1
+```
+
+Other optional setup for oneCCL. 
+
+```bash
+export FI_MR_ZE_CACHE_MONITOR_ENABLED=0
+export FI_MR_CACHE_MONITOR=disabled
+export FI_CXI_RX_MATCH_MODE=hybrid
+export FI_CXI_OFLOW_BUF_SIZE=8388608
+export FI_CXI_DEFAULT_CQ_SIZE=1048576
+export FI_CXI_CQ_FILL_PERCENT=30
+export MPI_PROVIDER=$FI_PROVIDER
+unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
+export INTELGT_AUTO_ATTACH_DISABLE=1
+export PALS_PING_PERIOD=240
+export PALS_RPC_TIMEOUT=240
+export MPIR_CVAR_GATHERV_INTER_SSEND_MIN_PROCS=-1 #to solve the sync send issue in Horovod seg fault
+export CCL_ATL_SYNC_COLL=1 #to avoid potential hang at large scale
+export CCL_OP_SYNC=1 #to avoid potential hang at large scale
+```
+
+These setup will probably be included in the framework module file in future. But for now, users need to explicitly set these in the submission script. 
+
 
 ### CPU Affinity
 
@@ -311,7 +368,6 @@ export FI_LOG_PROV=cxi
 # These allow for logging from a specific provider (libfabric)
 
 export MPIR_CVAR_ENABLE_GPU=0
-export CCL_KVS_GET_TIMEOUT=600
 
 #####################################################################
 # FRAMEWORK Variables that make a performance difference
@@ -329,7 +385,7 @@ export ITEX_FP32_MATH_MODE=TF32
 #####################################################################
 
 module use /soft/modulefiles
-module load frameworks/2023.12.15.001
+module load frameworks
 
 export NUMEXPR_NUM_THREADS=64
 # This is to resolve an issue due to a package called "numexpr".
