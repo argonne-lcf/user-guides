@@ -192,7 +192,7 @@ For 12 PPN, the following binding is recommended.
 ```bash
 CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ```
-![Sample NIC to Core binding](core-NIC-binding.png "Sample NIC to Core binding")
+![Sample NIC to Core binding](core-nic-binding.png "Sample NIC to Core binding")
 
 
 
