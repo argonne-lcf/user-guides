@@ -10,6 +10,9 @@ There is a single routing queue in place called `EarlyAppAccess` which submits t
 - `lustre_scaling` (execution queue) : 10 running jobs per-user; max walltime : 6 hours; max nodecount : 9090 (subject to change)
 
 ### Submitting a job
+
+Note: Jobs should be submitted only from your allocated project directory and not from your home directory. 
+
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
 ```bash
