@@ -4,6 +4,19 @@
 
 Currently, scp and SFTP are the only ways to transfer data to/from Aurora. 
 
+### Transferring files to Sunspot
+From an Aurora login-node, you can transfer files to Sunspot's `Gila` filesystem using the scp command. But first, you need to create SSH keys on Aurora and copy the public key (*.pub) to the ~/.ssh/authorized_keys file on Sunspot.
+1. Create SSH keys on the laptop/desktop/remote machine. See "Creating SSH Keys" section on [this page](https://help.cels.anl.gov/docs/linux/ssh/).
+2. Copy the public key (*.pub) from ~/.ssh folder on Aurora to ~/.ssh/authorized_keys file on Sunspot (sunspot.alcf.anl.gov)
+3. Run the scp command on Aurora to transfer files to Sunspot
+```
+haritha@aurora-uan-0010:~> scp test_file haritha@sunspot.alcf.anl.gov://lus/gila/projects/Aurora_deployment/haritha
+...
+haritha@uan-0001:/gila/Aurora_deployment/haritha> cat test_file
+this is a test file
+
+```
+
 ### Transferring files from non-ALCF systems
 
 As an expedient for initiating ssh sessions to Aurora login nodes via the bastion indirect nodes, and to enable scp from remote (non ALCF) hosts to Aurora login nodes, follow these steps:
