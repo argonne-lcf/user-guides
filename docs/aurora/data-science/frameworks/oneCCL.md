@@ -6,8 +6,8 @@ oneCCL is governed by the UXL Foundation and is an implementation of the oneAPI 
 oneCCL can be used through 
 
 1. native C++ SYCL mode
-2. Python Horovod (distributed training framework)
-3. Python PyTorch (machine learning framework)
+2. Horovod
+3. PyTorch Distributed Data Parallel (DDP)
 
 
 ## Aurora oneCCL environment 
@@ -19,7 +19,7 @@ kaushikvelusamy@aurora-uan-0012:~>  module load frameworks
 ```
 
 
-OneCCL mandatory environment variables 
+**OneCCL mandatory environment variables**
 
 ```bash
 module load frameworks
@@ -31,7 +31,8 @@ export LIBRARY_PATH=$CCL_ROOT/lib:$LIBRARY_PATH
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE=topo
-export CCL_ALLREDUCE_SCALEOUT=rabenseifner 
+export CCL_ALLREDUCE_SCALEOUT=rabenseifner  # currently best allreduce algorithm at large scale
+export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
 
 export CCL_KVS_MODE=mpi
 export CCL_CONFIGURATION_PATH=""
@@ -40,11 +41,9 @@ export CCL_KVS_CONNECTION_TIMEOUT=600
 
 export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
 export CCL_KVS_USE_MPI_RANKS=1
-export CCL_ATL_SYNC_COLL=1
-export CCL_OP_SYNC=1
 ```
 
-OneCCL optional environment variables 
+**OneCCL optional environment variables **
 
 ```bash
 ulimit -c unlimited
@@ -61,14 +60,16 @@ export INTELGT_AUTO_ATTACH_DISABLE=1
 export PALS_PING_PERIOD=240
 export PALS_RPC_TIMEOUT=240
 export MPIR_CVAR_GATHERV_INTER_SSEND_MIN_PROCS=-1 #to solve the sync send issue in Horovod seg fault
+export CCL_ATL_SYNC_COLL=1 #to avoid potential hang at large scale
+export CCL_OP_SYNC=1 #to avoid potential hang at large scale
 ```
 
 
-algorithm selection
+**Algorithm selection**
 
 ```bash
 export CCL_COLLECTIVENAME=topo
-export CCL_COLLECTIVENAME_SCALEOUT=rabenseifner 
+export CCL_COLLECTIVENAME_SCALEOUT=ALGORITHM_NAME
 ```
 More info on Algorithm selection: https://oneapi-src.github.io/oneCCL/env-variables.html
 
@@ -96,7 +97,6 @@ make -j install
 rm -rf _install/bin/* _install/lib/*mpi* _install/lib/*fabric* _install/opt/
 
 ```
-
 
 To run from a jobscript
 
@@ -159,6 +159,7 @@ done
 # For CPU only, change benchmark options to : --backend host --sycl_dev_type host
  
 ```
+For more information on oneCCL benchmark, please refer to: https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html
 
 
 
