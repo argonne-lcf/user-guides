@@ -3,6 +3,10 @@
 Spack is an HPC-oriented package manager which ALCF uses to install software for
 the user environment.
 
+Users should depend on libraries in the Spack PE over libraries on the system 
+when possible, as system libraries may slightly differ between compute nodes and
+login nodes.
+
 ALCF's Spack PE is a Spack-managed software stack which provides various build
 tools, utilities, and libraries. It consists of a base stack (`spack-pe-base`)
 and PrgEnv-dependent stacks (currently `spack-pe-gnu`).
@@ -30,7 +34,11 @@ module load spack-pe-base
 module load cmake
 ```
 
-The `spack-pe-base` module adds paths to the user's `MODULEPATH`; individual packages are subsequently loaded through the newly available modules. The full list of available packages can be viewed by running `module avail` or `module --show-hidden avail` for a complete listing. Packages are loaded in the same way from `spack-pe-gnu`.
+The `spack-pe-base` module adds paths to the user's `MODULEPATH`; individual
+packages are subsequently loaded through the newly available modules. The full
+list of available packages can be viewed by running `module avail` or `module
+--show-hidden avail` for a complete listing. Packages are loaded in the same way
+from `spack-pe-gnu`.
 
 
 ## Inspecting packages
