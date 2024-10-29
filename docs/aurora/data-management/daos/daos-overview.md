@@ -199,7 +199,7 @@ CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ## Interception library for posix containers
 
 The interception library (IL) is a next step in improving DAOS performance. This provides kernel-bypass for I/O data, leading to improved performance.
-The IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse.
+The libioil IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse. The libpil4dfs IL should be used for both data and metadata calls to go through dFuse.
 The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and commuNICates with DAOS directly in userspace.
 It will also take advantage of the multiple NICs on the node based on how many MPI processes are running on the node and which CPU socket they are on.
 
@@ -432,7 +432,7 @@ python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-6
 
 ## Cluster Size
 
-While we are working towards bringing up the entire 1024 daos server available users, currently different number of daos nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of daos servers available. 
+DAOS Cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 daos server available users, currently different number of daos nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of daos servers available. 
 
 
 ![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")

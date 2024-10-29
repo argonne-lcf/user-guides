@@ -28,6 +28,11 @@ Then run your mpiexec as you would normally run.
 If you want your I/O to go through copper, add ```/tmp/${USER}/copper/``` to the begining of your PATHS. Here only the root compute node will do the I/O directly with the lustre file system. 
 If ```/tmp/${USER}/copper/``` is not added to the begining of your paths, then all compute nodes would do I/O directly to the lustre file system. 
 
+For example, if you have a local conda environment located in a path at ```/lus/flare/projects/Aurora_deployment/kaushik/copper/oct24/copper/run/copper_conda_env```, you need to prepath the copper path as ```/tmp/${USER}/copper/lus/flare/projects/Aurora_deployment/kaushik/copper/oct24/copper/run/copper_conda_env```.
+The same should be done for any type of PATHS, like PYTHONPATH, CONDAPATH and your input file path.
+
+
+
 Python Example
 
 ```bash
@@ -76,6 +81,5 @@ launch_copper.sh -l 2 -t stdout_and_file -T 2 -s 40
 * Recommended trees is 1 or 2. 
 * Recommended size for max cachable byte size is 10MB to 100MB.
 * To be used only from the compute node.
-* More examples at https://github.com/argonne-lcf/copper/tree/main/examples/example3 
-
+* More examples at https://github.com/argonne-lcf/copper/tree/main/examples/example3 and https://alcf-copper-docs.readthedocs.io/en/latest/.
 
