@@ -94,8 +94,8 @@ Successfully created container 59747044-016b-41be-bb2b-22693333a380
 
 ```
 
-If you prefer a higher data protection and recovery you can --properties rd_fac:2 and if you don't need data protection and recovery, you can remove --properties rd_fac:1 .
-We recommend to have atleast --properties rd_fac:1.
+If you prefer a higher data protection and recovery you can --properties rd_fac:2 and if you don't need data protection and recovery, you can remove --properties rd_fac:1.
+We recommend to have at least --properties rd_fac:1.
 
 ![data model ](datamodel.png "DAOS data model")
 
@@ -151,9 +151,9 @@ fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} # To unmount
 
 ```
  
-#### To mount a posix container on a Compute Nodes
+#### To mount a posix container on Compute Nodes
 
-From a compute node, you need to mount the container on all compute nodes.
+You need to mount the container on all compute nodes.
 
 
 ```bash
@@ -168,15 +168,14 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-ldaos=default` switch will ensure that DAOS is available on the compute node.
+The `-ldaos=default` switch will ensure that DAOS is accessible on the compute nodes.
 
-Without DAOS job submission
+Job submission without requesting DAOS:  
 ```bash
 qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare -q lustre_scaling ./pbs_script1.sh  or - I 
 ```
 
-With DAOS job submission
-
+Job submission with DAOS: 
 ```bash
 qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare -q lustre_scaling -l daos=default 	./pbs_script1.sh  or - I 
 ```
@@ -184,28 +183,25 @@ qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems
 
 ## NIC and Core Binding
 
-Aurora compute node has 8 nics and Daos server node has 2 nics. 
-Each nic is capable of driving 20-25 GB/s
-Every read and write goes over the nic and hence nic binding is the key to achieve good performance. 
+Each Aurora compute node has 8 NICs and each DAOS server node has 2 NICs. 
+Each NIC is capable of driving 20-25 GB/s unidirection for data transfer. 
+Every read and write goes over the NIC and hence NIC binding is the key to achieve good performance. 
 
 For 12 PPN, the following binding is recommended.
 
 ```bash
 CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ```
-![Sample NIC to Core binding](core-nic-binding.png "Sample NIC to Core binding")
+![Sample NIC to Core binding](core-NIC-binding.png "Sample NIC to Core binding")
 
 
 
 ## Interception library for posix containers
 
-This provides kernel-bypass for I/O data, leading to improved performance.
-
-
-The interception library (IL) is a next step in improving DAOS performance.
+The interception library (IL) is a next step in improving DAOS performance. This provides kernel-bypass for I/O data, leading to improved performance.
 The IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse.
-The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and communicates with DAOS directly in userspace.
-It will also take advantage of the multiple NICs on the node based on who many MPI processes are running on the node and which CPU socket they are on.
+The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and commuNICates with DAOS directly in userspace.
+It will also take advantage of the multiple NICs on the node based on how many MPI processes are running on the node and which CPU socket they are on.
 
 
 
@@ -218,7 +214,7 @@ Interception library for POSIX mode
 
 mpiexec                                            # no interception
 mpiexec --env LD_PRELOAD=/usr/lib64/libioil.so     # only data is intercepted 
-mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata and data is intercepted. Provide close to DFS mode performance.
+mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata and data is intercepted. This provides close to DFS mode performance.
 
 
 ```
@@ -226,6 +222,7 @@ mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata a
 
 ## Sample job script
 
+Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS. 
 
 ```bash
 
@@ -297,7 +294,6 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
 # fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} #to unmount on login node
 
 ```
-
  
 ## MPI-IO Mode
 
