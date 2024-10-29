@@ -13,17 +13,19 @@ module. To use it from a compute node, please do:
 
 ```
 module use /soft/modulefiles/
-module load frameworks/2023.12.15.001
+module load frameworks
 ```
 
 Then you can `import` TensorFlow as usual, the following is an output from the 
-`frameworks/2023.12.15.001` module:
+`frameworks` module:
 
 ```
 >>> import tensorflow as tf
 >>> tf.__version__
 '2.14.1'
 ```
+This import will fail on login nodes because there is no XPU on login nodes. 
+
 A simple but useful check could be to use TensorFlow to get device information 
 on a compute node. You can do this the following way:
 
@@ -338,6 +340,36 @@ export NUMEXPR_NUM_THREADS=64
 # or equal to '64' or to increase the 'NUMEXPR_MAX_THREADS' to the available
 # number of threads. Both of these variables can be set manually.
 
+
+## CCL setup
+export FI_CXI_DEFAULT_CQ_SIZE=131072
+export FI_CXI_OVFLOW_BUF_SIZE=8388608
+export FI_CXI_CQ_FILL_PERCENT=20
+
+export FI_LOG_LEVEL=warn
+#export FI_LOG_PROV=tcp
+export FI_LOG_PROV=cxi
+
+export CCL_KVS_GET_TIMEOUT=600
+
+export LD_LIBRARY_PATH=$CCL_ROOT/lib:$LD_LIBRARY_PATH
+export CPATH=$CCL_ROOT/include:$CPATH
+export LIBRARY_PATH=$CCL_ROOT/lib:$LIBRARY_PATH
+
+export CCL_PROCESS_LAUNCHER=pmix  
+export CCL_ATL_TRANSPORT=mpi
+export CCL_ALLREDUCE=topo
+export CCL_ALLREDUCE_SCALEOUT=rabenseifner  # currently best allreduce algorithm at large scale
+export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
+
+export CCL_KVS_MODE=mpi
+export CCL_CONFIGURATION_PATH=""
+export CCL_CONFIGURATION=cpu_gpu_dpcpp
+export CCL_KVS_CONNECTION_TIMEOUT=600 
+
+export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
+export CCL_KVS_USE_MPI_RANKS=1
+
 #####################################################################
 # End of environment setup section
 #####################################################################
@@ -345,6 +377,7 @@ export NUMEXPR_NUM_THREADS=64
 #####################################################################
 # JOB LAUNCH
 ######################################################################
+
 
 export CCL_LOG_LEVEL="WARN"
 export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
