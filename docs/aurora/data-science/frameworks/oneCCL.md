@@ -43,7 +43,7 @@ export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
 export CCL_KVS_USE_MPI_RANKS=1
 ```
 
-**OneCCL optional environment variables **
+**OneCCL optional environment variables**
 
 ```bash
 ulimit -c unlimited
@@ -163,7 +163,7 @@ For more information on oneCCL benchmark, please refer to: https://www.intel.com
 
 
 
-## Python Horovod (distributed training framework)
+## Horovod
 
 Tensorflow horovod example
 
@@ -246,7 +246,7 @@ if hvd.rank() == 0:
 
 ```
 
-## Python PyTorch (machine learning framework)
+## Pytorch DDP
 
 ```bash
 import datetime
