@@ -25,8 +25,8 @@ launch_copper.sh
 
 Then run your mpiexec as you would normally run. 
 
-If you want your I/O to go through copper, add /tmp/${USER}/copper/ to the begining of your PATHS. Here only the root compute node will do the I/O directly with the lustre file system. 
-If /tmp/${USER}/copper/ is not added to the begining of your paths, then all compute nodes would do I/O directly to the lustre file system. 
+If you want your I/O to go through copper, add ```/tmp/${USER}/copper/``` to the begining of your PATHS. Here only the root compute node will do the I/O directly with the lustre file system. 
+If ```/tmp/${USER}/copper/``` is not added to the begining of your paths, then all compute nodes would do I/O directly to the lustre file system. 
 
 Python Example
 

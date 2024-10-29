@@ -82,6 +82,7 @@ export CCL_ALLREDUCE_SCALEOUT=rabenseifner
 ## native C++ SYCL mode
 
 You can compile examples from the oneCCL gitrepository and use the library from the system default instead of local builds.
+More information at : https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html
 
 To build the C++ benchmark examples 
 
@@ -325,5 +326,7 @@ References
 2. https://github.com/oneapi-src/oneCCL
 3. https://github.com/intel/torch-ccl
 4. https://github.com/argonne-lcf/dl_scaling
+5. https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html
+
 
 
