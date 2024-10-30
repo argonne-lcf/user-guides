@@ -28,6 +28,7 @@ This is loaded by default, so there's no need to load additional modules. You ca
 
 To use the LLVM module, load the following.
 ```
+module use /soft/modulefiles
 module load mpiwrappers/cray-mpich-llvm
 module load cudatoolkit-standalone
 ```
