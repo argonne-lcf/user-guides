@@ -7,8 +7,7 @@ The XALT library tracking software has been enabled for all Polaris users. More 
 
 ## 2024-04-22
 
-The management software on Polaris has been upgraded to HPCM 1.10
-The following version changes are in place with the upgrade to HPCM 1.10:
+The management software on Polaris has been upgraded to HPCM 1.10. The following version changes are in place with the upgrade to HPCM 1.10:
 
 - HPE Cray Programming Environment (CPE) 23.12
 - SlingShot version 2.1.2
@@ -17,53 +16,44 @@ The following version changes are in place with the upgrade to HPCM 1.10:
 - CUDA 12.2
 - SUSE 15 SP5
 
-### Releasing jobs
+### Releasing Jobs
 
-Jobs that were queued before the upgrade have been restored to the appropriate queues but are placed on user hold. 
-Jobs are not expected to complete successfully due to the changes made to the system and software environments resulting from the upgrade. 
-We recommend you review your jobs and either release the hold (`qrls <jobid>`) or delete it (`qdel <jobid>`) and resubmit as appropriate.
+Jobs that were queued before the upgrade have been restored to the appropriate queues but are placed on user hold. Jobs are not expected to complete successfully due to the changes made to the system and software environments resulting from the upgrade. We recommend you review your jobs and either release the hold (`qrls <jobid>`) or delete it (`qdel <jobid>`) and resubmit as appropriate.
 
 - Users need to rebuild for the new PE environment and major OS upgrade. Existing binaries are unlikely to run successfully.
 - We have held all jobs submitted prior to the upgrade as a user hold. Users may release their existing jobs with `qrls` to run after they have rebuilt their binaries.
-- PBS does cache the job execution script.  If a change to the script is required due to a path changing post rebuild, the job will have to be resubmitted.
+- PBS does cache the job execution script. If a change to the script is required due to a path changing post-rebuild, the job will have to be resubmitted.
 - All application binaries should be rebuilt prior to further job submissions.
 
-### Re-building user codes
+### Re-building User Codes
 
-Many user codes will need to be re-built and/or re-linked against the newer version of the programming environment (23.12) and Spack provided dependencies.
+Many user codes will need to be re-built and/or re-linked against the newer version of the programming environment (23.12) and Spack-provided dependencies.
 
-### Changes to the user software environment
+### Changes to the User Software Environment
 
-In addition to the system upgrades, several changes have been made to the user
-software environment which may impact user workflows.
+In addition to the system upgrades, several changes have been made to the user software environment which may impact user workflows.
 
-#### Older PE versions removed
+#### Older PE Versions Removed
 
-Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the
-upgraded system stack and are no longer available for use.
+Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the upgraded system stack and are no longer available for use.
 
 ### Datascience Anaconda Module Updates
 
-We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with 
-the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. 
-PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
+We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
 
 To use the new environment, type:
-```
+```bash
 module use /soft/modulefiles 
 module load conda; conda activate
 ```
 
-#### `/soft` refresh and default `$MODULEPATH` change
+#### `/soft` Refresh and Default `$MODULEPATH` Change
 
-Due to the new system software stack, `/soft` has been purged to allow for
-software to be rebuilt. In addition, `/soft/modulefiles` is no longer in the
-default `$MODULEPATH`. To access modules installed in `/soft`, users should run
-`module use /soft/modulefiles`. 
+Due to the new system software stack, `/soft` has been purged to allow for software to be rebuilt. In addition, `/soft/modulefiles` is no longer in the default `$MODULEPATH`. To access modules installed in `/soft`, users should run `module use /soft/modulefiles`.
 
 Adding `module use /soft/modulefiles` to your profile should approximate the old behavior.
 
-#### Modules removed
+#### Modules Removed
 
 The following modules have been removed:
 
@@ -99,7 +89,7 @@ The following modules have been removed:
    gsl/2.7                                                           xalt/3.0.1-202308261842                                                  (D)
 ```
 
-#### Modules newly installed
+#### Modules Newly Installed
 
 The following modules have been newly installed:
 
@@ -116,61 +106,43 @@ The following modules have been newly installed:
    spack-pe-gnu/0.6.1
 ```
 
-Note that `spack-pe-base` and `spack-pe-gnu` are metamodules which contain
-further software offerings. See the [Spack](#spack) section below for details.
+Note that `spack-pe-base` and `spack-pe-gnu` are metamodules which contain further software offerings. See the [Spack](#spack) section below for details.
 
 ### Spack
 
-We have newly installed Spack deployments in `/soft`. Spack is an HPC-oriented
-package manager which ALCF uses to install software for the user environment.
-However, no knowledge of Spack is necessary to use these software offerings. All
-ALCF-managed software is accessible to users via modules.
+We have newly installed Spack deployments in `/soft`. Spack is an HPC-oriented package manager which ALCF uses to install software for the user environment. However, no knowledge of Spack is necessary to use these software offerings. All ALCF-managed software is accessible to users via modules.
 
-The base suite of software tools and libraries can be accessed by loading the
-`spack-pe-base` module. This adds a path to `$MODULEPATH` which contains
-numerous modules. 
+The base suite of software tools and libraries can be accessed by loading the `spack-pe-base` module. This adds a path to `$MODULEPATH` which contains numerous modules.
 
-For example, to load `cmake` starting from the default environment, a user
-should run the following commands:
-```
+For example, to load `cmake` starting from the default environment, a user should run the following commands:
+```bash
 module use /soft/modulefiles
 module load spack-pe-base
 module load cmake
 ```
-Other modules in `spack-pe-base` can be browsed by running `module avail` or
-`module --show-hidden avail`. The latter shows hidden modules which are
-installed as dependencies of the un-hidden modules.
+Other modules in `spack-pe-base` can be browsed by running `module avail` or `module --show-hidden avail`. The latter shows hidden modules which are installed as dependencies of the un-hidden modules.
 
-In addition to the base stack, a suite of higher-level libraries are installed
-in the `spack-pe-gnu` module. These are built with and are dependent on
-`PrgEnv-gnu`. A `PrgEnv-nvidia`-compatible stack will be available in the
-future.
+In addition to the base stack, a suite of higher-level libraries are installed in the `spack-pe-gnu` module. These are built with and are dependent on `PrgEnv-gnu`. A `PrgEnv-nvidia`-compatible stack will be available in the future.
 
-Note that not all software is installed through Spack; many applications and
-libraries are installed as standalone packages in `/soft`. Users are encouraged
-to browse the available modules with `module avail` to see what software is
-installed on the system.
+Note that not all software is installed through Spack; many applications and libraries are installed as standalone packages in `/soft`. Users are encouraged to browse the available modules with `module avail` to see what software is installed on the system.
 
 ### ParaView and Visit
-ParaView module has been updated. For more information, see [https://docs.alcf.anl.gov/polaris/visualization/paraview/](https://github.com/argonne-lcf/user-guides/assets/93623920/10b4da82-ec8f-4507-844c-3d210d77b7da) and [https://docs.alcf.anl.gov/polaris/visualization/paraview-manual-launch/](https://github.com/argonne-lcf/user-guides/assets/93623920/f8b35652-e2b1-44af-9525-f90c9a717332)
+The ParaView module has been updated. For more information, see [ParaView Documentation](https://docs.alcf.anl.gov/polaris/visualization/paraview/) and [ParaView Manual Launch](https://docs.alcf.anl.gov/polaris/visualization/paraview-manual-launch/).
 
-Visit module is in the process of being updated.
-
+The Visit module is in the process of being updated.
 
 ### Changes to Memory Limits on Login Nodes
 
-Memory limits were lowered on the logins due to resource contention to 8GB of memory, and 8 cores per user. 
-This might result in error messages indicating abnormal process termination for user processes run on logins.
+Memory limits were lowered on the login nodes due to resource contention to 8GB of memory and 8 cores per user. This might result in error messages indicating abnormal process termination for user processes run on logins.
 
 Examples of the error messages people might see are:
 
- - `nvcc error   : 'cudafe++' died due to signal 9 (Kill signal)`
- - `g++-12: fatal error: Killed signal terminated program cc1plus`
+- `nvcc error   : 'cudafe++' died due to signal 9 (Kill signal)`
+- `g++-12: fatal error: Killed signal terminated program cc1plus`
 
-These errors are likely due to exhausting the per-user resources on a login node as each user is allocated 8 cores and 8GB memory.
-To avoid this you can either:
+These errors are likely due to exhausting the per-user resources on a login node as each user is allocated 8 cores and 8GB memory. To avoid this, you can either:
 
- - Reduce the parallelism of your compile, such as using `-j` or `-j4` flags
- - Request a debug node and run your compile there where you will have the full resources of the node at your disposal
+- Reduce the parallelism of your compile, such as using `-j` or `-j4` flags
+- Request a debug node and run your compile there where you will have the full resources of the node at your disposal
 
-
+---
