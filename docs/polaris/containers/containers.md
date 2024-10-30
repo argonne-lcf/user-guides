@@ -142,7 +142,7 @@ mkdir $APPTAINER_CACHEDIR
 
 **Mapping to rank 0 on all nodes**: Ensure that the container's MPI aligns with the system MPI. For e.g. follow the additional steps outlined in the [container registry documentation for MPI on Polaris](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
 
-**libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the containers base environment is not a Debian-based architecture such as Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing `.conda/`, `.cache/`, and `.local/` folders from your home directory and rebuilding the container.
+**libmpi.so.40 not found**: This can happen if the container's application has an OpenMPI dependency which is not currently supported on Polaris. It can also spring up if the container's base environment is not a Debian-based architecture such as Ubuntu. Ensure the application has an MPICH implementation as well. Also try removing `.conda/`, `.cache/`, and `.local/` folders from your home directory and rebuilding the container.
 
 **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
 
