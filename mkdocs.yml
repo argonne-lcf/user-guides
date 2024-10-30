@@ -69,10 +69,10 @@ nav:
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
             - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
             - XALT: polaris/applications-and-libraries/libraries/xalt.md
+    - Containers: polaris/containers/containers.md
     - Data Science:
         - Julia: polaris/data-science-workflows/julia.md
         - Python: polaris/data-science-workflows/python.md
-        - Containers: polaris/data-science-workflows/containers/containers.md
         - Frameworks:
             - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
             - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
@@ -109,7 +109,9 @@ nav:
     - Getting Started: sophia/getting-started.md
     - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
     - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
-    - Data Science: sophia/data-science/python.md
+    - Containers: sophia/containers/containers.md
+    - Data Science:
+        - Python: sophia/data-science/python.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
