@@ -166,9 +166,9 @@ nav:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
         - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
-        - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
-        - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
-        - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
+        # - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
+        # - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
+        # - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
         - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
       - Build Tools:
         - CMake: aurora/build-tools/cmake-aurora.md
