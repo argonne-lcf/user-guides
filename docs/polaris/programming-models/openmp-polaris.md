@@ -54,7 +54,7 @@ To switch from PrgEnv-nvhpc to PrgEnv-cray you can run:
 module switch PrgEnv-nvhpc PrgEnv-cray
 ```
 
-To use OpenMP on the GPU, load cudatoolkit-standalone, although this is not recommended at the moment.
+To use OpenMP on the GPU, load `cudatoolkit-standalone`, although this is not recommended at the moment.
 ```
 module load cudatoolkit-standalone
 ```
