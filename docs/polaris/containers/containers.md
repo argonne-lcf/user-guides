@@ -105,7 +105,7 @@ qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 
 As mentioned earlier, you can build Apptainer containers from recipe files. Instructions are available [here](https://apptainer.org/docs/user/1.2/build_a_container.html#building-containers-from-apptainer-definition-files). See [available containers](#available-containers) for more recipes. 
 
-> Note: You can also build custom recipes by bootstrapping from prebuilt images. For e.g the first two lines in a recipe to use our custom Tensorflow implementation would be `Bootstrap: oras` followed by `From: ghcr.io/argonne-lcf/tf2-mpich-nvidia-gpu:latest`
+> Note: You can also build custom recipes by bootstrapping from prebuilt images. For e.g the first two lines in a recipe to use our custom TensorFlow implementation would be `Bootstrap: oras` followed by `From: ghcr.io/argonne-lcf/tf2-mpich-nvidia-gpu:latest`
 
 ## Available containers
 
