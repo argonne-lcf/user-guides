@@ -111,7 +111,7 @@ As mentioned earlier, you can build Apptainer containers from recipe files. Inst
 
 If you just want to know what containers are available, here you go. 
 
-* Examples for running mpich/MPI containers can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
+* Examples for running MPICH containers can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris)
 
 * Examples for running databases can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/databases)
 
