@@ -178,9 +178,9 @@ nav:
       - Data Management:
         - Copper: aurora/data-management/copper/copper.md
         - DAOS: aurora/data-management/daos/daos-overview.md
-        - Lustre Flare: aurora/data-management/lustre/flare.md
-        - Moving_data_to_Aurora: 
-          - DAOS_datamover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+        - Lustre (Flare): aurora/data-management/lustre/flare.md
+        - Moving data to Aurora: 
+          - DAOS data mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
           - Globus: aurora/data-management/moving_data_to_aurora/globus.md
           - SCP: aurora/data-management/moving_data_to_aurora/scp.md
       - Applications and Libraries:
