@@ -30,7 +30,7 @@ module use /soft/spack/base/0.7.1/install/modulefiles/Core/
 module load apptainer
 apptainer build --fakeroot pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
 ```
-You can find the latest prebuilt NVIDIA PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The Tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers). For custom containers tailored for Sophia, visit [ALCF's GitHub container registry](https://github.com/argonne-lcf/container-registry/tree/main)
+You can find the latest prebuilt NVIDIA PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The TensorFlow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers). For custom containers tailored for Sophia, visit [ALCF's GitHub container registry](https://github.com/argonne-lcf/container-registry/tree/main)
 
 > **Note:** Currently container build and executions are only supported on the Sophia compute nodes
 
