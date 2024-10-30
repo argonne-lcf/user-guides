@@ -176,8 +176,13 @@ nav:
         - CMake: aurora/build-tools/cmake-aurora.md
       - Running Jobs: aurora/running-jobs-aurora.md
       - Data Management:
+        - Copper: aurora/data-management/copper/copper.md
         - DAOS: aurora/data-management/daos/daos-overview.md
-        - Lustre - Gecko: aurora/data-management/lustre/gecko.md
+        - Lustre Flare: aurora/data-management/lustre/flare.md
+        - Moving_data_to_Aurora: 
+          - DAOS_datamover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+          - Globus: aurora/data-management/moving_data_to_aurora/globus.md
+          - SCP: aurora/data-management/moving_data_to_aurora/scp.md
       - Applications and Libraries:
         - Libraries:
           - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
@@ -198,6 +203,7 @@ nav:
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
+          - OneCCL: aurora/data-science/frameworks/oneCCL.md
         - Libraries:
           - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
