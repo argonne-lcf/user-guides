@@ -110,6 +110,7 @@ nav:
     - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
     - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
     - Data Science: sophia/data-science/python.md
+    - Visualization: sophia/visualization/visualization.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
