@@ -82,12 +82,9 @@ int main(int argc, const char* argv[])
     num_devices = torch::xpu::device_count();
     std::cout << "Number of XPU devices: " << num_devices << std::endl;
 
-
     for (int i = 0; i < num_devices; ++i) {
       c10::xpu::set_device(i);
       std::cout << "Device " << i << ":" << std::endl;
-      //std::string device_name = c10::xpu::get_device_name();
-      //std::cout << "Device " << i << ": " << device_name << std::endl;
 
       c10::xpu::DeviceProp device_prop{};
       c10::xpu::get_device_properties(&device_prop, i);
@@ -107,8 +104,8 @@ int main(int argc, const char* argv[])
 ## Model Inferencing Using the Torch API 
 
 This example shows how to perform inference with the ResNet50 model using LibTorch.
-First, get a jit-traced version of the model executing `python resnet50_trace.py` (shwn below) on a compute node.
-```
+First, get a jit-traced version of the model executing `python resnet50_trace.py` (shown below) on a compute node.
+```bash
 import torch
 import torchvision
 import intel_extension_for_pytorch as ipex
