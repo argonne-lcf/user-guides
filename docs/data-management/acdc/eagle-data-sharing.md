@@ -53,9 +53,9 @@ PIs with data and compute allocations will have access to the required compute-s
 ## <a name="Creating-a-Guest-Collection"></a>Creating a Guest Collection
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections. 
 
-> PIs with an "Inactive/Deleted" ALCF account, should submit a reactivation request by filling out this form: [Re-activation Form](https://accounts.alcf.anl.gov/#/accountReactivate)
+> PIs with an "Inactive/Deleted" ALCF account, should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
 
-> PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://accounts.alcf.anl.gov/#/accountRequest) 
+> PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest) 
 
 ### Navigate to the Collections tab ###
 
@@ -278,14 +278,14 @@ Groups are constructs that enable multi-user data collaboration. A PI (and an Ac
 ### PI FAQs:
 **1. How can a PI request for a data-only, Eagle storage allocation?** 
 
-A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form: [Request an allocation](https://accounts.alcf.anl.gov/allocationRequests). The allocations committee reviews the proposals and provides its decision in 1-2 weeks. <!-- To request a storage allocation on Eagle for an existing project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with your proposal.-->
+A project PI can request an allocation by filling out the Director’s Discretionary Allocation Request form: [Request an allocation](https://my.alcf.anl.gov/accounts/#/allocationRequests). The allocations committee reviews the proposals and provides its decision in 1-2 weeks. <!-- To request a storage allocation on Eagle for an existing project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with your proposal.-->
 
 **2. Does a PI need to have an ALCF account to create a Globus guest collection?**
 
 Yes. The PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. 
 
-- PIs with an "Inactive/Deleted" ALCF account, should submit a reactivation request by filling out this form: [Re-activation Form](https://accounts.alcf.anl.gov/#/accountReactivate)
-- PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://accounts.alcf.anl.gov/#/accountRequest)  
+- PIs with an "Inactive/Deleted" ALCF account, should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
+- PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)  
  
 **3. What endpoint should the PI use?**
 

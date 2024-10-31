@@ -28,9 +28,9 @@ projectX                  Project      eagle                1.87T             10
 ```
 
 ## Requesting a New Eagle Allocation
-For requesting a new project having an allocation on Eagle (with or without a compute allocation), please make a request by filling out the [Director's Discretionary allocation form](https://accounts.alcf.anl.gov/allocationRequests). Note that all new compute projects will have the default file system.
+For requesting a new project having an allocation on Eagle (with or without a compute allocation), please make a request by filling out the [Director's Discretionary allocation form](https://my.alcf.anl.gov/accounts/#/allocationRequests). Note that all new compute projects will have the default file system.
 
 ## Quota Increases
-If you need a quota increase for Director's Discretionary allocations, please make a request by filling out the [Director's Discretionary allocation form](https://accounts.alcf.anl.gov/allocationRequests).
+If you need a quota increase for Director's Discretionary allocations, please make a request by filling out the [Director's Discretionary allocation form](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
 If you need a quota increase for your INCITE/ALCC/ALCC/ESP project directory, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the machine, project name, new quota amount and reason for the increase.
