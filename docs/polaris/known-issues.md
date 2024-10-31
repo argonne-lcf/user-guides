@@ -33,3 +33,6 @@ This is a collection of known issues that have been encountered on Polaris. Docu
       3. `-rw-------  (600)  id_rsa`
       4. `-rw-r--r--  (644)  id_rsa.pub`
    3. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
+   4. If you do not have the files mentioned above, you will need to create them.
+      1. You can generate an `id_rsa` file with the following command: `ssh-keygen -t rsa`
+
