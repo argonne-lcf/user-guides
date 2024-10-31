@@ -8,7 +8,7 @@ Basic documentation for getting started with Globus can be found at the followin
 [https://docs.globus.org/how-to/](https://docs.globus.org/how-to/)
 
 ## Data Transfer Node
-Several data transfer nodes (DTNs) for `/home`, Eagle, Grand, and HPSS  are available to ALCF users, allowing users to perform wide and local area data transfers. Access to the DTNs is provided via the following Globus endpoints.
+Several data transfer nodes (DTNs) for `/home`, Eagle, Grand, and HPSS are available to ALCF users, allowing users to perform wide and local area data transfers. Access to the DTNs is provided via the following Globus endpoints.
 
 ## ALCF Globus Endpoints
 The Globus endpoint and the path to use depends on where your data resides. If your data is on:
