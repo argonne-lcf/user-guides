@@ -63,7 +63,7 @@ ascovel@polaris-login-02:~>
 The following example demonstrates the use of MIG compute instances via the `CUDA_VISIBLE_DEVICES` environment variable:
 
 ```shell
-ascovel@polaris-login-02:~/polaris-mig> qsub -l mig_config=/home/ascovel/polaris-mig/mig_config.json -l select=1 -l walltime=60:00 -l filesystems=home:eagle:swift -A Operations -q R639752 -k doe -I
+ascovel@polaris-login-02:~/polaris-mig> qsub -l mig_config=/home/ascovel/polaris-mig/mig_config.json -l select=1 -l walltime=60:00 -l filesystems=home:eagle -A Operations -q R639752 -k doe -I
 qsub: waiting for job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 qsub: job 640002.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
 

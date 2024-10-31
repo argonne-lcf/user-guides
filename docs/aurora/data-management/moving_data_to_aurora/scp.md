@@ -5,14 +5,16 @@
 Use scp and SFTP to transfer data to/from Aurora. 
 
 ### Transferring files from Aurora (Flare) to Sunspot (Gila)
-From an Aurora login-node, you can transfer files to Sunspot's `Gila` filesystem using the scp command. But first, you need to create SSH keys on Aurora and copy the public key (*.pub) to the ~/.ssh/authorized_keys file on Sunspot.
+From an Aurora login-node, you can transfer files to Sunspot's `gila` filesystem using the `scp` command. But first, you need to create an SSH keypair on Aurora and copy the public key (`*.pub`) to the `~/.ssh/authorized_keys` file on Sunspot.
 1. Create SSH keys on the laptop/desktop/remote machine. See "Creating SSH Keys" section on [this page](https://help.cels.anl.gov/docs/linux/ssh/).
 2. Copy the public key (*.pub) from ~/.ssh folder on Aurora to ~/.ssh/authorized_keys file on Sunspot (sunspot.alcf.anl.gov)
 3. Run the scp command on Aurora to transfer files to Sunspot
+2. Copy the contents of the public key file (`*.pub`) located in the `~/.ssh/` folder on Aurora, and append it to the `~/.ssh/authorized_keys` file on Sunspot (`sunspot.alcf.anl.gov`)
+3. Run the `scp` command on Aurora to transfer files to Sunspot
 ```
-haritha@aurora-uan-0010:~> scp test_file haritha@sunspot.alcf.anl.gov://lus/gila/projects/Aurora_deployment/haritha
+username@aurora-uan-0010:~> scp test_file username@sunspot.alcf.anl.gov://lus/gila/projects/Aurora_deployment/username
 ...
-haritha@uan-0001:/gila/Aurora_deployment/haritha> cat test_file
+username@uan-0001:/gila/Aurora_deployment/username> cat test_file
 this is a test file
 
 ```
@@ -23,18 +25,18 @@ With the bastion pass-through nodes currently used to access both Sunspot and Au
 
 ```
 $ cat .ssh/config
-knight@aurora-uan-0009:~> cat .ssh/config
+username@aurora-uan-0009:~> cat .ssh/config
 Host bastion.alcf.anl.gov
-    User knight
+    User username
 
 Host polaris.alcf.anl.gov
     ProxyJump bastion.alcf.anl.gov
     DynamicForward 3142
-    user knight
+    user username
 ```
 
 ```
-knight@aurora-uan-0009:~> scp knight@polaris.alcf.anl.gov:/eagle/catalyst/proj-shared/knight/test.txt ./
+username@aurora-uan-0009:~> scp username@polaris.alcf.anl.gov:/eagle/catalyst/proj-shared/username/test.txt ./
 ---------------------------------------------------------------------------
                             Notice to Users
 ...
@@ -43,7 +45,7 @@ knight@aurora-uan-0009:~> scp knight@polaris.alcf.anl.gov:/eagle/catalyst/proj-s
                             Notice to Users
 ... 
 [Password:
-knight@aurora-uan-0009:~> cat test.txt 
+username@aurora-uan-0009:~> cat test.txt 
 from_polaris eagle
 ```
 
