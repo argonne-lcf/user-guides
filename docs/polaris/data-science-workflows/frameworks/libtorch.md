@@ -13,7 +13,7 @@ module use /soft/modulefiles
 module load conda/2024-04-29
 conda activate
 ```
-which will also load, `PrgEnv-gnu/8.5.0` and `cmake`.
+which will also loads `PrgEnv-gnu/8.5.0` and `cmake`.
 
 
 ## Torch Libraries
@@ -58,7 +58,7 @@ make
 Similarly to PyTorch, LibTorch provides API to perform instrospection on the devices available on the system.
 The simple code below shows how to check if CUDA devices are available, how many are present, and how to loop through them to discover some properties.
 
-```bash
+```c++
 #include <torch/torch.h>
 
 int main(int argc, const char* argv[])
@@ -85,7 +85,7 @@ int main(int argc, const char* argv[])
 
 This example shows how to perform inference with the ResNet50 model using LibTorch.
 First, get a jit-traced version of the model executing `python resnet50_trace.py` (shown below) on a compute node.
-```bash
+```python
 import torch
 import torchvision
 from time import perf_counter
@@ -108,7 +108,7 @@ torch.jit.save(model_jit, f"resnet50_jit.pt")
 ```
 
 Then, build `inference-example.cpp` (shown below)
-```bash
+```c++
 #include <torch/torch.h>
 #include <torch/script.h>
 
