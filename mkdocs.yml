@@ -112,6 +112,9 @@ nav:
     - Containers: sophia/containers/containers.md
     - Data Science:
         - Python: sophia/data-science/python.md
+    - Visualization: 
+        - Visualization on Sophia: sophia/visualization/visualization.md
+        - ParaView (Launch from Client): sophia/visualization/paraview.md
   - AI Testbed:
     - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
