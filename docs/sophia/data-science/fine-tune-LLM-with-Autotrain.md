@@ -70,7 +70,7 @@ hub:
 ## Merge adapters with base model to create new model
 Adapters need to be merged to the base model in order to run. You can use the code below
 
-```
+```python
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 import torch
 from peft import PeftModel
