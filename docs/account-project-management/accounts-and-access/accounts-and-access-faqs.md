@@ -19,7 +19,7 @@ To request an extension of your existing discretionary allocation or to request 
 - How many additional hours you are requesting?
 
 ## How do I join a project?
-To join a project, please go to [https://accounts.alcf.anl.gov](https://my.alcf.anl.gov/), then click "join a project". Once there, scroll down to the project you want to join and click on it. At the bottom of the next page, please click on the "Request Membership" button. Once we receive approval from the PI regarding your membership request, we will provide you with access to the necessary resources.
+To join a project, please go to [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/), then click "join a project". Once there, scroll down to the project you want to join and click on it. At the bottom of the next page, please click on the "Request Membership" button. Once we receive approval from the PI regarding your membership request, we will provide you with access to the necessary resources.
 
 ## How do I request a reservation?
 Reservation requests must include information detailed here: 
@@ -30,7 +30,7 @@ Reservation requests must include information detailed here:
 **Note:** All ALCF accounts must be associated with an allocated project.
 
 - Request a new account: [https://my.alcf.anl.gov/accounts/#/accountRequest](https://my.alcf.anl.gov/accounts/#/accountRequest)
-- ALCF Accounts: [https://accounts.alcf.anl.gov/](https://my.alcf.anl.gov/)
+- ALCF Accounts: [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/)
 
 ## What do I do when my ALCF account expires?
 Please forward your account expiry email to your Sponsor. As soon as we receive an approval email from your Sponsor, we'll proceed with your account renewal process as needed.

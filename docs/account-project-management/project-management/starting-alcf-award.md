@@ -78,7 +78,7 @@ All project members will need an ALCF user account to access project data and to
 
 Members that **do not have an ALCF account** should request one at: [https://my.alcf.anl.gov/accounts/#/accountRequest](https://my.alcf.anl.gov/accounts/#/accountRequest). When prompted for project name, they should select your project short name.
 
-Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://accounts.alcf.anl.gov/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate). When prompted for project name, they should select your project short name.
+Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://my.alcf.anl.gov/accounts/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate). When prompted for project name, they should select your project short name.
 
 Members with **active ALCF accounts but have not been added to your project** should submit a request to join your project by going to this page: [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/). They should search for your project and click the "Request Membership" button for that project.
 
