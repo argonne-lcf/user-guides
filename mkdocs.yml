@@ -78,6 +78,7 @@ nav:
             - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
+            - LibTorch: polaris/data-science-workflows/frameworks/libtorch.md
         - Applications:
             - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
