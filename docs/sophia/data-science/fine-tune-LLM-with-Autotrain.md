@@ -1,32 +1,34 @@
 # Autotrain
 
-Autotrain, developed by Hugging Face, is a platform designed to simplify training cutting-edge models in various filed: NLP, LLM, CV... [read more](https://huggingface.co/docs/autotrain/main/en/tasks/llm_finetuning)
+Autotrain, developed by Hugging Face, is a platform designed to simplify training cutting-edge models in various fields: NLP, LLM, CV... [read more](https://huggingface.co/docs/autotrain/main/en/tasks/llm_finetuning)
 
-## Create python venv for Autotrain
+## Create Python Virtual Environment for Autotrain
 
-Let's first create a environment for Autotrain
+Let's first create an environment for Autotrain:
 
-    ```bash
-    mkdir -p venv_autotrain
-    python -m venv venv_autotrain --system-site-packages
-    source venv_autotrain/bin/activate
-    pip3 install autotrain-advanced
-    ```
-Note:
-if autotrain doesn't work properly. You may have to reinstall nvidia-ml-py
-
-    ```bash
-    pip3 uninstall nvidia-ml-py3 pynvml
-    pip3 install --force-reinstall nvidia-ml-py==11.450.51
-    ```
-
-## Train Dataset format
-The dataset should have a column "text" contain the data to be trained on. [Example](https://huggingface.co/datasets/timdettmers/openassistant-guanaco)
-
-## Config file for fine-tuning local LLM
-Here is an example to create config file for supervised fine-tuning purpose. 
-
+```bash
+mkdir -p venv_autotrain
+python -m venv venv_autotrain --system-site-packages
+source venv_autotrain/bin/activate
+pip3 install autotrain-advanced
 ```
+
+**Note:** If Autotrain doesn't work properly, you may have to reinstall `nvidia-ml-py`.
+
+```bash
+pip3 uninstall nvidia-ml-py3 pynvml
+pip3 install --force-reinstall nvidia-ml-py==11.450.51
+```
+
+## Train Dataset Format
+
+The dataset should have a column "text" containing the data to be trained on. [Example](https://huggingface.co/datasets/timdettmers/openassistant-guanaco)
+
+## Config File for Fine-Tuning Local LLM
+
+Here is an example to create a config file for supervised fine-tuning purposes:
+
+```yaml
 task: llm-sft
 base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
 project_name: Llama-3-1-FT
@@ -61,41 +63,38 @@ hub:
 
 [More details](https://huggingface.co/docs/autotrain/en/config)
 
-## Run Autotrain to finetune using the config file
-     ```bash
-    cd Path/to/save/the/adapter
-    autotrain --config path/to/config.yaml
-    ```
+## Run Autotrain to Fine-Tune Using the Config File
 
-## Merge adapters with base model to create new model
-Adapters need to be merged to the base model in order to run. You can use the code below
+```bash
+cd Path/to/save/the/adapter
+autotrain --config path/to/config.yaml
+```
+
+## Merge Adapters with Base Model to Create New Model
+
+Adapters need to be merged with the base model in order to run. You can use the code below:
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 import torch
 from peft import PeftModel
 import os
-adapter= "path/to/saved/adapters/"
+
+adapter = "path/to/saved/adapters/"
 model_name = "project-name-from-config-file"
 adapter_path = os.path.join(adapter, model_name)
-base_model_path= "meta-llama/Meta-Llama-3.1-8B-Instruct"
-target_model_path= "path/to/save/fine-tuned/models" + model_name
+base_model_path = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+target_model_path = "path/to/save/fine-tuned/models" + model_name
 
 config = AutoConfig.from_pretrained(base_model_path)
-base_model = AutoModelForCausalLM.from_pretrained(
-    base_model_path
-)
+base_model = AutoModelForCausalLM.from_pretrained(base_model_path)
 
 merged_model = PeftModel.from_pretrained(base_model, adapter_path)
 
-tokenizer = AutoTokenizer.from_pretrained(
-    adapter_path,
-    trust_remote_code=True,
-)
+tokenizer = AutoTokenizer.from_pretrained(adapter_path, trust_remote_code=True)
 merged_model = merged_model.merge_and_unload()
 
 print("Saving target model...")
 merged_model.save_pretrained(target_model_path)
 tokenizer.save_pretrained(target_model_path)
 config.save_pretrained(target_model_path)
-```
