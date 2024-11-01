@@ -11,13 +11,10 @@ This is a collection of known issues that have been encountered on Polaris. Docu
 ## Compiling & Running Applications
 
 1. If your job fails to start with an `RPC launch` message like below, please forward the complete messages to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
-
    ```bash
    launch failed on x3104c0s1b0n0: Couldn't forward RPC launch(ab751d77-e80a-4c54-b1c2-4e881f7e8c90) to child x3104c0s31b0n0.hsn.cm.polaris.alcf.anl.gov: Resource temporarily unavailable
    ```
-
 2. The message below is an XALT-related warning that can be ignored when running `apptainer`. For other commands, please forward the complete message to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) so we are aware of your use case.
-
    ```bash
    ERROR: ld.so: object '/soft/xalt/3.0.2-202408282050/lib64/libxalt_init.so' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
    ```
@@ -32,7 +29,7 @@ This is a collection of known issues that have been encountered on Polaris. Docu
       2. `-rw-r--r--  (644)  config`
       3. `-rw-------  (600)  id_rsa`
       4. `-rw-r--r--  (644)  id_rsa.pub`
-   3. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
-   4. If you do not have the files mentioned above, you will need to create them.
+   3. If you do not have the files mentioned above, you will need to create them.
       1. You can generate an `id_rsa` file with the following command: `ssh-keygen -t rsa`
+   4. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
 
