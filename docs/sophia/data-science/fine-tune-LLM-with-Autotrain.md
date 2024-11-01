@@ -13,7 +13,7 @@ Let's first create a environment for Autotrain
     pip3 install autotrain-advanced
     ```
 Note:
-if autotrain doesn't work properly. You may have to use reinstall nvidia-ml-py
+if autotrain doesn't work properly. You may have to reinstall nvidia-ml-py
 
     ```bash
     pip3 uninstall nvidia-ml-py3 pynvml
@@ -70,7 +70,7 @@ hub:
 ## Merge adapters with base model to create new model
 Adapters need to be merged to the base model in order to run. You can use the code below
 
-'''
+```
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 import torch
 from peft import PeftModel
@@ -98,4 +98,4 @@ print("Saving target model...")
 merged_model.save_pretrained(target_model_path)
 tokenizer.save_pretrained(target_model_path)
 config.save_pretrained(target_model_path)
-'''
+```
