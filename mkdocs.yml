@@ -113,6 +113,7 @@ nav:
     - Containers: sophia/containers/containers.md
     - Data Science:
         - Python: sophia/data-science/python.md
+        - Fine-tune: sophia/data-science/fine-tune-LLM-with-Autotrain.md
     - Visualization: 
         - Visualization on Sophia: sophia/visualization/visualization.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
