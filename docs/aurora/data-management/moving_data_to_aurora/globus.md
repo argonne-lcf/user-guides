@@ -12,7 +12,7 @@ Perform the following steps to transfer data to/from the Aurora login nodes.
 	* When requested, input your ALCF username and one-time password from your CRYPTOCard/MobilePASS+ token
     * Select the Allow button
     * Enter the authentication code generated back into the terminal
-    * Enter a name for the endpoint (e.g., aurora\_login\_uan11)
+    * Enter a name for the endpoint (e.g., `aurora_login_uan11`)
 
 3. On the same terminal, execute 
 ```bash
