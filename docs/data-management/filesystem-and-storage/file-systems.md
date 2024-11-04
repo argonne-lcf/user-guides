@@ -58,7 +58,7 @@ setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 
 
 ### Project Directories
-- Directories on Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests) to submit requests for an allocation on Eagle. 
+- Directories on Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests) to submit requests for an allocation on Eagle. 
 - Directory paths:
     - Eagle: /eagle or /lus/eagle/projects
 
