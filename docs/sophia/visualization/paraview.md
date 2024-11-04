@@ -67,7 +67,7 @@ There are a number of parameters that you must enter manually here:
 
 **SSH executable:** the name of your ssh command. It may be different on Windows depending on the ssh client installed (i.e putty)
 
-**Remote machine:** leave this value at polaris.alcf.anl.gov
+**Remote machine:** leave this value at sophia.alcf.anl.gov
 
 **Username:** your ALCF user name
 
