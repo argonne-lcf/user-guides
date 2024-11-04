@@ -2,7 +2,7 @@
 
 All computing carried out on the ALCF systems is associated with a user "account." This account is used to log onto the login servers and run jobs on the resources. If someone has a user account, then he or she has a login name that is recorded in the user database. This web page describes the process that users will need to understand to manage account details, including policies and procedures.
 
-If you need an account, visit the Accounts and Project Management website: [Request an account](https://accounts.alcf.anl.gov/#!/accountRequest)
+If you need an account, visit the Accounts and Project Management website: [Request an account](https://my.alcf.anl.gov/accounts/#/accountRequest)
 
 If you want to learn how to get started, visit the Get Started Guide: [Get Started Guide](https://www.alcf.anl.gov/support-center/get-started)
 

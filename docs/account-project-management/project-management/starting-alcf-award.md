@@ -25,9 +25,9 @@ Before your project begins, you will receive an email with the following project
 - **Allocation End Date**: The end date of your award.
 
 ## Account Setup
-**If you do not have an ALCF account:** You will need to request one at [https://accounts.alcf.anl.gov/accountRequest](https://accounts.alcf.anl.gov/accountRequest). When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+**If you do not have an ALCF account:** You will need to request one at [https://my.alcf.anl.gov/accounts/#/accountRequest](https://my.alcf.anl.gov/accounts/#/accountRequest). When prompted for project name, please select the project short name you were given in your award email from [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-**If you have an active ALCF account:** Submit a request to join the newly awarded project at [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject).
+**If you have an active ALCF account:** Submit a request to join the newly awarded project at [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/).
 
 ### Information for Foreign National Access 
 The U.S. Department of Energy has guidelines and requirements for foreign nationals who access its facilities and sites. This guidance is issued in DOE Order 142.3, which is part of Argonne's contract; therefore, all foreign nationals (non-U.S. Citizens) must obtain authorization prior to using ALCF resources.
@@ -76,11 +76,11 @@ PI/proxies with active ALCF accounts can also approve new account requests, proj
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
 
-Members that **do not have an ALCF account** should request one at: [https://accounts.alcf.anl.gov/#/accountRequest](https://accounts.alcf.anl.gov/#/accountRequest). When prompted for project name, they should select your project short name.
+Members that **do not have an ALCF account** should request one at: [https://my.alcf.anl.gov/accounts/#/accountRequest](https://my.alcf.anl.gov/accounts/#/accountRequest). When prompted for project name, they should select your project short name.
 
-Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://accounts.alcf.anl.gov/#/accountReactivate](https://accounts.alcf.anl.gov/#/accountReactivate). When prompted for project name, they should select your project short name.
+Members with **ALCF accounts that are no longer active** should submit a reactivation request here: [https://my.alcf.anl.gov/accounts/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate). When prompted for project name, they should select your project short name.
 
-Members with **active ALCF accounts but have not been added to your project** should submit a request to join your project by going to this page: [https://accounts.alcf.anl.gov/#!/joinProject](https://accounts.alcf.anl.gov/#!/joinProject). They should search for your project and click the "Request Membership" button for that project.
+Members with **active ALCF accounts but have not been added to your project** should submit a request to join your project by going to this page: [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/). They should search for your project and click the "Request Membership" button for that project.
 
 ## Moving Your Data
 We encourage you to use Globus to move your project data to your ALCF project directory before your allocation begins. For details, see [Using Globus](../../data-management/data-transfer/using-globus.md).
