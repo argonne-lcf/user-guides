@@ -4,7 +4,7 @@ Autotrain, developed by Hugging Face, is a platform designed to simplify trainin
 
 ## Create Python Virtual Environment for Autotrain
 
-Let's first create an environment for Autotrain:
+Let's first create a virtual environment for Autotrain, built on top of the minimal system Python installation located at `/usr/bin/python`:
 
 ```bash
 mkdir -p venv_autotrain
