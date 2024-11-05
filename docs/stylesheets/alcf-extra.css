@@ -832,7 +832,7 @@ footer .grid{
 
 .footer--admin {
 	grid-column: 1 / span 1;
-	grid-row: 2;
+	grid-row: 3;
 }
 
 @media only screen and (max-width: 960px) {
@@ -843,8 +843,10 @@ footer .grid{
 }
 
 .footer--copyright {
-	grid-column: 3 / span 1;
-	grid-row: 2;
+	/*grid-column: 3 / span 1;
+	grid-row: 2;*/
+	grid-column: 3 / -1;
+	grid-row: 3;
 }
 
 @media only screen and (max-width: 960px) {
@@ -855,8 +857,10 @@ footer .grid{
 }
 
 .footer--logos {
-	grid-column: 4 / span 1;
+	/*grid-column: 4 / span 1;*/
+	grid-column: 3 / -1;
 	grid-row: 2;
+	margin-bottom: 12px;
 }
 
 @media only screen and (max-width: 960px) {
