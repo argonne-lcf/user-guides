@@ -250,7 +250,7 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
-    - Docs Questions/Issues: issues.md
+  - Docs Questions/Issues: issues.md
 not_in_nav: |
   not_in_nav/
   unused/
