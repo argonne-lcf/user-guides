@@ -73,7 +73,7 @@ DeepSpeed is also available and usable on Polaris.  For more information, please
 
 For best performance, it is crucial to enable multiple workers in the data loader to avoid compute and I/O overlap and concurrent loading of dataset. This can be set by tunning "num_workers" parameter in ```DataLoader``` (see https://pytorch.org/docs/stable/data.html). Accordingly to our experience, generally, one can set 4 or 8 for best performance. Due to the total number of CPU cores available on a node, the maximum number of workers one can choose is 16. It is always to tune this value and find the optimal setup for your own application. 
 
-Aside from this, one also have to make sure that the worker threads spread over different CPU codes. To do this one has to specify the cpu bindingto be depth and choose a depth value larger than ```num_workers``` through the following flag in the ```mpiexec``` command: 
+Aside from this, one also have to make sure that the worker threads spread over different CPU codes. To do this one has to specify the CPU binding to be `depth` and choose a depth value larger than ```num_workers``` through the following flag in the ```mpiexec``` command: 
 
 ```
 mpiexec -np $NUM_GPUS -ppn 4 --cpu-bind depth -d 16 python3 ...
