@@ -31,7 +31,7 @@ But first, you need to create an SSH keypair on Aurora and copy the public key
     scp test_file username@sunspot.alcf.anl.gov:$dst
     ```
 
-    ```bash
+    ``` { .bash .no-copy }
     # then, from Sunspot:
     $ cat test_file
     this is a test file
