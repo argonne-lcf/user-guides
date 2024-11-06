@@ -13,7 +13,7 @@ Several data transfer nodes (DTNs) for `/home`, Eagle, Grand, and HPSS are avail
 ## ALCF Globus Endpoints
 The Globus endpoint and the path to use depends on where your data resides. If your data is on:
 
-- `/home` which is where your home directory resides: `alcf#dtn_home` for accessing `/home` (i.e. home directories on swift-home filesystem). Use the path `/<username\>`
+- `/home` which is where your home directory resides: `alcf#dtn_home` for accessing `/home` (i.e. home directories on agile-home filesystem). Use the path `/<username\>`
 - HPSS: `alcf#dtn_hpss`
 - Eagle filesystem: `alcf#dtn_eagle` for accessing /`lus/eagle/projects` or `/eagle` (i.e project directories on Eagle filesystem). Use the path `/eagle/<project name\>`
 - Grand filesystem: `alcf#dtn_grand` for accessing `/lus/grand/projects` or `/grand` (i.e. project directories on Grand filesystem). Use the path `/grand/<project name\>`
