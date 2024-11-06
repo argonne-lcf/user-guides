@@ -21,7 +21,7 @@ The key here is to enable AWS plugin (https://github.com/aws/aws-ofi-nccl). AWS 
 
 This setup will lead to 2-3x performance improvement. For details, please refer to: https://github.com/argonne-lcf/alcf-nccl-tests. 
 
-As of now (October 29, 2029), these setup has been included in the conda module on Polaris as one can confirm as follows: 
+As of now (October 29, 2024), these environment variable settings have been included by default in the `conda` modules on Polaris. A user can confirm this via: 
 ```bash 
 module load conda
 env | grep NCCL
