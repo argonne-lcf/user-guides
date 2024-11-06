@@ -17,6 +17,8 @@ export FI_CXI_DISABLE_HOST_REGISTER=1
 export FI_MR_CACHE_MONITOR=userfaultfd
 export FI_CXI_DEFAULT_CQ_SIZE=131072
 ```
+The key here is to enable AWS plugin (https://github.com/aws/aws-ofi-nccl). AWS OFI NCCL is a plug-in which enables EC2 developers to use libfabric as a network provider while running NVIDIA's NCCL based applications.
+
 This setup will lead to 2-3x performance improvement. For details, please refer to: https://github.com/argonne-lcf/alcf-nccl-tests. 
 
 As of now (October 29, 2029), these setup has been included in the conda module on Polaris as one can confirm as follows: 
@@ -25,3 +27,12 @@ module load conda
 env | grep NCCL
 env | grep FI
 ```
+
+**WARNING**
+For some applications such as Megatron-DeepSpeed, enabling AWS plugin will cause hang or NCCL timeout issue. If so, please disable it by 
+
+```bash
+unset NCCL_NET_GDR_LEVEL NCCL_CROSS_NIC NCCL_COLLNET_ENABLE NCCL_NET
+```
+
+
