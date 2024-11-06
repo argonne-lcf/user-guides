@@ -79,4 +79,4 @@ Aside from this, one also have to make sure that the worker threads spread over 
 mpiexec -np $NUM_GPUS -ppn 4 --cpu-bind depth -d 16 python3 ...
 ```
 
-Enabling multiple workers used to cause a hang in the past, but this has been addressed after OS upgrade on Polaris. 
+Before 2024, enabling multiple workers would cause a fatal hang, but this has been addressed after an OS upgrade on Polaris. 
