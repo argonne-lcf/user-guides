@@ -25,12 +25,17 @@ But first, you need to create an SSH keypair on Aurora and copy the public key
 
 5. Run the `scp` command on Aurora to transfer files to Sunspot
 
-   ```bash
-   username@aurora-uan-0010:~> scp test_file username@sunspot.alcf.anl.gov://lus/gila/projects/Aurora_deployment/username
-   ...
-   username@uan-0001:/gila/Aurora_deployment/username> cat test_file
-   this is a test file
-   ```
+    ```bash
+    src="test_file"
+    dst="/lus/gila/projects/Aurora_deployment/username"
+    scp test_file username@sunspot.alcf.anl.gov:$dst
+    ```
+
+    ```bash
+    # then, from Sunspot:
+    $ cat test_file
+    this is a test file
+    ```
 
 ## Transferring files to Aurora (Flare)
 
@@ -53,7 +58,8 @@ A simple example shows the `#!bash .ssh/config` entries for Polaris and the
 `#!bash scp` command for transferring from Polaris:
 
 ```bash
-$ cat .ssh/config
+# on Polaris
+$ cat ~/.ssh/config
 Host bastion.alcf.anl.gov
     User username
 
@@ -68,3 +74,55 @@ src="/eagle/<project>/<username>/test.txt"
 dst="$(pwd)"
 scp "${src}" "${dst}"
 ```
+
+## `#!bash scp`: Examples[^examples]
+
+[^examples]: Examples copied from: [scp](https://tldr.inbrowser.app/pages/common/scp)
+
+- Copy a local file to a remote host:
+
+    ```bash
+    scp path/to/local_file remote_host:path/to/remote_file
+    ```
+
+- Use a specific port when connecting to the remote host:
+
+    ```bash
+    scp -P port path/to/local_file remote_host:path/to/remote_file
+    ```
+
+- Copy a file from a remote host to a local directory:
+
+    ```bash
+    scp remote_host:path/to/remote_file path/to/local_directory
+    ```
+
+- Recursively copy the contents of a directory from a remote host to a local directory:
+
+    ```bash
+    scp -r remote_host:path/to/remote_directory path/to/local_directory
+    ```
+
+- Copy a file between two remote hosts transferring through the local host:
+
+    ```bash
+    scp -3 host1:path/to/remote_file host2:path/to/remote_directory
+    ```
+
+- Use a specific username when connecting to the remote host:
+
+    ```bash
+    scp path/to/local_file remote_username@remote_host:path/to/remote_directory
+    ```
+
+- Use a specific SSH private key for authentication with the remote host:
+
+    ```bash
+    scp -i ~/.ssh/private_key path/to/local_file remote_host:path/to/remote_file
+    ```
+
+- Use a specific proxy when connecting to the remote host:
+
+    ```bash
+    scp -J proxy_username@proxy_host path/to/local_file remote_host:path/to/remote_file
+    ```
