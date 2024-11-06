@@ -183,7 +183,7 @@ export CCL_ATL_SYNC_COLL=1 #to avoid potential hang at large scale
 export CCL_OP_SYNC=1 #to avoid potential hang at large scale
 ```
 
-These setup will probably be included in the framework module file in future. But for now, users need to explicitly set these in the submission script. 
+These environment variable settings will probably be included in the framework module file in the future. But for now, users need to explicitly set these in the submission script. 
 
 In order to run an application with `TF32` precision type, one must set the 
 following environmental parameter:
