@@ -79,6 +79,7 @@ nav:
             - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
             - Jax: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
+            - LibTorch: polaris/data-science-workflows/frameworks/libtorch.md
         - Applications:
             - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
@@ -113,6 +114,7 @@ nav:
     - Containers: sophia/containers/containers.md
     - Data Science:
         - Python: sophia/data-science/python.md
+        - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
     - Visualization: 
         - Visualization on Sophia: sophia/visualization/visualization.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
@@ -249,6 +251,7 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+  - Docs Questions/Issues: issues.md
 not_in_nav: |
   not_in_nav/
   unused/

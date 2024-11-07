@@ -11,7 +11,7 @@ There is a single routing queue in place called `EarlyAppAccess` which submits t
 
 ### Submitting a job
 
-Note: Jobs should be submitted only from your allocated project directory and not from your home directory. 
+Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 

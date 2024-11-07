@@ -20,7 +20,7 @@ If you already have access to Sunspot, all you need to do to gain access to Auro
 If you have never had access to Sunspot, here are the steps to gain access to Aurora:
 
 1. Verify that your institution has signed a CNDA with Intel that covers you.
-2. If you do not have an active ALCF account, request one using the [ALCF Account request webpage](https://accounts.alcf.anl.gov/#/accountRequest). When you come to the part about joining a project, request the `ProjectName_aesp_CNDA` project.
+2. If you do not have an active ALCF account, request one using the [ALCF Account request webpage](https://my.alcf.anl.gov/accounts/#/accountRequest). When you come to the part about joining a project, request the `ProjectName_aesp_CNDA` project.
 3. Acknowledge the Intel Terms of Use agreement (TOU) for the Aurora Software Development Kit (SDK) by submitting [this form](https://events.cels.anl.gov/event/147/surveys/7).
 
 Getting a new ALCF account typically takes anywhere from a few days to a few weeks (processing new access for foreign nationals is what can take weeks). After you acknowledge the TOU, there is a manual step that typically takes a few days. You will receive an email notifying you when Aurora access is granted, including some getting started instructions.

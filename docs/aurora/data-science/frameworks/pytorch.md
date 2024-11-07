@@ -266,7 +266,7 @@ let NRANKS=${NNODES}*${NRANKS_PER_NODE}
 
 # This is a fix for running over 16 nodes:
 export FI_CXI_DEFAULT_CQ_SIZE=131072
-export FI_CXI_OVFLOW_BUF_SIZE=8388608
+export FI_CXI_OFLOW_BUF_SIZE=8388608
 export FI_CXI_CQ_FILL_PERCENT=20
 # These are workaround for a known Cassini overflow issue
 
