@@ -10,7 +10,7 @@ If you have any questions, please email: [support@alcf.anl.gov](mailto:support@a
 
 ## Transferring data to Eagle
 ### 1. Request a DD project on Eagle Filesystem
-All Petrel project owners/PIs should request for a Director's Discretionary project on the Eagle filesystem by filling out the form at [https://accounts.alcf.anl.gov/allocationRequests](https://accounts.alcf.anl.gov/allocationRequests). Select "New Project" and then "Eagle" as the resource and fill out the rest of the form. In the "Project and Justification Summary" section, along with the requested details you should also state that you are migrating your data from Petrel.
+All Petrel project owners/PIs should request for a Director's Discretionary project on the Eagle filesystem by filling out the form at [https://my.alcf.anl.gov/accounts/#/allocationRequests](https://my.alcf.anl.gov/accounts/#/allocationRequests). Select "New Project" and then "Eagle" as the resource and fill out the rest of the form. In the "Project and Justification Summary" section, along with the requested details you should also state that you are migrating your data from Petrel.
 
 Once the submission is reviewed and approved by the allocations committee, your project will be created on the Eagle filesystem and you will be notified via email. The approval process may take 1-2 weeks. Once the project is approved, proceed to the next step.
 
@@ -22,7 +22,7 @@ A project PI will need an active ALCF account to:
 **NOTE:** A collaborator does not need an ALCF account to access data that is shared on Eagle (as a Globus Guest Collection). They can sign into Globus with their institutional identity to access the data. The first time they log in, they will need to accept terms and conditions.
 
 #### To apply for an ALCF account:
-- Visit [https://accounts.alcf.anl.gov](https://accounts.alcf.anl.gov) and click on "Request An Account".
+- Visit [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/) and click on "Request An Account".
 - When prompted for project name, please select the project on Eagle that was created for your Petrel data as a result of Step 1: Request a DD project on Eagle (you have to wait for your project to be created before you can apply for an account)
   - If you don't have one, please follow the directions under "Step 1: Request a DD project on Eagle" (above)
   - For more details on the ALCF account request process, visit the webpage Request an account

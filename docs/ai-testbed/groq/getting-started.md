@@ -3,11 +3,11 @@
 ## Allocations
 
 If you do not already have an allocation, you will need to request one here:
-[Discretionary Allocation Request (New & Renewal)](https://accounts.alcf.anl.gov/#/allocationRequests)
+[Discretionary Allocation Request (New & Renewal)](https://my.alcf.anl.gov/accounts/#/allocationRequests)
 
 ## Accounts
 
-If you do not have an ALCF account (but have an allocation), request one here: [ALCF Account and Project Management](https://accounts.alcf.anl.gov/#/home)
+If you do not have an ALCF account (but have an allocation), request one here: [ALCF Account and Project Management](https://my.alcf.anl.gov/)
 
 ## Setup
 
