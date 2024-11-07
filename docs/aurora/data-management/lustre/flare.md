@@ -4,3 +4,4 @@
 
 Home is 12 PB **Gecko** Lustre Filesystem with 32 OSTs and 12 MDTs. 
 
+[Follow this link for more information on Lustre Filesystem I/O optimization Basics ](IO-optimization_mcpheeters.pdf)
