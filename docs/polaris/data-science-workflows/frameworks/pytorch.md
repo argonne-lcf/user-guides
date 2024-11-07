@@ -47,23 +47,15 @@ When running PyTorch applications, we have found the following practices to be g
 
 PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with PyTorch has been seen with both DDP and Horovod.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).  Some Polaris-specific details that may be helpful to you:
 
-1. CPU affinity and NCCL settings can improve scaling performance, particularly at the largest scales.  In particular, we encourage users to try their scaling measurements with the following settings:
- - Manually set the CPU affinity via mpiexec, such as with `--cpu-bind verbose,list:0,8,16,24
- - We have also included the following optimal NCCL setting in the conda module. Please see 
-    ```bash
-    export NCCL_NET_GDR_LEVEL=PHB
-    export NCCL_CROSS_NIC=1
-    export NCCL_COLLNET_ENABLE=1
-    export NCCL_NET="AWS Libfabric"
-    export LD_LIBRARY_PATH=/soft/libraries/aws-ofi-nccl/v1.9.1-aws/lib:$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=/soft/libraries/hwloc/lib/:$LD_LIBRARY_PATH
-    export FI_CXI_DISABLE_HOST_REGISTER=1
-    export FI_MR_CACHE_MONITOR=userfaultfd
-    export FI_CXI_DEFAULT_CQ_SIZE=131072
-    ```
-    Users do not have to set the above environment variables anymore. Also, we do not suggest to modify any of those environment variables. For more info on NCCL, please see [NCCL](../../applications-and-libraries/libraries/nccl.md)
+--8<-- [start:scalingsetup]
+1. CPU affinity can improve performance, particularly for data loading process.  In particular, we encourage users to try their scaling measurements by manually setting the CPU affinity via mpiexec, such as with `--cpu-bind verbose,list:0,8,16,24` or `--cpu-bind depth -d 16`. 
 
-2. Horovod and DDP work best when you limit the visible devices to only one GPU.  Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work!  You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`.   On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
+2. NCCL settings: 
+--8<-- "./docs/polaris/applications-and-libraries/libraries/nccl.md:ncclenv"
+
+3. CUDA device setting: it works best when you limit the visible devices to only one GPU.  Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work!  You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`.   On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
+--8<-- [end:scalingsetup]
+
 
 ### DeepSpeed
 

@@ -4,6 +4,7 @@ NVIDIA NCCL (pronounced "Nickel") is a standalone library of standard communicat
 
 NCCL is a key library for scaling AI applications on Nvidia system. The conda module on Polaris are built with NCCL as the communication backend for distributed training. But HPC applications can also chose NCCL for communication over MPI. The library is available in the following folder: ```/soft/libraries/nccl```. 
 
+--8<-- [start:ncclenv]
 We have done extensive performance tests and identified the following best environment setup. 
 
 ```bash
@@ -34,5 +35,6 @@ For some applications such as Megatron-DeepSpeed, enabling AWS plugin will cause
 ```bash
 unset NCCL_NET_GDR_LEVEL NCCL_CROSS_NIC NCCL_COLLNET_ENABLE NCCL_NET
 ```
+--8<-- [end:ncclenv]
 
 
