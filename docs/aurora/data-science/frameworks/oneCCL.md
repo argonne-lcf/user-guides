@@ -21,13 +21,9 @@ kaushikvelusamy@aurora-uan-0012:~>  module load frameworks
 --8<-- [start:onecclenv]
 **OneCCL mandatory environment variables**
 
-```bash
-module load frameworks
-echo $CCL_ROOT
-export LD_LIBRARY_PATH=$CCL_ROOT/lib:$LD_LIBRARY_PATH
-export CPATH=$CCL_ROOT/include:$CPATH
-export LIBRARY_PATH=$CCL_ROOT/lib:$LIBRARY_PATH
+The parameters below are recommended to be set all the time as it eigher gives the best performance for all applications or are requires to address potential hang / crash at large scale. 
 
+```bash
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE=topo
@@ -41,9 +37,15 @@ export CCL_KVS_CONNECTION_TIMEOUT=600
 
 export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
 export CCL_KVS_USE_MPI_RANKS=1
+
+export MPI_PROVIDER=$FI_PROVIDER
+unset MPIR_CVAR_CH4_POSIX_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
+unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 ```
 
 **OneCCL optional environment variables**
+The impact of the following environment variable might be application dependent. Users are encourage to try to set them and see whether they help their applications. 
 
 ```bash
 ulimit -c unlimited
@@ -53,9 +55,6 @@ export FI_CXI_RX_MATCH_MODE=hybrid
 export FI_CXI_OFLOW_BUF_SIZE=8388608
 export FI_CXI_DEFAULT_CQ_SIZE=1048576
 export FI_CXI_CQ_FILL_PERCENT=30
-export MPI_PROVIDER=$FI_PROVIDER
-unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
-unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 export INTELGT_AUTO_ATTACH_DISABLE=1
 export PALS_PING_PERIOD=240
 export PALS_RPC_TIMEOUT=240
