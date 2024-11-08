@@ -6,7 +6,7 @@ SYCL is an open, royalty-free, cross-platform abstraction layer that enables cod
 
 The specification can be found here: https://registry.khronos.org/SYCL/specs/sycl-2020/
 
-## Setting the environment to use SYCL on Auror
+## Setting the environment to use SYCL on Aurora
 
 The Intel oneAPI Programming Environment is the main environment on Aurora. oneAPI has SYCL support. The oneAPI module is loaded by default in your environment:
 
