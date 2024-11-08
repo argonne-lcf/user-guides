@@ -1,11 +1,11 @@
 # Model Inference with OpenVINO
 
 OpenVINO is a library developed by Intel specifically designed for accelerating inference of ML models on their CPU and GPU hardware. 
-This page contains build and run instructions for Python and C/C++ examples, but please refer to the [OpenVINO Github page](https://github.com/openvinotoolkit/openvino) for more information.
+This page contains build and run instructions for Python, but please refer to the [OpenVINO Github page](https://github.com/openvinotoolkit/openvino) for more information.
 
 
 
-## Instlling the OpenVINO Python Runtime and CLI Tools
+## Installing the OpenVINO Python Runtime and CLI Tools
 OpenVINO does not come with the default frameworks module on Aurora, but it can be installed manually within a Python virtual environment as shown below
 ```bash
 module load frameworks/2024.2.1_u1
@@ -24,7 +24,7 @@ The first suggested step is to convert the model from one of the ML frameworks i
 This consists of an `.xml` file which describes the network topology and a `.bin` file which contains the weights and biases in binary format. 
 The conversion can be done from the command line with `ovc` or using the Python API `openvino.convert_model()`.
 Note that PyTorch models cannot be converted directly with `ovc` and need to be converted to ONNX format first.
-You can find more information on the conversion process on OpenVINO's [documentation page](https://docs.openvino.ai/2024/openvino-workflow/model-preparation/convert-model-to-ir.html).
+You can find more information on the conversion process on [OpenVINO's documentation page](https://docs.openvino.ai/2024/openvino-workflow/model-preparation/convert-model-to-ir.html).
 
 The following code snippet demonstrates how to use the Python API to convert the ResNet50 model from TorchVision and save the OpenVINO IR.
 ```python
@@ -50,7 +50,7 @@ ov.save_model(ov_model, 'resnet50.xml', compress_to_fp16=False)
 or
 
 ```bash
-ovc </path/to/model.onnx> --compress_to_fp16=False
+ovc model.onnx --compress_to_fp16=False
 ```
 
 ## Benchmark App
@@ -106,7 +106,7 @@ core.set_property(
 )
 ```
 
-More information on the hints can be found on the [OpenVINO documentation page](https://docs.openvino.ai/2024/openvino-workflow/running-inference/optimize-inference/precision-control.html).
+More information on the available hints can be found on the [OpenVINO documentation page](https://docs.openvino.ai/2024/openvino-workflow/running-inference/optimize-inference/precision-control.html).
 
 Other than the direct call to the model, the Runtime API can be used to create inference requests and control their execution.
 For this approach we refer the user to the [OpenVINO documentation page](https://docs.openvino.ai/2024/openvino-workflow/running-inference/integrate-openvino-with-your-application/inference-request.html).
