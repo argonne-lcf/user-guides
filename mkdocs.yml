@@ -115,7 +115,7 @@ nav:
     - Data Science:
         - Python: sophia/data-science/python.md
         - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
-    - Visualization: 
+    - Visualization:
         - Visualization on Sophia: sophia/visualization/visualization.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
   - AI Testbed:
@@ -185,7 +185,7 @@ nav:
         - Copper: aurora/data-management/copper/copper.md
         - DAOS: aurora/data-management/daos/daos-overview.md
         - Lustre (Flare): aurora/data-management/lustre/flare.md
-        - Moving data to Aurora: 
+        - Moving data to Aurora:
           - DAOS data mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
           - Globus: aurora/data-management/moving_data_to_aurora/globus.md
           - SCP: aurora/data-management/moving_data_to_aurora/scp.md
@@ -209,13 +209,13 @@ nav:
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
-          - OneCCL: aurora/data-science/frameworks/oneCCL.md
+          - oneCCL: aurora/data-science/frameworks/oneCCL.md
         - Libraries:
           - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
-        - openCL: aurora/programming-models/opencl-aurora.md
+        - OpenCL: aurora/programming-models/opencl-aurora.md
         - OpenMP: aurora/programming-models/openmp-aurora.md
         - RAJA: aurora/programming-models/raja-aurora.md
         - SYCL: aurora/programming-models/sycl-aurora.md
