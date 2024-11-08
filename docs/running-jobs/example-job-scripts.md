@@ -460,7 +460,7 @@ wait
 
 In situations where you wish to repeat a job multiple times with a small change each time, such as in a parameter space study, a job array may be an option.  Unlike the multi-node ensemble case above, each subjob in a job array is its own job and will have its own initialization and tear-down by PBS.  Also, a job array will not block all nodes for the length of the longest running task, as is the case for an ensemble job.  Jobs on polaris cannot share nodes with other jobs, so job arrays on Polaris cannot be used to distribute work to different cpu cores or gpus on a node.  In that case, an ensemble job or using `mpiexec` as a parallel launcher can accomplish that goal.
 
-Both ensemble jobs and job arrays become unwieldy and inefficient for very large numbers of tasks.  They either have limits to the number of tasks that can be created at once (job arrays) or are unable to refill idle nodes when tasks complete (ensemble jobs).  In such cases, a [workflow management tool](../polaris/workflows/balsam.md) that can manage the running of tasks is recommended.
+Both ensemble jobs and job arrays become unwieldy and inefficient for very large numbers of tasks.  They either have limits to the number of tasks that can be created at once (job arrays) or are unable to refill idle nodes when tasks complete (ensemble jobs).  In such cases, a [workflow management tool](../machines/polaris/workflows/balsam.md) that can manage the running of tasks is recommended.
 
 ### Job array submission scripts
 

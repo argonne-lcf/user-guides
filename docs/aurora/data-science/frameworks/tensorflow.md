@@ -201,7 +201,7 @@ Some Aurora specific details might be helpful to you.
 The following environmental variables should be set on the batch submission 
 script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
---8<-- "./docs/aurora/data-science/frameworks/pytorch.md:commononecclenv"
+--8<-- "docs/machines/aurora/data-science/frameworks/oneCCLenv.md"
 
 ### CPU Affinity
 

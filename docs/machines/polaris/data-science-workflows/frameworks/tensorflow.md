@@ -11,20 +11,20 @@ module load conda
 conda activate
 ```
 
-Then, you can load TensorFlow in `python` as usual (below showing results from the `conda/2022-07-19` module):
+Then, you can load TensorFlow in `python` as usual (below showing results from the `conda/2024-04-29` module):
 
 ```python
 >>> import tensorflow as tf
 >>> tf.__version__
-'2.9.1'
+'2.16.1'
 >>>
 ```
 
-This installation of TensorFlow was built from source and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2022-07-19` module):
+This installation of TensorFlow was built from source and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2024-04-29` module):
 
 ```bash
 $ echo $CUDA_HOME
-/soft/datascience/cuda/cuda_11.5.2_495.29.05_linux
+/soft/compilers/cudatoolkit/cuda-12.4.1/
 ```
 
 If you need to build applications that use this version of TensorFlow and CUDA, we recommend using these cuda libraries to ensure compatibility.  We periodically update the TensorFlow release, though updates will come in the form of new versions of the `conda` module.
@@ -47,13 +47,7 @@ When running TensorFlow applications, we have found the following practices to b
 
 TensorFlow is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with tensorFlow has been seen with horovod in particular.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).  Some polaris specific details that may be helpful to you:
 
-1. CPU affinity and NCCL settings can improve scaling performance, particularly at the largest scales.  In particular, we encourage users to try their scaling measurements with the following settings:
- - Set the environment variable `NCCL_COLLNET_ENABLE=1`
- - Set the environment varialbe `NCCL_NET_GDR_LEVEL=PHB`
- - Manually set the CPU affinity via mpiexec, such as with `--cpu-bind verbose,list:0,8,16,24
-`
-
-2. Horovod works best when you limit the visible devices to only one GPU.  Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work!  You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`.   On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
+--8<-- "./docs/machines/polaris/data-science-workflows/frameworks/pytorch.md:scalingsetup"
 
 # TensorFlow Dataloaders
-Additional information to be provided.
+It is crucial to enable multiple workers in the data pipeline for best performance. For details, please refer to https://www.tensorflow.org/guide/data_performance

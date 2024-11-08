@@ -99,7 +99,7 @@ The job can be submitted using:
 qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 ```
 
---8<-- [start:commoncontainerdoc]
+<!-- --8<-- [start:commoncontainerdoc] -->
 
 ## Recipe-Based Container Building
 
@@ -136,7 +136,7 @@ export APPTAINER_CACHEDIR=$BASE_SCRATCH_DIR/apptainer-cachedir/
 mkdir $APPTAINER_CACHEDIR
 ```
 
-* Make sure you are not on a directory accessed with a symlink, i.e. check if `pwd` and `pwd -P` returns the same path.
+* Make sure you are not on a directory accessed with a symbolic link, i.e. check if `pwd` and `pwd -P` returns the same path.
 
 * If any of the above doesn't work, try running the build in your home directory.
 
@@ -146,4 +146,4 @@ mkdir $APPTAINER_CACHEDIR
 
 **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
 
---8<-- [end:commoncontainerdoc]
+<!-- --8<-- [end:commoncontainerdoc] -->
