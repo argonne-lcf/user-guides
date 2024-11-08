@@ -38,7 +38,7 @@ PyTorch is also available through NVIDIA containers that have been translated to
 
 When running PyTorch applications, we have found the following practices to be generally, if not universally, useful and encourage you to try some of these techniques to boost performance of your own applications.
 
-1. Use Reduced Precision. Reduced Precision is available on A100 via tensorcores and is supported with PyTorch operations.  In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as descibed in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html).  In PyTorch, users generally need to manage casting and loss scaling manually,  though context managers and function decorators can provide easy tools to do this.
+1. Use Reduced Precision. Reduced Precision is available on A100 via tensorcores and is supported with PyTorch operations.  In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as described in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html).  In PyTorch, users generally need to manage casting and loss scaling manually,  though context managers and function decorators can provide easy tools to do this.
 
 2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools.  However, PyTorch JIT capabilities are newer and may not yield performance improvements.  Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
 
@@ -47,14 +47,14 @@ When running PyTorch applications, we have found the following practices to be g
 
 PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with PyTorch has been seen with both DDP and Horovod.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).  Some Polaris-specific details that may be helpful to you:
 
---8<-- [start:scalingsetup]
+<!-- --8<-- [start:scalingsetup] -->
 1. CPU affinity can improve performance, particularly for data loading process.  In particular, we encourage users to try their scaling measurements by manually setting the CPU affinity via mpiexec, such as with `--cpu-bind verbose,list:0,8,16,24` or `--cpu-bind depth -d 16`. 
 
 2. NCCL settings: 
 --8<-- "./docs/polaris/applications-and-libraries/libraries/nccl.md:ncclenv"
 
 3. CUDA device setting: it works best when you limit the visible devices to only one GPU.  Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work!  You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`.   On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
---8<-- [end:scalingsetup]
+<!-- --8<-- [end:scalingsetup] -->
 
 
 ### DeepSpeed

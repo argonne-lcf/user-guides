@@ -18,7 +18,7 @@ kaushikvelusamy@aurora-uan-0012:~>  module load frameworks
 /opt/aurora/24.180.0/CNDA/oneapi/ccl/2021.13.1_20240808.145507
 ```
 
---8<-- [start:onecclenv]
+<!-- --8<-- [start:onecclenv] -->
 **OneCCL mandatory environment variables**
 
 The parameters below are recommended to be set all the time as it eigher gives the best performance for all applications or are requires to address potential hang / crash at large scale. 
@@ -62,7 +62,7 @@ export MPIR_CVAR_GATHERV_INTER_SSEND_MIN_PROCS=-1 #to solve the sync send issue 
 export CCL_ATL_SYNC_COLL=1 #to avoid potential hang at large scale
 export CCL_OP_SYNC=1 #to avoid potential hang at large scale
 ```
---8<-- [end:onecclenv]
+<!-- --8<-- [end:onecclenv] -->
 
 **Algorithm selection**
 
