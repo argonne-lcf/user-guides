@@ -9,16 +9,16 @@ JAX is installed on Polaris via the `conda` module, available with:
 module load conda; conda activate
 ```
 
-Then, you can load JAX in `python` as usual (below showing results from the `conda/2022-07-19` module):
+Then, you can load JAX in `python` as usual (below showing results from the `conda/2024-04-29` module):
 
 ```python
 >>> import jax
 >>> jax.__version__
-'0.3.15'
+'0.4.26'
 >>>
 ```
 
-## Notes on JAX 0.3.15
+## Notes on JAX 0.4.26
 
 On Polaris, due to a bug, an environment variable must be set to use JAX on GPUs.  The following code will crash:
 ```python
