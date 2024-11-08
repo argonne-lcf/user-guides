@@ -6,7 +6,7 @@ If your build system does not require GPUs for the build process, compilation of
 
 ## Filesystem
 
-It is helpful to realize that currently there is a single _temporary_ filesystem `gecko` mounted on the Aurora login and compute nodes available to users, where both `home` and `project` spaces reside. It is important to realize that this filesystem is not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `eagle` filesystem).
+It is helpful to realize that the home filesystem is `gecko` and the `project` spaces reside on the lustre filesystem called `Flare`. The filesystems are not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `eagle` filesystem).
 
 ## OneAPI Programming Environment
 
