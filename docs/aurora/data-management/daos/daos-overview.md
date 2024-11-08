@@ -66,20 +66,18 @@ Total size: 6.0 TB
 Rebuild done, 4 objs, 0 recs
 ```
 
-
-
 ## DAOS Container
 
 The container is the basic unit of storage. A POSIX container can contain hundreds of millions of files, you can use it to store all of your data.
 You only need a small set of containers; perhaps just one per major unit of project work is sufficient.
 
 There are 3 modes with which we can operate with the DAOS containers
-1. Posix container Posix Mode
-2. Posix Container MPI-IO Mode
+1. POSIX container POSIX Mode
+2. POSIX Container MPI-IO Mode
 3. DFS container through DAOS APIs.
 
 
-### Create a posix container
+### Create a POSIX container
 
 
 ```bash
@@ -128,11 +126,11 @@ daos container check --pool=$DAOS_POOL_NAME --cont=$DAOS_CONT_NAME
 ```
 
 
-### Mount a posix container
+### Mount a POSIX container
 Currently, you must manually mount your container prior to use on any node you are working on.
 In the future, we hope to automate some of this via additional `qsub` options.
 
-#### To mount a posix container on a login node
+#### To mount a POSIX container on a login node
 
 
 ```bash
@@ -151,7 +149,7 @@ fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} # To unmount
 
 ```
  
-#### To mount a posix container on Compute Nodes
+#### To mount a POSIX container on Compute Nodes
 
 You need to mount the container on all compute nodes.
 
@@ -196,7 +194,7 @@ CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 
 
 
-## Interception library for posix containers
+## Interception library for POSIX containers
 
 The interception library (IL) is a next step in improving DAOS performance. This provides kernel-bypass for I/O data, leading to improved performance.
 The libioil IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse. The libpil4dfs IL should be used for both data and metadata calls to go through dFuse.
@@ -377,7 +375,7 @@ Each DAOS server nodes is based on the Intel Coyote Pass platform.
 ## Darshan profiler for DAOS 
 
 Currently, you need to install your own local darshan-daos profiler
-You need to use DFS mode (3) or Posix with interception library to profile
+You need to use DFS mode (3) or POSIX with interception library to profile
 
 ```bash
 module use /soft/modulefiles
@@ -403,7 +401,7 @@ cd /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs
 
 ```
 
-Preload darshan first then daos interception library
+Preload darshan first then DAOS interception library:
 
 ```
 mpiexec --env LD_PRELOAD=~/soft/profilers/darshan-daos/darshan-install/lib/libdarshan.so:/usr/lib64/libpil4dfs.so   
@@ -413,7 +411,7 @@ mpiexec --env LD_PRELOAD=~/soft/profilers/darshan-daos/darshan-install/lib/libda
 ```
 
 
-install darshan-util from laptop
+Install darshan-util from laptop:
 
 
 ```bash
@@ -432,7 +430,7 @@ python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-6
 
 ## Cluster Size
 
-DAOS Cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 daos server available users, currently different number of daos nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of daos servers available. 
+DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. 
 
 
 ![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
@@ -441,18 +439,25 @@ DAOS Cluster size is the number of available DAOS servers. While we are working 
 ## Best practices
 
 ```bash
-Check 					                          qsub –l daos=default
-Daos sanity checks mentioned above
-Did you load DAOS module? 		            module load daos
-Do you have your DAOS pool allocated? 		daos pool query datascience
-Is Daos client running on all your nodes? ps –ef | grep daos   
-Is your container mounted on all nodes? 	mount | grep dfuse  
-Can you ls in your container?  			      ls /tmp/${DAOS_POOL}/${DAOS_CONT}  
-Did your I/O Actually fail?
-What is the health property in your container?  daos container get-prop $DAOS_POOL $CONT	
-Is your space full? Min and max				    daos pool query datascience
-Does your query show failed targets or rebuild in process?	daos pool query datascience
-daos pool      autotest
-Daos container check 
-
+Check that you requested DAOS
+    qsub –l daos=default
+Did you load DAOS module?
+    module load daos
+Do you have your DAOS pool allocated?
+    daos pool query datascience
+Is DAOS client running on all your nodes? 
+    ps –ef | grep daos   
+Is your container mounted on all nodes?
+    mount | grep dfuse  
+Can you ls in your container?  			      
+    ls /tmp/${DAOS_POOL}/${DAOS_CONT}  
+Did your I/O actually fail?
+What is the health property in your container?  
+    daos container get-prop $DAOS_POOL $CONT	
+Is your space full? Min and max
+    daos pool query datascience
+Does your query show failed targets or rebuild in process?
+    daos pool query datascience
+	daos pool autotest
+	daos container check 
 ```
