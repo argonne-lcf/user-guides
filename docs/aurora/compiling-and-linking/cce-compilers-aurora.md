@@ -1,1 +1,0 @@
-# CCE Compilers on Polaris

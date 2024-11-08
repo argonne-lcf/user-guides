@@ -1,3 +1,0 @@
-# Aurora MPICH
-
-Placeholder

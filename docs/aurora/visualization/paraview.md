@@ -1,1 +1,0 @@
-# Paraview on Aurora

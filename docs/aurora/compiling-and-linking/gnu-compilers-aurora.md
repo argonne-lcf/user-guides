@@ -1,1 +1,0 @@
-# GNU Compilers Polaris 
