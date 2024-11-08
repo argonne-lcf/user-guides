@@ -324,14 +324,14 @@ validation:
   anchors: warn
   not_found: warn
 
-repo_name: 'argonne-lcf/alcf-userguide'
-repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+repo_name: 'argonne-lcf/user-guides'
+repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
     - icon: 'fontawesome/brands/github-alt'
-      link: 'https://github.com/argonne-lcf/alcf-userguide'
+      link: 'https://github.com/argonne-lcf/user-guides'
   analytics:
     provider: google
     property: G-4M48E2L33R
