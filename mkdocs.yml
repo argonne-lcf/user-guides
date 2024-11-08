@@ -68,6 +68,7 @@ nav:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
             - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+            - NCCL: polaris/applications-and-libraries/libraries/nccl.md
             - XALT: polaris/applications-and-libraries/libraries/xalt.md
     - Containers: polaris/containers/containers.md
     - Data Science:
@@ -114,7 +115,7 @@ nav:
     - Data Science:
         - Python: sophia/data-science/python.md
         - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
-    - Visualization: 
+    - Visualization:
         - Visualization on Sophia: sophia/visualization/visualization.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
   - AI Testbed:
@@ -184,7 +185,7 @@ nav:
         - Copper: aurora/data-management/copper/copper.md
         - DAOS: aurora/data-management/daos/daos-overview.md
         - Lustre (Flare): aurora/data-management/lustre/flare.md
-        - Moving data to Aurora: 
+        - Moving data to Aurora:
           - DAOS data mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
           - Globus: aurora/data-management/moving_data_to_aurora/globus.md
           - SCP: aurora/data-management/moving_data_to_aurora/scp.md
@@ -208,13 +209,13 @@ nav:
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
-          - OneCCL: aurora/data-science/frameworks/oneCCL.md
+          - oneCCL: aurora/data-science/frameworks/oneCCL.md
         - Libraries:
           - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
-        - openCL: aurora/programming-models/opencl-aurora.md
+        - OpenCL: aurora/programming-models/opencl-aurora.md
         - OpenMP: aurora/programming-models/openmp-aurora.md
         - RAJA: aurora/programming-models/raja-aurora.md
         - SYCL: aurora/programming-models/sycl-aurora.md
@@ -323,14 +324,14 @@ validation:
   anchors: warn
   not_found: warn
 
-repo_name: 'argonne-lcf/alcf-userguide'
-repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+repo_name: 'argonne-lcf/user-guides'
+repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
     - icon: 'fontawesome/brands/github-alt'
-      link: 'https://github.com/argonne-lcf/alcf-userguide'
+      link: 'https://github.com/argonne-lcf/user-guides'
   analytics:
     provider: google
     property: G-4M48E2L33R
