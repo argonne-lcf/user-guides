@@ -204,7 +204,7 @@ project name is similar to the name on Polaris with an \_CNDA suffix
 project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if
 their project requires additional storage.
 
-**Note:** The Project Lustre File system has changed from Gecko to Flare. Project data from `/lus/gecko/projects/*` has been copied over to `/lus/flare/projects/*`.  `/lus/gecko/projects` is only available on the User Access Nodes (UANs).
+**Note:** The Project Lustre File system has changed from Gecko to Flare. 
 
 #### DAOS
 
