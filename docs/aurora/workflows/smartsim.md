@@ -27,7 +27,7 @@ module load frameworks/2024.2.1_u1
 python -m venv --clear /path/to/_ssim_env --system-site-packages
 source /path/to/_ssim_env/bin/activate
 ```
-Is is recommended that the venv is installed in a user's project space on the Flare parallel file system. 
+It is recommended that the venv is installed in a user's project space on the Flare parallel file system. 
 
 Install SmartSim
 ```bash
