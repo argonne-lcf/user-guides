@@ -10,7 +10,7 @@ DAOS is fully integrated with the wider Aurora compute fabric as can be seen in 
 
 
 
-# DAOS Overview
+## DAOS Overview
 
 The first step in using DAOS is to get DAOS POOL space allocated for your project. 
 Users should submit a request as noted below to have a DAOS pool created for your project.
