@@ -2,9 +2,9 @@
 
 NVIDIA NCCL (pronounced "Nickel") is a standalone library of standard communication routines for GPUs, implementing all-reduce, all-gather, reduce, broadcast, reduce-scatter, as well as any send/receive based communication pattern. It has been optimized to achieve high bandwidth on platforms using PCIe, NVLink, NVswitch, as well as networking using InfiniBand Verbs or TCP/IP sockets. NCCL supports an arbitrary number of GPUs installed in a single node or across multiple nodes, and can be used in either single- or multi-process (e.g., MPI) applications.
 
-NCCL is a key library for scaling AI applications on Nvidia system. The conda module on Polaris are built with NCCL as the communication backend for distributed training. But HPC applications can also chose NCCL for communication over MPI. The library is available in the following folder: ```/soft/libraries/nccl```. 
+NCCL is a key library for scaling AI applications on NVIDIA system. The Anaconda modules on Polaris are built with NCCL as the communication backend for distributed training of deep learning models. But HPC applications can also chose NCCL for communication over MPI. The library is available in the following folder: ```/soft/libraries/nccl```. 
 
---8<-- [start:ncclenv]
+<!-- --8<-- [start:ncclenv] -->
 We have done extensive performance tests and identified the following best environment setup. 
 
 ```bash
@@ -18,22 +18,22 @@ export FI_CXI_DISABLE_HOST_REGISTER=1
 export FI_MR_CACHE_MONITOR=userfaultfd
 export FI_CXI_DEFAULT_CQ_SIZE=131072
 ```
-The key here is to enable AWS plugin (https://github.com/aws/aws-ofi-nccl). AWS OFI NCCL is a plug-in which enables EC2 developers to use libfabric as a network provider while running NVIDIA's NCCL based applications.
+The key here is to enable AWS plugin (https://github.com/aws/aws-ofi-nccl). AWS OFI NCCL is a plugin which enables EC2 developers to use libfabric as a network provider while running NVIDIA's NCCL based applications.
 
-This setup will lead to 2-3x performance improvement. For details, please refer to: https://github.com/argonne-lcf/alcf-nccl-tests. 
+This setup can lead to 2-3x performance improvement for some communication workloads. For details, please refer to: https://github.com/argonne-lcf/alcf-nccl-tests. 
 
-As of now (October 29, 2024), these environment variable settings have been included by default in the `conda` modules on Polaris. A user can confirm this via: 
-```bash 
-module load conda
-env | grep NCCL
-env | grep FI
-```
+<!-- As of now (October 29, 2024), these environment variable settings have been included by default in the `conda` modules on Polaris. A user can confirm this via:  -->
+<!-- ```bash  -->
+<!-- module load conda -->
+<!-- env | grep NCCL -->
+<!-- env | grep FI -->
+<!-- ``` -->
 
 !!! warning
     For some applications such as Megatron-DeepSpeed, enabling AWS plugin will cause hang or NCCL timeout issue. If so, please disable it by:
     ```bash
     unset NCCL_NET_GDR_LEVEL NCCL_CROSS_NIC NCCL_COLLNET_ENABLE NCCL_NET
     ```
---8<-- [end:ncclenv]
+<!-- --8<-- [end:ncclenv] -->
 
 

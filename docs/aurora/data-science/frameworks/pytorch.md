@@ -128,12 +128,12 @@ Some of the Aurora specific details might be helpful to you:
 The following environmental variables should be set on the batch submission 
 script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
---8<-- [start:commononecclenv]
+<!-- --8<-- [start:commononecclenv] -->
 #### oneCCL environment variable
 --8<-- "./docs/aurora/data-science/frameworks/oneCCL.md:onecclenv"
 
 These environment variable settings will probably be included in the framework module file in the future. But for now, users need to explicitly set these in the submission script. 
---8<-- [end:commononecclenv]
+<!-- --8<-- [end:commononecclenv] -->
 
 In order to run an application with `TF32` precision type, one must set the 
 following environmental parameter:
