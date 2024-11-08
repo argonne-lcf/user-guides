@@ -182,8 +182,8 @@ body {
 }
 
 .header--primary .header__nav-primary li:last-child {
-	padding-bottom: 8px;
-	border-left: 1px solid #1d1651;
+	/* padding-bottom: 8px; */
+	/* border-left: 1px solid #1d1651; */
 }
 
 .header--primary .header__nav-primary a {
@@ -210,9 +210,9 @@ body {
 	margin-top: 6px;
 }
 
-#nav-sup {
-	padding-left: 32px;
-}
+/* #nav-sup { */
+/* 	padding-left: 32px; */
+/* } */
 
 .header--primary .header__nav-secondary {
 	grid-column: 2 / span 5;

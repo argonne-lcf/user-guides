@@ -1,5 +1,5 @@
 # ALCF User Guides
-We are moving our ALCF documentation into GitHub to make it easier to contribute and collaborate to our user and machine guides.
+The ALCF user-facing documentation source material is hosted on GitHub, in order to facilitate contributions and issue reporting from the community.
 
 Our user guides contain information for: 
 
