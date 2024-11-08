@@ -25,22 +25,20 @@ body {
 }
 
 .md-typeset h1 {
-/* 	font-size: 60px; */
-/* 	line-height: 60px; */
-	border-bottom: 1px solid rgb(216, 220, 225);
-	padding-bottom: .75rem;
-	margin: 0;
+    border-bottom: 1px solid rgb(216, 220, 225);
+    padding-bottom: .75rem;
+    margin: 0;
 }
 
-.md-typeset h2 {
-/* 	font-size: 36px; */
-/* 	line-height: 36px; */
-}
-
-.md-typeset h3 {
-/* 	margin:3em 0 0; */
-;
-}
+/* .md-typeset h2 { */
+/* /* 	font-size: 36px; */ */
+/* /* 	line-height: 36px; */ */
+/* } */
+/**/
+/* .md-typeset h3 { */
+/* /* 	margin:3em 0 0; */ */
+/* ; */
+/* } */
 
 .md-typeset p, .md-typeset li {
 	font-size: 19px;
@@ -49,24 +47,24 @@ body {
 	margin-block-start: .8em;
 }
 
-.md-typeset li{
-	margin-block-start: 0;
-}
+/* .md-typeset li{ */
+/* 	margin-block-start: 0; */
+/* } */
 
 
 .md-typeset ul {
-	list-style-type: none;
+	list-style-type: disc;
 }
 
-.md-typeset ul > li {
-	text-indent: -15px;
-}
+/* .md-typeset ul > li { */
+/* 	text-indent: -15px; */
+/* } */
 
 .md-typeset ul > li:before {
-	content: "–";
-  margin-right: 5px;
+	/* content: " "; */
+  /* margin-right: 1rem; */
   font-weight: 600;
-  color: #6e6e78;
+  color: var(--md-accent-fg-color);
 }
 
 .md-typeset :target {
