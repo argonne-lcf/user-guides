@@ -1,9 +1,10 @@
 mkdocs-material
 mkdocs>=1.5.0
+mkdocs-video
 mkdocs-include-markdown-plugin
-mkdocs-codeinclude-plugin>=0.2.1
-pymdown-extensions>=9.10
-mkdocs-get-deps>=0.2.0
-mkdocs-git-authors-plugin>=0.9.2
-mkdocs-material-extensions>=1.3.1
-mkdocs-minify-plugin>=0.8.0
+mkdocs-codeinclude-plugin
+pymdown-extensions
+mkdocs-get-deps
+mkdocs-git-authors-plugin
+mkdocs-material-extensions
+mkdocs-minify-plugin
