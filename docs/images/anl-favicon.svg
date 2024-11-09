@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 128 129.00922"
+   width="128"
+   height="128"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="anl-favicon.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="true"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     showborder="true"
+     inkscape:clip-to-page="true"
+     inkscape:zoom="2.3246387"
+     inkscape:cx="-55.277407"
+     inkscape:cy="23.659591"
+     inkscape:window-width="1624"
+     inkscape:window-height="1229"
+     inkscape:window-x="0"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <style
+       id="style1">
+      .cls-1{fill:none;}.cls-2{fill:#FFF;}.cls-3{fill:#007836;}.cls-4{fill:#0082ca;}.cls-5{fill:#0b1f8f;}.cls-6{fill:#a12b2f;}.cls-7{fill:#cd202c;}.cls-8{fill:#77b300;}.cls-hole{fill:#00000000}.cls-name{fill:#838383;}
+    </style>
+  </defs>
+  <title
+     id="title1">ANL_RGB_rev</title>
+  <g
+     id="boundary"
+     transform="translate(-226.39118,-24.133325)">
+    <rect
+       id="_Rectangle_"
+       data-name="&lt;Rectangle&gt;"
+       class="cls-1"
+       width="300"
+       height="104.82"
+       x="0"
+       y="0" />
+  </g>
+  <g
+     id="delta"
+     transform="matrix(2.1791498,0,0,2.1791498,-490.08922,-30.160403)">
+    <g
+       id="_Group_"
+       data-name="&lt;Group&gt;">
+      <polygon
+         id="_Path_"
+         data-name="&lt;Path&gt;"
+         class="cls-3"
+         points="225.15,50.31 234.83,67.07 244.51,50.31 " />
+      <path
+         id="_Compound_Path_"
+         data-name="&lt;Compound Path&gt;"
+         class="cls-4"
+         d="m 263.87,50.31 h -19.36 l -9.68,16.77 h 38.72 z" />
+      <polygon
+         id="_Path_2"
+         data-name="&lt;Path&gt;"
+         class="cls-5"
+         points="263.87,50.31 273.55,67.07 283.23,50.31 " />
+      <polygon
+         id="_Path_3"
+         data-name="&lt;Path&gt;"
+         class="cls-1"
+         points="244.51,50.31 254.19,33.54 263.87,50.31 " />
+      <polygon
+         id="_Path_4"
+         data-name="&lt;Path&gt;"
+         class="cls-6"
+         points="244.51,16.77 254.19,33.54 263.87,16.77 " />
+      <polygon
+         id="_Path_5"
+         data-name="&lt;Path&gt;"
+         class="cls-7"
+         points="263.87,16.77 254.19,33.54 263.87,50.3 263.87,50.31 283.23,50.31 " />
+      <path
+         id="_Compound_Path_2"
+         data-name="&lt;Compound Path&gt;"
+         class="cls-8"
+         d="m 244.51,50.31 9.68,-16.77 -9.68,-16.77 -19.36,33.54 z" />
+    </g>
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>ANL_RGB_rev</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

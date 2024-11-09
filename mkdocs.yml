@@ -6,23 +6,15 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  custom_dir: overrides
   language: "en"
-  logo: "images/Argonne_wireframe_white_transparent.png"
-  favicon: "images/alcf_favicon.ico"
-
-  icon:
-    edit: material/pencil
-    view: material/eye
-  # palette:
-  #   scheme: alcf
-
+  custom_dir: overrides
+  favicon: "images/anl-favicon.svg"
   palette:
     # Palette toggle for automatic mode
-    # - media: "(prefers-color-scheme)"
-    #   toggle:
-    #     icon: material/brightness-auto
-    #     name: Switch to light mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
 
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -120,6 +112,14 @@ extra:
   social:
     - icon: "fontawesome/brands/github"
       link: "https://github.com/argonne-lcf/user-guides"
+    # - icon: fontawesome/brands/docker
+    #   link: https://hub.docker.com/r/squidfunk/mkdocs-material/
+    # - icon: fontawesome/brands/python
+    #   link: https://pypi.org/project/mkdocs-material/
+    # - icon: fontawesome/brands/mastodon
+    #   link: https://fosstodon.org/@squidfunk
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/argonne_lcf
   analytics:
     provider: google
     property: G-4M48E2L33R
@@ -136,17 +136,7 @@ plugins:
       minify_html: true
 
 nav:
-  - ALCF Resources: https://www.alcf.anl.gov/alcf-resources
-  - Science and Engineering: https://www.alcf.anl.gov/science
-  - Community and Outreach: https://docs.alcf.anl.gov/#https://www.alcf.anl.gov/community-and-partnerships
-  - About: https://www.alcf.anl.gov/about
-  - News: https://www.alcf.anl.gov/news
-  - Events: https://www.alcf.anl.gov/events
-  - People: https://www.alcf.anl.gov/about/people
-  - Careers: https://www.alcf.anl.gov/about/careers
-  - MyALCF Portal: https://my.alcf.anl.gov/
-
-  - User Guides:
+  - Home:
     - index.md
     - Account and Project Management:
         - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
@@ -419,6 +409,15 @@ nav:
             - Data Policy: policies/data-and-software-policies/data-policy.md
             - Software Policy: policies/data-and-software-policies/software-policy.md
 
+  - ALCF Resources: https://www.alcf.anl.gov/alcf-resources
+  - Science and Engineering: https://www.alcf.anl.gov/science
+  - Community and Outreach: https://docs.alcf.anl.gov/#https://www.alcf.anl.gov/community-and-partnerships
+  - About: https://www.alcf.anl.gov/about
+  - News: https://www.alcf.anl.gov/news
+  - Events: https://www.alcf.anl.gov/events
+  - People: https://www.alcf.anl.gov/about/people
+  - Careers: https://www.alcf.anl.gov/about/careers
+  - MyALCF Portal: https://my.alcf.anl.gov/
   - Support:
     - issues.md
     - Support Center: https://www.alcf.anl.gov/support-center

@@ -21,20 +21,14 @@
 
 [data-md-color-scheme="slate"] {
     --md-typeset-a-color: #badef5;
-    /* --md-typeset-a-color: var(--md-primary-fg-color); */
-    /* color: #badef5; */
-    /* --md-typeset-a-color: #B8E2DE; */
     --md-default-heading-color: #b8e2de;
-    /* --md-primary-fg-color: #0261AF; */
-    /* --md-default-bg-color: #1d1651; */
-    /* --md-primary-fg-color: #1d1651; */
     --md-primary-fg-color: #1A1C23;
     --md-default-bg-color: #111317;
+    /* --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1); */
     --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82);
     --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.56);
     --md-default-fg-color--lighter: hsla(var(--md-hue), 15%, 90%, 0.32);
     --md-default-fg-color--lightest: hsla(var(--md-hue), 15%, 90%, 0.12);
-    /* --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1); */
     --md-default-bg-color--light: hsla(var(--md-hue), 15%, 14%, 0.54);
     --md-default-bg-color--lighter: hsla(var(--md-hue), 15%, 14%, 0.26);
     --md-default-bg-color--lightest: hsla(var(--md-hue), 15%, 14%, 0.07);
@@ -71,15 +65,15 @@
     color-scheme: dark;
 }
 
-.md-content a {
-    text-decoration: underline;
-}
-
-.md-content a:hover {
-    text-decoration: underline;
-    transition: 0.2s ease-in-out;
-}
-
+/* .md-content a { */
+/*     text-decoration: underline; */
+/* } */
+/**/
+/* .md-content a:hover { */
+/*     text-decoration: underline; */
+/*     transition: 0.2s ease-in-out; */
+/* } */
+/**/
 
 /* .header a { */
 /*     text-decoration: none; */
@@ -90,6 +84,12 @@
 /* typography */
 body {
     font-family: proxima-nova, sans-serif;
+}
+
+.md-header__inner .md-logo img {
+	height: auto;
+	width: 105!important;
+	/* padding-top: 0.5rem; */
 }
 
 .md-typeset h1,
@@ -104,8 +104,8 @@ body {
 }
 
 .md-typeset h1 {
-    border-bottom: 1px solid rgb(216, 220, 225);
-    padding-bottom: .75rem;
+    /* border-bottom: 1px solid rgb(216, 220, 225); */
+    /* padding-bottom: .75rem; */
     margin: 0;
 }
 
@@ -176,14 +176,14 @@ body {
 	.md-header { display: none; }
 }*/
 
-.header--primary {
-    background-color: var(--md-primary-fg-color);
-    color: #e7f6fd;
-    border-bottom: 1px solid #1d1651;
-    height: 152px;
-    font-size: 19px;
-    line-height: 24px;
-}
+/* .header--primary { */
+/*     background-color: var(--md-primary-fg-color); */
+/*     color: #e7f6fd; */
+/*     border-bottom: 1px solid #1d1651; */
+/*     height: 152px; */
+/*     font-size: 19px; */
+/*     line-height: 24px; */
+/* } */
 
 
 
@@ -204,31 +204,31 @@ body {
 /*     max-width: 59.8rem; */
 /* } */
 
-.header--primary .header__nav-primary a {
-    color: #FFF;
-    text-decoration: none;
-}
+/* .header--primary .header__nav-primary a { */
+/*     color: #FFF; */
+/*     text-decoration: none; */
+/* } */
+/**/
+/* .header--primary .header__nav-secondary a { */
+/*     color: #badef5; */
+/*     text-decoration: none; */
+/* } */
 
-.header--primary .header__nav-secondary a {
-    color: #badef5;
-    text-decoration: none;
-}
+/* .header--primary .header__nav-secondary a:hover { */
+/*     color: #0261AF; */
+/*     text-decoration: none; */
+/*     /* color: #0261af; */ */
+/* } */
+/**/
+/* .header--primary a:hover { */
+/*     /* color: #0261af; */ */
+/*     color: #0261AF; */
+/* } */
+/**/
 
-.header--primary .header__nav-secondary a:hover {
-    color: #0261AF;
-    text-decoration: none;
-    /* color: #0261af; */
-}
-
-.header--primary a:hover {
-    /* color: #0261af; */
-    color: #0261AF;
-}
-
-
-.header--primary .grid {
-    min-height: 152px;
-}
+/* .header--primary .grid { */
+/*     min-height: 152px; */
+/* } */
 
 /* .header--primary .header__site-title { */
 /*     grid-column: span 6; */
@@ -237,16 +237,16 @@ body {
 /*     margin-bottom: -8px; */
 /* } */
 
-.header--primary a {
-    text-decoration: none;
-}
+/* .header--primary a { */
+/*     text-decoration: none; */
+/* } */
 
-.header--primary .header__site-title h1 {
-    color: #b8e2de;
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 36px;
-}
+/* .header--primary .header__site-title h1 { */
+/*     color: #b8e2de; */
+/*     font-size: 36px; */
+/*     font-weight: 600; */
+/*     line-height: 36px; */
+/* } */
 
 .header--primary .header__nav-primary {
     grid-column: span 6;
