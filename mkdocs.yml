@@ -44,7 +44,7 @@ theme:
     - content.action.edit
     - content.action.view
     - toc.follow
-    - toc.integrate
+    # - toc.integrate
     # - navigation.instant
     # - navigation.instant.prefetch
     - navigation.prune
@@ -136,278 +136,278 @@ plugins:
       minify_html: true
 
 nav:
-  - Home:
-    - index.md
-    - Account and Project Management:
-        - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
-        - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
-        - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
-        - Project Management:
-            - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
-            - Managing Your Team Members: account-project-management/project-management/team-management.md
-            - Reporting: account-project-management/project-management/project-reports.md
-        - Allocations:
-            - Allocations on ALCF Computing Resources: account-project-management/allocation-management/overview.md
-            - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
-            - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
+  - User Guides:
+      - index.md
+      - Account and Project Management:
+          - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
+          - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+          - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+          - Project Management:
+              - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
+              - Managing Your Team Members: account-project-management/project-management/team-management.md
+              - Reporting: account-project-management/project-management/project-reports.md
+          - Allocations:
+              - Allocations on ALCF Computing Resources: account-project-management/allocation-management/overview.md
+              - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
+              - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
 
-    - Data Management:
-        - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-        - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
-        - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
-        - Data Transfer:
-            - SFTP and SCP: data-management/data-transfer/sftp-scp.md
-            - Using Globus: data-management/data-transfer/using-globus.md
-        - File System & Storage:
-            - File Systems: data-management/filesystem-and-storage/file-systems.md
-            - Data Storage: data-management/filesystem-and-storage/data-storage.md
-            - HPSS: data-management/filesystem-and-storage/hpss.md
-            - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+      - Data Management:
+          - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
+          - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+          - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
+          - Data Transfer:
+              - SFTP and SCP: data-management/data-transfer/sftp-scp.md
+              - Using Globus: data-management/data-transfer/using-globus.md
+          - File System & Storage:
+              - File Systems: data-management/filesystem-and-storage/file-systems.md
+              - Data Storage: data-management/filesystem-and-storage/data-storage.md
+              - HPSS: data-management/filesystem-and-storage/hpss.md
+              - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
 
-    - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
-        - Services: services/index.md
-        # it is a dropdown. Only linked to in base docs/index.md
-        # - Getting Started: services/getting-started.md
-        - JupyterHub: services/jupyter-hub.md
-        - Continuous Integration:
-            - General: services/continuous-integration.md
-            - Gitlab-CI: services/gitlab-ci.md
+      - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
+          - Services: services/index.md
+          # it is a dropdown. Only linked to in base docs/index.md
+          # - Getting Started: services/getting-started.md
+          - JupyterHub: services/jupyter-hub.md
+          - Continuous Integration:
+              - General: services/continuous-integration.md
+              - Gitlab-CI: services/gitlab-ci.md
 
-    - Running Jobs with PBS at the ALCF:
-        - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
-        - Example Job Scripts: running-jobs/example-job-scripts.md
-        - Machine Reservations: running-jobs/machine-reservations.md
-        - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
+      - Running Jobs with PBS at the ALCF:
+          - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
+          - Example Job Scripts: running-jobs/example-job-scripts.md
+          - Machine Reservations: running-jobs/machine-reservations.md
+          - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
 
-    - Machines:
-      - Machines: machines/index.md
+      - Machines:
+          - Machines: machines/index.md
 
-      - Aurora/Sunspot:
-          - Aurora: machines/aurora/index.md
-          # - Getting Started: machines/aurora/getting-started-on-machines/aurora.md
-          - Aurora PE: machines/aurora/machines/aurora-pe.md
-          - Sunspot to Aurora: machines/aurora/sunspot-to-aurora.md
-          - Known Issues: machines/aurora/known-issues.md
-          - Hardware Overview: machines/aurora/hardware-overview/machine-overview.md
-          - Node Performance Overview: machines/aurora/node-performance-overview/node-performance-overview.md
-          - Compiling and Linking:
-              - Compiling and Linking Overview: machines/aurora/compiling-and-linking/compiling-and-linking-overview.md
-              - Programming Models: machines/aurora/compiling-and-linking/aurora-programming-models.md
-              - Example Program and Makefile: machines/aurora/compiling-and-linking/aurora-example-program-makefile.md
-              #  - LLVM Compilers: machines/aurora/compiling-and-linking/llvm-compilers-aurora.md
-              #  - GNU Compilers: machines/aurora/compiling-and-linking/gnu-compilers-aurora.md
-              # - CCE Compilers: machines/aurora/compiling-and-linking/cce-compilers-aurora.md
-              - Continuous Integration: machines/aurora/compiling-and-linking/continuous-integration-aurora.md
-          - Build Tools:
-              - CMake: machines/aurora/build-tools/cmake-aurora.md
-          - Running Jobs: machines/aurora/running-jobs-aurora.md
-          - Data Management:
-              - Copper: machines/aurora/data-management/copper/copper.md
-              - DAOS: machines/aurora/data-management/daos/daos-overview.md
-              - Lustre (Flare): machines/aurora/data-management/lustre/flare.md
-              - Moving data to Aurora:
-                  - DAOS data mover: machines/aurora/data-management/moving_data_to_aurora/daos_datamover.md
-                  - Globus: machines/aurora/data-management/moving_data_to_aurora/globus.md
-                  - SCP: machines/aurora/data-management/moving_data_to_aurora/scp.md
-          - Applications and Libraries:
-              - Libraries:
-                  - Cabana: machines/aurora/applications-and-libraries/libraries/cabana-aurora.md
-                  - Math Libraries: machines/aurora/applications-and-libraries/libraries/math-libraries.md
-                  - MKL: machines/aurora/applications-and-libraries/libraries/mkl.md
-                  - MPI: machines/aurora/applications-and-libraries/libraries/mpi.md
-                  - oneDAL: machines/aurora/applications-and-libraries/libraries/onedal.md
-                  - Spack PE: machines/aurora/applications-and-libraries/libraries/spack-pe.md
-          - Data Science:
-              - Julia: machines/aurora/data-science/julia.md
-              - Python: machines/aurora/data-science/python.md
-              - Applications:
-                  - gpt-neox: machines/aurora/data-science/applications/gpt-neox.md
-              - Containers: machines/aurora/data-science/containers/containers.md
-              - Frameworks:
-                  - DeepSpeed: machines/aurora/data-science/frameworks/deepspeed.md
-                  - Jax: machines/aurora/data-science/frameworks/jax.md
-                  - PyTorch: machines/aurora/data-science/frameworks/pytorch.md
-                  - TensorFlow: machines/aurora/data-science/frameworks/tensorflow.md
-                  - LibTorch: machines/aurora/data-science/frameworks/libtorch.md
-                  - OneCCL: machines/aurora/data-science/frameworks/oneCCL.md
-              - Libraries:
-                  - OpenVINO: machines/aurora/data-science/libraries/openvino.md
-          - Programming Models:
-              - Kokkos: machines/aurora/programming-models/kokkos-aurora.md
-              - Level Zero: machines/aurora/programming-models/level-0.md
-              - openCL: machines/aurora/programming-models/opencl-aurora.md
-              - OpenMP: machines/aurora/programming-models/openmp-aurora.md
-              - RAJA: machines/aurora/programming-models/raja-aurora.md
-              - SYCL: machines/aurora/programming-models/sycl-aurora.md
-          - Debugging Tools:
-              - Overview: machines/aurora/debugging/debugging-overview.md
-              - gdb-oneapi: machines/aurora/debugging/gdb-oneapi-aurora.md
-          - Performance Tools:
-              - Overview: machines/aurora/performance-tools/performance-overview.md
-              - Advisor: machines/aurora/performance-tools/advisor.md
-              - VTune: machines/aurora/performance-tools/vtune.md
-          - Visualization:
-              - Paraview: machines/aurora/visualization/paraview.md
-          - Services:
-              - GitLab: machines/aurora/services/gitlab-ci.md
-              - JupyterHub: machines/aurora/services/jupyterhub.md
-          - Workflows:
-              - Balsam: machines/aurora/workflows/balsam.md
-              - DeepHyper: machines/aurora/workflows/deephyper.md
-              - libEnsemble: machines/aurora/workflows/libensemble.md
-              - Parsl: machines/aurora/workflows/parsl.md
-              - SmartSim: machines/aurora/workflows/smartsim.md
+          - Aurora/Sunspot:
+              - Aurora: machines/aurora/index.md
+              # - Getting Started: machines/aurora/getting-started-on-machines/aurora.md
+              - Aurora PE: machines/aurora/machines/aurora-pe.md
+              - Sunspot to Aurora: machines/aurora/sunspot-to-aurora.md
+              - Known Issues: machines/aurora/known-issues.md
+              - Hardware Overview: machines/aurora/hardware-overview/machine-overview.md
+              - Node Performance Overview: machines/aurora/node-performance-overview/node-performance-overview.md
+              - Compiling and Linking:
+                  - Compiling and Linking Overview: machines/aurora/compiling-and-linking/compiling-and-linking-overview.md
+                  - Programming Models: machines/aurora/compiling-and-linking/aurora-programming-models.md
+                  - Example Program and Makefile: machines/aurora/compiling-and-linking/aurora-example-program-makefile.md
+                  #  - LLVM Compilers: machines/aurora/compiling-and-linking/llvm-compilers-aurora.md
+                  #  - GNU Compilers: machines/aurora/compiling-and-linking/gnu-compilers-aurora.md
+                  # - CCE Compilers: machines/aurora/compiling-and-linking/cce-compilers-aurora.md
+                  - Continuous Integration: machines/aurora/compiling-and-linking/continuous-integration-aurora.md
+              - Build Tools:
+                  - CMake: machines/aurora/build-tools/cmake-aurora.md
+              - Running Jobs: machines/aurora/running-jobs-aurora.md
+              - Data Management:
+                  - Copper: machines/aurora/data-management/copper/copper.md
+                  - DAOS: machines/aurora/data-management/daos/daos-overview.md
+                  - Lustre (Flare): machines/aurora/data-management/lustre/flare.md
+                  - Moving data to Aurora:
+                      - DAOS data mover: machines/aurora/data-management/moving_data_to_aurora/daos_datamover.md
+                      - Globus: machines/aurora/data-management/moving_data_to_aurora/globus.md
+                      - SCP: machines/aurora/data-management/moving_data_to_aurora/scp.md
+              - Applications and Libraries:
+                  - Libraries:
+                      - Cabana: machines/aurora/applications-and-libraries/libraries/cabana-aurora.md
+                      - Math Libraries: machines/aurora/applications-and-libraries/libraries/math-libraries.md
+                      - MKL: machines/aurora/applications-and-libraries/libraries/mkl.md
+                      - MPI: machines/aurora/applications-and-libraries/libraries/mpi.md
+                      - oneDAL: machines/aurora/applications-and-libraries/libraries/onedal.md
+                      - Spack PE: machines/aurora/applications-and-libraries/libraries/spack-pe.md
+              - Data Science:
+                  - Julia: machines/aurora/data-science/julia.md
+                  - Python: machines/aurora/data-science/python.md
+                  - Applications:
+                      - gpt-neox: machines/aurora/data-science/applications/gpt-neox.md
+                  - Containers: machines/aurora/data-science/containers/containers.md
+                  - Frameworks:
+                      - DeepSpeed: machines/aurora/data-science/frameworks/deepspeed.md
+                      - Jax: machines/aurora/data-science/frameworks/jax.md
+                      - PyTorch: machines/aurora/data-science/frameworks/pytorch.md
+                      - TensorFlow: machines/aurora/data-science/frameworks/tensorflow.md
+                      - LibTorch: machines/aurora/data-science/frameworks/libtorch.md
+                      - OneCCL: machines/aurora/data-science/frameworks/oneCCL.md
+                  - Libraries:
+                      - OpenVINO: machines/aurora/data-science/libraries/openvino.md
+              - Programming Models:
+                  - Kokkos: machines/aurora/programming-models/kokkos-aurora.md
+                  - Level Zero: machines/aurora/programming-models/level-0.md
+                  - openCL: machines/aurora/programming-models/opencl-aurora.md
+                  - OpenMP: machines/aurora/programming-models/openmp-aurora.md
+                  - RAJA: machines/aurora/programming-models/raja-aurora.md
+                  - SYCL: machines/aurora/programming-models/sycl-aurora.md
+              - Debugging Tools:
+                  - Overview: machines/aurora/debugging/debugging-overview.md
+                  - gdb-oneapi: machines/aurora/debugging/gdb-oneapi-aurora.md
+              - Performance Tools:
+                  - Overview: machines/aurora/performance-tools/performance-overview.md
+                  - Advisor: machines/aurora/performance-tools/advisor.md
+                  - VTune: machines/aurora/performance-tools/vtune.md
+              - Visualization:
+                  - Paraview: machines/aurora/visualization/paraview.md
+              - Services:
+                  - GitLab: machines/aurora/services/gitlab-ci.md
+                  - JupyterHub: machines/aurora/services/jupyterhub.md
+              - Workflows:
+                  - Balsam: machines/aurora/workflows/balsam.md
+                  - DeepHyper: machines/aurora/workflows/deephyper.md
+                  - libEnsemble: machines/aurora/workflows/libensemble.md
+                  - Parsl: machines/aurora/workflows/parsl.md
+                  - SmartSim: machines/aurora/workflows/smartsim.md
 
-      - Polaris:
-          - Getting Started: machines/polaris/getting-started.md
-          - System Updates: machines/polaris/system-updates.md
-          - Known Issues: machines/polaris/known-issues.md
-          - Hardware Overview:
-              - Polaris Machine Overview: machines/polaris/hardware-overview/machine-overview.md
-          - Compiling and Linking:
-              - Compiling and Linking Overview: machines/polaris/compiling-and-linking/compiling-and-linking-overview.md
-              - Programming Models: machines/polaris/compiling-and-linking/polaris-programming-models.md
-              - Example Program and Makefile: machines/polaris/compiling-and-linking/polaris-example-program-makefile.md
-              - CCE Compilers: machines/polaris/compiling-and-linking/cce-compilers-polaris.md
-              - GNU Compilers: machines/polaris/compiling-and-linking/gnu-compilers-polaris.md
-              - NVIDIA Compilers: machines/polaris/compiling-and-linking/nvidia-compiler-polaris.md
-              - LLVM Compilers: machines/polaris/compiling-and-linking/llvm-compilers-polaris.md
-              - oneAPI Toolkit: machines/polaris/compiling-and-linking/oneapi-compiler.md
-          - Build Tools:
-              - CMake: machines/polaris/build-tools/cmake-polaris.md
-          - Running Jobs: machines/polaris/running-jobs.md
-          - Applications and Libraries:
-              - Applications:
-                  - GROMACS: machines/polaris/applications-and-libraries/applications/gromacs.md
-                  - LAMMPS: machines/polaris/applications-and-libraries/applications/lammps.md
-                  - NekRS: machines/polaris/applications-and-libraries/applications/nekrs.md
-                  - OpenMM: machines/polaris/applications-and-libraries/applications/openmm.md
-                  - QMCPACK: machines/polaris/applications-and-libraries/applications/QMCPACK.md
-                  - Quantum ESPRESSO: machines/polaris/applications-and-libraries/applications/QuantumESPRESSO.md
-                  - VASP: machines/polaris/applications-and-libraries/applications/vasp.md
-              - Libraries:
-                  - Math Libraries: machines/polaris/applications-and-libraries/libraries/math-libraries.md
-                  - Cabana: machines/polaris/applications-and-libraries/libraries/cabana-polaris.md
-                  - Spack PE: machines/polaris/applications-and-libraries/libraries/spack-pe.md
-                  - XALT: machines/polaris/applications-and-libraries/libraries/xalt.md
-          - Containers: machines/polaris/containers/containers.md
-          - Data Science:
-              - Julia: machines/polaris/data-science-workflows/julia.md
-              - Python: machines/polaris/data-science-workflows/python.md
-              - Frameworks:
-                  - TensorFlow: machines/polaris/data-science-workflows/frameworks/tensorflow.md
-                  - PyTorch: machines/polaris/data-science-workflows/frameworks/pytorch.md
-                  - Jax: machines/polaris/data-science-workflows/frameworks/jax.md
-                  - DeepSpeed: machines/polaris/data-science-workflows/frameworks/deepspeed.md
-                  - LibTorch: machines/polaris/data-science-workflows/frameworks/libtorch.md
-              - Applications:
-                  - Megatron-DeepSpeed: machines/polaris/data-science-workflows/applications/megatron-deepspeed.md
-                  - gpt-neox: machines/polaris/data-science-workflows/applications/gpt-neox.md
-          - Programming Models:
-              - OpenMP: machines/polaris/programming-models/openmp-polaris.md
-              - SYCL: machines/polaris/programming-models/sycl-polaris.md
-              - Kokkos: machines/polaris/programming-models/kokkos-polaris.md
-          - Debugging Tools:
-              - CUDA-GDB: machines/polaris/debugging-tools/CUDA-GDB.md
-          - Performance Tools:
-              - NVIDIA-Nsight: machines/polaris/performance-tools/NVIDIA-Nsight.md
-          - Visualization:
-              - Visualization on Polaris: machines/polaris/visualization/visualization.md
-              - ParaView (Launch from Client): machines/polaris/visualization/paraview.md
-              - ParaView (Manual Launch): machines/polaris/visualization/paraview-manual-launch.md
-              - VisIt: machines/polaris/visualization/visit.md
-              - FFmpeg: machines/polaris/visualization/ffmpeg.md
-              - ImageMagick: machines/polaris/visualization/imagemagick.md
-              - ParaView Tutorial: machines/polaris/visualization/paraview-tutorial.md
-              - VNC: machines/polaris/visualization/vnc.md
-          - Workflows:
-              - Multi-Instance GPU (MIG) mode: machines/polaris/workflows/mig-compute.md
-              - Balsam: machines/polaris/workflows/balsam.md
-              - Parsl: machines/polaris/workflows/parsl.md
-              - libEnsemble: machines/polaris/workflows/libensemble.md
-              - SmartSim: machines/polaris/workflows/smartsim.md
+          - Polaris:
+              - Getting Started: machines/polaris/getting-started.md
+              - System Updates: machines/polaris/system-updates.md
+              - Known Issues: machines/polaris/known-issues.md
+              - Hardware Overview:
+                  - Polaris Machine Overview: machines/polaris/hardware-overview/machine-overview.md
+              - Compiling and Linking:
+                  - Compiling and Linking Overview: machines/polaris/compiling-and-linking/compiling-and-linking-overview.md
+                  - Programming Models: machines/polaris/compiling-and-linking/polaris-programming-models.md
+                  - Example Program and Makefile: machines/polaris/compiling-and-linking/polaris-example-program-makefile.md
+                  - CCE Compilers: machines/polaris/compiling-and-linking/cce-compilers-polaris.md
+                  - GNU Compilers: machines/polaris/compiling-and-linking/gnu-compilers-polaris.md
+                  - NVIDIA Compilers: machines/polaris/compiling-and-linking/nvidia-compiler-polaris.md
+                  - LLVM Compilers: machines/polaris/compiling-and-linking/llvm-compilers-polaris.md
+                  - oneAPI Toolkit: machines/polaris/compiling-and-linking/oneapi-compiler.md
+              - Build Tools:
+                  - CMake: machines/polaris/build-tools/cmake-polaris.md
+              - Running Jobs: machines/polaris/running-jobs.md
+              - Applications and Libraries:
+                  - Applications:
+                      - GROMACS: machines/polaris/applications-and-libraries/applications/gromacs.md
+                      - LAMMPS: machines/polaris/applications-and-libraries/applications/lammps.md
+                      - NekRS: machines/polaris/applications-and-libraries/applications/nekrs.md
+                      - OpenMM: machines/polaris/applications-and-libraries/applications/openmm.md
+                      - QMCPACK: machines/polaris/applications-and-libraries/applications/QMCPACK.md
+                      - Quantum ESPRESSO: machines/polaris/applications-and-libraries/applications/QuantumESPRESSO.md
+                      - VASP: machines/polaris/applications-and-libraries/applications/vasp.md
+                  - Libraries:
+                      - Math Libraries: machines/polaris/applications-and-libraries/libraries/math-libraries.md
+                      - Cabana: machines/polaris/applications-and-libraries/libraries/cabana-polaris.md
+                      - Spack PE: machines/polaris/applications-and-libraries/libraries/spack-pe.md
+                      - XALT: machines/polaris/applications-and-libraries/libraries/xalt.md
+              - Containers: machines/polaris/containers/containers.md
+              - Data Science:
+                  - Julia: machines/polaris/data-science-workflows/julia.md
+                  - Python: machines/polaris/data-science-workflows/python.md
+                  - Frameworks:
+                      - TensorFlow: machines/polaris/data-science-workflows/frameworks/tensorflow.md
+                      - PyTorch: machines/polaris/data-science-workflows/frameworks/pytorch.md
+                      - Jax: machines/polaris/data-science-workflows/frameworks/jax.md
+                      - DeepSpeed: machines/polaris/data-science-workflows/frameworks/deepspeed.md
+                      - LibTorch: machines/polaris/data-science-workflows/frameworks/libtorch.md
+                  - Applications:
+                      - Megatron-DeepSpeed: machines/polaris/data-science-workflows/applications/megatron-deepspeed.md
+                      - gpt-neox: machines/polaris/data-science-workflows/applications/gpt-neox.md
+              - Programming Models:
+                  - OpenMP: machines/polaris/programming-models/openmp-polaris.md
+                  - SYCL: machines/polaris/programming-models/sycl-polaris.md
+                  - Kokkos: machines/polaris/programming-models/kokkos-polaris.md
+              - Debugging Tools:
+                  - CUDA-GDB: machines/polaris/debugging-tools/CUDA-GDB.md
+              - Performance Tools:
+                  - NVIDIA-Nsight: machines/polaris/performance-tools/NVIDIA-Nsight.md
+              - Visualization:
+                  - Visualization on Polaris: machines/polaris/visualization/visualization.md
+                  - ParaView (Launch from Client): machines/polaris/visualization/paraview.md
+                  - ParaView (Manual Launch): machines/polaris/visualization/paraview-manual-launch.md
+                  - VisIt: machines/polaris/visualization/visit.md
+                  - FFmpeg: machines/polaris/visualization/ffmpeg.md
+                  - ImageMagick: machines/polaris/visualization/imagemagick.md
+                  - ParaView Tutorial: machines/polaris/visualization/paraview-tutorial.md
+                  - VNC: machines/polaris/visualization/vnc.md
+              - Workflows:
+                  - Multi-Instance GPU (MIG) mode: machines/polaris/workflows/mig-compute.md
+                  - Balsam: machines/polaris/workflows/balsam.md
+                  - Parsl: machines/polaris/workflows/parsl.md
+                  - libEnsemble: machines/polaris/workflows/libensemble.md
+                  - SmartSim: machines/polaris/workflows/smartsim.md
 
-      - Sophia:
-          - Machine Overview: machines/sophia/hardware-overview/machine-overview.md
-          - Getting Started: machines/sophia/getting-started.md
-          - Running Jobs: machines/sophia/queueing-and-running-jobs/running-jobs.md
-          - Compiling and Linking: machines/sophia/compiling-and-linking/compiling-and-linking-overview.md
-          - Containers: machines/sophia/containers/containers.md
-          - Data Science:
-              - Python: machines/sophia/data-science/python.md
-              - Fine-tuning with Autotrain: machines/sophia/data-science/fine-tune-LLM-with-Autotrain.md
-          - Visualization:
-              - Visualization on Sophia: machines/sophia/visualization/visualization.md
-              - ParaView (Launch from Client): machines/sophia/visualization/paraview.md
+          - Sophia:
+              - Machine Overview: machines/sophia/hardware-overview/machine-overview.md
+              - Getting Started: machines/sophia/getting-started.md
+              - Running Jobs: machines/sophia/queueing-and-running-jobs/running-jobs.md
+              - Compiling and Linking: machines/sophia/compiling-and-linking/compiling-and-linking-overview.md
+              - Containers: machines/sophia/containers/containers.md
+              - Data Science:
+                  - Python: machines/sophia/data-science/python.md
+                  - Fine-tuning with Autotrain: machines/sophia/data-science/fine-tune-LLM-with-Autotrain.md
+              - Visualization:
+                  - Visualization on Sophia: machines/sophia/visualization/visualization.md
+                  - ParaView (Launch from Client): machines/sophia/visualization/paraview.md
 
-      - AI Testbed:
-          - Getting Started: machines/ai-testbed/getting-started.md
+          - AI Testbed:
+              - Getting Started: machines/ai-testbed/getting-started.md
 
-          - Cerebras:
-              - System Overview: machines/ai-testbed/cerebras/system-overview.md
-              - Getting Started: machines/ai-testbed/cerebras/getting-started.md
-              - Running a Model/Program: machines/ai-testbed/cerebras/running-a-model-or-program.md
-              - Customizing Environments: machines/ai-testbed/cerebras/customizing-environment.md
-              - Job Queuing and Submission: machines/ai-testbed/cerebras/job-queuing-and-submission.md
-              - Example Programs: machines/ai-testbed/cerebras/example-programs.md
-              #- Performance Tools: machines/ai-testbed/cerebras/performance-tools.md
-              - Tunneling and Forwarding Ports: machines/ai-testbed/cerebras/tunneling-and-forwarding-ports.md
-              - Miscellaneous: machines/ai-testbed/cerebras/miscellaneous.md
+              - Cerebras:
+                  - System Overview: machines/ai-testbed/cerebras/system-overview.md
+                  - Getting Started: machines/ai-testbed/cerebras/getting-started.md
+                  - Running a Model/Program: machines/ai-testbed/cerebras/running-a-model-or-program.md
+                  - Customizing Environments: machines/ai-testbed/cerebras/customizing-environment.md
+                  - Job Queuing and Submission: machines/ai-testbed/cerebras/job-queuing-and-submission.md
+                  - Example Programs: machines/ai-testbed/cerebras/example-programs.md
+                  #- Performance Tools: machines/ai-testbed/cerebras/performance-tools.md
+                  - Tunneling and Forwarding Ports: machines/ai-testbed/cerebras/tunneling-and-forwarding-ports.md
+                  - Miscellaneous: machines/ai-testbed/cerebras/miscellaneous.md
 
-          - Graphcore:
-              - System Overview: machines/ai-testbed/graphcore/system-overview.md
-              - Getting Started: machines/ai-testbed/graphcore/getting-started.md
-              - Virtual Environment: machines/ai-testbed/graphcore/virtual-environments.md
-              - Running a Model/Program: machines/ai-testbed/graphcore/running-a-model-or-program.md
-              - Job Queuing and Submission: machines/ai-testbed/graphcore/job-queuing-and-submission.md
-              - Example Programs: machines/ai-testbed/graphcore/example-programs.md
-              - Miscellaneous: machines/ai-testbed/graphcore/miscellaneous.md
-              - Documentation: machines/ai-testbed/graphcore/documentation.md
+              - Graphcore:
+                  - System Overview: machines/ai-testbed/graphcore/system-overview.md
+                  - Getting Started: machines/ai-testbed/graphcore/getting-started.md
+                  - Virtual Environment: machines/ai-testbed/graphcore/virtual-environments.md
+                  - Running a Model/Program: machines/ai-testbed/graphcore/running-a-model-or-program.md
+                  - Job Queuing and Submission: machines/ai-testbed/graphcore/job-queuing-and-submission.md
+                  - Example Programs: machines/ai-testbed/graphcore/example-programs.md
+                  - Miscellaneous: machines/ai-testbed/graphcore/miscellaneous.md
+                  - Documentation: machines/ai-testbed/graphcore/documentation.md
 
-          - Groq:
-              - System Overview: machines/ai-testbed/groq/system-overview.md
-              - Getting Started: machines/ai-testbed/groq/getting-started.md
-              - Running a Model/Program: machines/ai-testbed/groq/running-a-model-or-program.md
-              #- Example Programs: machines/ai-testbed/groq/example-programs.md
-              - Virtual Environments: machines/ai-testbed/groq/virtual-environments.md
-              - Job Queueing and Submission: machines/ai-testbed/groq/job-queuing-and-submission.md
-              - Profiling with GroqView: machines/ai-testbed/groq/groqview.md
+              - Groq:
+                  - System Overview: machines/ai-testbed/groq/system-overview.md
+                  - Getting Started: machines/ai-testbed/groq/getting-started.md
+                  - Running a Model/Program: machines/ai-testbed/groq/running-a-model-or-program.md
+                  #- Example Programs: machines/ai-testbed/groq/example-programs.md
+                  - Virtual Environments: machines/ai-testbed/groq/virtual-environments.md
+                  - Job Queueing and Submission: machines/ai-testbed/groq/job-queuing-and-submission.md
+                  - Profiling with GroqView: machines/ai-testbed/groq/groqview.md
 
-          - SambaNova:
-              - System Overview: machines/ai-testbed/sambanova/system-overview.md
-              - Getting Started: machines/ai-testbed/sambanova/getting-started.md
-              - Virtual Environment: machines/ai-testbed/sambanova/virtual-environment.md
-              - Running a Model/Program: machines/ai-testbed/sambanova/running-a-model-or-program.md
-              - Job Queuing and Submission: machines/ai-testbed/sambanova/job-queuing-and-submission.md
-              - Example Programs: machines/ai-testbed/sambanova/example-programs.md
-              - Example Multi-Node Programs: machines/ai-testbed/sambanova/example-multi-node-programs.md
-              # - Running BERT Large on Sambanova DataScale SN30-8: machines/ai-testbed/sambanova/running-bert-large-on-sn30.md
-              - Modelzoo Samples: machines/ai-testbed/sambanova/example-modelzoo-programs.md
-              - Tunneling and Forwarding Ports: machines/ai-testbed/sambanova/tunneling-and-forwarding-ports.md
-              - SambaTune for profiling and performance tuning: machines/ai-testbed/sambanova/sambatune.md
-              - Miscellaneous: machines/ai-testbed/sambanova/miscellaneous.md
-              - SambaNova Documentation: machines/ai-testbed/sambanova/documentation.md
-            # - Performance Tools: machines/ai-testbed/sambanova/performance-tools.md
-        #
-          - Data Management: machines/ai-testbed/data-management/data-management-overview.md
+              - SambaNova:
+                  - System Overview: machines/ai-testbed/sambanova/system-overview.md
+                  - Getting Started: machines/ai-testbed/sambanova/getting-started.md
+                  - Virtual Environment: machines/ai-testbed/sambanova/virtual-environment.md
+                  - Running a Model/Program: machines/ai-testbed/sambanova/running-a-model-or-program.md
+                  - Job Queuing and Submission: machines/ai-testbed/sambanova/job-queuing-and-submission.md
+                  - Example Programs: machines/ai-testbed/sambanova/example-programs.md
+                  - Example Multi-Node Programs: machines/ai-testbed/sambanova/example-multi-node-programs.md
+                  # - Running BERT Large on Sambanova DataScale SN30-8: machines/ai-testbed/sambanova/running-bert-large-on-sn30.md
+                  - Modelzoo Samples: machines/ai-testbed/sambanova/example-modelzoo-programs.md
+                  - Tunneling and Forwarding Ports: machines/ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+                  - SambaTune for profiling and performance tuning: machines/ai-testbed/sambanova/sambatune.md
+                  - Miscellaneous: machines/ai-testbed/sambanova/miscellaneous.md
+                  - SambaNova Documentation: machines/ai-testbed/sambanova/documentation.md
+                # - Performance Tools: machines/ai-testbed/sambanova/performance-tools.md
+              #
+              - Data Management: machines/ai-testbed/data-management/data-management-overview.md
 
-    - Facility Policies:
-        - Overview of Policies: policies/facility-policies.md
-        - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
+      - Facility Policies:
+          - Overview of Policies: policies/facility-policies.md
+          - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
 
-        - Account Policies:
-            - Accounts Policy: policies/accounts/accounts-policy.md
-            - Account Sponsorship & Retention Policy: policies/accounts/account-sponsorship-retention-policy.md
-            - User Authentication Policy: policies/accounts/user-authentication-policy.md
+          - Account Policies:
+              - Accounts Policy: policies/accounts/accounts-policy.md
+              - Account Sponsorship & Retention Policy: policies/accounts/account-sponsorship-retention-policy.md
+              - User Authentication Policy: policies/accounts/user-authentication-policy.md
 
-        - Queue and Scheduling Policies:
-            - Queue and Scheduling Policy: policies/queue-scheduling/queue-and-scheduling-policy.md
-            - Refund Policy: policies/queue-scheduling/refund-policy.md
-            - Pullback Policy: policies/queue-scheduling/pullback-policy.md
+          - Queue and Scheduling Policies:
+              - Queue and Scheduling Policy: policies/queue-scheduling/queue-and-scheduling-policy.md
+              - Refund Policy: policies/queue-scheduling/refund-policy.md
+              - Pullback Policy: policies/queue-scheduling/pullback-policy.md
 
-        - Data and Software Policies:
-            - Data Policy: policies/data-and-software-policies/data-policy.md
-            - Software Policy: policies/data-and-software-policies/software-policy.md
+          - Data and Software Policies:
+              - Data Policy: policies/data-and-software-policies/data-policy.md
+              - Software Policy: policies/data-and-software-policies/software-policy.md
 
   - ALCF Resources: https://www.alcf.anl.gov/alcf-resources
   - Science and Engineering: https://www.alcf.anl.gov/science
@@ -419,8 +419,8 @@ nav:
   - Careers: https://www.alcf.anl.gov/about/careers
   - MyALCF Portal: https://my.alcf.anl.gov/
   - Support:
-    - issues.md
-    - Support Center: https://www.alcf.anl.gov/support-center
+      - issues.md
+      - Support Center: https://www.alcf.anl.gov/support-center
 
 not_in_nav: |
   not_in_nav/
