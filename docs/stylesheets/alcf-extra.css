@@ -1,11 +1,13 @@
+/* ALCF Colors taken from branding guidelines */
+
 /* #A12B2F #CD202C */
 /* #FF7900 #F8B200 */
 /* #00A19C #03A669 #007836 */
 /* #00609C #0261AF #0061Af */
 /* #4582ec #118acb #0082CA */
-/* #5B0091 #1d1651 #0B1F8F */
-/* #b8e2de #e7f6fd */
-/* #F2F2F2 #D1D1D1 #666666 */
+/* #5B0091 #0B1F8F #1d1651 */
+/* #b8e2de #e7f6fd #F2F2F2 
+/* #D1D1D1 #666666 */
 
 [data-md-color-scheme="alcf"] {
     /* Colors */
@@ -87,9 +89,14 @@ body {
 }
 
 .md-header__inner .md-logo img {
-	height: auto;
-	width: 105!important;
-	/* padding-top: 0.5rem; */
+    height: auto;
+    width: 105 !important;
+}
+
+.md-header__inner {
+    align-items: center;
+    display: flex;
+    padding-inline: 5pt;
 }
 
 .md-typeset h1,
@@ -154,12 +161,48 @@ body {
     box-shadow: none;
 }
 
+.md-header__button.md-logo {
+    margin: auto;
+}
+
 .md-header__inner .md-logo img {
     height: auto;
     width: 100px;
 }
 
+.md-tabs__item {
+    height: auto;
+    padding-left: .6rem;
+    padding-right: .6rem;
+}
 
+.md-header__button {
+    color: currentcolor;
+    cursor: pointer;
+    /* margin: .2rem; */
+    outline-color: var(--md-accent-fg-color);
+    padding: .4rem;
+    position: relative;
+    transition: opacity .25s;
+    vertical-align: middle;
+    z-index: 1;
+}
+
+.md-tabs__link {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    font-size: 0.75rem;
+    margin-top: auto;
+    outline-color: var(--md-accent-fg-color);
+    outline-offset: .2rem;
+    transition: transform .4s cubic-bezier(.1, .7, .1, 1), opacity .25s;
+    padding-block: 5pt;
+}
+
+.md-header__button.md-logo {
+    padding-inline-start: 3px;
+}
 
 
 /* primary header */
@@ -217,11 +260,13 @@ body {
 /* .header--primary .header__nav-secondary a:hover { */
 /*     color: #0261AF; */
 /*     text-decoration: none; */
-/*     /* color: #0261af; */ */
+/*     /* color: #0261af; */
+*/
 /* } */
 /**/
 /* .header--primary a:hover { */
-/*     /* color: #0261af; */ */
+/*     /* color: #0261af; */
+*/
 /*     color: #0261AF; */
 /* } */
 /**/
@@ -265,8 +310,10 @@ body {
 }
 
 /* .header--primary .header__nav-primary li:last-child { */
-/* 	/* padding-bottom: 8px; */ */
-/* 	/* border-left: 1px solid #1d1651; */ */
+/* 	/* padding-bottom: 8px; */
+*/
+/* 	/* border-left: 1px solid #1d1651; */
+*/
 /* } */
 
 .header--primary .header__nav-primary a {
