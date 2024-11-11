@@ -1,5 +1,8 @@
 # Transfering files through Globus
+## During Acceptance Testing period 
+We have set up a temporary Globus endpoint for Flare that you can use to transfer data out. The endpoint is called "alcf#dtn_flare_at" and is set up for read-only access. The endpoint will be available through the acceptance testing (AT) period and will be shutdown after AT concludes.
 
+## Before Acceptance Testing
 Currently, only Globus personal is supported on Aurora. 
 Perform the following steps to transfer data to/from the Aurora login nodes.
 
