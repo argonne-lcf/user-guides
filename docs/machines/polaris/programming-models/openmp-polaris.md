@@ -126,8 +126,7 @@ $ qsub -l select=1:system=polaris -l walltime=0:30:00 -l filesystems=home:eagle 
 
 In the above, having the PBS options in the script and on the command line is redundant, but we put it there to show both ways of launching. This submits the script to one node in the debug queue on Polaris, requesting 30 min and the eagle and home filesystems. It will charge project Catalyst for the time.
 
-More details for setting up the job script are in [Job Scheduling and Execution section](../../running-jobs/job-and-queue-scheduling.md).
-
+More details for setting up the job script are in [Job Scheduling and Execution section](../../../running-jobs/job-and-queue-scheduling.md)
 
 ## Example
 

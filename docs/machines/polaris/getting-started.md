@@ -28,7 +28,7 @@ Additionally, a suite of software packages is provided via Spack deployments, de
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](../running-jobs/example-job-scripts.md) page as well.
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](../../running-jobs/example-job-scripts.md) page as well.
 
 ## Lustre File Striping
 

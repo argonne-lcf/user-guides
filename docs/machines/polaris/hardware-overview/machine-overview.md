@@ -54,6 +54,7 @@ Links to detailed NVIDIA A100 documentation:
 
 
 ## Login nodes
+
 There are four login nodes available to users for editing code, building code, submitting / monitoring jobs, checking usage (`sbank`), etc..  Their full hostnames are `polaris-login-N.hsn.cm.polaris.alcf.anl.gov`  for `N` equal to `01` through `04`; there are an additional two login nodes that are not user-accessible which are used for running services such as JupyterHub. The various compilers and libraries are present on the logins, so most users should be able to build their code.  However, if your build requires the physical presence of the GPU, you will need to build on a compute node.
 
 All users share the same login nodes so please be courteous and respectful of your fellow users.  For example, please do not run computationally or IO intensive pre- or post-processing on the logins and keep the parallelism of your builds to a reasonable level.
@@ -72,8 +73,10 @@ Note 3: If your build requires the physical presence of a GPU you will need to b
 
 
 ## Gateway nodes
+
 There are 50 gateway nodes.  These nodes are not user accessible, but are used transparently for access to the storage systems.  Each node has a single 200 Gbps HDR IB card for access to the storage area network.  This gives a theoretical peak bandwidth of 1250 GB/s which is approximately the aggregate bandwidth of the global file systems (1300 GB/s).
 
 
 ## Storage
-Polaris has access to the ALCF global file systems.  Details on storage can be found [here](../../data-management/filesystem-and-storage/data-storage.md).
+
+Polaris has access to the ALCF global file systems.  Details on storage can be found [here](../../../data-management/filesystem-and-storage/data-storage.md).
