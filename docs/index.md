@@ -16,10 +16,10 @@ Our user guides contain information for:
   Information on getting your code ready for our upcoming exascale
   supercomputer.
 
-- [Polaris](polaris/getting-started.md):
+- [Polaris](machines/polaris/getting-started.md):
   Information on how to get started on our supercomputer.
 
-- [AI Testbed](ai-testbed/getting-started.md):
+- [AI Testbed](machines/ai-testbed/getting-started.md):
   Information on how to use our AI Accelerators.
 
 - [Services](./services/index.md):
@@ -47,7 +47,7 @@ provides information on what you need to do in order to get time on our
 systems, get an account, and how to start running jobs.
 
 If you have an account and an award for Polaris, we suggest visiting on
-[Getting on Polaris webpage](polaris/getting-started.md).
+[Getting on Polaris webpage](machines/polaris/getting-started.md).
 
 If you'd like to user our AI accelerators, visit
 [Getting Started on AI Testbed](https://argonne-lcf.github.io/ai-testbed-userdocs/#getting-started).
