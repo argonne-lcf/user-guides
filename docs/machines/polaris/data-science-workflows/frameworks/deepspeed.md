@@ -26,7 +26,7 @@ DeepSpeed support.
     ```
 
     Refer to [job scheduling and
-    execution](../../../running-jobs/job-and-queue-scheduling.md) for
+    execution](../../../../running-jobs/job-and-queue-scheduling.md) for
     additional information.
 
 1. Load `conda` module and activate base environment:
