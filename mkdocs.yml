@@ -185,7 +185,7 @@ nav:
           - Aurora/Sunspot:
               - Aurora: machines/aurora/index.md
               # - Getting Started: machines/aurora/getting-started-on-machines/aurora.md
-              - Aurora PE: machines/aurora/machines/aurora-pe.md
+              - Aurora PE: machines/aurora/aurora-pe.md
               - Sunspot to Aurora: machines/aurora/sunspot-to-aurora.md
               - Known Issues: machines/aurora/known-issues.md
               - Hardware Overview: machines/aurora/hardware-overview/machine-overview.md
@@ -287,6 +287,7 @@ nav:
                       - VASP: machines/polaris/applications-and-libraries/applications/vasp.md
                   - Libraries:
                       - Math Libraries: machines/polaris/applications-and-libraries/libraries/math-libraries.md
+                      - NCCL: machines/polaris/applications-and-libraries/libraries/nccl.md
                       - Cabana: machines/polaris/applications-and-libraries/libraries/cabana-polaris.md
                       - Spack PE: machines/polaris/applications-and-libraries/libraries/spack-pe.md
                       - XALT: machines/polaris/applications-and-libraries/libraries/xalt.md
@@ -368,8 +369,9 @@ nav:
                   - System Overview: machines/ai-testbed/groq/system-overview.md
                   - Getting Started: machines/ai-testbed/groq/getting-started.md
                   - Running a Model/Program: machines/ai-testbed/groq/running-a-model-or-program.md
-                  #- Example Programs: machines/ai-testbed/groq/example-programs.md
                   - Virtual Environments: machines/ai-testbed/groq/virtual-environments.md
+                  #- Example Programs: machines/ai-testbed/groq/example-programs.md
+                  # - Virtual Environments: machines/ai-testbed/groq/virtual-environments.md
                   - Job Queueing and Submission: machines/ai-testbed/groq/job-queuing-and-submission.md
                   - Profiling with GroqView: machines/ai-testbed/groq/groqview.md
 
@@ -428,6 +430,7 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
+  machines/aurora/data-science/frameworks/oneCCLenv.md
   account-project-management/index.md
   llvm-compilers-aurora.md
   gnu-compilers-aurora.md
