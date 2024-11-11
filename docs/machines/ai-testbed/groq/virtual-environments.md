@@ -35,6 +35,7 @@ if [ -d "groqflow_demo_helpers.egg-info" ]; then rm -r groqflow_demo_helpers.egg
 pip install -e .
 popd
 pip install soundfile
+pip install datasets==2.21.0
 ```
 
 Note: if you encounter problems trying to update an existing groqflow conda environment, consider removing the existing environment with the following command, and recreating it. Make sure you deactivate the environment before removing it. 
