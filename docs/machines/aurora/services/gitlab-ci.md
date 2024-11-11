@@ -7,16 +7,14 @@
 #### ALCF Specific Variables for Aurora and Sunspot:
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
-| Sunspot | PBS       | ANL_SUNSPOT_SCHEDULER_PARAMETERS  | [Sunspot Getting Started](../getting-started-on-aurora.md) |
-
-
+| Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../../aurora/index.md) |
+| Sunspot | PBS       | ANL_SUNSPOT_SCHEDULER_PARAMETERS  | [Sunspot Getting Started](../../aurora/index.md) |
 
 ### Examples which have been modified for Aurora and Sunspot:
 
-
 _Example: A `.gitlab-ci.yml` file for an Aurora project_
-```
+
+```yml
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -44,7 +42,8 @@ batch_test:
 ```
 
 _Example: Running a batch job on the Aurora HPC_
-```
+
+```yml
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -64,7 +63,8 @@ batch_test:
 
 
 _Example: Aurora pipeline with custom stages_
-```
+
+```yml
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -96,9 +96,9 @@ test2:
     - echo "Job 2 end"
 ```
 
-
 _Example: Gitlab job designed to only run on merge requests_
-```
+
+```yml
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'

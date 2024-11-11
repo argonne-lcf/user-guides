@@ -63,11 +63,11 @@ $ qsub -l select=1 -l walltime=0:30:00 -q EarlyAppAccess -A Project ./submit.sh
 
 In the above, having the PBS options in the script and on the command line is redundant, but we put it there to show both ways of launching. This submits the script to one node in the `EarlyAppAccess` queue on Aurora, requesting 30 min. It will charge project `Project` for the time. You should replace it with your project name.
 
-More details for setting up the job script are in [Job Scheduling and Execution section](running-jobs/job-and-queue-scheduling.md).
+More details for setting up the job script are in [Job Scheduling and Execution section](../running-jobs-aurora.md).
 
 ## Example
 
-```
+```bash
 $ cat hello.cpp
 #include <stdio.h>
 #include <omp.h>
@@ -111,12 +111,15 @@ program  main
  end program main
 ```
 ### To compile
+
+```bash
+mpicxx -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.cpp -o c_test
+mpifort -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.F90 -o f_test
 ```
-$ mpicxx -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.cpp -o c_test
-$ mpifort -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.F90 -o f_test
-```
-### To run 
-```
+
+### To run
+
+```bash
 $ mpiexec -n 1 ./c_test
 Number of devices: 6
 Hello world from accelerator.
@@ -124,5 +127,3 @@ $ mpiexec -n 1 ./f_test
  Number of devices:            6
  Hello world from accelerator
 ```
-
-
