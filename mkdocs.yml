@@ -9,6 +9,7 @@ theme:
   language: "en"
   custom_dir: overrides
   favicon: "images/favicon.svg"
+  logo: images/logo.svg
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -164,7 +165,7 @@ nav:
               - HPSS: data-management/filesystem-and-storage/hpss.md
               - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
 
-      - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
+      - Services:
           - Services: services/index.md
           # it is a dropdown. Only linked to in base docs/index.md
           # - Getting Started: services/getting-started.md
