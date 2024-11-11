@@ -8,7 +8,7 @@ theme:
   name: material
   language: "en"
   custom_dir: overrides
-  favicon: "images/anl-favicon.svg"
+  favicon: "images/favicon.svg"
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
