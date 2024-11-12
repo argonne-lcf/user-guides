@@ -39,7 +39,7 @@ jobs:
       if: steps.changed_files.outputs.files != ''
       run: |
         echo "${{ steps.changed_files.outputs.files }}" > changed_files.txt
-        python proofread.py changed_files.txt
+        python scripts/proofread.py changed_files.txt
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
