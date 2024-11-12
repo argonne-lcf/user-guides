@@ -54,12 +54,8 @@ With the use of `ProxyJump` below, entering the MobilePass+ or Cryptocard
 passcode twice will be needed (once for bastion and once for the other
 resource).
 
-A simple example shows the `#!bash .ssh/config` entries for Polaris and the
-`#!bash scp` command for transferring from Polaris:
-
 ```bash
-# on Polaris
-$ cat ~/.ssh/config
+username@aurora-uan-0009:~> cat .ssh/config
 Host bastion.alcf.anl.gov
     User username
 
@@ -70,9 +66,17 @@ Host polaris.alcf.anl.gov
 ```
 
 ```bash
-src="/eagle/<project>/<username>/test.txt"
-dst="$(pwd)"
-scp "${src}" "${dst}"
+username@aurora-uan-0009:~> scp username@polaris.alcf.anl.gov:/eagle/catalyst/proj-shared/username/test.txt ./
+---------------------------------------------------------------------------
+                            Notice to Users
+...
+[Password:
+---------------------------------------------------------------------------
+                            Notice to Users
+... 
+[Password:
+username@aurora-uan-0009:~> cat test.txt 
+from_polaris eagle
 ```
 
 ## `#!bash scp`: Examples[^examples]
