@@ -55,7 +55,6 @@ passcode twice will be needed (once for bastion and once for the other
 resource).
 
 ```bash
-$ cat .ssh/config
 username@aurora-uan-0009:~> cat .ssh/config
 Host bastion.alcf.anl.gov
     User username
@@ -79,8 +78,6 @@ username@aurora-uan-0009:~> scp username@polaris.alcf.anl.gov:/eagle/catalyst/pr
 username@aurora-uan-0009:~> cat test.txt 
 from_polaris eagle
 ```
-
-
 
 ## `#!bash scp`: Examples[^examples]
 
