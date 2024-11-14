@@ -77,7 +77,7 @@ nav:
         - Frameworks:
             - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
             - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
-            - Jax: polaris/data-science-workflows/frameworks/jax.md
+            - JAX: polaris/data-science-workflows/frameworks/jax.md
             - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
             - LibTorch: polaris/data-science-workflows/frameworks/libtorch.md
         - Applications:
@@ -163,7 +163,7 @@ nav:
       - SambaNova Documentation: ai-testbed/sambanova/documentation.md
       # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
-  - Aurora/Sunspot:
+  - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
       - Aurora PE: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
@@ -174,10 +174,10 @@ nav:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
         - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
-      #  - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
-      #  - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
+      # - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
+      # - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
       # - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
-        - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
+      # - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
       - Build Tools:
         - CMake: aurora/build-tools/cmake-aurora.md
       - Running Jobs: aurora/running-jobs-aurora.md
@@ -186,26 +186,26 @@ nav:
         - DAOS: aurora/data-management/daos/daos-overview.md
         - Lustre (Flare): aurora/data-management/lustre/flare.md
         - Moving data to Aurora:
-          - DAOS data mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+          - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
           - Globus: aurora/data-management/moving_data_to_aurora/globus.md
           - SCP: aurora/data-management/moving_data_to_aurora/scp.md
       - Applications and Libraries:
         - Libraries:
           - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
-          - Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
-          - MKL: aurora/applications-and-libraries/libraries/mkl.md
-          - MPI: aurora/applications-and-libraries/libraries/mpi.md
-          - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+          #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
+          #- MKL: aurora/applications-and-libraries/libraries/mkl.md
+          #- MPI: aurora/applications-and-libraries/libraries/mpi.md
+          #- oneDAL: aurora/applications-and-libraries/libraries/onedal.md
           - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
       - Data Science:
-        - Julia: aurora/data-science/julia.md
+        #- Julia: aurora/data-science/julia.md
         - Python: aurora/data-science/python.md
-        - Applications:
-          - gpt-neox: aurora/data-science/applications/gpt-neox.md
+        #- Applications:
+          #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
         - Frameworks:
-          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
-          - Jax: aurora/data-science/frameworks/jax.md
+          #- DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          #- JAX: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
@@ -217,25 +217,25 @@ nav:
         - Level Zero: aurora/programming-models/level-0.md
         - OpenCL: aurora/programming-models/opencl-aurora.md
         - OpenMP: aurora/programming-models/openmp-aurora.md
-        - RAJA: aurora/programming-models/raja-aurora.md
+        #- RAJA: aurora/programming-models/raja-aurora.md
         - SYCL: aurora/programming-models/sycl-aurora.md
       - Debugging Tools:
         - Overview: aurora/debugging/debugging-overview.md
-        - gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
+        #- gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
       - Performance Tools:
-        - Overview: aurora/performance-tools/performance-overview.md
+      #  - Overview: aurora/performance-tools/performance-overview.md
         - Advisor: aurora/performance-tools/advisor.md
         - VTune: aurora/performance-tools/vtune.md
-      - Visualization:
-        - Paraview: aurora/visualization/paraview.md
+      # - Visualization:
+      #   - ParaView: aurora/visualization/paraview.md
       - Services:
         - GitLab: aurora/services/gitlab-ci.md
-        - JupyterHub: aurora/services/jupyterhub.md
+        #- JupyterHub: aurora/services/jupyterhub.md
       - Workflows:
-        - Balsam: aurora/workflows/balsam.md
-        - DeepHyper: aurora/workflows/deephyper.md
-        - libEnsemble: aurora/workflows/libensemble.md
-        - Parsl: aurora/workflows/parsl.md
+        # - Balsam: aurora/workflows/balsam.md
+        # - DeepHyper: aurora/workflows/deephyper.md
+        # - libEnsemble: aurora/workflows/libensemble.md
+        # - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
@@ -259,9 +259,28 @@ not_in_nav: |
   TODO.md
   notes.md
   account-project-management/index.md
+  # TODO: complete or remove Aurora placeholder pages
   llvm-compilers-aurora.md
   gnu-compilers-aurora.md
   cce-compilers-aurora.md
+  continuous-integration-aurora.md
+  aurora/applications-and-libraries/libraries/math-libraries.md
+  aurora/applications-and-libraries/libraries/mkl.md
+  aurora/applications-and-libraries/libraries/mpi.md
+  aurora/applications-and-libraries/libraries/onedal.md
+  aurora/data-science/julia.md
+  aurora/data-science/applications/gpt-neox.md
+  aurora/data-science/frameworks/deepspeed.md
+  aurora/data-science/frameworks/jax.md
+  aurora/programming-models/raja-aurora.md
+  aurora/debugging/gdb-oneapi-aurora.md
+  aurora/performance-tools/performance-overview.md
+  aurora/visualization/paraview.md
+  aurora/services/jupyterhub.md
+  aurora/workflows/balsam.md
+  aurora/workflows/deephyper.md
+  aurora/workflows/libensemble.md
+  aurora/workflows/parsl.md
 
 theme:
   name: 'material'
