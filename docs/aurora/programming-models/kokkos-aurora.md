@@ -18,19 +18,18 @@ spaces. By convention, Kokkos only allows one GPU backend at a time.
 
 The prebuilt Kokkos on Aurora includes 3 backends: Serial and OpenMP for CPU
 execution and SYCL for GPU execution (with ahead-of-time (AOT) compilation,
-not just-in-time (JIT) compilation. To use it, run
+not just-in-time (JIT) compilation). To use it, run
 
 ```
-module use /soft/modulefiles
 module load kokkos
 ```
 This sets the following environment variables, some of which are used by
 `cmake`:
 
-* `KOKKOS_HOME` - path to the `lib64/`, `include/` files installed
-* `LIBRARY_PATH` - prepends `$KOKKOS_HOME/lib64` to this variable used by `cmake`
-* `CPATH` - prepends `$KOKKOS_HOME/include` to this variable used by `cmake`
-* `LD_LIBRARY_PATH` - prepends `$KOKKOS_HOME/lib64` to this variable
+* `KOKKOS_ROOT` - path to the `lib64/`, `include/` files installed
+* `LIBRARY_PATH` - prepends `$KOKKOS_ROOT/lib64` to this variable used by `cmake`
+* `CPATH` - prepends `$KOKKOS_ROOT/include` to this variable used by `cmake`
+* `LD_LIBRARY_PATH` - prepends `$KOKKOS_ROOT/lib64` to this variable
 
 
 ### Building a Kokkos Application Using `cmake`
@@ -75,26 +74,27 @@ make
 Here's an example `Makefile`:
 
 ```
-# KOKKOS_HOME set via:
+# KOKKOS_ROOT set via:
 #   module load kokkos
-
-# You can look at the first lines of $KOKKOS_HOME/KokkosConfigCommon.cmake to
-# see the flags used in cmake configuration of the kokkos library build. The
-# default Kokkos module on Aurora was built with PrgEnv-nvhpc and includes
-# Serial, OpenMP (threads) and CUDA backends. So you should have that
-# environment module loaded and include compiler flags for cuda and openmp:
+# 
+# You can look at the first lines of
+# $KOKKOS_ROOT/lib64/cmake/Kokkos/KokkosConfigCommon.cmake to see the flags
+# used in cmake configuration of the kokkos library build. The default Kokkos
+# module on Aurora was built with the default oneAPI module and includes
+# Serial, OpenMP (threads) and SYCL backends. So you should have that
+# environment module loaded and include compiler flags for sycl and openmp:
 
 # Aurora MPICH wrapper for C++ and C compilers:
 CXX="mpic++ -cxx=icpx"
 CC="mpicc -cc=icx"
 
 SYCL_AOT_CPPFLAGS=-fsycl -fsycl-targets=spir64_gen -fno-sycl-id-queries-fit-in-int -fsycl-dead-args-optimization -fsycl-unnamed-lambda -std=c++17
-SYCL_AOT_LDFLAGS=-Xsycl-target-backend "-device 12.60.7"
+SYCL_AOT_LDFLAGS=-Xsycl-target-backend "-device pvc"
 
-CPPFLAGS=-g -O2 -fiopenmp -I $(KOKKOS_HOME)/include $(SYCL_AOT_CPPFLAGS) -Wno-deprecated-declarations -Wno-tautological-constant-compare -Wno-unknown-attributes
+CPPFLAGS=-g -O2 -fiopenmp -I $(KOKKOS_ROOT)/include $(SYCL_AOT_CPPFLAGS) -Wno-deprecated-declarations -Wno-tautological-constant-compare -Wno-unknown-attributes -ffp-model=precise
 
 LDFLAGS=$(CPPFLAGS) $(SYCL_AOT_LDFLAGS)
-LDLIBS=-L$(KOKKOS_HOME)/lib64 -lkokkoscore -lkokkossimd -lpthread
+LDLIBS=-L$(KOKKOS_ROOT)/lib64 -lkokkoscore -lkokkossimd -lkokkoscontainers -lpthread
 
 SRCS=example1.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
@@ -146,13 +146,15 @@ cmake\
     -DKokkos_ENABLE_SERIAL=ON\
     -DKokkos_ENABLE_OPENMP=ON\
     -DKokkos_ENABLE_SYCL=ON\
-    -DKokkos_ARCH_INTEL_PVC=ON\
-    -DBUILD_SHARED_LIBS=OFF\
+    -DKokkos_ARCH_INTEL_GEN=ON\
+    -DKokkos_ENABLE_SYCL_RELOCATABLE_DEVICE_CODE=OFF\
+    -DKokkos_ENABLE_IMPL_SYCL_DEVICE_GLOBAL_SUPPORTED=OFF\
+    -DBUILD_SHARED_LIBS=ON\
     -DKokkos_ENABLE_DEPRECATED_CODE_3=ON\
     -DKokkos_ENABLE_DEBUG=OFF\
     -DKokkos_ENABLE_EXAMPLES=OFF\
-    -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations -Wno-tautological-constant-compare"\
-    -DCMAKE_EXE_LINKER_FLAGS="-fsycl-max-parallel-link-jobs=5"\
+    -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations -Wno-tautological-constant-compare -ffp-model=precise -Xsycl-target-backend \"-device pvc\""\
+    -DCMAKE_EXE_LINKER_FLAGS="-ffp-model=precise -fsycl-max-parallel-link-jobs=20 -fno-sycl-rdc"\
     -DCMAKE_VERBOSE_MAKEFILE=OFF\
     -DCMAKE_INSTALL_PREFIX=/path/to/your/install/directory\
     ..
