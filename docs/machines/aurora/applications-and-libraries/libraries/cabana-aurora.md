@@ -17,7 +17,6 @@ backends: Serial and OpenMP for CPU execution and SYCL for GPU execution. To
 use it, run
 
 ```
-module use /soft/modulefiles
 module load cabana
 ```
 
