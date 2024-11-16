@@ -44,16 +44,14 @@ theme:
     - content.action.edit
     - content.action.view
     - toc.follow
-    # - toc.integrate
-    # - navigation.instant
-    # - navigation.instant.prefetch
-    - navigation.prune
+    - toc.integrate
+    # - navigation.prune
     - navigation.top
     - navigation.sections
     - navigation.tabs
     - navigation.tracking
     - navigation.indexes
-    - navigation.instant.preview
+
 
 extra_css:
   - stylesheets/alcf-extra.css
@@ -112,12 +110,6 @@ extra:
   social:
     - icon: "fontawesome/brands/github"
       link: "https://github.com/argonne-lcf/user-guides"
-    # - icon: fontawesome/brands/docker
-    #   link: https://hub.docker.com/r/squidfunk/mkdocs-material/
-    # - icon: fontawesome/brands/python
-    #   link: https://pypi.org/project/mkdocs-material/
-    # - icon: fontawesome/brands/mastodon
-    #   link: https://fosstodon.org/@squidfunk
     - icon: fontawesome/brands/x-twitter
       link: https://x.com/argonne_lcf
   analytics:
@@ -410,19 +402,31 @@ nav:
           - Data and Software Policies:
               - Data Policy: policies/data-and-software-policies/data-policy.md
               - Software Policy: policies/data-and-software-policies/software-policy.md
+      - Support:
+          - issues.md
+          - Support Center: https://www.alcf.anl.gov/support-center
 
-  - ALCF Resources: https://www.alcf.anl.gov/alcf-resources
-  - Science and Engineering: https://www.alcf.anl.gov/science
-  - Community and Outreach: https://docs.alcf.anl.gov/#https://www.alcf.anl.gov/community-and-partnerships
+  # - ALCF:
+  - ALCF: https://www.alcf.anl.gov
   - About: https://www.alcf.anl.gov/about
-  - News: https://www.alcf.anl.gov/news
-  - Events: https://www.alcf.anl.gov/events
-  - People: https://www.alcf.anl.gov/about/people
   - Careers: https://www.alcf.anl.gov/about/careers
+  - Community and Outreach: https://docs.alcf.anl.gov/#https://www.alcf.anl.gov/community-and-partnerships
+  - Events: https://www.alcf.anl.gov/events
   - MyALCF Portal: https://my.alcf.anl.gov/
-  - Support:
-      - issues.md
-      - Support Center: https://www.alcf.anl.gov/support-center
+  - News: https://www.alcf.anl.gov/news
+  - People: https://www.alcf.anl.gov/about/people
+  - Resources: https://www.alcf.anl.gov/alcf-resources
+  - Science and Engineering: https://www.alcf.anl.gov/science
+
+  # - ALCF Resources: https://www.alcf.anl.gov/alcf-resources
+  # - Science and Engineering: https://www.alcf.anl.gov/science
+  # - Community and Outreach: https://docs.alcf.anl.gov/#https://www.alcf.anl.gov/community-and-partnerships
+  # - About: https://www.alcf.anl.gov/about
+  # - News: https://www.alcf.anl.gov/news
+  # - Events: https://www.alcf.anl.gov/events
+  # - People: https://www.alcf.anl.gov/about/people
+  # - Careers: https://www.alcf.anl.gov/about/careers
+  # - MyALCF Portal: https://my.alcf.anl.gov/
 
 not_in_nav: |
   not_in_nav/
