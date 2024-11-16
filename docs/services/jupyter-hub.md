@@ -33,7 +33,7 @@ menu of the available job options to start the Jupyter instance.
   nodes to be allocated.
 - Runtime (minutes:seconds): This field allows the user to set the runtime of
   the job in minutes and seconds. The user should refer to the [Polaris queue
-  scheduling policy](../polaris/running-jobs.md)
+  scheduling policy](../machines/polaris/running-jobs.md)
   for minimum and maximum runtime allowed for the selected queue.
 - File Systems: This field allows the user to select the file systems to be
   mounted. By default all the file systems are selected.
@@ -80,7 +80,7 @@ installed. This can be achieved by first creating custom Python environments
 either through [venv](https://docs.python.org/3/library/venv.html) or
 [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 More information on creating custom Python environments can be found in our
-documentation for [Polaris](../polaris/data-science-workflows/python.md).
+documentation for [Polaris](../machines/polaris/data-science-workflows/python.md).
 After activating the custom environment, `ipykernel` package needs to be
 installed with the following command:
 ```bash

@@ -240,7 +240,7 @@ If you are planning to submit jobs to a scheduler then you will need to specify 
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
+| Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../machines/polaris/getting-started.md) |
 
 _Example: Running a batch job_
 ```
