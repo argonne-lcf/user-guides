@@ -62,9 +62,10 @@ You only need to run -b once, e.g.
 ```console
 groq-python groq_llama2_7b.py -b
 ```
-then multiple
+then multiple queries
 ```console
 groq-python groq_llama2_7b.py -p 'what are the most popular ice cream flavors'
+groq-python groq_llama2_7b.py -p 'what are some unique ice cream flavors'
 ```
 Note: the -b flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a weird state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
 
