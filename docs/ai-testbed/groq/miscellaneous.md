@@ -71,6 +71,8 @@ Note: the -b flag for `groq_llama2_7b.py` brings up the whole rack c2c links bet
 
 When done, clean up. This deletes the all-rack PBS reservation. (TODO what about the c2c bringup?)
 ```console
-bash -x stage3_cleanup.sh
+# if running manually, go back to the script dir
+popd
+bash stage3_cleanup.sh
 ```
 
