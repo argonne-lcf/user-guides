@@ -25,29 +25,29 @@ Follow these instructions to compile and train the `fc_mnist` PyTorch sample. Th
 
 First, make a virtual environment for Cerebras for PyTorch.
 See [Customizing Environments](./customizing-environment.md) for the procedures for making PyTorch virtual environments for Cerebras.
-If an environment is made in ```~/R_2.3.0/```, it would be activated as follows:
+If an environment is made in ```~/R_2.4.0/```, it would be activated as follows:
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
 ```
 
 ### Clone the Cerebras modelzoo
 
 ```console
-mkdir ~/R_2.3.0
-cd ~/R_2.3.0
+mkdir ~/R_2.4.0
+cd ~/R_2.4.0
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.3.0
+git checkout Release_2.4.0
 ```
 ## Running a Pytorch sample
 
 ### Activate your PyTorch virtual environment, install modelzoo requirements, and change to the working directory
 
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/fc_mnist/pytorch
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/fc_mnist/pytorch
 ```
 
 Next, edit configs/params.yaml, making the following changes:
@@ -76,7 +76,7 @@ To run the sample:
 export MODEL_DIR=model_dir
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=fc_mnist --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=fc_mnist --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:

@@ -4,15 +4,15 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_2.3.0
-cd ~/R_2.3.0
+mkdir ~/R_2.4.0
+cd ~/R_2.4.0
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.3.0
+git checkout Release_2.4.0
 ```
 <!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.3.0/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.4.0/anl_shared
 --->
 
 <!---
@@ -23,18 +23,18 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment and make sure that requirements are installed.
 
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 --->
 
@@ -49,7 +49,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_2.3.0/anl_shared/braggnn/tf
+cd ~/R_2.4.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -69,20 +69,20 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 ```
-Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.3.0/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
+Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.4.0/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
@@ -113,18 +113,18 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
@@ -146,16 +146,16 @@ The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/tran
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 Instructions for training:
 ```bash
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
 cp /software/cerebras/dataset/params_llama_7b.yaml configs/params_llama_7b.yaml
 export MODEL_DIR=model_dir_llamma
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=llama_7b --params configs/params_llama_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=llama_7b --params configs/params_llama_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
 ```
 
 Please find a sample output
@@ -255,16 +255,16 @@ The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/m
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
 export MODEL_DIR=model_dir_esm2
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 Sample output
