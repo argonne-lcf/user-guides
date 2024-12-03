@@ -15,7 +15,7 @@ pip install openvino==2024.4.0
 pip install openvino-dev==2024.4.0
 ```
 
-It is recommended that the path to the virtual env be in the user's project space on [Flare](../../data-management/lustre/flare/).
+It is recommended that the path to the virtual env be in the user's project space on [Flare](../../data-management/lustre/flare.md).
 
 
 ## Model Converter
