@@ -72,17 +72,17 @@ nav:
             - XALT: polaris/applications-and-libraries/libraries/xalt.md
     - Containers: polaris/containers/containers.md
     - Data Science:
-        - Julia: polaris/data-science-workflows/julia.md
-        - Python: polaris/data-science-workflows/python.md
+        - Julia: polaris/data-science/julia.md
+        - Python: polaris/data-science/python.md
         - Frameworks:
-            - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
-            - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
-            - JAX: polaris/data-science-workflows/frameworks/jax.md
-            - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
-            - LibTorch: polaris/data-science-workflows/frameworks/libtorch.md
+            - TensorFlow: polaris/data-science/frameworks/tensorflow.md
+            - PyTorch: polaris/data-science/frameworks/pytorch.md
+            - JAX: polaris/data-science/frameworks/jax.md
+            - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
+            - LibTorch: polaris/data-science/frameworks/libtorch.md
         - Applications:
-            - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
-            - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
+            - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
+            - gpt-neox: polaris/data-science/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
