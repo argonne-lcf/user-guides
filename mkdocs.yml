@@ -209,9 +209,8 @@ nav:
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
+          - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
-        - Libraries:
-          - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
