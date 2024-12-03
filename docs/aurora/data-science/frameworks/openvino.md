@@ -1,7 +1,7 @@
 # Model Inference with OpenVINO
 
 OpenVINO is a library developed by Intel specifically designed for accelerating inference of ML models on their CPU and GPU hardware. 
-This page contains build and run instructions for Python, but please refer to the [OpenVINO Github page](https://github.com/openvinotoolkit/openvino) for more information.
+This page contains build and run instructions for Python, but please refer to the [OpenVINO GitHub page](https://github.com/openvinotoolkit/openvino) for more information.
 
 
 
