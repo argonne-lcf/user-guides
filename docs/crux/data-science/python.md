@@ -12,7 +12,7 @@ python3 -m venv ~/_test_env
 pip install mpi4py
 ```
 
-This new virtual environment can then be used in a batch job as in this simple hello_world example available in the GettingStarted repo.
+This new virtual environment can then be used in a batch job as in this simple hello_world example available in the GettingStarted [repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Crux/python).
 
 ```bash
 $ cat hello_world.py
