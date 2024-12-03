@@ -20,3 +20,17 @@ For CPU 1:
 * NUMA 6 : cores 96-111,224-239
 * NUMA 7 : cores 112-127,240-255
 
+<!-- Table 1 summarizes the capabilities of a Crux compute node:
+
+| COMPONENT | COMPONENT | AGGREGATE |
+| --- | ----------- | ----------- |
+| AMD Rome 64-core CPU | 2 | 48 |
+| DDR4 Memory | 1 TB on 320 GB & 2 TB on 640 GB | 26 TB |
+| NVIDIA A100 GPU | 8 | 192 |
+| GPU Memory | 22 nodes w/ 320 GB & 2 nodes w/ 640 GB | 8,320 GB |
+| HDR200 Compute Ports | 8 | 192 |
+| HDR200 Storage Ports | 2 | 48 |
+| 100GbE Ports | 2 | 48 |
+| 3.84 TB Gen4 NVME drives | 4 | 96 |
+-->
+
