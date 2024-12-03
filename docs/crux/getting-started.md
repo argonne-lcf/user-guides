@@ -34,10 +34,10 @@ module load cmake
 
 ## Submitting and Running Jobs
 
-Please read through the [Running Jobs with PBS at the ALCF](./queueing-and-running-jobs/running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts.
+Please read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts.
 
 For more information on Crux queues and job submission visit: [Running Jobs
-on Crux](../running-jobs.md)
+on Crux](./queueing-and-running-jobs/running-jobs.md)
 
 
 ## Lustre File Striping

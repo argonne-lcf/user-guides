@@ -244,8 +244,8 @@ nav:
     - Containers: crux/containers/containers.md
     - Data Science:
       - Python: crux/data-science/python.md
-    - Visualization:
-      - Visualization on Crux: crux/visualization/visualization.md
+    #- Visualization:
+      #- Visualization on Crux: crux/visualization/visualization.md
       #- ParaView (Launch from Client): crux/visualization/paraview.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
