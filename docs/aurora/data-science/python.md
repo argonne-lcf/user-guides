@@ -1,133 +1,136 @@
 # Python on Aurora
 
-## Framework Modules
+## AI/ML Framework Module
 
-Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations. The following commands can be used both from an interactive session on a terminal and on a batch job script.
+For most Python users on Aurora, a good starting point is the AI/ML framework module. 
+The Anaconda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations, among other popular Python and ML packages. 
 
-Note that the framework modules may load a different oneAPI than the default module.  The frameworks are updated on approximately a quarterly cadence at the moment.
-
-```
-module use /soft/modulefiles
+The following command can be used both from an interactive session on a terminal or within a batch job script to load the latest module
+```bash
 module load frameworks
 ```
-These pre-built `conda` environments come with GPU-supported builds of PyTorch
-and TensorFlow. Both of these frameworks have
-`Horovod` support for multi-node calculations. Many other commonly used Python
-modules are available through these modules.
 
-For more information on pytorch and tensorflow please see their respective 
-pages: 
+Please note that:
 
-- [PyTorch](https://pytorch.org/)
-- [TensorFlow](https://www.tensorflow.org/)
+- The module automatically activates a pre-built `conda` environment (`aurora_nre_models_frameworks-2024.2.1_u1`) which comes with GPU-supported builds of PyTorch and TensorFlow. Both of these frameworks have `Horovod` support for multi-node calculations, as well as PyTorch DDP with [oneCCL](./frameworks/oneCCL.md).
+- The frameworks module may load a different oneAPI compiler SDK than the default module
+- The frameworks module is updated approximately every quarter.
 
-From a login node we can do the following commands to list the available 
-modules:
+For more information on PyTorch and TensorFlow on Aurora, please see their respective pages: 
 
-```
-module load /soft/modulefiles/
-module avail
-```
-This shows a list of avilable modules including the frameworks module. There 
-are many frameworks modules available. The latest 
-frameworks release could be used using:
+- [PyTorch](./frameworks/pytorch.md)
+- [TensorFlow](./frameworks/tensorflow.md)
 
-```
-$ module load frameworks/2023.12.15.001
-
-The following have been reloaded with a version change:
-  1) gcc/11.2.0 => gcc/12.2.0     2) intel_compute_runtime/release/agama-devel-551 => intel_compute_runtime/release/stable-736.25
-
-$ which python3
-/soft/datascience/aurora_nre_models_frameworks-2024.0/bin/python3
-
-$ which python
-/soft/datascience/aurora_nre_models_frameworks-2024.0/bin/python
-```
-At the time of writing this module contains Python 3.9.18.
-Future modules will
-contain updated versions of Python, PyTorch, TensorFlow, etc.
-
-While the shared Anaconda environment encapsulated in the module contains many 
-of the most commonly used Python libraries for our users, you may still 
-encounter a scenario in which you need to extend the functionality of the 
-environment (i.e. install additional packages)
-
-You can use a virtual environment to extend/modify an existing frameworks 
-module. 
 
 ## Virtual environments via `venv`
 
-Creating your own (empty) virtual Python environment in a directory that is 
-writable to you is straightforward:
+While the Anaconda environment automatically loaded with the `frameworks` module contains many 
+of the most commonly used Python packages for our users, you may still 
+encounter a scenario in which you need to extend the functionality of the 
+environment (i.e. install additional packages).
+In this case, we suggest the use of Python virtual environments. 
 
-```
-python3 -m venv /path/to/new/virtual/environment
-```
+Creating and activating a new virtual environment (`venv`) is straightforward:
 
-This creates a new folder that is fairly lightweight folder (<20 MB) with its 
-own Python interpreter where you can install whatever packages you'd like. 
-First, you must activate the virtual environment to make this Python 
-interpreter the default interpreter in your shell session.  By default, this environment
-will not have access to the framework packages but instead will be empty.
-
-You activate the new environment whenever you want to start using it via 
-running the activate script in that folder:
-
-```
-source /path/to/new/virtual/environment/bin/activate
+```bash
+python3 -m venv /path/to/new/venv --system-site-packages
+source /path/to/new/venv/bin/activate
 ```
 
-In many cases, you do not want an empty virtual environment, but instead want 
-to start from the `conda` base environment's installed packages, only adding 
-and/or changing a few modules.
-
-To extend the base Anaconda environment with `venv` (e.g. `my_env` in the current 
-directory) and inherit the base enviroment packages, one can use the 
-`--system-site-packages` flag:
-
-```
-module use /soft/modulefiles/
-module load frameworks/2023.12.15.001
-python3 -m venv --system-site-packages my_env
-source my_env/bin/activate
-
-# Install additional packages here
-```
+The `--system-site-packages` flag will make sure that all the packages included in the `frameworks` module are available after sourcing the venv.
+If, however, you would like to create an empty venv, simply remove this flag.
 You can always retroactively change the `--system-site-packages` flag state for 
-this virtual environment by editing `my_env/pyvenv.cfg` and changing the value 
-of the line `include-system-site-packages = false`.
+this virtual environment by editing `venv/pyvenv.cfg` and changing the value 
+of `include-system-site-packages` to `true`.
 
 To install a different version of a package that is already installed in the 
 base environment, you can use:
-
-```
+```bash
 pip install --ignore-installed ... # or -I
 ```
 The shared base environment is not writable, so it is impossible to remove or 
 uninstall packages from it. The packages installed with the above `pip` command 
 should shadow those installed in the base environment.
 
-## Using `pip install --user` (not recommended)
-
-With the conda environment setup, one can install common Python modules using 
-`pip install --users <module-name>` which will install packages in 
-`$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. The `$PYTHONUSERBASE` 
-environment variable is automatically set when you load the base `conda` 
-module, and is equal to `/home/$USER/.local/aurora/frameworks/2023.12.15.001`
-
-Note, Python modules installed this way that contain command line binaries will 
-not have those binaries automatically added to the shell's `$PATH`. To manually 
-add the path:
-
+An alternative, although not recommended, approach to creating a `venv` is to install packages with
+```bash
+pip install --user ...
 ```
-export PATH=$PYTHONUSERBASE/bin:$PATH
-```
-Be sure to remove this location from `$PATH` if you deactivate the base 
-Anaconda environment or unload the module.
+which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`.
+Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`.
+Cloning the Anaconda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
 
-Cloning the Anaconda environment, or using `venv` are both more flexible and 
-transparent when compared to `--user` installs.
+
+## Intel's Data Parallel Extensions for Python (DPEP)
+
+On Aurora, users can access Intel's Python stack comprising of compilers and libraries for programming heterogenous devices, namely the Data Parallel Extensions for Python (DPEP).
+DPEP is composed of three main packages for programming on CPUs and GPUs:
+- [dpnp](https://github.com/IntelPython/dpnp) - Data Parallel Extensions for Numpy is a library that implements a subset of Numpy that can be executed on any data parallel device. The subset is a drop-in replacement of core Numpy functions and numerical data types, similar to `cupy` for CUDA devices.
+- [numba_dpex](https://github.com/IntelPython/numba-dpex) - Data Parallel Extensions for Numba is an extension to Numba compiler for programming data-parallel devices similar to developing programs with Numba for CPU or CUDA devices.
+- [dpctl](https://github.com/IntelPython/dpctl) - Data Parallel Control library provides utilities for device selection, allocation of data on devices, tensor data structure along with Python Array API Standard implementation, and support for creation of user-defined data-parallel extensions.
+
+The DPEP packages follow the "compute follows data" programming model, 
+meaning that the offload target for a Python library call, or a hand-written kernel using numba-dpex, 
+does not need to be specified directly when making the call.
+Instead, the offload target is inferred from the input arguments to a library call.
+With this programming model, the user only needs to specify the offload target when creating the tensor/ndarray objects.
+Note that operating on arrays created different devices will raise an exception.
+
+For example,
+```python
+import dpctl.tensor as dpt
+
+x_gpu = dpt.arange(100, device=”gpu”)
+sqx_gpu = dpt.square(x_gpu) # square offloads to the “gpu” device
+print(sqx_gpu.device) # sqx_gpu is created on the “gpu” device
+```
+
+### Install 
+For integration with the ML frameworks (PyTorch and TensorFlow with the respective Intel extensions for GPU), 
+we recommend using an older `frameworks` module, namely
+```bash
+module load frameworks/2024.1
+```
+
+If integration with the ML frameworks is not required, you can obtain more recent DPEP packages with
+```bash
+module load frameworks
+conda create -y --prefix /path/to/dpep_env python=3.11 pip
+conda activate /path/to/dpep_env
+conda install -y --channel https://software.repos.intel.com/python/conda/ --channel conda-forge dpctl dpnp numba-dpex
+```
+
+### dpnp
+The dpnp library implements the NumPy API using DPC++ and is meant as a drop-in replacement for numpy.
+Following the minimal example below
+
+```python
+import dpnp as np
+x = np.asarray([1, 2, 3])
+print("Array x allocated on the device:", x.device)
+y = np.sum(x)
+print("Result y is located on the device:", y.device)
+```
+
+`np.asarray()` creates an array on the default SYCL device, which is the Intal Max 1550 GPU on Aurora.
+The queue associated with this array is now carried with `x`, and the pre-compiled kernel for `np.sum(x)` is submitted to that queue. 
+The result `y` is allocated on the device and is associated with that queue too.
+
+All dpnp array creation routines and random number generators have additional optional keyword
+arguments: device, queue, and usm_type, which a user can explicitly specify on which device or queue
+they want the tensor data to be created along with the USM memory type to be used.
+
+Add note about synchronization...
+
+### dpctl 
+
+### numba-dpex
+
+### dlpack
+
+
+
+
 
 
 
