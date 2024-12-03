@@ -1,13 +1,13 @@
 # Getting Started on Crux
 
-## Logging Into Sophia
+## Logging Into Crux
 
 To log into Crux:
 ```
 ssh <username>@crux.alcf.anl.gov
 ```
 Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged
-in, you land on one of the crux login nodes (crux-login-01, crux-login-02). 
+in, you land on one of the crux login nodes (`crux-login-01`, `crux-login-02`). 
 
 ## Hardware Overview
 
