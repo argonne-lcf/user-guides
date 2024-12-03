@@ -3,8 +3,6 @@
 OpenVINO is a library developed by Intel specifically designed for accelerating inference of ML models on their CPU and GPU hardware. 
 This page contains build and run instructions for Python, but please refer to the [OpenVINO GitHub page](https://github.com/openvinotoolkit/openvino) for more information.
 
-
-
 ## Installing the OpenVINO Python Runtime and CLI Tools
 OpenVINO does not come with the default frameworks module on Aurora, but it can be installed manually within a Python virtual environment as shown below
 ```bash
@@ -16,7 +14,6 @@ pip install openvino-dev==2024.4.0
 ```
 
 It is recommended that the path to the virtual env be in the user's project space on [Flare](../../data-management/lustre/flare.md).
-
 
 ## Model Converter
 
@@ -64,7 +61,7 @@ benchmark_app -m resnet50.xml -hint latency -d GPU.0 -data_shape [1,3,224,224]
 
 which returns a series of information on the parameters set for the benchmark tests and the performance of the tests. The last few lines of the output are shown below.
 
-```
+``` { .bash .no-copy }
 [ INFO ] Execution Devices:['GPU.0']
 [ INFO ] Count:            42847 iterations
 [ INFO ] Duration:         60001.96 ms
@@ -134,7 +131,7 @@ export ZE_AFFINITY_MASK=0.0
 An example performing inference with the C++ OpenVINO API is shown below.
 This simple program loads the ResNet50 model in OpenVINO IR format to the GPU (see instructions above on how to download and convert the model), creates an input vector and offloads it to the GPU with SYCL, and finally executes a single synchronous inference request on the GPU.
 
-```
+```c++
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -235,5 +232,3 @@ Note:
 * OpenVINO does not currently support the Level Zero backend. OpenCL must be used instead, which can be set on Aurora with `export ONEAPI_DEVICE_SELECTOR=opencl:gpu`
 * The [Remote Tensor API](https://docs.openvino.ai/2023.3/openvino_docs_OV_UG_supported_plugins_GPU_RemoteTensor_API.html) must be used to share the SYCL OpenCL context with OpenVINO
 --->
-
-
