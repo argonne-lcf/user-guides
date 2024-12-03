@@ -4,7 +4,7 @@
 
 Full documentation for Balsam is available [online](https://balsam.readthedocs.io/en/latest/).
 
-Balsam requires Python 3.7+. To install Balsam on Polaris, first set up a [virtual Python environment](../data-science-workflows/python.md):
+Balsam requires Python 3.7+. To install Balsam on Polaris, first set up a [virtual Python environment](../data-science/python.md):
 
 ```shell
 module use /soft/modulefiles
