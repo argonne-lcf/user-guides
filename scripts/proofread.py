@@ -27,7 +27,7 @@ def main():
             original_content = f.read()
 
         # Use OpenAI API to proofread the content
-        response = openai.chat_completions.create(
+        response = openai.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that proofreads and corrects markdown text."},
