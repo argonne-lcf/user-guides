@@ -241,6 +241,12 @@ nav:
     - Getting Started: crux/getting-started.md
     - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
     - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
+    - Containers: crux/containers/containers.md
+    - Data Science:
+      - Python: crux/data-science/python.md
+    - Visualization:
+      - Visualization on Crux: crux/visualization/visualization.md
+      #- ParaView (Launch from Client): crux/visualization/paraview.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
