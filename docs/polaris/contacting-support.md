@@ -31,7 +31,7 @@ If you need to open a ticket related to Python please be sure to include the fol
 * The output from `module list`
 * Whether you have extended the base environment via `venv`, `conda clone`, etc.
 * Have you installed any new packages, or removed existing ones? If so, please include your script and commands necessary to recreate the issue
-* Whether you're attempting to run on a log in node or a compute node
+* Whether you're attempting to run on a login node or a compute node
 
 By including the above information this will help Support quickly route your ticket to the correct SME, resulting in a quicker resolution.
 
