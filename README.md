@@ -44,7 +44,7 @@ Run `mkdocs serve` or `make serve` to auto-build and serve the docs for preview 
 $ make serve
 ```
 
-GitHub Actions are used to automatically validate all changes in pull requests before they are merged, by executing `mkdocs build --strict`. The [`--strict`](https://www.mkdocs.org/user-guide/configuration/#validation) flag will print out warnings and return a nonzero code if any of a number of checks fail (e.g. broken relative links, orphaned Markdown pages thtat are missing from the navigation sidebar, etc.). To see if your changes will pass these tests, run the following command locally:
+GitHub Actions are used to automatically validate all changes in pull requests before they are merged, by executing `mkdocs build --strict`. The [`--strict`](https://www.mkdocs.org/user-guide/configuration/#validation) flag will print out warnings and return a nonzero code if any of a number of checks fail (e.g. broken relative links, orphaned Markdown pages that are missing from the navigation sidebar, etc.). To see if your changes will pass these tests, run the following command locally:
 ```
 $ make build-docs
 ```
@@ -52,7 +52,7 @@ $ make build-docs
 ### Working on documentation
 
 * All commits must have a commit message
-* Create your own branch from the `main` branch.  For this writing we are using `YOURBRANCH` as an example:
+* Create your own branch from the `main` branch.  Here, we are using `YOURBRANCH` as an example:
 ```
 $ cd user-guides
 $ git fetch --all
@@ -64,7 +64,7 @@ $ git push -u origin YOURBRANCH
 * Commit your changes to the remote repo:
 ```
 $ cd user-guides
-$ git status                         # check the status of the files you have editted
+$ git status                         # check the status of the files you have edited
 $ git commit -a -m "Updated docs"    # preferably one issue per commit
 $ git status                         # should say working tree clean
 $ git push origin YOURBRANCH         # push YOURBRANCH to origin
