@@ -37,7 +37,7 @@ By including the above information this will help Support quickly route your tic
 
 !!! note 
 We encourage the use of the pre-installed `conda` environment. 
-Any custom environments are supported on a best effort basis only.***
+Any custom environments are supported on a best effort basis only.
 
 ### Installation & Compiling Issues
 
