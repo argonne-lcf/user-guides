@@ -35,7 +35,8 @@ If you need to open a ticket related to Python please be sure to include the fol
 
 By including the above information this will help Support quickly route your ticket to the correct SME, resulting in a quicker resolution.
 
-***NOTE: We encourage users to use the pre-installed conda environment. 
+!!! note 
+We encourage the use of the pre-installed `conda` environment. 
 Any custom environments are supported on a best effort basis only.***
 
 ### Installation & Compiling Issues
