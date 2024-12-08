@@ -1,8 +1,9 @@
+```markdown
 # DeepSpeed
 
 The base `#!bash conda` environment on ThetaGPU comes with Microsoft's
 [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions
-for using / cloning the base environment can be found
+for using/cloning the base environment can be found
 <!-- broken sophia link [here](docs/polaris/data-science-workflows/python.md).-->
 
 We describe below the steps needed to get started with DeepSpeed on ThetaGPU.
@@ -16,7 +17,7 @@ DeepSpeed support.
 
 !!! note
 
-    The instructions below should be **ran directly from a compute node**.
+    The instructions below should be **run directly from a compute node**.
     Explicitly, to request an interactive job (from `thetalogin`):
 
     ```bash
@@ -26,7 +27,6 @@ DeepSpeed support.
     ```
 
     Refer to [GPU Node Queue and Policy](../gpu-node-queue-and-policy.md).
-
 
 1. Load `conda` module and activate base environment:
     ```bash
@@ -48,9 +48,8 @@ DeepSpeed support.
     $ which deepspeed
     deepspeed not found
     $ python3 -m pip install --upgrade pip setuptools wheel
-    $ DS_BUILD_OPS=1 python3 -m pip install 
+    $ DS_BUILD_OPS=1 python3 -m pip install deepspeed
     ```
-
 
 !!! example "Launching DeepSpeed"
 
@@ -76,7 +75,7 @@ DeepSpeed support.
             -x LD_LIBRARY_PATH \
             -x PYTHONUSERBASE \
             -x http_proxy \
-            -x https_proxy
+            -x https_proxy \
             python3 cifar10_deepspeed.py \
                 --deepspeed_config ds_config-1.json
         ```
@@ -112,8 +111,7 @@ DeepSpeed support.
             --deepspeed_config ds_config.json
         ```
 
-
-???- bug "`AssertionError: Micro batch sizer per gpu: 0 has to be greater than 0`"
+???- bug "`AssertionError: Micro batch size per gpu: 0 has to be greater than 0`"
 
     Depending on the details of your specific job, it may be necessary to
     modify the provided `#!bash ds_config.json`.
@@ -151,6 +149,7 @@ DeepSpeed support.
       $ENVIRONMENT_VARIABLE` will be set in the launched processes.
 
 [^deepspeed]:
-      Additional details for installing DeepSpeed can be found int their docs
+      Additional details for installing DeepSpeed can be found in their docs
       from: [Installation
       Details](https://www.deepspeed.ai/tutorials/advanced-install/)
+```

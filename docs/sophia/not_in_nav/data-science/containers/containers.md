@@ -4,7 +4,7 @@
 <!-- On Theta(GPU), container creation can be achieved by using Docker on your local machine as mentioned in [Example `Dockerfile`](../../../theta/data-science-workflows/containers/containers.md#example-dockerfile), or using a Singularity recipe file and building on a Theta(GPU) worker node. -->
 
 ## Building using Docker
-If you followed the `Dockerfile` instructions, using the Theta(GPU) specific [`Dockerfile_thetagpu`](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Dockerfile_thetagpu) you can build your container for theta gpu using:
+If you followed the `Dockerfile` instructions, using the Theta(GPU) specific [`Dockerfile_thetagpu`](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/Dockerfile_thetagpu), you can build your container for ThetaGPU using:
 ```bash
 singularity build <image_name> docker://<username>/<repo_name>:<tag>
 # using tutorial example
@@ -13,7 +13,7 @@ singularity build my_image.simg docker://jtchilders/alcf_cwp_example:thetagpu
 
 ![singularity_build_thetagpu](../files/singularity_build_thetagpu.gif)
 
-Then you can submit a job to Theta(GPU) using the [job submission script](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpu.sh)
+Then you can submit a job to Theta(GPU) using the [job submission script](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpu.sh).
 
 ```bash
 module load cobalt/cobalt-gpu
@@ -60,7 +60,7 @@ Hello world from processor thetagpu12, rank 3 out of 16 processors
 
 ## Building using Singularity Recipes
 
-While building using Docker on your local machine tends to be the easier method. There are sometimes reasons to build in the environment of the supercomputer. In this case, one can build a singularity container on ThetaGPU in an interactive session on a compute (or worker) node. First a recipe file is needed, below is an example singularity definition file which can also be found [here](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def). 
+While building using Docker on your local machine tends to be the easier method, there are sometimes reasons to build in the environment of the supercomputer. In this case, one can build a Singularity container on ThetaGPU in an interactive session on a compute (or worker) node. First, a recipe file is needed. Below is an example Singularity definition file, which can also be found [here](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def).
 
 Detailed directions for recipe construction are available on the [Singularity Recipe Page](https://sylabs.io/guides/2.6/user-guide/container_recipes.html).
 
@@ -73,7 +73,7 @@ Bootstrap: docker
 From: ubuntu:20.04
 ```
 
-The `%files` section lists files to copy from the host system (left path) to the container filesystem (right path)prior to build time.
+The `%files` section lists files to copy from the host system (left path) to the container filesystem (right path) prior to build time.
 
 ```singularity
 %files
@@ -144,7 +144,7 @@ The `%help` section can be used to define how to build and run the container.
 
 ```singularity
 %help
-    	This is container is used to illustrate a mpi based def file to build a container running python and c programs. To build the container use singularity build --fakeroot mpi.sif mpi.def
+    	This container is used to illustrate an MPI-based def file to build a container running Python and C programs. To build the container, use singularity build --fakeroot mpi.sif mpi.def
 ```
 
 ## Build Singularity container on ThetaGPU compute
@@ -157,15 +157,14 @@ module load cobalt/cobalt-gpu
 qsub -I -n 1 -t 01:00:00 -q single-gpu -A <project_name> --attrs fakeroot=true:pubnet=true:filesystems=home,theta-fs0
 ```
 
-Before building the container make sure the ThetaGPU compute nodes have access to external resources, this is achieved by setting the `http_proxy` and `https_proxy` variables
+Before building the container, make sure the ThetaGPU compute nodes have access to external resources. This is achieved by setting the `http_proxy` and `https_proxy` variables.
 ```bash
 # setup network proxy to reach outside world
 export http_proxy=http://proxy.tmi.alcf.anl.gov:3128
 export https_proxy=http://proxy.tmi.alcf.anl.gov:3128
 ```
 
-Now build the container using `--fakeroot` where `<def_filename>.def` is the definition file we have defined in the example above and `<image_name>.sif` is the user defined image file name
-Using [mpi.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def) example
+Now build the container using `--fakeroot` where `<def_filename>.def` is the definition file we have defined in the example above and `<image_name>.sif` is the user-defined image file name. Using [mpi.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/mpi.def) example:
 ```bash
 # important you run this in the proper path because the file copies in
 # the `%files` section of the recipe uses relative paths on the host.
@@ -177,7 +176,7 @@ singularity build --fakeroot <image_name>.sif <def_filename>.def
 
 An example job submission script is here: [job_submission_thetagpu.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpu.sh).
 
-First we define our job and our script takes the container name as an input parameter.
+First, we define our job, and our script takes the container name as an input parameter.
 
 ```bash
 #!/bin/bash -l
@@ -188,14 +187,14 @@ First we define our job and our script takes the container name as an input para
 CONTAINER=$1
 ```
 
-Enable network access at run time by setting the proxy.
+Enable network access at runtime by setting the proxy.
 
 ```bash
 export http_proxy=http://proxy.tmi.alcf.anl.gov:3128
 export https_proxy=http://proxy.tmi.alcf.anl.gov:3128
 ```
 
-Setup our MPI settings, figure out number of nodes `NODES` and fix number of process per node `PPN` and multiply to get total MPI ranks `PROCS`.
+Set up our MPI settings, figure out the number of nodes `NODES`, fix the number of processes per node `PPN`, and multiply to get total MPI ranks `PROCS`.
 
 ```bash
 NODES=`cat $COBALT_NODEFILE | wc -l`
@@ -213,7 +212,7 @@ export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 echo mpirun=$(which mpirun)
 ```
 
-Finally the exectuable is launched. Notice on NVidia systems that the `singularity exec` or `singularity run` commands must use the `--nv` flag to pass important libraries/drivers from the host to the container environment.
+Finally, the executable is launched. Notice on NVidia systems that the `singularity exec` or `singularity run` commands must use the `--nv` flag to pass important libraries/drivers from the host to the container environment.
 
 ```bash
 mpirun -hostfile $COBALT_NODEFILE -n $PROCS -npernode $PPN singularity exec --nv -B $MPI_BASE $CONTAINER /usr/source/mpi_hello_world
@@ -263,9 +262,9 @@ Hello world from processor thetagpu01, rank 2 out of 16 processors
 
 ## Pre-existing Images for Deep Learning
 
-There are several containers on ThetaGPU that will help you get started with deep learning experiments that can efficiently use the A100 GPUs. We have different optimized container for DL here `ls /lus/theta-fs0/software/thetagpu/nvidia-containers/`
+There are several containers on ThetaGPU that will help you get started with deep learning experiments that can efficiently use the A100 GPUs. We have different optimized containers for DL here `ls /lus/theta-fs0/software/thetagpu/nvidia-containers/`.
 
-The [bootstap.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/bootstrap.def) gives an example of how these containers were created.
+The [bootstrap.def](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/bootstrap.def) gives an example of how these containers were created.
 
 The image is bootstrapped from an NVidia image, in this case from a [PyTorch](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch) build. One can also use the [TensorFlow](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) build. At the time of this writing, the latest tag for the PyTorch image was `22.04-py3`, but users should select the version that best suits their needs.
 
@@ -273,7 +272,7 @@ The image is bootstrapped from an NVidia image, in this case from a [PyTorch](ht
 Bootstrap: docker
 From: nvcr.io/nvidia/pytorch:22.04-py3
 ```
-Next we need to install MPI support for cross-node parallel training.
+Next, we need to install MPI support for cross-node parallel training.
 
 ```singularity
 %post
@@ -284,4 +283,4 @@ Next we need to install MPI support for cross-node parallel training.
     # Install horovod
     CC=$(which mpicc) CXX=$(which mpicxx) HOROVOD_WITH_TORCH=1 pip install --no-cache-dir horovod
 ```
-Next build the container on a ThetaGPU compute node, following the instructions in the previous section. Then an example job submission script is here: [job_submission_thetagpudl.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpudl.sh).
+Next, build the container on a ThetaGPU compute node, following the instructions in the previous section. Then an example job submission script is here: [job_submission_thetagpudl.sh](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/Containers/ThetaGPU/job_submission_thetagpudl.sh).
