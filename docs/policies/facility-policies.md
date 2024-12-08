@@ -29,7 +29,7 @@ These policies detail data and software usage, as well as pullback and refunds o
 
 The ALCF is required to report the progress and accomplishments of its allocation projects. Policies are detailed by award type.
 
-- [Quarterly Report Policy](account-project-management/project-management/project-reports.md)
+- [Quarterly Report Policy](../account-project-management/project-management/project-reports.md)
 
 ## Queue and Scheduling Policies
 

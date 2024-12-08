@@ -64,7 +64,7 @@ The team project/campaign file system /projects mounted on AI Testbed's login an
 
 ### Shared Community Project or Campaign File System (Eagle)
 
-The file system Eagle, a Lustre global parallel file system, has community sharing abilities and is useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota on Eagle is 1 TB and the default period is 1 year. More information on Lustre File Striping Basics: Lustre File Striping Basics.
+The file system Eagle, a Lustre global parallel file system, has community sharing abilities and is useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota on Eagle is 1 TB and the default period is 1 year. More information on Lustre file striping can be found in this [presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf).
 
 **_Eagle Data Pullback Policy:_** 
 Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
