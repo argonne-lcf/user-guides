@@ -109,7 +109,7 @@ Please see this page for overburn/overuse eligibility for INCITE projects that h
 Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy.md) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
 ### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../policies/facility-policies.md).
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../../policies/facility-policies.md).
 
 ## Useful Allocation and Quota Commands
 We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
