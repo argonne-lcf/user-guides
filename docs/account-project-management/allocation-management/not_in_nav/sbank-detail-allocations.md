@@ -165,5 +165,3 @@ Do not display system messages.
 
 #### **--no-totals**
 Do not display the totals.
-
----
