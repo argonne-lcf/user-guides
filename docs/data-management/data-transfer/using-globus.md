@@ -30,5 +30,3 @@ After [registering](https://app.globus.org/), simply use the appropriate ALCF en
 
 [Research Data Management with Globus (2019)](https://www.alcf.anl.gov/support-center/training-assets/research-data-management-globus)  
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1nCfWslDrf8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
----

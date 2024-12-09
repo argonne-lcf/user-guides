@@ -96,5 +96,3 @@ If you see an error like this:
  Error - authentication/initialization failed
 ```
 it means that your account is not enabled to use the HPSS yet. [Please contact support](mailto:support@alcf.anl.gov) to have it set up.
-
----

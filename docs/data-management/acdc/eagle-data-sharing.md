@@ -403,5 +403,3 @@ If you are a non-PI and you see this error while trying to access the collection
   ![Permission denied](files/roles.png){ width="1000" }
   <figcaption>If you get this error, you do not have read permissions.</figcaption>
 </figure>
-
----

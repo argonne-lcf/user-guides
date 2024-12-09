@@ -28,5 +28,3 @@ If you are new to the ALCF, follow these instructions on how to transfer your da
 
 If you already have an ALCF account, follow these instructions on how to share your data:
 [Sharing Data to Eagle](eagle-data-sharing.md)
- 
----
