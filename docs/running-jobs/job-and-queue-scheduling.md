@@ -434,3 +434,13 @@ If you receive a `qsub: Job rejected by all possible destinations` error, then c
 The fakeroot feature (commonly referred to as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping. To request this feature be enabled on your job add the following to your `qsub` command line:
 
 `-l singularity_fakeroot=true`
+<!-- Need help from applications people for this section
+
+* Thinking of things like:
+  * How do you set affinity
+  * NVIDIA specific stuff
+  * There is a PALS specific thing to tell you what rank you are in a node?
+  * Should Chris cook up example running four mpiexec on different GPUs and separate CPUs or just rely on PBS's vnode (discussion at very top here)?
+-->
+
+
