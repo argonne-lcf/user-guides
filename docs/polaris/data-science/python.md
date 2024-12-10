@@ -125,3 +125,10 @@ To addresss this, please add the following line in the very beginning of your py
 ```python
 from mpi4py import MPI
 ```
+## Creating a Jupyter Kernel
+If you need to use your python `venv` on JupyterHub, you will need to create a Jupyter kernel for it.
+1. Install ipykernel: install `ipykernel` on your 'venv`
+`pip install ipykernel`
+2. Create a Jupyter Kernel:
+`python -m ipykernel install --user --name=venv --display-name "Jupyter (venv)"`
+Replace `"Jupyter (myenv)"` with the display name you want for the kernel in JupyterHub
