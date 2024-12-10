@@ -10,7 +10,7 @@ If you have any questions, please email: [support@alcf.anl.gov](mailto:support@a
 
 ## Transferring data to Eagle
 ### 1. Request a DD project on Eagle Filesystem
-All Petrel project owners/PIs should request for a Director's Discretionary project on the Eagle filesystem by filling out the form at [https://accounts.alcf.anl.gov/allocationRequests](https://accounts.alcf.anl.gov/allocationRequests). Select "New Project" and then "Eagle" as the resource and fill out the rest of the form. In the "Project and Justification Summary" section, along with the requested details you should also state that you are migrating your data from Petrel.
+All Petrel project owners/PIs should request for a Director's Discretionary project on the Eagle filesystem by filling out the form at [https://my.alcf.anl.gov/accounts/#/allocationRequests](https://my.alcf.anl.gov/accounts/#/allocationRequests). Select "New Project" and then "Eagle" as the resource and fill out the rest of the form. In the "Project and Justification Summary" section, along with the requested details you should also state that you are migrating your data from Petrel.
 
 Once the submission is reviewed and approved by the allocations committee, your project will be created on the Eagle filesystem and you will be notified via email. The approval process may take 1-2 weeks. Once the project is approved, proceed to the next step.
 
@@ -22,14 +22,14 @@ A project PI will need an active ALCF account to:
 **NOTE:** A collaborator does not need an ALCF account to access data that is shared on Eagle (as a Globus Guest Collection). They can sign into Globus with their institutional identity to access the data. The first time they log in, they will need to accept terms and conditions.
 
 #### To apply for an ALCF account:
-- Visit [https://accounts.alcf.anl.gov](https://accounts.alcf.anl.gov) and click on "Request An Account".
+- Visit [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/) and click on "Request An Account".
 - When prompted for project name, please select the project on Eagle that was created for your Petrel data as a result of Step 1: Request a DD project on Eagle (you have to wait for your project to be created before you can apply for an account)
   - If you don't have one, please follow the directions under "Step 1: Request a DD project on Eagle" (above)
   - For more details on the ALCF account request process, visit the webpage Request an account
 - Once your account is created and you have the cryptocard/mobile token to login to Eagle, proceed to the next step to transfer the data from Petrel to Eagle
 
 ### 3. Transfer data from your source endpoint to Eagle using Globus
-You can use the Globus web app to transfer data or the CLI. See [Using CLI](#Using Globus CLI tool) for instructions on how to use the CLI to transfer data. The following set of instructions use the Globus web app, using **alcf#dtn_eagle (path /projectname)** as the destination to transfer data from your source endpoint.
+You can use the Globus web app to transfer data or the CLI. See [Using CLI](#Using-Globus-CLI-tool) for instructions on how to use the CLI to transfer data. The following set of instructions use the Globus web app, using **alcf#dtn_eagle (path /projectname)** as the destination to transfer data from your source endpoint.
 
 **NOTE:** Anonymous HTTPS read access is enabled on Eagle.
 
@@ -104,10 +104,10 @@ See below for step-by-step instructions on how to share data from Eagle using Gl
 
 **NOTE:** Guest Collections are tied to the project PI's account so if the PI's account becomes inactive, the Guest Collections will also become inactive. Once the PI's account is reactivated, access to the Guest Collections is restored.
 
-#### Using Globus CLI tool:
+#### <a name="Using-Globus-CLI-tool"></a>Using Globus CLI tool:
 To copy data and permissions from a source collection, PIs can use a Globus CLI tool that automates the step of copying the permissions set on the source collection and applies them to the collection on Eagle. This is especially useful for PIs who had previously stored data on Petrel. See [https://github.com/globus/globus-tool-examples](https://github.com/globus/globus-tool-examples) for more information.
 
-The tool, migrate_permissions.py in the github repo takes the source endpoint (the shared endpoint on Petrel for example), and destination endpoint (the guest collection on Eagle that has the data), and copies over all the permissions. The tool assumes the data was coped over as is from source to destination. Note that you need to have a guest collection set up for your project on Eagle to use the CLI command and tool. See this page for instructions on [how to set up guest collections](eagle-data-sharing.md#Creating a Guest Collection).
+The tool, migrate_permissions.py in the github repo takes the source endpoint (the shared endpoint on Petrel for example), and destination endpoint (the guest collection on Eagle that has the data), and copies over all the permissions. The tool assumes the data was coped over as is from source to destination. Note that you need to have a guest collection set up for your project on Eagle to use the CLI command and tool. See this page for instructions on [how to set up guest collections](eagle-data-sharing.md#Creating-a-Guest-Collection).
 
 If you have any questions on the tool, or need further support, please contact [support@globus.org](mailto:support@globus.org).
 

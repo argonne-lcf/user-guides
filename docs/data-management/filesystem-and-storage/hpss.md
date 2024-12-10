@@ -5,7 +5,7 @@ HPSS is a data archive and retrieval system that manages large amounts of data o
 
 HPSS is currently configured with a disk and tape tier. The disk tier has a capacity of 1.2PB on a DataDirect Networks SFA12K-40 storage array. By default, all archived data is initially written to the disk tier. The tape tier consists of 3 SpectraLogic T950 robotic tape libraries containing a total of 72 LTO6 tape drives with total uncompressed capacity 64 PB. Archived data is migrated to the tape tier at regular intervals, then deleted from the disk tier to create space for future archives.
 
-Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients, HSI and HTAR.  These are installed on the login nodes of Theta and Cooley (*NOTE: The HPSS clients, HSI and HTAR are not yet installed on Polaris*). In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under subdirectory .hpss. The file name will be in the format .ktb_<userid>.
+Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients: HSI and HTAR.  These are installed on the login nodes of Theta, Cooley, and Polaris. In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under subdirectory `.hpss`. The file name will be in the format `.ktb_<userid>`.
   
 ## HSI General Usage
 

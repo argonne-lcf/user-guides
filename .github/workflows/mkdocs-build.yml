@@ -1,0 +1,22 @@
+name: mkdocs-build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docs-strict:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - name: Setup Python environment
+        run: pip install -r requirements.txt
+      - name: Build docs with --strict
+        run: mkdocs build --strict

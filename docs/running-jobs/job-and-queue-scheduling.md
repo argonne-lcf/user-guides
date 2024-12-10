@@ -5,7 +5,6 @@
     * [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf): This is the users guide.
     * [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf): This is the Reference Guide.  It shows every option and gives you details on how to format various elements on the command line.
 * [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md): shows how to map cobalt command line options to PBS command line options.  Can be found at the link above.
-* `qsub2pbs`: Installed on Theta and Cooley.  Pass it a Cobalt command line and it will convert it to a PBS command line.  Add the `--directives` option, and it will output an executable script.  Note that it outputs `-l select=system=None`.  You would need to change the `None` to whatever system you wanted to target (`polaris`, `aurora`, etc.).
 
 ## Introduction
 At a high level, getting computational tasks run on an HPC system is a two-step process:
@@ -70,6 +69,7 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * PBS Documentation: Users Guide Sec. 9.2, page UG-168; Reference Guide Sec. 2.40, page RG-130
 4. `qdel`: cancel a job that you don't need. This will also kill a running job
     * `qdel <jobid>`
+    * Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
 **Note: The page numbers in the PBS guides are unique.  If you search for the specified page number it will take you directly to the relevant page.**
@@ -89,7 +89,7 @@ Where:
 *  `walltime=HH:MM:SS` specifying a wall time is mandatory at the ALCF.  Valid wall times depend on the queue you are using.  There is a table with the queues for each machine at the end of this section and in the machine specific documentation.
 *  `filesystems=fs1:fs2:...` Specifying which filesystems your application uses is mandatory at ALCF.  The reason for this is if a filesystem goes down, we have a way of making PBS aware of that and it won't run jobs that need that filesystem.  If you don't specify filesystems you will receive the following error: `qsub: Resource: filesystems is required to be set.`
 *  `place=scatter` is telling PBS you want each of your chunks on a separate vnode.  By default, PBS will pack your chunks to get maximum utilization.  If you requested `ncpus=1` and `chunks=64` **without** `place=scatter` on a system with `ncpus=64`, all your chunks would end up on one node.
-*  Your job script:  See [Example Job Scripts](../example-job-scripts) for more information about how to build your job script.  For options that wont change, you do have the option of taking things off the command line and putting them in your job script.  For instance the above command line could be simplified to `qsub -l select=<#> <your job script>` if you added the following to the top (the PBS directives have to be before any executable line) of your job script:
+*  Your job script:  See [Example Job Scripts](./example-job-scripts.md) for more information about how to build your job script.  For options that wont change, you do have the option of taking things off the command line and putting them in your job script.  For instance the above command line could be simplified to `qsub -l select=<#> <your job script>` if you added the following to the top (the PBS directives have to be before any executable line) of your job script:
 
 ```bash
 #PBS -A <project>
@@ -226,7 +226,7 @@ Users should add ```-M <email address>``` if they want notifications as a best p
 
 `qsub: Resource: filesystems is required to be set.`
 
-Valid filesystems are `home`, `eagle`, and `grand`.  For example, to request the home and eagle filesystems for your job you would add `-l filesystems=home:eagle` to your qsub command.
+Valid filesystems are `home` and `eagle`.For example, to request the home and Eagle filesystems for your job you would add `-l filesystems=home:eagle` to your `qsub` command.
 
 If a job is submitted while a filesystem it requested is marked down, the job will be queued but will not run, with a message in the comment field of the job as to why it is not running. Run `qstat -f <jobid>` to see the comment field. For example, if the job requested for eagle and if Eagle is unavailable, the comment field will have `Can Never Run: Insufficient amount of server resource: eagle_fs (True != False)`).  Once the affected filesystem has been returned to normal operation, and the filesystem is marked as being available, the job will then be scheduled normally. The job cannot run until all filesystems requested by the job are available.
 
@@ -234,7 +234,7 @@ If a job requesting a filesystem that is marked down is already in the queue, th
 
 An example of a job requesting filesystems:
 
-`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=grand:home -A ProjectX -q prod my_job.sh`
+`qsub -l select=10:ncpus=64,walltime=30:00,filesystems=eagle:home -A ProjectX -q prod my_job.sh`
 
 To update the filesystems list for your job, use `qalter`.
 
@@ -306,6 +306,9 @@ Basically takes the same options as `qsub`;  Say you typoed and set the walltime
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 
 `qdel <jobid> [<jobid> <jobid>...]`
+
+Occasionally, the job will still show up in `qstat` after you try and `qdel` it.  When this happens you can try `qdel -W force <jobid>`.  If it still wont go away, please send mail to <support@alcf.anl.gov>  and one of the administrators can remove it for you.  DO NOT just default to using `-W force`.  The force does not do all of the clean up and can cause problems of its own.
+
 
 ## <a name="qmove"></a>`qmove`: Move a job to a different queue
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
@@ -429,12 +432,14 @@ If you receive a `qsub: Job rejected by all possible destinations` error, then c
 The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues.
 Please see the table above for limits on production queue job sizes.
 
-**NOTE:** For batch submissions, if the parameters within your submission script do not meet the parameters of any of the above queues you might not receive the "Job submission" error on the command line at all.
-This can happen because your job is in waiting in a routing queue and has not yet reached the execution queues.
-In this case you will receive a jobid back and qsub will exit, however when the proposed job is routed, it will be rejected from the execution queues.
-In that case, the job will be deleted from the system and will not show up in the job history for that system.
+**NOTE:** If you receive a job ID but you cannot find your job with `qsub`, then this may be a submission parameter issue.
+This can happen for batch submission because the job is being accepted into the routing (`prod`) queue. 
+The routing/`prod` queue's parameters are more broad since it needs to accommodate for all three production queues (`small`, `medium`, & `large`).
+The prod routing queue accepts the job, generating a job ID. 
+Depending on what is going on with the system, the routing may or may not occur before the qsub returns (i.e., if the queues are backed-up the routing queue can't route the job before the qsub returns).
+If the routing is delayed then a job ID is returned, and routing is completed later. 
+Since the qsub has ended then there isn't a way to inform the user that this has been rejected by all routing destinations.
 If you run a qstat on the jobid, it will return `qstat: Unknown Job Id <jobid>`.
-
 
 ## <a name="Using-Fakeroot-with-Singularity"></a>Using Fakeroot with Singularity
 The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping.  To request this feature be enabled on your job add the following to your `qsub` command line:

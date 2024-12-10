@@ -1,24 +1,21 @@
 # ALCF File Systems
-Our HPC systems have three discrete file systems for project data: theta-fs0, Grand, and Eagle. 
-Theta-fs0 is an Intel Enterprise Edition Lustre parallel file system mounted as /lus-projects or /projects. 
-Grand and Eagle are 100 PB Lustre file systems mounted as /grand and /eagle respectively. 
+Our HPC systems store project data in a file system called Eagle. 
+Eagle is a Lustre file system mounted as` /eagle`. 
 For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
 
 * [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 For information on the AI Testbed storage systems, refer to the AI Testbed storage page: [https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/](https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/)
 
-Our HPC systems also share a Lustre home file system, called swift-home. The home file system is mounted as /home, and should generally be used for small files and any binaries to be run on Theta. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
+Our HPC systems also share a Lustre home file system, called agile-home. The home file system is mounted as /home, and should generally be used for small files and any binaries to be run on Polaris. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
 
-The swift-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
+The agile-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
-| Name                                 | Accessible From                                     | Type   | Path                                                                                  | Production                                         | Backed-up | Usage                                                                  |
-|--------------------------------------|-----------------------------------------------------|--------|---------------------------------------------------------------------------------------|----------------------------------------------------|-----------|------------------------------------------------------------------------| 
-| swift-home                           | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris  | Lustre | /home or /lus/swift/home	                                                          | Yes                                                | Yes | General use                                                            |
-| lus-projects  (theta-fs0)	           | Theta <br /> ThetaGPU <br /> Cooley	                | Lustre | /projects or /lus-projects or /lus/theta-fs0/projects	                              | Yes	                                               | No  | Intensive job output, large files                                      |
-| Grand                                | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris	 | Lustre | /grand or /lus/grand/projects	                                                      | Yes	                                               | No  | Intensive job output, large files                                      |
-| Eagle	                               | Theta <br /> ThetaGPU <br /> Cooley <br /> Polaris	 | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                               | No  | Community sharing via Globus; <br /> Intensive job output, large files | 
-| Node SSD <br /><br /> (Compute node only)	 | Theta <br /> ThetaGPU <br /> Polaris	               | xfs	   | /local/scratch (Theta) <br /> /local/scratch (Polaris) <br />/raid/scratch (ThetaGPU) | Yes <br /> <br /> Theta & ThetaGPU by request only | No  | Local node scratch during run                                          |
+| Name                                 | Accessible From | Type   | Path                                                                                  | Production                                    | Backed-up | Usage                                                                  |
+|--------------------------------------|----------|--------|---------------------------------------------------------------------------------------|-----------------------------------------------|-----------|------------------------------------------------------------------------| 
+| agile-home                           | Polaris  | Lustre | /home or /lus/agile/home	                                                          | Yes                                           | Yes | General use                                                            |
+| Eagle	                               | Polaris	 | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                          | No  | Community sharing via Globus; <br /> Intensive job output, large files | 
+| Node SSD <br /><br /> (Compute node only)	 | Polaris	 | xfs	   | /local/scratch (Polaris) | Yes | No  | Local node scratch during run                                          |
 
 ## Available Directories
 ### Home Directories
@@ -49,35 +46,31 @@ chmod -R o+Xr /home/username/subdirectoryname
 First, a one-time-only change to your top-level /home/username directory. To share files/directories with user gilgamesh, for example:
 
 ```
-setfacl u:gilgamesh:--x /home/username
+setfacl -m u:gilgamesh:X /home/username
 ```
 
 Then you may permission individual files and/or subdirectories with read access. For example, to recursively change permissions on /home/username/subdirectoryname so that all files in that subdirectory and any subdirectory trees within it are readable to user gilgamesh, you would use
 
 ```
-setfacl -R -u gilgamesh:m:r-X,d:u:gilgamesh:r-X /home/username/subdirectoryname
+setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 ```
 
 
 
 ### Project Directories
-- Directories on Grand or Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://accounts.alcf.anl.gov/allocationRequests) to submit requests for an allocation on Eagle. Note that project directories are no longer created on theta-fs0.
+- Directories on Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests) to submit requests for an allocation on Eagle. 
 - Directory paths:
-    - theta-fs0: /projects or /lus-projects or /lus/theta-fs0/projects
-    - Grand: /grand or /lus/grand/projects
     - Eagle: /eagle or /lus/eagle/projects
 
 These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](disk-quota.md).
 
 ## Local Node SSD
-Access to SSDs is disabled by default for Theta and ThetaGPU. Project PIs may request access by emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). A use case will need to be provided.
-
 Access to SSDs is enabled by default on Polaris.
 
 ### SSD Information
 - Local scratch SSD storage on compute nodes for running jobs
 - Completely local non-parallel filesystem
-- Located at /local/scratch on Theta and Polaris computes and /raid/scratch on ThetaGPU computes
+- Located at /local/scratch on Polaris computes
 - Wiped between Cobalt/PBS Pro jobs
 - No automatic backups provided
 - Information on the current SSD drives in use is below:
@@ -92,23 +85,5 @@ Model PM1725a drives [specifications](https://semiconductor.samsung.com/resource
 | Sequential | Read	3300 MB/s  |
 | Sequential | Write	3300 MB/s |
 
-**Theta and ThetaGPU SSD Specs**
-
-Model SM961 drives
-
-| Model SM961 drives | -------  |
-| ------ | ------|
-| Capacity	| 128 GB |
-| Sequential | Read	3100 MB/s |
-| Sequential | Write	700 MB/s |
-
-
-Model SM951 drives [specifications](https://s3.ap-northeast-2.amazonaws.com/global.semi.static/0_sm951-prodoverview-0615-v1-0.pdf)
-
-| Model SM951 drives |   ------   |
-| ------ | ------|
-| Capacity	| 128 GB |
-| Sequential | Read	2150 MB/s |
-| Sequential | Write	1550 MB/s |
 
 

@@ -26,19 +26,21 @@ nav:
       - Data Storage: data-management/filesystem-and-storage/data-storage.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since it is a dropdown. Only linked to in base docs/index.md
+  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
+    # it is a dropdown. Only linked to in base docs/index.md
+    - Getting Started: services/getting-started.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
-      - Jenkins: services/jenkins.md
       - Gitlab-CI: services/gitlab-ci.md
   - Running Jobs with PBS at the ALCF:
       - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
-      - Machine Reservations: running-jobs/machine-reservations-polaris.md
+      - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
+    - System Updates: polaris/system-updates.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -50,6 +52,7 @@ nav:
       - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
       - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
       - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
+      - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
     - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
     - Running Jobs: polaris/running-jobs.md
@@ -57,21 +60,30 @@ nav:
         - Applications:
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - NekRS: polaris/applications-and-libraries/applications/nekrs.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
+            - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
+            - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
             - VASP: polaris/applications-and-libraries/applications/vasp.md
         - Libraries:
             - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
             - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
+            - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+            - NCCL: polaris/applications-and-libraries/libraries/nccl.md
+            - XALT: polaris/applications-and-libraries/libraries/xalt.md
+    - Containers: polaris/containers/containers.md
     - Data Science:
-        - Python: polaris/data-science-workflows/python.md
-        - Containers: polaris/data-science-workflows/containers/containers.md
+        - Julia: polaris/data-science/julia.md
+        - Python: polaris/data-science/python.md
         - Frameworks:
-            - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
-            - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
-            - Jax: polaris/data-science-workflows/frameworks/jax.md
-            - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
+            - TensorFlow: polaris/data-science/frameworks/tensorflow.md
+            - PyTorch: polaris/data-science/frameworks/pytorch.md
+            - JAX: polaris/data-science/frameworks/jax.md
+            - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
+            - LibTorch: polaris/data-science/frameworks/libtorch.md
         - Applications:
-            - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
+            - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
+            - gpt-neox: polaris/data-science/applications/gpt-neox.md
     - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
@@ -81,173 +93,161 @@ nav:
     - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
     - Visualization:
-        - Paraview: polaris/visualization/paraview.md
+        - Visualization on Polaris: polaris/visualization/visualization.md
+        - ParaView (Launch from Client): polaris/visualization/paraview.md
+        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
+        - VisIt: polaris/visualization/visit.md
+        - FFmpeg: polaris/visualization/ffmpeg.md
+        - ImageMagick: polaris/visualization/imagemagick.md
+        - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
+        - VNC: polaris/visualization/vnc.md
     - Workflows:
+        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
-  - Theta:
-    - Hardware Overview:
-      - Theta Machine Overview: theta/hardware-overview/machine-overview.md
-      - Theta Memory Modes: theta/hardware-overview/theta-memory-modes.md
-      - Aries Network: theta/hardware-overview/aries-network.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: theta/compiling-and-linking/compiling-and-linking-overview.md
-      - Library and Compiler Tracking: theta/compiling-and-linking/theta-library-compiler-tracking-overview.md
-      - Example Program and Makefile: theta/compiling-and-linking/theta-example-program-makefile.md
-      - Clang Compiler: theta/compiling-and-linking/clang-compiler-theta.md
-    - Queueing and Running Jobs on Theta:
-      - The Gronkulator (Job Status Display): theta/queueing-and-running-jobs/gronkulator.md
-      - Job and Queue Scheduling: theta/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Example Job Scripts: theta/queueing-and-running-jobs/example-job-scripts.md
-      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
-      - Affinity on Theta: theta/queueing-and-running-jobs/affinity-theta.md
-    - Applications and Libraries:
-      - Applications:
-        - ELPA: theta/applications-and-libraries/applications/elpa.md
-        - Gromacs: theta/applications-and-libraries/applications/gromacs.md
-        - LAMMPS: theta/applications-and-libraries/applications/lammps.md
-        - NAMD: theta/applications-and-libraries/applications/namd.md
-        - NwChem: theta/applications-and-libraries/applications/nwchem.md
-        - QMCPack: theta/applications-and-libraries/applications/qmcpack.md
-        - QBox: theta/applications-and-libraries/applications/qbox.md
-        - Quantum Espresso: theta/applications-and-libraries/applications/quantum-espresso.md
-        - Quantum Package: theta/applications-and-libraries/applications/quantum-package.md
-        - VASP: theta/applications-and-libraries/applications/vasp.md
-        - WEST: theta/applications-and-libraries/applications/west.md
-      - Libraries:
-        - Boost: theta/applications-and-libraries/libraries/boost.md
-        - Spack: theta/applications-and-libraries/libraries/spack.md
-      - Visualization:
-        - Remote Visualization Using VNC: theta/applications-and-libraries/visualization/remote-vis.md
+        - SmartSim: polaris/workflows/smartsim.md
+  - Sophia:
+    - Machine Overview: sophia/hardware-overview/machine-overview.md
+    - Getting Started: sophia/getting-started.md
+    - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
+    - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
+    - Containers: sophia/containers/containers.md
     - Data Science:
-      - Machine Learning Tools: theta/data-science-workflows/machine-learning-tools.md
-      - Data Science Modules: theta/data-science-workflows/data-science-modules.md
-      - Apache Spark: theta/data-science-workflows/apache-spark.md
-      - Balsam: theta/data-science-workflows/balsam.md
-      - Conda: theta/data-science-workflows/conda.md
-      - DeepHyper: theta/data-science-workflows/deephyper.md
-      - Distributed Learning with Horovod: theta/data-science-workflows/distributed-learning-horovod.md
-      - HDF5: theta/data-science-workflows/hdf5.md
-      - Keras: theta/data-science-workflows/keras.md
-      - MongoDB: theta/data-science-workflows/mongo-db.md
-      - PostgreSQL and SQLite: theta/data-science-workflows/postgre-sql-lite.md
-      - PyTorch: theta/data-science-workflows/pytorch.md
-      - Containers: theta/data-science-workflows/containers/containers.md
-      - TensorFlow: theta/data-science-workflows/tensorflow.md
-    - Programming Models:
-      - Kokkos: theta/programming-models/kokkos.md
-      - MPI: theta/programming-models/mpi-on-theta.md
-      - OpenMP: theta/programming-models/openmp-theta.md
-      - Raja: theta/programming-models/raja.md
-    - Debugging Tools:
-      - Arm DDT: theta/debugging-tools/arm-ddt.md
-      - ATP and STAT: theta/debugging-tools/atp-and-stat.md
-      - GDB: theta/debugging-tools/gdb.md
-    - Performance Tools:
-      - Arm MAP: theta/performance-tools/arm-map.md
-      - CrayPat: theta/performance-tools/craypat.md
-      - Darshan: theta/performance-tools/darshan.md
-      - HPCToolkit: theta/performance-tools/hpctoolkit.md
-      - Intel Advisor: theta/performance-tools/intel-advisor.md
-      - Intel Vtune: theta/performance-tools/intel-vtune.md
-      - PAPI: theta/performance-tools/papi.md
-      - TAU: theta/performance-tools/tau.md
-  - ThetaGPU:
-    - Getting Started: theta-gpu/getting-started.md
-    - Hardware Overview:
-      - ThetaGPU Machine Overview: theta-gpu/hardware-overview/theta-gpu-machine-overview.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: theta-gpu/compiling-and-linking/compiling-and-linking-overview.md
-      - Continuous Integration: theta-gpu/compiling-and-linking/continuous-integration.md
-    - Queueing and Running Jobs on ThetaGPU:
-      - Job and Queue Scheduling: theta-gpu/queueing-and-running-jobs/job-and-queue-scheduling.md
-      - Machine Reservations: theta/queueing-and-running-jobs/machine-reservations.md
-    - Applications and Libraries:
-      - Applications:
-        - Gromacs: theta-gpu/applications-and-libraries/applications/gromacs.md
-    - Data Science:
-      - Data Science Software Availability: theta-gpu/data-science-workflows/data-science-software-availability.md
-      - Building Python Packages: theta-gpu/data-science-workflows/building-python-packages.md
-      - GPU Monitoring: theta-gpu/data-science-workflows/gpu-monitoring.md
-      - GPU Node Queue and Policy: theta-gpu/data-science-workflows/gpu-node-queue-and-policy.md
-      - Python/C++ Code Interoperability: theta-gpu/data-science-workflows/pythonc-code-interoperability.md
-      - Containers: theta-gpu/data-science-workflows/containers/containers.md
-      - Deep Learning Frameworks:
-        - Distributed Training on ThetaGPU Using Data Parallelism: theta-gpu/data-science-workflows/dl-frameworks/distributed-training-using-data-parallelism.md
-        - DeepSpeed on ThetaGPU: theta-gpu/data-science-workflows/dl-frameworks/deepspeed.md
-        - Running PyTorch with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-pytorch-conda.md
-        - Running TensorFlow with Conda: theta-gpu/data-science-workflows/dl-frameworks/running-tensorflow-conda.md
-        - TensorBoard Instructions: theta-gpu/data-science-workflows/dl-frameworks/tensorboard-instructions.md
-    - Programming Models:
-      - Kokkos: theta-gpu/programming-models/kokkos.md
-      - OpenMP: theta-gpu/programming-models/openmp.md
-      - Raja: theta-gpu/programming-models/raja.md
-    - Performance Tools:
-      - Darshan: theta-gpu/performance-tools/darshan.md
-      - NVIDIA Nsight: theta-gpu/performance-tools/nvidia-nsight.md
+        - Python: sophia/data-science/python.md
+        - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
+    - Visualization:
+        - Visualization on Sophia: sophia/visualization/visualization.md
+        - ParaView (Launch from Client): sophia/visualization/paraview.md
   - AI Testbed:
-    - Getting Started: ai-testbed/index.md
+    - Getting Started: ai-testbed/getting-started.md
     - Cerebras:
       - System Overview: ai-testbed/cerebras/system-overview.md
       - Getting Started: ai-testbed/cerebras/getting-started.md
-      - Steps to Run a Model/Program: ai-testbed/cerebras/steps-to-run-a-model-or-program.md
+      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
+      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
       - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
       - Example Programs: ai-testbed/cerebras/example-programs.md
-      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Performance Tools: ai-testbed/cerebras/performance-tools.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
       - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
       - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-    - SambaNova Gen1:
-      - System Overview: ai-testbed/sambanova_gen1/system-overview.md
-      - Getting Started: ai-testbed/sambanova_gen1/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova_gen1/virtual-environment.md
-      - Steps to Run a Model/Program: ai-testbed/sambanova_gen1/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova_gen1/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova_gen1/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova_gen1/example-multi-node-programs.md
-      - Steps to Run BERT Large on Sambanova DataScale SN10-8R: ai-testbed/sambanova_gen1/running-bert-large-on-sn10-8r.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen1/tunneling-and-forwarding-ports.md
-      #- DataParallel: ai-testbed/sambanova_gen1/DataParallel.md
-      - Miscellaneous: ai-testbed/sambanova_gen1/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova_gen1/documentation.md
-    - SambaNova Gen2:
-      - System Overview: ai-testbed/sambanova_gen2/system-overview.md
-      - Getting Started: ai-testbed/sambanova_gen2/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova_gen2/virtual-environment.md
-      - Running a Model/Program: ai-testbed/sambanova_gen2/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova_gen2/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova_gen2/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova_gen2/example-multi-node-programs.md
-      #- Running BERT Large on Sambanova DataScale SN30-8R: ai-testbed/sambanova_gen2/running-bert-large-on-sn30.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova_gen2/tunneling-and-forwarding-ports.md
-      #- DataParallel: ai-testbed/sambanova_gen2/DataParallel.md
-      - Miscellaneous: ai-testbed/sambanova_gen2/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova_gen2/documentation.md
+    - Graphcore:
+      - System Overview: ai-testbed/graphcore/system-overview.md
+      - Getting Started: ai-testbed/graphcore/getting-started.md
+      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
+      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/graphcore/example-programs.md
+      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
+      - Documentation: ai-testbed/graphcore/documentation.md
+    - Groq:
+      - System Overview: ai-testbed/groq/system-overview.md
+      - Getting Started: ai-testbed/groq/getting-started.md
+      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
+      #- Example Programs: ai-testbed/groq/example-programs.md
+      - Virtual Environments: ai-testbed/groq/virtual-environments.md
+      - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+      - Profiling with GroqView: ai-testbed/groq/groqview.md
+    - SambaNova:
+      - System Overview: ai-testbed/sambanova/system-overview.md
+      - Getting Started: ai-testbed/sambanova/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+      - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
+      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+      # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
-  - Cooley:
-    - Hardware Overview:
-      - Cooley Machine Overview: cooley/cooley-overview.md
-    - Compiling And Linking:
-      - Compiling and Linking Overview: cooley/compiling-and-linking/compiling-and-linking.md
-    - Queueing and Running Jobs:
-      - Job and Queue Scheduling: cooley/job-submission/job-and-queue-scheduling.md
-    - Software and Libraries:
-      - Jupyter Notebooks: cooley/software-and-libraries/jupyter-notebooks.md
-      - Machine Learning Tools: cooley/software-and-libraries/machine-learning-tools.md
-      - ParaView: cooley/software-and-libraries/paraview.md
-      - ParaView Tutorial: cooley/software-and-libraries/paraview-tutorial.md
-      - Singularity on Cooley: cooley/software-and-libraries/singularity-cooley.md
-      - Visit on Cooley: cooley/software-and-libraries/visit-on-cooley.md
-    - Programming Models:
-      - Kokkos: cooley/programming-models/kokkos.md
-      - OpenCL: cooley/programming-models/opencl.md
-      - OpenMP: cooley/programming-models/openmp.md
-      - Raja: cooley/programming-models/raja.md
-    - Performance Tools:
-      - Darshan: cooley/performance-tools/darshan.md
-      - Remote Visualization Using VNC: cooley/performance-tools/remote-visualization-using-vnc.md
-  - Aurora/Sunspot: https://www.alcf.anl.gov/support-center/aurora-sunspot
+  - Aurora:
+      - Getting Started: aurora/getting-started-on-aurora.md
+      - Aurora PE: aurora/aurora-pe.md
+      - Sunspot to Aurora: aurora/sunspot-to-aurora.md
+      - Known Issues: aurora/known-issues.md
+      - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
+      - Compiling and Linking:
+        - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
+        - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
+        - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
+      # - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
+      # - GNU Compilers: aurora/compiling-and-linking/gnu-compilers-aurora.md
+      # - CCE Compilers: aurora/compiling-and-linking/cce-compilers-aurora.md
+      # - Continuous Integration: aurora/compiling-and-linking/continuous-integration-aurora.md
+      - Build Tools:
+        - CMake: aurora/build-tools/cmake-aurora.md
+      - Running Jobs: aurora/running-jobs-aurora.md
+      - Data Management:
+        - Copper: aurora/data-management/copper/copper.md
+        - DAOS: aurora/data-management/daos/daos-overview.md
+        - Lustre (Flare): aurora/data-management/lustre/flare.md
+        - Moving data to Aurora:
+          - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+          - Globus: aurora/data-management/moving_data_to_aurora/globus.md
+          - SCP: aurora/data-management/moving_data_to_aurora/scp.md
+      - Applications and Libraries:
+        - Libraries:
+          - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
+          #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
+          #- MKL: aurora/applications-and-libraries/libraries/mkl.md
+          #- MPI: aurora/applications-and-libraries/libraries/mpi.md
+          #- oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+          - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
+      - Data Science:
+        #- Julia: aurora/data-science/julia.md
+        - Python: aurora/data-science/python.md
+        #- Applications:
+          #- gpt-neox: aurora/data-science/applications/gpt-neox.md
+        - Containers: aurora/data-science/containers/containers.md
+        - Frameworks:
+          #- DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          #- JAX: aurora/data-science/frameworks/jax.md
+          - PyTorch: aurora/data-science/frameworks/pytorch.md
+          - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+          - LibTorch: aurora/data-science/frameworks/libtorch.md
+          - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - oneCCL: aurora/data-science/frameworks/oneCCL.md
+      - Programming Models:
+        - Kokkos: aurora/programming-models/kokkos-aurora.md
+        - Level Zero: aurora/programming-models/level-0.md
+        - OpenCL: aurora/programming-models/opencl-aurora.md
+        - OpenMP: aurora/programming-models/openmp-aurora.md
+        #- RAJA: aurora/programming-models/raja-aurora.md
+        - SYCL: aurora/programming-models/sycl-aurora.md
+      - Debugging Tools:
+        - Overview: aurora/debugging/debugging-overview.md
+        #- gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
+      - Performance Tools:
+      #  - Overview: aurora/performance-tools/performance-overview.md
+        - Advisor: aurora/performance-tools/advisor.md
+        - VTune: aurora/performance-tools/vtune.md
+      # - Visualization:
+      #   - ParaView: aurora/visualization/paraview.md
+      - Services:
+        - GitLab: aurora/services/gitlab-ci.md
+        #- JupyterHub: aurora/services/jupyterhub.md
+      - Workflows:
+        # - Balsam: aurora/workflows/balsam.md
+        # - DeepHyper: aurora/workflows/deephyper.md
+        # - libEnsemble: aurora/workflows/libensemble.md
+        # - Parsl: aurora/workflows/parsl.md
+        - SmartSim: aurora/workflows/smartsim.md
+  - Crux:
+    - Machine Overview: crux/hardware-overview/machine-overview.md
+    - Getting Started: crux/getting-started.md
+    - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
+    - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
+    - Containers: crux/containers/containers.md
+    - Data Science:
+      - Python: crux/data-science/python.md
+    #- Visualization:
+      #- Visualization on Crux: crux/visualization/visualization.md
+      #- ParaView (Launch from Client): crux/visualization/paraview.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
@@ -262,6 +262,36 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+  - Docs Questions/Issues: issues.md
+not_in_nav: |
+  not_in_nav/
+  unused/
+  todo.md
+  TODO.md
+  notes.md
+  account-project-management/index.md
+  # TODO: complete or remove Aurora placeholder pages
+  llvm-compilers-aurora.md
+  gnu-compilers-aurora.md
+  cce-compilers-aurora.md
+  continuous-integration-aurora.md
+  aurora/applications-and-libraries/libraries/math-libraries.md
+  aurora/applications-and-libraries/libraries/mkl.md
+  aurora/applications-and-libraries/libraries/mpi.md
+  aurora/applications-and-libraries/libraries/onedal.md
+  aurora/data-science/julia.md
+  aurora/data-science/applications/gpt-neox.md
+  aurora/data-science/frameworks/deepspeed.md
+  aurora/data-science/frameworks/jax.md
+  aurora/programming-models/raja-aurora.md
+  aurora/debugging/gdb-oneapi-aurora.md
+  aurora/performance-tools/performance-overview.md
+  aurora/visualization/paraview.md
+  aurora/services/jupyterhub.md
+  aurora/workflows/balsam.md
+  aurora/workflows/deephyper.md
+  aurora/workflows/libensemble.md
+  aurora/workflows/parsl.md
 
 theme:
   name: 'material'
@@ -276,6 +306,7 @@ theme:
     - instant
     - search.highlight
     - search.suggest
+    - content.code.copy
   logo: 'images/Argonne_wireframe_white_transparent.png'
   favicon: 'images/alcf_favicon.ico'
 
@@ -302,7 +333,7 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: ["."]  # for root of repo, default since that is where mkdocs.yml is
       # base_path: ["docs"]
-      #dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
+      dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
   - pymdownx.superfences
@@ -316,15 +347,24 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+  not_found: warn
 
-repo_name: 'argonne-lcf/alcf-userguide'
-repo_url: 'https://github.com/argonne-lcf/alcf-userguide'
+repo_name: 'argonne-lcf/user-guides'
+repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 
 extra:
   social:
     - icon: 'fontawesome/brands/github-alt'
-      link: 'https://github.com/argonne-lcf/alcf-userguide'
+      link: 'https://github.com/argonne-lcf/user-guides'
+  analytics:
+    provider: google
+    property: G-4M48E2L33R
 
 plugins:
   - include-markdown

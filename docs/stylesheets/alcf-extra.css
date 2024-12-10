@@ -25,22 +25,20 @@ body {
 }
 
 .md-typeset h1 {
-/* 	font-size: 60px; */
-/* 	line-height: 60px; */
-	border-bottom: 1px solid rgb(216, 220, 225);
-	padding-bottom: .75rem;
-	margin: 0;
+    border-bottom: 1px solid rgb(216, 220, 225);
+    padding-bottom: .75rem;
+    margin: 0;
 }
 
-.md-typeset h2 {
-/* 	font-size: 36px; */
-/* 	line-height: 36px; */
-}
-
-.md-typeset h3 {
-/* 	margin:3em 0 0; */
-;
-}
+/* .md-typeset h2 { */
+/* /* 	font-size: 36px; */ */
+/* /* 	line-height: 36px; */ */
+/* } */
+/**/
+/* .md-typeset h3 { */
+/* /* 	margin:3em 0 0; */ */
+/* ; */
+/* } */
 
 .md-typeset p, .md-typeset li {
 	font-size: 19px;
@@ -49,24 +47,24 @@ body {
 	margin-block-start: .8em;
 }
 
-.md-typeset li{
-	margin-block-start: 0;
-}
+/* .md-typeset li{ */
+/* 	margin-block-start: 0; */
+/* } */
 
 
 .md-typeset ul {
-	list-style-type: none;
+	list-style-type: disc;
 }
 
-.md-typeset ul > li {
-	text-indent: -15px;
-}
+/* .md-typeset ul > li { */
+/* 	text-indent: -15px; */
+/* } */
 
 .md-typeset ul > li:before {
-	content: "–";
-  margin-right: 5px;
+	/* content: " "; */
+  /* margin-right: 1rem; */
   font-weight: 600;
-  color: #6e6e78;
+  color: var(--md-accent-fg-color);
 }
 
 .md-typeset :target {
@@ -184,8 +182,8 @@ body {
 }
 
 .header--primary .header__nav-primary li:last-child {
-	padding-bottom: 8px;
-	border-left: 1px solid #1d1651;
+	/* padding-bottom: 8px; */
+	/* border-left: 1px solid #1d1651; */
 }
 
 .header--primary .header__nav-primary a {
@@ -203,18 +201,18 @@ body {
 	display: block;
 }
 
-.md-nav {
-  font-size: 15px;
-  line-height: 1;
-}
+/* .md-nav { */
+/*   font-size: 15px; */
+/*   line-height: 1; */
+/* } */
 
 .md-nav__link {
 	margin-top: 6px;
 }
 
-#nav-sup {
-	padding-left: 32px;
-}
+/* #nav-sup { */
+/* 	padding-left: 32px; */
+/* } */
 
 .header--primary .header__nav-secondary {
 	grid-column: 2 / span 5;
@@ -832,7 +830,7 @@ footer .grid{
 
 .footer--admin {
 	grid-column: 1 / span 1;
-	grid-row: 2;
+	grid-row: 3;
 }
 
 @media only screen and (max-width: 960px) {
@@ -843,8 +841,10 @@ footer .grid{
 }
 
 .footer--copyright {
-	grid-column: 3 / span 1;
-	grid-row: 2;
+	/*grid-column: 3 / span 1;
+	grid-row: 2;*/
+	grid-column: 3 / -1;
+	grid-row: 3;
 }
 
 @media only screen and (max-width: 960px) {
@@ -855,8 +855,10 @@ footer .grid{
 }
 
 .footer--logos {
-	grid-column: 4 / span 1;
+	/*grid-column: 4 / span 1;*/
+	grid-column: 3 / -1;
 	grid-row: 2;
+	margin-bottom: 12px;
 }
 
 @media only screen and (max-width: 960px) {
@@ -912,4 +914,13 @@ footer a:hover {
 
 .js-dropdown-hidden {
 	display: none;
+}
+
+table {
+  table-layout: fixed;
+  max-width: 100%;
+}
+
+.md-typeset code {
+  overflow-wrap: break-word;
 }

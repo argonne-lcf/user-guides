@@ -1,24 +1,14 @@
 # Compiling and Linking Overview on Polaris
 
-## Polaris Nodes
+## Compiling on Polaris Login and Compute Nodes
 
-### Login Nodes
+If your build system does not require GPUs for the build process, as is usually the case, compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. You may in this case compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs.md#interactive-jobs-on-compute-nodes), or running your build system in a batch job.
 
-The login nodes do not currently have GPUs installed. It is still possible to compile GPU-enabled applications on the login nodes depending on the requirements of your applications build system. If a GPU is required for compilation, then users are encouraged for the time being to build their applications on a Polaris compute node. This can be readily accomplished by submitting an interactive single-node job. Compilation of non-GPU codes is expected to work well on the current Polaris login nodes.
+<!-- The following section on home file system would be more useful somewhere else --Tim W.: -->
 
 ### Home File System
 
 Is it helpful to realize that there is a single `HOME` filesystem for users that can be accessed from the login and computes of each production resource at ALCF. Thus, users should be mindful of modifications to their environments (e.g. `.bashrc`) that may cause issues to arise due to differences between the systems. 
-
-An example is creating an alias for the `qstat` command to, for example, change the order of columns printed to screen. Users with such an alias that works well on Theta may run into issues using `qstat` on Polaris as the two system use different schedulers: Cobalt (Theta) and PBS (Polaris). Users with such modifications to their environments are encouraged to modify their scripts appropriately depending on `$hostname`.
-
-### Interactive Jobs on Compute Nodes
-
-Submitting a single-node interactive job to, for example, build and test applications on a Polaris compute node can be accomplished using the `qsub` command.
-```
-qsub -I -l select=1 -l walltime=1:00:00 -q debug
-```
-This command requests 1 node for a period of 1 hour in the debug queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will become available. Users can then proceed to start building applications and testing job submission scripts.
 
 ## Cray Programming Environment
 
@@ -78,9 +68,9 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 ## Notes on Default Modules
 
-* `craype-x86-rome`: While the Polaris compute nodes currently have Milan CPUs, this module is loaded by default to avoid the `craype-x86-milan` module from adding a `zen3` target not supported in the default `nvhpc/21.9` compilers. The `craype-x86-milan` module is expected to be made default once a newer `nvhpc` version (e.g. 22.5) is made the default.
-
 * `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with gpu-enabled MPI libraries as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building cpu-only applications may find it useful to unload this module to silence "gpu code generation" warnings.
+
+* `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 
 ## Mixed C/C++ & Fortran Applications
 

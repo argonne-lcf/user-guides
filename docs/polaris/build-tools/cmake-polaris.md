@@ -15,5 +15,5 @@ To use CMake on Polaris, run
 
 ```
 module use /soft/modulefiles
-module load cmake
+module load spack-pe-base cmake
 ```

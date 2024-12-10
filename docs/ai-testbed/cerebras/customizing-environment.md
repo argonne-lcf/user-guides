@@ -1,28 +1,35 @@
 # Customizing Environments
 
-## Using a virtual python environment to customize an environment
+## Using virtual Python environments
 
-It is considered good practice to create and use a python virtual environment for python projects with dependencies not satisfied by the base environment.
-This prevents dependency conflicts between projects.
-Cerebras does not support conda, but python virtualenvs can be used instead.
+#### To make a PyTorch virtual environment for Cerebras
 
 ```console
-python3 -m venv ~/testp3env
-source ~/testp3env/bin/activate
+mkdir ~/R_2.3.0
+cd ~/R_2.3.0
+# Note: "deactivate" does not actually work in scripts.
+deactivate
+rm -r venv_cerebras_pt
+/software/cerebras/python3.8/bin/python3.8 -m venv venv_cerebras_pt
+source venv_cerebras_pt/bin/activate
 pip install --upgrade pip
-# sample pip install
-pip install wget
-# to exit the virtual env:
+pip install cerebras_pytorch==2.3.0
+```
+
+<!--- No longer any TensorFlow wheel
+#### To make a TensorFlow virtual environment for Cerebras
+--->
+
+#### Activation and deactivation
+
+To activate a virtual environments
+
+```console
+source ~/R_2.3.0/venv_cerebras_pt/bin/activate
+```
+
+To deactivate a virtual environment,
+
+```console
 deactivate
 ```
-
-To use this virtual env, e.g. in a script started with csrun_wse or csrun_cpu, or in a singularity shell:
-
-```console
-source testp3env/bin/activate
-```
-
-## Customizing the Cerebras singularity container
-
-See this section of the Cerebras documentation:
-[Adding Custom Packages To cbcore Container](https://docs.cerebras.net/en/latest/software-guides/adding-custom-pkgs-to-cbcore-container.html)

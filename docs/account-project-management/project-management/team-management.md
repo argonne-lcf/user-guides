@@ -1,14 +1,12 @@
 # Managing Your Team Members
-New project members will need a user account to access project data and to run jobs on ALCF systems.
 
-Please instruct any members who do not have an ALCF account to request one as soon as possible by visiting: [https://accounts.alcf.anl.gov/#!/accountRequest](https://accounts.alcf.anl.gov/#!/accountRequest). When prompted for project name, they should select the "short name" for your project. 
+The PI or Proxy must approve each member of the team to gain access and to run project jobs on the ALCF's resources. If you have an active ALCF account, you can manage your project team by logging into the ALCF account and project management website and navigating to [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/)
 
-The PI or Proxy must approve each member of the team to gain access and to run project jobs on the ALCF's resources. If you have an active ALCF account, you can manage your project team by logging into the ALCF account and project management website and navigating to [https://accounts.alcf.anl.gov/#!/manageProjects](https://accounts.alcf.anl.gov/#!/manageProjects)
+Project members will need to have an active ALCF user account to access project data and to run jobs on ALCF systems. See [Accounts and Access for your Project Members]{https://docs.alcf.anl.gov/account-project-management/project-management/starting-alcf-award/#accounts-and-access-for-your-project-members) for information on how team members can get an account, reactivate an account, or request to join your project.
 
 ## Accessing your project(s)
-1. Log in at [https://accounts.alcf.anl.gov/#!/manageProjects](https://accounts.alcf.anl.gov/#!/manageProjects) using your credentials: ALCF username and Physical/Mobile token passcode for a password.
-2. Click on Project Management, located in the right sidebar.
-3. You will see a list of projects of which you are the Primary Investigator (PI).
+1. Log in at [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/) using your credentials (ALCF username and Physical/Mobile token passcode one-time passcode).
+2. You will see a list of projects of which you are the Primary Investigator (PI).
 4. Click on the desired project to view information and management options for the selected project.
 
 ## Modifying project information

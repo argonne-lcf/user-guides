@@ -12,13 +12,22 @@ implementing particle codes
 
 ### Cabana on Polaris
 
-Built against the prebuilt Kokkos on polaris, the prebuilt Cabana includes 3
-backends: Serial and OpenMP for CPU execution and CUDA for GPU execution. To
-use it, run
+Following the [Polaris upgrade to HPCM
+1.10](https://www.alcf.anl.gov/support-center/facility-updates/polaris-upgraded-hpcm-110-0),
+the module setup to use the prebuilt Kokkos changed.
+
+Built against the [prebuilt Kokkos on
+polaris](../../programming-models/kokkos-polaris.md), the prebuilt Cabana
+includes 3 backends: Serial and OpenMP for CPU execution and CUDA for GPU
+execution. To use it, run
 
 ```
+module load craype-x86-milan
+module load craype-accel-nvidia80
+module swap PrgEnv-nvhpc PrgEnv-gnu
 module use /soft/modulefiles
-module load cabana
+module load cuda-PrgEnv-nvidia/12.2.91
+module load kokkos cabana
 ```
 
-Currently, Cabana is a headers-only installation; there are no libraries per se.
+Cabana is a headers-only package; there are no actual libraries installed.

@@ -1,118 +1,110 @@
-# Paraview on Polaris
+# ParaView on Polaris
 
-!!! note  
-	At this time, we only support client/server mode where the user must manually launch the server on Polaris.
+The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource, and the ParaView server on the Polaris compute nodes. The ParaView client needs to first be installed on your local resource, and needs to match the version that you run on Polaris.
 
-
-## Setting up Paraview 
-
-From your local client select Connect, either from the File menu, or by clicking on the icon circled below:
-
-![Connect icon](connect-icon.png) 
-
-A new window will open where you can configure a server. Click on Add Server:
-
-![Choose server](choose-server.png)
-
-Give your server a name, select Client/Server, localhost, and a TCP port (8000 in this example)
-
-![Edit server](edit-server.png)
-
-Click "Configure". In the next window there is an option to set up how Paraview server will be launched, and the default is "Manual". Leave it on "Manual" and click "Save".
-
-You will use these settings when establishing the connection.
-
-## Launching the Paraview server on Polaris
-
-You can launch an interactive session on Polaris compute nodes with the following command (adjust parameters as needed to match your allocation, desired number of nodes, queue, walltime, and filesystems):
-
-```shell
-qsub -l walltime=01:00:00 -l select=2 -A yourallocation -q debug -I -l filesystems=home:grand
+There are multiple versions of ParaView installed on Polaris. To find the versions of ParaView currently available on Polaris run the following command on a login node: 
+```
+module use /soft/modulefiles
+module avail paraview
 ```
 
-When the job starts you will receive a prompt on your head node like this:
+Binary and source packages of the ParaView client for Linux, MacOS, and Windows are available from the [ParaView Download Page](https://www.paraview.org/download/). 
 
+## Connecting to the ParaView server on Polaris
+This section describes how to launch the ParaView server on Polaris from a local ParaView client.
+
+### Start ParaView Client
+First, launch the ParaView client on your local resource. You will need to configure some server settings in the client. This initial set up should only need to be done once, and can be reused each time you want to run ParaView on Polaris.
+
+### Server Configuration
+
+#### 1. Select Connect
+From the ParaView client choose to connect to a server by either clicking on the "Connect" icon in the menu bar
+ 
+![Connect icon](images/connect-icon.png) 
+
+or selecting File->Connect from the main menu
+
+<figure markdown>
+  ![Select connect](images/ParaviewConnectMenu.png){ width="700" }
+</figure>
+
+#### 2. Set Up Servers (first time only)
+The first time you want to run a server on Polaris and have it connect to your local ParaView client, you will need to set up a Server. Once this server is set up, you can reuse it each time you run the ParaView client with the ParaView server on Polaris.
+
+Kitware, the developers of ParaView, maintain a database of server configurations which you can retrieve through the ParaView client. In the File->Connect menu press the button named "Fetch Servers" and select POLARIS@ANL. Windows users should select "windows to POLARIS@ANL". Press "Import Selected"
+
+<figure markdown>
+  ![Load servers](images/ParaviewFetchServers.png){ width="700" }
+</figure>
+
+#### 3. Use ParaView
+
+After the previous step, you can now select POLARIS@ANL in the File->Connect menu and press Connect
+
+<figure markdown>
+  ![Load servers](images/ParaviewChooseServerConfig.png){ width="700" }
+</figure>
+
+At this point a new window will pop up
+
+<figure markdown>
+  ![Load servers](images/ParaviewConnectionOptions.png){ width="700" }
+</figure>
+
+There are a number of parameters that you must enter manually here:
+
+**Xterm executable:** the path of a terminal on your system. The figure shows the case of a Mac with XQuartz. You may need to change these values for Windows or Linux.
+
+**SSH executable:** the name of your ssh command. It may be different on Windows depending on the ssh client installed (i.e putty)
+
+**Remote machine:** leave this value at polaris.alcf.anl.gov
+
+**Username:** your ALCF user name
+
+**ParaView version:** the version of Paraview that you want to use. Verify first that this version is installed on the system (as described at the top of this document). You will also need to add a `-EGL` suffix.
+
+Example:
 ```
-username@x3005c0s7b0n0:~>
-```
-
-Make a note of the node hostname (`x3005c0s7b0n0` in the example above). You can also get this information from `qstat -fx jobID`
-
-
-Now load the Paraview module
-
-```
-username@x3005c0s7b0n0:~> module load paraview
-
-Lmod is automatically replacing "nvhpc/21.9" with "gcc/11.2.0".
-
-----------------------------------------------------------------------------------
-     Paraview v5.11.0 successfully loaded
-----------------------------------------------------------------------------------
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.16
-```
-
-and launch the Paraview server with
-
-```
-srizzi@x3005c0s7b0n0:~> mpirun -n 8 pvserver --server-port=8000
-Waiting for client...
-Connection URL: cs://x3005c0s7b0n0:8000
-Accepting connection(s): x3005c0s7b0n0:8000
-```
-
-In this case `pvserver` will be listening on TCP port 8000 of your head node. You can change this port if you want.
-
-## Creating a tunnel over ssh
-
-We need to establish an ssh tunnel to connect client to server. On your local machine open a new terminal and type:
-
-```
-ssh -v -N -L 8000:x3005c0s7b0n0:8000 polaris.alcf.anl.gov
-```
-
-where 8000 is a TCP port and `x3005c0s7b0n0` the name of your head node. Adjust these values accordingly.
-
-Among multiple lines with debug information,  you should see something like:
-
-```
-debug1: Local connections to LOCALHOST:8000 forwarded to remote address x3005c0s7b0n0:8000
-```
-
-Keep this terminal open for the duration of your session to keep the ssh tunnel active.
-
-Now you are ready to launch your Paraview client locally. Keep in mind that client and servers versions must match. The Paraview version currently deployed on Polaris is 5.11.0
-
-## Connecting to Paraview server
-
-Connect your Paraview client to the server configuration you created above. You can select Connect, either from the File menu, or the icon circled in the figure:
-
-![Connect icon](connect-icon.png)  
-
-and selecting the configuration you created in a previous step.
-
-The connection should point to:
-
-```
-localhost:8000
+5.12.0-EGL
 ```
 
-In the terminal where you launched the server you will see now that the connection is established. Note that Paraview may take a few seconds to connect. This is normal behavior.
+**Client port:** it is safe to use the default value
 
-```
-username@x3005c0s7b0n0:~> mpirun -n 8 pvserver --server-port=8000
-Waiting for client...
-Connection URL: cs://x3005c0s7b0n0:8000
-Accepting connection(s): x3005c0s7b0n0:8000
-Client connected.
-```
+**Server port:** is is safe to use the default value
 
-At this point you can use Paraview normally.
+**Number of nodes to reserve:** enter the number of Polaris compute nodes you want to use for your job
 
+**Number of ranks per node:** enter the number of ranks per node
 
+**Number of minutes to reserve:** the duration of your job in minutes
 
+**Account:** enter here the name of your ALCF allocation
 
+**Queue:** the name of the Polaris queue you would like to use (i.e: `debug` for small, quick jobs, `prod`, `preemptable`)
 
+**File Systems:** enter here the file systems you need for your job, separated with colons, no spaces. Keep in mind that your job may not run if one of these file systems is not available at that time, so enter these values carefully
 
+**Job name:** safe to use default value. The PBS scheduler will assign this name to your job
+
+Now you can press OK to establish the connection with a ParaView server on Polaris.
+
+An ssh connection will be established with a Polaris login node and a password will be requested in a terminal, similar to the process you normally use to connect and work on the system.
+
+After you enter your password, a job will be queued and you will see a window like this:
+
+<figure markdown>
+  ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
+</figure>
+
+When the job is launched on the compute nodes, the previous window will go away and ParaView will show it is connected to Polaris in its Pipeline Browser:
+
+<figure markdown>
+  ![Load servers](images/ParaviewConnected.png){ width="700" }
+</figure>
+
+At this point you can open datasets stored on the ALCF file systems and use ParaView normally.
+
+## Additional Information
+- [ParaView Documentation](https://docs.paraview.org/en/latest/)
+- [ParaView Community Support](https://discourse.paraview.org/)

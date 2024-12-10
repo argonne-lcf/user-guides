@@ -7,45 +7,139 @@
 - ALCF Tutorial: [https://github.com/argonne-lcf/sycltrain](https://github.com/argonne-lcf/sycltrain)
 
 ```
-module load oneapi
+module load oneapi/upstream
 ```
+
+!!! note
+
+    This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. For more details on the release version of compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective github repositories for the compilers and libraries.
+
+## Components
+- These are the list of components associated with this module
+
+| User Application  | Component                                               |
+|-------------------|---------------------------------------------------------|
+| Compilers         | [DPC++](https://github.com/intel/llvm)		      |
+| oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
+| oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
+| SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
 
 ## Dependencies
 - SYCL programming model is supported through `oneapi` compilers that were built from source-code
 - Loading this module switches the default programming environment to GNU and with the following dependencies
-  - PrgEnv-gnu/8.3.3
-  - cpe-cuda/22.05
-  - gcc/10.3.0
-  - cudatoolkit-standalone/11.8.0
-- Environment Variable set: `SYCL_DEVICE_SELECTOR=ext_oneapi_cuda:gpu`
-- Note: This warning can be ignored safely `clang-16: warning: CUDA version 11.8 is only partially supported [-Wunknown-cuda-version]`
+  - PrgEnv-gnu
+  - cuda-PrgEnv-nvidia
+- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=cuda:gpu`
 
-## Example (memory intilization)
+## Example: How to use SYCL with MPI and OpenMP 
+
+<details>
+<summary>Toggle for SYCL example with OpenMP & MPI for CPU-side</summary>
 
 ```c++
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <iomanip>
+#include <string.h>
+#include <mpi.h>
+#include <sched.h>
 #include <sycl/sycl.hpp>
+#include <omp.h>
 
-int main(){
-    const int N= 100;
-    sycl::queue Q;
-    float *A = sycl::malloc_shared<float>(N, Q);
+// SYCL port of https://code.ornl.gov/olcf/hello_jobstep
+// To compile: mpicxx -fsycl -fopenmp -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 hello_jobstep.cpp -o hello_jobstep.out
 
-    std::cout << "Running on "
-              << Q.get_device().get_info<sycl::info::device::name>()
-              << "\n";
+int main(int argc, char *argv[]){
 
-    // Create a command_group to issue command to the group
-    Q.parallel_for(N, [=](sycl::item<1> id) { A[id] = 0.1 * id; }).wait();
+  MPI_Init(&argc, &argv);
 
-    for (size_t i = 0; i < N; i++)
-        std::cout << "A[ " << i << " ] = " << A[i] << std::endl;
-    return 0;
+  int size;
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  int rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+  char name[MPI_MAX_PROCESSOR_NAME];
+  int resultlength;
+  MPI_Get_processor_name(name, &resultlength);
+
+  // If CUDA_VISIBLE_DEVICES is set, capture visible GPUs
+  const char* gpu_id_list;
+  const char* cuda_visible_devices = getenv("CUDA_VISIBLE_DEVICES");
+  if(cuda_visible_devices == NULL){
+    gpu_id_list = "N/A";
+  }
+  else{
+    gpu_id_list = cuda_visible_devices;
+  }
+
+  // Find how many GPUs L0 runtime says are available
+  int num_devices = 0;
+  std::vector<sycl::device> sycl_all_devs = sycl::device::get_devices(sycl::info::device_type::gpu);
+  num_devices = sycl_all_devs.size();
+
+  int hwthread;
+  int thread_id = 0;
+
+  if(num_devices == 0){
+#pragma omp parallel default(shared) private(hwthread, thread_id)
+    {
+      thread_id = omp_get_thread_num();
+      hwthread = sched_getcpu();
+
+      printf("MPI %03d - OMP %03d - HWT %03d - Node %s\n",
+             rank, thread_id, hwthread, name);
+
+    }
+  }
+  else{
+
+    std::string busid = "";
+
+    std::string busid_list = "";
+    std::string rt_gpu_id_list = "";
+
+    // Loop over the GPUs available to each MPI rank
+    for(int i=0; i<num_devices; i++){
+
+      // // Get the PCIBusId for each GPU and use it to query for UUID
+      busid = sycl_all_devs[i].get_info<sycl::ext::intel::info::device::pci_address>();
+      busid_list.append(busid);
+
+      // Concatenate per-MPIrank GPU info into strings for print
+      if(i > 0) rt_gpu_id_list.append(",");
+      rt_gpu_id_list.append(std::to_string(i));
+    }
+
+#pragma omp parallel default(shared) private(hwthread, thread_id)
+    {
+#pragma omp critical
+      {
+        thread_id = omp_get_thread_num();
+        hwthread = sched_getcpu();
+
+        printf("MPI %03d - OMP %03d - HWT %03d - Node %s - RT_GPU_ID %s - GPU_ID %s - Bus_ID %s\n",
+               rank, thread_id, hwthread, name, rt_gpu_id_list.c_str(), gpu_id_list, busid_list.c_str());
+      }
+    }
+  }
+
+  MPI_Finalize();
+
+  return 0;
 }
 ```
+</details>
 
 Compile and Run
 ```bash
-$ clang++ -std=c++17 -sycl-std=2020 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 main.cpp
+$ mpiexec -n 4 --ppn 4 --env OMP_NUM_THREADS=1 ./set_affinity_gpu_polaris.sh ./hello_jobstep.out
+
+MPI 000 - OMP 000 - HWT 000 - Node x3200c0s37b0n0 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 0000:C7:00.0
+MPI 001 - OMP 000 - HWT 001 - Node x3200c0s37b0n0 - RT_GPU_ID 0 - GPU_ID 2 - Bus_ID 0000:85:00.0
+MPI 003 - OMP 000 - HWT 003 - Node x3200c0s37b0n0 - RT_GPU_ID 0 - GPU_ID 0 - Bus_ID 0000:07:00.0
+MPI 002 - OMP 000 - HWT 002 - Node x3200c0s37b0n0 - RT_GPU_ID 0 - GPU_ID 1 - Bus_ID 0000:46:00.0
 $ ./a.out
 ```
 
@@ -121,15 +215,16 @@ int main(int argc, char *argv[]) {
 Load Modules
 
 ```bash
-module load oneapi
-module load mpiwrappers/cray-mpich-oneapi
+module load oneapi/upstream
+module load mpiwrappers/cray-mpich-oneapi-upstream
+module load craype-accel-nvidia80
 export MPICH_GPU_SUPPORT_ENABLED=1
 ```
 
 Compile and Run
 
 ```bash
-$ mpicxx -L/opt/cray/pe/mpich/8.1.16/gtl/lib -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 main.cpp
+$ mpicxx -L/opt/cray/pe/mpich/8.1.28/gtl/lib -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 main.cpp
 $ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
 ```
 For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](../../running-jobs/job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
@@ -140,11 +235,12 @@ For further details regarding the arguments passed to `mpiexec` command shown ab
 [oneMKL Interfaces](https://github.com/oneapi-src/oneMKL) is an open-source implementation of the oneMKL Data Parallel C++ (DPC++) interface according to the [oneMKL specification](https://spec.oneapi.io/versions/latest/elements/oneMKL/source/index.html). It works with multiple devices (backends) using device-specific libraries underneath.
 
 oneMKL is part of oneAPI. Various backend supported are shown below. More Information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
-| User Application | Third-Party Library                                                                |
-|------------------|------------------------------------------------------------------------------------|
-|                  | [NVIDIA cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html) for NVIDIA GPU     |
-| oneMKL interface | [NVIDIA cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) for NVIDIA GPU |
-|                  | [NVIDIA cuRAND](https://docs.nvidia.com/cuda/curand/index.html) for NVIDIA GPU     |
+
+| User Application | Third-Party Library                                          |
+|------------------|--------------------------------------------------------------|
+|                  | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
+| oneMKL interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
+|                  | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
 
 ## Example (using onemkl::gemm)
 The following snippet shows how to compile and run a SYCL code with oneMKL library. For instance, a GPU-based GEMM is performed using `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional blas (e.g., AOCL-BLIS) library.
@@ -243,7 +339,7 @@ int main() {
 
   // Resultant matrix: C_onemkl
   sycl::queue q(sycl::property_list{sycl::property::queue::in_order{}});
-  std::cout << "Device: " << q.get_device().get_info<info::device::name>() << std::endl << std::endl;
+  std::cout << "Device: " << q.get_device().get_info<sycl::info::device::name>() << std::endl << std::endl;
 
   double* A_dev        = sycl::malloc_device<double>(M*N, q);
   double* B_dev        = sycl::malloc_device<double>(N*P, q);
@@ -272,6 +368,7 @@ int main() {
 ```
 
 Compile and Run
+
 The user would need to provide paths the math-libraris as shown below. Also please provide AOCL library for CPU GEMM by `module load aocl`.
 Environment variables `MKLROOT` is defined with `oneapi` module & `AOCL_ROOT` is defined with `aocl` module.
 Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
