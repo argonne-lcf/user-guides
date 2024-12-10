@@ -131,4 +131,4 @@ If you need to use your python `venv` on JupyterHub, you will need to create a J
 `pip install ipykernel`
 2. Create a Jupyter Kernel:
 `python -m ipykernel install --user --name=venv --display-name "Jupyter (venv)"` <br>
-Replace `"Jupyter (myenv)"` with the display name you want for the kernel in JupyterHub
+Replace `"Jupyter (venv)"` with the display name you want for the kernel in JupyterHub
