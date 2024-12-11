@@ -74,6 +74,7 @@ nav:
     - Data Science:
         - Julia: polaris/data-science/julia.md
         - Python: polaris/data-science/python.md
+        - Profiling: polaris/data-science/profiling_dl.md   
         - Frameworks:
             - TensorFlow: polaris/data-science/frameworks/tensorflow.md
             - PyTorch: polaris/data-science/frameworks/pytorch.md
