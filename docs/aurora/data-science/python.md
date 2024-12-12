@@ -1,5 +1,8 @@
 # Python on Aurora
 
+> [!IMPORTANT]  
+> We have system installed frameworks module which contains common AI/ML packages such as PyTorch and TensorFlow installed. If the users have custom package or virtual environment installed in your own home or project directory, it is **HIGHLY** recommended to use Copper package to help reducing I/O overhead in importing python package at large scale. We have seen that at a scale beyong 1000 nodes, loading python modules from home or lustre project directory might be significantly slow, or even crash the Lustre file system. Please refer to (../data-management/copper/copper.md) on how to use Copper for loading custom installed python packages for details. 
+
 ## AI/ML Framework Module
 
 For most Python users on Aurora, a good starting point is the AI/ML framework module. 
@@ -20,9 +23,6 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 
 - [PyTorch](./frameworks/pytorch.md)
 - [TensorFlow](./frameworks/tensorflow.md)
-
-> [!IMPORTANT]  
-> When the users have custom package installed in your own home or project directory, it is HIGHLY recommended to use Copper package to help reducing I/O overhead for importing python package at large scale. Please refer to (../data-management/copper/copper.md)
 
 ## Virtual environments via `venv`
 
