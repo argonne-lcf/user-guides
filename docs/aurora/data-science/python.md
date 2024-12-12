@@ -21,6 +21,9 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 - [PyTorch](./frameworks/pytorch.md)
 - [TensorFlow](./frameworks/tensorflow.md)
 
+> [!IMPORTANT]  
+> When the users have custom package installed in your own home or project directory, it is HIGHLY recommended to use Copper package to help reducing I/O overhead for importing python package at large scale. Please refer to (../data-management/copper/copper.md)
+
 ## Virtual environments via `venv`
 
 While the Anaconda environment automatically loaded with the `frameworks` module contains many 
