@@ -2,7 +2,7 @@
 
 > [!IMPORTANT]
 > **Importing python modules at large scale**: 
-> We have system installed frameworks module described in this page, which contains common AI/ML packages such as PyTorch and TensorFlow. If the users have custom package or virtual environment installed in your own home or project directory, it is **HIGHLY** recommended to use Copper package to help reducing I/O overhead in importing python package at large scale. We have seen that at a scale beyong 1000 nodes, importing python modules from home or lustre project directory might be significantly slow, or even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) on how to use Copper for loading custom installed python packages for details. 
+> We have system installed frameworks module described in this page, which contains common AI/ML packages such as PyTorch and TensorFlow. If the users have custom package or virtual environment installed in your own home or project directory, it is **HIGHLY** recommended to use Copper package to help reducing I/O overhead in importing python package at large scale. We have seen that at a scale beyong 1000 nodes, importing python modules from home or lustre project directory might be significantly slow, or even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) on detailed instructions on loading custom installed python packages using Copper. 
 
 ## AI/ML Framework Module
 
