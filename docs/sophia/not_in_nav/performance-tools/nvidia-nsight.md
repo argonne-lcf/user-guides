@@ -1,59 +1,76 @@
 # NVIDIA Nsight
+
 ## References
+
 - [NVIDIA Nsight Systems Documentation](https://docs.nvidia.com/nsight-systems/)
 - [NVIDIA Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html)
 
 ## Introduction
-NVIDIA® Nsight™ Systems provides developers a system-wide visualization of an applications performance. Developers can optimize bottlenecks to scale efficiently across any number or size of CPUs and GPUs on ThetaGPU. For further optimizations to compute kernels developers should use Nsight Compute.
 
-The NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command line tool. 
+NVIDIA® Nsight™ Systems provides developers with a system-wide visualization of an application's performance. Developers can optimize bottlenecks to scale efficiently across any number or size of CPUs and GPUs on ThetaGPU. For further optimizations to compute kernels, developers should use Nsight Compute.
 
-In addition, the baseline feature of this tool allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface,  metric collection, and can be extended with analysis scripts for post-processing results.
+NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command-line tool.
+
+In addition, the baseline feature of this tool allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface, metric collection, and can be extended with analysis scripts for post-processing results.
 
 ## Step-by-step guide
-### 1. Common part on thetaGPU
+
+### 1. Common part on ThetaGPU
+
 Build your application for ThetaGPU and submit your job script to ThetaGPU or start an interactive job mode on ThetaGPU as follows:
-```
+
+```bash
 $ module load cobalt/cobalt-gpu
 $ qsub -I -n 1 -t 30 -q full-node -A {your_project}
 ```
 
 ### 2. Nsight Systems
+
 Run your application with Nsight Systems as follows:
-```
+
+```bash
 $ nsys profile -o {output_filename} --stats=true ./{your_application}
 ```
 
 ### 3. Nsight Compute
+
 Run your application with Nsight Compute.
-```
+
+```bash
 $ ncu --set detailed -k {kernel_name} -o {output_filename} ./{your_application}
 ```
-**Note:** Without -o option, Nsight Compute provides performance data as a standard output
+
+**Note:** Without the -o option, Nsight Compute provides performance data as standard output.
 
 ### 4. Post-processing the profiled data
-#### Post-processing via CLI.
-```
+
+#### Post-processing via CLI
+
+```bash
 $ nsys stats {output_filename}.qdrep
 $ ncu -i {output_filename}.ncu-rep
 ```
+
 #### Post-processing on your local system via GUI
 
-  - Install NVIDIA Nsight Systems and NVIDIA Nsight Compute after downloading both of them from the  NVIDIA Developer Zone.
-  - Download nsys output files (i.e., ending with .qdrep and . sqlite) to your local system, and then open them with NVIDIA Nsight Systems on your local system.
-  - Download ncu output files (i.e., ending with .ncu-rep) to your local system, and then open them with NVIDIA Nsight Compute on your local system.
+- Install NVIDIA Nsight Systems and NVIDIA Nsight Compute after downloading both of them from the NVIDIA Developer Zone.
+- Download nsys output files (i.e., ending with .qdrep and .sqlite) to your local system, and then open them with NVIDIA Nsight Systems on your local system.
+- Download ncu output files (i.e., ending with .ncu-rep) to your local system, and then open them with NVIDIA Nsight Compute on your local system.
 
 For more options for performance analysis with Nsight Systems and Nsight Compute:
-```
+
+```bash
 $ nsys --help
 $ ncu --help
 ```
 
 ## A quick example
+
 ### Nsight Systems
 
 #### Running a stream benchmark with Nsight Systems
-```
+
+```bash
 jkwack@thetagpu18:~/HPC_benchmarks/BabelStream/JK_thetaGPU$ nsys profile -o JKreport-nsys-BableStream --stats=true ./cuda-stream
 
 Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
@@ -98,23 +115,19 @@ Saving temporary "/tmp/nsys-report-b948-7122-9b9a-feb1.qdstrm" file to disk...
 
 Creating final output files...
 
-
 Processing [==============================================================100%]
 
 Saved report file to "/tmp/nsys-report-b948-7122-9b9a-feb1.qdrep"
 
 Exporting 7098 events: [==================================================100%]
 
-
 Exported successfully to
 
 /tmp/nsys-report-b948-7122-9b9a-feb1.sqlite
 
-
 Generating CUDA API Statistics...
 
 CUDA API Statistics (nanoseconds)
-
 
 Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
 
@@ -130,14 +143,9 @@ Time(%)      Total Time       Calls         Average         Minimum         Maxi
 
     0.4         2729558         501          5448.2            4970           36269  cudaLaunchKernel                                                                
 
-
-
-
-
 Generating CUDA Kernel Statistics...
 
 CUDA Kernel Statistics (nanoseconds)
-
 
 Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name                                                                                                                                                                                                                                                                                                                                         
 
@@ -155,13 +163,9 @@ Time(%)      Total Time   Instances         Average         Minimum         Maxi
 
     0.2          521628           1        521628.0          521628          521628  void init_kernel<double>(double*, double*, double*, double, double, double)                                                                                                                                                                                                                                                                  
 
-
-
-
 Generating CUDA Memory Operation Statistics...
 
 CUDA Memory Operation Statistics (nanoseconds)
-
 
 Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name                                                                            
 
@@ -169,10 +173,7 @@ Time(%)      Total Time  Operations         Average         Minimum         Maxi
 
   100.0        94988808         103        922221.4            2335        32089877  [CUDA memcpy DtoH]                                                              
 
-
-
 CUDA Memory Operation Statistics (KiB)
-
 
               Total      Operations              Average            Minimum              Maximum  Name                                                                            
 
@@ -180,14 +181,9 @@ CUDA Memory Operation Statistics (KiB)
 
          786632.000             103             7637.204              2.000           262144.000  [CUDA memcpy DtoH]                                                              
 
-
-
-
-
 Generating Operating System Runtime API Statistics...
 
 Operating System Runtime API Statistics (nanoseconds)
-
 
 Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
 
@@ -240,16 +236,9 @@ Time(%)      Total Time       Calls         Average         Minimum         Maxi
     0.0            1252           1          1252.0            1252            1252  bind                                                                            
 
 
-
-
-
 Generating NVTX Push-Pop Range Statistics...
 
 NVTX Push-Pop Range Statistics (nanoseconds)
-
-
-
-
 
 Report file moved to "/gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_thetaGPU/JKreport-nsys-BableStream.qdrep"
 
@@ -261,9 +250,10 @@ Report file moved to "/gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_theta
 </figure>
 
 ### Nsight Compute
+
 #### Running a stream benchmark with Nsight Compute for triad_kernel
 
-```
+```bash
 jkwack@thetagpu18:~/HPC_benchmarks/BabelStream/JK_thetaGPU$ ncu --set detailed -k triad_kernel -o JKreport-ncu_detailed-triad_kernel-BableStream ./cuda-stream
 
 BabelStream
@@ -288,204 +278,6 @@ Driver: 11000
 
 ==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
 
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 18 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
-==PROF== Profiling "triad_kernel": 0%....50%....100% - 19 passes
-
 Function    MBytes/sec  Min (sec)   Max         Average     
 
 Copy        1336793.345 0.00040     0.00042     0.00041     
@@ -502,6 +294,7 @@ Dot         1081921.148 0.00050     0.00055     0.00053
 
 ==PROF== Report: /gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_thetaGPU/JKreport-ncu_detailed-triad_kernel-BableStream.ncu-rep
 ```
+
 <figure markdown>
   ![Nsight Compute example](files/JK_Ncu_Plots_Details.png){ width="700" }
 </figure>
@@ -518,5 +311,4 @@ Dot         1081921.148 0.00050     0.00055     0.00053
   ![Nsight Compute example](files/JK_Ncu_Plots_sources.png){ width="700" }
 </figure>
 
-
-
+---
