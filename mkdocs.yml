@@ -195,7 +195,7 @@ nav:
           #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
           #- MKL: aurora/applications-and-libraries/libraries/mkl.md
           #- MPI: aurora/applications-and-libraries/libraries/mpi.md
-          #- oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+          - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
           - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
       - Data Science:
         #- Julia: aurora/data-science/julia.md
