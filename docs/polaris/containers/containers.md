@@ -6,9 +6,9 @@ Polaris, powered by NVIDIA A100 GPUs, benefits from container-based workloads fo
 Polaris employs Apptainer (formerly known as Singularity) for container management. To set up Apptainer, run:
 
 ```bash
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
 apptainer version #1.2.2
 ```
 
@@ -27,9 +27,9 @@ export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
 apptainer build --fakeroot pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
 ```
 You can find the latest prebuilt Nvidia PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The Tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers). For custom containers tailored for Polaris, visit [ALCF's GitHub container registry](https://github.com/argonne-lcf/container-registry/tree/main)
@@ -56,9 +56,9 @@ We move to current working directory and enable network access at run time by se
 
 ```bash
 # SET proxy for internet access
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
