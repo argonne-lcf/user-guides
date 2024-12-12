@@ -43,7 +43,7 @@ unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
 unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 ```
 
-The impact of the following environment variable might be application dependent. Users are encourage to try to set them and see whether they help their applications. 
+The following additional set of environment variable setup might be application dependent. Users are encourage to try to set them and see whether they help their applications. 
 
 ```bash
 ulimit -c unlimited
