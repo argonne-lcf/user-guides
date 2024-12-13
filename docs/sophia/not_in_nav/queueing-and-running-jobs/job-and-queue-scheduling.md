@@ -1,4 +1,4 @@
-# Job and Queue Scheduling on ThetaGPU
+# Job and Queue Sheduling on ThetaGPU
 ## Queues and Job Scheduling
 
 ### Nodes vs Queue vs MIG mode
@@ -12,10 +12,10 @@ There are three primary queues:
   - bigmem -  2 of the nodes have 640 GB of memory compared to the other 22 nodes with 320 GB. Use this queue to access these 2 nodes by specifying ```-q bigmem``` in your script. A max of 2 nodes (-n 2) can be requested in this queue.
   - single-gpu: This is the general production queue for jobs that operate best on a single GPUs. The -n parameter in your qsub should always be 1 as you can only submit to a single gpu. If you need more than 1 gpu, use the full-node queue.
 
-Here are the initial queue limits. You may not violate either of these policies.
+Here are the initdial queue limits. You may not violate either of these policies.
 
 #### full-node queue:
-- MinTime is 5 minutes
+- MinTime   is 5 minutes
 - MaxTime is 12 hours
 - MaxQueued will be 20 jobs
 - MaxRunning will be 10 jobs
@@ -27,7 +27,7 @@ Here are the initial queue limits. You may not violate either of these policies.
 - MaxRunning is 1 job
 
 #### single-gpu queue:
-- MinTime is 5 minutes
+- MinTime is 5 minsutes
 - MaxTime is 1 hour
 - MaxQueued is 1 job
 - MaxRunning is 1 job

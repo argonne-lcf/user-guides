@@ -1,0 +1,47 @@
+name: Proofread Markdown Files
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  proofread:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout PR code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for accurate diff
+        ref: ${{ github.event.pull_request.head.sha }}  # Checkout the PR's HEAD commit
+
+    - name: Fetch base branch
+      run: git fetch origin ${{ github.base_ref }} --depth=1
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install openai PyGithub
+
+    - name: Get list of changed Markdown files
+      id: changed_files
+      run: |
+        FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '*.md')
+        echo "files<<EOF" >> $GITHUB_OUTPUT
+        echo "${FILES}" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Proofread changed Markdown files
+      if: steps.changed_files.outputs.files != ''
+      run: |
+        echo "${{ steps.changed_files.outputs.files }}" > changed_files.txt
+        python scripts/proofread.py changed_files.txt
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        PR_NUMBER: ${{ github.event.number }}
