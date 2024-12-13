@@ -9,7 +9,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 4        | 5 min    | 2 hr     | max 8 nodes in use by this queue at any given time; Only 8 nodes are exclusive (see **Note** below) |
-| workq-route   | 1       | 512      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below                                                                             |                        |
+| workq-route   | 1        | 512      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below                                                                             |
 
 ******
 
@@ -19,8 +19,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
 |-----------------|----------|----------|----------|----------|----------------------------------------|
-| workq           | 1        | 512      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project
-
+| workq           | 1        | 512      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project |
 
 ## Running MPI+OpenMP Applications
 
@@ -36,7 +35,7 @@ Once a submitted job is running, calculations can be launched on the compute nod
 * `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
 
 A sample submission script with directives is below for a 4-node job with 8 MPI ranks on each node and 8 OpenMP threads per rank. Each hardware thread runs a single OpenMP thread since there are 64 hardware threads on the CPU (2 per core).
-You can download and compile `hello_affinity` from this [link](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity).
+You can download and compile `hello_affinity` from this [link](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Crux/affinity).
 
 ```bash
 #!/bin/bash -l
@@ -73,9 +72,9 @@ The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master
 
 ## Running Multiple MPI Applications on a Single Node
 
-Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources. One can provide a list of CPUs using the `--cpu-bind` option to explicitly assign CPU resources on a node to each application. Output from the `numactl --hardware` command is useful for understanding how to localize applications within NUMA domains on the two CPUs of each node. 
+Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources. One can provide a list of CPUs using the `--cpu-bind` option to explicitly assign CPU resources on a node to each application. Output from the `numactl --hardware` command is useful for understanding how to localize applications within NUMA domains on the two CPUs of each node.
 
-In the example below, eight instances of the application are simultaneously running on a single node, with each application localized to a single NUMA domain. Each application here is bound to 16 CPU cores with a single process running on each core (i.e. no hyperthreads). In the first instance, the application is spawning 16 MPI ranks on cores 0-15 in the first CPU. 
+In the example below, eight instances of the application are simultaneously running on a single node, with each application localized to a single NUMA domain. Each application here is bound to 16 CPU cores with a single process running on each core (i.e. no hyperthreads). In the first instance, the application is spawning 16 MPI ranks on cores 0-15 in the first CPU.
 
 ```bash
   MPI_ARG="-n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE}"
@@ -96,9 +95,9 @@ In the example below, eight instances of the application are simultaneously runn
 wait
 ```
 
-## Running Multiple MPI Applications on a Multiple Nodes
+## Running Multiple MPI Applications on Multiple Nodes
 
-An important detail missing from the prior example was specifying the hostfile. When not specified, the default hostfile ${PBS_NODEFILE} is used for all innvocations of `mpiexec` meaning all applications will include identical sets of nodes. This is fine for single-node jobs, but appropriate hostfiles need to be created and passed to `mpiexec` when running applications across subsets of nodes in a large job.
+An important detail missing from the prior example was specifying the hostfile. When not specified, the default hostfile ${PBS_NODEFILE} is used for all invocations of `mpiexec`, meaning all applications will include identical sets of nodes. This is fine for single-node jobs, but appropriate hostfiles need to be created and passed to `mpiexec` when running applications across subsets of nodes in a large job.
 
 The following example first splits the hostfile ${PBS_NODEFILE} into separate hostfiles each containing the requested number of nodes (in this case just 1 per file). The separate hostfiles are then used in each batch of `mpiexec` calls to launch applications on different compute nodes.
 
