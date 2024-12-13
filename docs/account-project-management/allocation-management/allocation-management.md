@@ -10,11 +10,11 @@ For information on how to run the query, look at our documentation on our [sbank
 To determine which platforms have an active balance, check our allocation accounting system [sbank](sbank-allocation-accounting-system.md).
 
 - To obtain the allocation balance, check the sbank command [sbank-list-allocations](not_in_nav/sbank-list-allocations.md).
-- DD projects with a negative balance will not be able to run jobs until they have requested additional time, see Getting more time below.
-- INCITE and ALCC PIs automatically email a summary of project usage.  If this is a DD project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+- DD projects with a negative balance will not be able to run jobs until they have requested additional time; see Getting More Time below.
+- INCITE and ALCC PIs are automatically emailed a summary of project usage.  If this is a DD project, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Allocation Expiration
-Projects and allocations at the ALCF are different.  A particular project might have multiple allocations of time. For example, a discretionary project that has been approved for more than 3 times will have 3 allocations (2 are probably expired) but just one project. Projects will not expire, allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Use the two bullets above (Checking for an active allocation and Determining the balance of an allocation) to determine active allocations.
+Projects and allocations at the ALCF are different.  A particular project might have multiple allocations of time. For example, a discretionary project that has been approved for more than 3 times will have 3 allocations (2 are probably expired) but just one project. Projects will not expire -- allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Use the two bullets above (Checking for an active allocation and Determining the balance of an allocation) to determine active allocations.
 
 ## Getting More Time
 To request an extension of your existing discretionary allocation or to request additional hours, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with answers to the following:
