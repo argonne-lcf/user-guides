@@ -11,5 +11,5 @@ Today it is a common practice to use a CI tool for defining pipelines and execut
 
 ## CI Tools at ALCF
 
-### Gitlab-CI
-  [Gitlab](gitlab-ci.md)  is an application that offers combined functionality as git repository, issue tracker, and CI/CD platform.  The ALCF implementation of the Gitlab-CI environment leverages upstream gitlab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into Gitlab, it can allow for tighter devops processes. [Gitlab-CI](https://gitlab-ci.alcf.anl.gov) is meant to provide CI/CD services for projects using [Gitlab-CI](https://gitlab-ci.alcf.anl.gov) to store their git repositories. ALCF does not allow users to join their own private runners to our existing gitlab ci environment and provides runners on our supported systems.
+### GitLab-CI
+[GitLab](gitlab-ci.md) is an application that offers combined functionality as a git repository, issue tracker, and CI/CD platform. The ALCF implementation of the GitLab-CI environment leverages upstream GitLab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into GitLab, it can allow for tighter DevOps processes. [GitLab-CI](https://gitlab-ci.alcf.anl.gov) is meant to provide CI/CD services for projects using [GitLab-CI](https://gitlab-ci.alcf.anl.gov) to store their git repositories. ALCF does not allow users to join their own private runners to our existing GitLab CI environment and provides runners on our supported systems.
