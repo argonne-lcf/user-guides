@@ -9,6 +9,7 @@ Polaris employs Apptainer (formerly known as Singularity) for container manageme
 ml use /soft/modulefiles
 ml load spack-pe-base/0.8.1
 ml load apptainer
+ml load e2fsprogs
 apptainer version #1.2.2
 ```
 
