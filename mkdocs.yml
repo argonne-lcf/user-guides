@@ -37,132 +37,6 @@ nav:
       - Example Job Scripts: running-jobs/example-job-scripts.md
       - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
-  - Polaris:
-    - Getting Started: polaris/getting-started.md
-    - System Updates: polaris/system-updates.md
-    - Known Issues: polaris/known-issues.md
-    - Hardware Overview:
-      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
-    - Compiling and Linking:
-      - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
-      - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
-      - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
-      - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
-      - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
-      - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
-      - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
-      - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
-    - Build Tools:
-        - CMake: polaris/build-tools/cmake-polaris.md
-    - Running Jobs: polaris/running-jobs.md
-    - Applications and Libraries:
-        - Applications:
-            - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
-            - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
-            - NekRS: polaris/applications-and-libraries/applications/nekrs.md
-            - OpenMM: polaris/applications-and-libraries/applications/openmm.md
-            - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
-            - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
-            - VASP: polaris/applications-and-libraries/applications/vasp.md
-        - Libraries:
-            - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
-            - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
-            - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
-            - NCCL: polaris/applications-and-libraries/libraries/nccl.md
-            - XALT: polaris/applications-and-libraries/libraries/xalt.md
-    - Containers: polaris/containers/containers.md
-    - Data Science:
-        - Julia: polaris/data-science-workflows/julia.md
-        - Python: polaris/data-science-workflows/python.md
-        - Frameworks:
-            - TensorFlow: polaris/data-science-workflows/frameworks/tensorflow.md
-            - PyTorch: polaris/data-science-workflows/frameworks/pytorch.md
-            - JAX: polaris/data-science-workflows/frameworks/jax.md
-            - DeepSpeed: polaris/data-science-workflows/frameworks/deepspeed.md
-            - LibTorch: polaris/data-science-workflows/frameworks/libtorch.md
-        - Applications:
-            - Megatron-DeepSpeed: polaris/data-science-workflows/applications/megatron-deepspeed.md
-            - gpt-neox: polaris/data-science-workflows/applications/gpt-neox.md
-    - Programming Models:
-        - OpenMP: polaris/programming-models/openmp-polaris.md
-        - SYCL: polaris/programming-models/sycl-polaris.md
-        - Kokkos: polaris/programming-models/kokkos-polaris.md
-    - Debugging Tools:
-        - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
-    - Performance Tools:
-        - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
-    - Visualization:
-        - Visualization on Polaris: polaris/visualization/visualization.md
-        - ParaView (Launch from Client): polaris/visualization/paraview.md
-        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
-        - VisIt: polaris/visualization/visit.md
-        - FFmpeg: polaris/visualization/ffmpeg.md
-        - ImageMagick: polaris/visualization/imagemagick.md
-        - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
-        - VNC: polaris/visualization/vnc.md
-    - Workflows:
-        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
-        - Balsam: polaris/workflows/balsam.md
-        - Parsl: polaris/workflows/parsl.md
-        - libEnsemble: polaris/workflows/libensemble.md
-        - SmartSim: polaris/workflows/smartsim.md
-  - Sophia:
-    - Machine Overview: sophia/hardware-overview/machine-overview.md
-    - Getting Started: sophia/getting-started.md
-    - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
-    - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
-    - Containers: sophia/containers/containers.md
-    - Data Science:
-        - Python: sophia/data-science/python.md
-        - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
-    - Visualization:
-        - Visualization on Sophia: sophia/visualization/visualization.md
-        - ParaView (Launch from Client): sophia/visualization/paraview.md
-  - AI Testbed:
-    - Getting Started: ai-testbed/getting-started.md
-    - Cerebras:
-      - System Overview: ai-testbed/cerebras/system-overview.md
-      - Getting Started: ai-testbed/cerebras/getting-started.md
-      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
-      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-      - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/cerebras/example-programs.md
-      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
-      - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
-      - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-    - Graphcore:
-      - System Overview: ai-testbed/graphcore/system-overview.md
-      - Getting Started: ai-testbed/graphcore/getting-started.md
-      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
-      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/graphcore/example-programs.md
-      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
-      - Documentation: ai-testbed/graphcore/documentation.md
-    - Groq:
-      - System Overview: ai-testbed/groq/system-overview.md
-      - Getting Started: ai-testbed/groq/getting-started.md
-      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
-      #- Example Programs: ai-testbed/groq/example-programs.md
-      - Virtual Environments: ai-testbed/groq/virtual-environments.md
-      - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
-      - Profiling with GroqView: ai-testbed/groq/groqview.md
-    - SambaNova:
-      - System Overview: ai-testbed/sambanova/system-overview.md
-      - Getting Started: ai-testbed/sambanova/getting-started.md
-      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
-      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
-      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
-      - Example Programs: ai-testbed/sambanova/example-programs.md
-      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
-      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
-      - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
-      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
-      - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
-      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
-      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
-      # - Performance Tools: ai-testbed/sambanova/performance-tools.md
-    - Data Management: ai-testbed/data-management/data-management-overview.md
   - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
       - Aurora PE: aurora/aurora-pe.md
@@ -209,9 +83,8 @@ nav:
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
+          - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
-        - Libraries:
-          - OpenVINO: aurora/data-science/libraries/openvino.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
@@ -237,6 +110,143 @@ nav:
         # - libEnsemble: aurora/workflows/libensemble.md
         # - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
+  - Polaris:
+    - Getting Started: polaris/getting-started.md
+    - System Updates: polaris/system-updates.md
+    - Known Issues: polaris/known-issues.md
+    - Hardware Overview:
+      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+    - Compiling and Linking:
+      - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
+      - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
+      - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
+      - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
+      - GNU Compilers: polaris/compiling-and-linking/gnu-compilers-polaris.md
+      - NVIDIA Compilers: polaris/compiling-and-linking/nvidia-compiler-polaris.md
+      - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
+      - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
+    - Build Tools:
+        - CMake: polaris/build-tools/cmake-polaris.md
+    - Running Jobs: polaris/running-jobs.md
+    - Applications and Libraries:
+        - Applications:
+            - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
+            - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - NekRS: polaris/applications-and-libraries/applications/nekrs.md
+            - OpenMM: polaris/applications-and-libraries/applications/openmm.md
+            - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
+            - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
+            - VASP: polaris/applications-and-libraries/applications/vasp.md
+        - Libraries:
+            - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
+            - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
+            - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+            - NCCL: polaris/applications-and-libraries/libraries/nccl.md
+            - XALT: polaris/applications-and-libraries/libraries/xalt.md
+    - Containers: polaris/containers/containers.md
+    - Data Science:
+        - Julia: polaris/data-science/julia.md
+        - Python: polaris/data-science/python.md
+        - Frameworks:
+            - TensorFlow: polaris/data-science/frameworks/tensorflow.md
+            - PyTorch: polaris/data-science/frameworks/pytorch.md
+            - JAX: polaris/data-science/frameworks/jax.md
+            - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
+            - LibTorch: polaris/data-science/frameworks/libtorch.md
+        - Applications:
+            - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
+            - gpt-neox: polaris/data-science/applications/gpt-neox.md
+    - Programming Models:
+        - OpenMP: polaris/programming-models/openmp-polaris.md
+        - SYCL: polaris/programming-models/sycl-polaris.md
+        - Kokkos: polaris/programming-models/kokkos-polaris.md
+    - Debugging Tools:
+        - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
+    - Performance Tools:
+        - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+    - Visualization:
+        - Visualization on Polaris: polaris/visualization/visualization.md
+        - ParaView (Launch from Client): polaris/visualization/paraview.md
+        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
+        - VisIt: polaris/visualization/visit.md
+        - FFmpeg: polaris/visualization/ffmpeg.md
+        - ImageMagick: polaris/visualization/imagemagick.md
+        - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
+        - VNC: polaris/visualization/vnc.md
+    - Workflows:
+        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
+        - Balsam: polaris/workflows/balsam.md
+        - Parsl: polaris/workflows/parsl.md
+        - libEnsemble: polaris/workflows/libensemble.md
+        - SmartSim: polaris/workflows/smartsim.md
+  - Sophia:
+    - Machine Overview: sophia/hardware-overview/machine-overview.md
+    - Getting Started: sophia/getting-started.md
+    - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
+    - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
+    - Containers: sophia/containers/containers.md
+    - Data Science:
+        - Python: sophia/data-science/python.md
+        - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
+    - Visualization:
+        - Visualization on Sophia: sophia/visualization/visualization.md
+        - ParaView (Launch from Client): sophia/visualization/paraview.md
+  - Crux:
+    - Machine Overview: crux/hardware-overview/machine-overview.md
+    - Getting Started: crux/getting-started.md
+    - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
+    - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
+    - Containers: crux/containers/containers.md
+    - Data Science:
+      - Python: crux/data-science/python.md
+    #- Visualization:
+      #- Visualization on Crux: crux/visualization/visualization.md
+      #- ParaView (Launch from Client): crux/visualization/paraview.md
+  - AI Testbed:
+    - Getting Started: ai-testbed/getting-started.md
+    - Cerebras:
+      - System Overview: ai-testbed/cerebras/system-overview.md
+      - Getting Started: ai-testbed/cerebras/getting-started.md
+      - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
+      - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
+      - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/cerebras/example-programs.md
+      #- Performance Tools: ai-testbed/cerebras/performance-tools.md
+      - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
+      - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
+    - Graphcore:
+      - System Overview: ai-testbed/graphcore/system-overview.md
+      - Getting Started: ai-testbed/graphcore/getting-started.md
+      - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
+      - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/graphcore/example-programs.md
+      - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
+      - Documentation: ai-testbed/graphcore/documentation.md
+    - Groq:
+      - System Overview: ai-testbed/groq/system-overview.md
+      - Getting Started: ai-testbed/groq/getting-started.md
+      - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
+      #- Example Programs: ai-testbed/groq/example-programs.md
+      - Virtual Environments: ai-testbed/groq/virtual-environments.md
+      - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+      - Profiling with GroqView: ai-testbed/groq/groqview.md
+    - SambaNova:
+      - System Overview: ai-testbed/sambanova/system-overview.md
+      - Getting Started: ai-testbed/sambanova/getting-started.md
+      - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+      - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+      - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+      - Example Programs: ai-testbed/sambanova/example-programs.md
+      - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+      # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+      - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
+      - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+      - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
+      - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+      - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+      # - Performance Tools: ai-testbed/sambanova/performance-tools.md
+    - Data Management: ai-testbed/data-management/data-management-overview.md
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md

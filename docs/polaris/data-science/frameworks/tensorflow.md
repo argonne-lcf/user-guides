@@ -47,7 +47,7 @@ When running TensorFlow applications, we have found the following practices to b
 
 TensorFlow is compatible with scaling up to multiple GPUs per node, and across multiple nodes.  Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs.  Good performance with tensorFlow has been seen with horovod in particular.  For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).  Some polaris specific details that may be helpful to you:
 
---8<-- "./docs/polaris/data-science-workflows/frameworks/pytorch.md:scalingsetup"
+--8<-- "./docs/polaris/data-science/frameworks/pytorch.md:scalingsetup"
 
 # TensorFlow Dataloaders
 It is crucial to enable multiple workers in the data pipeline for best performance. For details, please refer to https://www.tensorflow.org/guide/data_performance

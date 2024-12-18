@@ -17,7 +17,7 @@ libEnsemble is provided on Polaris in the **conda** module:
     module load conda
     conda activate base
 
-See the docs for more details on using [python on Polaris](https://docs.alcf.anl.gov/polaris/data-science-workflows/python/).
+See the docs for more details on using [Python on Polaris](https://docs.alcf.anl.gov/polaris/data-science/python/).
 
 <details>
   <summary>Example: creating virtual environment and updating libEnsemble</summary>
