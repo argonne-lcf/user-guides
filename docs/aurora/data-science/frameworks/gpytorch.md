@@ -1,4 +1,4 @@
-i# Guide of Login to Aurora Load Environments, Run Jobs, and Install GPytorch
+# Guide of Login to Aurora Load Environments, Run Jobs, and Install GPytorch
 
 #### 1. Login and queue a job
 Login to Aurora
