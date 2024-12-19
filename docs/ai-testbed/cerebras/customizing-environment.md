@@ -14,6 +14,7 @@ rm -r venv_cerebras_pt
 source venv_cerebras_pt/bin/activate
 pip install --upgrade pip
 pip install cerebras_pytorch==2.4.0
+pip install --editable git+https://github.com/Cerebras/modelzoo#egg=cerebras_modelzoo 'murmurhash==1.0.10' 'thinc==8.2.2' 'cymem<2.0.10'
 ```
 
 <!--- No longer any TensorFlow wheel
