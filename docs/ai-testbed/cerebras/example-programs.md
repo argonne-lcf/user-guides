@@ -140,8 +140,8 @@ The last parts of the output should resemble the following:
 2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
 ```
 
-## Llama-7B 
-The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
+## Llama2-7B 
+The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
 
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
@@ -152,10 +152,10 @@ pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 Instructions for training:
 ```bash
 cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
-cp /software/cerebras/dataset/params_llama_7b.yaml configs/params_llama_7b.yaml
-export MODEL_DIR=model_dir_llamma
+cp /software/cerebras/dataset/params_llama2_7b.yaml configs/params_llama2_7b.yaml
+export MODEL_DIR=model_dir_llama2_7b
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=llama_7b --params configs/params_llama_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src  --compile_dir $(whoami) --ini ws_chf_skip_fabric_compare=True |& tee mytest.log
 ```
 
 Please find a sample output
@@ -264,7 +264,7 @@ cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
 export MODEL_DIR=model_dir_esm2
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) --ini ws_chf_skip_fabric_compare=True |& tee mytest.log
 ```
 
 Sample output
