@@ -1,6 +1,9 @@
 # RAJA ThetaGPU
+
 ## Overview
+
 RAJA is a collection of C++ software abstractions, being developed at Lawrence Livermore National Laboratory (LLNL), that enable architecture portability for HPC applications. The overarching goals of RAJA are to:
+
 - Make existing (production) applications portable with minimal disruption
 - Provide a model for new applications so that they are portable from inception.
 
@@ -9,19 +12,28 @@ RAJA targets portable, parallel loop execution by providing building blocks that
 Additional information can be found at [RAJA User Guide](https://raja.readthedocs.io/en/develop/sphinx/user_guide/index.html).
 
 ## Using RAJA
+
 RAJA provides a project template for how to use RAJA in an application project that uses CMake or Make. This is located at [RAJA Project Template](https://github.com/LLNL/RAJA-project-template).
 
 ### How to get the source code
-The RAJA source code lives at [RAJA github](https://github.com/LLNL/RAJA). 
 
-It can be cloned with git clone ```--recursive https://github.com/llnl/raja.git```. The recursive clone will also clone RAJA's dependencies in the proper locations.
+The RAJA source code is available at [RAJA GitHub](https://github.com/LLNL/RAJA).
 
-### Add a cmake configuration for ThetaGPU
+It can be cloned with:
+
+```bash
+git clone --recursive https://github.com/llnl/raja.git
 ```
+
+The recursive clone will also clone RAJA's dependencies in the proper locations.
+
+### Add a CMake configuration for ThetaGPU
+
+```cmake
 raja/host-configs/alcf-builds/thetagpu.cmake
 ```
 
-```
+```cmake
 set(RAJA_COMPILER "RAJA_COMPILER_GNU" CACHE STRING "")
 
 set(CMAKE_CXX_COMPILER "g++" CACHE PATH "")
@@ -53,7 +65,7 @@ set(RAJA_HOST_CONFIG_LOADED On CACHE Bool "")
 
 ### Now build on the ThetaGPU compute node
 
-```
+```bash
 git clone --recursive https://github.com/llnl/raja.git
 
 mkdir build_alcf-thetagpu && cd build_alcf-thetagpu
@@ -66,6 +78,5 @@ cmake \
   -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
   -DCMAKE_INSTALL_PREFIX=../install_${BUILD_SUFFIX} \
   "$@" \
-
   ..
 ```
