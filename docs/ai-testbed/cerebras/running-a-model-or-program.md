@@ -47,36 +47,24 @@ git checkout Release_2.4.0
 ```console
 source ~/R_2.4.0/venv_cerebras_pt/bin/activate
 pip install -r ~/R_2.4.0/modelzoo/requirements.txt
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/fc_mnist/pytorch
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3
 ```
 
-Next, edit configs/params.yaml, making the following changes:
+Next, copy a sample config file. This is for a small GPT3 model, modified to use a preprocessed dataset and to run for fewer steps. 
 
 ```text
- train_input:
--    data_dir: "./mnist"
-+    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
+cp /software/cerebras/dataset/OWT/Pytorch/111m_modified.yaml configs/Cerebras_GPT/111m_modified.yaml
 ```
-
-and
-
-```text
- eval_input:
--    data_dir: "./mnist"
-+    data_dir: "/software/cerebras/dataset/fc_mnist/data/mnist/train"
-```
-
-If you want to have the sample download the dataset, you will need to specify absolute paths for the "data_dir"s.
 
 ### Running a sample PyTorch training job
 
 To run the sample:
 
 ```console
-export MODEL_DIR=model_dir
+export MODEL_DIR=model_dir_gpt3_111m
 # deletion of the model_dir is only needed if sample has been previously run
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=fc_mnist --params configs/params.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gpt3_111m --params configs/Cerebras_GPT/111m_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami)  --ini ws_chf_skip_fabric_compare=True |& tee mytest.log
 ```
 
 A successful fc_mnist PyTorch training run should finish with output resembling the following:
