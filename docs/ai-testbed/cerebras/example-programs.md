@@ -349,3 +349,65 @@ Sample output
 2024-08-02 21:38:42,923 INFO:   Processed 819200 training sample(s) in 2716.994790088 seconds.
 ```
 
+## Vision Transformer
+The cerebras transformer based vision classifier model implementation can be found at `modelzoo/models/vision/vision_transformer`. Configs for base and huge model of the vision transformer can be found at `modelzoo/models/vision/vision_transformer/configs`. This examples uses the ImageNet dataset preprocessed at path `/software/datasets/imagenet/`. 
+
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
+```bash
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
+```
+Instructions for training (for 400 steps):
+```bash
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
+export MODEL_DIR=model_dir_vt
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+cp  /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
+python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+```
+
+Sample output
+```bash
+2024-12-21 00:40:15,426 INFO:   No need to use DLS for loss when half dtype is bfloat16. Disabling gradient scaling.
+2024-12-21 00:40:15,600 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "model_dir_vt" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
+2024-12-21 00:40:15,601 INFO:   No checkpoints were found in "model_dir_vt".
+2024-12-21 00:40:15,601 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
+2024-12-21 00:40:15,602 INFO:   Effective batch size is 2850.
+2024-12-21 00:40:15,605 INFO:   The following sequence is used to transform data:
+Compose(
+    Resize(size=[256, 256], interpolation=bilinear, max_size=None, antialias=None)
+    RandomResizedCrop(size=[224, 224], scale=(0.08, 1.0), ratio=(0.75, 1.33), interpolation=bilinear, antialias=True)
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    LambdaWithParam(args=(torch.bfloat16,), kwargs={})
+)
+2024-12-21 00:40:55,243 INFO:   Starting training loop 1, from global step 0 to 132225
+...
+2024-12-21 00:41:25,467 INFO:   Compiling the model. This may take a few minutes.
+...
+2024-12-21 00:45:49,911 INFO:   Compiling at original per-box batch size 2850
+2024-12-21 00:46:00,124 INFO:   Compiling image...
+2024-12-21 00:46:00,273 INFO:   Compiling kernels
+2024-12-21 00:48:10,561 INFO:   Compiling final image
+2024-12-21 00:51:53,676 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_9892963798577744835
+2024-12-21 00:51:59,530 INFO:   Compile was successful!
+2024-12-21 00:51:59,531 INFO:   Waiting for weight initialization to complete
+2024-12-21 00:51:59,531 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
+2024-12-21 00:51:59,919 INFO:   Initiating a new execute wsjob against the cluster server.
+...
+2024-12-21 00:53:37,788 INFO:   Finished sending initial weights
+2024-12-21 00:53:37,789 INFO:   Finalizing appliance staging for the run
+2024-12-21 00:53:58,206 INFO:   Waiting for device programming to complete
+2024-12-21 00:55:57,939 INFO:   Device programming is complete
+2024-12-21 00:55:58,865 INFO:   Using network type: ROCE
+2024-12-21 00:55:58,866 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2024-12-21 00:55:58,883 INFO:   Input workers have begun streaming input data
+2024-12-21 00:56:00,346 INFO:   Appliance staging is complete
+2024-12-21 00:56:00,346 INFO:   Beginning appliance run
+2024-12-21 00:56:01,022 INFO:   | Train Device=CSX, Step=1, Loss=7.00964, Rate=4626.81 samples/sec, GlobalRate=4626.69 samples/sec
+2024-12-21 00:56:01,773 INFO:   | Train Device=CSX, Step=2, Loss=7.02971, Rate=4128.64 samples/sec, GlobalRate=4170.71 samples/sec
+2024-12-21 00:56:04,670 INFO:   | Train Device=CSX, Step=3, Loss=7.03938, Rate=2241.66 samples/sec, GlobalRate=2005.18 samples/sec
+2024-12-21 00:56:05,276 INFO:   | Train Device=CSX, Step=4, Loss=7.02248, Rate=3718.21 samples/sec, GlobalRate=2340.86 samples/sec
+2024-12-21 00:56:08,100 INFO:   | Train Device=CSX, Step=5, Loss=7.02704, Rate=2092.96 samples/sec, GlobalRate=1852.26 samples/sec
+```
