@@ -90,6 +90,12 @@ There are an insufficient number of nodes are online and free for the job to sta
 
 In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
 
+Use of the qsub `-V` flag(note: upper-case) is discouraged, as it can lead to startup failures.  The following message(found via pbsnodes -l):
+```
+failed to acquire job resources; job startup aborted (jobid: [YOUR JOBID])
+```
+indicates such a failure.  It is recommended to instead use `-v`(note: lower-case) and explicitly export any environment variables that your job may require.
+
 To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
 
 
