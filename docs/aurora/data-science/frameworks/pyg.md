@@ -6,17 +6,17 @@ It provides tools for working with graph-structured data, and implementations of
 
 ## PyG on Aurora
 
-PyTorch Geometric includes a base library, called [`torch_geometric`](https://github.com/pyg-team/pytorch_geometric), and a number of optional dependencies (
-[`torch_scatter`](https://github.com/rusty1s/pytorch_scatter), 
-[`torch_sparse`](https://github.com/rusty1s/pytorch_sparse), 
-[`torch_cluster`](https://github.com/rusty1s/pytorch_cluster), 
-[`torch_spline_conv`](https://github.com/rusty1s/pytorch_spline_conv), 
-[`pyg_lib`](https://github.com/pyg-team/pyg-lib) 
-), which include optimized operations that are relevant to GNNs and are missing in PyTorch. 
+PyTorch Geometric includes a base library, called [`torch_geometric`](https://github.com/pyg-team/pytorch_geometric), and a number of optional dependencies:
+- [`torch_scatter`](https://github.com/rusty1s/pytorch_scatter)
+- [`torch_sparse`](https://github.com/rusty1s/pytorch_sparse)
+- [`torch_cluster`](https://github.com/rusty1s/pytorch_cluster)
+- [`torch_spline_conv`](https://github.com/rusty1s/pytorch_spline_conv)
+- [`pyg_lib`](https://github.com/pyg-team/pyg-lib) 
 
 The [base library](#pyg-base-library), `torch_geometric`, relies solely on PyTorch and can utilize Intel GPUs through the `xpu` device specification. 
 
-The [optional dependencies](#optional-dependencies) have only CPU and CUDA implementations and can therefore only run on Aurora CPUs.
+The [optional dependencies](#optional-dependencies) include optimized operations that are relevant to GNNs and are missing in PyTorch. 
+They have only CPU and CUDA implementations and can therefore only run on Aurora CPUs. 
 
 
 ## PyG base library 
@@ -41,8 +41,7 @@ pip install torch_geometric
 The following example is inspired by the [`gcn.py` example](https://github.com/pyg-team/pytorch_geometric/blob/master/examples/gcn.py) on the PyG repository. 
 
 - Copy the following Python script into a  file called `gcn.py`.
-  #### `gcn.py`
-  ```python
+  ```python title="gcn.py"
   # gcn.py
   import argparse
   import time
