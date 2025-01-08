@@ -85,6 +85,7 @@ nav:
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
+          - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
