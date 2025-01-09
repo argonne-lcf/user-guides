@@ -41,7 +41,7 @@ nav:
       - Getting Started: aurora/getting-started-on-aurora.md
       - Aurora PE: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
-      - Known Issues: aurora/known-issues.md
+      - Early User Notes and Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
       - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
       - Compiling and Linking:
