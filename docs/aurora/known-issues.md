@@ -24,7 +24,7 @@ The current queue policy for Aurora is setup based on experiences to-date to hel
 
 #### Flare (Lustre file system)
 
-This is the primary and most stable storage filesystem for now. It is still possible that heavy use may trigger significant lags and performance degradations, and possibly lead to compute nodes crashing.  We’re still not sure how stable it will be with everyone on doing production, but we’ll find out soon.  We should encourage teams to start out easy on I/O (both amount and job size), if possible, and see how it goes.  If all goes well we can tell them it is ok to scale up.
+This is the primary and most stable storage filesystem for now. It is still possible that heavy use may trigger significant lags and performance degradations, and possibly lead to compute nodes crashing.  We will continue to monitor filesystem stability as production use ramps up. We encourage teams to start out easy on I/O (both amount and job size), if possible, and report issues.
 
 #### DAOS (object store)
 
