@@ -10,14 +10,14 @@ Aurora, please contact support@alcf.anl.gov.
 PyTorch is already installed on Aurora with GPU support and available through
 the frameworks module. To use it from a compute node, please load the following modules:
 
-```
+```bash
 module use /soft/modulefiles/
 module load frameworks
 ```
 Then you can `import` PyTorch as usual, the following is an output from the
 `frameworks` module
 
-```
+```python
 >>> import torch
 >>> torch.__version__
 '2.3.1+cxx11.abi'
@@ -34,26 +34,25 @@ print(f'Number of tiles = {torch.xpu.device_count()}')
 current_tile = torch.xpu.current_device()
 print(f'Current tile = {current_tile}')
 print(f'Curent device ID = {torch.xpu.device(current_tile)}')
-print(f'Device name = {torch.xpu.get_device_name(current_tile)}')
+print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
+Output of the above code block:
 ```
-# output of the above code block
-
 GPU availability: True
 Number of tiles = 12
 Current tile = 0
 Curent device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
-Device name = Intel(R) Data Center GPU Max 1550
+Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
 ```
 Note that, along with importing the `torch` module, you need to import the
 `intel_extension_for_pytorch` module. The default mode in `ipex` for counting
-the available devices on a compute node treat each tile as a device, hence the
+the available devices on a compute node treat each tile (also called "Sub-device") as a torch device, hence the
 code block above is expected to output `12`. If you want to get the number of
-"cards" as an output, you may declare the following environment variable:
+GPUs (also called "Devices" or "cards") as an output, you may declare the following environment variable:
 
-```shell
-export IPEX_TILE_AS_DEVICE=0
+```bash
+export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
 ```
 With this environmental variable, we expect the output to be `6` -- the number
 of GPUs available on an Aurora compute node. All the `API` calls involving 
@@ -65,7 +64,7 @@ right after `import torch`, prior to importing other packages, (from
 [Intel's getting started doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
 
 Intel extension for PyTorch has been made publicly available as an open-source
-project at [Github](https://github.com/intel/intel-extension-for-pytorch)
+project on [Github](https://github.com/intel/intel-extension-for-pytorch).
 
 Please consult the following resources for additional details and useful 
 tutorials.
@@ -78,20 +77,33 @@ tutorials.
 
 ## Single Device Performance
 
-To expose one particular device out of the 6 available on a compute node, this
-environmental variable should be set
+By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. 
+To map a PyTorch device to one particular GPU Device out of the 6 available on a compute node, these 
+environmental variables should be set
 
-```shell
+```bash
+export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
+export ZE_AFFINITY_MASK=0
+
+# or, equivalently, following the syntax `Device.Sub-device`
 export ZE_AFFINITY_MASK=0.0,0.1
-
-# The values taken by this variable follows the syntax `Device.Sub-device`
 ```
 In the example given above, an application is targeting the `Device:0` 
 and `Sub-devices: 0, 1`, i.e. *the two tiles of the GPU:0*. This is 
 particularly important in setting a performance benchmarking baseline.
+Setting the above environmental variables after loading the frameworks modules,
+you can check that each PyTorch device is now mapped to one GPU:
 
+```python
+>>> import torch
+>>> import intel_extension_for_pytorch as ipex
+>>> torch.xpu.device_count()
+1
+>>> torch.xpu.get_device_properties()
+_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=131072MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+```
 More information and details are available through the 
-[Level Zero Specification Documentation - Affinity Mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+[Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
 
 ## Single Node Performance
 
@@ -117,10 +129,10 @@ information.
 ## Multi-GPU / Multi-Node Scale Up
 
 PyTorch is compatible with scaling up to multiple GPUs per node, and across 
-multiple nodes. Good performance with PyTorch has been seen with both DDP and 
+multiple nodes. Good performance with PyTorch has been seen with both Distributed Data Parallel (DDP) and 
 Horovod. For details, please see the 
-[Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) 
-or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).
+[Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) 
+or the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html).
 Some of the Aurora specific details might be helpful to you:
 
 ### Environmental Variables
@@ -129,7 +141,7 @@ The following environmental variables should be set on the batch submission
 script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
 <!-- --8<-- [start:commononecclenv] -->
-#### oneCCL environment variable
+#### oneCCL environment variables
 --8<-- "./docs/aurora/data-science/frameworks/oneCCL.md:onecclenv"
 
 These environment variable settings will probably be included in the framework module file in the future. But for now, users need to explicitly set these in the submission script. 
@@ -138,7 +150,7 @@ These environment variable settings will probably be included in the framework m
 In order to run an application with `TF32` precision type, one must set the 
 following environmental parameter:
 
-```shell
+```bash
 export IPEX_FP32_MATH_MODE=TF32
 ```
 This allows calculations using `TF32` as opposed to the default `FP32`, and 
@@ -240,7 +252,7 @@ A detailed example of the full procedure with a toy model is given here:
 
 Below we give an example job script:
 
-```shell
+```bash
 #!/bin/bash -l
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
@@ -365,7 +377,6 @@ ulimit -c 0
 mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
 --cpu-bind ${CPU_BIND} \
 python path/to/application.py
-
 ```
 
 
