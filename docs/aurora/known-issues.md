@@ -22,7 +22,7 @@ The current queue policy for Aurora is setup based on experiences to-date to hel
 
 ### Storage
 
-#### Flare (lustre file system)
+#### Flare (Lustre file system)
 
 This is the primary and most stable storage filesystem for now. It is still possible that heavy use may trigger significant lags and performance degradations, and possibly lead to compute nodes crashing.  We’re still not sure how stable it will be with everyone on doing production, but we’ll find out soon.  We should encourage teams to start out easy on I/O (both amount and job size), if possible, and see how it goes.  If all goes well we can tell them it is ok to scale up.
 
@@ -32,7 +32,7 @@ Performance of DAOS has been impressive, but we continue to experience crashes w
 
 #### Grand/Eagle
 
-These won’t be mounted on Aurora initially, but might be mounted around May if that seems feasible to do so. Similarly, Flare will not initially be mounted on Polaris. DTNs and globus are the best means to transfer data between Polaris and Aurora.
+These won’t be mounted on Aurora initially, but they might be mounted around May 2025, depending on feasibility. Similarly, Flare will not initially be mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
 
 ### Checkpointing 
 
@@ -46,7 +46,7 @@ Checkpointing is absolutely essential. The mean time between application interru
 
 ### Troubleshooting Common Issues
 
-As always, INCITE and ALCC projects should Report all issues to Catalyst POC
+As always, INCITE and ALCC projects should Report all issues to Catalyst point of contact.
 
 #### Ping Failures
 
