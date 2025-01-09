@@ -15,6 +15,12 @@ module use /soft/modulefiles; module load conda ; conda activate base
 
 This will load and activate the base environment.
 
+!!! tip
+We encourage users to use the pre-installed conda environment. 
+Any custom environments are supported on a best effort basis only.
+
+For Python issues or questions please see the [Contacting Support](../contacting-support.md) page.
+
 ## Virtual environments via `venv`
 
 To install additional packages that are missing from the `base` environment,

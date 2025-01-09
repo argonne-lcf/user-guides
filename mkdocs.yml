@@ -86,6 +86,7 @@ nav:
           - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
           - GPytorch: aurora/data-science/frameworks/gpytorch.md
+          - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
@@ -114,6 +115,7 @@ nav:
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - System Updates: polaris/system-updates.md
+    - Contacting Support and Software Requests: polaris/contacting-support.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -131,8 +133,10 @@ nav:
     - Running Jobs: polaris/running-jobs.md
     - Applications and Libraries:
         - Applications:
+            - Amber: polaris/applications-and-libraries/applications/amber.md
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - NAMD: polaris/applications-and-libraries/applications/namd.md
             - NekRS: polaris/applications-and-libraries/applications/nekrs.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
             - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md

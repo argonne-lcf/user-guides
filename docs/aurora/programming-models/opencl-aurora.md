@@ -35,7 +35,23 @@ OpenCL is a C API that can be used in your application by including the
 ```
 
 Application that use the OpenCL API need to be linked to the OpenCL
-loader library by using the `-lOpenCL` linker flag.
+loader library by using the `-lOpenCL` linker flag when using Make.
+For CMake based builds, you can find the OpenCL package and then link
+it to your targets as shown below:
+```CMake
+find_package(OpenCL REQUIRED)
+target_link_libraries(my_target PRIVATE OpenCL::OpenCL)
+```
+During the configure step, CMake may need help finding the OpenCL
+library. You can provide hints to CMake by setting the `OpenCL_LIBRARY`
+and `OpenCL_INCLUDE_DIR` variables. If you use `icx` or `icpx` on
+Aurora, you can do the following during the configure step:
+```CMake
+export OPENCL_BASE_DIR=$(dirname $(which icx))/..
+cmake -DOpenCL_LIBRARY=${OPENCL_BASE_DIR}/lib/libOpenCL.so \
+      -DOpenCL_INCLUDE_DIR=${OPENCL_BASE_DIR}/include/sycl \
+      <other_cmake_options>
+```
 
 C++ bindings exist and can be used in C++ applications by including the
 `CL/opencl.hpp` file:
