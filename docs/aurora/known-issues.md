@@ -182,7 +182,6 @@ To increase the chances that a large job does not terminate due to a node failur
 
 ### Other issues
 
-* Interim Filesystem: The early access filesystem is not highly performant. Intermittent hangs or pauses should be expected - waiting for IO to complete is recommended and IO completions should pass without failure. Jobs requiring significant filesystem performance must be avoided at this time.
 * Large number of Machine Check Events from the PVC, that causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking  at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at single-node are tracked in the JLSE wiki/confluence [page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
