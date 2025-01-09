@@ -20,8 +20,9 @@ If you are having issues running your job, or you job is failing, please include
 * The `*.e` (error) and `*.o` (output) files from at least one of your job failures
 * Any errors displayed on the command line
 
-***NOTE: Support does not have access to your home directory or your project directory. 
-Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.***
+!!!  info
+Support does not have access to your home directory or your project directory. 
+Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
 
 ### Python Issues
 
@@ -35,7 +36,7 @@ If you need to open a ticket related to Python please be sure to include the fol
 
 By including the above information this will help ALCF Support staff quickly route your ticket to the correct subject-matter expert (SME), resulting in a quicker resolution.
 
-!!! note 
+!!! tip 
 We encourage the use of the pre-installed `conda` environment. 
 Any custom environments are supported on a best effort basis only.
 
@@ -51,8 +52,9 @@ If you are having issues installing and/or compiling your app, please include th
 
 ## Software Requests
 
-***NOTE: Software install requests can take several months to receive approval before testing and installation. 
-Therefore, it is strongly encourged to attempt to install the app yourself before contacting support for it to be installed system-wide.***
+!!! warning
+Software install requests can take several months to receive approval before testing and installation. 
+Therefore, it is strongly encourged to attempt to install the app yourself before contacting support for it to be installed system-wide.
 
 If you want to request a package be installed on Polaris, please include the following when reaching out to support:
 * A link to the package/app you want to be installed
