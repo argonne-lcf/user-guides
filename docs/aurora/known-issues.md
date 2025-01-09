@@ -69,7 +69,7 @@ then most likely your application will crash or hang. If you see these, the best
 
 There are multiple failure modes that can lead to jobs hanging. For known hardware or low-level software issues such as ping failures as discussed above, just restart the job. 
 
-To avoid a hung job running out all the requested wallclock time on all its nodes, we suggest devising ways to monitor job progress. For example, if your application regularly writes small output to logfile, then you could launch a “watcher” script look for that expected output and collect a stack trace and kill the job if it's been too long.
+To avoid a hung job running out all the requested wallclock time on all its nodes, we suggest devising ways to monitor job progress. For example, if your application regularly writes small output to logfile, then you could launch a “watcher” script that looks for that expected output and collect a stack trace and kill the job if it's been too long since progress was made. Please engage your Catalyst POC if you are interested in evaluating this for your application.
 
 #### GPU Segfaults (a.k.a. "Page Faults")
 
