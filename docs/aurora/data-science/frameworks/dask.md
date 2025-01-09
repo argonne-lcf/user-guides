@@ -109,7 +109,7 @@ mpiexec -n $(( $NNODES * 6 )) --ppn 6 ./start_dask_aurora.sh gpu 6
 
 In this example, we will [estimate Pi using a Monte Carlo method](https://en.wikipedia.org/wiki/Pi#Monte_Carlo_methods). 
 
-Paste the following python script into a file called `pi_dask_gpu.py`. 
+Paste the following Python script into a file called `pi_dask_gpu.py`. 
 Here is a breakdown of what the script does:
 1. It connects to the Dask cluster (that you should start beforehand) and prints some information including the number of workers and available memory.
 1. It divides the total number of points to sample between the workers, and each worker uses its GPU to
