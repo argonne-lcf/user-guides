@@ -33,7 +33,7 @@ If you need to open a ticket related to Python please be sure to include the fol
 * Have you installed any new packages, or removed existing ones? If so, please include your script and commands necessary to recreate the issue
 * Whether you're attempting to run on a login node or a compute node
 
-By including the above information this will help Support quickly route your ticket to the correct SME, resulting in a quicker resolution.
+By including the above information this will help ALCF Support staff quickly route your ticket to the correct subject-matter expert (SME), resulting in a quicker resolution.
 
 !!! note 
 We encourage the use of the pre-installed `conda` environment. 
