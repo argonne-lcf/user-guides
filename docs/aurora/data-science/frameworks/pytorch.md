@@ -141,7 +141,6 @@ The following environmental variables should be set on the batch submission
 script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
 <!-- --8<-- [start:commononecclenv] -->
-#### oneCCL environment variables
 --8<-- "./docs/aurora/data-science/frameworks/oneCCL.md:onecclenv"
 
 These environment variable settings will probably be included in the framework module file in the future. But for now, users need to explicitly set these in the submission script. 
@@ -246,13 +245,9 @@ A detailed example of the full procedure with a toy model is given here:
 
 - [Intel's oneCCL demo](https://github.com/intel/torch-ccl/blob/master/demo/demo.py)
 
+Below we give an example PBS job script:
 
-
-## A Simple Job Script
-
-Below we give an example job script:
-
-```bash
+```bash title="example_torch_dist_training.sh"
 #!/bin/bash -l
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
