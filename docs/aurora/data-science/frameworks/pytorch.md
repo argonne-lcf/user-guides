@@ -246,13 +246,9 @@ A detailed example of the full procedure with a toy model is given here:
 
 - [Intel's oneCCL demo](https://github.com/intel/torch-ccl/blob/master/demo/demo.py)
 
+Below we give an example PBS job script:
 
-
-## A Simple Job Script
-
-Below we give an example job script:
-
-```bash
+```bash title="example_torch_dist_training.sh"
 #!/bin/bash -l
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
