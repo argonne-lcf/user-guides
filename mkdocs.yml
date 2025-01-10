@@ -39,7 +39,7 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
-      - Aurora PE: aurora/aurora-pe.md
+      - Aurora Programming Environment: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
       - Early User Notes and Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
