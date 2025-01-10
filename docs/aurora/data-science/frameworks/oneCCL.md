@@ -19,15 +19,14 @@ kaushikvelusamy@aurora-uan-0012:~>  module load frameworks
 ```
 
 <!-- --8<-- [start:onecclenv] -->
-**OneCCL mandatory environment variables**
+**oneCCL environment variables**
 
-The parameters below are recommended to be set all the time as it eigher gives the best performance for all applications or are requires to address potential hang / crash at large scale. 
+We have identified a set of environment settings that typically provides better performance or addresses potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. The users are encouraged to check this page regularly. 
 
 ```bash
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
-export CCL_ALLREDUCE=topo
-export CCL_ALLREDUCE_SCALEOUT=rabenseifner  # currently best allreduce algorithm at large scale
+export CCL_ALLREDUCE_SCALEOUT=direct:0-1048576;rabenseifner:1048577-max  # currently best allreduce algorithm at large scale
 export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
 
 export CCL_KVS_MODE=mpi
@@ -44,8 +43,7 @@ unset MPIR_CVAR_CH4_COLL_SELECTION_TUNING_JSON_FILE
 unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 ```
 
-**OneCCL optional environment variables**
-The impact of the following environment variable might be application dependent. Users are encourage to try to set them and see whether they help their applications. 
+The following additional set of environment variable setup might be application dependent. Users are encourage to try to set them and see whether they help their applications. 
 
 ```bash
 ulimit -c unlimited
