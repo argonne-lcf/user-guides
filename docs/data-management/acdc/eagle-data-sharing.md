@@ -28,7 +28,9 @@ You will be taken to a familiar-looking page for ALCF login. Enter your ALCF log
 
 ## Accessing your Eagle Project Directory
 
-**Note:** Specifically for PIs with Eagle 'Data-Only' projects (no compute allocations), logging in through Globus is the only way to access the project directory.
+!!! note
+
+    Specifically for PIs with Eagle 'Data-Only' projects (no compute allocations), logging in through Globus is the only way to access the project directory.
 
 PIs with data and compute allocations will have access to the required compute-system login nodes (along with the Globus Web Interface) to access their project directory.
 
