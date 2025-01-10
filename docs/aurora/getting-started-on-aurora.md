@@ -1,6 +1,6 @@
 # Getting Started on Aurora
 
-## Logging Into Polaris
+## Logging Into Aurora:
 
 To log into Aurora:
 ```bash
