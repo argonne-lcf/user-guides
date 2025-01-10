@@ -16,7 +16,7 @@ An overview of the Aurora system including details on the compute node architect
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
-Autotools and cmake are available in the default Aurora PE environment and can be loaded via modules.
+Autotools and cmake are available in the default Aurora programming environment(PE) and can be loaded via modules.
 
 ```
 $ module load autoconf cmake
@@ -28,6 +28,17 @@ Aurora uses the [PBSPro](../running-jobs/job-and-queue-scheduling.md) job
 scheduler system. For Aurora-specific job documentation, refer to [Running
 Jobs on Aurora](running-jobs-aurora.md)
 
+
+## Early User Notes and Known Issues
+
+* Hardware instabilities - possible frequent downtime
+* Software instabilities - non-optimized compilers, libraries and tools; frequent software updates
+* Non-final configurations (storage, OS versions, etc...)
+* Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
+
+See this [page](./known-issues.md) for known issues.
+
+
 ## Python on Aurora
 
 Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
@@ -36,7 +47,7 @@ Frameworks on Aurora can be loaded into a users environment by loading the `fram
 module load frameworks
 ```
 
-Note that there is a separate Python installation in `spack-pe-gcc` which is used as a dependency of a number of Spack PE packages. Users will need to exercise caution when loading both `frameworks` and `python` from the Spack PE.
+Note that there is a separate Python installation in `spack-pe-gcc` which is used as a dependency of a number of Spack PE packages. Users will need to exercise caution when loading both `frameworks` and `python` from the Spack PE. For more details please about Python on Aurora please review [Python on Aurora](./data-science/python.md)
 
 ## Software Environment
 
