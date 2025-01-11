@@ -86,9 +86,9 @@ A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Know
 
 ### Runtime Errors
 
-#### 1. `Cassini Event Queue overflow detected.`
+#### 1. `Cassini Event Queue overflow detected`
   
-`Cassini Event Queue overflow detected.` errors may occur for certain MPI communications and may happen for a variety of reasons - software and hardware, job placement, job routing, and the sate of the machine. Simply speaking, it means one of the network interfaces is getting messages too fast and cannot keep up to process them
+`Cassini Event Queue overflow detected` errors may occur for certain MPI communications and may happen for a variety of reasons - software and hardware, job placement, job routing, and the state of the machine. Simply speaking, it means one of the network interfaces is getting messages too fast and cannot keep up with processing them.
 
 ```
 libfabric:16642:1701636928::cxi:core:cxip_cq_eq_progress():531<warn> x4204c1s3b0n0: Cassini Event Queue overflow detected.
@@ -108,7 +108,7 @@ It maybe be useful to use other libfabric environment settings.
 In particular, the setting below may be useful to try. These are what what Cray MPI sets by default
 [Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/24.03/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
 
-#### 2. `failed to convert GOTPCREL relocation `
+#### 2. `failed to convert GOTPCREL relocation`
 
 If you see
 ```
