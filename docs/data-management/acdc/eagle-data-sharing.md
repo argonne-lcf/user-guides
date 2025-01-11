@@ -40,9 +40,11 @@ PIs with data and compute allocations will have access to the required compute-s
 
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections.
 
-> PIs with an "Inactive/Deleted" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
+!!! info 
+    PIs with an "Inactive/Deleted" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
 
-> PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)
+!!! info
+    PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)
 
 ### Navigate to the Collections tab
 
