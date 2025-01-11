@@ -6,7 +6,7 @@ NAMD, recipient of a 2002 Gordon Bell Award, a 2012 Sidney Fernbach Award, and a
 
 ## Using NAMD at ALCF
 
-ALCF offers assistance with building binaries and compiling instructions for NAMD. For questions, contact us at support@alcf.anl.gov.
+ALCF offers assistance with building binaries and compiling instructions for NAMD. For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Running NAMD on Polaris
 
@@ -21,7 +21,7 @@ NAMD supports two types of parallelized simulations: single instance strong-scal
 
 A sample PBS script follows for GPU-resident runs on Polaris.
 
-``` bash
+```bash
 #!/bin/sh -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -45,7 +45,7 @@ Note, the GPU-resident version only runs on a single node currently and some imp
 
 A sample PBS script for multiple-copy GPU-resident runs follows.
 
-``` bash
+```bash
 #!/bin/sh -l
 #PBS -l select=4:system=polaris
 #PBS -l place=scatter
@@ -68,7 +68,7 @@ This sample script launches a solute-tempering replica-exchange simulation with 
 
 A sample PBS script for a GPU-offload run follows.
 
-``` bash
+```bash
 #!/bin/sh -l
 #PBS -l select=64:system=polaris
 #PBS -l place=scatter
@@ -90,7 +90,7 @@ Measured performance for a ~1,000,000 atom system generated with the above submi
 
 A sample PBS script for multiple-copy GPU-offload runs follows.
 
-``` bash
+```bash
 #!/bin/sh -l
 #PBS -l select=4:system=polaris
 #PBS -l place=scatter
@@ -106,41 +106,40 @@ cd ${PBS_O_WORKDIR}
 aprun -N 4 -n 16 --cc=core --cpus-per-pe 8 $EXE +replicas 16 init.conf --source rest2_remd.namd +setcpuaffinity +stdout rest2_output/%d/job0.%d.log +devicesperreplica 1
 ```
 
-
 ## Building NAMD
 
-We recommend using the NAMD binaries provided. 
+We recommend using the provided NAMD binaries.
 
-The following instructions are for the GPU-offload version build on top of Slingshit-11 generic charm++.
+The following instructions are for the GPU-offload version build on top of Slingshot-11 generic Charm++.
 
-1. module swap PrgEnv-nvhpc PrgEnv-gnu
+1. `module swap PrgEnv-nvhpc PrgEnv-gnu`
 2. Download NAMD source [code](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
-``` bash
-$ tar -xzf NAMD_3.0_Source.tar.gz
-$ cd NAMD_3.0_Source
-$ tar xvf charm-8.0.0.tar
-$ cd charm-8.0.0
-$ ./buildold charm++ ofi-crayshasta cxi slurmpmi2cray smp --with-production -j8 -DCMK_OBJIC_COLLECTION_BITS=8 -DCMK_OBJID_HOME_BITS=20
-$ cd ..
-$ wget http://www.ks.uiuc.edu/Research/namd/libraries/fftw-linux-x86_64.tar.gz
-$ wget http://www.ks.uiuc.edu/Research/namd/libraries/tcl8.6.13-linux-x86_64.tar.gz
-$ wget http://www.ks.uiuc.edu/Research/namd/libraries/tcl8.6.13-linux-x86_64-threaded.tar.gz
-$ tar xzf fftw-linux-x86_64.tar.gz
-$ tar xzf tcl8.6.13-linux-x86_64.tar.gz
-$ tar xzf tcl8.6.13-linux-x86_64-threaded.tar.gz
-$ mv linux-x86_64 fftw
-$ mv tcl8.6.13-linux-x86_64 tcl
-$ mv tcl8.6.13-linux-x86_64-threaded tcl-threaded 
-$ ./config Linux-x86_64-g++  --charm-base ./charm-8.0.0 --charm-arch ofi-crayshasta-cxi-slurmpmi2cray-smp --with-cuda --cuda-prefix /soft/compilers/cudatoolkit/cuda-12.2.2
-$ cd Linux-x86_64-g++
-$ make -j8
+```bash title="build_namd.sh"
+tar -xzf NAMD_3.0_Source.tar.gz
+cd NAMD_3.0_Source
+tar xvf charm-8.0.0.tar
+cd charm-8.0.0
+./buildold charm++ ofi-crayshasta cxi slurmpmi2cray smp --with-production -j8 -DCMK_OBJIC_COLLECTION_BITS=8 -DCMK_OBJID_HOME_BITS=20
+cd ..
+wget http://www.ks.uiuc.edu/Research/namd/libraries/fftw-linux-x86_64.tar.gz
+wget http://www.ks.uiuc.edu/Research/namd/libraries/tcl8.6.13-linux-x86_64.tar.gz
+wget http://www.ks.uiuc.edu/Research/namd/libraries/tcl8.6.13-linux-x86_64-threaded.tar.gz
+tar xzf fftw-linux-x86_64.tar.gz
+tar xzf tcl8.6.13-linux-x86_64.tar.gz
+tar xzf tcl8.6.13-linux-x86_64-threaded.tar.gz
+mv linux-x86_64 fftw
+mv tcl8.6.13-linux-x86_64 tcl
+mv tcl8.6.13-linux-x86_64-threaded tcl-threaded 
+./config Linux-x86_64-g++  --charm-base ./charm-8.0.0 --charm-arch ofi-crayshasta-cxi-slurmpmi2cray-smp --with-cuda --cuda-prefix /soft/compilers/cudatoolkit/cuda-12.2.2
+cd Linux-x86_64-g++
+make -j8
 ```
 
-The NAMD binary is namd3. To build a memory-optimized version, the flag `--with-memopt` needs to be inserted as a config argument.
+The NAMD binary is `namd3`. To build a memory-optimized version, the flag `--with-memopt` needs to be inserted as a config argument.
 
 The configure steps above can be replaced with the following to build the GPU-resident version of NAMD.
 
-``` bash
-$ ./build charm++ netlrts-linux-x86_64 gcc smp -j8  --with-production
-$ ./config Linux-x86_64-g++  --charm-base ./charm-8.0.0 --charm-arch netlrts-linux-x86_64-smp-gcc --with-cuda --with-single-node-cuda --cuda-prefix /soft/compilers/cudatoolkit/cuda-12.2.2
+```bash
+./build charm++ netlrts-linux-x86_64 gcc smp -j8  --with-production
+./config Linux-x86_64-g++  --charm-base ./charm-8.0.0 --charm-arch netlrts-linux-x86_64-smp-gcc --with-cuda --with-single-node-cuda --cuda-prefix /soft/compilers/cudatoolkit/cuda-12.2.2
 ```

@@ -21,7 +21,7 @@ kaushikvelusamy@aurora-uan-0012:~>  module load frameworks
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
-We have identified a set of environment settings that give better performance or address potential hang / crash at large scale. These setup are still **EXPERIMENTAL** and might change as we discover better setup. The users are encouraged to check this page regularly. 
+We have identified a set of environment settings that typically provides better performance or addresses potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. The users are encouraged to check this page regularly. 
 
 ```bash
 export CCL_PROCESS_LAUNCHER=pmix  
