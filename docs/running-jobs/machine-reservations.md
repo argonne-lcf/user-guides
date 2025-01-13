@@ -11,10 +11,16 @@ A **5-business-day** lead time is recommended to ensure timely approval. Schedul
 **Early Completion Policy:** If you have finished running your jobs before your reservation has ended, please reach out to the support team (support@alcf.anl.gov) to release it for other users. At this time, there is no way for a user to release a reservation early.
 
 ### Some definitions
+/// define
+Reservation
 
-A **reservation** means we set aside some number of nodes on a system for a limited time. Only certain users or projects can submit to the queues assigned to the reservation.
+- A number of nodes on a system set aside from the general pool of resources for a limited time. Only certain users or projects can submit to the queues assigned to the reservation.
 
-A **score boost** means we give your job(s) a boost in score to help it move ahead in the queue, but it still allows the scheduler to more efficiently fill the machine.
+Score boost
+
+- A job with a boosted score helps it move ahead in the queue, but it still allows the scheduler to more efficiently fill the machine.
+
+///
 
 ----
 
