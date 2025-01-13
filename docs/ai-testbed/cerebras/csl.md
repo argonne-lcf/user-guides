@@ -58,7 +58,7 @@ You can use the SDK Debug GUI to analyze and gain insights into your code execut
 
 To launch the SDK Debug GUI, run the following commands:
 ```bash linenums="1"
-cd ~/csl-examples/examples/gemm-collectives_2d
+cd ~/csl-examples/benchmarks/gemm-collectives_2d
 sdk_debug_shell visualize
 ```
 
@@ -87,8 +87,8 @@ Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster
 
 **Create Virtual Environment:** Follow these steps to set up the virtual environment for the Cerebras SDK:
 ```bash linenums="1"
-mkdir ~/cs_appliacne_sdk
-cd ~/cs_appliacne_sdk
+mkdir ~/cs_appliance_sdk
+cd ~/cs_appliance_sdk
 deactivate
 rm -r cs_appliance_sdk
 /software/cerebras/python3.8/bin/python3.8 -m venv cs_appliance_sdk
