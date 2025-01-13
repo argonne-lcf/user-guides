@@ -16,7 +16,7 @@ A **5-business-day** lead time is recommended to ensure timely approval. Schedul
     
 	If you have finished running your jobs before your reservation has ended, please reach out to the support team ([support@alcf.anl.gov](mailto:support@alcf.anl.gov)) to release it for other users. At this time, there is no way for a user to release a reservation early.
 
-### Relevant terms efinitions
+### Relevant terms
 /// define
 Reservation
 
