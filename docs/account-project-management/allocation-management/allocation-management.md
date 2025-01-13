@@ -86,7 +86,9 @@ sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballo
 
 Note: `hours-to-move` must be greater than or equal to the available balance for the suballocation `nameofsuballoc`.
 
-*Tip: see `sbank e suballocation -h` for all the options.*
+!!! tip inline end
+
+    See `sbank e suballocation -h` for all the options.
 
 **Step 3: Submit Jobs (Project team)**
 
