@@ -67,4 +67,3 @@ You can also move jobs from the regular queue to the reservation queue at any ti
 
     There is absolutely no time padding at the end of the reservation. When the reservation ends, all jobs are terminated, deleted, and the reservation queue is deleted. If a routing queue is used for the reservation, then jobs may be preserved, but any running job(s) are still terminated.
 
----
