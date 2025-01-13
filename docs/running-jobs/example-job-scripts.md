@@ -4,7 +4,9 @@ This page contains a small collection of example job scripts users may find usef
 
 A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
-**NOTE:** Since `#` is required prior to each PBS directive, comments should be added after the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue_name>  #comment`).
+!!! warning "Comments in PBS scripts"
+
+    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue_name>  #comment`).
 
 ## CPU MPI-OpenMP Examples
 
