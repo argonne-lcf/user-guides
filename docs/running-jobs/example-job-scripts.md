@@ -40,12 +40,24 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
 
+<!-- BEGIN COMPARISON of mkdocs-codeinclude-plugin and pymdownx.snippets -->
+<!--codeinclude-->
+<!-- [Identifying physical or virtual GPU by UUID](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:uuid_print -->
+<!--/codeinclude-->
+
+<!-- Snippets paths are relative to base location, by default the current working directory (relative to mkdocs.yml?). You can specify a new base location by setting the base_path. base_path is a list of paths. When evaluating paths, they are done in the order specified. The specified snippet will be evaluated against each base path and the first base path that yields a valid snippet will be returned. -->
+
 === "Identifying physical or virtual GPU by UUID"
 ```c++
 ---8<---
 ./GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
 ---8<---
 ```
+
+<!--- example of other pymdownx.snippets syntax. ; temp disables it -->
+---8<--- "; docs/running-jobs/pbs-qsub-options-table.md"
+
+<!-- END COMPARISON -->
 
 *NOTE: If you are a `zsh` user, you will need to ensure **ALL** submission and shell scripts include the `-l` flag following `#!/bin/bash` as seen in the example above to ensure your environment is being instantiated properly. `zsh` is **NOT** supported by HPE and support from ALCF will be best effort only.*
 
@@ -72,6 +84,7 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 ### Hardware threads
 
 This example is similar to the previous, but it exhausts all 64 logical cores available on each compute node CPU. We double the number of MPI ranks to 32, one per each physical core. Using `--cpu-bind=core`, the `--depth` flag value becomes interpreted by Cray MPICH as spacing in number of **physical cores**, so `NDEPTH=1` ensures that rank 0 is bound to CPU core IDs `(0,32)`, the 2 SMT sibling hardware threads that share the first physical core.
+<!-- NOTE about use of "sibling" terminology for logical cores/hardware threads : "SMT sibling hardware threads" as in sysfs thread_siblings_list; not core_siblings_list, which lists all logical core siblings in a socket, as in /proc/cpuinfo siblings entry -->
 
 ```bash
 #!/bin/bash -l
@@ -136,6 +149,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 ```
 
 The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ensure that each MPI rank is bound to a separate NUMA node. If OpenMP threading is desired, set `NTHREADS=8` for each MPI rank to spawn 1 thread per physical core (all in the same NUMA domain that the rank is bound to). The OpenMP-related options are not needed if your application does not use OpenMP. Nothing additional is required on the `mpiexec` command for applications that internally manage GPU devices and handle the binding of MPI/OpenMP processes to GPUs. A small helper script is available for those with applications that rely on MPI to handle the binding of MPI ranks to GPUs. Some notes on this helper script and other key differences with the early CPU example follow.
+<!-- NOTE: "-d 8 --cpu-bind=core" equiv to "-d 16 --cpu-bind=numa", so it is not quite the same as -d 8 --cp-bind=depth. E.g. in the former 2, rank0 has logical cores (0-7,32-39) so if NTHREADS=8, the behavior will be the same as "-d 8 --cpu-bind=depth -->
 
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
