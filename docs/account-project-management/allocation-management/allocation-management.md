@@ -84,7 +84,8 @@ PI adds hours to a suballocation:
 sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameofsuballoc2>
 ```
 
-Note: `hours-to-move` must be greater than or equal to the available balance for the suballocation `nameofsuballoc`.
+!!! note 
+    `hours-to-move` must be greater than or equal to the available balance for the suballocation `nameofsuballoc`.
 
 !!! tip inline end
 
