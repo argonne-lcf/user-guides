@@ -57,5 +57,3 @@ For an EOY report, replace YEARS with the years associated with your allocation.
 - [Quarterly Report Template](files/PINAME_ALLOCATION_YEAR_QX.docx)
 - [End of Project Report Template](files/PINAME_ALLOCATION_YEARS_EOP.docx)
 - [End of Year Report Template](files/PINAME_ALLOCATION_YEAR_EOY.docx)
-
----
