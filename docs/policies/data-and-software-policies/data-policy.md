@@ -84,13 +84,13 @@ Activity is defined as, but not limited to:
 
 ### Archive Space
 
-The archive space is intended for offline storage of results you wish to retain but either have no immediate need to access or no room in your parallel file system space. Archiving capabilities are available via HPSS. The primary HPSS access is via HSI. HTAR is available, but its path length and file size limitations often cause it to fail. Globus Online and GridFTP are clients that can also be used with HPSS. Due to the possibility of data corruption or loss due to a bad tape, users can request dual writes for particularly critical data. Such requests will be handled on a case-by-case basis.
+The archive space is intended for offline storage of results you wish to retain but either have no immediate need to access or no room in your parallel file system space. Archiving capabilities are available via HPSS. The primary HPSS access is via HSI. HTAR is available, but its path length and file size limitations often cause it to fail. Globus Online and GridFTP are clients that can also be used with HPSS.  Due to the possibility of data corruption, users can request 2 copies for particularly critical data. Such requests will be handled on a case-by-case basis.
 
 ## Data Storage Policies
 
 ### Disk Capacity and Retention Policies
 
-| ----                                           | /home       | lus/eagle/projects or /eagle                                                                             |
+| ----                                           | /home       | lus/eagle/projects or /eagle or /grand                                                                            |
 |------------------------------------------------|-------------|----------------------------------------------------------------------------------------------------------|
 | Default Quota ^1^                              | 50 GB       | 1 TB / 1 million files                                                                                   |
 | Quota Enforcement ^2^                          | hard/soft   | hard/soft                                                                                                |
@@ -103,17 +103,16 @@ The archive space is intended for offline storage of results you wish to retain 
 
 ### Tape Capacity and Retention Policies
 
-| ----                                           | /home | lus/eagle/projects or /eagle |
-|------------------------------------------------|-------|------------------------------|
-| Automatic Backup to Tape? ^7^                  | yes   | no                           |
-| Archived to Tape Before Deleted from Disk? ^9^ | yes   | no                           |
+| ----                                           | /home | lus/eagle/projects or /eagle or /grand |
+|------------------------------------------------|-------|----------------------------------------|
+| Automatic Backup to Tape? ^6^                  | yes   | no                                     |
+| Archived to Tape Before Deleted from Disk? ^8^ | yes   | no                                     |
 
 1. While quotas are subject to negotiation on a case-by-case basis, disk space is a finite resource and projects must exercise good data management practices for their own sake and the sake of other users of the facility. With Lustre, it has become necessary to enforce file quotas as well, which are also negotiable.
 2. “Hard quota enforcement” means a job will fail when writing output if you exceed the hard quota limit. "Soft quota enforcement" means you may exceed the soft quota limit (but never the higher hard quota value) for up to seven days. If you do not drop back below the soft quota limit within seven days, writes will begin to fail.
 3. Hard drives are in redundancy groups of 10 disks (8 data + 2 parity). In other words, three out of 10 drives would have to fail before data loss occurred.
 4. Metadata (i.e., information listing which blocks are part of which files) is written twice to two different storage arrays. Thus, even if an entire array were lost, the metadata would be preserved.
 5. Refers to the fact that data (user output) is written twice with each block on two different storage arrays, so that even if an entire array were lost, the data would be preserved.
-6. Snapshots are stored in your home directory (see Home File System Space for more info). If you accidentally delete the directory or need a previous version, use the cp command to copy the file back to your home directory.
-7. “Yes” denotes that ALCF does regular backups without intervention from the user. In case of project data, data is backed up to tape after a stipulated period (see point 8 below) and is retained for 2 years (subject to change). In all other cases, the user is responsible for archiving the data to HPSS or copying it to another facility as desired.
-8. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following the project end date (except Eagle). Access to the directory will be removed after 90 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis.
-9. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information.
+6. “Yes” denotes that ALCF does regular backups without intervention from the user. 
+7. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following project end date. Access to the directory will be removed after 180 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis. 
+8. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information. The user is responsible for archiving the data to HPSS or copying it to another facility as desired. Data will be retained on tape for 2 years, at which time it is eligible for removal (subject to change). 
