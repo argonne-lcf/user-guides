@@ -42,7 +42,8 @@ nav:
       - Aurora Programming Environment: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
       - Early User Notes and Known Issues: aurora/known-issues.md
-      - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      #- Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Machine Overview: aurora/machine-overview.md
       - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
       - Compiling and Linking:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
@@ -116,8 +117,9 @@ nav:
     - System Updates: polaris/system-updates.md
     - Contacting Support and Software Requests: polaris/contacting-support.md
     - Known Issues: polaris/known-issues.md
-    - Hardware Overview:
-      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+    #- Hardware Overview:
+    #- Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+     - Polaris Machine Overview: polaris/machine-overview.md
     - Compiling and Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
