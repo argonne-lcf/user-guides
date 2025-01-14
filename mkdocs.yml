@@ -295,6 +295,8 @@ not_in_nav: |
   aurora/workflows/deephyper.md
   aurora/workflows/libensemble.md
   aurora/workflows/parsl.md
+  polaris/hardware-overview
+  aurora/hardware-overview
 
 theme:
   name: 'material'
