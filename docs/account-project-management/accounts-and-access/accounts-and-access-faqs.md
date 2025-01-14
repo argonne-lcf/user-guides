@@ -19,7 +19,7 @@ To request an extension of your existing discretionary allocation or to request 
 - How many additional hours are you requesting?
 
 ## How do I join a project?
-To join a project, please go to [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/), then click "join a project." Once there, scroll down to the project you want to join and click on it. At the bottom of the next page, please click on the "Request Membership" button. Once we receive approval from the PI regarding your membership request, we will provide you with access to the necessary resources.
+To join a project, please go to [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/), login then click the "Project & Resources" dropdown on the left sidebar. Next, select "Join project". Once there, search and scroll down to the project you want to join and click on the. At the bottom of the next page, please click on the "Request Membership" button. Once we receive approval from the PI regarding your membership request, we will provide you with access to the necessary resources.
 
 ## How do I request a reservation?
 Reservation requests must include information detailed here: 
