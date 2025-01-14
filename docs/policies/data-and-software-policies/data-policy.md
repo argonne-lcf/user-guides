@@ -8,7 +8,9 @@ Data is not encrypted at rest. Data transferred via SSH (i.e., scp) is encrypted
 
 The basic level of protection provided is UNIX file level permissions; it is the user's responsibility to ensure that file permissions and umasks are set to match their needs.
 
-**NOTE:** The default permissions and umasks are group and world readable. For help determining or setting file permissions or umasks, or creating a UNIX group, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+!!! warning
+
+	The default permissions and umasks are group and world readable. For help determining or setting file permissions or umasks, or creating a UNIX group, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## ALCF Staff with Root Privileges
 
@@ -17,7 +19,8 @@ ALCF resource administrators with root privileges are not constrained by the fil
 The ALCF resources are Federal resources and are the property of the United States Government. Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized site, Department of Energy, and law enforcement personnel, as well as authorized officials of other agencies, both domestic and foreign.
 
 Administrators use elevated privileges for maintenance and system management. Following are instances where ALCF staff might look at your files:
-- We maintain copies of all .error, .output, and Cobalt log files and may review them to determine if a job failure was due to user error or a system failure.
+
+- We maintain copies of all job submission error, output, and log files and may review them to determine if a job failure was due to user error or a system failure.
 - If you request our assistance via any mechanism (for example, support ticket, direct personal email, in-person, etc.), be aware we may need to view your files using elevated privileges to aid us in resolving your issue.
 
 ## Use of Proprietary/Licensed Software
@@ -46,7 +49,7 @@ The home file system (/home) is intended to hold your executable files, configur
 
 **AI Testbed home**
 
-/home shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes, is different from mira-home. Default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is backed up.
+`/home/` shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes, is different from mira-home. Default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is backed up.
 
 ### Team Project or Campaign File System
 
@@ -56,7 +59,7 @@ The team project/campaign file system is intended primarily for results output f
 
 This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Eagle is a Lustre global parallel file system. All new projects will be given storage allocations on Eagle. More information on Lustre File Striping Basics: Lustre File Striping Basics.
 
-**_Pullback Policy:_** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+**Pullback Policy:** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
 **AI Testbed projects file system**
 
@@ -66,10 +69,10 @@ The team project/campaign file system /projects mounted on AI Testbed's login an
 
 The file system Eagle, a Lustre global parallel file system, has community sharing abilities and is useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota on Eagle is 1 TB and the default period is 1 year. More information on Lustre file striping can be found in this [presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf).
 
-**_Eagle Data Pullback Policy:_** 
+**Eagle Data Pullback Policy:** 
 Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-**_Eagle Access Termination Policy:_** 
+**Eagle Access Termination Policy:** 
 Project endpoints that have exhibited no activity* for a period of 6 months will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
 Activity is defined as, but not limited to:
