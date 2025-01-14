@@ -39,9 +39,9 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
-      - Aurora PE: aurora/aurora-pe.md
+      - Aurora Programming Environment: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
-      - Known Issues: aurora/known-issues.md
+      - Early User Notes and Known Issues: aurora/known-issues.md
       - Hardware Overview: aurora/hardware-overview/machine-overview.md
       - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
       - Compiling and Linking:
@@ -85,6 +85,7 @@ nav:
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
+          - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
@@ -113,6 +114,7 @@ nav:
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - System Updates: polaris/system-updates.md
+    - Contacting Support and Software Requests: polaris/contacting-support.md
     - Known Issues: polaris/known-issues.md
     - Hardware Overview:
       - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -130,8 +132,10 @@ nav:
     - Running Jobs: polaris/running-jobs.md
     - Applications and Libraries:
         - Applications:
+            - Amber: polaris/applications-and-libraries/applications/amber.md
             - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
             - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+            - NAMD: polaris/applications-and-libraries/applications/namd.md
             - NekRS: polaris/applications-and-libraries/applications/nekrs.md
             - OpenMM: polaris/applications-and-libraries/applications/openmm.md
             - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
@@ -322,7 +326,6 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
-  - def_list
   - pymdownx.critic
   - pymdownx.inlinehilite
   - pymdownx.keys
@@ -345,6 +348,7 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.blocks.definition
 
 validation:
   omitted_files: warn
