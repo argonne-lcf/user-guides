@@ -36,7 +36,7 @@ Jobs on Aurora](running-jobs-aurora.md)
 * Non-final configurations (storage, OS versions, etc...)
 * Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
 
-See this [page](./known-issues.md) for known issues.
+See this page for additional Early User Notes and Known Issuesthis [page](./known-issues.md) for known issues.
 
 
 ## Python on Aurora
