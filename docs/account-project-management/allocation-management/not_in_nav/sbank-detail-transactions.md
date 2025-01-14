@@ -4,11 +4,11 @@
 
 Detail transaction information.
 
-**NOTE:**
+!!! note
 
-1. The list of `<transaction id>` arguments is optional.
-2. You can also enter the `<transaction id>` list by using the `-t` option multiple times.
-3. Regardless, both are optional, and you can get detailed transaction info using the option filters below.
+    1. The list of `<transaction id>` arguments is optional.
+    2. You can also enter the `<transaction id>` list by using the `-t` option multiple times.
+    3. Regardless, both are optional, and you can get detailed transaction info using the option filters below.
 
 ### OPTIONS
 

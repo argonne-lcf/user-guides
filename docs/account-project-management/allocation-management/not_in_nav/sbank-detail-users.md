@@ -4,12 +4,12 @@
 
 Detail user information.
 
-**NOTE:**
+!!! note
 
-1. Use `-I` to include inactive allocations.
-2. The list of `<user>` arguments is optional.
-3. You can also enter the `<user>` list by using the `-u` option multiple times.
-4. Regardless, both are optional, and you can get detailed user info using the option filters below.
+    1. Use `-I` to include inactive allocations.
+    2. The list of `<user>` arguments is optional.
+    3. You can also enter the `<user>` list by using the `-u` option multiple times.
+    4. Regardless, both are optional, and you can get detailed user info using the option filters below.
 
 ### OPTIONS
 
