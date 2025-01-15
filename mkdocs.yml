@@ -78,14 +78,16 @@ nav:
           #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
         - Frameworks:
-          #- DeepSpeed: aurora/data-science/frameworks/deepspeed.md
-          #- JAX: aurora/data-science/frameworks/jax.md
-          - PyTorch: aurora/data-science/frameworks/pytorch.md
-          - TensorFlow: aurora/data-science/frameworks/tensorflow.md
+          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          - ezpz: aurora/data-science/frameworks/ezpz.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
-          - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
+          #- JAX: aurora/data-science/frameworks/jax.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
+          - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - PyTorch: aurora/data-science/frameworks/pytorch.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
+          - TensorFlow: aurora/data-science/frameworks/tensorflow.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
@@ -310,9 +312,10 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-  logo: 'images/Argonne_wireframe_white_transparent.png'
-  favicon: 'images/alcf_favicon.ico'
-
+  # logo: 'images/Argonne_wireframe_white_transparent.png'
+  # favicon: 'images/alcf_favicon.ico'
+  favicon: "images/favicon.svg"
+  logo: images/logo/anl/logo.svg
 extra_css:
   - stylesheets/alcf-extra.css
 
