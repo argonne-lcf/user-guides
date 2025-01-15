@@ -1,4 +1,4 @@
-# Guide of Login to Aurora Load Environments, Run Jobs, and Install GPytorch
+# GPyTorch on Aurora
 
 #### 1. Login and queue a job
 Login to Aurora
@@ -28,7 +28,7 @@ python3 -m pip install gpytorch
 ```
 
 #### Optional
-Create a 'activation_env.sh' file that contains
+Create a `activation_env.sh` file that contains the following lines:
 ```
 module use /soft/modulefiles
 module load frameworks
@@ -41,10 +41,9 @@ To run on GPUs, one needs to add to code
 ```
 import intel_extension_for_pytorch as ipex
  ```
-and 
-set the device as follows in the code:
+and set the device as follows in the code:
 
-```
+```python
 if torch.cuda.is_available():
     device = torch.device('cuda')
 elif torch.xpu.is_available():
@@ -52,4 +51,4 @@ elif torch.xpu.is_available():
 else: 
     device = torch.device('cpu')
 ```
-(One might need to install an earlier version of GPytorch for multiple GPUs running.)
+(One might need to install an earlier version of GPyTorch for multiple GPUs running.)
