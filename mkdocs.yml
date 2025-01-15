@@ -116,8 +116,8 @@ nav:
     - System Updates: polaris/system-updates.md
     - Contacting Support and Software Requests: polaris/contacting-support.md
     - Known Issues: polaris/known-issues.md
-    - Machine Overview:
-      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+    - Machine Overview: polaris/hardware-overview/machine-overview.md
+      # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
     - Compiling and Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
