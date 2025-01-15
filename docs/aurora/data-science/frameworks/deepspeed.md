@@ -1,8 +1,8 @@
 # DeepSpeed
 
 The base `frameworks` environment on Aurora does not come with Microsoft's
-[DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed and it needs to be installed by the user. Instructions
-for using / cloning the base environment can be found [here](../python.md).
+[DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed and it needs to be installed by the user. Further 
+instructions for working with the base environment can be found [here](../python.md).
 
 <!---
 !Below copied from Polaris guide but needs changes for Aurora!
@@ -29,7 +29,7 @@ DeepSpeed support.
     ```
 
     Refer to [job scheduling and
-    execution](../../../running-jobs/job-and-queue-scheduling.md) for
+    execution](../../running-jobs-aurora.md) for
     additional information.
 
 1. Load `frameworks` module:
@@ -64,14 +64,15 @@ DeepSpeed support.
 !!! example "Launching DeepSpeed"
     In both examples the 'train_batch_size' variable needs to be modified from 16 to 12 in the DeepSpeed 
     config embedded in function `get_ds_config()` from Python file `cifar10_deepspeed.py`. This is because the default of 16 is not 
-    compatible with 12 ranks per node we are launching with.
+    compatible with 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, 
+    and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/). 
 
     === "Launching with MPICH"
 
         1. Get total number of available GPUs:
             1. Count number of lines in `$PBS_NODEFILE` (1 host per line)
             2. Count number of GPUs available on current host
-            3. `#!bash NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"`
+            3. `NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"`
         ```bash
         NHOSTS=$(wc -l < "${PBS_NODEFILE}")
         NGPU_PER_HOST=12
@@ -99,7 +100,7 @@ DeepSpeed support.
         sed -e 's/$/ slots=12/' -i hostfile
         ```
 
-        2. Create a `#!bash .deepspeed_env` (more info [here](https://www.deepspeed.ai/getting-started/#multi-node-environment-variables) containing the environment
+        2. Create a `.deepspeed_env` (more info [here](https://www.deepspeed.ai/getting-started/#multi-node-environment-variables)) containing the environment
            variables our workers will need access to:
         ```bash
         echo "PATH=${PATH}" >> .deepspeed_env
@@ -114,7 +115,7 @@ DeepSpeed support.
             `KEY=VALUE`. Each of these will then be set as environment
             variables on each available worker specified in our `hostfile`.
 
-        We can then run the `#!bash cifar10_deepspeed.py` module using DeepSpeed:
+        We can then run the `cifar10_deepspeed.py` module using DeepSpeed:
         ```bash
         deepspeed --hostfile=hostfile cifar10_deepspeed.py \
             --deepspeed 
@@ -123,7 +124,7 @@ DeepSpeed support.
 ???- bug "`AssertionError: Micro batch sizer per gpu: 0 has to be greater than 0`"
 
     Depending on the details of your specific job, it may be necessary to
-    modify the provided `#!bash ds_config.json`.
+    modify the provided `ds_config.json`.
 
     If you encounter an error:
     ```
