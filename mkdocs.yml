@@ -310,6 +310,8 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
+    - content.code.annotate
+    #- content.code.select # experimental
   logo: 'images/Argonne_wireframe_white_transparent.png'
   favicon: 'images/alcf_favicon.ico'
 
@@ -344,6 +346,8 @@ markdown_extensions:
   - pymdownx.highlight:
       use_pygments: true
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
