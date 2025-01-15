@@ -99,7 +99,7 @@ DeepSpeed support.
         sed -e 's/$/ slots=12/' -i hostfile
         ```
 
-        2. Create a `#!bash .deepspeed_env` containing the environment
+        2. Create a `#!bash .deepspeed_env` (more info [here](https://www.deepspeed.ai/getting-started/#multi-node-environment-variables) containing the environment
            variables our workers will need access to:
         ```bash
         echo "PATH=${PATH}" >> .deepspeed_env
