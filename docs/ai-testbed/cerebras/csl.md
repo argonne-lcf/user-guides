@@ -99,8 +99,8 @@ pip install --upgrade pip
 **Install SDK Packages:** Install the `cerebras_appliance` and `cerebras_sdk` Python packages in the virtual environment, specifying the appropriate Cerebras Software release:
 ```bash linenums="1"
 pip install --upgrade pip
-pip install cerebras_appliance==2.3.0
-pip install cerebras_sdk==2.3.0
+pip install cerebras_appliance==2.4.0
+pip install cerebras_sdk==2.4.0
 ```
 
 ### Examples
