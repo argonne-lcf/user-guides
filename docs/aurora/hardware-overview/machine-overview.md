@@ -1,4 +1,4 @@
-# Aurora System Overview
+# Aurora Machine Overview
 
 Aurora is a 10,624 node HPE Cray-Ex based system. It has 166 racks with 21,248 CPUs and 63,744 GPUs.
 Each node consists of 2 Intel Xeon CPU Max Series (codename Sapphire Rapids or SPR) 
