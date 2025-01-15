@@ -93,7 +93,7 @@ DeepSpeed support.
     === "Launching with DeepSpeed"
 
         1. Create a DeepSpeed compliant `hostfile`, specifying the `hostname` and
-           number of GPUs (`slots`) for each of our available workers:
+           number of GPUs (`slots`) for each of our available workers (more info [here](https://www.deepspeed.ai/getting-started/#resource-configuration-multi-node)):
         ```bash
         cat $PBS_NODEFILE > hostfile
         sed -e 's/$/ slots=12/' -i hostfile
