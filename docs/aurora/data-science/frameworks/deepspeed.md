@@ -63,7 +63,7 @@ DeepSpeed support.
 
 !!! example "Launching DeepSpeed"
     In both examples the 'train_batch_size' variable needs to be modified from 16 to 12 in the DeepSpeed 
-    config embedded in the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not 
+    config embedded in function `get_ds_config()` from Python file `cifar10_deepspeed.py`. This is because the default of 16 is not 
     compatible with 12 ranks per node we are launching with.
 
     === "Launching with MPICH"
