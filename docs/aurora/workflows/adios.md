@@ -246,8 +246,3 @@ wait
 !!! info "Selecting the SST Data Transport Plane"
 
 	The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA, however note that it requires running the applications on more than 1 node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
-
-
-
-
-
