@@ -19,7 +19,6 @@ conda install -y -c https://software.repos.intel.com/python/conda/ -c conda-forg
 python -m ipykernel install --prefix=${CONDA_PREFIX} --name dask
 ```
 
-
 ## Start a Dask cluster
 
 Copy the following script into a file called `start_dask_aurora.sh` and make it executable with :
@@ -28,7 +27,7 @@ Copy the following script into a file called `start_dask_aurora.sh` and make it 
 chmod a+x ./start_dask_aurora.sh
 ```
 
-```bash linenums="1" title=start_dask_aurora.sh
+```bash linenums="1" title="start_dask_aurora.sh"
 #!/bin/bash
 
 # start_dask_aurora.sh
@@ -101,7 +100,6 @@ NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $(( $NNODES * 6 )) --ppn 6 ./start_dask_aurora.sh gpu 6
 ```
 
-
 ## Example
 
 In this example, we will [estimate Pi using a Monte Carlo method](https://en.wikipedia.org/wiki/Pi#Monte_Carlo_methods). 
@@ -172,7 +170,7 @@ client.shutdown()
 
 - First, request an interactive job on 1 node.
 - Then, [start a Dask cluster with 6 GPU workers](#start-a-cluster-with-gpu-workers) and wait about 10 seconds for the cluster to start.
-- Press ++ctrl+Z++ to send the process to the background, or open a new shell and SSH onto the compute node. 
+- Press ++ctrl+z++ (SIGTSTP) and then execute `bg` to continue running the process to the background, or open a new shell and SSH onto the compute node. 
 - Run the example script:
   ```bash linenums="1"
   module load frameworks
