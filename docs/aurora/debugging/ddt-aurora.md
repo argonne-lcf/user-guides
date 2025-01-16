@@ -44,7 +44,7 @@ If you are using a wrapper script to map MPI ranks to PVC GPU tiles, you must se
 export FORGE_DEBUGGER_WRAPPER=/opt/aurora/24.180.1/support/tools/mpi_wrapper_utils/gpu_tile_compact.sh
 ```
 
-As discussed w.r.t. [gdb-oneapi](./gdb-oneapi.md), you must explicitly enable gpu debugging on all the PVC GPUs you are using, on all the nodes you are using. One way to do this is to create a script and execute it across all your compute nodes using `mpiexec`. Here is an example script, which takes an argument 1 to enable debugging or 0 to disable it:
+As discussed with respect to [gdb-oneapi](./gdb-oneapi.md), you must explicitly enable GPU debugging on all the PVC GPUs you are using, on all the nodes you are using. One way to do this is to create a script and execute it across all your compute nodes using `mpiexec`. Here is an example script, which takes an argument `1` to enable debugging or `0` to disable it:
 
 ```
 #!/usr/bin/env bash
