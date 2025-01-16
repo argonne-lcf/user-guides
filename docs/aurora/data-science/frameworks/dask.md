@@ -205,6 +205,7 @@ Here are the steps to start a Dask cluster and connect to it interactively from 
   ```bash
   ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 YOUR_ALCF_USERNAME@bastion.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 login.aurora.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 COMPUTE_NODE
   ```
+  - *Note*: If you have issues with the above sequence of `ssh` commands, check [this page](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/issues/56) for troubleshooting.
 - **On the compute node** where you land with the above ssh command, start JupyterLab:
   ```bash
   module load frameworks
