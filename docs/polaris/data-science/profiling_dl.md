@@ -128,7 +128,7 @@ mpiexec -n ${NRANKS} -ppn ${NRANKS_PER_NODE} --env TMPDIR=${TEMPORARY_DIR} -l --
 ${NSYS_WRAPPER} python ${WORK_DIR}/application.py
 ```
 
-Note that, `--env TMPDIR=${TEMPORARY_DIR}` is critical for the `nsys` 
+Note that `--env TMPDIR=${TEMPORARY_DIR}` is essential for `nsys` to function correctly.
 functioning.
 
 ### An `ncu` wrapper
