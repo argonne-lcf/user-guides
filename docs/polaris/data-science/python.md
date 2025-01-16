@@ -16,8 +16,9 @@ module use /soft/modulefiles; module load conda ; conda activate base
 This will load and activate the base environment.
 
 !!! tip
-We encourage users to use the pre-installed conda environment. 
-Any custom environments are supported on a best effort basis only.
+
+	We encourage users to use the pre-installed conda environment. 
+	Any custom environments are supported on a best effort basis only.
 
 For Python issues or questions please see the [Contacting Support](../contacting-support.md) page.
 
@@ -84,12 +85,9 @@ conda create --clone base --prefix /path/to/envs/base-clone
 conda activate /path/to/envs/base-clone
 ```
 
-where, `#!bash path/to/envs/base-clone` should be replaced by a suitably chosen
-path.
+where, `#!bash path/to/envs/base-clone` should be replaced by a suitably path. The cloning process can be _quite_ slow.
 
-**Note**: The cloning process can be _quite_ slow.
-
-## Using `pip install --user` (not recommended)
+## Using `pip install --user` 
 
 !!! danger
 
@@ -126,8 +124,12 @@ aborting job:
 MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
 ```
 
-To addresss this, please add the following line in the very beginning of your python script. 
+To address this, please add the following line in the very beginning of your Python script. 
 
 ```python
 from mpi4py import MPI
 ```
+## Creating a Jupyter Kernel
+
+If you need to use your Python `venv` on JupyterHub, you will need to create a [custom Jupyter kernel](https://docs.alcf.anl.gov/services/jupyter-hub/#custom-ipython-kernels) for it. 
+
