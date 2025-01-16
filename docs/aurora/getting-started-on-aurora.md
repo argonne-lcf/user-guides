@@ -3,7 +3,7 @@
 ## Logging Into Aurora:
 
 To log into Aurora:
-```bash
+```bash linenums="1"
 ssh <username>@aurora.alcf.anl.gov
 ```
 Then, type in the password from your CRYPTOCard/MobilePASS+ token.
@@ -16,10 +16,10 @@ An overview of the Aurora system including details on the compute node architect
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
-Autotools and cmake are available in the default Aurora programming environment(PE) and can be loaded via modules.
+Autotools and CMake are available in the default [Aurora Programming Environment (PE)](aurora-pe.md) and can be loaded via Lmod modules:
 
-```
-$ module load autoconf cmake
+```bash linenums="1"
+module load autoconf cmake
 ```
 
 ## Submitting and Running Jobs
@@ -41,7 +41,7 @@ See [Early User Notes and Known Issues](./known-issues.md) for details.
 
 Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
 
-```
+```bash linenums="1"
 module load frameworks
 ```
 
@@ -50,13 +50,13 @@ Note that there is a separate Python installation in `spack-pe-gcc` which is use
 ## Software Environment
 
 The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
-```
+```bash linenums="1"
 module load cmake
 ```
 More details are on the [Aurora PE page](./aurora-pe.md).
 
 Additional software is installed in `/soft` and can be accessed by adding `/soft/modulefiles` to the module search path.
-```
+```bash linenums="1"
 module use /soft/modulefiles
 ```
 This will make available a handful of additional software modules, such as `kokkos`.
@@ -65,7 +65,7 @@ This will make available a handful of additional software modules, such as `kokk
 
 If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
 
-```bash
+```bash linenums="1"
 # proxy settings
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
 export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
