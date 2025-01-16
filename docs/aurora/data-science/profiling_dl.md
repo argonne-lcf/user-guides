@@ -74,7 +74,7 @@ rank.
 
 ### Deployment
 
-The wrapper above can be deployed using a PBS job script the following way
+The wrapper above can be deployed using the following PBS job script:
 
 ```
 #!/bin/bash -x
