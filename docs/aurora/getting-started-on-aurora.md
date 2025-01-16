@@ -3,7 +3,7 @@
 ## Logging Into Aurora:
 
 To log into Aurora:
-```bash
+```bash linenums="1"
 ssh <username>@aurora.alcf.anl.gov
 ```
 Then, type in the password from your CRYPTOCard/MobilePASS+ token.
@@ -16,17 +16,15 @@ An overview of the Aurora system including details on the compute node architect
 
 Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
 
-Autotools and cmake are available in the default Aurora programming environment(PE) and can be loaded via modules.
+Autotools and CMake are available in the default [Aurora Programming Environment (PE)](aurora-pe.md) and can be loaded via Lmod modules:
 
-```
-$ module load autoconf cmake
+```bash linenums="1"
+module load autoconf cmake
 ```
 
 ## Submitting and Running Jobs
 
-Aurora uses the [PBSPro](../running-jobs/job-and-queue-scheduling.md) job
-scheduler system. For Aurora-specific job documentation, refer to [Running
-Jobs on Aurora](running-jobs-aurora.md)
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](running-jobs-aurora.md)
 
 
 ## Early User Notes and Known Issues
@@ -36,14 +34,14 @@ Jobs on Aurora](running-jobs-aurora.md)
 * Non-final configurations (storage, OS versions, etc...)
 * Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
 
-See this [page](./known-issues.md) for known issues.
+See [Early User Notes and Known Issues](./known-issues.md) for details.
 
 
 ## Python on Aurora
 
 Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
 
-```
+```bash linenums="1"
 module load frameworks
 ```
 
@@ -52,13 +50,13 @@ Note that there is a separate Python installation in `spack-pe-gcc` which is use
 ## Software Environment
 
 The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
-```
+```bash linenums="1"
 module load cmake
 ```
 More details are on the [Aurora PE page](./aurora-pe.md).
 
 Additional software is installed in `/soft` and can be accessed by adding `/soft/modulefiles` to the module search path.
-```
+```bash linenums="1"
 module use /soft/modulefiles
 ```
 This will make available a handful of additional software modules, such as `kokkos`.
@@ -67,7 +65,7 @@ This will make available a handful of additional software modules, such as `kokk
 
 If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
 
-```bash
+```bash linenums="1"
 # proxy settings
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
 export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
@@ -119,21 +117,6 @@ See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using D
 In addition to the content above, here is a document on Lustre File Striping Basics:
 
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
-
-
-**Expect to experience:**
-
-* Hardware instabilities - possible frequent downtime
-* Software instabilities - non-optimized compilers, libraries and tools; frequent software updates
-* Non-final configurations (storage, OS versions, etc...)
-* Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
-
-
-## Known Issues
-
-See this [page](https://docs.alcf.anl.gov/aurora/known-issues/) for known issues.
-
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access. See [page](https://docs.alcf.anl.gov/aurora/known-issues/) for other known issues.
 
 ## Getting Assistance
 
