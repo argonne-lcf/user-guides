@@ -6,6 +6,7 @@ Login to Aurora
 ssh <username>@aurora.alcf.anl.gov
 ```
 Refer to [getting started on Aurora](../../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
+
 !!! note
 
     The instructions below should be **ran directly from a compute node**.
