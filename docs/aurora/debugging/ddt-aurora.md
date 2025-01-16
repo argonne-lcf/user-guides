@@ -30,7 +30,7 @@ You may want to test the configuration. To do that, click the Test Remote Launch
 
 If the test is successful, you are are ready to proceed from an Aurora compute node.
 
-###Invoking the DDT Server from Aurora
+### Invoking the DDT Server from Aurora
 
 To run DDT interactively from Aurora, start up an [interactive PBS job](../running-jobs-aurora.md#interactive-jobs-on-compute-nodes). You'll need to load a module to access DDT:
 
