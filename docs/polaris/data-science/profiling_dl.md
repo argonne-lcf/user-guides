@@ -75,7 +75,6 @@ different levels. An exhaustive list of options can be found in the
 [nsys user guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html).
 Note that, `%q{PMI_RANK}` is essential to get a per rank profile.
 
-
 - `PROFRANK`: As implemented, this variable is set by the user to trace the rank
 of choice. For example, this wrapper will trace the rank 0 on each node.
 
