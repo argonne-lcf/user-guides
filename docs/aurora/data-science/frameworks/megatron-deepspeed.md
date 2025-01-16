@@ -74,7 +74,7 @@ for automated device + backend selection.
 
         - `DTYPE`: Data type
         - `DATA_FILE_LIST`: Data file list
-        - `FFN_HIDDEN_SIZE`: Intermediate size
+       - `FFN_HIDDEN_SIZE`: Feedforward Neural Network projection size
         - `GRAD_ACC_STEPS`: Gradient accumulation steps
         - `HEADS`: Number of attention heads
         - `HIDDEN`: Hidden size
