@@ -1,6 +1,6 @@
 # Profiling Deep Learning Applications
 
-We can use both framework (for example, PyTorch) native profiler and vendor specific 
+We can use both a framework-specific (for example, PyTorch-specific) native profiler and the vendor-specific NVIDIA
 [Nsys profiler](https://developer.nvidia.com/nsight-systems/get-started) to get
 high level profiling information and timeline of execution for an application.
 For kernel level information, we may use 
