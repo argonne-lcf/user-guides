@@ -4,39 +4,37 @@ The gdb4hpc is not a GPU-aware debugger but can be used to debug general code pr
 ## Attaching to a running job
 
 Determine the `jobid` of interest:
-
+```bash linenums="1"
+qstat -u $USER
 ```
-  qstat -u $USER
-```
 
-```
-  harms@aurora-uan-0009:~/working/all2all> qstat -u $USER
+``` { .bash .no-copy }
+harms@aurora-uan-0009:~/working/all2all> qstat -u $USER
 
-  aurora-pbs-0001.hostmgmt.cm.aurora.alcf.anl.gov: 
+aurora-pbs-0001.hostmgmt.cm.aurora.alcf.anl.gov: 
                                                             Req'd  Req'd   Elap
-  Job ID          Username Queue    Jobname    SessID NDS TSK Memory Time  S Time
-  --------------- -------- -------- ---------- ------ --- --- ------ ----- - -----
-  127750.aurora-* harms    workq    all2all       --    4   4    --  00:30 R   -- 
+Job ID          Username Queue    Jobname    SessID NDS TSK Memory Time  S Time
+--------------- -------- -------- ---------- ------ --- --- ------ ----- - -----
+127750.aurora-* harms    workq    all2all       --    4   4    --  00:30 R   -- 
 ```
 
-Next find a node the job is running on. Choose the first node in the list of vnodes.
+Next find a node the job is running on. Choose the first node in the list of `vnodes`:
+```bash linenums="1"
+qstat -f 127750 | grep exec_vnode
+```
 
-```
-  qstat -f 127750 | grep exec_vnode
-```
-
-```
-  harms@aurora-uan-0009:~/working/all2all> qstat -f 127750 | grep exec_vnode
-      exec_vnode = (x4305c2s6b0n0:ncpus=1)+(x4305c2s7b0n0:ncpus=1)+(x4305c4s0b0n0
+``` { .bash .no-copy }
+harms@aurora-uan-0009:~/working/all2all> qstat -f 127750 | grep exec_vnode
+exec_vnode = (x4305c2s6b0n0:ncpus=1)+(x4305c2s7b0n0:ncpus=1)+(x4305c4s0b0n0
 ```
 
 Login to this node, find your `mpiexec` process id and run `gdb4hpc`:
 
-```
-  ssh x4305c2s6b0n0
-  ps -eaf | grep mpiexec
-  module load gdb4hpc
-  CTI_WLM_IMPL=ssh gdb4hpc
+```bash linenums="1"
+ssh x4305c2s6b0n0
+ps -eaf | grep mpiexec
+module load gdb4hpc
+CTI_WLM_IMPL=ssh gdb4hpc
 ```
 
 ???+ example "Example output"
