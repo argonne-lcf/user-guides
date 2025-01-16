@@ -13,10 +13,10 @@ Here we sketch out some possible configurations for executing workflows on Auror
 ## Installation and Setup
 Parsl is a Python library and can be installed with `pip`.  For example, in a Python virtual environment:
 
-```shell
-$ python -m venv $HOME/_env
-$ source $HOME/_env/bin/activate
-$ pip install parsl
+```bash linenums="1"
+python -m venv $HOME/_env
+source $HOME/_env/bin/activate
+pip install parsl
 ```
 
 When using Parsl to distribute work over many PBS Jobs (first two examples below), your workflow script will be executed on a login node and will not return until all tasks are completed.  In this situation, it is advisable to run your script in a [screen](https://linuxize.com/post/how-to-use-linux-screen/) session on the login node.  To setup your screen session and run your workflow you can follow these steps:
@@ -39,7 +39,7 @@ A common use case is to run a large ensemble of tasks that each require one GPU 
 
 !!! warning
 
-    Ensembles of tasks launched with `mpiexec` are currently limited to 1000 total tasks run per batch job.  This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris.  This is due to a known issue with Slingshot and will be fixed in the future.  Users running MPI application ensembles on Aurora with Parsl should take this into account when configuring their workflows.
+    Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job.  This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris.  This is due to a known issue with Slingshot and will be fixed in the future.  Users running MPI application ensembles on Aurora with Parsl should take this into account when configuring their workflows.
 
 The `Config` object for this case is defined like this:
 
@@ -110,7 +110,7 @@ aurora_single_tile_config = Config(
 
 Import this `Config` object and use in a workflow script, e.g.:
 
-```python
+```python linenums="1" title="my_parsl_workflow.py
 # my_parsl_workflow.py
 import os
 import parsl
@@ -169,8 +169,8 @@ Note that a parsl workflow script must block at some point on the result of all 
 To run this workflow script:
 ```shell
 screen -S my_parsl_session
-$ source $HOME/_env/bin/activate
-$ python my_parsl_workflow.py
+source $HOME/_env/bin/activate
+python my_parsl_workflow.py
 ```
 
 When executing this script, the script will block until all tasks are completed.  You may wish to check the scheduler to verify that parsl queues a job to execute the tasks.
@@ -181,7 +181,7 @@ In the previous example, `mpiexec` was used as a launcher, rather than an execut
 
 This example `Config` object can be used to execute MPI tasks that use two nodes each: 
 
-``` python
+``` python linenums="1" title="config.py"
 import parsl
 import os
 from parsl.config import Config
@@ -226,7 +226,8 @@ mpi_ensemble_config = Config(
 
 This example workflow uses this `Config` to run an ensemble of 2-node MPI tasks:
 
-```python
+```python linenums="1" title="my_parsl_workflow.py"
+# my_parsl_workflow.py
 import os
 import parsl
 from parsl import bash_app
@@ -276,7 +277,7 @@ with parsl.load(mpi_ensemble_config):
 If your tasks can be run within a single PBS job, Parsl can be configured to run inside the PBS job, instead of submitting multiple jobs to the scheduler as shown in the examples above.
 
 To run the single tile task ensemble from above in this alternate mode, use this `Config` object in the workflow script:
-```python
+```python linenums="1" title="config.py"
 # config.py
 import os
 from parsl.config import Config
@@ -323,7 +324,7 @@ aurora_single_tile_config = Config(
 ```
 
 Then submit the the workflow with a PBS batch script:
-```bash
+```bash linenums="1"
 #!/bin/bash -l
 #PBS -l select=1
 #PBS -l place=scatter
