@@ -46,7 +46,7 @@ export FORGE_DEBUGGER_WRAPPER=/opt/aurora/24.180.1/support/tools/mpi_wrapper_uti
 
 As discussed with respect to [gdb-oneapi](./gdb-oneapi.md), you must explicitly enable GPU debugging on all the PVC GPUs you are using, on all the nodes you are using. One way to do this is to create a script and execute it across all your compute nodes using `mpiexec`. Here is an example script, which takes an argument `1` to enable debugging or `0` to disable it:
 
-```
+```bash linenums="1" title="helper_toggle_eu_debug.sh"
 #!/usr/bin/env bash
 # helper_toggle_eu_debug.bash
 
