@@ -11,7 +11,7 @@ A Parsl workflow contains two parts:
 Here we sketch out some possible configurations for executing workflows on Aurora.  These docs were written for Parsl 2025.1.13.
 
 ## Installation and Setup
-Parsl is a python library and can be installed with `pip`.  For example, in a python virtual environment:
+Parsl is a Python library and can be installed with `pip`.  For example, in a Python virtual environment:
 
 ```shell
 $ python -m venv $HOME/_env
