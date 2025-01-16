@@ -20,7 +20,7 @@ module load frameworks
 
 Please note that:
 
-- The `frameworks` module automatically activates a pre-built `conda` environment (`aurora_nre_models_frameworks-2024.2.1_u1`) which comes with GPU-supported builds of PyTorch and TensorFlow. Both of these frameworks have `Horovod` support for multi-node calculations, as well as PyTorch DDP with [oneCCL](./frameworks/oneCCL.md).
+- The `frameworks` module automatically activates a pre-built `conda` environment which comes with GPU-supported builds of PyTorch and TensorFlow. Both of these frameworks have `Horovod` support for multi-node calculations, as well as PyTorch DDP with [oneCCL](./frameworks/oneCCL.md).
 - The `frameworks` module may load a different oneAPI compiler SDK than the default module
 - The `frameworks` module is updated approximately every quarter
 
@@ -96,7 +96,7 @@ print(sqx_gpu.device) # sqx_gpu is created on the “gpu” device
 For integration with the ML frameworks (PyTorch and TensorFlow with the respective Intel extensions for GPU), 
 we recommend using an older `frameworks` module, namely
 ```bash
-module load frameworks/2024.1
+module load frameworks
 ```
 
 If integration with the ML frameworks is not required, you can obtain more recent DPEP packages with
