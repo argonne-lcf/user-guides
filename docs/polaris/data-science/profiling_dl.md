@@ -30,11 +30,7 @@ We can use `nsys` to trace an application running on multiple ranks and
 multiple nodes. A simple example, where we use a wrapper script to trace the 
 rank 0 on each node of a 2 node job running a PyTorch application is below:
 
-We can use `nsys` to trace an application running on multiple ranks and
-multiple nodes. A simple example, where we use a wrapper script to trace the
-rank 0 on each node of a 4 node job running a PyTorch application is below:
-
-```bash title="nsys_wrapper.sh"
+```bash linenums="1" title="nsys_wrapper.sh"
 #!/bin/bash
 ## This wrapper should be used with nsys profiler to trace in any number of nodes
 ## The script is set up to trace rank 0 of first 2 Nodes in the case of
