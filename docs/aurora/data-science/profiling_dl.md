@@ -1,8 +1,6 @@
 # Profiling Deep Learning Applications
 
-On Aurora we can use the `unitrace` profiler from Intel to profile Deep 
-Learning applications. Refer to the 
-[unitrace documentation page](https://github.com/intel/pti-gpu/tree/master/tools/unitrace)
+On Aurora we can use the `unitrace` profiler from Intel to profile deep learning applications. Refer to the [`unitrace` documentation page](https://github.com/intel/pti-gpu/tree/master/tools/unitrace)
 for details.
 
 ## Example Usage
