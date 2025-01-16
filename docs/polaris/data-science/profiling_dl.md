@@ -245,3 +245,36 @@ There are many other information provided through these reports. Here we have
 discussed the way to view the high level information.
 
 
+### PyTorch Profiler
+
+Using the PyTorch profiler requires changes in the application source code. A
+simple example is the following:
+
+```py title="pytorch_profiler_example.py"
+from torch.profiler import profile, record_function, ProfilerActivity
+
+# A tracer decorator for a function to be traced
+def trace_func(func):
+   def wrapper(*args, **kwargs):
+      try:
+         function_name = func.__func__.__qualname__
+      except:
+         function_name = func.__qualname__
+      with record_function(function_name):
+         return func(*args, **kwargs)
+   return wrapper
+
+@trace_func
+def trace_this_function(a, b, c):
+    ...
+    ...
+    return x, y, z
+
+activities = [ProfilerActivity.CPU, ProfilerActivity.CUDA]
+
+with profile(activities=activities, record_shapes=True) as prof:
+    result = trace_this_function(a, b, c)
+prof.export_chrome_trace(f"{/path/to/the/trace/dir}/{name/of/the/trace}-{rank}-of-{world_size}.json")
+```
+This procedure described above works for both single and multi-rank deployments.
+

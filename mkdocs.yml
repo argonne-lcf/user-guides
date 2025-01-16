@@ -252,7 +252,6 @@ nav:
       - SambaNova Documentation: ai-testbed/sambanova/documentation.md
       # - Performance Tools: ai-testbed/sambanova/performance-tools.md
     - Data Management: ai-testbed/data-management/data-management-overview.md
-<<<<<<< HEAD
   - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
       - Aurora PE: aurora/aurora-pe.md
@@ -338,8 +337,6 @@ nav:
     #- Visualization:
       #- Visualization on Crux: crux/visualization/visualization.md
       #- ParaView (Launch from Client): crux/visualization/paraview.md
-=======
->>>>>>> main
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
