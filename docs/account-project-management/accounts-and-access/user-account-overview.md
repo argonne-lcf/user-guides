@@ -8,7 +8,7 @@ If you want to learn how to get started, visit the [Get Started Guide](https://w
 
 ## Who Can Get an Account
 
-Those who are interested in having an account on an ALCF resource must first request an allocation and provide a detailed description of the work, including computational requirements and coding capabilities for the Blue Gene platform.
+Those who are interested in having an account on an ALCF resource must first request an allocation and provide a detailed description of the work, including computational requirements and coding capabilities for the applicable ALCF resources.
 Alternatively, one may be part of a project team that already has an active allocation. Once an allocation has been granted, new users should complete an account request. A project’s Principal Investigator (PI) must sponsor these accounts—if the PI is the user, an ALCF staff member must serve as sponsor. Sponsors are asked annually to evaluate the accounts they have sponsored to determine whether or not these accounts should be kept active.
 
 ## Account Abilities
@@ -21,8 +21,8 @@ Accounts are classified in one of the following categories:
 
 - **Pending:** An account that has been requested but has not yet been created.
 - **Active:** An account that can be used to interact with the ALCF Login Servers. This is the normal state for all accounts.
-- **Inactive:** An account that still exists on the system (that is, the account continues to be registered in the database and the user's files exist on disk) but the user cannot interact with the ALCF Login Servers. An account might be disabled due to misuse, security concerns, or because it is no longer allocated.
-- **Deleted:** An account that existed on the system and is thus in the records and backups, but whose user no longer has access to the systems or files on disk.
+- **Inactive:** An account that still exists on the system (that is, the account continues to be registered in the database and the user's files exist on disk) but the user cannot interact with the ALCF Login Servers. An account might be disabled due to misuse, security concerns, or because it is no longer allocated or the approval period has expired.
+- **Deleted:** An account that existed on the system and is thus in the records and backups, but whose user no longer has access to the systems or files on disk. Typically, an account that is inactive for 90 days is flagged as deleted.
 
 ## More Information
 

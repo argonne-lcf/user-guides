@@ -118,21 +118,6 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
-
-**Expect to experience:**
-
-* Hardware instabilities - possible frequent downtime
-* Software instabilities - non-optimized compilers, libraries and tools; frequent software updates
-* Non-final configurations (storage, OS versions, etc...)
-* Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
-
-
-## Known Issues
-
-See this [page](https://docs.alcf.anl.gov/aurora/known-issues/) for known issues.
-
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the JLSE Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access. See [page](https://docs.alcf.anl.gov/aurora/known-issues/) for other known issues.
-
 ## Getting Assistance
 
 Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
