@@ -24,7 +24,7 @@ module load adios2
 A custom build of ADIOS2 is also possible on Aurora.
 In this case, we recommend the users start with the following install script for a base build
 
-```bash linenums="1" title="install_adios2.sh
+```bash linenums="1" title="install_adios2.sh"
 export CRAYPE_LINK_TYPE=dynamic
 git clone https://github.com/ornladios/ADIOS2.git ADIOS2
 mkdir adios2-build && cd adios2-build
@@ -56,9 +56,9 @@ A full list of CMake options is available at the [documentation](https://adios2.
 Here we show a basic example of using ADIOS2 to stream data between a C++ data producer (e.g., a simulation) and a Python data consumer (e.g., a data analysis or ML component).
 Both applications are MPI programs.
 In this simple workflow, each application loops over a workflow iteration loop, in which the producer writes data to the stream and the consumer reads the data.
-The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to pause execution util the consumer has read the data for a given step.
+The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to pause execution until the consumer has read the data for a given step.
 This is not a requirement, and can be modified with the `RendezvousReaderCount`, `QueueFullPolicy` and `QueueLimit` parameters.
-More information on the SST engine parameters can be found at the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport) as wall as in the provided [examples](https://github.com/ornladios/ADIOS2/tree/master/examples).
+More information on the SST engine can be found at the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport) as wall as in the provided [examples](https://github.com/ornladios/ADIOS2/tree/master/examples).
 
 ```c++ linenums="1" title="producer.cpp"
 #include <iostream>
@@ -187,7 +187,7 @@ if __name__ == '__main__':
 
 To build the C++ producer, use the following CMake file
 
-```CMake linenums="1" name="CMakeLists.txt"
+```cmake linenums="1" title="CMakeLists.txt"
 cmake_minimum_required(VERSION 3.12)
 project(ADIOS2HelloExample)
 
@@ -225,7 +225,7 @@ The example can be run from an interactive session with the following script,
 which runs the producer and consumer with two ranks per node and places the producer on sockect 0 and the consumer on socket 1 of each node.
 The producer and consumer can also be run on separare nodes by specifying the `--hostfile` or `--hostlist` in the `mpiexec` commands.
 
-```bash linenums="1" name="run_adios_example.sh"
+```bash linenums="1" title="run_adios_example.sh"
 #!/bin/bash
 
 module load adios2
@@ -245,7 +245,7 @@ wait
 
 !!! info "Selecting the SST Data Transport Plane"
 
-	The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA for the moment, however note that it requires running the applications on more than 1 node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
+	The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA, however note that it requires running the applications on more than 1 node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
 
 
 
