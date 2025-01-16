@@ -295,9 +295,6 @@ not_in_nav: |
   aurora/data-science/frameworks/jax.md
   aurora/programming-models/raja-aurora.md
   aurora/debugging/gdb-oneapi-aurora.md
-  # aurora/debugging/gdb-oneapi.md
-  # aurora/debugging/ddt-aurora.md
-  # aurora/debugging/gdb4hpc.md
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
   aurora/services/jupyterhub.md
