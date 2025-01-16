@@ -6,13 +6,9 @@ high level profiling information and timeline of execution for an application.
 For kernel level information, we may use 
 [Nsight compute profiler](https://developer.nvidia.com/tools-overview/nsight-compute/get-started).
 Refer to the respective documentation for more details:
-
 - [Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
-
 - [Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
-
 - [Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
-
 - [PyTorch Profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html)
 
 ## Example Usage
