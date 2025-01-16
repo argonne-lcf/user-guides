@@ -6,10 +6,8 @@ To use `gdb-oneapi` effectively, you need to compile and link your application w
 
 The man page and `gdb-oneapi --help` do not include any information about GPU debugging---only the generic `gdb` information. The current build of `gdb-oneapi` does support the TUI (Text User Interface) mode via the `--tui` command-line switch. The `help` command from the `(gdb) ` command prompt command-line interface does not offer any insights into GPU debugging, since the commands to use are really just the normal gdb commands. The key is that it provides access to GPU threads, not just CPU threads. If you query the threads, you will see CPU threads (such as OpenMP threads) and example GPU threads if there are any scheduled. The GPU threads look like the last line in this example output, in which 2.481 is a single GPU thread id running on that GPU. All the other threads in this example are CPU threads, which are mostly waiting for GPU kernels to complete:
 
-???+ example "Example output"
-
-    ``` { .bash .no-copy}
-    (gdb) info threads -s
+``` { .bash .no-copy}
+(gdb) info threads -s
     Id      Target Id                                          Frame
     1.1     Thread 0x155523298880 (LWP 25335) "xgc-es-cpp-gpu" 0x000015552d310407 in sched_yield () from /lib64/libc.so.6
     1.3     Thread 0x15551b307700 (LWP 27775) "xgc-es-cpp-gpu" 0x000015552d2efba1 in clock_nanosleep@GLIBC_2.2.5 () from /lib64/libc.so.6
@@ -33,6 +31,8 @@ The man page and `gdb-oneapi --help` do not include any information about GPU de
   * 2.481:0 ZE 0.7.4.0                                         get_f0_grid<Kokkos::Device<Kokkos::Experimental::SYCL, Kokkos::Experimental::SYCLDeviceUSMSpace> >
       (grid=..., magnetic_field=..., species=..., vgrid=..., pol_decomp=...,
       part=..., grid_wts0=..., f0_ptl=...) at getf0.tpp:22
+(gdb) 
+```
 
 You may use the `thread apply` command followed by a specific thread number, followed by a gdb command, to execute that command on the specific thread. For example
 
