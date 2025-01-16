@@ -13,8 +13,7 @@ Refer to the respective documentation for more details:
 
 ## Example Usage
 
-At the high level, the usage of the `nsys` or the `ncu` profiler can be
-summarized through the following command:
+Both the `nsys` and `ncu` profiler commands take the following generic structure:
 
 ```
 nsys profile -o profile python application.py
