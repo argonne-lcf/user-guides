@@ -125,7 +125,7 @@ We can get kernel level information (for example roofline, Tensor Core usage)
 using NVIDIA's Nsight Compute profiler. Below is a simple wrapper script to 
 show the usage.
 
-```bash title="ncu_wrapper.sh"
+```bash linenums="1" title="ncu_wrapper.sh"
 #!/bin/bash
 FNAME_EXT=$(basename "$2")
 FNAME="${FNAME_EXT%%.*}"
