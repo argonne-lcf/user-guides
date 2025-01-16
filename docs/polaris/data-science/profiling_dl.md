@@ -175,7 +175,7 @@ of data collection can be found in the
 of the documentation. Here we only show standard options, either of the three 
 could be chosen. Note that, invoking each option will lead to varying amounts 
 of time the profiler need to run. This will be important in setting the 
-requested wall-time for your batch job.
+requested walltime for your batch job.
 
 `ncu` will generate `ncu-rep` files for each traced ranks, and we will need 
 NVIDIA's Nsight Compute system on the local machine.
