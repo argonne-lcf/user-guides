@@ -310,8 +310,8 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-  logo: 'images/Argonne_wireframe_white_transparent.png'
-  favicon: 'images/alcf_favicon.ico'
+  logo: images/logo.svg
+  favicon: "images/favicon.svg"
 
 extra_css:
   - stylesheets/alcf-extra.css
