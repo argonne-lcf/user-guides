@@ -11,7 +11,7 @@ We can use `unitrace` to trace an application running on multiple ranks and
 multiple nodes. A simple example, where we use a wrapper script to trace the
 rank 0 on each node of a 4 node job running a PyTorch application is below:
 
-```bash title="unitrace_wrapper.sh"
+```bash linenums="1" title="unitrace_wrapper.sh"
 #!/bin/bash
 ## This wrapper should be used with unitrace to trace in any number of nodes.
 ## The script for this example is set up to trace rank 0 of first 4 Nodes in the case of
