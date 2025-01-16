@@ -238,7 +238,7 @@ discussed the way to view the high level information.
 Using the PyTorch profiler requires changes in the application source code. A
 simple example is the following:
 
-```py title="pytorch_profiler_example.py"
+```python linenums="1" title="pytorch_profiler_example.py"
 from torch.profiler import profile, record_function, ProfilerActivity
 
 # A tracer decorator for a function to be traced
