@@ -1,6 +1,6 @@
 # GPyTorch on Polaris
 
-#### 1. Login and queue a job
+## 1. Login and queue a job
 Login to Polaris
 ```
 ssh alcfusername@polaris.alcf.anl.gov
@@ -20,8 +20,7 @@ ssh alcfusername@polaris.alcf.anl.gov
 
 
 
-
-#### 2. Load Modules
+## 2. Load Modules
 
 Load the Anaconda environment module, which contains a PyTorch installation, since GPyTorch has PyTorch as a dependency:
 ```
@@ -50,7 +49,7 @@ source path_to_myenv/bin/activate
 ``` 
 
 
-## Using Jupyter Notebook to Run GPyTorch on Polaris
+## 3. Using Jupyter Notebook to Run GPyTorch on Polaris
 Here is the guide:
 
 ### Approach 1 - Use ALCF JupyterHub
