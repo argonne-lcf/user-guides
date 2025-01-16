@@ -185,7 +185,7 @@ NVIDIA's Nsight Compute system on the local machine.
 The next step is to load the `nsys-rep` files in the Nsight Systems GUI, and
 the `ncu-rep` files to the Nsight Compute GUI.
 
-### For a single rank run
+### Single rank run
 
 #### `nsys` profiles
 In the single rank case, we go to the top left, go `file` --> `open` and select
