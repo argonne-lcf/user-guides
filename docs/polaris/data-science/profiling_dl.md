@@ -18,8 +18,7 @@ Both the `nsys` and `ncu` profiler commands take the following generic structure
 ```
 nsys profile -o profile python application.py
 ```
-If we want to launch with `MPI` then
-
+If we want to launch the profiled application with MPI, then `mpiexec` must be used:
 ```
 mpiexec ... nsys profile ... python application.py ... 
 ```
