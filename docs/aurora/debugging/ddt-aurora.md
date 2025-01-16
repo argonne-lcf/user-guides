@@ -6,7 +6,7 @@ We have licenses for Linaro DDT on Aurora, a parallel debugger that is able to u
 
 Download and install the latest Linaro Forge client for your desktop/laptop system from the [Linaro website](https://www.linaroforge.com/download-documentation/). This is available for linux, MacOS, and Windows systems.
 
-###Configuring the Remote Client
+### Configuring the Remote Client
 
 Before you can start a DDT debugging session on Aurora compute nodes, you must set your client for remote connection from Aurora compute nodes. Your client window should look something like this:
 
