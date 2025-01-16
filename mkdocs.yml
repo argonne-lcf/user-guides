@@ -84,6 +84,7 @@ nav:
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - Dask: aurora/data-science/frameworks/dask.md          
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
           - GPyTorch: aurora/data-science/frameworks/gpytorch.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
