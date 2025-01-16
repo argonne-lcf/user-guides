@@ -127,8 +127,6 @@ ${NSYS_WRAPPER} python ${WORK_DIR}/application.py
 
 Note that `--env TMPDIR=${TEMPORARY_DIR}` is essential for `nsys` to function correctly.
 
-### A `ncu` wrapper
-
 We can get kernel level information (for example roofline, Tensor Core usage)
 using NVIDIA's Nsight Compute profiler. Below is a simple wrapper script to 
 show the usage.
