@@ -168,7 +168,7 @@ fi
 
 This wrapper can be deployed as the `nsys` example above. In the `ncu` wrapper
 we explicitly set the name of the kernel that we want to analyze 
-(a gemm kernel in this case).
+(a GEMM kernel in this case).
 The exhaustive list of option to set the amount
 of data collection can be found in the 
 [command line section](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html#command-line-options)
