@@ -74,7 +74,7 @@ From the interactive prompt on your lead Aurora compute node, issue
 
 ```
 export NNODES=`wc -l < $PBS_NODEFILE`
-mpiexec -n $NNODES ./helper_toggle_eu_debug.bash 1
+mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
 ```
 
 To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example:
