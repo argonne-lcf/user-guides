@@ -39,10 +39,10 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
   - Aurora:
       - Getting Started: aurora/getting-started-on-aurora.md
-      - Aurora PE: aurora/aurora-pe.md
+      - Aurora Programming Environment: aurora/aurora-pe.md
       - Sunspot to Aurora: aurora/sunspot-to-aurora.md
-      - Known Issues: aurora/known-issues.md
-      - Hardware Overview: aurora/hardware-overview/machine-overview.md
+      - Early User Notes and Known Issues: aurora/known-issues.md
+      - Machine Overview: aurora/hardware-overview/machine-overview.md
       - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
       - Compiling and Linking:
         - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
@@ -78,7 +78,7 @@ nav:
           #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
         - Frameworks:
-          #- DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
           #- JAX: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
@@ -117,8 +117,8 @@ nav:
     - System Updates: polaris/system-updates.md
     - Contacting Support and Software Requests: polaris/contacting-support.md
     - Known Issues: polaris/known-issues.md
-    - Hardware Overview:
-      - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+    - Machine Overview: polaris/hardware-overview/machine-overview.md
+      # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
     - Compiling and Linking:
       - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
       - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
@@ -311,8 +311,8 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-  logo: 'images/Argonne_wireframe_white_transparent.png'
-  favicon: 'images/alcf_favicon.ico'
+  logo: images/logo.svg
+  favicon: "images/favicon.svg"
 
 extra_css:
   - stylesheets/alcf-extra.css
@@ -327,7 +327,6 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
-  - def_list
   - pymdownx.critic
   - pymdownx.inlinehilite
   - pymdownx.keys
@@ -350,6 +349,7 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.blocks.definition
 
 validation:
   omitted_files: warn

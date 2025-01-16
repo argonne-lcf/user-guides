@@ -1,6 +1,6 @@
 # Autotrain
 
-Autotrain, developed by Hugging Face, is a platform designed to simplify training cutting-edge models in various fields: NLP, LLM, CV, ... [read more](https://huggingface.co/docs/autotrain/main/en/tasks/llm_finetuning)
+Autotrain, developed by Hugging Face, is a platform designed to simplify training cutting-edge models in various fields: NLP, LLM, CV, etc. [Read more](https://huggingface.co/docs/autotrain/main/en/tasks/llm_finetuning).
 
 ## Create Python Virtual Environment for Autotrain
 
@@ -98,3 +98,4 @@ print("Saving target model...")
 merged_model.save_pretrained(target_model_path)
 tokenizer.save_pretrained(target_model_path)
 config.save_pretrained(target_model_path)
+```
