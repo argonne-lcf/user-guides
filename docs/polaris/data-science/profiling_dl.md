@@ -225,11 +225,8 @@ viewed separately.
 In both cases, `nsys` and `ncu` we have used the standard option sets to
 generate the profiles. The exhaustive list could be found in the respective
 documentation pages:
-
 - [Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
-
 - [Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
-
 - [Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
 
 There are many other information provided through these reports. Here we have
