@@ -78,13 +78,14 @@ nav:
           #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
         - Frameworks:
-          #- DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+          - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
           #- JAX: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
+          - Dask: aurora/data-science/frameworks/dask.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
