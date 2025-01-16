@@ -2,7 +2,7 @@
 
 We have licenses for Linaro DDT on Aurora, a parallel debugger that is able to use [gdb-oneapi](./gdb-oneapi.md) as its underlying engine on Aurora. This is not a tutorial on DDT; for that you should use Linaro's documentation, such as the documentation bundled with their client programs. Here we provide specific information on using DDT interactively in the GUI client-server mode on Aurora.
 
-##Client
+## Client
 
 Download and install the latest Linaro Forge client for your desktop/laptop system from the [Linaro website](https://www.linaroforge.com/download-documentation/). This is available for linux, MacOS, and Windows systems.
 
