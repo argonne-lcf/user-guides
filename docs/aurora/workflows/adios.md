@@ -51,63 +51,92 @@ cd ..
 
 A full list of CMake options is available at the [documentation](https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#install-from-source).
 
-## Python Hello World Example
+## Mixed C++ and Python Hello World Example
 
-Here we show a basic example of using ADIOS2 to stream data between two Python `mpi4py` applications.
-This simple workflow sets up a data producer and a data consumer, each looping over a workflow iteration loop.
-At every iteration, the producer writes data to the stream and the consumer reads the data.
-The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to halt util the consumer has read the data for a given step.
+Here we show a basic example of using ADIOS2 to stream data between a C++ data producer (e.g., a simulation) and a Python data consumer (e.g., a data analysis or ML component).
+Both applications are MPI programs.
+In this simple workflow, each application loops over a workflow iteration loop, in which the producer writes data to the stream and the consumer reads the data.
+The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to pause execution util the consumer has read the data for a given step.
 This is not a requirement, and can be modified with the `RendezvousReaderCount`, `QueueFullPolicy` and `QueueLimit` parameters.
-More information on the SST engine parameters can be found at the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport).
+More information on the SST engine parameters can be found at the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport) as wall as in the provided [examples](https://github.com/ornladios/ADIOS2/tree/master/examples).
 
-```python linenums="1" title="producer.py"
-from mpi4py import MPI
-import numpy as np
-from adios2 import Stream, Adios, bindings
-from time import sleep
+```c++ linenums="1" title="producer.cpp"
+#include <iostream>
+#include <vector>
+#include <adios2.h>
+#include <mpi.h>
+#include <unistd.h>
 
-# MPI Init
-COMM = MPI.COMM_WORLD
-RANK = COMM.Get_rank()
-SIZE = COMM.Get_size()
-
-if __name__ == '__main__':
-    # Create new communicator (needed for launch on MPMD mode)
-    color = 3231
-    app_comm = COMM.Split(color, RANK)
-    arank = app_comm.Get_rank()
-    asize = app_comm.Get_size()
-    adios = Adios(app_comm)
-
-    # ADIOS IO
-    io = adios.declare_io("simai")
-    io.set_engine("SST")
-    parameters = {
-        'RendezvousReaderCount': '1', # options: 1 for sync, 0 for async
-        'QueueFullPolicy': 'Block', # options: Block, Discard
-        'QueueLimit': '1', # options: 0 for no limit
-        'DataTransport': 'RDMA', # options: MPI, WAN, UCX, RDMA
-        'OpenTimeoutSecs': '600', # number of seconds SST is to wait for a peer connection on Open()
+template <class T>
+void PrintData(const std::vector<T> &data, const int rank, const size_t step)
+{
+    std::cout << "\tProducer Rank[" << rank << "]: send data [";
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+        std::cout << data[i] << " ";
     }
-    io.set_parameters(parameters)
+    std::cout << "]" << std::endl;
+}
 
-    myArray = np.array([0, 1, 2, 3, 4], dtype=np.float32)
-    nx = len(myArray)
-    myArray = nx * arank + myArray
-    increment = nx * asize * 1.0
+int main(int argc, char *argv[])
+{
 
-    # Loop over workflow steps and send write at each step
-    workflow_steps = 2
-    with Stream(io, "data_stream", "w", app_comm) as stream:
-        for istep in range(workflow_steps):
-            sleep(3)
-            if arank==0: print(f"\nIteration {istep}:", flush=True)
-            app_comm.Barrier()
-            stream.begin_step()
-            if istep>0: myArray += increment
-            stream.write("y", myArray, [asize * nx], [arank * nx], [nx])
-            print(f"\tProducer [{arank}]: sent data = {myArray}", flush=True)
-            stream.end_step()
+    // MPI_THREAD_MULTIPLE is only required if you enable the SST MPI_DP
+    int rank, size, provide;
+    MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provide);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    // Create a new communicator
+    int color = 3130, arank, asize;
+    MPI_Comm app_comm;
+    MPI_Comm_split(MPI_COMM_WORLD, color, rank, &app_comm);
+    MPI_Comm_rank(app_comm, &arank);
+    MPI_Comm_size(app_comm, &asize);
+
+    // ADIOS IO Setup
+    adios2::ADIOS adios(app_comm);
+    adios2::IO sstIO = adios.DeclareIO("myIO");
+    sstIO.SetEngine("Sst");
+    adios2::Params params;
+    params["RendezvousReaderCount"] = "1";
+    params["QueueFullPolicy"] = "Block";
+    params["QueueLimit"] = "1";
+    params["DataTransport"] = "RDMA";
+    params["OpenTimeoutSecs"] = "600";
+    sstIO.SetParameters(params);
+
+    // Setup the data to send
+    std::vector<float> myArray = {0.0, 1.0, 2.0, 3.0, 4.0};
+    const std::size_t Nx = myArray.size();
+    for (size_t k = 0; k < myArray.size(); ++k) {
+        myArray[k] = myArray[k] + static_cast<float>(Nx * arank);
+    }
+    const float increment = (float)(Nx * asize * 1.0);
+
+    // Define variable and local size
+    auto bpFloats = sstIO.DefineVariable<float>("y", {asize * Nx}, {arank * Nx}, {Nx});
+
+    int workflow_steps = 2;
+    adios2::Engine sstWriter = sstIO.Open("data_stream", adios2::Mode::Write);
+    for (size_t i = 0; i < workflow_steps; ++i) {
+        sleep(3);
+        if (arank == 0)
+            std::cout << "\n Iteration " << i << std::endl;
+        sstWriter.BeginStep();
+        sstWriter.Put<float>(bpFloats, myArray.data());
+        PrintData(myArray, rank, i);
+        sstWriter.EndStep();
+        for (size_t k = 0; k < myArray.size(); ++k) {
+            myArray[k] += increment;
+        }
+    }
+    sstWriter.Close();
+
+    MPI_Finalize();
+
+    return 0;
+}
 ```
 
 ```python linenums="1" title="consumer.py"
@@ -128,8 +157,8 @@ if __name__ == '__main__':
     arank = app_comm.Get_rank()
     adios = Adios(app_comm)
 
-    # ADIOS IO
-    io = adios.declare_io("simai")
+    # ADIOS IO Setup
+    io = adios.declare_io("myIO")
     io.set_engine("SST")
     parameters = {
         'RendezvousReaderCount': '1', # options: 1 for sync, 0 for async
@@ -156,11 +185,47 @@ if __name__ == '__main__':
             stream.end_step()
 ```
 
+To build the C++ producer, use the following CMake file
+
+```CMake linenums="1" name="CMakeLists.txt"
+cmake_minimum_required(VERSION 3.12)
+project(ADIOS2HelloExample)
+
+if(NOT TARGET adios2_core)
+  set(_components CXX)
+
+  find_package(MPI COMPONENTS C)
+  if(MPI_FOUND)
+    # Workaround for various MPI implementations forcing the link of C++ bindings
+    add_definitions(-DOMPI_SKIP_MPICXX -DMPICH_SKIP_MPICXX)
+
+    list(APPEND _components MPI)
+  endif()
+
+  find_package(ADIOS2 REQUIRED COMPONENTS ${_components})
+endif()
+
+add_executable(producer producer.cpp)
+target_link_libraries(producer adios2::cxx11_mpi MPI::MPI_CXX)
+
+install(TARGETS producer RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+```
+
+and execute the following commands
+
+```bash
+module load adios2
+module load cmake
+
+cmake ./
+make
+```
+
 The example can be run from an interactive session with the following script, 
-which runs the producer and consumer with two ranks per node across `NODES` and places the producer on sockect 0 and the consumer on socket 1 of each node.
+which runs the producer and consumer with two ranks per node and places the producer on sockect 0 and the consumer on socket 1 of each node.
 The producer and consumer can also be run on separare nodes by specifying the `--hostfile` or `--hostlist` in the `mpiexec` commands.
 
-```bash linenuma="1" name="run_adios_example.sh"
+```bash linenums="1" name="run_adios_example.sh"
 #!/bin/bash
 
 module load adios2
@@ -173,7 +238,7 @@ PROCS_PER_NODE=2
 PROCS=$((NODES * PROCS_PER_NODE))
 
 # Run Python example
-mpiexec -n $PROCS --ppn $PROCS_PER_NODE --cpu-bind list:1:2 python producer.py &
+mpiexec -n $PROCS --ppn $PROCS_PER_NODE --cpu-bind list:1:2 producer &
 mpiexec -n $PROCS --ppn $PROCS_PER_NODE --cpu-bind list:53:54 python consumer.py
 wait
 ```
