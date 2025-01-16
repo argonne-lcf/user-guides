@@ -32,7 +32,7 @@ If the test is successful, you are are ready to proceed from an Aurora compute n
 
 ###Invoking the DDT Server from Aurora
 
-To run DDT interactively from Aurora, start up an [interactive PBS job](/aurora/running-jobs-aurora/#interactive-jobs-on-compute-nodes). You'll need to load a module to access DDT:
+To run DDT interactively from Aurora, start up an [interactive PBS job](../running-jobs-aurora.md#interactive-jobs-on-compute-nodes). You'll need to load a module to access DDT:
 
 ```
 module load forge
