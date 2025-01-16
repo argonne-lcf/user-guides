@@ -111,6 +111,7 @@ nav:
         # - libEnsemble: aurora/workflows/libensemble.md
         # - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
+        - Adios: aurora/workflows/adios.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - System Updates: polaris/system-updates.md
