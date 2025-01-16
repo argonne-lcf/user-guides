@@ -129,7 +129,6 @@ ${NSYS_WRAPPER} python ${WORK_DIR}/application.py
 ```
 
 Note that `--env TMPDIR=${TEMPORARY_DIR}` is essential for `nsys` to function correctly.
-functioning.
 
 ### An `ncu` wrapper
 
