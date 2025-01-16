@@ -92,7 +92,7 @@ local machine
 
 The wrapper above can be deployed using the following PBS job script:
 
-```bash title="pbs_jobscript_nsys.sh"
+```bash linenums="1" title="pbs_jobscript_nsys.sh"
 #!/bin/bash -l
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
