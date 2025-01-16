@@ -293,8 +293,6 @@ print(f'PyTorch view of dpnp array: {t_ary}')
 	PyTorch view of dpnp array: tensor([-3,  1,  2,  3], device='xpu:0')
 	```
 
-
-On Aurora, please note that:
 !!! info "DLPack notes on Aurora"
 	- `ZE_FLAT_DEVICE_HIERARCHY` must be set to `FLAT`
 	- Zero-copy interoperability is supported between dpnp, dpctl, and PyTorch on CPU and GPU, and between Numpy as well on CPU only
