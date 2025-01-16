@@ -11,7 +11,7 @@ A Parsl workflow contains two parts:
 Here we sketch out some possible configurations for executing workflows on Aurora.  These docs were written for Parsl 2025.1.13.
 
 ## Installation and Setup
-Parsl is a python library and can be installed with `pip`.  For example, in a python virtual environment:
+Parsl is a Python library and can be installed with `pip`.  For example, in a Python virtual environment:
 
 ```shell
 $ python -m venv $HOME/_env
@@ -21,7 +21,7 @@ $ pip install parsl
 
 When using Parsl to distribute work over many PBS Jobs (first two examples below), your workflow script will be executed on a login node and will not return until all tasks are completed.  In this situation, it is advisable to run your script in a [screen](https://linuxize.com/post/how-to-use-linux-screen/) session on the login node.  To setup your screen session and run your workflow you can follow these steps:
 
-```shell
+```bash linenums="1"
 screen -S parsl_session_name
 source _env/bin/activate
 python my_parsl_workflow.py
@@ -43,7 +43,7 @@ A common use case is to run a large ensemble of tasks that each require one GPU 
 
 The `Config` object for this case is defined like this:
 
-```python
+```python linenums="1" title="config.py"
 # config.py
 import os
 from parsl.config import Config
