@@ -43,7 +43,7 @@ A common use case is to run a large ensemble of tasks that each require one GPU 
 
 The `Config` object for this case is defined like this:
 
-```python
+```python linenums="1" title="config.py"
 # config.py
 import os
 from parsl.config import Config
