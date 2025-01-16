@@ -84,8 +84,9 @@ nav:
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - Dask: aurora/data-science/frameworks/dask.md          
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
-          - Dask: aurora/data-science/frameworks/dask.md
+          - GPyTorch: aurora/data-science/frameworks/gpytorch.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
@@ -158,6 +159,7 @@ nav:
             - JAX: polaris/data-science/frameworks/jax.md
             - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
             - LibTorch: polaris/data-science/frameworks/libtorch.md
+            - GPyTorch: polaris/data-science/frameworks/gpytorch.md
         - Applications:
             - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science/applications/gpt-neox.md
