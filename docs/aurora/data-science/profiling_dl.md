@@ -67,7 +67,7 @@ beyond which `unitrace` will not trace any rank. An user can change the number
 according to the number of maximum ranks running per node to set up how many 
 ranks to be
 traced. `unitrace` will produce a profile (`json` file, by default) per traced 
-rank. This profile can be viewed using the [perfetto trace viewer](https://ui.perfetto.dev/)
+rank. This profile can be viewed using the [Perfetto trace viewer](https://ui.perfetto.dev/)
 
 ### Deployment
 
