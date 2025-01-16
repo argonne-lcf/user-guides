@@ -48,7 +48,7 @@ As discussed with respect to [gdb-oneapi](./gdb-oneapi.md), you must explicitly 
 
 ```bash linenums="1" title="helper_toggle_eu_debug.sh"
 #!/usr/bin/env bash
-# helper_toggle_eu_debug.bash
+# helper_toggle_eu_debug.sh
 
 export MY_RANK=${PMIX_RANK}
 export MY_NODE=${PALS_NODEID}
