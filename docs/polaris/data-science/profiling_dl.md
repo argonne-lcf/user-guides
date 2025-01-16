@@ -7,13 +7,13 @@ For kernel level information, we may use
 [Nsight compute profiler](https://developer.nvidia.com/tools-overview/nsight-compute/get-started).
 Refer to the respective documentation for more details:
 
-[Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
+- [Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
 
-[Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
+- [Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
 
-[Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
+- [Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
 
-[PyTorch Profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html)
+- [PyTorch Profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html)
 
 ## Example Usage
 
@@ -36,13 +36,11 @@ We can use `nsys` to trace an application running on multiple ranks and
 multiple nodes. A simple example, where we use a wrapper script to trace the 
 rank 0 on each node of a 2 node job running a PyTorch application is below:
 
-### An `nsys` wrapper
-
 We can use `nsys` to trace an application running on multiple ranks and
 multiple nodes. A simple example, where we use a wrapper script to trace the
 rank 0 on each node of a 4 node job running a PyTorch application is below:
 
-```
+```bash title="nsys_wrapper.sh"
 #!/bin/bash
 ## This wrapper should be used with nsys profiler to trace in any number of nodes
 ## The script is set up to trace rank 0 of first 2 Nodes in the case of
@@ -99,7 +97,7 @@ local machine
 
 The wrapper above can be deployed using the following PBS job script:
 
-```
+```bash title="pbs_jobscript_nsys.sh"
 #!/bin/bash -l
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
@@ -130,13 +128,13 @@ ${NSYS_WRAPPER} python ${WORK_DIR}/application.py
 
 Note that `--env TMPDIR=${TEMPORARY_DIR}` is essential for `nsys` to function correctly.
 
-### An `ncu` wrapper
+### A `ncu` wrapper
 
 We can get kernel level information (for example roofline, Tensor Core usage)
 using NVIDIA's Nsight Compute profiler. Below is a simple wrapper script to 
 show the usage.
 
-```
+```bash title="ncu_wrapper.sh"
 #!/bin/bash
 FNAME_EXT=$(basename "$2")
 FNAME="${FNAME_EXT%%.*}"
@@ -237,11 +235,11 @@ In both cases, `nsys` and `ncu` we have used the standard option sets to
 generate the profiles. The exhaustive list could be found in the respective
 documentation pages:
 
-[Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
+- [Nsight System User Guide](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
 
-[Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
+- [Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/)
 
-[Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
+- [Nsight Compute CLI](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html)
 
 There are many other information provided through these reports. Here we have
 discussed the way to view the high level information.
