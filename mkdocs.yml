@@ -77,6 +77,7 @@ nav:
         #- Applications:
           #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
+        - Profiling: aurora/data-science/profiling_dl.md
         - Frameworks:
           - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
           #- JAX: aurora/data-science/frameworks/jax.md
@@ -153,6 +154,7 @@ nav:
     - Data Science:
         - Julia: polaris/data-science/julia.md
         - Python: polaris/data-science/python.md
+        - Profiling: polaris/data-science/profiling_dl.md
         - Frameworks:
             - TensorFlow: polaris/data-science/frameworks/tensorflow.md
             - PyTorch: polaris/data-science/frameworks/pytorch.md
