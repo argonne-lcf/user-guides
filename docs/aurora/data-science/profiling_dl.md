@@ -50,7 +50,7 @@ else
 fi
 
 ```
-There are a few important things to notice in the wrapper.
+There are several important shell variables in the wrapper, which may require modification:
 
 - `UNITRACE_DIR`: This is the main `unitrace` directory, which may change after
 an update to the programming environment.
