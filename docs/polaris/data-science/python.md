@@ -127,11 +127,5 @@ from mpi4py import MPI
 ```
 ## Creating a Jupyter Kernel
 
-If you need to use your python `venv` on JupyterHub, you will need to create a Jupyter kernel for it.
+If you need to use your python `venv` on JupyterHub, you will need to create a [Jupyter kernel](https://docs.alcf.anl.gov/services/jupyter-hub/#custom-ipython-kernels) for it. 
 
-1. Install ipykernel: install `ipykernel` on your `venv` <br>
-`pip install ipykernel`
-
-2. Create a Jupyter Kernel: <br>
-`python -m ipykernel install --user --name=venv --display-name "Jupyter (venv)"` <br>
-Replace `"Jupyter (venv)"` with the display name you want for the kernel in JupyterHub
