@@ -1,5 +1,7 @@
 # DAOS Architecture
 
+DAOS is a scratch file system. Please note that data may be removed or unavailable at any time. 
+
 DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes.
 DAOS is an open-source software-defined object store designed for massively distributed Non Volatile Memory (NVM) and NVMe SSD. 
 DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5.

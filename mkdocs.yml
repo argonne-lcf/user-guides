@@ -78,14 +78,16 @@ nav:
           #- gpt-neox: aurora/data-science/applications/gpt-neox.md
         - Containers: aurora/data-science/containers/containers.md
         - Frameworks:
+          - Dask: aurora/data-science/frameworks/dask.md                  
           - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
-          - LibTorch: aurora/data-science/frameworks/libtorch.md
-          - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
+          - GPyTorch: aurora/data-science/frameworks/gpytorch.md
           #- JAX: aurora/data-science/frameworks/jax.md
-          - oneCCL: aurora/data-science/frameworks/oneCCL.md
-          - OpenVINO: aurora/data-science/frameworks/openvino.md
+          - LibTorch: aurora/data-science/frameworks/libtorch.md          
+          - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
+          - oneCCL: aurora/data-science/frameworks/oneCCL.md          
+          - OpenVINO: aurora/data-science/frameworks/openvino.md          
           - PyTorch: aurora/data-science/frameworks/pytorch.md
-          - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
+          - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md          
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
@@ -158,6 +160,7 @@ nav:
             - JAX: polaris/data-science/frameworks/jax.md
             - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
             - LibTorch: polaris/data-science/frameworks/libtorch.md
+            - GPyTorch: polaris/data-science/frameworks/gpytorch.md
         - Applications:
             - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
             - gpt-neox: polaris/data-science/applications/gpt-neox.md
@@ -311,8 +314,9 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-  logo: 'images/Argonne_wireframe_white_transparent.png'
-  favicon: 'images/alcf_favicon.ico'
+  logo: images/logo.svg
+  favicon: "images/favicon.svg"
+
 extra_css:
   - stylesheets/alcf-extra.css
 
