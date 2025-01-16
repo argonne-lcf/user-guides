@@ -109,7 +109,7 @@ The wrapper above can be deployed using a PBS job script the following way
 #PBS -A YOUR ALLOCATION
 
 
-# What's the benchmark work directory?
+# What's the working directory for the benchmark?
 WORK_DIR=/path/to/the/Python/program
 TEMPORARY_DIR=/path/to/a/temporary/directory/for/`nsys`/to/use
 NSYS_WRAPPER=${WORK_DIR}/nsys_wrapper.sh
