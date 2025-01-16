@@ -132,7 +132,7 @@ Note that `--env TMPDIR=${TEMPORARY_DIR}` is essential for `nsys` to function co
 
 ### An `ncu` wrapper
 
-We can get kernel level information (for example roofline, tensorcore usage)
+We can get kernel level information (for example roofline, Tensor Core usage)
 using NVIDIA's Nsight Compute profiler. Below is a simple wrapper script to 
 show the usage.
 
