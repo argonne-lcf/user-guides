@@ -1,4 +1,4 @@
-# Polaris Hardware Overview 
+# Polaris Machine Overview 
 Polaris is a 560 node HPE Apollo 6500 Gen 10+ based system.  Each node has a single 2.8 GHz AMD EPYC Milan 7543P 32 core CPU with 512 GB of DDR4 RAM and four NVIDIA A100 GPUs connected via NVLink, a pair of local 1.6TB of SSDs in RAID0 for the users use, and a pair of Slingshot 11 network adapters.  There are two nodes per chassis, seven chassis per rack, and 40 racks for a total of 560 nodes.  More detailed specifications are as follows:
 
 ## Polaris Compute Nodes
