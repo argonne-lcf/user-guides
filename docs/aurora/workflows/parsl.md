@@ -272,7 +272,7 @@ with parsl.load(mpi_ensemble_config):
     print("Tasks done!")
 ```
 
-## Run Parsl Workflow within single PBS Job
+## Run Parsl Workflow within a single PBS Job
 
 If your tasks can be run within a single PBS job, Parsl can be configured to run inside the PBS job, instead of submitting multiple jobs to the scheduler as shown in the examples above.
 
