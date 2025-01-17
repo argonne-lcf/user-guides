@@ -18,7 +18,7 @@ There are three production queues you can target in your qsub (`-q <queue name>`
 
 !!!  note
 
-    For all Sophia queues, MaxQueued will be 20 queued or running jobs (per project) and MaxRunning will be 5 concurrent jobs (per project)
+    For all Sophia queues, `MaxQueued` will be 20 queued or running jobs (per project) and `MaxRunning` will be 5 concurrent jobs (per project)
 
 The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill. 
 The `by-queue` and `by-gpu` queues target non-bigmem nodes. 
