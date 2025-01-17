@@ -7,8 +7,8 @@ To use `gdb-oneapi` effectively, you need to compile and link your application w
 The man page and `gdb-oneapi --help` do not include any information about GPU debugging---only the generic `gdb` information. The current build of `gdb-oneapi` does support the TUI (Text User Interface) mode via the `--tui` command-line switch. The `help` command from the `(gdb) ` command prompt command-line interface does not offer any insights into GPU debugging, since the commands to use are really just the normal gdb commands. The key is that it provides access to GPU threads, not just CPU threads. If you query the threads, you will see CPU threads (such as OpenMP threads) and example GPU threads if there are any scheduled. The GPU threads look like the last line in this example output, in which 2.481 is a single GPU thread id running on that GPU. All the other threads in this example are CPU threads, which are mostly waiting for GPU kernels to complete:
 
 ???+ example "Example output"
-
-    ``` { .bash .no-copy}
+    
+    ``` { .bash .no-copy }
     (gdb) info threads -s
     Id      Target Id                                          Frame
     1.1     Thread 0x155523298880 (LWP 25335) "xgc-es-cpp-gpu" 0x000015552d310407 in sched_yield () from /lib64/libc.so.6
@@ -30,33 +30,30 @@ The man page and `gdb-oneapi --help` do not include any information about GPU de
     1.18    Thread 0x1555027fde00 (LWP 28153) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
     1.19    Thread 0x1555023fbe80 (LWP 28155) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
     1.20    Thread 0x155501ffa700 (LWP 28160) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-  * 2.481:0 ZE 0.7.4.0                                         get_f0_grid<Kokkos::Device<Kokkos::Experimental::SYCL, Kokkos::Experimental::SYCLDeviceUSMSpace> >
-      (grid=..., magnetic_field=..., species=..., vgrid=..., pol_decomp=...,
-      part=..., grid_wts0=..., f0_ptl=...) at getf0.tpp:22
+	* 2.481:0 ZE 0.7.4.0                                       get_f0_grid<Kokkos::Device<Kokkos::Experimental::SYCL, Kokkos::Experimental::SYCLDeviceUSMSpace> >
+     (grid=..., magnetic_field=..., species=..., vgrid=..., pol_decomp=...,
+     part=..., grid_wts0=..., f0_ptl=...) at getf0.tpp:22
+    ```
 
-You may use the `thread apply` command followed by a specific thread number, followed by a gdb command, to execute that command on the specific thread. For example
-
+You may use the `thread apply` command followed by a specific thread number, followed by a `gdb` command, to execute that command on the specific thread. For example:
 ```
 thread apply 2.481 where
 ```
+This will show the call stack for that GPU thread, which should show the GPU kernel function calls.
 
-will show the call stack for that GPU thread, which should show the GPU kernel function calls.
-
-To set a mode where the stepping commands such as `next` and `stepi` only apply to a single thread, use
-
+To set a mode where the stepping commands such as `next` and `stepi` only apply to a single thread, use:
 ```
 set scheduler-locking step
 ```
 
-You may find it useful to look at PVC assembly code. In stepping through GPU code, you may use
-
+You may find it useful to look at PVC assembly code. In stepping through GPU code, you may use:
 ```
 disassemble $pc - 0x20, $pc + 0x20
 ```
 
-to show the assembly code for a range of instructions before and after the current step (program counter). Adjust the hex value larger or smaller than `0x20` to increase/decrase the range of assembly instructions displayed.
+This shows the assembly code for a range of instructions before and after the current step (program counter). Adjust the hex value larger or smaller than `0x20` to increase/decrase the range of assembly instructions displayed.
 
-When debugging in GPU code, you should be able to use the usual gdb inspection commands such as `print` to look at GPU data structures, variables, and registers.
+When debugging in GPU code, you should be able to use the usual `gdb` inspection commands such as `print` to look at GPU data structures, variables, and registers.
 
 ## Stopping at GPU Segmentation Faults (a.k.a. "Page Faults")
 
@@ -68,11 +65,9 @@ handle all stop print
 
 before the first `run` command (or sometime before you expect the fault to happen).
 
-
 ## Noninteractive Debugging
 
-For MPI programs run using a wrapper script to map ranks to GPUs, you may use a modified wrapper script to invoke a set of pre-determined `gdb-oneapi` commands on some or all of the ranks. For example:
-
+For MPI programs run using a wrapper script to map ranks to GPUs, you may use a modified wrapper script to invoke a set of predetermined `gdb-oneapi` commands on some or all of the ranks. For example:
 ```bash linenums="1" title="mpi-wrapper-gdb-oneapi.sh"
 #!/bin/bash
 display_help() {
