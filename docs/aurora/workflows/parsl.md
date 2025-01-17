@@ -5,10 +5,13 @@
 Parsl uses Python's concurrent futures module to create functions that return a Python futures object.  A Parsl workflow operates by creating futures for tasks that the Parsl executor will then fulfill by running them on available compute resources.
 
 A Parsl workflow contains two parts:
-* the workflow logic of applications, tasks and task dependencies
-* the configuration of compute resources that execute tasks
 
-Here we sketch out some possible configurations for executing workflows on Aurora.  These docs were written for Parsl 2025.1.13.
+- The workflow logic of applications, tasks and task dependencies
+- The configuration of compute resources that execute tasks
+
+Here we sketch out some possible configurations for executing workflows on Aurora.  
+
+!!! info "These docs were written for Parsl 2025.1.13."
 
 ## Installation and Setup
 Parsl is a Python library and can be installed with `pip`.  For example, in a Python virtual environment:
