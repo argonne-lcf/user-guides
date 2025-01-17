@@ -99,8 +99,3 @@ apptainer exec \
 # Stop the container and kill the process
 kill "$(cat pg_pid.txt)"
 rm pg_pid.txt
-```
-
-
-
-
