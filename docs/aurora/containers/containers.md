@@ -55,7 +55,7 @@ apptainer build intel-optimized-pytorch.sing docker://intel/intel-optimized-pyto
 
 ### Example to run Postgres Database using Apptainer
 
-To run postgres on Aurora compute node,
+To run Postgres on Aurora compute node,
 
 ```bash linenums="1"
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
