@@ -210,6 +210,10 @@ body {
 	margin-top: 6px;
 }
 
+.md-nav__item--section > .md-nav__link[for] {
+	color: var(--md-default-fg-color);
+}
+
 /* #nav-sup { */
 /* 	padding-left: 32px; */
 /* } */
@@ -269,6 +273,15 @@ body {
 	[data-md-toggle=search]:checked~.md-header .md-search__inner {
     width: 18rem;
 	}
+}
+
+.md-nav--secondary .md-nav__title {
+	position: inherit;
+}
+
+.md-nav--primary .md-nav__title {
+    display: none;
+	/* position: inherit; */
 }
 
 @media screen and (min-width: 76.25em) {
