@@ -83,12 +83,13 @@ nav:
           #- JAX: aurora/data-science/frameworks/jax.md
           - PyTorch: aurora/data-science/frameworks/pytorch.md
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
-          - LibTorch: aurora/data-science/frameworks/libtorch.md
-          - OpenVINO: aurora/data-science/frameworks/openvino.md
           - Dask: aurora/data-science/frameworks/dask.md          
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
           - GPyTorch: aurora/data-science/frameworks/gpytorch.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
+        - AI Inference:
+          - LibTorch: aurora/data-science/inference/libtorch.md
+          - OpenVINO: aurora/data-science/inference/openvino.md
       - Programming Models:
         - Kokkos: aurora/programming-models/kokkos-aurora.md
         - Level Zero: aurora/programming-models/level-0.md
