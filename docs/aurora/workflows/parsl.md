@@ -173,7 +173,7 @@ source $HOME/_env/bin/activate
 python my_parsl_workflow.py
 ```
 
-When executing this script, the script will block until all tasks are completed.  You may wish to check the scheduler to verify that parsl queues a job to execute the tasks.
+When executing this script, the script will block until all tasks are completed. You may wish to check the scheduler to verify that Parsl queues a job to execute the tasks.
 
 ## Parsl Config for Ensemble of Multinode MPI tasks tasks run over many PBS Jobs
 
