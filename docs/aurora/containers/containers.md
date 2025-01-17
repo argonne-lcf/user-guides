@@ -1,5 +1,5 @@
 # Containers on Aurora
-Aurora, powered by 2 Intel Xeon CPUs and 6 Intel Data Center GPU Max Series, benefits from container-based workloads for seamless compatibility across Intel systems. This guide details the use of containers on Aurora, including custom container creation, large-scale execution, and common pitfalls.
+Users of Aurora can benefit from container-based workloads for seamless compatibility across Intel systems. This guide details the use of containers on Aurora, including custom container creation, large-scale execution, and common pitfalls.
 
 We support Apptainer and Podman (documentation coming soon) on Aurora.
 
