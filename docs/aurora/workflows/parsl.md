@@ -165,7 +165,7 @@ with parsl.load(aurora_single_tile_config):
 
 Note that a Parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
 
-To run this workflow script:
+To run this workflow script, execute the following from a login node:
 ```bash linenums="1"
 source $HOME/_env/bin/activate
 python my_parsl_workflow.py
@@ -208,11 +208,11 @@ mpi_ensemble_config = Config(
             # This creates 1 worker for each multinode task slot
             max_workers_per_block=nodes_per_job//nodes_per_task, 
             provider=PBSProProvider(
-                account="Aurora_deployment",
+                account="Aurora_deployment", # (1)!
                 worker_init=f"""source $HOME/_env/bin/activate; \
-                                cd {working_directory}""",
+                                cd {working_directory}""", # (2)!
                 walltime="0:30:00",
-                queue="lustre_scaling",
+                queue="lustre_scaling", # (3)!
                 scheduler_options="#PBS -l filesystems=home:flare",
                 launcher=SimpleLauncher(),
                 select_options="",
@@ -225,6 +225,10 @@ mpi_ensemble_config = Config(
     retries=1,
 )
 ```
+
+1. Users should change this with their project name
+2. Users should update this with the path to their venv and all needed modules
+3. Users should change this with the appropriate queue name
 
 This example workflow uses this `Config` to run an ensemble of 2-node MPI tasks:
 
@@ -272,6 +276,17 @@ with parsl.load(mpi_ensemble_config):
         tf.result()
         
     print("Tasks done!")
+```
+
+!!! info "Updating the `Config` object in `config.py` and the MPI executable"
+	Users should make sure to update the account and queue names to match their allocation and job needs. 
+	Additionally, please ensure to update the `worker_init` entry in the `config.py` file with all modules needed to run the workflow script and applications.
+	Finally, please update the MPI executable and `mpiexec` arguments in the `mpi_hello_affinity()` function of `my_parsl_workflow.py` as needed.
+
+The workflow can be launched from a login node by executing
+```bash
+source $HOME/_env/bin/activate
+python my_parsl_workflow.py
 ```
 
 ## Run Parsl Workflow within a single PBS Job
