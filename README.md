@@ -9,11 +9,7 @@ To build documentation locally, you need a Python environment with `mkdocs` inst
 ```bash
 python --version
 ```
-```output
-Python 3.8.3
-```
-
-Then create a new virtual env to isolate the `mkdocs` installation:
+e.g. `Python 3.8.3`. Then create a new virtual env to isolate the `mkdocs` installation:
 ```bash
 python -m venv env
 source env/bin/activate
