@@ -25,7 +25,7 @@ screen -S parsl_session_name
 source _env/bin/activate
 python my_parsl_workflow.py
 ```
-The program then begins execution, waiting for compute resources and for tasks to complete, and blocking the interactive shell. While it runs, you can disconnect from the screen session with ++ctrl+a++ ++d++ (assuming that GNU Screen is configured to use the command character ++a++).
+The program then begins execution, waiting for compute resources and for tasks to complete, and blocking the interactive shell. While it runs, you can disconnect from the screen session with ++ctrl+a++ ++d++[^1].
 
 Some time later, reconnect to your screen session on the same login node with:
 ```bash linenums="1"
@@ -339,3 +339,5 @@ python my_workflow_script.py
 ```
 
 Note that if the workflow does not complete before the end of the PBS job, outstanding tasks will not complete.
+
+[^1]: This assumes that GNU Screen is configured to use the default command character ++a++
