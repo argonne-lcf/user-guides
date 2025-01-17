@@ -8,7 +8,7 @@ What you will get is determined by the queue you submit to (see Queues section b
 
 ## <a name="Sophia-Queues"></a>Queues
 
-There are three production queues you can target in your qsub (`-q <queue name>`):
+There are three production queues you can target in your `qsub` command (`-q <queue name>`):
 
 | Queue Name  | Node/GPU Min | Node/GPU Max                             | Time Min | Time Max |
 |-------------|--------------|------------------------------------------|----------|----------|
