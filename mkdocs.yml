@@ -85,7 +85,7 @@ nav:
           - TensorFlow: aurora/data-science/frameworks/tensorflow.md
           - LibTorch: aurora/data-science/frameworks/libtorch.md
           - OpenVINO: aurora/data-science/frameworks/openvino.md
-          - Dask: aurora/data-science/frameworks/dask.md          
+          - Dask: aurora/data-science/frameworks/dask.md
           - oneCCL: aurora/data-science/frameworks/oneCCL.md
           - GPyTorch: aurora/data-science/frameworks/gpytorch.md
           - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
@@ -280,7 +280,6 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  account-project-management/index.md
   # TODO: complete or remove Aurora placeholder pages
   llvm-compilers-aurora.md
   gnu-compilers-aurora.md
@@ -289,20 +288,16 @@ not_in_nav: |
   aurora/applications-and-libraries/libraries/math-libraries.md
   aurora/applications-and-libraries/libraries/mkl.md
   aurora/applications-and-libraries/libraries/mpi.md
-  aurora/applications-and-libraries/libraries/onedal.md
   aurora/data-science/julia.md
   aurora/data-science/applications/gpt-neox.md
-  aurora/data-science/frameworks/deepspeed.md
   aurora/data-science/frameworks/jax.md
   aurora/programming-models/raja-aurora.md
-  aurora/debugging/gdb-oneapi-aurora.md
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
   aurora/services/jupyterhub.md
   aurora/workflows/balsam.md
   aurora/workflows/deephyper.md
   aurora/workflows/libensemble.md
-  aurora/workflows/parsl.md
 
 theme:
   name: 'material'
