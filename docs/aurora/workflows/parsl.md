@@ -167,7 +167,7 @@ with parsl.load(aurora_single_tile_config):
 Note that a parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
 
 To run this workflow script:
-```shell
+```bash linenums="1"
 screen -S my_parsl_session
 source $HOME/_env/bin/activate
 python my_parsl_workflow.py
