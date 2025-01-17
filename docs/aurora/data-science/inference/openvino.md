@@ -6,7 +6,7 @@ This page contains build and run instructions for Python, but please refer to th
 ## Installing the OpenVINO Python Runtime and CLI Tools
 OpenVINO does not come with the default frameworks module on Aurora, but it can be installed manually within a Python virtual environment as shown below
 ```bash
-module load frameworks/2024.2.1_u1
+module load frameworks
 python -m venv --clear /path/to/_ov_env --system-site-packages
 source /path/to/_ov_env/bin/activate
 pip install openvino==2024.4.0

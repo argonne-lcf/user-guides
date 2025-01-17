@@ -4,9 +4,9 @@ JAX is another popular python package for accelerated computing.  JAX is built o
 
 ## JAX on Polaris
 
-JAX is installed on Polaris via the `conda` module, available with:
+JAX is installed on Polaris via the `jax` module, available with:
 ```bash
-module load conda; conda activate
+module use /soft/modulefiles; module load jax
 ```
 
 Then, you can load JAX in `python` as usual (below showing results from the `conda/2024-04-29` module):
