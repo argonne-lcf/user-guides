@@ -106,7 +106,7 @@ aurora_single_tile_config = Config(
 
 Import this `Config` object and use in a workflow script, e.g.:
 
-```python linenums="1" title="my_parsl_workflow.py
+```python linenums="1" title="my_parsl_workflow.py"
 # my_parsl_workflow.py
 import os
 import parsl
