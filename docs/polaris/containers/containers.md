@@ -149,4 +149,25 @@ mkdir $APPTAINER_CACHEDIR
 
 **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
 
+**Apptainer instance errors with version 1.3.2**
+Use nohup and `&` as an alternative if you want to run Apptainer as a background process. For example see below to run postgres as a background process
+```bash
+nohup apptainer run \
+  -B pgrun:/var/run/postgresql \
+  -B pgdata:/var/lib/postgresql/data \
+  --env-file pg.env \
+  postgres.sing postgres &
+
+# 3) Capture its PID so we can kill it later
+echo $! > postgres_pid.txt
+echo "Started Postgres in the background with PID $(cat postgres_pid.txt)"
+
+# 4) Perform whatever work you need while Postgres is running
+#    In this demo, we just sleep for 30 minutes (1800 seconds).
+sleep 1800
+
+# 5) Kill the background process at the end of the job
+kill "$(cat postgres_pid.txt)"
+rm postgres_pid.txt
+```
 <!-- --8<-- [end:commoncontainerdoc] -->
