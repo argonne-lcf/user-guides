@@ -99,7 +99,9 @@ nav:
         - SYCL: aurora/programming-models/sycl-aurora.md
       - Debugging Tools:
         - Overview: aurora/debugging/debugging-overview.md
-        #- gdb-oneapi: aurora/debugging/gdb-oneapi-aurora.md
+        - gdb-oneapi: aurora/debugging/gdb-oneapi.md
+        - DDT: aurora/debugging/ddt-aurora.md
+        - gdb4hpc: aurora/debugging/gdb4hpc.md
       - Performance Tools:
       #  - Overview: aurora/performance-tools/performance-overview.md
         - Advisor: aurora/performance-tools/advisor.md
@@ -115,6 +117,7 @@ nav:
         # - libEnsemble: aurora/workflows/libensemble.md
         # - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
+        - ADIOS2: aurora/workflows/adios.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - System Updates: polaris/system-updates.md
