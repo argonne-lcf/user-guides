@@ -20,18 +20,18 @@ pip install parsl
 ```
 
 When using Parsl to distribute work over many PBS Jobs (first two examples below), your workflow script will be executed on a login node and will not return until all tasks are completed.  In this situation, it is advisable to run your script in a [screen](https://linuxize.com/post/how-to-use-linux-screen/) session on the login node.  To setup your screen session and run your workflow you can follow these steps:
-
 ```bash linenums="1"
 screen -S parsl_session_name
 source _env/bin/activate
 python my_parsl_workflow.py
-# the program begins execution, waiting for compute resources and for tasks to complete. While it runs, you can disconnect from the screen session with:
-# Ctrl+a d
-
-# Some time later, reconnect to your screen session on the same login node with 
-screen -r parsl_session_name
-# progress of your workflow script will then be displayed again
 ```
+The program then begins execution, waiting for compute resources and for tasks to complete, and blocking the interactive shell. While it runs, you can disconnect from the screen session with ++ctrl+a++ ++d++ (assuming that GNU Screen is configured to use the command character ++a++).
+
+Some time later, reconnect to your screen session on the same login node with:
+```bash linenums="1"
+screen -r parsl_session_name
+```
+Progress of your workflow script will then be displayed again.
 
 ## Parsl Config for a Large Ensemble of Single Tile tasks run over many PBS Jobs
 
