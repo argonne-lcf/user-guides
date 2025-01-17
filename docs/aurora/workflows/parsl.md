@@ -59,19 +59,19 @@ aurora_single_tile_config = Config(
             # Ensures one worker per GPU tile on each node
             available_accelerators=tile_names,
             max_workers_per_node=12,
-            # Distributes threads to workers/tiles in a way optimized for Aurora 
+            # Distributes threads to workers/tiles in a way optimized for Aurora
             cpu_affinity="list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203",
             # Increase if you have many more tasks than workers
             prefetch_capacity=0,
             # Options that specify properties of PBS Jobs
             provider=PBSProProvider(
                 # Project name
-                account="Aurora_deployment", # (1)!
+                account="Aurora_deployment",
                 # Submission queue
-                queue="debug", # (2)!
+                queue="debug",
                 # Commands run before workers launched
                 # Make sure to activate your environment where Parsl is installed
-                worker_init=f'''source $HOME/_env/bin/activate; cd {execute_dir}''', # (3)!
+                worker_init=f'''source $HOME/_env/bin/activate; cd {execute_dir}''',
                 # Wall time for batch jobs
                 walltime="0:30:00",
                 # Change if data/modules located on other filesystem
@@ -98,10 +98,6 @@ aurora_single_tile_config = Config(
 )
 ```
 
-1. Users should change this with their project name
-2. Users should change this with the appropriate queue name
-3. Users should update this with the path to their venv
-
 Import this `Config` object and use in a workflow script, e.g.:
 
 ```python linenums="1" title="my_parsl_workflow.py"
@@ -115,7 +111,7 @@ from config import aurora_single_tile_config
 # Bash apps are for executing compiled applications or other shell commands
 @bash_app
 def hello_affinity(stdout='hello.stdout', stderr='hello.stderr'):
-    return f'echo "Hello from mpiexec"'
+    return f'$HOME/GettingStarted/Examples/Aurora/affinity_gpu/sycl/hello_affinity'
 
 # Python apps are for executing native python functions
 @python_app
@@ -133,7 +129,7 @@ with parsl.load(aurora_single_tile_config):
     # Create 12 hello_world tasks
     hello_world_futures = [hello_world(f"Aurora {i}") for i in range(12)]
     print(f"Created {len(hello_world_futures)} hello_world tasks")
-    
+
     # Create 12 hello_affinity tasks
     hello_affinity_futures = [hello_affinity(stdout=f"{working_directory}/output/hello_{i}.stdout",
                                              stderr=f"{working_directory}/output/hello_{i}.stderr")
@@ -155,17 +151,12 @@ with parsl.load(aurora_single_tile_config):
         with open(f"{working_directory}/output/hello_{i}.stdout", "r") as f:
             outputs = f.readlines()
             print(outputs)
-    
+
     print("Tasks done!")
 ```
-
-!!! info "Updating the `Config` object in `config.py`"
-	Users should make sure to update the account and queue names to match their allocation and job needs. 
-	Additionally, please ensure to update the `worker_init` entry with all modules needed to run the workflow script and applications.
-
 Note that a Parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
 
-To run this workflow script, execute the following from a login node:
+To run this workflow script:
 ```bash linenums="1"
 source $HOME/_env/bin/activate
 python my_parsl_workflow.py
@@ -181,7 +172,7 @@ In the previous example, `mpiexec` was used as a launcher, rather than an execut
 
     Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job.  This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris.  This is due to a known issue with Slingshot and will be fixed in the future.  Users running MPI application ensembles on Aurora with Parsl should take this into account when configuring their workflows.
 
-This example `Config` object can be used to execute MPI tasks that use two nodes each: 
+This example `Config` object can be used to execute MPI tasks that use two nodes each:
 
 ``` python linenums="1" title="config.py"
 import parsl
@@ -206,13 +197,13 @@ mpi_ensemble_config = Config(
     executors=[
         MPIExecutor(
             # This creates 1 worker for each multinode task slot
-            max_workers_per_block=nodes_per_job//nodes_per_task, 
+            max_workers_per_block=nodes_per_job//nodes_per_task,
             provider=PBSProProvider(
-                account="Aurora_deployment", # (1)!
+                account="Aurora_deployment",
                 worker_init=f"""source $HOME/_env/bin/activate; \
-                                cd {working_directory}""", # (2)!
+                                cd {working_directory}""",
                 walltime="0:30:00",
-                queue="lustre_scaling", # (3)!
+                queue="lustre_scaling",
                 scheduler_options="#PBS -l filesystems=home:flare",
                 launcher=SimpleLauncher(),
                 select_options="",
@@ -225,10 +216,6 @@ mpi_ensemble_config = Config(
     retries=1,
 )
 ```
-
-1. Users should change this with their project name
-2. Users should update this with the path to their venv and all needed modules
-3. Users should change this with the appropriate queue name
 
 This example workflow uses this `Config` to run an ensemble of 2-node MPI tasks:
 
@@ -255,7 +242,7 @@ working_directory = os.getcwd()
 with parsl.load(mpi_ensemble_config):
 
     task_futures = []
-    
+
     # Create 2-node tasks
     # We set 12 ranks per node to match the number of gpu tiles on an aurora node
     resource_specification = {'num_nodes': 2, # Number of nodes required for the application instance
@@ -269,24 +256,13 @@ with parsl.load(mpi_ensemble_config):
                             stdout=f"{working_directory}/mpi_output/{i}/hello.stdout",
                             stderr=f"{working_directory}/mpi_output/{i}/hello.stderr")
                         for i in range(10)]
-    
+
     # This loop will block until all task results are returned
     print(f"{len(task_futures)} tasks created, wating for completion")
     for tf in task_futures:
         tf.result()
-        
+
     print("Tasks done!")
-```
-
-!!! info "Updating the `Config` object in `config.py` and the MPI executable"
-	Users should make sure to update the account and queue names to match their allocation and job needs. 
-	Additionally, please ensure to update the `worker_init` entry in the `config.py` file with all modules needed to run the workflow script and applications.
-	Finally, please update the MPI executable and `mpiexec` arguments in the `mpi_hello_affinity()` function of `my_parsl_workflow.py` as needed.
-
-The workflow can be launched from a login node by executing
-```bash
-source $HOME/_env/bin/activate
-python my_parsl_workflow.py
 ```
 
 ## Run Parsl Workflow within a single PBS Job
@@ -323,7 +299,7 @@ aurora_single_tile_config = Config(
             # Ensures one worker per GPU tile on each node
             available_accelerators=tile_names,
             max_workers_per_node=12,
-            # Distributes threads to workers/tiles in a way optimized for Aurora 
+            # Distributes threads to workers/tiles in a way optimized for Aurora
             cpu_affinity="list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203",
             # Increase if you have many more tasks than workers
             prefetch_capacity=0,
