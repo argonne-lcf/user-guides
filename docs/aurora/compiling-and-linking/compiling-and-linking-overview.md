@@ -2,11 +2,11 @@
 
 ## Compiling on Aurora Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs-aurora.md#Interactive-Jobs-on-Compute-Nodes) or [batch](../running-jobs-aurora.md#Batch-Jobs-on-Compute-Nodes) job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
+If your build system does not require GPUs for the build process, compilation of GPU-accelerated codes is generally expected to work well on the Aurora login nodes. If your build system _does_ require GPUs, then currently that must be done on the compute nodes either via an [interactive](../running-jobs-aurora.md#Interactive-Jobs-on-Compute-Nodes) or batch job submission. Doing this interactively in a single-node job may be the preferred route as it also provides opportunity to quickly test the executable.
 
 ## Filesystem
 
-It is helpful to realize that currently there is a single _temporary_ filesystem `gecko` mounted on the Aurora login and compute nodes available to users, where both `home` and `project` spaces reside. It is important to realize that this filesystem is not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `grand` and `eagle` filesystems).
+It is helpful to realize that the home filesystem is `gecko` and the `project` spaces reside on the lustre filesystem called `Flare`. The filesystems are not backed up and users should take care to retain copies of important files (e.g. local resources or ALCF's `eagle` filesystem).
 
 ## OneAPI Programming Environment
 

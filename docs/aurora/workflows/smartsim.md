@@ -21,48 +21,51 @@ For more resources on SmartSim, follow the links below:
 
 ## Installation
 
-SmartSim on Aurora can be installed creating a virtual environment based on the ML frameworks module
-```
-module use /soft/modulefiles
-module load frameworks/2023.10.15.001
+Create a Python virtual environment based on the ML frameworks module
+```bash
+module load frameworks/2024.2.1_u1
 python -m venv --clear /path/to/_ssim_env --system-site-packages
 source /path/to/_ssim_env/bin/activate
-pip install --upgrade pip
 ```
-Note that `/path/to/` can either be a user's home or project directory.
+It is recommended that the venv is installed in a user's project space on the Flare parallel file system. 
 
-To use SmartSim in the future, simply load the frameworks module and source the virtual environment.
-```
-module use /soft/modulefiles
-module load frameworks/2023.10.15.001
-source /path/to/_ssim_env/bin/activate
-```
-
-Then install SmartSim and the CPU backend
-```
-export SMARTSIM_REDISAI=1.2.7
-git clone https://github.com/CrayLabs/SmartSim.git
+Install SmartSim
+```bash
+git clone https://github.com/rickybalin/SmartSim.git
 cd SmartSim
+git checkout rollback_aurora
 pip install -e .
-TORCH_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-TF_PATH=$( python -c 'import tensorflow;print("/".join(tensorflow.__file__.split("/")[:-1]))' )
-smart build -v --device cpu --torch_dir $TORCH_PATH --libtensorflow_dir $TF_PATH
 cd ..
 ```
 
-Note:
-
-* The `pip install -e .` command returns some warnings regarding the version of `protobuf` and errors about the installation of `cloud-volume`, but these can be ignored for now.
-* The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing with the SmartRedis library on the CPU hardware with models stored within the database. This feature is not enabled on the Intel Max 1550 GPU.
-
-
-Finally, install the SmartRedis library
+Install the RedisAI PyTorch backend for the CPU
+```bash
+export TORCH_CMAKE_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+smart build -v --device cpu --torch_dir $TORCH_CMAKE_PATH --no_tf
+smart validate --device cpu
 ```
-git clone https://github.com/CrayLabs/SmartRedis.git
+
+Install the SmartRedis library
+```bash
+git clone https://github.com/rickybalin/SmartRedis.git
 cd SmartRedis
 pip install -e .
 make lib
 cd ..
 ```
+
+Known Issues:
+
+* Pip installing SmartSim returns some warnings which can be safely ignored
+* The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
+* The RedisAI backend requires an older version of TensorFlow relative to what is loaded with the frameworks module on Aurora. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
+* When running a workload with SmartSim, please include the following in your run or submit scripts
+```bash
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+```
+
 
 

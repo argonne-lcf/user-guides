@@ -67,9 +67,9 @@ pip install -r requirements.txt
 python minilmv2.py
 ```
 
-Then run the script as a batch job with PBS:
+Then run the script as a batch job with PBS. This will reserve a full eight-card(chip) node.
 ```bash
-qsub -l groq_accelerator=1 run_minilmv2.sh
+qsub -l  select=1,place=excl run_minilmv2.sh
 ```
 
 Note: the number of chips used by a model can be found in the compile cache dir for the model after it is compiled. E.g.
@@ -122,9 +122,9 @@ $ ls -la run_minilmv2.sh.*
 ```
 
 #### Run a sample using PBS in interactive mode
-An alternative is to use an interactive PBS job. This may be useful when debugging new or changed code. Here is an example that starts a 24 hour interactive job.
+An alternative is to use an interactive PBS job. This may be useful when debugging new or changed code. Here is an example that starts a 24 hour interactive job. It reserves a full eight-card(chip) node. 
 ```bash
-qsub -IV -l walltime=24:00:00 -l groq_accelerator=2
+qsub -IV -l walltime=24:00:00 -l select=1,place=excl
 ```
 Then activate your groqflow environment, and run python scripts with
 ```console

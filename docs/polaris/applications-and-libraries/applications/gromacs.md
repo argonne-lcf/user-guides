@@ -40,7 +40,7 @@ A sample pbs script follows that will run GROMACS on two nodes, using 4 MPI rank
 #PBS -l walltime=0:30:00
 #PBS -q debug
 #PBS -A PROJECT
-#PBS -l filesystems=home:grand:eagle
+#PBS -l filesystems=home:eagle
 
 cd ${PBS_O_WORKDIR}
 

@@ -2,7 +2,7 @@
 
 ## Compiling on Polaris Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, as is usually the case, compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. You may in this case compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs.md#Interactive-Jobs-on-Compute-Nodes), or running your build system in a batch job.
+If your build system does not require GPUs for the build process, as is usually the case, compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. You may in this case compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs.md#interactive-jobs-on-compute-nodes), or running your build system in a batch job.
 
 <!-- The following section on home file system would be more useful somewhere else --Tim W.: -->
 
@@ -68,9 +68,9 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 ## Notes on Default Modules
 
-* `craype-x86-rome`: While the Polaris compute nodes currently have Milan CPUs, this module is loaded by default to avoid the `craype-x86-milan` module from adding a `zen3` target not supported in the default `nvhpc/21.9` compilers. The `craype-x86-milan` module is expected to be made default once a newer `nvhpc` version (e.g. 22.5) is made the default.
-
 * `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with gpu-enabled MPI libraries as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building cpu-only applications may find it useful to unload this module to silence "gpu code generation" warnings.
+
+* `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 
 ## Mixed C/C++ & Fortran Applications
 

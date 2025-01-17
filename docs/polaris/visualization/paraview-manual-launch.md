@@ -27,7 +27,7 @@ You will use these settings when establishing the connection.
 You can launch an interactive session on Polaris compute nodes with the following command (adjust parameters as needed to match your allocation, desired number of nodes, queue, walltime, and filesystems):
 
 ```shell
-qsub -l walltime=01:00:00 -l select=2 -A yourallocation -q debug -I -l filesystems=home:grand
+qsub -l walltime=01:00:00 -l select=2 -A yourallocation -q debug -I -l filesystems=home:eagle
 ```
 
 When the job starts you will receive a prompt on your head node like this:

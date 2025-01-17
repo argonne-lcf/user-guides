@@ -28,6 +28,7 @@ This is loaded by default, so there's no need to load additional modules. You ca
 
 To use the LLVM module, load the following.
 ```
+module use /soft/modulefiles
 module load mpiwrappers/cray-mpich-llvm
 module load cudatoolkit-standalone
 ```
@@ -42,11 +43,8 @@ To switch from PrgEnv-nvhpc to PrgEnv-gnu you can run:
 module switch PrgEnv-nvhpc PrgEnv-gnu
 ```
 
-The gcc/gfortran on Polaris was not built with GPU support. To use OpenMP on the CPU, you need to unload craype-accel-nvidia80:
+The gcc/gfortran on Polaris was not built with GPU support.
 
-```
-module unload craype-accel-nvidia80
-```
 
 ### Using PrgEnv-cray
 
@@ -56,13 +54,7 @@ To switch from PrgEnv-nvhpc to PrgEnv-cray you can run:
 module switch PrgEnv-nvhpc PrgEnv-cray
 ```
 
-To use OpenMP on the CPU only, also unload craype-accel-nvidia80:
-
-```
-module unload craype-accel-nvidia80
-```
-
-To use OpenMP on the GPU, load cudatoolkit-standalone, although this is not recommended at the moment.
+To use OpenMP on the GPU, load `cudatoolkit-standalone`, although this is not recommended at the moment.
 ```
 module load cudatoolkit-standalone
 ```
@@ -75,7 +67,7 @@ The following table shows what compiler and flags to use with which PrgEnv:
 |module | compiler | flags
 | --- | --- | --- |
 | PrgEnv-nvhpc | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
-| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda | 
+| llvm | mpicc/mpicxx (clang/clang++) | -fopenmp --offload-arch=sm_80 | 
 | PrgEnv-gnu | cc/CC/ftn (gcc/g++/gfortran) | -fopenmp |
 | PrgEnv-cray | cc/CC/ftn | -fopenmp |
 
@@ -91,8 +83,12 @@ ftn -mp=gpu -gpu=cc80 hello.F90
 ### For LLVM, after loading the modules as discussed above:
 
 ```
-mpicxx -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda hello.cpp 
+mpicxx -fopenmp --offload-arch=sm_80 hello.cpp 
 ```
+
+Note that if you want to force the code to error out if it cannot run on
+the GPU (instead of falling back to run on host, which is the default), you can
+additionally compile with `-fopenmp-offload-mandatory`.
 
 ### For PrgEnv-gnu, after loading the modules as discussed above we would use:
 
