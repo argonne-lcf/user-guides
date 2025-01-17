@@ -285,7 +285,7 @@ print(f'PyTorch view of dpnp array: {t_ary}')
 
 ???+ example "Output"
 
-	``` { .bash .no-copy }
+	``` { .python-console .no-copy }
 	Original PyTorch array: tensor([-2,  1,  2,  3], device='xpu:0')
 	dpnp view of PyTorch array: [-2  1  2  3] on device Device(level_zero:gpu:0)
 	
