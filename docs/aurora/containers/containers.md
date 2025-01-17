@@ -9,7 +9,7 @@ We support Apptainer and Podman (documentation coming soon) on Aurora.
 
 Aurora employs Apptainer (formerly known as Singularity) for container management. To set up Apptainer, run on a compute node the following:
 
-```bash
+```bash linenums="1"
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
 # proxy settings
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
