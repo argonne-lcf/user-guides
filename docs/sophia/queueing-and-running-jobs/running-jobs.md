@@ -28,7 +28,7 @@ The old `single-node` queue is now a routing queue (redirect) to the `by-node`, 
 
 ### `by-gpu`
 
-This is the **default** production queue and is targeted at jobs that can utilize 1-8 GPUs. 
+This is the **default** production queue[^1] and is targeted at jobs that can utilize 1-8 GPUs. 
 The number of "chunks" you specify in your `qsub` (i.e., `-l select=4`) will be the number of GPUs you are allocated, and they will all be on the same node. 
 Valid values are 1, 2, 4, or 8 in your select statement. 
 These restrictions ensure you get a sane set of resources (RAM is in the same NUMA node as the cores, the GPU has minimal hops to the GPU, etc.). 
@@ -44,3 +44,5 @@ The number of "chunks" you specify in your `qsub` (i.e., `-l select=4`) will be 
 Two of the nodes have 80GB of RAM per GPU, while the other 22 have 40GB of RAM per GPU (640 GB of aggregate GPU memory per node vs. 320 aggregate GPU memory per node). 
 Use this queue to access the 2 nodes with more memory by specifying `-q bigmem` in your `qsub`. 
 A max of 1 node (`-l select=1`) can be requested in this queue.
+
+[^1]: The default queue is where your job will be submitted if you don't have `-q <queue name>` in your `qsub`.
