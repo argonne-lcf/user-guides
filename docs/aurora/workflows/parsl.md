@@ -66,12 +66,12 @@ aurora_single_tile_config = Config(
             # Options that specify properties of PBS Jobs
             provider=PBSProProvider(
                 # Project name
-                account="Aurora_deployment",
+                account="Aurora_deployment", # (1)!
                 # Submission queue
-                queue="debug",
+                queue="debug", # (2)!
                 # Commands run before workers launched
                 # Make sure to activate your environment where Parsl is installed
-                worker_init=f'''source $HOME/_env/bin/activate; cd {execute_dir}''',
+                worker_init=f'''source $HOME/_env/bin/activate; cd {execute_dir}''', # (3)!
                 # Wall time for batch jobs
                 walltime="0:30:00",
                 # Change if data/modules located on other filesystem
@@ -98,6 +98,10 @@ aurora_single_tile_config = Config(
 )
 ```
 
+1. Users should change this with their project name
+2. Users should change this with the appropriate queue name
+3. Users should update this with the path to their venv
+
 Import this `Config` object and use in a workflow script, e.g.:
 
 ```python linenums="1" title="my_parsl_workflow.py"
@@ -111,7 +115,7 @@ from config import aurora_single_tile_config
 # Bash apps are for executing compiled applications or other shell commands
 @bash_app
 def hello_affinity(stdout='hello.stdout', stderr='hello.stderr'):
-    return f'$HOME/GettingStarted/Examples/Aurora/affinity_gpu/sycl/hello_affinity'
+    return f'echo "Hello from mpiexec"'
 
 # Python apps are for executing native python functions
 @python_app
@@ -154,6 +158,11 @@ with parsl.load(aurora_single_tile_config):
     
     print("Tasks done!")
 ```
+
+!!! info "Updating the `Config` object in `config.py`"
+	Users should make sure to update the account and queue names to match their allocation and job needs. 
+	Additionally, please ensure to update the `worker_init` entry with all modules needed to run the workflow script and applications.
+
 Note that a Parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
 
 To run this workflow script:
