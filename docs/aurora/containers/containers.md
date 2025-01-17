@@ -4,62 +4,58 @@ Users of Aurora can benefit from container-based workloads for seamless compatib
 We support Apptainer and Podman (documentation coming soon) on Aurora.
 
 ## Apptainer
+Aurora employs Apptainer (formerly known as Singularity) for container management.
 
-### Setup
+### Login and queue a job
+```
+ssh <username>@aurora.alcf.anl.gov
+```
+Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
 
-Aurora employs Apptainer (formerly known as Singularity) for container management. To set up Apptainer, run on a compute node the following:
+!!! note
 
+    The instructions below should be **ran directly from a compute node**.
+
+    Explicitly, to request an interactive job (from `aurora-uan`):
+    ```bash
+    qsub -I -q [your_Queue] -l select=1,walltime=60:00 -A [your_ProjectName]
+    ```
+
+    Refer to [job scheduling and
+    execution](../../running-jobs/job-and-queue-scheduling.md) for
+    additional information.
+
+### Load Modules on Compute Node
 ```bash linenums="1"
-qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
-# proxy settings
-export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
-export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
-export http_proxy="http://proxy.alcf.anl.gov:3128"
-export https_proxy="http://proxy.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
-
 # load apptainer
 module load spack-pe-gcc
 module load apptainer
 module load fuse-overlayfs
-
-# example to run a simple hello world
-apptainer exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
 ```
 
 ### Building from Docker or Argonne GitHub Container Registry
-
 Containers on Aurora can be built by writing Dockerfiles on a local machine and then publish the container to DockerHub, or by directly building them on ALCF compute node by writing an Apptainer recipe file. If you prefer to use existing containers, you can pull them from various registries like DockerHub and run them on Aurora.
 
 Since Docker requires root privileges, which users do not have on Aurora, existing Docker containers must be converted to Apptainer. To build a Docker-based container on Aurora, use the following as an example:
 
-```bash
-qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
-# proxy settings
-export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
-export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
-export http_proxy="http://proxy.alcf.anl.gov:3128"
-export https_proxy="http://proxy.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
-
-# load apptainer
-module load spack-pe-gcc
-module load apptainer
-module load fuse-overlayfs
-
+```bash linenums="1"
+## Build an image
 apptainer build intel-optimized-pytorch.sing docker://intel/intel-optimized-pytorch
 ```
 
+### Example to run Hello World using Apptainer
+```bash linenums="1"
+apptainer exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
+```
 
 ### Example to run Postgres Database using Apptainer
-
-To run Postgres on Aurora compute node,
+To run Postgres on Aurora compute node, below is a full example.
 
 ```bash linenums="1"
+# qsub from a UAN/login node
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
-# proxy settings
+
+# Set proxy on compute node
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
 export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
 export http_proxy="http://proxy.alcf.anl.gov:3128"
@@ -67,14 +63,15 @@ export https_proxy="http://proxy.alcf.anl.gov:3128"
 export ftp_proxy="http://proxy.alcf.anl.gov:3128"
 export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
 
-# load apptainer
+# Load apptainer
 module load spack-pe-gcc
 module load apptainer
 module load fuse-overlayfs
 
+# Build postgres image
 apptainer build postgres.sing docker://postgres #do this once
 
-# create an environment file
+# Create an environment file
 cat >> pg.env <<EOF
 > export POSTGRES_USER=pguser
 > export POSTGRES_PASSWORD=mypguser123
