@@ -327,4 +327,3 @@ python my_workflow_script.py
 
 Note that if the workflow does not complete before the end of the PBS job, outstanding tasks will not complete.
 
-[^1]: This assumes that GNU Screen is configured to use the default command character ++a++
