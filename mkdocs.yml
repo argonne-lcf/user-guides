@@ -69,7 +69,7 @@ nav:
           #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
           #- MKL: aurora/applications-and-libraries/libraries/mkl.md
           #- MPI: aurora/applications-and-libraries/libraries/mpi.md
-          #- oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+          - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
           - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
       - Data Science:
         #- Julia: aurora/data-science/julia.md
@@ -111,12 +111,12 @@ nav:
         - GitLab: aurora/services/gitlab-ci.md
         #- JupyterHub: aurora/services/jupyterhub.md
       - Workflows:
+        - ADIOS2: aurora/workflows/adios.md
         # - Balsam: aurora/workflows/balsam.md
         # - DeepHyper: aurora/workflows/deephyper.md
         # - libEnsemble: aurora/workflows/libensemble.md
-        # - Parsl: aurora/workflows/parsl.md
+        - Parsl: aurora/workflows/parsl.md
         - SmartSim: aurora/workflows/smartsim.md
-        - ADIOS2: aurora/workflows/adios.md
   - Polaris:
     - Getting Started: polaris/getting-started.md
     - System Updates: polaris/system-updates.md
