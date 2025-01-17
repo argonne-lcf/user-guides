@@ -22,7 +22,7 @@ If you are having issues running your job, or you job is failing, please include
 * The `*.e` (error) and `*.o` (output) files from at least one of your job failures
 * Any errors displayed on the command line
 
-!!!  info
+!!! info
 
 	Support does not have access to your home directory or your project directory. Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
 
@@ -46,12 +46,12 @@ By including the above information this will help ALCF Support staff quickly rou
 ### Installation & Compiling Issues
 
 If you are having issues installing and/or compiling your app, please include the following in your email to support:
-* The output from `module list`
-* If you are on a log in node or a compute node
-* A link to the app you are attempting to install (if possible)
-* The full command you're using to compile
-* Any other necessary steps Support will need to recreate the issue
 
+- The output from `module list`
+- If you are on a log in node or a compute node
+- A link to the app you are attempting to install (if possible)
+- The full command you're using to compile
+- Any other necessary steps Support will need to recreate the issue
 
 ## Software Requests
 
