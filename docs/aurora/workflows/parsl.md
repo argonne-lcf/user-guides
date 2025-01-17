@@ -164,7 +164,7 @@ with parsl.load(aurora_single_tile_config):
     
     print("Tasks done!")
 ```
-Note that a parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
+Note that a Parsl workflow script must block at some point on the result of all tasks that are created in order to ensure that the tasks complete.
 
 To run this workflow script:
 ```bash linenums="1"
