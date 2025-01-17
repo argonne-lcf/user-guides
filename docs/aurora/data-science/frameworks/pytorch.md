@@ -1,11 +1,11 @@
 # PyTorch on Aurora
 
-PyTorch is a popular, open source deep learning framework developed and 
+PyTorch is a popular, open-source deep learning framework developed and 
 released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
-Aurora, please contact support@alcf.anl.gov.
+Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Installation on Aurora
+## Provided Installation
 
 PyTorch is already installed on Aurora with GPU support and available through
 the frameworks module. To use it from a compute node, please load the following modules:
@@ -25,7 +25,7 @@ Then you can `import` PyTorch as usual, the following is an output from the
 A simple but useful check could be to use PyTorch to get device information on
 a compute node. You can do this the following way:
 
-```python
+```python linenums="1" title="get-device-info.py"
 import torch
 import intel_extension_for_pytorch as ipex
 
@@ -38,7 +38,7 @@ print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
 Output of the above code block:
-```
+``` { .no-copy }
 GPU availability: True
 Number of tiles = 12
 Current tile = 0
@@ -59,23 +59,22 @@ of GPUs available on an Aurora compute node. All the `API` calls involving
 `torch.cuda`, should be replaced with `torch.xpu`, as shown in the above 
 example.
 
-__Important__: It is highly recommended to import `intel_extension_for_pytorch` 
-right after `import torch`, prior to importing other packages, (from 
-[Intel's getting started doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
+!!! tip 
+
+    It is highly recommended to import `intel_extension_for_pytorch` right after `#!python import torch`, prior to importing other packages, (from [Intel's "Getting Started" doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
 
 Intel extension for PyTorch has been made publicly available as an open-source
-project on [Github](https://github.com/intel/intel-extension-for-pytorch).
+project on [GitHub](https://github.com/intel/intel-extension-for-pytorch).
 
 Please consult the following resources for additional details and useful 
-tutorials.
-
+tutorials:
 - [PyTorch's webpage for Intel extension](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)
-- [Intel's Github repository](https://github.com/intel/intel-extension-for-pytorch)
-- [Intel's Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/)
+- [Intel's IPEX GitHub repository](https://github.com/intel/intel-extension-for-pytorch)
+- [Intel's IPEX Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/)
 
-# PyTorch Best Practices on Aurora
+## PyTorch Best Practices on Aurora
 
-## Single Device Performance
+### Single Device Performance
 
 By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. 
 To map a PyTorch device to one particular GPU Device out of the 6 available on a compute node, these 
@@ -93,19 +92,23 @@ and `Sub-devices: 0, 1`, i.e. *the two tiles of the GPU:0*. This is
 particularly important in setting a performance benchmarking baseline.
 Setting the above environmental variables after loading the frameworks modules,
 you can check that each PyTorch device is now mapped to one GPU:
-
-```python
->>> import torch
->>> import intel_extension_for_pytorch as ipex
->>> torch.xpu.device_count()
-1
->>> torch.xpu.get_device_properties()
-_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=131072MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+```python linenums="1"
+import torch
+import intel_extension_for_pytorch as ipex
+torch.xpu.device_count()
+torch.xpu.get_device_properties()
 ```
-More information and details are available through the 
-[Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
 
-## Single Node Performance
+???+ example "Example output"
+
+    ``` { .bash .no-copy }
+	1
+	_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=131072MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+	```
+	
+More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+
+### Single Node Performance
 
 When running PyTorch applications, we have found the following practices to be 
 generally, if not universally, useful and encourage you to try some of these 
@@ -126,7 +129,7 @@ information.
 
 3. `torch.compile` will be available through the next framework release.
 
-## Multi-GPU / Multi-Node Scale Up
+### Multi-GPU / Multi-Node Scale Up
 
 PyTorch is compatible with scaling up to multiple GPUs per node, and across 
 multiple nodes. Good performance with PyTorch has been seen with both Distributed Data Parallel (DDP) and 
@@ -201,10 +204,8 @@ More detailed information and examples are available at the
 [Intel oneCCL repo](https://github.com/intel/torch-ccl), formerly known as 
 `torch-ccl`.
 
-The key steps in performing distributed training using 
-`oneccl_bindings_for_pytorch` are the following:
-
-```python
+The key steps in performing distributed training using `oneccl_bindings_for_pytorch` are the following:
+```python linenums="1"
 import os
 import torch
 import intel_extension_for_pytorch as ipex
@@ -247,7 +248,7 @@ A detailed example of the full procedure with a toy model is given here:
 
 Below we give an example PBS job script:
 
-```bash title="example_torch_dist_training.sh"
+```bash linenums="1" title="example_torch_dist_training.sh"
 #!/bin/bash -l
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
@@ -373,5 +374,3 @@ mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
 --cpu-bind ${CPU_BIND} \
 python path/to/application.py
 ```
-
-

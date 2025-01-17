@@ -10,7 +10,7 @@ During compilation, Intel optimizations will be activated automatically once the
 
 To use LibTorch on Aurora, load the ML frameworks module
 ```bash
-module load frameworks/2024.2.1_u1
+module load frameworks
 ```
 which will also load the consistent oneAPI SDK (version 2024.2) and `cmake`.
 

@@ -129,3 +129,7 @@ To address this, please add the following line in the very beginning of your Pyt
 ```python
 from mpi4py import MPI
 ```
+## Creating a Jupyter Kernel
+
+If you need to use your Python `venv` on JupyterHub, you will need to create a [custom Jupyter kernel](https://docs.alcf.anl.gov/services/jupyter-hub/#custom-ipython-kernels) for it. 
+
