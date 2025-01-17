@@ -21,7 +21,7 @@ python -m ipykernel install --prefix=${CONDA_PREFIX} --name dask
 
 ## Start a Dask cluster
 
-Copy the following script into a file called `start_dask_aurora.sh` and make it executable with :
+Copy the following script into a file called `start_dask_aurora.sh` and make it executable with:
 
 ```bash linenums="1"
 chmod a+x ./start_dask_aurora.sh
@@ -81,7 +81,6 @@ fi
 ### Start a cluster with CPU workers
 
 Run the following commands from a compute node on Aurora to start a Dask cluster with 104 CPU workers per node:
-
 ```bash linenums="1"
 module load frameworks
 conda activate dask
@@ -92,7 +91,6 @@ mpiexec -n $(( $NNODES * 104 )) --ppn 104 ./start_dask_aurora.sh cpu 104
 ### Start a cluster with GPU workers
 
 Run the following commands from a compute node on Aurora to start a Dask cluster with 6 GPU workers per node:
-
 ```bash linenums="1"
 module load frameworks
 conda activate dask
@@ -105,6 +103,7 @@ mpiexec -n $(( $NNODES * 6 )) --ppn 6 ./start_dask_aurora.sh gpu 6
 In this example, we will [estimate Pi using a Monte Carlo method](https://en.wikipedia.org/wiki/Pi#Monte_Carlo_methods). 
 
 Paste the following Python script into a file called `pi_dask_gpu.py`. Here is a breakdown of what the script does:
+
 1. It connects to the Dask cluster (that you should start beforehand) and prints some information including the number of workers and available memory.
 1. It divides the total number of points to sample between the workers, and each worker uses its GPU to
    - generate random points uniformly inside the unit square

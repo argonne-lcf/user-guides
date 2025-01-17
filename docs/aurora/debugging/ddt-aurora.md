@@ -10,23 +10,23 @@ Download and install the latest Linaro Forge client for your desktop/laptop syst
 
 Before you can start a DDT debugging session on Aurora compute nodes, you must set your client for remote connection from Aurora compute nodes. Your client window should look something like this:
 
-![Example DDT client screen](ddt_client.png "Example DDT client screen")
+![Example DDT client screen](images/ddt_client.png "Example DDT client screen")
 
 Click the Remote Launch pull-down and click Configure to create a connector for Aurora:
 
-![Click Configure](ddt_configure.png "Click Configure")
+![Click Configure](images/ddt_configure.png "Click Configure")
 
 Click the Add button on the Configure Remote Connections screen:
 
-![Click Add](ddt_configure_add.png "Click Add")
+![Click Add](images/ddt_configure_add.png "Click Add")
 
 Create a configuration named "aurora," and set it up like this example, replacing "username" with your actual ALCF login name:
 
-![Configuration example for aurora](ddt_configure_aurora.png "Configuration example for aurora")
+![Configuration example for aurora](images/ddt_configure_aurora.png "Configuration example for aurora")
 
 You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time password:
 
-![Example DDT remote connection login prompt](ddt_login_prompt.png "Example DDT remote connection login prompt")
+![Example DDT remote connection login prompt](images/ddt_login_prompt.png "Example DDT remote connection login prompt")
 
 If the test is successful, you are are ready to proceed from an Aurora compute node.
 
@@ -85,14 +85,14 @@ ddt --connect --mpi=generic --mpiargs="-l --np 12 -ppn 12 --cpu-bind verbose,lis
 
 On the client, you should see a connection pop-up like this:
 
-![Example DDT connection request](ddt_connect.png "Example DDT connection reauest")
+![Example DDT connection request](images/ddt_connect.png "Example DDT connection reauest")
 
 Click the Connect button. This should bring up a DETAILS pane that looks like the following example. Make sure the Implementation is set to "Generic" (change it to Generic if it isn't). Likewise confirm and adjust the number of OpenMP threads and other parameters to be correct for your run. For PVC debugging, the Intel Xe box should be checked:
 
-![Example DDT run details](ddt_details.png "Example DDT run details")
+![Example DDT run details](images/ddt_details.png "Example DDT run details")
 
 When you are satisfied with the details, click the Run button. This should pop up a window that shows the multiple processes starting up. If that startup completes normally, the pop-up will disappear and your client window should reveal the full DDT debugging GUI interface, something like this example:
 
-![Example DDT debugging GUI](ddt_debugging_gui.png "Example DDT debugging GUI")
+![Example DDT debugging GUI](images/ddt_debugging_gui.png "Example DDT debugging GUI")
 
 From here, you should be able to control starting and stopping processes, ranks, and threads (CPU and GPU threads). If you set a breakpoint or otherwise stop in the source code for a GPU-offloaded kernel, you should be able to click the Thread radio button and see threads with a "GPU" badge on them. As mentioned above, this is not meant to be full documentation on how to use DDT. A good place to start with that is to open the User Guide from the Help menu in the client application.
