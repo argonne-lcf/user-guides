@@ -249,7 +249,7 @@ print("Sum completed successfully")
 2. Get the work item
 3. Define the number of work items
 
-The `vecadd` function, when decorated as a dpex kernel, is compiled with numba-dpex into a data-parallel function to be executed individually by a set of work items (`item.get_id(0)`). 
+The `vecadd` function, when decorated as a dpex kernel, is compiled with numba-dpex into a data-parallel function to be executed individually by a set of work items (`#!python item.get_id(0)`). 
 Numba-dpex follows the SPMD programming model, wherein each work item runs the function for a subset of the elements of the input arrays.  
 The set of work items is defined by the `dpex.Range()` object and the `dpex.call_kernel()` call instructs every work item in the range to execute the `vecadd` kernel for a specific subset of the data.
 Numba-dpex also follows the compute-follows-data programming model, meaning that the kernel is run on the same device as the dpnp and dpctl arrays passed as inputs.
