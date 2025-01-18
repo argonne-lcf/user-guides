@@ -102,7 +102,7 @@ for automated device + backend selection.
             - `sophiag`
         - `PP`: Pipeline parallelism degree
         - `SEQ`: Sequence length
-        - `SP`: Sequence parallelism degree
+        - `SP`: Sequence parallelism (Ulysses) degree
         - `TP`: Tensor parallelism degree
         - `TRAIN_TOKENS`: Number of training tokens
             - `TRAIN_ITERS`: Number of training iterations
