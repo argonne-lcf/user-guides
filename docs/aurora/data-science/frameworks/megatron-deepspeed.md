@@ -52,6 +52,8 @@ for automated device + backend selection.
 1. Launch training:
 
     ```bash
+    # Before launching, `PBS_O_WORKDIR` should be set to Megatron-DeepSpeed's PATH
+    # and venv inside Megatron-DeepSpeed/venv should be activated.
     TP=2 NLAYERS=10 DATA_FILE_LIST=ALCF/data-lists/aurora/books.txt bash train_aGPT_7B.sh
     ```
 
