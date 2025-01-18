@@ -218,6 +218,7 @@ nav:
         - Data Science:
           #- Julia: aurora/data-science/julia.md
           - Python: aurora/data-science/python.md
+          - Jupyter: aurora/data-science/jupyter.md
           #- Applications:
             #- gpt-neox: aurora/data-science/applications/gpt-neox.md
           - Profiling: aurora/data-science/profiling_dl.md
