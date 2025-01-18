@@ -3,17 +3,7 @@
 ## Overview
 
 The Aurora Programming Environment (Aurora PE) is Aurora's default software environment and consists of the OneAPI SDK, MPICH, and the Spack PE. The Aurora PE is loaded in the user environment through a default module set. Alternative versions of the Aurora PE, as well as Aurora PE components not loaded by default, are available through the module interface.
-
-As of May 2024, the default modules are
-```
-  1) spack-pe-gcc/0.6.1-23.275.2   7) mpich-config/collective-tuning/1024
-  2) gmp/6.2.1-pcxzkau             8) intel_compute_runtime/release/agama-devel-736.25
-  3) mpfr/4.2.0-w7v7yjv            9) oneapi/eng-compiler/2023.12.15.002
-  4) mpc/1.3.1-dfagrna            10) libfabric/1.15.2.0
-  5) gcc/12.2.0                   11) cray-pals/1.3.3
-  6) mpich/icc-all-pmix-gpu/52.2  12) cray-libpals/1.3.3
-```
-Besides the latter three modules, this set of modules is loaded from the Aurora PE. The `oneapi`, `intel_compute_runtime`, and `mpich` modules are part of version `23.275.2` of the Aurora PE. Each version of the PE may have multiple compilers, runtimes, and/or MPICH installations; these are interchangeable within a particular PE version. In addition to the OneAPI and MPICH installations, the Aurora PE contains the Spack PE, which contains a myriad of general and scientific computing software. See the [Spack PE page](./applications-and-libraries/libraries/spack-pe.md) for more details.
+Besides the latter three modules, this set of modules is loaded from the Aurora PE. The `oneapi`, `intel_compute_runtime`, and `mpich`. Each version of the PE may have multiple compilers, runtimes, and/or MPICH installations; these are interchangeable within a particular PE version. In addition to the OneAPI and MPICH installations, the Aurora PE contains the Spack PE, which contains a myriad of general and scientific computing software. See the [Spack PE page](./applications-and-libraries/libraries/spack-pe.md) for more details.
 
 ## Switching PE or SDK versions
 
