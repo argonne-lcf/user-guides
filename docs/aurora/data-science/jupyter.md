@@ -102,7 +102,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
    ```bash
    qstat -f <job_id> | awk -F '=' '/exec_host/ {print $2}' | tr '+' '\n' | cut -d '/' -f 1
    ```
-   This should give you a hostname like `x4603c0s0b0n0`. Note that you can ssh into the compute nodes only when your job is running.
+   This should give you a hostname like `x4603c0s0b0n0`. Note that you can SSH into the compute nodes only when your job is running.
 
 ### Step 2: Start JupyterLab on the Compute Node
 1. **SSH to the Compute Node**:
