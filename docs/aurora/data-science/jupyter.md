@@ -40,7 +40,12 @@ Please note that you only need a terminal (to ssh into Aurora) and a browser on 
    Steps 2, 3, and 4 are only required once for each virtual environment.
 ---
 
-## 2. Run JupyterLab on a Login Node (Not Recommended for Heavy Workloads)
+## 2. Run JupyterLab on a Login Node 
+
+    !!! warning
+    
+         This is not recommended for compute-intensive or memory-intensive workloads. Run the JupyterLab server on a compute node (see below section) if the workload is heavy.
+
 1. **Start JupyterLab**:
    ```bash
    source myenv/bin/activate
