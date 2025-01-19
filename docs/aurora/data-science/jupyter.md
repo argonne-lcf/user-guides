@@ -25,7 +25,7 @@ Please note that you only need a terminal (to ssh into Aurora) and a browser on 
    Note that this command will create a directory called `myenv` in the current working directory, and `myenv` will also be the name of the virtual environment. You can change the name as you see fit.
    You can find more information about creating a virtual environment on Aurora [here](./python.md).
 
-3. **Installing Required Packages**:
+3. **Install Required Packages**:
    The third step is to install `jupyterlab` and/or `notebook` as well as `ipykernel`.
    Note that you need to activate the virtual environment before installing the packages. Here we assume that the virtual environment is named `myenv` and is located in the current working directory.
    ```bash
