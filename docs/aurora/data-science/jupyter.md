@@ -136,6 +136,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
 
 ---
 
-## Notes
-- You can use `tmux` or `screen` to keep JupyterLab running if the SSH connection drops.
-- Please avoid running JupyterLab or Notebook on the login node for resource-intensive tasks; use compute nodes instead.
+!!! tip
+
+    You can use `tmux` or `screen` to keep JupyterLab running if the SSH connection drops.
+
