@@ -66,7 +66,7 @@ for automated device + backend selection.
     - `DATA_FILE_LIST`: Using the
     [Books corpus](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/data-lists/aurora/books.txt)
     of the Dolma dataset
-    - WARNING: Currently, there is a bug with running on 1 node. A work-around is to comment out `set_ccl_vars_on_aurora` in helper.sh. 
+    - WARNING: Currently, there is a bug with running on 1 node. A work-around is to comment out `set_ccl_vars_on_aurora` in `helper.sh`. 
     ??? note "Overridable Options"
 
         This is a simple subset of the overridable options.
