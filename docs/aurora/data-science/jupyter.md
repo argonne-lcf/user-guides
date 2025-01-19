@@ -126,7 +126,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
    ssh -L 9999:127.0.0.1:9999 -J <your-username>@aurora.alcf.anl.gov <your-username>@<compute_node_hostname>
    ```
    Please note that the `-J` option is used to specify the jump host, which is the Aurora login node.
-   - Replace `9999` with another port if it is unavailable.
+   Replace `9999` with another port if it is unavailable.
 
 2. **Access JupyterLab**:
    Open your browser and navigate to:
