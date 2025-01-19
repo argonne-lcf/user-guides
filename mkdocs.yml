@@ -2,15 +2,40 @@ site_name: ALCF User Guides
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
+edit_url: 'edit/main/docs/'
 
 theme:
   name: 'material'
   custom_dir: overrides
   language: 'en'
   palette:
-    scheme: alcf
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: alcf
+      primary: custom
+      accent: custom
+
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
   font:
-    text: proxima-nova
+    text: proxima-nova   # removed in #545. remove again?
+
   features:
     - content.action.edit
     - content.action.view
@@ -69,10 +94,13 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.tabbed:
       alternate_style: true
+      combine_header_slug: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.blocks.definition
 
+  - toc:
+      permalink: true
 validation:
   omitted_files: warn
   absolute_links: warn
@@ -81,9 +109,12 @@ validation:
   not_found: warn
 
 extra:
+  homepage: 'https://docs.alcf.anl.gov'
   social:
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'
+    - icon: 'fontawesome/brands/x-twitter'
+      link: 'https://x.com/argonne_lcf'
   analytics:
     provider: google
     property: G-4M48E2L33R
@@ -94,6 +125,9 @@ plugins:
       title_mode: pymdownx.tabbed
   - search:
       lang: en
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
 
 nav:
   - ALCF User Guides:
