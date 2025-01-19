@@ -5,7 +5,7 @@ ALCF provides a [JupyterHub](https://jupyter.alcf.anl.gov/) for running JupyterL
 ---
 
 ## Prerequisites
-Please note that you only need a terminal (to ssh into Aurora) and a browser on your local machine (laptop or desktop). All the required packages need to be installed on Aurora only.
+Please note that you only need a terminal (to SSH into Aurora) and a browser on your local machine (laptop or desktop). All the required packages need to be installed on Aurora only.
 
 ---
 
