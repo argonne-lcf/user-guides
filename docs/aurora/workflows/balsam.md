@@ -2,7 +2,7 @@
 
 [Balsam](https://github.com/argonne-lcf/balsam) is a toolkit for managing large computational campaigns on hpc systems. Balsam helps users to execute large numbers of jobs, with inter-job dependencies, track job outcomes, and manage postprocessing analysis.  The command line interface and Python API make it easy for users to adopt: after wrapping the command line for an application in a few lines of Python code, users can describe jobs with accompanying options.  These jobs are stored persistently in the Balsam database.  Balsam is especially well suited for executing large ensembles of MPI tasks with a variety of sizes.
 
-A user's Balsam service consists of a Balsam Site process that runs on a login node and that orchestrates the execution of work, and a Balsam Site directory space where job and workflow results are stored. When the user submits a batch job to PBS through Balsam, the Site process pulls Balsam jobs from the database and executes them within the PBS batch job, achieving high throughput while incurring only a single wait-time in the queue.
+A user's Balsam service consists of a Balsam Site process that runs on a login node that orchestrates the execution of work, and a Balsam Site directory space where job and workflow results are stored. When the user submits a batch job to PBS through Balsam, the Site process pulls Balsam jobs from the database and executes them within the PBS batch job, achieving high throughput while incurring only a single wait-time in the queue.
 
 The full [Balsam documentation](https://balsam.readthedocs.io/en/latest) covers all functionality for users, including additional examples, and describes the Balsam architecture for potential developers.
 
@@ -22,7 +22,7 @@ Alternatively, Balsam can be installed in a conda environment also with pip.
 
 The Balsam command line tool will now be in your path.  To get information on how to use the command line tool, you can type `balsam --help` in your shell.
 
-To use Balsam, users need an account on the Balsam server.  Users can get an account by contacting the [ALCF Help Desk](mailto:support@alcf.anl.gov).  Once a user has an account, they can login and make a new site.  A Balsam site is a project space for your workflow. You will be prompted to select what machine (Polaris) you are working on when creating a new site:
+To use Balsam, users need an account on the Balsam server.  Users can get an account by contacting the [ALCF Help Desk](mailto:support@alcf.anl.gov).  Once a user has an account, they can login and make a new site.  A Balsam site is a project space for your workflow. You will be prompted to select what machine (Aurora) you are working on when creating a new site:
 
 ```bash linenums="1"
 balsam login
@@ -123,7 +123,7 @@ cat data/demo/*/job.out
 
 Batch jobs created by Balsam will have a name beginning with `qlaunch` when queried with the `PBS` command `qstat`.
 
-Balsam has addition features that will submit work to PBS elastically, a special app type for native python code, and a `serial` job mode for executing tasks that are single core/gpu that do not require MPI launching.  More information can be found in the [Balsam documentation](https://balsam.readthedocs.io/en/latest).
+Balsam has additional features that will submit work to PBS elastically, a special app type for native python code, and a `serial` job mode for executing tasks that are single core/gpu that do not require MPI launching.  More information can be found in the [Balsam documentation](https://balsam.readthedocs.io/en/latest).
 
 ## Troubleshooting
 

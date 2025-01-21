@@ -258,7 +258,7 @@ nav:
           #- JupyterHub: aurora/services/jupyterhub.md
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md        
-          # - Balsam: aurora/workflows/balsam.md
+          - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
           # - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md
