@@ -383,7 +383,7 @@ This feature on PVC is similar to MPS on NVIDIA GPUs
 and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile.
 For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
 
-Distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
+For both DDP and Horovod, distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
 
 ```python linenums="1"
 import os
@@ -431,6 +431,17 @@ exec "$@"
 ```
 
 1. Note that the script takes the number of CCSs exposed as a command line argument
+
+!!! info "Checking PVC usage with `xpu-smi`"
+	Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
+	```bash
+	module load xpu-smi
+	watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
+    ```
+
+	1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
+
+	and checking the GPU and memory utilization of both tiles.
 
 !!! warning "Multiple CCSs and oneCCL"
 	- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
