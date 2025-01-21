@@ -46,28 +46,45 @@ Here is an example that runs an application `hello_affinity` from our getting st
 ```python linenums="1" title="balsam_job_ensemble.py"
 from balsam.api import ApplicationDefinition, Job
 
+# Define an application that runs an echo command and takes an input
 class EchoHello(ApplicationDefinition):
     site = "test_aurora"
     command_template = "echo Hello, {{ say_hello_to }}! ZE_AFFINITY_MASK=$ZE_AFFINITY_MASK OMP_NUM_THREADS=$OMP_NUM_THREADS"
 EchoHello.sync()
 
+# Define an application that runs a compiled executable and is wrapped by the gpu affinity script
 class HelloAffinity(ApplicationDefinition):
     site = "test_aurora"
-    command_template = "$HOME/HelperScripts/Aurora/set_affinity_gpu_aurora.sh $HOME/Examples/Aurora/affinity_gpu/sycl/hello_affinity"
+    command_template = "$HOME/GettingStarted/HelperScripts/Aurora/set_affinity_gpu_aurora.sh $HOME/GettingStarted/Examples/Aurora/affinity_gpu/sycl/hello_affinity"
 HelloAffinity.sync()
 
-jobs = [ Hello.submit(
-         workdir=f"demo/hello_multi{n}",
-         say_hello_to = f"Aurora_{n}",
-         tags={"workflow":"hello_multi"},
-         node_packing_count=3,
-         ranks_per_node=4,
+# Create a Balsam job that runs hello_affinity on one node with twelve ranks per node
+affinity_job = Job(site_name="test_aurora",
+                   app_id="HelloAffinity",
+                   workdir=f"demo/hello_affinity",
+                   tags={"workflow":"demo"},
+                   num_nodes=1,
+                   node_packing_count=1,
+                   ranks_per_node=12,
+                   gpus_per_rank=1)
+
+# This call saves a single Balsam job to the database
+affinity_job.save()
+
+# Create many Balsam jobs that run the EchoHello app each on a single tile
+echo_jobs = [Job( site_name="test_aurora", 
+         app_id="EchoHello", 
+         workdir=f"demo/echo_hello{n}", 
+         parameters={"say_hello_to": f"world {n}!"},
+         tags={"workflow":"demo"}, 
+         node_packing_count=12, # this allows for 12 of these jobs to run concurrently on a node
          gpus_per_rank=1,
-         threads_per_rank=16,
-         threads_per_core=2,
-         )
-    for n in range(12)
+         ranks_per_node=1,)       
+    for n in range(24)
 ]
+
+# This call saves a list of jobs to the database
+echo_jobs = Job.objects.bulk_create(echo_jobs)
 ```
 
 After execution of this script, your site will have two registered apps and several Balsam jobs.  Use the Balsam CLI tool to query them:
