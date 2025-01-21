@@ -431,11 +431,9 @@ export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4
 	- Please be mindful of the device hierarchy selected. When running with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, 6 PVC are exposed to the applications and the above command should be used, noting that `export ZEX_NUMBER_OF_CCS=0:4` exposes 4 CCSs on both tiles of GPU 0. When running with `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, the 12 PVC tiles are exposed to the applications (tile-as-device), thus `export ZEX_NUMBER_OF_CCS=0:4` only refers to tile 0 of GPU 0. To expose multiple CCSs on all tiles, users should use `export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4`.
 	- Users should also be mindful of the CPU binding affinity guidelines described above, ensuring that MPI processes are bound to the correct socket and GPU pairs.
 	- `ZE_AFFINITY_MASK` is read by the Level Zero driver prior to `ZEX_NUMBER_OF_CCS`, thus `ZEX_NUMBER_OF_CCS` should refer to the GPU IDs of the masked devices.
-	- Users can expose different number of CCSs on the different GPU and tiles, the CCS mode does not need to be uniform across the GPU on a node. 
+	- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node. 
 
 More information can be found on [Intel's documentation page](https://github.com/intel/compute-runtime/blob/master/level_zero/doc/experimental_extensions/MULTI_CCS_MODES.md).
-
-Intel PVC GPUs feature Compute-Command Streamers (CCSs) that cluster Execution Units (EUs), similar to the MPS capabilities on NVIDIA GPUs. These CCSs allow access to a shared pool of EUs. The hardware enables the selection of a specific distribution of EUs among CCSs, which can be set to 4, 2, or 1 (default) per stack using an environmental variable
 
 
 ## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
