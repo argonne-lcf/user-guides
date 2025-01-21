@@ -393,7 +393,8 @@ import intel_extension_for_pytorch
 import oneccl_bindings_for_pytorch
 
 parser = ArgumentParser(description='CCS Test')
-parser.add_argument('--ppd', default=1, type=int, help='Number of MPI processes per GPU device')
+parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], # (1)!
+                    help='Number of MPI processes per GPU device')
 args = parser.parse_args()
 
 local_rank = int(os.environ.get('PALS_LOCAL_RANKID'))
@@ -403,6 +404,8 @@ if torch.xpu.is_available():
            f"Assert failed: xpu_id={xpu_id} and {torch.xpu.device_count()} available devices"
     torch.xpu.set_device(xpu_id)
 ```
+
+1. PVC GPU allow the use of 1, 2 or 4 CCSs on each tile
 
 and then adding the proper environment variables and `mpiexec` settings in the run script. 
 For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
