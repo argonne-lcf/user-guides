@@ -3,11 +3,43 @@
 
 ## <a name="Aurora-Queues"></a>Queues
 
-There is a single routing queue in place called `EarlyAppAccess` which submits to the `lustre_scaling` queue. The total number of nodes available on this queue is changing often.
+There are four production queues you can target in your qsub (`-q <queue name>`):
 
-### Queue Policy
-- `EarlyAppAccess` (routing queue) : 100 queued jobs per-user 
-- `lustre_scaling` (execution queue) : 10 running jobs per-user; max walltime : 6 hours; max nodecount : 9090 (subject to change)
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
+|---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
+| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
+| prod          | 32       | 10624    | 5 min    | 24 hrs   | Routing queue; See table below                                                                       |
+| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
+
+!!!  note
+
+      The debug queue has 32 exclusively dedicated nodes. 
+      If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
+
+`prod` is a routing queue and routes your job to one of the following eight execution queues:
+
+| Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
+|-----------------|----------|----------|----------|----------|----------------------------------------|
+| tiny            | 32       | 512      | 5 min    | 6 hrs    |                                        |
+| small           | 513      | 1024     | 5 min    | 12 hrs   |                                        |
+| medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                        |
+| large           | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only***                  |
+| backfill-tiny   | 32       | 512      | 5 min    | 6 hrs    | Low priority, negative project balance |
+| backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance |
+| backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance |
+| backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | Low priority, negative project balance |
+
+!!! warning
+
+    You cannot submit to these queues directly; you can only submit to the routing queue "`prod`".
+
+!!! note
+
+      All of these queues have a limit of ten (10) jobs running/accruing per-project.
+      All of these queues have a limit of one hundred (100) jobs queued (not accruing score) per-project.
+
+
 
 ### Submitting a job
 
@@ -16,13 +48,13 @@ Note: Jobs should be submitted only from your allocated project directory and no
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q EarlyAppAccess -I
+qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q debug -I
 ```
 
 Recommended PBSPro options follow.
 
 ```bash
-#!/bin/sh
+#!/bin/bash -l
 #PBS -A [your_ProjectName]
 #PBS -N
 #PBS -l walltime=[requested_walltime_value]
@@ -35,7 +67,7 @@ Recommended PBSPro options follow.
 
 As Aurora is still a pre-production supercomputer, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
 
-We recommend against useing `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
+We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
 1. Start your interactive job
 2. When the job transitions to Running state, run `pbsnodes -l | grep <jobid>`
@@ -83,8 +115,8 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l select=4
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
-#PBS -q workq
-#PBS -A MYPROJECT
+#PBS -q debug-scaling
+#PBS -A <MYPROJECT>
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=28 # Number of MPI ranks to spawn per node
@@ -408,7 +440,7 @@ This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -A MYPROJECT -q workq
+qsub -I -l select=1,walltime=1:00:00,place=scatter -A <MYPROJECT> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
