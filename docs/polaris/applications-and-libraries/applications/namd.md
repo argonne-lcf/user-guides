@@ -10,12 +10,12 @@ ALCF offers assistance with building binaries and compiling instructions for NAM
 
 ## Running NAMD on Polaris
 
-Prebuilt release of NAMD binaries can be found in directory `/soft/applications/namd`. 
+Prebuilt releases of NAMD binaries can be found in the directory `/soft/applications/namd`. 
 * `Linux-x86_64-netlrts-smp-CUDA` supports GPU-resident runs. 
 * `Linux-x86_64-ofi-smp-CUDA` supports general GPU-offload runs.
 * `Linux-x86_64-ofi-smp-CUDA-memopt` supports memory-optimized input files and parallel I/O for the largest simulations (~100 million atoms or more).
 
-NAMD supports two types of parallelized simulations: single instance strong-scaling and multiple-copy weak-scaling (i.e. replica exchange). For more functionality details, please visit the NAMD [website](https://tcbg.illinois.edu/Research/namd).
+NAMD supports two types of parallelized simulations: single instance strong-scaling and multiple-copy weak-scaling (i.e., replica exchange). For more functionality details, please visit the NAMD [website](https://tcbg.illinois.edu/Research/namd).
 
 ### GPU-resident runs
 
@@ -39,7 +39,7 @@ mpiexec -n 1 --ppn 1 --depth=16 --cpu-bind=depth $EXE +p 15 +devices 3,2,1,0 stm
 
 Measured performance for a ~1,000,000 atom system generated with the above submission script run under NPT conditions and a timestep of 2 fs was `16 CPUs 0.00381933 s/step 45.2435 ns/day`.
 
-Note, the GPU-resident version only runs on a single node currently and some important functions remain to be implemented with it. A user is strongly encouraged to ensure the updated GPU-resident version fully supports the planned simulation in advance.
+Note, the GPU-resident version only runs on a single node currently, and some important functions remain to be implemented with it. A user is strongly encouraged to ensure the updated GPU-resident version fully supports the planned simulation in advance.
 
 ### Multiple-copy GPU-resident runs
 
@@ -62,7 +62,7 @@ cd ${PBS_O_WORKDIR}
 $CHARMRUN ++mpiexec ++np 16 ++ppn 8 $EXE +replicas 16 init.conf --source rest2_remd.namd +pemap 0-31 +setcpuaffinity +devices 0,1,2,3 +stdout rest2_output/%d/job0.%d.log +devicesperreplica 1
 ```
 
-This sample script launches a solute-tempering replica-exchange simulation with 16 replicas on 4 Polaris nodes. Each node accomodates 4 replicas, and each replica uses 8 CPU cores and binds to 1 GPU device.
+This sample script launches a solute-tempering replica-exchange simulation with 16 replicas on 4 Polaris nodes. Each node accommodates 4 replicas, and each replica uses 8 CPU cores and binds to 1 GPU device.
 
 ### GPU-offload run on multiple nodes
 
