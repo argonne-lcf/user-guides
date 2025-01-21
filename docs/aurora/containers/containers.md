@@ -51,7 +51,7 @@ apptainer exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet
 ### Example to run Postgres Database using Apptainer
 To run Postgres on Aurora compute node, below is a full example.
 
-```bash linenums="1"
+```bash linenums="1" title="apptainer_aurora_example.sh"
 # qsub from a UAN/login node
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
 
@@ -99,3 +99,4 @@ apptainer exec \
 # Stop the container and kill the process
 kill "$(cat pg_pid.txt)"
 rm pg_pid.txt
+```
