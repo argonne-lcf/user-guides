@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-### Last Updated: 2025-01-09 13:00 CST
+### Last Updated: 2025-01-21 14:00 CST
 
 
 ## Early User Notes
@@ -28,7 +28,11 @@ This is the primary and most stable storage filesystem for now. It is still poss
 
 #### DAOS (object store)
 
-Performance of DAOS has been impressive, but we continue to experience crashes with large jobs, including loss of data. Projects may use it, but should not consider it stable or safe for long-term storage.
+DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
+
+The initial configuration of DAOS has a smaller number of nodes, resulting in smaller project allocations. We expect DAOS to grow over the year and when that happens, changes will be announced/posted in user docs. Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need the allocation size to be bumped up. 
+
+Performance of DAOS has been impressive but we continue to experience crashes with large jobs, including loss of data. Projects may use it, but should not consider it stable or safe for long-term storage.
 
 #### Grand/Eagle
 
