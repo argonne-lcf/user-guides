@@ -393,8 +393,8 @@ import intel_extension_for_pytorch
 import oneccl_bindings_for_pytorch
 
 parser = ArgumentParser(description='CCS Test')
-parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], # (1)!
-                    help='Number of MPI processes per GPU device')
+parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], 
+                    help='Number of MPI processes per GPU device') # (1)!
 args = parser.parse_args()
 
 local_rank = int(os.environ.get('PALS_LOCAL_RANKID'))
@@ -418,7 +418,20 @@ mpiexec --pmi=pmix --envall -n 48 --ppn 48 \
     python training_script.py --ppd=4
 ```
 
-!!! warning "Multiple CCSs and oneCCL"
-	When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. 
-	This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
+Alternatively, users can use the following modified GPU affinity script in their `mpiexec` command in order to bind multiple MPI processes to each tile by setting `ZE_AFFINITY_MASK`
 
+```bash linenums="1" title="gpu_affinity_ccs.sh"
+#!/bin/bash
+
+num_ccs=$1 # (1)!
+shift
+gpu_id=$(( PALS_LOCAL_RANKID / num_ccs ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+
+1. Note that the script takes the number of CCSs exposed as a command line argument
+
+!!! warning "Multiple CCSs and oneCCL"
+	- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
+	- When using PyTorch DDP, the model must be offloaded to the XPU device after calling the `DDP()` wrapper on the model to avoid hangs.
