@@ -202,6 +202,7 @@ nav:
         - Containers: aurora/containers/containers.md
         - Data Science:
           - Python: aurora/data-science/python.md
+          - Jupyter: aurora/data-science/jupyter.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
