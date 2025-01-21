@@ -55,7 +55,7 @@ To install a different version of a package that is already installed in the
 base environment, you can use:
 
 ```bash
-python3 pip install --ignore-installed <package> # or -I
+python3 -m pip install --ignore-installed <package> # or -I
 ```
 
 The shared base environment is not writable, so it is impossible to remove or
@@ -94,7 +94,7 @@ where, `#!bash path/to/envs/base-clone` should be replaced by a suitably path. T
     This is typically _not_ recommended.
 
 With the conda environment setup, one can install common Python modules using
-`#!bash python3 pip install --users '<module-name>'` which will install
+`#!bash python3 -m pip install --users '<module-name>'` which will install
 packages in `#!bash $PYTHONUSERBASE/lib/pythonX.Y/site-packages`.
 
 The `#!bash $PYTHONUSERBASE` environment variable is automatically set when you
