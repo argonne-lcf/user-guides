@@ -420,6 +420,7 @@ This command requests 1 node for a period of 1 hour in the `workq` queue. After 
 
 The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
 These pools can then be accessed by separate processes thereby allowing users to bind multiple processes to a single tile and enabling applications to run up to 48 MPI processes per node on the 6 PVC available.
+Enabling multiple CCSs on Aurora is similar to the MPS capabilities on NVIDIA GPUs.
 By default, all EUs are assigned to a single CCS, but EUs can be distributed equally into 2 or 4 groups by exposing 2 or 4 CCSs, respectively. 
 This feature is enabled with the `ZEX_NUMBER_OF_CCS` environment variable, which takes a comma-separated list of device-mode pairs.
 For example, to enable 4 CCSs on all 6 PVC, execute
