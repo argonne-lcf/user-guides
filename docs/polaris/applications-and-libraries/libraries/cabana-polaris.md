@@ -2,24 +2,18 @@
 
 ## Cabana
 
-Cabana is built atop Kokkos. It provides class templates useful for
-implementing particle codes
+Cabana is built atop Kokkos. It provides class templates useful for implementing particle codes.
 
 ### Cabana Documentation
 
 * [Cabana Wiki](https://github.com/ECP-copa/Cabana/wiki)
-* [Cabana github](https://github.com/ECP-copa/Cabana)
+* [Cabana GitHub](https://github.com/ECP-copa/Cabana)
 
 ### Cabana on Polaris
 
-Following the [Polaris upgrade to HPCM
-1.10](https://www.alcf.anl.gov/support-center/facility-updates/polaris-upgraded-hpcm-110-0),
-the module setup to use the prebuilt Kokkos changed.
+Following the [Polaris upgrade to HPCM 1.10](https://www.alcf.anl.gov/support-center/facility-updates/polaris-upgraded-hpcm-110-0), the module setup to use the prebuilt Kokkos changed.
 
-Built against the [prebuilt Kokkos on
-polaris](../../programming-models/kokkos-polaris.md), the prebuilt Cabana
-includes 3 backends: Serial and OpenMP for CPU execution and CUDA for GPU
-execution. To use it, run
+Built against the [prebuilt Kokkos on Polaris](../../programming-models/kokkos-polaris.md), the prebuilt Cabana includes three backends: Serial and OpenMP for CPU execution, and CUDA for GPU execution. To use it, run:
 
 ```
 module load craype-x86-milan
