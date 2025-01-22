@@ -212,17 +212,19 @@ nav:
             #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
             #- MKL: aurora/applications-and-libraries/libraries/mkl.md
             #- MPI: aurora/applications-and-libraries/libraries/mpi.md
-            #- oneDAL: aurora/applications-and-libraries/libraries/onedal.md
+            - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - Spack PE: aurora/applications-and-libraries/libraries/spack-pe.md
         - Containers: aurora/containers/containers.md
         - Data Science:
           #- Julia: aurora/data-science/julia.md
           - Python: aurora/data-science/python.md
+          - Jupyter: aurora/data-science/jupyter.md
           #- Applications:
             #- gpt-neox: aurora/data-science/applications/gpt-neox.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+            - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
             #- JAX: aurora/data-science/frameworks/jax.md
             - PyTorch: aurora/data-science/frameworks/pytorch.md
             - TensorFlow: aurora/data-science/frameworks/tensorflow.md
@@ -255,12 +257,12 @@ nav:
           - GitLab: aurora/services/gitlab-ci.md
           #- JupyterHub: aurora/services/jupyterhub.md
         - Workflows:
-          # - Balsam: aurora/workflows/balsam.md
+          - ADIOS2: aurora/workflows/adios.md        
+          - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
           # - libEnsemble: aurora/workflows/libensemble.md
-          # - Parsl: aurora/workflows/parsl.md
+          - Parsl: aurora/workflows/parsl.md
           - SmartSim: aurora/workflows/smartsim.md
-          - ADIOS2: aurora/workflows/adios.md
     - Crux:
       - Machine Overview: crux/hardware-overview/machine-overview.md
       - Getting Started: crux/getting-started.md
@@ -383,7 +385,6 @@ not_in_nav: |
   todo.md
   TODO.md
   notes.md
-  account-project-management/index.md
   # TODO: complete or remove Aurora placeholder pages
   llvm-compilers-aurora.md
   gnu-compilers-aurora.md
@@ -392,17 +393,13 @@ not_in_nav: |
   aurora/applications-and-libraries/libraries/math-libraries.md
   aurora/applications-and-libraries/libraries/mkl.md
   aurora/applications-and-libraries/libraries/mpi.md
-  aurora/applications-and-libraries/libraries/onedal.md
   aurora/data-science/julia.md
   aurora/data-science/applications/gpt-neox.md
-  aurora/data-science/frameworks/deepspeed.md
   aurora/data-science/frameworks/jax.md
   aurora/programming-models/raja-aurora.md
-  aurora/debugging/gdb-oneapi-aurora.md
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
   aurora/services/jupyterhub.md
   aurora/workflows/balsam.md
   aurora/workflows/deephyper.md
   aurora/workflows/libensemble.md
-  aurora/workflows/parsl.md
