@@ -374,3 +374,75 @@ mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
 --cpu-bind ${CPU_BIND} \
 python path/to/application.py
 ```
+
+### Distributed Training with Multiple CCSs
+
+The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
+These pools can then be accessed by separate processes thereby enabling distributed training with multiple MPI processes per tile. 
+This feature on PVC is similar to MPS on NVIDIA GPUs 
+and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile.
+For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
+
+For both DDP and Horovod, distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
+
+```python linenums="1"
+import os
+from argparse import ArgumentParser
+import torch
+import intel_extension_for_pytorch
+import oneccl_bindings_for_pytorch
+
+parser = ArgumentParser(description='CCS Test')
+parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], 
+                    help='Number of MPI processes per GPU device') # (1)!
+args = parser.parse_args()
+
+local_rank = int(os.environ.get('PALS_LOCAL_RANKID'))
+if torch.xpu.is_available():
+    xpu_id = local_rank//args.ppd if torch.xpu.device_count()>1 else 0
+    assert xpu_id>=0 and xpu_id<torch.xpu.device_count(), \
+           f"Assert failed: xpu_id={xpu_id} and {torch.xpu.device_count()} available devices"
+    torch.xpu.set_device(xpu_id)
+```
+
+1. PVC GPU allow the use of 1, 2 or 4 CCSs on each tile
+
+and then adding the proper environment variables and `mpiexec` settings in the run script. 
+For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
+
+```bash linenums="1"
+export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4
+BIND_LIST="1:2:4:6:8:10:12:14:16:18:20:22:24:26:28:30:32:34:36:38:40:42:44:46:53:54:56:58:60:62:64:66:68:70:72:74:76:78:80:82:84:86:88:90:92:94:96:98"
+mpiexec --pmi=pmix --envall -n 48 --ppn 48 \
+    --cpu-bind=verbose,list:${BIND_LIST} \
+    python training_script.py --ppd=4
+```
+
+Alternatively, users can use the following modified GPU affinity script in their `mpiexec` command in order to bind multiple MPI processes to each tile by setting `ZE_AFFINITY_MASK`
+
+```bash linenums="1" title="gpu_affinity_ccs.sh"
+#!/bin/bash
+
+num_ccs=$1 # (1)!
+shift
+gpu_id=$(( PALS_LOCAL_RANKID / num_ccs ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+
+1. Note that the script takes the number of CCSs exposed as a command line argument
+
+!!! info "Checking PVC usage with `xpu-smi`"
+	Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
+	```bash
+	module load xpu-smi
+	watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
+    ```
+
+	1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
+
+	and checking the GPU and memory utilization of both tiles.
+
+!!! warning "Multiple CCSs and oneCCL"
+	- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
+	- When using PyTorch DDP, the model must be offloaded to the XPU device after calling the `DDP()` wrapper on the model to avoid hangs.
