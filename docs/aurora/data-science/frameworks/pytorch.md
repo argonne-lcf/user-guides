@@ -269,7 +269,7 @@ The key steps in performing distributed training are:
 1. Rescale the learning rate
 1. Use `set_epoch` for shuffling data across epochs
 
-Here is the code to train the [same dummy PyTorch model](#example%3A-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
+Here is the code to train the [same dummy PyTorch model](#example-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
 
 ```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6 8-24 31-33 36 37 34 44 47 48 61 62"
 from mpi4py import MPI
