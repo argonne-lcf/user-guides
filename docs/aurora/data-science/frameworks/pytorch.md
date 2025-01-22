@@ -358,8 +358,9 @@ Here are the steps to run the above code on Aurora:
 
 !!! warning "Settings for training beyond 16 nodes"
 
-    When training at medium and large scales, we recommend using the module `frameworks_optimized`, which provides an [optimized setup](./oneCCL.md:onecclenv) based on observed performance.
+    When training at medium and large scales, we recommend using the module `frameworks_optimized`, which provides an [optimized setup](./oneCCL.md) based on observed performance.
     To use this optimized setup, the last two steps of the above instructions should be replaced with the following ones:
+    
     1. Load the `frameworks_optimized` module:
        ```bash
        module use /soft/datascience/modulefiles
