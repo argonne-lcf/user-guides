@@ -41,6 +41,6 @@ More detailed information about node architecture can be found [here](https://ww
 | L1 cache         |                                |                            | 128 KiB              |
 | Last Level cache | a.k.a. RAMBO cache             |                            | 384 MiB per GPU      |
 
-See [Aurora Overview](https://www.alcf.anl.gov/sites/default/files/2022-10/aurora_overview_bertoni_10_6_2022.pdf)
+See [Aurora Overview](https://www.alcf.anl.gov/sites/default/files/2024-11/Overview-of-Aurora-Oct-2024.pdf)
 for more information. 
 
