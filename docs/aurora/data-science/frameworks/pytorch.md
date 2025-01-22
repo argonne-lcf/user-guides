@@ -95,7 +95,7 @@ Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is c
 
 ## Code changes to run PyTorch on Aurora GPUs
 
-[Intel extension for PyTorch (IPEX)](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html) is an [open-source project](https://github.com/intel/intel-extension-for-pytorch) that extends PyTorch with optimizations for extra performance boost on Intel hardware, including Intel GPUs. 
+[Intel Extension for PyTorch (IPEX)](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html) is an [open-source project](https://github.com/intel/intel-extension-for-pytorch) that extends PyTorch with optimizations for extra performance boost on Intel CPUs and enables the use of Intel GPUs.
 
 Here we list some common changes that you may need to do to your PyTorch code in order to use Intel GPUs.  
 Please consult [Intel's IPEX Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/examples.html) for additional details and useful tutorials.
