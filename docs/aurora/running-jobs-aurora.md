@@ -13,7 +13,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | prod-large    | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
-!!!  note
+!!! note
 
       The debug queue has 32 exclusively dedicated nodes. 
       If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
@@ -41,28 +41,31 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
       All of these queues have a limit of one hundred (100) jobs queued (not accruing score) per-project.
 
 
-
 ### Submitting a job
 
 Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
-For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
+For example, a one-node interactive job requiring access to the `/home` and `/flare` filesystems can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q debug -I
+qsub -l select=1 -l walltime=30:00 filesystems=home:flare -A [your_ProjectName] -q debug -I
 ```
+
+For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
 
 Recommended PBSPro options follow.
 
 ```bash
 #!/bin/bash -l
 #PBS -A [your_ProjectName]
-#PBS -N
+#PBS -N [your_JobName]
 #PBS -l walltime=[requested_walltime_value]
+#PBS -l filesystems=[requested_fs1:requested_fs2]
 #PBS -k doe
 #PBS -l place=scatter
 #PBS -q EarlyAppAccess
 ```
+
 
 ## Working Around Node Failures
 
@@ -116,6 +119,7 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l select=4
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
+#PBS -l filesystems=home:flare
 #PBS -q debug-scaling
 #PBS -A <MYPROJECT>
 
@@ -442,7 +446,7 @@ This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -A <MYPROJECT> -q debug
+qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<home> -A <MYPROJECT> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.

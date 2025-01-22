@@ -18,7 +18,7 @@ Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additi
 
     Explicitly, to request an interactive job (from `aurora-uan`):
     ```bash
-    qsub -I -q [your_Queue] -l select=1,walltime=60:00 -A [your_ProjectName]
+    qsub -I -q [your_Queue] -l select=1,walltime=60:00 -A [your_ProjectName] -l filesystems=[fs1:fs2]
     ```
 
     Refer to [job scheduling and
@@ -53,7 +53,7 @@ To run Postgres on Aurora compute node, below is a full example.
 
 ```bash linenums="1" title="apptainer_aurora_example.sh"
 # qsub from a UAN/login node
-qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -I
+qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -l filesystems=<fs1:fs2> -I
 
 # Set proxy on compute node
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
