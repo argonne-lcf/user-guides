@@ -4,7 +4,7 @@
 
 scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs.  For more information, see the [scikit-learn-intelex Github page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw). 
 
-The acceleration is by patching: replacing stock scikit-learn algorithms with the versions from Intel(R) oneAPI Data Analytics Library (oneDAL). 
+The accelerated interfaces are available via patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL). 
 
 Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, sklearnex will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
 
@@ -20,7 +20,7 @@ There are multiple ways to patch scikit-learn with the Intel Extension, as Intel
 from sklearnex import patch_sklearn
 patch_sklearn()
 ```
-It is important to note that this needs to happen before importing scikit-learn. To explicitly only patch certain estimators, you can import particular functions from sklearnex instead of sklearn, like this:
+It is important to note that this needs to happen before importing scikit-learn. To explicitly only patch certain estimators, you can import particular functions from `sklearnex` instead of `sklearn`, like this:
 ```
 from sklearnex.neighbors import NearestNeighbors
 ```
@@ -34,7 +34,7 @@ As described in more detail in Intel's documentation [here](https://uxlfoundatio
 2. Configure Intel Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`. 
 
 ### Distributed Mode
-To distribute an sklearnex algorithm across multiple GPUs, we need several ingredients, which we will demonstrate in an example below. We recommend using the MPI backend rather than the CCL backend since it is more tested on Aurora.
+To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is more tested on Aurora.
 
 !!! warning "Warning"
     The current version of Intel Extension to scikit-learn does not scale well to multiple GPUs. The cause has been identified, and we're waiting on a fix. However, if you use the oneDAL C++ API, the scaling is much better.
@@ -58,12 +58,8 @@ from sklearnex.spmd.neighbors import KNeighborsClassifier
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 
-if dpctl.has_gpu_devices():
-    q = dpctl.SyclQueue("gpu")
-else:
-    raise RuntimeError(
-        "GPU devices unavailable."
-    )
+# Create a GPU SYCL queue to store data on device
+q = dpctl.SyclQueue("gpu")
 
 # For the sake of a concise demo, each rank is generating different random training data. 
 X, y = make_classification(n_samples=100000, n_features=8, random_state=rank)
