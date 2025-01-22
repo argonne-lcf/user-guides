@@ -42,6 +42,6 @@ https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-
 | L1 cache         |                                |                            | 128 KiB              |
 | Last Level cache | a.k.a. RAMBO cache             |                            | 384 MiB per GPU      |
 
-
-
+See [Aurora Overview](https://www.alcf.anl.gov/sites/default/files/2022-10/aurora_overview_bertoni_10_6_2022.pdf)
+for more information. 
 
