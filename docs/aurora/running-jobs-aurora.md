@@ -44,13 +44,17 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
-For example, a one-node interactive job requiring access to the `/home` and `/flare` filesystems can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
+For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 filesystems=home:flare -A <your_ProjectName> -q debug -I
+qsub -l select=1 -l walltime=30:00 filesystems=flare -A <your_ProjectName> -q debug -I
 ```
-
+      
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
+
+!!! tip
+
+      To view the available filesystem options, execute the `qstat -Bf` command and view the `resources_available.valid_filesystems` entry.
 
 Recommended PBSPro options follow.
 
@@ -117,7 +121,7 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l select=4
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
-#PBS -l filesystems=home:flare
+#PBS -l filesystems=<fs1:fs2>
 #PBS -q debug-scaling
 #PBS -A <MYPROJECT>
 
@@ -393,7 +397,7 @@ This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<home> -A <MYPROJECT> -q debug
+qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <MYPROJECT> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
