@@ -1,5 +1,7 @@
 # DAOS Architecture
 
+DAOS is a scratch file system. Please note that data may be removed or unavailable at any time. 
+
 DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes.
 DAOS is an open-source software-defined object store designed for massively distributed Non Volatile Memory (NVM) and NVMe SSD. 
 DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5.
@@ -166,7 +168,7 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-ldaos=default` switch will ensure that DAOS is accessible on the compute nodes.
+The `-lfilesystems=home:daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:  
 ```bash
@@ -175,7 +177,7 @@ qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems
 
 Job submission with DAOS: 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare -q lustre_scaling -l daos=default 	./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=home:flare:daos_user -q lustre_scaling 	./pbs_script1.sh  or - I 
 ```
 
 
@@ -230,12 +232,12 @@ Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS.
 #PBS -A Aurora_deployment
 #PBS -q lustre_scaling
 #PBS -k doe
-#PBS -ldaos=default
+#PBS -l filesystems=home:daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=flare -q lustre_scaling  -ldaos=default  ./pbs_script.sh or - I 
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=home:flare:daos_user -q lustre_scaling ./pbs_script.sh or - I 
 
 
-# please do not miss -ldaos=default in your qsub :'(
+# please do not miss -l filesystems=daos_user in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
@@ -430,7 +432,7 @@ python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-6
 
 ## Cluster Size
 
-DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. 
+DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
 
 
 ![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
@@ -440,7 +442,7 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 
 ```bash
 Check that you requested DAOS
-    qsub –l daos=default
+    qsub –l filesystems=daos_user
 Did you load DAOS module?
     module load daos
 Do you have your DAOS pool allocated?
