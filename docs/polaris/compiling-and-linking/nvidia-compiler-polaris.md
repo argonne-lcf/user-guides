@@ -1,8 +1,8 @@
 # NVIDIA Compilers on Polaris
 
-The NVIDIA compilers (`nvc`, `nvc++`, `nvcc`, and `nvfortran`) are available on Polaris via the `PrgEnv-nvhpc` and `nvhpc` modules. There is currently a `PrgEnv-nvidia` module available, but that will soon be deprecated in Cray's PE, thus it is not recommend for use.
+The NVIDIA compilers (`nvc`, `nvc++`, `nvcc`, and `nvfortran`) are available on Polaris via the `PrgEnv-nvhpc` and `nvhpc` modules. There is currently a `PrgEnv-nvidia` module available, but that will soon be deprecated in Cray's PE, thus it is not recommended for use.
 
-The Cray compiler wrappers map to NVIDIA compilers as follows.
+The Cray compiler wrappers map to NVIDIA compilers as follows:
 
 ```
 cc -> nvc
@@ -15,13 +15,15 @@ Users are encouraged to look through [NVIDIA's documentation](https://developer.
 ## Notes on NVIDIA Compilers
 ### PGI compilers
 
-The NVIDIA programming environments makes available compilers from the [NVIDIA HPC SDK](https://developer.nvidia.com/hpc-sdk). While the PGI compilers are available in this programming environment, it should be noted they are actually symlinks to the corresponding `NVIDIA` compilers.
+The NVIDIA programming environments make available compilers from the [NVIDIA HPC SDK](https://developer.nvidia.com/hpc-sdk). While the PGI compilers are available in this programming environment, it should be noted they are actually symlinks to the corresponding NVIDIA compilers.
+
 ```
 pgcc -> nvc
 pgc++ -> nvc++
 pgf90 -> nvfortran
 pgfortran -> nvfortran
 ```
+
 While `nvcc` is the traditional CUDA C and CUDA C++ compiler for NVIDIA GPUs, the `nvc`, `nvc++`, and `nvfortran` compilers additionally target CPUs.
 
 ### NVHPC SDK Directory Structure
@@ -37,7 +39,7 @@ Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to re
 
 ### Differences between nvcc and nvc/nvc++
 
-For users that want to continue using `nvcc` it is important to be mindful of differences with the newer `nvc` and `nvc++` compilers. For example, the `-cuda` flag instructs `nvcc` to compile `.cu` input files to `.cu.cpp.ii` output files which are to be separately compiled, whereas the same `-cuda` flag instructs `nvc`, `nvc++`, and `nvfortran` to enable CUDA C/C++ or CUDA Fortran code generation. The resulting output file in each case is different (text vs. object) and one may see `unrecognized format error` when `-cuda` is incorrectly passed to `nvcc`.
+For users that want to continue using `nvcc`, it is important to be mindful of differences with the newer `nvc` and `nvc++` compilers. For example, the `-cuda` flag instructs `nvcc` to compile `.cu` input files to `.cu.cpp.ii` output files, which are to be separately compiled, whereas the same `-cuda` flag instructs `nvc`, `nvc++`, and `nvfortran` to enable CUDA C/C++ or CUDA Fortran code generation. The resulting output file in each case is different (text vs. object), and one may see an `unrecognized format error` when `-cuda` is incorrectly passed to `nvcc`.
 
 ### Known Issues and Workarounds
 
@@ -63,8 +65,6 @@ you will need to work around it by loading the latest cudatoolkit module atop Pr
 ```
 module load cudatoolkit-standalone/11.6.2
 ```
-
-
 
 [//]: # (ToDo: repeat here some of the nvidia-specific items from general compiling page??)
 [//]: # (ToDo: do we want separate pages for each compiler or a single compiler page with brief info on each of them with links to further info??)
