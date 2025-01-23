@@ -2,15 +2,9 @@
 
 Aurora is a 10,624 node HPE Cray-Ex based system. It has 166 racks with 21,248 CPUs and 63,744 GPUs. Each node consists of 2 Intel Xeon CPU Max Series (codename Sapphire Rapids or SPR) with on-package HBM and 6 Intel Data Center GPU Max Series (codename Ponte Vecchio or PVC). Each Xeon CPU has 52 physical cores supporting 2 hardware threads per core and 64 GB of HBM. Each CPU socket has 512 GB of DDR5 memory. The GPUs are connected all-to-all with Intel X^e^ Link interfaces. Each node has 8 HPE Slingshot-11 NICs, and the system is connected in a Dragonfly topology. The GPUs may send messages directly to the NIC via PCIe, without the need to copy into CPU memory.
 
-![Aurora Node Diagam](https://github.com/user-attachments/assets/b579fa71-7674-4e92-a767-35655110ee8e)
+![Aurora Node Diagram](../images/aurora_node_dataflow.png)
 
-Intel Data Center GPU Max Series is based on X^e^ Core. 
-Each X^e^ core consist of 8 vector engines and 8 matrix engines with 512 kb of L1 cache that 
-can be configured as cache or Shared Local Memroy (SLM).
-16 X^e^ cores are grouped together to form a slice.
-4 slicess are combined along with a large L2 cache, 4 HBM2E memory controllers to form s stack or tile.
-One or more stacks/tiles can then be combined on a socket to form a GPU. 
-More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html).
+Intel Data Center GPU Max Series is based on X^e^ Core. Each X^e^ core consist of 8 vector engines and 8 matrix engines with 512 kb of L1 cache that can be configured as cache or Shared Local Memroy (SLM). 16 X^e^ cores are grouped together to form a slice. 4 slicess are combined along with a large L2 cache, 4 HBM2E memory controllers to form s stack or tile. One or more stacks/tiles can then be combined on a socket to form a GPU. More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html).
 
 
 ## Aurora Compute Node
