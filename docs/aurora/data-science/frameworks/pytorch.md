@@ -243,7 +243,7 @@ this.
 
 4. In order to run an application with `TF32` precision type, one must set the following environmental parameter: `#!bash export IPEX_FP32_MATH_MODE=TF32`. This allows calculations using `TF32` as opposed to the default `FP32`, and done through `intel_extension_for_pytorch` module.
 
-5. For convolutional neural networks, using `channels_last` (NHWC) memory format can further accel is faster. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
+5. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
 
 
 ## Distributed Training on multiple GPUs
@@ -287,7 +287,7 @@ os.environ['RANK'] = str(RANK)
 os.environ['WORLD_SIZE'] = str(SIZE)
 MASTER_ADDR = socket.gethostname() if RANK == 0 else None
 MASTER_ADDR = MPI.COMM_WORLD.bcast(MASTER_ADDR, root=0)
-os.environ['MASTER_ADDR'] = MASTER_ADDR
+os.environ['MASTER_ADDR'] = f"{MASTER_ADDR}.hsn.cm.aurora.alcf.anl.gov"
 os.environ['MASTER_PORT'] = str(2345)
 print(f"DDP: Hi from rank {RANK} of {SIZE} with local rank {LOCAL_RANK}. {MASTER_ADDR}")
 
