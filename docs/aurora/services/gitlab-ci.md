@@ -1,19 +1,16 @@
-# Continuous Integration via Gitlab-CI For Sunspot/Aurora
+# Continuous Integration via Gitlab-CI For Aurora
 
-## Changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) needed for Aurora/Sunspot:
-
-**Instead of [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) use [gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov).**
-
-#### ALCF Specific Variables for Aurora and Sunspot:
-| Cluster | Scheduler | Variable Name | Support docs |
-|:--------|:---------:|:-------------:|:------------:|
-| Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
-| Sunspot | PBS       | ANL_SUNSPOT_SCHEDULER_PARAMETERS  | [Sunspot Getting Started](../getting-started-on-aurora.md) |
+### Changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) needed for Aurora:
+-  #### Instead of [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) use [gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov).
+-  #### Note the specific variables for Aurora's scheduler:
+  | Cluster | Scheduler | Variable Name | Support docs |
+  |:--------|:---------:|:-------------:|:------------:|
+  | Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
 
 
+### Examples of `.gitlab-ci.yml` files for Aurora:
 
-### Examples which have been modified for Aurora and Sunspot:
-
+See the [large-example .gitlab-ci.yml file](https://gitlab-sunspot.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml) for additional examples.
 
 _Example: A `.gitlab-ci.yml` file for an Aurora project_
 ```

@@ -6,12 +6,11 @@ released by Google. The
 TensorFlow, which you can refer to. For trouble shooting on Polaris, please 
 contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Installation on Aurora
+## Provided Installation
 
-TensorFlow is already pre-installed on Aurora, available in the `frameworks` 
-module. To use it from a compute node, please do:
-
-```
+TensorFlow is already preinstalled on Aurora, available in the `frameworks` 
+module. To use it from a compute node, load the module:
+```bash linenums="1"
 module use /soft/modulefiles/
 module load frameworks
 ```
@@ -19,9 +18,11 @@ module load frameworks
 Then you can `import` TensorFlow as usual, the following is an output from the 
 `frameworks` module:
 
+```python linenums="1"
+import tensorflow as tf
+tf.__version__
 ```
->>> import tensorflow as tf
->>> tf.__version__
+```
 '2.14.1'
 ```
 This import will fail on login nodes because there is no XPU on login nodes. 
@@ -29,8 +30,10 @@ This import will fail on login nodes because there is no XPU on login nodes.
 A simple but useful check could be to use TensorFlow to get device information 
 on a compute node. You can do this the following way:
 
+```python linenums="1"
+tf.config.list_physical_devices()
 ```
->>> tf.config.list_physical_devices()
+``` { .console .no-copy }
 [PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), 
 PhysicalDevice(name='/physical_device:XPU:0', device_type='XPU'), 
 PhysicalDevice(name='/physical_device:XPU:1', device_type='XPU'), 
@@ -56,18 +59,18 @@ to be deprecated soon.
 
 Intel extension for TensorFLow is has been made publicly available as an 
 open-source project at 
-[Github](https://github.com/intel/intel-extension-for-tensorflow).
+[GitHub](https://github.com/intel/intel-extension-for-tensorflow).
 
-Please consult the following resources for additional details and useful tutorials.
+Please consult the following resources for additional details and useful tutorials:
 
 - [Intel's Documentation](https://intel.github.io/intel-extension-for-tensorflow/latest/get_started.html#documentation)
 - [Intel's Examples](https://github.com/intel/intel-extension-for-tensorflow/tree/main/examples)
 - [Intel's ITEX Features Guide](https://www.intel.com/content/www/us/en/developer/articles/technical/innovation-of-ai-software-extension-tensorflow.html)
 - [Intel's Practice Guide](https://intel.github.io/intel-extension-for-tensorflow/latest/docs/guide/practice_guide.html#gpu-practice-guide)
 
-# TensorFlow Best Practices on Aurora
+## TensorFlow Best Practices on Aurora
 
-## Single Device Performance
+### Single Device Performance
 
 To expose one particular device out of the 6 available on a compute node, 
 this environmental variable should be set
@@ -84,13 +87,13 @@ This is particularly important in setting a performance benchmarking baseline.
 More information and details are available through
 [Level Zero Specification Documentation - Affinity Mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
 
-## Single Node Performance
+### Single Node Performance
 
 When running TensorFlow applications, we have found the following practices to 
 be generally, if not universally, useful and encourage you to try some of these 
 techniques to boost performance of your own applications.
 
-### Reduced Precision
+#### Reduced Precision
 
 Use Reduced Precision, whenever the application allows. Reduced Precision is 
 available on Intel Max 1550 and is supported with TensorFlow operations. In 
@@ -110,7 +113,7 @@ export ITEX_AUTO_MIXED_PRECISION_DATA_TYPE="BFLOAT16" # or "FLOAT16"
 If you use a custom training loop (and not `keras.Model.fit`), you will also 
 need to apply [loss scaling](https://www.tensorflow.org/guide/mixed_precision#training_the_model_with_a_custom_training_loop).
 
-### TensorFlow's graph API
+#### TensorFlow's graph API
 
 Use TensorFlow's graph API to improve efficiency of operations. TensorFlow is, 
 in general, an imperative language but with function decorators like 
@@ -134,7 +137,7 @@ export ITEX_ONEDNN_GRAPH=1
 ```
 This feature is experimental, and actively under development.
 
-### `TF32` Math Mode
+#### `TF32` Math Mode
 
 The Intel Xe Matrix Extensions (Intel XMX) engines in Intel Max 1550 Xe-HPC 
 GPUs natively support `TF32` math mode. Through intel extension for tensorflow
@@ -144,7 +147,7 @@ you can enable it by setting the following environmental variable:
 export ITEX_FP32_MATH_MODE="TF32"
 ```
 
-### XLA Compilation (Planned/Upcoming)
+#### XLA Compilation (Planned/Upcoming)
 
 XLA is the Accelerated Linear Algebra library that is available in TensorFlow 
 and critical in software like JAX. XLA will compile a `tf.Graph` object, 
@@ -162,11 +165,11 @@ acceleration through
 [Intel Extension for OpenXLA](https://github.com/intel/intel-extension-for-openxla).
 Full TensorFlow and PyTorch support is planned for development.
 
-### A simple example
+#### A simple example
 
 A simple example on how to use Intel GPU with TensorFlow is the following:
 
-```Python
+```python linenums="1" title="intel-xpu-tf-example.py"
 import tensorflow as tf   # TensorFlow registers PluggableDevices here.
 tf.config.list_physical_devices()  # XPU device is visible to TensorFlow.
 
@@ -188,7 +191,7 @@ def run():
 run()  # PluggableDevices also work with tf.function and graph mode. Runs on XPU
 ```
 
-## Multi-GPU / Multi-Node Scale Up
+### Multi-GPU / Multi-Node Scale Up
 
 TensorFlow is compatible with scaling up to multiple GPUs per node, and across 
 multiple nodes. Good performance with tensorFlow has been seen with horovod in 
@@ -196,14 +199,14 @@ particular. For details, please see the
 [Horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).
 Some Aurora specific details might be helpful to you.
 
-### Environment Variables
+#### Environment Variables
 
 The following environmental variables should be set on the batch submission 
 script (PBSPro script) in the case of attempting to run beyond 16 nodes.
 
 --8<-- "./docs/aurora/data-science/frameworks/pytorch.md:commononecclenv"
 
-### CPU Affinity
+#### CPU Affinity
 
 The CPU affinity should be set manually through mpiexec. 
 You can do this the following way:
@@ -235,11 +238,11 @@ The criteria for choosing the cpu bindings are:
 - Binding for cache access – This is the part that will change per application 
     and some experimentation is needed.
 
-__Important__: This setup is a work in progress, and based on observed 
-performance. The recommended settings are likely to changed with new `framework`
-releases.
+!!! note
 
-### Distributed Training 
+    This setup is a work in progress, and based on observed performance. The recommended settings are likely to changed with new `framework` releases.
+
+#### Distributed Training 
 
 Distributed training with TensorFlow  on Aurora is facilitated through Horovod,
 using [Intel Optimization for Horovod](https://github.com/intel/intel-optimization-for-horovod).
@@ -256,11 +259,11 @@ A suite of detailed and well documented examples is part of Intel's optimization
 
 - [Distributed Training Example Suite](https://github.com/intel/intel-optimization-for-horovod/tree/main/examples)
 
-### A simple Job Script
+#### A simple Job Script
 
 Below we give a simple job script:
 
-```bash
+```bash linenums="1"
 #!/bin/bash -l
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
@@ -375,4 +378,3 @@ mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
 --cpu-bind ${CPU_BIND} \
 python path/to/application.py
 ```
-

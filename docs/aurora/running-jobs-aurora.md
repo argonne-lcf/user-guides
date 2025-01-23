@@ -3,11 +3,44 @@
 
 ## <a name="Aurora-Queues"></a>Queues
 
-There is a single routing queue in place called `EarlyAppAccess` which submits to the `lustre_scaling` queue. The total number of nodes available on this queue is changing often.
+There are four production queues you can target in your qsub (`-q <queue name>`):
 
-### Queue Policy
-- `EarlyAppAccess` (routing queue) : 100 queued jobs per-user 
-- `lustre_scaling` (execution queue) : 10 running jobs per-user; max walltime : 6 hours; max nodecount : 9090 (subject to change)
+| Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
+|---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
+| debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
+| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
+| prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> See table below                              |
+| prod-large    | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
+| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
+
+!!!  note
+
+      The debug queue has 32 exclusively dedicated nodes. 
+      If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
+
+`prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
+
+| Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                                                                              |
+|-----------------|----------|----------|----------|----------|----------------------------------------------------------------------------------------------------|
+| tiny            | 32       | 512      | 5 min    | 6 hrs    |                                                                                                    |
+| small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
+| medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
+| large           | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
+| backfill-tiny   | 32       | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
+| backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
+| backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
+| backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue*** <br/> Low priority, negative project balance |
+
+!!! warning
+
+    You cannot submit to these queues directly; you can only submit to the routing queue `prod` or `prod-large`.
+
+!!! note
+
+      All of these queues have a limit of ten (10) jobs running/accruing per-project.
+      All of these queues have a limit of one hundred (100) jobs queued (not accruing score) per-project.
+
+
 
 ### Submitting a job
 
@@ -16,13 +49,13 @@ Note: Jobs should be submitted only from your allocated project directory and no
 For example, a one-node interactive job can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q EarlyAppAccess -I
+qsub -l select=1 -l walltime=30:00 -A [your_ProjectName] -q debug -I
 ```
 
 Recommended PBSPro options follow.
 
 ```bash
-#!/bin/sh
+#!/bin/bash -l
 #PBS -A [your_ProjectName]
 #PBS -N
 #PBS -l walltime=[requested_walltime_value]
@@ -35,7 +68,7 @@ Recommended PBSPro options follow.
 
 As Aurora is still a pre-production supercomputer, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
 
-We recommend against useing `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
+We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
 1. Start your interactive job
 2. When the job transitions to Running state, run `pbsnodes -l | grep <jobid>`
@@ -83,8 +116,8 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l select=4
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
-#PBS -q workq
-#PBS -A MYPROJECT
+#PBS -q debug-scaling
+#PBS -A <MYPROJECT>
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=28 # Number of MPI ranks to spawn per node
@@ -329,7 +362,8 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
 </figure>
 
 
-**NOTE:** For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
+!!! info
+	For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
 Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment.
@@ -408,12 +442,34 @@ This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -A MYPROJECT -q workq
+qsub -I -l select=1,walltime=1:00:00,place=scatter -A <MYPROJECT> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
 
-**NOTE:** If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
+!!! warning
+	If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
+
+
+## <a name="Running-with-Multiple-CCS"></a>Running with Multiple Compute Command Streamers (CCSs)
+
+The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
+These pools can then be accessed by separate processes thereby allowing users to bind multiple processes to a single tile and enabling applications to run up to 48 MPI processes per node on the 6 PVC available.
+Enabling multiple CCSs on Aurora is similar to the MPS capabilities on NVIDIA GPUs.
+By default, all EUs are assigned to a single CCS, but EUs can be distributed equally into 2 or 4 groups by exposing 2 or 4 CCSs, respectively. 
+This feature is enabled with the `ZEX_NUMBER_OF_CCS` environment variable, which takes a comma-separated list of device-mode pairs.
+For example, to enable 4 CCSs on all 6 PVC, execute
+```bash
+export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4
+```
+
+!!! info "Additional notes when running with multiple CCSs" 
+	- Please be mindful of the device hierarchy selected. When running with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, 6 PVC are exposed to the applications and the above command should be used, noting that `export ZEX_NUMBER_OF_CCS=0:4` exposes 4 CCSs on both tiles of GPU 0. When running with `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, the 12 PVC tiles are exposed to the applications (tile-as-device), thus `export ZEX_NUMBER_OF_CCS=0:4` only refers to tile 0 of GPU 0. To expose multiple CCSs on all tiles, users should use `export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4`.
+	- Users should also be mindful of the CPU binding affinity guidelines described above, ensuring that MPI processes are bound to the correct socket and GPU pairs.
+	- `ZE_AFFINITY_MASK` is read by the Level Zero driver prior to `ZEX_NUMBER_OF_CCS`, thus `ZEX_NUMBER_OF_CCS` should refer to the GPU IDs of the masked devices.
+	- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node. 
+
+More information can be found on Intel's [documentation](https://www.intel.com/content/www/us/en/docs/oneapi/optimization-guide-gpu/2024-1/multi-tile-advanced-topics.html) and [GitHub](https://github.com/intel/compute-runtime/blob/master/level_zero/doc/experimental_extensions/MULTI_CCS_MODES.md) pages.
 
 
 ## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node

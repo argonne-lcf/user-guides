@@ -6,9 +6,10 @@ Polaris, powered by NVIDIA A100 GPUs, benefits from container-based workloads fo
 Polaris employs Apptainer (formerly known as Singularity) for container management. To set up Apptainer, run:
 
 ```bash
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
+ml load e2fsprogs
 apptainer version #1.2.2
 ```
 
@@ -27,9 +28,10 @@ export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
+ml load e2fsprogs
 apptainer build --fakeroot pytorch:22.06-py3.sing docker://nvcr.io/nvidia/pytorch:22.06-py3
 ```
 You can find the latest prebuilt Nvidia PyTorch containers [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch).  The Tensorflow containers are [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow) (though note that LCF doesn't prebuild the TF-1 containers typically).  You can search the full container registry [here](https://catalog.ngc.nvidia.com/containers). For custom containers tailored for Polaris, visit [ALCF's GitHub container registry](https://github.com/argonne-lcf/container-registry/tree/main)
@@ -56,9 +58,10 @@ We move to current working directory and enable network access at run time by se
 
 ```bash
 # SET proxy for internet access
-module use /soft/modulefiles
-module load spack-pe-base/0.6.2 
-module load apptainer
+ml use /soft/modulefiles
+ml load spack-pe-base/0.8.1
+ml load apptainer
+ml load e2fsprogs
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
@@ -146,4 +149,26 @@ mkdir $APPTAINER_CACHEDIR
 
 **Disabled Port mapping, user namespace and [network virtualization]** [Network virtualization](https://apptainer.org/docs/user/main/networking.html) is disabled for the container due to security constraints. See issue [#2533](https://github.com/apptainer/apptainer/issues/2553)
 
+!!! bug "Apptainer instance errors with version 1.3.2"
+
+    Use `nohup` and `&` as an alternative if you want to run Apptainer as a background process. See below for an example of running Postgres as a background process:
+    ```bash linenums="1"
+     nohup apptainer run 
+     -B pgrun:/var/run/postgresql \
+     -B pgdata:/var/lib/postgresql/data \
+     --env-file pg.env \
+     postgres.sing postgres &
+
+     # 3) Capture its PID so we can kill it later
+     echo $! > postgres_pid.txt
+     echo "Started Postgres in the background with PID $(cat postgres_pid.txt)"
+
+    # 4) Perform whatever work you need while Postgres is running
+    #    In this demo, we just sleep for 30 minutes (1800 seconds).
+    sleep 1800
+
+    # 5) Kill the background process at the end of the job
+    kill "$(cat postgres_pid.txt)"
+    rm postgres_pid.txt
+    ```
 <!-- --8<-- [end:commoncontainerdoc] -->
