@@ -31,7 +31,7 @@ print(f"GPU availability: {torch.xpu.is_available()}")
 print(f'Number of tiles = {torch.xpu.device_count()}')
 current_tile = torch.xpu.current_device()
 print(f'Current tile = {current_tile}')
-print(f'Curent device ID = {torch.xpu.device(current_tile)}')
+print(f'Current device ID = {torch.xpu.device(current_tile)}')
 print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
@@ -42,7 +42,7 @@ Output of the above code block:
         GPU availability: True
         Number of tiles = 12
         Current tile = 0
-        Curent device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
+        Current device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
         Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
         ```
 
@@ -231,7 +231,7 @@ techniques to boost performance of your own applications.
 
 1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and 
 is supported with PyTorch operations. In general, the way to do this is via the 
-PyTorch Automatic Mixed Precision package (AMP), as descibed in the 
+PyTorch Automatic Mixed Precision package (AMP), as described in the 
 [mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In 
 PyTorch, users generally need to manage casting and loss scaling manually, 
 though context managers and function decorators can provide easy tools to do 
