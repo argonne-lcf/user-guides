@@ -25,7 +25,7 @@ DeepSpeed support.
 
     Explicitly, to request an interactive job (from `uan-00xx`):
     ```bash
-    qsub -A <project> -q debug -l select=1 -l walltime=01:00:00 -I
+    qsub -A <project> -q debug -l filesystems=<fs1:fs2> -l select=1 -l walltime=01:00:00 -I
     ```
 
     Refer to [job scheduling and
