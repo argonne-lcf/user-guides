@@ -1,7 +1,7 @@
 # Getting Started on MyALCF
 
 ## Access MyALCF
-To find MyALCF, either use the myALCF link at the [ALCF homepage](https:alcf.anl.gov) or visit the [MyALCF homepage](my.alcf.anl.gov)
+To find MyALCF, either use the myALCF link at the [ALCF homepage](https://alcf.anl.gov) or visit the [MyALCF homepage](https://my.alcf.anl.gov)
 
 
 <br>
