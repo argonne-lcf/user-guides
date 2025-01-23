@@ -49,11 +49,12 @@ To run, you can run the produced executable or with mpiexec in a job script, and
 
 ```
 $ cat submit.sh
-#!/bin/sh
+#!/bin/bash -l
 #PBS -l select=1
 #PBS -l walltime=0:30:00
-#PBS -q EarlyAppAccess 
-#PBS -A Project
+#PBS -l filesystems=<fs1:fs2>
+#PBS -q <queue> 
+#PBS -A <ProjectName>
 
 cd ${PBS_O_WORKDIR}
  mpiexec -n 1 ./executable
