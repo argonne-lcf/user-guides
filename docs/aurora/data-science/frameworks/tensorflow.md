@@ -3,7 +3,7 @@
 TensorFlow is a popular, open-source deep learning framework developed and 
 released by Google. The 
 [TensorFlow home page](https://www.tensorflow.org/) has more information about 
-TensorFlow, which you can refer to. For trouble shooting on Polaris, please 
+TensorFlow, which you can refer to. For troubleshooting on Polaris, please 
 contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Provided Installation
@@ -57,7 +57,7 @@ appropriate values to achieve desired behavior, as described in the
 This environment variable is equivalent to the `ITEX_TILE_AS_DEVICE`, which is
 to be deprecated soon.
 
-Intel extension for TensorFLow is has been made publicly available as an 
+Intel extension for TensorFLow has been made publicly available as an 
 open-source project at 
 [GitHub](https://github.com/intel/intel-extension-for-tensorflow).
 
@@ -98,7 +98,7 @@ techniques to boost performance of your own applications.
 Use Reduced Precision, whenever the application allows. Reduced Precision is 
 available on Intel Max 1550 and is supported with TensorFlow operations. In 
 general, the way to do this is via the `tf.keras.mixed_precision` Policy, as 
-descibed in the 
+described in the 
 [mixed precision documentation](https://www.tensorflow.org/guide/mixed_precision)
 Intel's extension for TensorFlow is fully compatible with the Keras mixed 
 precision API in TensorFlow. It also provides an advanced auto mixed precision 
@@ -216,7 +216,7 @@ export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-7
 mpiexec ... --cpu-bind=${CPU_BIND}
 ```
 
-These bindings should be use along with the following oneCCL and Horovod 
+These bindings should be used along with the following oneCCL and Horovod 
 environment variable settings:
 
 ```bash
@@ -240,7 +240,7 @@ The criteria for choosing the cpu bindings are:
 
 !!! note
 
-    This setup is a work in progress, and based on observed performance. The recommended settings are likely to changed with new `framework` releases.
+    This setup is a work in progress, and based on observed performance. The recommended settings are likely to change with new `framework` releases.
 
 #### Distributed Training 
 
