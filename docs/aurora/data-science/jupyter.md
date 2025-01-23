@@ -42,9 +42,9 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
 
 ## 2. Run JupyterLab on a Login Node 
 
-    !!! warning
+!!! warning
     
-         This is not recommended for compute-intensive or memory-intensive workloads. Run the JupyterLab server on a compute node (see below section) if the workload is heavy.
+      This is not recommended for compute-intensive or memory-intensive workloads. Run the JupyterLab server on a compute node (see below section) if the workload is heavy.
 
 1. **Start JupyterLab**:
    ```bash

@@ -31,7 +31,7 @@ Email support@alcf.anl.gov to request a DAOS pool with the following information
 
 
 ### Note
-This is an initial test DAOS configuration and as such, any data on the DAOS system will envtually be deleted when the configuration is changed into a larger system.
+This is an initial test DAOS configuration and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system.
 Warning will be given before the system is wiped to allow time for users to move any important data off.
 
 
@@ -168,7 +168,7 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-lfilesystems=home:daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=home:daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:  
 ```bash
