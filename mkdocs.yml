@@ -64,6 +64,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.blocks.definition
+  - pymdownx.blocks.caption
 
 validation:
   omitted_files: warn
@@ -257,7 +258,7 @@ nav:
           - GitLab: aurora/services/gitlab-ci.md
           #- JupyterHub: aurora/services/jupyterhub.md
         - Workflows:
-          - ADIOS2: aurora/workflows/adios.md        
+          - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
           # - libEnsemble: aurora/workflows/libensemble.md
