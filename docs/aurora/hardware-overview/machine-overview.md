@@ -4,6 +4,10 @@ Aurora is a 10,624 node HPE Cray-Ex based system. It has 166 racks with 21,248 C
 
 ![Aurora Node Diagram](../images/aurora_node_dataflow.png)
 
+/// caption
+Figure 1: Summary of the compute, memory, and communication hardware contained within a single Aurora node.
+///
+
 Intel Data Center GPU Max Series is based on X^e^ Core. Each X^e^ core consist of 8 vector engines and 8 matrix engines with 512 kb of L1 cache that can be configured as cache or Shared Local Memory (SLM). 16 X^e^ cores are grouped together to form a slice. 4 slicess are combined along with a large L2 cache, 4 HBM2E memory controllers to form s stack or tile. One or more stacks/tiles can then be combined on a socket to form a GPU. More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/max-series.html).
 
 
