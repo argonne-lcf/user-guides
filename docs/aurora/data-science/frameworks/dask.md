@@ -122,7 +122,7 @@ fname = f'{pathlib.Path.home().as_posix()}/dask-local-directory/scheduler.json'
 with open(fname, 'r') as f:
     scheduler = json.load(f)
 client = Client(scheduler['address'])
-print(client.scheduler_info)
+print(client)
 
 
 import time
@@ -180,7 +180,7 @@ client.shutdown()
 ???+ example "Output"
 
     ``` { .bash .no-copy }
-	<bound method Client.scheduler_info of <Client: 'tcp://10.168.0.10:8786' processes=6 threads=204, memory=1.00 TiB>>
+	<Client: 'tcp://10.168.0.10:8786' processes=6 threads=204, memory=1.00 TiB>
 	Run 0           Num samples: 1.04E+10           Estimate: 3.141653798           Time taken: 1.596 s
 	Run 1           Num samples: 1.04E+10           Estimate: 3.141570887           Time taken: 1.354 s
 	Run 2           Num samples: 1.04E+10           Estimate: 3.141651954           Time taken: 1.451 s
