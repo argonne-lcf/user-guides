@@ -15,7 +15,7 @@ can be configured as cache or Shared Local Memroy (SLM).
 16 Xe cores are grouped together to form a slice.
 4 slicess are combined along with a large L2 cache, 4 HBM2E memory controllers to form s stack or tile.
 One or more stacks/tiles can then be combined on a socket to form a GPU. 
-More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html)
+More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-data-center-gpu-max-series-overview.html).
 
 
 ## Aurora Compute Node
@@ -41,6 +41,6 @@ More detailed information about node architecture can be found [here](https://ww
 | L1 cache         |                                |                            | 128 KiB              |
 | Last Level cache | a.k.a. RAMBO cache             |                            | 384 MiB per GPU      |
 
-
-
+See [Aurora Overview](https://www.alcf.anl.gov/sites/default/files/2024-11/Overview-of-Aurora-Oct-2024.pdf)
+for more information. 
 
