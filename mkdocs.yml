@@ -64,6 +64,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.blocks.definition
+  - pymdownx.blocks.caption
 
 validation:
   omitted_files: warn
@@ -230,6 +231,7 @@ nav:
             - TensorFlow: aurora/data-science/frameworks/tensorflow.md
             - Dask: aurora/data-science/frameworks/dask.md
             - oneCCL: aurora/data-science/frameworks/oneCCL.md
+            - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
           - AI Inference:
@@ -257,7 +259,7 @@ nav:
           - GitLab: aurora/services/gitlab-ci.md
           #- JupyterHub: aurora/services/jupyterhub.md
         - Workflows:
-          - ADIOS2: aurora/workflows/adios.md        
+          - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
           # - libEnsemble: aurora/workflows/libensemble.md

@@ -5,25 +5,23 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
+
 ## Provided Installation
 
-PyTorch is already installed on Aurora with GPU support and available through
-the frameworks module. To use it from a compute node, please load the following modules:
+PyTorch is already installed on Aurora with GPU support and available through the [frameworks module](../python.md). 
+To use it from a compute node, please load the following modules:
 
 ```bash
 module use /soft/modulefiles/
 module load frameworks
 ```
-Then you can `import` PyTorch as usual, the following is an output from the
-`frameworks` module
-
-```python
+Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
+``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
 '2.3.1+cxx11.abi'
 ```
-A simple but useful check could be to use PyTorch to get device information on
-a compute node. You can do this the following way:
+A simple but useful check could be to use PyTorch to get device information on a compute node. You can do this the following way:
 
 ```python linenums="1" title="get-device-info.py"
 import torch
@@ -33,82 +31,201 @@ print(f"GPU availability: {torch.xpu.is_available()}")
 print(f'Number of tiles = {torch.xpu.device_count()}')
 current_tile = torch.xpu.current_device()
 print(f'Current tile = {current_tile}')
-print(f'Curent device ID = {torch.xpu.device(current_tile)}')
+print(f'Current device ID = {torch.xpu.device(current_tile)}')
 print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
-Output of the above code block:
-``` { .no-copy }
-GPU availability: True
-Number of tiles = 12
-Current tile = 0
-Curent device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
-Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+???+ example "Example output:"
+
+    ``` { .python-console .no-copy }
+	GPU availability: True
+    Number of tiles = 12
+    Current tile = 0
+    Current device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
+    Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', \
+	type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, \
+	gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, \
+	has_atomic64=1)
+	```
+
+Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node in the above output. 
+
+!!! note "`import intel_extension_for_pytorch as ipex`"
+    
+    Along with importing the `torch` module, you need to import the `intel_extension_for_pytorch` module in order to detect Intel GPUs as `xpu` devices. 
+
+    !!! warning
+    
+        It is highly recommended to import `intel_extension_for_pytorch` right after `#!python import torch`, prior to importing other packages, (from [Intel's "Getting Started" doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
+
+
+??? info "Using GPU Devices as PyTorch devices"
+
+    By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. 
+    To map a PyTorch device to one particular GPU Device out of the 6 available on a compute node, these 
+    environmental variables should be set
+    
+    ```bash
+    export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
+    export ZE_AFFINITY_MASK=0
+    
+    # or, equivalently, following the syntax `Device.Sub-device`
+    export ZE_AFFINITY_MASK=0.0,0.1
+    ```
+    In the example given above, an application is targeting the `Device:0` 
+    and `Sub-devices: 0, 1`, i.e. *the two tiles of the GPU:0*. This is 
+    particularly important in setting a performance benchmarking baseline.
+    Setting the above environmental variables after loading the frameworks modules,
+    you can check that each PyTorch device is now mapped to one GPU:
+    ```python linenums="1"
+    import torch
+    import intel_extension_for_pytorch as ipex
+    torch.xpu.device_count()
+    torch.xpu.get_device_properties()
+    ```
+    
+    ???+ example "Example output"
+    
+        ``` { .bash .no-copy }
+    	1
+    	_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=131072MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+    	```
+    	
+    More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+
+
+
+## Code changes to run PyTorch on Aurora GPUs
+
+[Intel Extension for PyTorch (IPEX)](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html) is an [open-source project](https://github.com/intel/intel-extension-for-pytorch) that extends PyTorch with optimizations for extra performance boost on Intel CPUs and enables the use of Intel GPUs.
+
+Here we list some common changes that you may need to do to your PyTorch code in order to use Intel GPUs.  
+Please consult [Intel's IPEX Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/examples.html) for additional details and useful tutorials.
+
+1. Import the `intel_extension_for_pytorch` **right after** importing `torch`:
+   ```python hl_lines="2"
+   import torch
+   import intel_extension_for_pytorch as ipex
+   ```
+1. All the `API` calls involving `torch.cuda`, should be replaced with `torch.xpu`. For example:
+   ```diff
+   - torch.cuda.device_count()
+   + torch.xpu.device_count()
+   ```
+1. When moving tensors and model to GPU, replace `"cuda"` with `"xpu"`. For example:
+   ```diff
+   - model = model.to("cuda")
+   + model = model.to("xpu")
+   ```
+1. Convert model and loss criterion to `xpu`, and then call `ipex.optimize` for additional performance boost:
+   ```python
+   device = torch.device('xpu')
+   model = model.to(device)
+   criterion = criterion.to(device)
+   model, optimizer = ipex.optimize(model, optimizer=optimizer)
+   ```
+
+!!! tip
+    
+    A more portable solution to select the appropriate device is the following:
+    ```python
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+    elif torch.xpu.is_available():
+        device = torch.device('xpu')
+    else: 
+        device = torch.device('cpu')
+    model = model.to(device)
+    ```
+
+
+## Example: training a PyTorch model on a single GPU tile
+
+Here is a simple code to train a dummy PyTorch model on CPU:
+
+```python linenums="1" title="pytorch_cpu.py"
+import torch
+
+torch.manual_seed(0)
+
+src = torch.rand((2048, 1, 512))
+tgt = torch.rand((2048, 20, 512))
+dataset = torch.utils.data.TensorDataset(src, tgt)
+loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+
+model = torch.nn.Transformer(batch_first=True)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+criterion = torch.nn.CrossEntropyLoss()
+model.train()
+
+for epoch in range(10):
+    for source, targets in loader:
+        optimizer.zero_grad()
+
+        output = model(source, targets)
+        loss = criterion(output, targets)
+
+        loss.backward()
+        optimizer.step()
 ```
-Note that, along with importing the `torch` module, you need to import the
-`intel_extension_for_pytorch` module. The default mode in `ipex` for counting
-the available devices on a compute node treat each tile (also called "Sub-device") as a torch device, hence the
-code block above is expected to output `12`. If you want to get the number of
-GPUs (also called "Devices" or "cards") as an output, you may declare the following environment variable:
 
-```bash
-export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
-```
-With this environmental variable, we expect the output to be `6` -- the number
-of GPUs available on an Aurora compute node. All the `API` calls involving 
-`torch.cuda`, should be replaced with `torch.xpu`, as shown in the above 
-example.
+And here is the code to train the same model on a single GPU tile on Aurora, with new or modified lines highlighted:
 
-!!! tip 
-
-    It is highly recommended to import `intel_extension_for_pytorch` right after `#!python import torch`, prior to importing other packages, (from [Intel's "Getting Started" doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
-
-Intel extension for PyTorch has been made publicly available as an open-source
-project on [GitHub](https://github.com/intel/intel-extension-for-pytorch).
-
-Please consult the following resources for additional details and useful 
-tutorials:
-- [PyTorch's webpage for Intel extension](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)
-- [Intel's IPEX GitHub repository](https://github.com/intel/intel-extension-for-pytorch)
-- [Intel's IPEX Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/)
-
-## PyTorch Best Practices on Aurora
-
-### Single Device Performance
-
-By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. 
-To map a PyTorch device to one particular GPU Device out of the 6 available on a compute node, these 
-environmental variables should be set
-
-```bash
-export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
-export ZE_AFFINITY_MASK=0
-
-# or, equivalently, following the syntax `Device.Sub-device`
-export ZE_AFFINITY_MASK=0.0,0.1
-```
-In the example given above, an application is targeting the `Device:0` 
-and `Sub-devices: 0, 1`, i.e. *the two tiles of the GPU:0*. This is 
-particularly important in setting a performance benchmarking baseline.
-Setting the above environmental variables after loading the frameworks modules,
-you can check that each PyTorch device is now mapped to one GPU:
-```python linenums="1"
+```python linenums="1" title="pytorch_xpu.py" hl_lines="2 3 16-18 22 23"
 import torch
 import intel_extension_for_pytorch as ipex
-torch.xpu.device_count()
-torch.xpu.get_device_properties()
+device = torch.device('xpu')
+
+torch.manual_seed(0)
+
+src = torch.rand((2048, 1, 512))
+tgt = torch.rand((2048, 20, 512))
+dataset = torch.utils.data.TensorDataset(src, tgt)
+loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+
+model = torch.nn.Transformer(batch_first=True)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+criterion = torch.nn.CrossEntropyLoss()
+model.train()
+model = model.to(device)
+criterion = criterion.to(device)
+model, optimizer = ipex.optimize(model, optimizer=optimizer)
+
+for epoch in range(10):
+    for source, targets in loader:
+        source = source.to(device)
+        targets = targets.to(device)
+        optimizer.zero_grad()
+
+        output = model(source, targets)
+        loss = criterion(output, targets)
+
+        loss.backward()
+        optimizer.step()
 ```
 
-???+ example "Example output"
+Here are the steps to run the above code on Aurora:
 
-    ``` { .bash .no-copy }
-	1
-	_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=131072MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
-	```
-	
-More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+1. [Login to Aurora](../../getting-started-on-aurora.md): 
+   ```bash
+   ssh <username>@aurora.alcf.anl.gov
+   ```
+1. [Request a one-node interactive job](../../running-jobs-aurora.md#submitting-a-job) for 30 minutes:
+   ```bash
+   qsub -q debug -l select=1,walltime=30:00 -A <your_project_name> -k doe -j oe -I
+   ```
+1. Copy the above Python script into a file called `pytorch_xpu.py` and make it executable with `#!bash chmod a+x pytorch_xpu.py`.
+1. [Load the frameworks module](../python.md#aiml-framework-module):
+   ```bash
+   module load frameworks
+   ```
+1. Run the script:
+   ```bash
+   python pytorch_xpu.py
+   ```
 
-### Single Node Performance
+
+## PyTorch Best Practices on Aurora
 
 When running PyTorch applications, we have found the following practices to be 
 generally, if not universally, useful and encourage you to try some of these 
@@ -116,261 +233,251 @@ techniques to boost performance of your own applications.
 
 1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and 
 is supported with PyTorch operations. In general, the way to do this is via the 
-PyTorch Automatic Mixed Precision package (AMP), as descibed in the 
+PyTorch Automatic Mixed Precision package (AMP), as described in the 
 [mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In 
 PyTorch, users generally need to manage casting and loss scaling manually, 
 though context managers and function decorators can provide easy tools to do 
 this.
 
-2. PyTorch has a `JIT` module as well as backends to support op fusion, similar 
-to TensorFlow's `tf.function` tools. 
-Please see [TorchScript](https://pytorch.org/docs/stable/jit.html) for more 
-information.
+2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools. See [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
 
 3. `torch.compile` will be available through the next framework release.
 
-### Multi-GPU / Multi-Node Scale Up
+4. In order to run an application with `TF32` precision type, one must set the following environmental parameter: `#!bash export IPEX_FP32_MATH_MODE=TF32`. This allows calculations using `TF32` as opposed to the default `FP32`, and done through `intel_extension_for_pytorch` module.
 
-PyTorch is compatible with scaling up to multiple GPUs per node, and across 
-multiple nodes. Good performance with PyTorch has been seen with both Distributed Data Parallel (DDP) and 
-Horovod. For details, please see the 
-[Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) 
-or the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html).
-Some of the Aurora specific details might be helpful to you:
+5. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
 
-### Environmental Variables
 
-The following environmental variables should be set on the batch submission 
-script (PBSPro script) in the case of attempting to run beyond 16 nodes.
+## Distributed Training on multiple GPUs
 
-<!-- --8<-- [start:commononecclenv] -->
---8<-- "./docs/aurora/data-science/frameworks/oneCCL.md:onecclenv"
+Distributed training with PyTorch on Aurora is facilitated through both [Distributed Data Parallel (DDP)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) and [Horovod](https://horovod.readthedocs.io/en/stable/pytorch.html), with comparable performance. 
+We recommend using native PyTorch DDP to perform Data Parallel training on Aurora. 
 
-These environment variable settings will probably be included in the framework module file in the future. But for now, users need to explicitly set these in the submission script. 
-<!-- --8<-- [end:commononecclenv] -->
 
-In order to run an application with `TF32` precision type, one must set the 
-following environmental parameter:
+### Distributed Data Parallel (DDP)
 
-```bash
-export IPEX_FP32_MATH_MODE=TF32
-```
-This allows calculations using `TF32` as opposed to the default `FP32`, and 
-done through `intel_extension_for_pytorch` module.
+DDP training is accelerated using oneAPI Collective Communications Library Bindings for Pytorch (`oneccl_bindings_for_pytorch`). The extension supports FP32 and BF16 data types. 
+More detailed information and examples are available at the [Intel oneCCL repo](https://github.com/intel/torch-ccl), formerly known as `torch-ccl`.
 
-### CPU Affinity
+#### Code changes to train on multiple GPUs using DDP
 
-The CPU affinity should be set manually through mpiexec. 
-You can do this the following way:
+The key steps in performing distributed training are:
 
-```bash
-export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
-mpiexec ... --cpu-bind=${CPU_BIND}
-```
+1. Load the `oneccl_bindings_for_pytorch` module, which enables efficient distributed deep learning training in PyTorch using Intel's oneCCL library, implementing collectives like `allreduce`, `allgather`, `alltoall`.
+1. Initialize PyTorch's `DistributedDataParallel`
+1. Use `DistributedSampler` to partition the training data among the ranks
+1. Pin each rank to a GPU
+1. Wrap the model in DDP to keep it in sync across the ranks 
+1. Rescale the learning rate
+1. Use `set_epoch` for shuffling data across epochs
 
-These bindings should be use along with the following oneCCL and Horovod 
-environment variable settings:
+Here is the code to train the [same dummy PyTorch model](#example-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
 
-```bash
-HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
-CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
-```
-
-When running 12 ranks per node with these settings the `framework`s use 3 cores, 
-with Horovod tightly coupled with the `framework`s using one of the 3 cores, and 
-oneCCL using a separate core for better performance, eg. with rank 0 the 
-`framework`s would use cores 2,3,4, Horovod would use core 4, and oneCCL would 
-use core 5.
-
-Each workload may perform better with different settings. 
-The criteria for choosing the cpu bindings are:
-
-- Binding for GPU and NIC affinity – To bind the ranks to cores on the proper 
-    socket or NUMA nodes.
-- Binding for cache access – This is the part that will change per application 
-    and some experimentation is needed.
-
-__Important__: This setup is a work in progress, and based on observed 
-performance. The recommended settings are likely to changed with new `framework`
-releases.
-
-### Distributed Training
-
-Distributed training with PyTorch on Aurora is facilitated through both DDP and
-Horovod. DDP training is accelerated using oneAPI Collective Communications 
-Library Bindings for Pytorch (oneCCL Bindings for Pytorch). 
-The extension supports FP32 and BF16 data types. 
-More detailed information and examples are available at the 
-[Intel oneCCL repo](https://github.com/intel/torch-ccl), formerly known as 
-`torch-ccl`.
-
-The key steps in performing distributed training using `oneccl_bindings_for_pytorch` are the following:
-```python linenums="1"
-import os
+```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6 8-24 31-33 36 37 34 44 47 48 61 62"
+from mpi4py import MPI
+import os, socket
 import torch
-import intel_extension_for_pytorch as ipex
-import torch.distributed as dist
-import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel as DDP
+import intel_extension_for_pytorch as ipex
 import oneccl_bindings_for_pytorch as torch_ccl
 
-...
+# DDP: Set environmental variables used by PyTorch
+SIZE = MPI.COMM_WORLD.Get_size()
+RANK = MPI.COMM_WORLD.Get_rank()
+LOCAL_RANK = os.environ.get('PALS_LOCAL_RANKID')
+os.environ['RANK'] = str(RANK)
+os.environ['WORLD_SIZE'] = str(SIZE)
+MASTER_ADDR = socket.gethostname() if RANK == 0 else None
+MASTER_ADDR = MPI.COMM_WORLD.bcast(MASTER_ADDR, root=0)
+os.environ['MASTER_ADDR'] = f"{MASTER_ADDR}.hsn.cm.aurora.alcf.anl.gov"
+os.environ['MASTER_PORT'] = str(2345)
+print(f"DDP: Hi from rank {RANK} of {SIZE} with local rank {LOCAL_RANK}. {MASTER_ADDR}")
 
-# perform the necessary transforms
-# set up the training data set
-# set up the data loader
-# set the master address, ports, world size and ranks through os.environ module
+# DDP: initialize distributed communication with nccl backend
+torch.distributed.init_process_group(backend='ccl', init_method='env://', rank=int(RANK), world_size=int(SIZE))
 
-...
-# Initialize the process group for distributed training with oneCCL backend
+# DDP: pin GPU to local rank.
+torch.xpu.set_device(int(LOCAL_RANK))
+device = torch.device('xpu')
+torch.manual_seed(0)
 
-dist.init_process_group(backend='ccl', ... # arguments)
+src = torch.rand((2048, 1, 512))
+tgt = torch.rand((2048, 20, 512))
+dataset = torch.utils.data.TensorDataset(src, tgt)
+# DDP: use DistributedSampler to partition the training data
+sampler = torch.utils.data.distributed.DistributedSampler(dataset, shuffle=True, num_replicas=SIZE, rank=RANK, seed=0)
+loader = torch.utils.data.DataLoader(dataset, sampler=sampler, batch_size=32)
 
-model = YOUR_MODEL().to(device)         # device = 'cpu' or 'xpu:{os.environ['MPI_LOCALRANKID']}'
-criterion = torch.nn. ... .to(device)   # Choose a loss function 
-optimizer = torch.optim. ...            # Choose an optimizer
-# model.train()                         # Optional, model dependent
-
-# Off-load the model to ipex for additional optimization 
+model = torch.nn.Transformer(batch_first=True)
+# DDP: scale learning rate by the number of GPUs.
+optimizer = torch.optim.Adam(model.parameters(), lr=(0.001*SIZE))
+criterion = torch.nn.CrossEntropyLoss()
+model.train()
+model = model.to(device)
+criterion = criterion.to(device)
 model, optimizer = ipex.optimize(model, optimizer=optimizer)
+# DDP: wrap the model in DDP
+model = DDP(model)
 
-# Initialize DDP with your model for distributed processing
-if dist.get_world_size() > 1:
-     model = DDP(model, device_ids=[device] if (device != 'cpu') else None)
+for epoch in range(10):
+    # DDP: set epoch to sampler for shuffling
+    sampler.set_epoch(epoch)
 
-for ...
-    # perform the training loop
+    for source, targets in loader:
+        source = source.to(device)
+        targets = targets.to(device)
+        optimizer.zero_grad()
+
+        output = model(source, targets)
+        loss = criterion(output, targets)
+
+        loss.backward()
+        optimizer.step()
+
+# DDP: cleanup
+torch.distributed.destroy_process_group()
 ```
 
-A detailed example of the full procedure with a toy model is given here:
+Here are the steps to run the above code on Aurora:
 
-- [Intel's oneCCL demo](https://github.com/intel/torch-ccl/blob/master/demo/demo.py)
+1. [Login to Aurora](../../getting-started-on-aurora.md): 
+   ```bash
+   ssh <username>@aurora.alcf.anl.gov
+   ```
+1. [Request a one-node interactive job](../../running-jobs-aurora.md#submitting-a-job) for 30 minutes:
+   ```bash
+   qsub -q debug -l select=2,walltime=30:00 -A <your_project_name> -k doe -j oe -I
+   ```
+1. Copy the above Python script into a file called `pytorch_ddp.py` and make it executable with `#!bash chmod a+x pytorch_ddp.py`.
+1. [Load the frameworks module](../python.md#aiml-framework-module):
+   ```bash
+   module load frameworks
+   ```
+1. Run the script on 24 tiles, 12 per node:
+   ```bash
+   mpiexec -n 24 -ppn 12 python pytorch_ddp.py
+   ```
 
-Below we give an example PBS job script:
+!!! warning "Settings for training beyond 16 nodes"
 
-```bash linenums="1" title="example_torch_dist_training.sh"
-#!/bin/bash -l
-#PBS -l select=512                              # selecting 512 Nodes
-#PBS -l place=scatter
-#PBS -l walltime=1:59:00
-#PBS -q EarlyAppAccess                          # a specific queue
-#PBS -A Aurora_deployment                       # project allocation
-#PBS -l filesystems=home                        # specific filesystem, can be a list separated by :
-#PBS -k doe
-#PBS -e /home/$USER/path/to/errordir            
-#PBS -o /home/$USER/path/to/outdir              # path to `stdout` or `.OU` files
-#PBS -j oe                                      # output and error placed in the `stdout` file
-#PBS -N a.name.for.the.job
+    When training at medium and large scales, we recommend using the module `frameworks_optimized`, which provides an [optimized setup](./oneCCL.md) based on observed performance.
+    To use this optimized setup, the last two steps of the above instructions should be replaced with the following ones:
+    
+    1. Load the `frameworks_optimized` module:
+       ```bash
+       module use /soft/datascience/modulefiles
+       module load frameworks_optimized
+       ```
+    1. Run the script on 24 tiles, 12 per node:
+       ```bash
+       mpiexec -n 24 -ppn 12 --cpu-bind=${CPU_BIND} python pytorch_ddp.py
+       ```
 
-#####################################################################
-# This block configures the total number of ranks, discovering
-# it from PBS variables.
-# 12 Ranks per node, if doing rank/tile
-#####################################################################
-
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=12
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
-
-# This is a fix for running over 16 nodes:
-export FI_CXI_DEFAULT_CQ_SIZE=131072
-export FI_CXI_OFLOW_BUF_SIZE=8388608
-export FI_CXI_CQ_FILL_PERCENT=20
-# These are workaround for a known Cassini overflow issue
-
-export FI_LOG_LEVEL=warn
-#export FI_LOG_PROV=tcp
-export FI_LOG_PROV=cxi
-# These allow for logging from a specific provider (libfabric)
-
-export MPIR_CVAR_ENABLE_GPU=0 
-export CCL_KVS_GET_TIMEOUT=600
-
-#####################################################################
-# APPLICATION Variables that make a performance difference
-#####################################################################
-
-# Channels last is faster for pytorch, requires code changes!
-# More info here:
-# https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last
-# https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html
-DATA_FORMAT="channels_last"
-
-#####################################################################
-# FRAMEWORK Variables that make a performance difference 
-#####################################################################
-
-# Toggle tf32 on (or don't):
-export IPEX_FP32_MATH_MODE=TF32
-
-#####################################################################
-# End of perf-adjustment section
-#####################################################################
-
-#####################################################################
-# Environment set up, using the latest frameworks drop
-#####################################################################
-
-module use /soft/modulefiles
-module load frameworks
-
-export NUMEXPR_NUM_THREADS=64
-# This is to resolve an issue due to a package called "numexpr". 
-# It sets the variable 
-# 'numexpr.nthreads' to available number of threads by default, in this case 
-# to 208. However, the 'NUMEXPR_MAX_THREADS' is also set to 64 as a package 
-# default. The solution is to either set the 'NUMEXPR_NUM_THREADS' to less than 
-# or equal to '64' or to increase the 'NUMEXPR_MAX_THREADS' to the available 
-# number of threads. Both of these variables can be set manually.
-
-#####################################################################
-# End of environment setup section
-#####################################################################
-
-#####################################################################
-# JOB LAUNCH
-######################################################################
+    ??? tip "Setting the CPU Affinity"
+    
+        The [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) can be set manually through mpiexec. 
+        You can do this the following way (after having loaded all needed modules):
+        
+        ```bash
+        export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
+        mpiexec ... --cpu-bind=${CPU_BIND}
+        ```
+        
+        These bindings should be used along with the following oneCCL and Horovod 
+        environment variable settings:
+        
+        ```bash
+        HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
+        CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
+        ```
+        
+        When running 12 ranks per node with these settings the `framework`s use 3 cores, 
+        with Horovod tightly coupled with the `framework`s using one of the 3 cores, and 
+        oneCCL using a separate core for better performance, eg. with rank 0 the 
+        `framework`s would use cores 2,3,4, Horovod would use core 4, and oneCCL would 
+        use core 5.
+        
+        Each workload may perform better with different settings. 
+        The criteria for choosing the cpu bindings are:
+        
+        - Binding for GPU and NIC affinity – To bind the ranks to cores on the proper 
+            socket or NUMA nodes.
+        - Binding for cache access – This is the part that will change per application 
+            and some experimentation is needed.
+        
+        __Important__: This setup is a work in progress, and based on observed 
+        performance. The recommended settings are likely to changed with new `framework`
+        releases.
 
 
-## CCL setup
-export FI_CXI_DEFAULT_CQ_SIZE=131072
-export FI_CXI_OVFLOW_BUF_SIZE=8388608
-export FI_CXI_CQ_FILL_PERCENT=20
+### Distributed Training with Multiple CCSs
 
-export FI_LOG_LEVEL=warn
-#export FI_LOG_PROV=tcp
-export FI_LOG_PROV=cxi
+The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
+These pools can then be accessed by separate processes thereby enabling distributed training with multiple MPI processes per tile. 
+This feature on PVC is similar to MPS on NVIDIA GPUs 
+and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile.
+For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
 
-export CCL_KVS_GET_TIMEOUT=600
+For both DDP and Horovod, distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
 
-export LD_LIBRARY_PATH=$CCL_ROOT/lib:$LD_LIBRARY_PATH
-export CPATH=$CCL_ROOT/include:$CPATH
-export LIBRARY_PATH=$CCL_ROOT/lib:$LIBRARY_PATH
+```python linenums="1"
+import os
+from argparse import ArgumentParser
+import torch
+import intel_extension_for_pytorch
+import oneccl_bindings_for_pytorch
 
-export CCL_PROCESS_LAUNCHER=pmix  
-export CCL_ATL_TRANSPORT=mpi
-export CCL_ALLREDUCE=topo
-export CCL_ALLREDUCE_SCALEOUT=rabenseifner  # currently best allreduce algorithm at large scale
-export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
+parser = ArgumentParser(description='CCS Test')
+parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], 
+                    help='Number of MPI processes per GPU device') # (1)!
+args = parser.parse_args()
 
-export CCL_KVS_MODE=mpi
-export CCL_CONFIGURATION_PATH=""
-export CCL_CONFIGURATION=cpu_gpu_dpcpp
-export CCL_KVS_CONNECTION_TIMEOUT=600 
-
-export CCL_ZE_CACHE_OPEN_IPC_HANDLES_THRESHOLD=1024
-export CCL_KVS_USE_MPI_RANKS=1
-
-
-export CCL_LOG_LEVEL="WARN"
-export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
-HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
-CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
-
-ulimit -c 0
-
-# Launch the script
-mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
---cpu-bind ${CPU_BIND} \
-python path/to/application.py
+local_rank = int(os.environ.get('PALS_LOCAL_RANKID'))
+if torch.xpu.is_available():
+    xpu_id = local_rank//args.ppd if torch.xpu.device_count()>1 else 0
+    assert xpu_id>=0 and xpu_id<torch.xpu.device_count(), \
+           f"Assert failed: xpu_id={xpu_id} and {torch.xpu.device_count()} available devices"
+    torch.xpu.set_device(xpu_id)
 ```
+
+1. PVC GPU allow the use of 1, 2 or 4 CCSs on each tile
+
+and then adding the proper environment variables and `mpiexec` settings in the run script. 
+For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
+
+```bash linenums="1"
+export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4
+BIND_LIST="1:2:4:6:8:10:12:14:16:18:20:22:24:26:28:30:32:34:36:38:40:42:44:46:53:54:56:58:60:62:64:66:68:70:72:74:76:78:80:82:84:86:88:90:92:94:96:98"
+mpiexec --pmi=pmix --envall -n 48 --ppn 48 \
+    --cpu-bind=verbose,list:${BIND_LIST} \
+    python training_script.py --ppd=4
+```
+
+Alternatively, users can use the following modified GPU affinity script in their `mpiexec` command in order to bind multiple MPI processes to each tile by setting `ZE_AFFINITY_MASK`
+
+```bash linenums="1" title="gpu_affinity_ccs.sh"
+#!/bin/bash
+
+num_ccs=$1 # (1)!
+shift
+gpu_id=$(( PALS_LOCAL_RANKID / num_ccs ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+
+1. Note that the script takes the number of CCSs exposed as a command line argument
+
+!!! info "Checking PVC usage with `xpu-smi`"
+	Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
+	```bash
+	module load xpu-smi
+	watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
+    ```
+
+	1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
+
+	and checking the GPU and memory utilization of both tiles.
+
+!!! warning "Multiple CCSs and oneCCL"
+	- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
+	- When using PyTorch DDP, the model must be offloaded to the XPU device after calling the `DDP()` wrapper on the model to avoid hangs.
