@@ -45,10 +45,10 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
-For example, a one-node interactive job requiring access to the `/home` and `/flare` filesystems can be requested for 30 minutes with the following command, where `[your_ProjectName]` is replaced with an appropriate project name.
+For example, a one-node interactive job requiring access to the `/home` and `/flare` filesystems can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 filesystems=home:flare -A [your_ProjectName] -q debug -I
+qsub -l select=1 -l walltime=30:00 filesystems=home:flare -A <your_ProjectName> -q debug -I
 ```
 
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
@@ -57,10 +57,10 @@ Recommended PBSPro options follow.
 
 ```bash
 #!/bin/bash -l
-#PBS -A [your_ProjectName]
-#PBS -N [your_JobName]
-#PBS -l walltime=[requested_walltime_value]
-#PBS -l filesystems=[requested_fs1:requested_fs2]
+#PBS -A <your_ProjectName>
+#PBS -N <your_JobName>
+#PBS -l walltime=<requested_walltime_value>
+#PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
 #PBS -q EarlyAppAccess
@@ -80,7 +80,7 @@ We recommend against using `-W tolerate_node_failures=all` in your qsub command,
     ```bash
     $ cat $PBS_NODEFILE > local.hostfile
     # edit local.hostfile to remove problem nodes
-    $ mpiexec --hostfile local.hostfile [other mpiexec arguments]
+    $ mpiexec --hostfile local.hostfile <other mpiexec arguments>
     ```
 
 4. Continue to execute

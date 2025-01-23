@@ -13,7 +13,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
 
     Explicitly, to request an interactive job (from `aurora-uan`):
     ```bash
-    qsub -I -q [your_Queue] -l select=1,walltime=60:00 -A [your_ProjectName]
+    qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
     ```
 
     Refer to [job scheduling and
