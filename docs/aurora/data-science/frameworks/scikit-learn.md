@@ -2,11 +2,7 @@
 
 [scikit-learn](https://scikit-learn.org/stable/) is a popular open-source Python library for machine learning. It has wide coverage of machine learning algorithms (other than neural networks), such as k-means clustering and random forests. 
 
-scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs.  For more information, see the [scikit-learn-intelex Github page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw). 
-
-The accelerated interfaces are available via patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL). 
-
-Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, sklearnex will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
+scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs and adds support for additional functionality, such as incremental and distributed algorithms.  For more information, see the [scikit-learn-intelex Github page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw). 
 
 ## Environment Setup
 
@@ -15,6 +11,10 @@ module. You can load the frameworks module as described [here](../python.md), wh
 
 ## Usage
 ### Patching
+To accelerate existing scikit-learn code with minimal code changes, Intel Extension for Scikit-learn uses patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL). 
+
+Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, the Intel Extension will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
+
 There are multiple ways to patch scikit-learn with the Intel Extension, as Intel documents [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/what-is-patching.html). For example, you can patch within the script, like this:
 ```
 from sklearnex import patch_sklearn
@@ -26,24 +26,26 @@ from sklearnex.neighbors import NearestNeighbors
 ```
 
 ### GPU Acceleration
-Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. (If not, see the [Python page](../python.md)) dpctl implements oneAPI concepts like queues and devices. 
+Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. (If not, see the [Python page](../python.md).) dpctl implements oneAPI concepts like queues and devices. 
 
 As described in more detail in Intel's documentation [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU. 
 
 1. Pass the input data to the algorithm as `dpctl.tensor.usm_ndarray`. Then the algorithm will run on the same device as the data and return the result as a usm_array on the same device. 
 2. Configure Intel Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`. 
 
+Patching (described above) can be helpful in the case of functionality that already exists in scikit-learn because you can import the functions from `sklearn` instead of `sklearnex`. 
+
 ### Distributed Mode
-To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is more tested on Aurora.
+To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is tested more thoroughly on Aurora.
 
 !!! warning "Warning"
     The current version of Intel Extension to scikit-learn does not scale well to multiple GPUs. The cause has been identified, and we're waiting on a fix. However, if you use the oneDAL C++ API, the scaling is much better.
 
-1. Create an MPI communicator using mpi4py if you need to use the rank. (mpi4py is also included in the frameworks module.)
-2. Check for GPU devices. 
-3. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
-4. Using dpctl and your queue, move your data to the GPU devices.
-5. Run the algorithm on that data. The compute will happen where the data is. The algorithm should be from `sklearnex.spmd`. 
+1. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
+2. Using dpctl and your queue, move your data to the GPU devices.
+3. Run the algorithm on that data. The compute will happen where the data is. The algorithm should be from `sklearnex.spmd`. 
+
+Since you are importing the algorithm from `sklearnex` instead of `sklearn`, patching is not necessary here. 
 
 ### An Example Python Script
 This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex Github repo.
@@ -55,17 +57,20 @@ from mpi4py import MPI
 from sklearn.datasets import make_classification
 from sklearnex.spmd.neighbors import KNeighborsClassifier
 
-comm = MPI.COMM_WORLD
-rank = comm.Get_rank()
-
-# Create a GPU SYCL queue to store data on device
+# Create a GPU SYCL queue to store data on device.
 q = dpctl.SyclQueue("gpu")
 
+# mpi4py is one way to handle arranging data across ranks. 
 # For the sake of a concise demo, each rank is generating different random training data. 
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
 X, y = make_classification(n_samples=100000, n_features=8, random_state=rank)
+
+# Move the data to the GPU devices.
 dpt_X = dpt.asarray(X, usm_type="device", sycl_queue=q)
 dpt_y = dpt.asarray(y, usm_type="device", sycl_queue=q)
-
+ 
+# Run the algorithm. 
 model_spmd = KNeighborsClassifier(
     algorithm="brute", n_neighbors=20, weights="uniform", p=2, metric="minkowski"
 )
