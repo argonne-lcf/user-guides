@@ -13,10 +13,10 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | prod-large    | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
-!!!  note
+!!! note
 
-      The debug queue has 32 exclusively dedicated nodes. 
-      If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
+    The debug queue has 32 exclusively dedicated nodes. 
+	If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
 
 `prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
 
