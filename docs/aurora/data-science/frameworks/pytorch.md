@@ -16,7 +16,7 @@ module use /soft/modulefiles/
 module load frameworks
 ```
 Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
-```python
+``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
 '2.3.1+cxx11.abi'
@@ -35,16 +35,18 @@ print(f'Current device ID = {torch.xpu.device(current_tile)}')
 print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
-Output of the above code block:
-???+ example "Example output"
+???+ example "Example output:"
 
-    ``` { .bash .no-copy }
-        GPU availability: True
-        Number of tiles = 12
-        Current tile = 0
-        Current device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
-        Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
-        ```
+    ``` { .python-console .no-copy }
+	GPU availability: True
+    Number of tiles = 12
+    Current tile = 0
+    Current device ID = <intel_extension_for_pytorch.xpu.device object at 0x1540a9f25790>
+    Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) Level-Zero', \
+	type='gpu', driver_version='1.3.30872', total_memory=65536MB, max_compute_units=448, gpu_eu_count=448, \
+	gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, \
+	has_atomic64=1)
+	```
 
 Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node in the above output. 
 
