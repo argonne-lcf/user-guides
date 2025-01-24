@@ -1,20 +1,18 @@
 # Getting Started on MyALCF
 
+
 ## Access MyALCF
 To find MyALCF, either use the myALCF link at the [ALCF homepage](https://alcf.anl.gov) or visit the [MyALCF homepage](https://my.alcf.anl.gov)
 
 
-<br>
-
 ## Logging In
-Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](https://docs.alcf.anl.gov/account-project-management/accounts-and-access/alcf-passcode-tokens/)
-
-<br>
+Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./alcf-passcode-tokens/)
 
 
 ## Home Screen Dashboard
 
 Once logged in to MyALCF, a home screen is presented with useful information pertaining to an individual's projects and the facility. The navigation menu links to get to more in depth tools and information. Simple icons show the current status of ALCF systems. Up-to-date data about current compute project allocations are shown as a high-level view of current activity (if there are no current allocations, there will be a link to request a new allocation.) Links for support help, training event information, and facility news updates fill out the dashboard.
+![Dashboard Screenshot](images/dash.jpg) *Example screenshot of dashboard.*
 
 #### Navigation
 Navigation menu items link to pages to update account and project information, use the sbank accounting tool, view training and documentation, and use any other tools your role allows you to access.  
@@ -23,17 +21,19 @@ ALCF machine status is visible with a green up arrow showing a running system an
 #### Current Allocations  
 Collection of data showing status and usage of compute allocations. If there are no current compute allocations, a link to request a new discretionary allocation is visible. Data for each allocation is presented in rows with five columns per row. 
 - Compute Allocation - The project name, system, award type, allocation ID and dates. 
-- On-track Trend - Comparison of project activity to a linear usage of hours. Expanding the graph shows a more detailed version of the graph with node hour percentage used and months specified. A second graph shows job sizes needed to use all node hours available in the remaining time. 
-- Node Hour Usage - Total node hours available, used, and remaining in the allocation. 
-- 14 Day Jobs Activity show a simple graph of the last two weeks of actvity. Expanding it gives a more detailed view with node hour counts per day and per month. 
-- Hours by Size - How the jobs in the allocation are split in terms of machine nodes used. Expanding this graph will give a visualization of how that split has occured over time.  
+- On-track Trend - Comparison of project activity to a linear usage of hours. Expanding the graph shows a more detailed version of the graph with node hour percentage used and months specified. A second graph shows job sizes needed to use all node hours available in the remaining time.
+![On-track Trend Screenshot](images/ontrack_expand.jpg) *Screenshot of example expanded on-track graph.*
+- Node Hour Usage - Total node hours available, used, and remaining in the allocation.
+- 14 Day Jobs Activity show a simple graph of the last two weeks of actvity. Expanding it gives a more detailed view with node hour counts per day and per month.
+![Activity Screenshot](images/activity_expand.jpg) *Screenshot of example expanded activity graph.*
+- Hours by Size - How the jobs in the allocation are split in terms of machine nodes used. Expanding this graph will give a visualization of how that split has occured over time.
+![Jobs By Size Screenshot](images/jobsize_expand.jpg) *Screenshot of example expanded jobs by size graph.*
+
 #### Links, Training, Facility Updates 
 The bottom portion of the MyALCF home screen shows quick links to training events, support, and current facility news.
 
-<br>
 
-
-## Navigation menu
+## Navigation Menu
 The navigation menu is personalized and shows sections available based on the user role. As more MyALCF features are developed, this menu will update to keep the site easy to navigate. All active account users will be able to access the following:  
 
 #### Update Account
@@ -45,7 +45,9 @@ View and update project memberships, join projects, view and edit UNIX groups an
 #### sbank
 sbank is the compute node hour accounting system at ALCF. It has historically been accessed via the command line but this interface allows for accessing information via graphic-based interactions. The basic capabilities and tools within the graphic interface are the following:
 - Command Builder -
-The Command Builder is a point-and-click style interface that allows for typing commands into the top command bar and/or selecting options from input boxes and/or dropdowns to create specific sbank commands. The default command is ‘sbank-list-allocations’. You can switch to sbank-list-jobs, sbank-detail-allocations, etc. under the top command bar and refine the command below via the input fields. Dynamic help is offered when a field is highlighted to explain the command and give examples. The output commands can be altered in the ‘view options’ panel accessed via the "View Options" button. 
+The Command Builder is a point-and-click style interface that allows for typing commands into the top command bar and/or selecting options from input boxes and/or dropdowns to create specific sbank commands. The default command is ‘sbank-list-allocations’. You can switch to sbank-list-jobs, sbank-detail-allocations, etc. under the top command bar and refine the command below via the input fields. Dynamic help is offered when a field is highlighted to explain the command and give examples. The output commands can be altered in the ‘view options’ panel accessed via the "View Options" button.
+![Command Builder Screenshot](images/commandbuilder.jpg) *Screenshot of command builder portion of sbank page.*
+
 - View Options -
 View Options is shown as a set of three lists with selectable items that affect how the output is presented.
   * Display Fields -
@@ -54,6 +56,9 @@ The column titles that will show in the output. The column titles are listed in 
 Allows for toggling between different sets of rows available. By default, output is for active allocations.
   * Display Options -
 Allows for toggling items shown in the output.
+
+![View Options Screenshot](images/viewoptions.jpg) *Screenshot of the view options portion of sbank page.*
+
 - Output -
 The output can be either text based or an html table that is filterable. This is done by toggling between ‘text output’ and ‘html output’ next to the output window. Output can be saved as .csv by clicking the ‘Save Output’ button next to the output window.
 Commands can also be saved by clicking the ‘save command’ button. 
