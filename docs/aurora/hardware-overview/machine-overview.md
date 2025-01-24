@@ -27,8 +27,8 @@ Intel Data Center GPU Max Series is based on X^e^ Core. Each X^e^ core consist o
 | GPU COMPONENT    | DESCRIPTION                    | COUNT                      | CAPABILITY           |
 |------------------|--------------------------------|----------------------------|----------------------|
 | Stack            | a.k.a. Tile                    | 2                          |                      |
-| X^e^ Vector Engine | a.k.a. EU (execution unit)     | 512 per Stack (4?? active) | 8 threads, 512b SIMD |
-| X^e^ Matrix Engine | a.k.a  systolic part of EU     | 512 per Stack (4?? active) |                      |
+| X^e^ Vector Engine | a.k.a. EU (execution unit)     | 512 per Stack (448 active) | 8 threads, 512b SIMD |
+| X^e^ Matrix Engine | a.k.a  systolic part of EU     | 512 per Stack (448 active) |                      |
 | Register         | 512 bit register               | 128 per thread             |                      |
 | X^e^ Core          | a.k.a. subslice; unit of 8 EUs | 64 per Stack               | 128 per GPU          |
 | L1 cache         |                                |                            | 128 KiB              |
