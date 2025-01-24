@@ -33,14 +33,14 @@ Collection of data showing status and usage of compute allocations. If there are
   ///
   
 - **Node Hour Usage**: Total node hours available, used, and remaining in the allocation.
-- **14 Day Jobs Activity**: show a simple graph of the last two weeks of actvity. Expanding it gives a more detailed view with node hour counts per day and per month.
+- **14 Day Jobs Activity**: show a simple graph of the last two weeks of activity. Expanding it gives a more detailed view with node hour counts per day and per month.
 
   ![Activity Screenshot](images/activity_expand.jpg) 
   /// caption
   Screenshot of example expanded activity graph.
   ///
   
-- **Hours by Size**: How the jobs in the allocation are split in terms of machine nodes used. Expanding this graph will give a visualization of how that split has occured over time.
+- **Hours by Size**: How the jobs in the allocation are split in terms of machine nodes used. Expanding this graph will give a visualization of how that split has occurred over time.
 
   ![Jobs By Size Screenshot](images/jobsize_expand.jpg) 
   /// caption
