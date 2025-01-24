@@ -12,7 +12,6 @@ PyTorch is already installed on Aurora with GPU support and available through th
 To use it from a compute node, please load the following modules:
 
 ```bash
-module use /soft/modulefiles/
 module load frameworks
 ```
 Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
@@ -273,7 +272,7 @@ The key steps in performing distributed training are:
 
 Here is the code to train the [same dummy PyTorch model](#example-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
 
-```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6 8-24 31-33 36 37 34 44 47 48 61 62"
+```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6 8-24 31-33 36 37 43 44 47 48 61 62"
 from mpi4py import MPI
 import os, socket
 import torch
@@ -365,7 +364,7 @@ Here are the steps to run the above code on Aurora:
     
     1. Load the `frameworks_optimized` module:
        ```bash
-       module use /soft/datascience/modulefiles
+       module use /soft/datascience/frameworks_optimized/
        module load frameworks_optimized
        ```
     1. Run the script on 24 tiles, 12 per node:
