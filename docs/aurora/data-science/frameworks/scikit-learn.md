@@ -79,40 +79,12 @@ model_spmd.fit(dpt_X, dpt_y)
 
 ### An Example Job Script
 
-Below we give an example job script, adapted from [the PyTorch page](pytorch.md). Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
+Below we give an example job script. Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
 
 ```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="30-37"
-#!/bin/bash -l
-#PBS -l select=1                                # selecting 1 node
-#PBS -l place=scatter
-#PBS -l walltime=10:00
-#PBS -q debug                         # a specific queue
-#PBS -A <ProjectName>                       # project allocation
-#PBS -l filesystems=<fs1:fs2>                        # specific filesystem, can be a list separated by :
-#PBS -k doe
-#PBS -e </home/$USER/path/to/errordir>            
-#PBS -o </home/$USER/path/to/outdir>              # path to `stdout` or `.OU` files
-#PBS -j oe                                      # output and error placed in the `stdout` file
-#PBS -N a.name.for.the.job
-
-#####################################################################
-# This block configures the total number of ranks, discovering
-# it from PBS variables.
-# 12 Ranks per node, if doing rank/tile
-#####################################################################
-
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=12
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
-
-#####################################################################
-# Environment set up, using the latest frameworks drop
-#####################################################################
-
 module use /soft/modulefiles
 module load frameworks
 
-export NUMEXPR_NUM_THREADS=64
 # This is to resolve an issue due to a package called "numexpr". 
 # It sets the variable 
 # 'numexpr.nthreads' to available number of threads by default, in this case 
@@ -120,20 +92,11 @@ export NUMEXPR_NUM_THREADS=64
 # default. The solution is to either set the 'NUMEXPR_NUM_THREADS' to less than 
 # or equal to '64' or to increase the 'NUMEXPR_MAX_THREADS' to the available 
 # number of threads. Both of these variables can be set manually.
-
-#####################################################################
-# End of environment setup section
-#####################################################################
-
-#####################################################################
-# JOB LAUNCH
-######################################################################
+export NUMEXPR_NUM_THREADS=64
 
 export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
 
 # Launch the script
-mpiexec -np ${NRANKS} -ppn ${NRANKS_PER_NODE} \
---cpu-bind ${CPU_BIND} gpu_tile_compact.sh \
-python knn_mpi4py_spmd.py
+mpiexec -np 12 -ppn 12 --cpu-bind ${CPU_BIND} gpu_tile_compact.sh python knn_mpi4py_spmd.py
 
 ```
