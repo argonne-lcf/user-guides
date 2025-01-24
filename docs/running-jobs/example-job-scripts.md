@@ -14,7 +14,7 @@ The following `submit.sh` example submits a 1-node job to Polaris with 16 MPI ra
 
 The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) program is a compiled C++ code, which is built via `make -f Makefile.nvhpc` in the linked directory after cloning the [Getting Started](https://github.com/argonne-lcf/GettingStarted) repository.
 
-```bash
+```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -24,19 +24,26 @@ The [`hello_affinity`](https://github.com/argonne-lcf/GettingStarted/tree/master
 #PBS -A Catalyst
 
 # Change to working directory
-cd ${PBS_O_WORKDIR}
+cd ${PBS_O_WORKDIR}  # (1)!
 
 # MPI and OpenMP settings
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=16
-NDEPTH=2
-NTHREADS=2
+NNODES=`wc -l < $PBS_NODEFILE` # (2)!
+NRANKS_PER_NODE=16 # (3)!
+NDEPTH=2 # (4)!
+NTHREADS=2 # (5)!
 
-NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE )) # (6)!
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
 
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} -env OMP_PLACES=threads ./hello_affinity
 ```
+
+1. `cd ${PBS_O_WORKDIR}`: change into the working directory from where `qsub` was executed.
+2. ``NNODES= `wc -l < $PBS_NODEFILE` ``: one method for determining the total number of nodes allocated to a job.
+3. `NRANKS_PER_NODE=16`: This is a helper variable to set the number of MPI ranks for each node to 16.
+4. `NDEPTH=2`: This is a helper variable to space MPI ranks 2 "slots" from each other. In this example, individual threads correspond to a slot. This will be used together with the `--cpu-bind` option from `mpiexec` and additional binding options are available (e.g. `numa`, `socket`, `core`, etc.).
+5. `NTHREADS=2`: This is a helper variable to set the number of OpenMP threads per MPI rank.
+6. `NTOTRANKS=$(( NNODES * NRANKS_PER_NODE))`: This is a helper variable calculating the total number of MPI ranks spanning all nodes in the job.
 
 The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
 
@@ -87,7 +94,7 @@ Information on the use of `mpiexec` is available via `man mpiexec`. Some notes o
 This example is similar to the previous, but it exhausts all 64 logical cores available on each compute node CPU. We double the number of MPI ranks to 32, one per each physical core. Using `--cpu-bind=core`, the `--depth` flag value becomes interpreted by Cray MPICH as spacing in number of **physical cores**, so `NDEPTH=1` ensures that rank 0 is bound to CPU core IDs `(0,32)`, the 2 SMT sibling hardware threads that share the first physical core.
 <!-- NOTE about use of "sibling" terminology for logical cores/hardware threads : "SMT sibling hardware threads" as in sysfs thread_siblings_list; not core_siblings_list, which lists all logical core siblings in a socket, as in /proc/cpuinfo siblings entry -->
 
-```bash
+```bash linenums="1" title="submit_hw_threads.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -117,7 +124,7 @@ Many HPC applications do not benefit from utilizing the CPU's SMT2 capabilities,
 
 Using the CPU job submission examples above as a baseline, there are not many additional changes needed to enable an application to make use of the 4 NVIDIA A100 GPUs on each Polaris node. In the following 2-node example (because `#PBS -l select=2` indicates the number of nodes requested), 4 MPI ranks will be started on each node assigning 1 MPI rank to each GPU in a round-robin fashion. A simple example using a similar job submission script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/).
 
-```bash
+```bash linenums="1" title="submit_gpu.sh"
 #!/bin/bash -l
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
@@ -162,7 +169,7 @@ The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ens
 
 ### Hardware threads
 
-```bash
+```bash linenums="1" title="submit_gpu_hw_threads.sh"
 #!/bin/bash -l
 #PBS -l select=2:system=polaris
 #PBS -l place=scatter
@@ -424,7 +431,7 @@ Both ensemble jobs and job arrays become unwieldy and inefficient for very large
 
 An example job array submission script:
 
-```bash
+```bash linenums="1" title="submit_array.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter

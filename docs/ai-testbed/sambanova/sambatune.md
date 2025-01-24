@@ -61,8 +61,8 @@ See SambaNova's SambaTune documentation for more information about using SambaTu
 This section is a good starting point: [Workflow overview](https://docs.sambanova.ai/sambatune/latest/workflow.html)
 
 When finished:<br>
-- Break the ssh tunnel with ctrl-c or equivalent.<br>
-- Stop the sambatune_ui server on the target node with ctrl-c or equivalent.<br>
+- Break the ssh tunnel with ++ctrl+c++ (SIGINT) or equivalent.<br>
+- Stop the sambatune_ui server on the target node with ++ctrl+c++ or equivalent.<br>
 - Exit the interactive slurm job to release the reserved resources.
 
 A disconnected job can be canceled by determining its job id with `squeue -a` and canceling the job with `scancel <jobid>`

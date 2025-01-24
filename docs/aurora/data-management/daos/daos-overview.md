@@ -1,5 +1,7 @@
 # DAOS Architecture
 
+DAOS is a scratch file system. Please note that data may be removed or unavailable at any time. 
+
 DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes.
 DAOS is an open-source software-defined object store designed for massively distributed Non Volatile Memory (NVM) and NVMe SSD. 
 DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5.
@@ -29,7 +31,7 @@ Email support@alcf.anl.gov to request a DAOS pool with the following information
 
 
 ### Note
-This is an initial test DAOS configuration and as such, any data on the DAOS system will envtually be deleted when the configuration is changed into a larger system.
+This is an initial test DAOS configuration and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system.
 Warning will be given before the system is wiped to allow time for users to move any important data off.
 
 
@@ -166,7 +168,7 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-lfilesystems=home:daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=home:daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:  
 ```bash
@@ -430,7 +432,7 @@ python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-6
 
 ## Cluster Size
 
-DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. 
+DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
 
 
 ![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
