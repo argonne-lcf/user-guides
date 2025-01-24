@@ -6,7 +6,7 @@ To find MyALCF, either use the myALCF link at the [ALCF homepage](https://alcf.a
 
 
 ## Logging In
-Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./alcf-passcode-tokens/)
+Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./alcf-passcode-tokens.md)
 
 
 ## Home Screen Dashboard
