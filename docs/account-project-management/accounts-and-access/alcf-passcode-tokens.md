@@ -100,7 +100,7 @@ If you have pushed the button on your physical token more than 10 times, it will
 1. Have your physical token ready.
 
 2. Obtain a challenge sequence:
-    - Initiate an SSH session to a host that allows token authentication (such as polaris.alcf.anl.gov). At the password prompt, just hit 'Enter'. This will cause the CRYPTOcard service to produce a challenge string consisting of 8 numbers.
+    - Initiate an SSH session to a host that allows token authentication (such as `polaris.alcf.anl.gov`). At the password prompt, just hit 'Enter'. This will cause the CRYPTOcard service to produce a challenge string consisting of 8 numbers.
 
 3. Hold down the button on your token for a few seconds until the display says "Init," then let go.
 
