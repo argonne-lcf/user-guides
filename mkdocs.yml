@@ -93,9 +93,11 @@ nav:
     - index.md
 
   - Account and Project Management:
-    - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
-    - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
-    - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+    - Accounts and Access:
+      - MyALCF: account-project-management/accounts-and-access/MyALCF.md
+      - User Account: account-project-management/accounts-and-access/user-account-overview.md
+      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
     - Project Management:
       - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
       - Managing Your Team Members: account-project-management/project-management/team-management.md
@@ -232,6 +234,7 @@ nav:
             - Dask: aurora/data-science/frameworks/dask.md
             - oneCCL: aurora/data-science/frameworks/oneCCL.md
             - scikit-learn: aurora/data-science/frameworks/scikit-learn.md            
+            - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
           - AI Inference:

@@ -24,7 +24,7 @@ module use /soft/modulefiles
 ```
 The available software can then be queried with `module avail`.
 
-Additionally, a suite of software packages is provided via Spack deployments, detailed on the [Spack PE](applications-and-libraries/libraries/spack-pe.md) page.
+Additionally, a suite of software packages is provided via Spack deployments, detailed on the [Spack PE](./applications-and-libraries/libraries/spack-pe.md) page.
 
 ## Submitting and Running Jobs
 

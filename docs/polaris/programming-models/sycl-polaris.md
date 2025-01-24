@@ -1,6 +1,6 @@
 # SYCL
 
->SYCL (pronounced ‘sickle’) is a royalty-free, cross-platform abstraction layer that enables code for heterogeneous processors to be written using standard ISO C++ with the host and kernel code for an application contained in the same source file.
+> SYCL (pronounced ‘sickle’) is a royalty-free, cross-platform abstraction layer that enables code for heterogeneous processors to be written using standard ISO C++ with the host and kernel code for an application contained in the same source file.
 
 - Specification: [https://www.khronos.org/sycl/](https://www.khronos.org/sycl/)
 - Source code of the compiler: [https://github.com/intel/llvm](https://github.com/intel/llvm)
@@ -12,24 +12,24 @@ module load oneapi/upstream
 
 !!! note
 
-    This module (compilers, libraries) gets built periodically from the latest open-source rather than releases. For more details on the release version of compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective github repositories for the compilers and libraries.
+    This module (compilers, libraries) is built periodically from the latest open-source rather than releases. For more details on the release version of the compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective GitHub repositories for the compilers and libraries.
 
 ## Components
-- These are the list of components associated with this module
+- These are the components associated with this module:
 
 | User Application  | Component                                               |
 |-------------------|---------------------------------------------------------|
-| Compilers         | [DPC++](https://github.com/intel/llvm)		      |
+| Compilers         | [DPC++](https://github.com/intel/llvm)                 |
 | oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
 | oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
 | SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
 
 ## Dependencies
-- SYCL programming model is supported through `oneapi` compilers that were built from source-code
-- Loading this module switches the default programming environment to GNU and with the following dependencies
+- The SYCL programming model is supported through `oneapi` compilers that were built from source code.
+- Loading this module switches the default programming environment to GNU with the following dependencies:
   - PrgEnv-gnu
   - cuda-PrgEnv-nvidia
-- Environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=cuda:gpu`
+- An environment variable is set when loading the module: `ONEAPI_DEVICE_SELECTOR=cuda:gpu`
 
 ## Example: How to use SYCL with MPI and OpenMP 
 
@@ -227,14 +227,14 @@ Compile and Run
 $ mpicxx -L/opt/cray/pe/mpich/8.1.28/gtl/lib -lmpi_gtl_cuda -std=c++17 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 main.cpp
 $ mpiexec -n 2 --ppn 2 --depth=1 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
 ```
-For further details regarding the arguments passed to `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](../../running-jobs/job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
+For further details regarding the arguments passed to the `mpiexec` command shown above, please visit the [Job Scheduling and Execution section](../../running-jobs/job-and-queue-scheduling.md). A simple example describing the details and execution of the `set_affinity_gpu_polaris.sh` file can be found [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu).
 
-**Note:** By default, there is no GPU-aware MPI library linking support.  The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.
+**Note:** By default, there is no GPU-aware MPI library linking support. The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.
 
 # oneAPI Math Kernel Library (oneMKL) Interfaces
 [oneMKL Interfaces](https://github.com/oneapi-src/oneMKL) is an open-source implementation of the oneMKL Data Parallel C++ (DPC++) interface according to the [oneMKL specification](https://spec.oneapi.io/versions/latest/elements/oneMKL/source/index.html). It works with multiple devices (backends) using device-specific libraries underneath.
 
-oneMKL is part of oneAPI. Various backend supported are shown below. More Information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
+oneMKL is part of oneAPI. Various backends supported are shown below. More information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
 
 | User Application | Third-Party Library                                          |
 |------------------|--------------------------------------------------------------|
@@ -243,7 +243,7 @@ oneMKL is part of oneAPI. Various backend supported are shown below. More Inform
 |                  | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
 
 ## Example (using onemkl::gemm)
-The following snippet shows how to compile and run a SYCL code with oneMKL library. For instance, a GPU-based GEMM is performed using `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional blas (e.g., AOCL-BLIS) library.
+The following snippet shows how to compile and run a SYCL code with the oneMKL library. For instance, a GPU-based GEMM is performed using the `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional BLAS (e.g., AOCL-BLIS) library.
 ```c++
 #include <limits>
 #include <random>
@@ -369,8 +369,8 @@ int main() {
 
 Compile and Run
 
-The user would need to provide paths the math-libraris as shown below. Also please provide AOCL library for CPU GEMM by `module load aocl`.
-Environment variables `MKLROOT` is defined with `oneapi` module & `AOCL_ROOT` is defined with `aocl` module.
+The user would need to provide paths to the math libraries as shown below. Also, please provide the AOCL library for CPU GEMM by `module load aocl`.
+Environment variables `MKLROOT` is defined with the `oneapi` module & `AOCL_ROOT` is defined with the `aocl` module.
 Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
 ```bash
 $ clang++ -std=c++17 -sycl-std=2020 -O3 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 -L$AOCL_ROOT/lib -lblis -L$MKLROOT/lib -lonemkl sycl_onemkl_gemm.cpp -o sycl_onemkl_gemm.out
