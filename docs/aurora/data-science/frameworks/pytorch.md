@@ -12,7 +12,6 @@ PyTorch is already installed on Aurora with GPU support and available through th
 To use it from a compute node, please load the following modules:
 
 ```bash
-module use /soft/modulefiles/
 module load frameworks
 ```
 Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
@@ -365,7 +364,7 @@ Here are the steps to run the above code on Aurora:
     
     1. Load the `frameworks_optimized` module:
        ```bash
-       module use /soft/datascience/modulefiles
+       module use /soft/datascience/frameworks_optimized/
        module load frameworks_optimized
        ```
     1. Run the script on 24 tiles, 12 per node:
