@@ -13,7 +13,7 @@ After you’ve been provisioned a mobile token, you will receive a notification 
 
 **Auto-Enrollment** (to enroll SafeNet MobilePass+ token automatically):
 
-1. Click on the http:// link in the email. The SafeNet Authentication Service Self-Enrollment will open.
+1. Click on the `http://` link in the email. The SafeNet Authentication Service Self-Enrollment will open.
 2. Click enroll your SafeNet MobilePass+ token.
 3. When prompted to open in MobilePass+, tap **Open**.
 4. You will now be prompted to enter a 6-digit all-numeric PIN.
@@ -61,7 +61,7 @@ After you’ve been provisioned a mobile token, you will receive a notification 
 The physical token allows access to the ALCF systems. This security token uses one-time passwords combined with your PIN for controlled access to the login systems. The physical token is a tracked asset for which you are responsible and is keyed to your use. Please safeguard your token as you would your credit cards or house keys: Do not store username, PIN, or other account-related records with the token. Sharing of tokens is strictly forbidden. Please do not mark on the token or alter it in any way.
 
 ## Enabling Your ALCF Physical Token
-Upon receipt of the CRYPTOCard token, contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to verify your identity and activate the token. If this step is not performed, the CRYPTOCard token will not be able to log on to the ALCF resource.
+Upon receipt of the CRYPTOcard token, contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to verify your identity and activate the token. If this step is not performed, the CRYPTOcard token will not be able to log on to the ALCF resource.
 
 **ALCF Accounts Service Desk Info**
 **Hours:** Monday-Friday 9 a.m. - 5 p.m. (Central time);
@@ -100,7 +100,7 @@ If you have pushed the button on your physical token more than 10 times, it will
 1. Have your physical token ready.
 
 2. Obtain a challenge sequence:
-    - Initiate an SSH session to a host that allows token authentication (such as polaris.alcf.anl.gov). At the password prompt, just hit 'Enter'. This will cause the Cryptocard service to produce a challenge string consisting of 8 numbers.
+    - Initiate an SSH session to a host that allows token authentication (such as `polaris.alcf.anl.gov`). At the password prompt, just hit 'Enter'. This will cause the CRYPTOcard service to produce a challenge string consisting of 8 numbers.
 
 3. Hold down the button on your token for a few seconds until the display says "Init," then let go.
 
@@ -137,7 +137,7 @@ Lemont, IL 60439
 ```
 
 ## Resetting the Physical Token PIN
-Please email us at support@alcf.anl.gov for PIN resets. Once your identity has been verified, we will provide you with a new PIN for your CRYPTOcard token.
+Please email us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov) for PIN resets. Once your identity has been verified, we will provide you with a new PIN for your CRYPTOcard token.
 
 ## Returning a Physical Token
 If you no longer need your physical token, please return it to this address:
