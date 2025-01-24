@@ -233,6 +233,7 @@ nav:
             - TensorFlow: aurora/data-science/frameworks/tensorflow.md
             - Dask: aurora/data-science/frameworks/dask.md
             - oneCCL: aurora/data-science/frameworks/oneCCL.md
+            - scikit-learn: aurora/data-science/frameworks/scikit-learn.md            
             - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md

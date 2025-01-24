@@ -15,8 +15,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 !!! note
 
-	The debug queue has 32 exclusively dedicated nodes. 
-	If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
+  	The debug queue has 32 exclusively dedicated nodes. If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
 
 `prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
 
