@@ -414,7 +414,7 @@ Compose(
 
 
 ## Diffusion Transformer
-The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`.Three configs, for the large and xlarge models in paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This examples uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
+The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
