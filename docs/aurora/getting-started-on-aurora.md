@@ -4,7 +4,7 @@
 
 To log into Aurora:
 ```bash linenums="1"
-ssh <username>@aurora.alcf.anl.gov
+ssh <username>@login.aurora.alcf.anl.gov
 ```
 Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
@@ -83,7 +83,7 @@ Home directories on Aurora are `/home/username`, available on login and compute
 nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
 
 Lustre project directories are under `/lus/flare/projects`. ALCF staff should
-use `/lus/flare/projects/Aurora_deployment` project directory. ESP and ECP
+use `/lus/flare/projects/Aurora_deployment` project directory. ESP
 project members should use their corresponding project directories. The
 project name is similar to the name on Polaris with an \_CNDA suffix
 (e.g.: projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The
@@ -102,7 +102,7 @@ such as Lustre (even those using non-spinning disk and/or burst
 buffers). Project PIs will have requested a storage pool on DAOS via
 INCITE/ALCC/DD allocation proposals.
 
-Preproduction ESP and ECP Aurora project PIs should email
+Preproduction ESP Aurora project PIs should email
 [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request DAOS storage
 with the following information:
 
