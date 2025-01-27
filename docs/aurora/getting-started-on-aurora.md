@@ -4,7 +4,7 @@
 
 To log into Aurora:
 ```bash linenums="1"
-ssh <username>@login.aurora.alcf.anl.gov
+ssh <username>@aurora.alcf.anl.gov
 ```
 Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
