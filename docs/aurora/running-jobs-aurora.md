@@ -46,7 +46,7 @@ Note: Jobs should be submitted only from your allocated project directory and no
 For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 filesystems=flare -A <your_ProjectName> -q debug -I
+qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <your_ProjectName> -q debug -I
 ```
       
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
