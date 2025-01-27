@@ -268,9 +268,9 @@ Below we give a simple job script:
 #PBS -l select=512                              # selecting 512 Nodes
 #PBS -l place=scatter
 #PBS -l walltime=1:59:00
-#PBS -q EarlyAppAccess                          # a specific queue
-#PBS -A Aurora_deployment                       # project allocation
-#PBS -l filesystems=home                        # specific filesystem, can be a list separated by :
+#PBS -q prod                                   # a specific queue
+#PBS -A <ProjectName>                          # project allocation
+#PBS -l filesystems=<fs1:fs2>                   # specific filesystem, can be a list separated by :
 #PBS -k doe
 #PBS -e /home/$USER/path/to/errordir
 #PBS -o /home/$USER/path/to/outdir              # path to `stdout` or `.OU` files

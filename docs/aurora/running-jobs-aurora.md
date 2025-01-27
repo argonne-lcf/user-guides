@@ -65,8 +65,10 @@ Recommended PBSPro options follow.
 #PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
-#PBS -q EarlyAppAccess
+#PBS -q <requested_Queue>
 ```
+
+More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/job-and-queue-scheduling/).
 
 ## Working Around Node Failures
 
