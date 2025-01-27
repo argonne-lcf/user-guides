@@ -421,6 +421,7 @@ First, source a Cerebras PyTorch virtual environment and make sure that the requ
 source ~/R_2.4.0/venv_cerebras_pt/bin/activate
 pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
+
 Instructions for training (for 400 steps):
 ```bash
 cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
