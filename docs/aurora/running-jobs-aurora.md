@@ -10,7 +10,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
 | prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> See table below                              |
-| prod-large    | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
+| prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
 !!! note
@@ -24,7 +24,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | tiny            | 32       | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
+| large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
 | backfill-tiny   | 32       | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
@@ -65,8 +65,10 @@ Recommended PBSPro options follow.
 #PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
-#PBS -q EarlyAppAccess
+#PBS -q <requested_Queue>
 ```
+
+More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/job-and-queue-scheduling.md).
 
 ## Working Around Node Failures
 
