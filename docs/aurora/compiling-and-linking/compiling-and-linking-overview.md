@@ -12,9 +12,8 @@ It is helpful to realize that the home filesystem is `gecko` and the `project` s
 
 The oneAPI programming environment is currently the single environment for building and running software to maximally use the available hardware resources. The oneAPI environment is loaded by default for users and is principally defined by the following set of modules and related variants.
 
-- oneapi
-- intel_compute_runtime
-- mpich
+- oneapi. Intel oneAPI HPC toolkit.
+- mpich. MPI libraries.
 
 Additional modules loading `GNU` CPU compilers and parallel application launch support (e.g. libfabric and cray-pals) are also provided in the default environment. The oneAPI environment provides C, C++, and Fortran compilers and associated MPICH MPI wrappers for building applications targeting CPUs and GPUs based on the OpenMP, SYCL, and OpenCL programming models. 
 
