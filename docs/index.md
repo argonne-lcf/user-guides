@@ -5,7 +5,7 @@ Our user guides contain information for:
 
 - [Account and Project Management](account-project-management/accounts-and-access/user-account-overview.md): Information and instructions on how to manage your ALCF account and awarded project.  
 - [Data Management](data-management/filesystem-and-storage/data-storage.md): Information on our file systems that are mounted globally across all of our production systems.
-- [Aurora/Sunspot](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for our upcoming exacale supercomputer.
+- [Aurora](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
 - [Polaris](polaris/getting-started.md): Information on how to get started our newest supercomputer.
 - [AI Testbed](ai-testbed/getting-started.md): Information on how to use our AI Accelerators.
 - [Services](services/getting-started.md): Information on how to use various services provided across clusters.

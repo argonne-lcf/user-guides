@@ -3,7 +3,7 @@ mkdocs>=1.5.0
 mkdocs-video
 mkdocs-include-markdown-plugin
 mkdocs-codeinclude-plugin>=0.2.1
-pymdown-extensions>=9.10
+pymdown-extensions>=10.12
 mkdocs-get-deps
 #mkdocs-git-authors-plugin
 mkdocs-material-extensions

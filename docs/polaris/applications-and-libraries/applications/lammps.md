@@ -2,7 +2,7 @@
 
 ## Overview
 
-LAMMPS is a general-purpose molecular dynamics software package for massively parallel computers. It is written in an exceptionally clean style that makes it one of the more popular codes for users to extend and it currently has dozens of user-developed extensions.
+LAMMPS is a general-purpose molecular dynamics software package for massively parallel computers. It is written in an exceptionally clean style that makes it one of the more popular codes for users to extend, and it currently has dozens of user-developed extensions.
 
 For details about the code and its usage, see the [LAMMPS](http://lammps.sandia.gov/) home page. This page provides information specific to running on Polaris at the ALCF.
 
@@ -16,11 +16,11 @@ LAMMPS is an open-source code, which can be downloaded from the LAMMPS [website]
 
 ## Building on Polaris 
 
-After LAMMPS has been downloaded and unpacked on an ALCF filesystem, users should see a directory whose name is of the form `lammps-<version>`. One should then see the Makefile `lammps-<version>/src/MAKE/MACHINES/Makefile.polaris` in recent versions that can be used as a starting point for compilation on Polaris. Copies of Makefiles for building with the GPU/KOKKOS package using CUDA for GPU support with the GNU/NVHPC compiler are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For older versions of LAMMPS, you may need to take an existing Makefile (e.g. Makefile.mpi) for your specific version of LAMMPS and edit the top portion appropratiately to create a new Makefile.polaris.
+After LAMMPS has been downloaded and unpacked on an ALCF filesystem, users should see a directory whose name is of the form `lammps-<version>`. One should then see the Makefile `lammps-<version>/src/MAKE/MACHINES/Makefile.polaris` in recent versions that can be used as a starting point for compilation on Polaris. Copies of Makefiles for building with the GPU/KOKKOS package using CUDA for GPU support with the GNU/NVHPC compiler are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For older versions of LAMMPS, you may need to take an existing Makefile (e.g., Makefile.mpi) for your specific version of LAMMPS and edit the top portion appropriately to create a new Makefile.polaris.
 
 ### KOKKOS package and GNU compilers
 
-The following modules are useful for this particular build. Note, the `cmake` module is not required if using the GNU Makefile procedure to build LAMMPS. The initial `module restore` is just setting the default environment as the starting point. Users may find it useful to copy these module commands into a small helper script to assist with compiling and running LAMMPS (e.g. `setup_lammps_gnu.sh`). 
+The following modules are useful for this particular build. Note, the `cmake` module is not required if using the GNU Makefile procedure to build LAMMPS. The initial `module restore` is just setting the default environment as the starting point. Users may find it useful to copy these module commands into a small helper script to assist with compiling and running LAMMPS (e.g., `setup_lammps_gnu.sh`). 
 
 ```
 module restore
@@ -67,7 +67,7 @@ LIB =
 SIZE =      size
 ```
 
-With the appropriate LAMMPS Makefile in place an executable can be compiled as in the following example. Note, per-user limits on the login nodes will reduce the maximum parallelism for compilation. Users are encouraged to compile on a compute node in an interactive session if necessary.
+With the appropriate LAMMPS Makefile in place, an executable can be compiled as in the following example. Note, per-user limits on the login nodes will reduce the maximum parallelism for compilation. Users are encouraged to compile on a compute node in an interactive session if necessary.
 
 ```
 cd lammps-<version>/src
@@ -77,7 +77,7 @@ make polaris_gnu_kokkos -j 32
 
 ### KOKKOS package and NVHPC compilers
 
-The following modules are useful for this particular build. Note, the `cmake` module is not required if using the GNU Makefile procedure to build LAMMPS. The initial `module restore` is just setting the default environment as the starting point. Users may find it useful to copy these module commands into a small helper script to assist with compiling and running LAMMPS (e.g. `setup_lammps_nvhpc.sh`). 
+The following modules are useful for this particular build. Note, the `cmake` module is not required if using the GNU Makefile procedure to build LAMMPS. The initial `module restore` is just setting the default environment as the starting point. Users may find it useful to copy these module commands into a small helper script to assist with compiling and running LAMMPS (e.g., `setup_lammps_nvhpc.sh`). 
 
 ```
 module restore
@@ -123,7 +123,7 @@ LIB += $(CRAY_LIB)
 SIZE =      size
 ```
 
-With the appropriate LAMMPS Makefile in place an executable can be compiled as in the following example. Note, per-user limits on the login nodes will reduce the maximum parallelism for compilation. Users are encouraged to compile on a compute node in an interactive session if necessary.
+With the appropriate LAMMPS Makefile in place, an executable can be compiled as in the following example. Note, per-user limits on the login nodes will reduce the maximum parallelism for compilation. Users are encouraged to compile on a compute node in an interactive session if necessary.
 
 ```
 cd lammps-<version>/src
@@ -178,4 +178,3 @@ The module environments above can be used to build LAMMPS with the GPU package a
 ## Performance Notes
 
 Some useful information on accelerator packages and expectations can be found on the LAMMPS website [here](https://docs.lammps.org/Speed_packages.html).
-

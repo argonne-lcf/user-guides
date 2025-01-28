@@ -24,7 +24,7 @@ module load autoconf cmake
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](running-jobs-aurora.md)
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](running-jobs-aurora.md).
 
 
 ## Early User Notes and Known Issues
@@ -32,20 +32,20 @@ Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../
 * Hardware instabilities - possible frequent downtime
 * Software instabilities - non-optimized compilers, libraries and tools; frequent software updates
 * Non-final configurations (storage, OS versions, etc...)
-* Short notice for downtimes (scheduled downtimes will be with 4 hr notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
+* Short notice for downtimes (scheduled downtimes will be with 4 hour notice, but sometimes downtimes may occur with just an email notice). Notices go to the <aurora-notify@alcf.anl.gov> email list. All users with access are added to the list initially.
 
 See [Early User Notes and Known Issues](./known-issues.md) for details.
 
 
 ## Python on Aurora
 
-Frameworks on Aurora can be loaded into a users environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
+Frameworks on Aurora can be loaded into a user's environment by loading the `frameworks` module as follows. The conda environment loaded with this module makes available TensorFlow, Horovod, and Pytorch with Intel extensions and optimizations.
 
 ```bash linenums="1"
 module load frameworks
 ```
 
-Note that there is a separate Python installation in `spack-pe-gcc` which is used as a dependency of a number of Spack PE packages. Users will need to exercise caution when loading both `frameworks` and `python` from the Spack PE. For more details please about Python on Aurora please review [Python on Aurora](./data-science/python.md)
+Note that there is a separate Python installation in `spack-pe-gcc` which is used as a dependency of a number of Spack PE packages. Users will need to exercise caution when loading both `frameworks` and `python` from the Spack PE. For more details please about Python on Aurora please review [Python on Aurora](./data-science/python.md).
 
 ## Software Environment
 
@@ -80,17 +80,11 @@ export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,po
 ### Home and Project Directories
 
 Home directories on Aurora are `/home/username`, available on login and compute
-nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
+nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. 
 
-Lustre project directories are under `/lus/flare/projects`. ALCF staff should
-use `/lus/flare/projects/Aurora_deployment` project directory. ESP and ECP
-project members should use their corresponding project directories. The
-project name is similar to the name on Polaris with an \_CNDA suffix
-(e.g.: projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The
+Lustre project directories are under `/lus/flare/projects`. Default quota is 1 TB. The
 project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if
 their project requires additional storage.
-
-**Note:** The Project Lustre File system has changed from Gecko to Flare. 
 
 #### DAOS
 
@@ -102,13 +96,15 @@ such as Lustre (even those using non-spinning disk and/or burst
 buffers). Project PIs will have requested a storage pool on DAOS via
 INCITE/ALCC/DD allocation proposals.
 
-Preproduction ESP and ECP Aurora project PIs should email
+Aurora project PIs should email
 [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request DAOS storage
-with the following information
+with the following information:
 
-* Project name (e.g. FOO\_aesp\_CNDA)
-* Storage capacity (For ESP projects, if this is different than in the ESP
+* Project name 
+* Storage capacity (if this is different than in the current project
   proposal, please give brief justification)
+* Who should be the designated owner of the pool (please provide their ALCF username). The owner can be the project PI or any other team member, but they need to have an active ALCF account".
+* Have you used DAOS in the past? Is yes, please provide details.
 
 See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using DAOS for I/O.
 

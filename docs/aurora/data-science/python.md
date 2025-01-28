@@ -37,6 +37,10 @@ encounter a scenario in which you need to extend the functionality of the
 environment (i.e. install additional packages).
 In this case, we suggest the use of Python virtual environments. 
 
+!!! warning
+	
+	There are several alternative approaches for extending or modifying the base Anaconda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
+
 Creating and activating a new virtual environment (`venv`) is straightforward:
 
 ```bash
