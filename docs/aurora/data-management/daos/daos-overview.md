@@ -168,7 +168,7 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:  
 ```bash
@@ -177,7 +177,7 @@ qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems
 
 Job submission with DAOS: 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare:daos_user -q lustre_scaling 	./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare:daos_user -l daos=daos_user -q lustre_scaling ./pbs_script1.sh  or - I 
 ```
 
 
@@ -233,11 +233,12 @@ Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS.
 #PBS -q lustre_scaling
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
+#PBS -l daos=daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=flare:daos_user -q lustre_scaling ./pbs_script.sh or - I 
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=flare:daos_user -l daos=daos_user -q lustre_scaling ./pbs_script.sh or - I 
 
 
-# please do not miss -l filesystems=daos_user in your qsub :'(
+# please do not miss -l filesystems=daos_user and -l daos=daos_user in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
@@ -442,7 +443,7 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 
 ```bash
 Check that you requested DAOS
-    qsub –l filesystems=daos_user
+    qsub –l filesystems=daos_user -l daos=daos_user
 Did you load DAOS module?
     module load daos
 Do you have your DAOS pool allocated?
