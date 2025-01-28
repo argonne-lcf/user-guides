@@ -34,6 +34,10 @@ To request an extension of your existing discretionary allocation or to request 
 
 ## Sub-allocations
 
+!!! tip inline end
+
+    See `sbank new suballocation -h` for all the options.
+
 Suballocations let PIs control who in their team can run jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates).
 
 **Step 1: Create Suballocations (Project PI):**
@@ -43,10 +47,6 @@ PI creates suballocations
 ```bash
 sbank new sub <allocationid> --name <nameofsuballoc>
 ```
-
-!!! tip inline end
-
-    See `sbank new suballocation -h` for all the options.
 
 **Step 2: Manage Suballocations (Project PI)**
 
@@ -85,12 +85,12 @@ sbank e sub <suballocationID> -S <start_date> -E <end_date>
 PI adds hours to a suballocation:
 
 ```bash
-sbank e sub <projectname>::<nameofsuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameofsuballoc2>
+sbank e sub <projectname>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameOfDestSuballoc>
 ```
 
-!!! note 
+!!! note
 
-    `hours-to-move` must be greater than or equal to the available balance for the suballocation `nameofsuballoc`.
+    `hours` must be less than or equal to the available balance for the suballocation `nameOfSourceSuballoc`.
 
 !!! tip inline end
 
