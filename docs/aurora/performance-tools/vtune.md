@@ -85,19 +85,17 @@ zeCommandListAppendMemoryCopy
 
 ### After collecting the performance data, *VTune profiler web server* can be used for the post-processing.
 
-Step 1: Open a new terminal and log into Sunspot login node (no X11 forwarding required)
+Step 1: Open a new terminal and log into an Aurora login node (no X11 forwarding required)
 ```
-$ ssh <username>@bastion.alcf.anl.gov
 $ ssh <username>@login.aurora.alcf.anl.gov
 ```
-Step 2: Start VTune server on a Sunspot login node after loading oneapi module and setting corresponding environmental variables for VTune
+Step 2: Start VTune server on an Aurora login node after loading oneapi module and setting corresponding environmental variables for VTune
 ```
 $ module load oneapi
 $ vtune-backend --data-directory=<location of precollected VTune results>
 ```
-Step 3: Open a new terminal with SSH port forwarding enabled (need 2 hops)
+Step 3: Open a new terminal with SSH port forwarding enabled
 ```
-$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@bastion.alcf.anl.gov
 $ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@login.aurora.alcf.anl.gov
 ```
 
