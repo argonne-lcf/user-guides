@@ -6,7 +6,7 @@ A batch submission script for the following example is available [here](https://
 
 !!! warning "Warning"
 
-    The instructions below should be **run directly from a compute node**.
+    The instructions below should be **ran directly from a compute node**.
 
     Explicitly, to request an interactive job (from `polaris-login`):
     ```shell
@@ -15,55 +15,59 @@ A batch submission script for the following example is available [here](https://
 
     Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
-1. Load and activate the base `conda` environment:
-   ```bash
-   module load conda
-   conda activate base
-   ```
 
-2. We've installed the requirements for running `gpt-neox` into a virtual environment. To activate this environment:
-   ```bash
-   source /soft/datascience/venvs/polaris/2022-09-08/bin/activate
-   ```
+1. Load and activate the base `conda` environment:
+  ```bash
+  module load conda
+  conda activate base
+  ```
+
+2. We've installed the requirements for running `gpt-neox` into a virtual
+   environment. To activate this environment,
+  ```bash
+  source /soft/datascience/venvs/polaris/2022-09-08/bin/activate
+  ```
 
 3. Clone the `EleutherAI/gpt-neox` repository if it doesn't already exist:
-   ```bash
-   git clone https://github.com/EleutherAI/gpt-neox
-   ```
+  ```bash
+  git clone https://github.com/EleutherAI/gpt-neox
+  ```
 
 4. Navigate into the `gpt-neox` directory:
-   ```bash
-   cd gpt-neox
-   ```
-   <div class="admonition note" style="display:inline-block;margin-top:auto;">
-   <p class="admonition-title">Note</p>
-   <p>The remaining instructions assume you're inside the <code>gpt-neox</code> directory.</p>
-   </div>
+  ```bash
+  cd gpt-neox
+  ```
+  <div class="admonition note" style="display:inline-block;margin-top:auto;">
+  <p class="admonition-title">Note</p>
+  <p>The remaining instructions assume you're inside the <code>gpt-neox</code> directory
+  </p>
+  </div>
 
 5. Create a DeepSpeed compliant `hostfile` (each line is formatted as `hostname, slots=N`):
-   ```bash
-   cat $PBS_NODEFILE > hostfile
-   sed -e 's/$/ slots=4/' -i hostfile
-   export DLTS_HOSTFILE=hostfile 
-   ```
+  ```bash
+  cat $PBS_NODEFILE > hostfile
+  sed -e 's/$/ slots=4/' -i hostfile
+  export DLTS_HOSTFILE=hostfile 
+  ```
 
-6. Create a `.deepspeed_env` file to ensure a consistent environment across all workers:
+6. Create a `.deepspeed_env` file to ensure a consistent environment across all
+   workers
    ```bash
-   echo "PATH=${PATH}" > .deepspeed_env
-   echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> .deepspeed_env
-   echo "http_proxy=${http_proxy}" >> .deepspeed_env
-   echo "https_proxy=${https_proxy}" >> .deepspeed_env
+   echo "PATH=${PATH} > .deepspeed_env"
+   echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH} >> .deepspeed_env"
+   echo "http_proxy=${http_proxy} >> .deepspeed_env"
+   echo "https_proxy=${https_proxy} >> .deepspeed_env"
    ```
 
 7. Prepare data:
-   ```bash
-   python3 prepare_data.py -d ./data
-   ```
+  ```bash
+  python3 prepare_data.py -d ./data
+  ```
 
 8. Train:
-   ```bash
-   python3 ./deepy.py train.py -d configs small.yml local_setup.yml
-   ```
+  ```bash
+  python3 ./deepy.py train.py -d configs small.yml local_setup.yml
+  ```
 
 ---
 
@@ -75,4 +79,6 @@ A batch submission script for the following example is available [here](https://
     Using /home/user/.cache/torch_extensions as PyTorch extensions root...
     ```
 
-    there may be a leftover `.lock` file from an aborted build. Cleaning either the whole `.cache` or the extensions' sub-directory should force a clean build on the next attempt.
+    there may be a leftover `.lock` file from an aborted build. Cleaning
+    either the whole `.cache` or the extensions' sub-directory should force a
+    clean build on the next attempt.
