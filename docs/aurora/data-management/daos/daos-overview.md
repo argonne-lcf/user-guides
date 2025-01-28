@@ -172,12 +172,12 @@ The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the
 
 Job submission without requesting DAOS:  
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare -q lustre_scaling ./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A debug -k doe -l filesystems=flare -q lustre_scaling ./pbs_script1.sh  or - I 
 ```
 
 Job submission with DAOS: 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare:daos_user -q lustre_scaling 	./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A debug -k doe -l filesystems=flare:daos_user -q lustre_scaling 	./pbs_script1.sh  or - I 
 ```
 
 
@@ -229,12 +229,12 @@ Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS.
 #!/bin/bash -x
 #PBS -l select=512
 #PBS -l walltime=01:00:00
-#PBS -A Aurora_deployment
+#PBS -A prod
 #PBS -q lustre_scaling
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=flare:daos_user -q lustre_scaling ./pbs_script.sh or - I 
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A prod -l filesystems=flare:daos_user -q lustre_scaling ./pbs_script.sh or - I 
 
 
 # please do not miss -l filesystems=daos_user in your qsub :'(
