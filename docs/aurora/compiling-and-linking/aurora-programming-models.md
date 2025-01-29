@@ -30,4 +30,9 @@ For some build systems (e.g., `cmake`), it may be necessary to use the backslash
 -Xopenmp-target-backend=spir64_gen \"-device pvc\"
 ```
 
-OpenCL is supported but does not require specific compiler flags per se, as the offloaded kernels are JIT-compiled. One does need to link against the OpenCL library `-lOpenCL`. Abstraction programming models, such as Kokkos, can be built on top of these programming models.
+OpenCL is supported, but does not require specific compiler flags per-se as the offloaded kernels are JIT-compiled. One does need to link against the OpenCL library `-lOpenCL`. Abstraction programming models, such as Kokkos, can be built on top of these programming models.
+
+[//]: # (Do we need a "Mapping Programming Models" table? It's just oneAPI compilers today...)
+
+
+
