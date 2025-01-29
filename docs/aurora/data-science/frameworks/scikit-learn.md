@@ -88,7 +88,7 @@ model_spmd.fit(dpt_X, dpt_y)
 
 Below we give an example job script. Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
 
-```bash
+```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="30-37"
 module use /soft/modulefiles
 module load frameworks
 

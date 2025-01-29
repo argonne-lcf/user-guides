@@ -44,31 +44,31 @@ mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
 
 The man page and `gdb-oneapi --help` do not include any information about GPU debugging—only the generic `gdb` information. The current build of `gdb-oneapi` does support the TUI (Text User Interface) mode via the `--tui` command-line switch. The `help` command from the `(gdb)` command prompt command-line interface does not offer any insights into GPU debugging, since the commands to use are really just the normal gdb commands. The key is that it provides access to GPU threads, not just CPU threads. If you query the threads, you will see CPU threads (such as OpenMP threads) and example GPU threads if there are any scheduled. The GPU threads look like the last line in this example output, in which 2.481 is a single GPU thread id running on that GPU. All the other threads in this example are CPU threads, which are mostly waiting for GPU kernels to complete:
     
-```bash
-(gdb) info threads -s
-Id      Target Id                                          Frame
-1.1     Thread 0x155523298880 (LWP 25335) "xgc-es-cpp-gpu" 0x000015552d310407 in sched_yield () from /lib64/libc.so.6
-1.3     Thread 0x15551b307700 (LWP 27775) "xgc-es-cpp-gpu" 0x000015552d2efba1 in clock_nanosleep@GLIBC_2.2.5 () from /lib64/libc.so.6
-1.4     Thread 0x155515e9b700 (LWP 27809) "xgc-es-cpp-gpu" 0x000015552d32bcdf in epoll_wait () from /lib64/libc.so.6
-1.5     Thread 0x155505c17780 (LWP 28039) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.6     Thread 0x155505815800 (LWP 28046) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.7     Thread 0x155505413880 (LWP 28056) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.8     Thread 0x155505011900 (LWP 28062) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.9     Thread 0x155504c0f980 (LWP 28065) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.10    Thread 0x15550480da00 (LWP 28070) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.11    Thread 0x15550440ba80 (LWP 28075) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.12    Thread 0x155504009b00 (LWP 28080) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.13    Thread 0x155503c07b80 (LWP 28096) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.14    Thread 0x155503805c00 (LWP 28110) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.15    Thread 0x155503403c80 (LWP 28121) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.16    Thread 0x155503001d00 (LWP 28137) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.17    Thread 0x155502bffd80 (LWP 28151) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.18    Thread 0x1555027fde00 (LWP 28153) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.19    Thread 0x1555023fbe80 (LWP 28155) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-1.20    Thread 0x155501ffa700 (LWP 28160) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
-* 2.481:0 ZE 0.7.4.0                                       get_f0_grid<Kokkos::Device<Kokkos::Experimental::SYCL, Kokkos::Experimental::SYCLDeviceUSMSpace> >
- (grid=..., magnetic_field=..., species=..., vgrid=..., pol_decomp=...,
- part=..., grid_wts0=..., f0_ptl=...) at getf0.tpp:22
+```bash  title="Example gdb output"
+    (gdb) info threads -s
+    Id      Target Id                                          Frame
+    1.1     Thread 0x155523298880 (LWP 25335) "xgc-es-cpp-gpu" 0x000015552d310407 in sched_yield () from /lib64/libc.so.6
+    1.3     Thread 0x15551b307700 (LWP 27775) "xgc-es-cpp-gpu" 0x000015552d2efba1 in clock_nanosleep@GLIBC_2.2.5 () from /lib64/libc.so.6
+    1.4     Thread 0x155515e9b700 (LWP 27809) "xgc-es-cpp-gpu" 0x000015552d32bcdf in epoll_wait () from /lib64/libc.so.6
+    1.5     Thread 0x155505c17780 (LWP 28039) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.6     Thread 0x155505815800 (LWP 28046) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.7     Thread 0x155505413880 (LWP 28056) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.8     Thread 0x155505011900 (LWP 28062) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.9     Thread 0x155504c0f980 (LWP 28065) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.10    Thread 0x15550480da00 (LWP 28070) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.11    Thread 0x15550440ba80 (LWP 28075) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.12    Thread 0x155504009b00 (LWP 28080) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.13    Thread 0x155503c07b80 (LWP 28096) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.14    Thread 0x155503805c00 (LWP 28110) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.15    Thread 0x155503403c80 (LWP 28121) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.16    Thread 0x155503001d00 (LWP 28137) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.17    Thread 0x155502bffd80 (LWP 28151) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.18    Thread 0x1555027fde00 (LWP 28153) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.19    Thread 0x1555023fbe80 (LWP 28155) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+    1.20    Thread 0x155501ffa700 (LWP 28160) "xgc-es-cpp-gpu" 0x000015552d41a70c in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+	* 2.481:0 ZE 0.7.4.0                                       get_f0_grid<Kokkos::Device<Kokkos::Experimental::SYCL, Kokkos::Experimental::SYCLDeviceUSMSpace> >
+     (grid=..., magnetic_field=..., species=..., vgrid=..., pol_decomp=...,
+     part=..., grid_wts0=..., f0_ptl=...) at getf0.tpp:22
 ```
 
 You may use the `thread apply` command followed by a specific thread number, followed by a `gdb` command, to execute that command on the specific thread. For example:
@@ -108,8 +108,7 @@ before the first `run` command (or sometime before you expect the fault to happe
 ### Noninteractive Debugging
 
 For MPI programs run using a wrapper script to map ranks to GPUs, you may use a modified wrapper script to invoke a set of predetermined `gdb-oneapi` commands on some or all of the ranks. For example:
-
-```bash
+```bash linenums="1" title="mpi-wrapper-gdb-oneapi.sh"
 #!/bin/bash
 display_help() {
   echo " Will map MPI ranks to gpu tiles in compact and then round-robin fashion"

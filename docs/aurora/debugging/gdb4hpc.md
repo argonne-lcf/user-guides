@@ -10,7 +10,7 @@ Determine the `jobid` of interest:
 qstat -u $USER
 ```
 
-```bash
+``` { .bash .no-copy }
 harms@aurora-uan-0009:~/working/all2all> qstat -u $USER
 
 aurora-pbs-0001.hostmgmt.cm.aurora.alcf.anl.gov: 
@@ -20,20 +20,19 @@ Job ID          Username Queue    Jobname    SessID NDS TSK Memory Time  S Time
 127750.aurora-* harms    workq    all2all       --    4   4    --  00:30 R   -- 
 ```
 
-Next, find a node the job is running on. Choose the first node in the list of `vnodes`:
-
-```bash
+Next find a node the job is running on. Choose the first node in the list of `vnodes`:
+```bash linenums="1"
 qstat -f 127750 | grep exec_vnode
 ```
 
-```bash
+``` { .bash .no-copy }
 harms@aurora-uan-0009:~/working/all2all> qstat -f 127750 | grep exec_vnode
 exec_vnode = (x4305c2s6b0n0:ncpus=1)+(x4305c2s7b0n0:ncpus=1)+(x4305c4s0b0n0
 ```
 
 Log in to this node, find your `mpiexec` process id, and run `gdb4hpc`:
 
-```bash
+```bash linenums="1"
 ssh x4305c2s6b0n0
 ps -eaf | grep mpiexec
 module load gdb4hpc
@@ -41,7 +40,7 @@ CTI_WLM_IMPL=ssh gdb4hpc
 ```
 
 ???+ example "Example output"
-    ```bash
+    ``` { .bash .no-copy}
     harms@aurora-uan-0009:~/working/all2all> ssh x4305c2s6b0n0
     harms@x4305c2s6b0n0:~> ps -eaf | grep mpiexec
     harms    108581 108569  0 16:05 ?        00:00:00 mpiexec -l --no-transfer --line-buffer --np 16 -ppn 4 --cpu-bind core ./a2a-p2p
@@ -61,13 +60,13 @@ CTI_WLM_IMPL=ssh gdb4hpc
 
 Now attach to the `mpiexec` process:
 
-```bash
-dbg all> attach $a <pid>
+``` { .bash .no-copy }
+  dbg all> attach $a <pid>
 ```
 
 ???+ example "Example output"
 
-    ```bash
+    ```{ .bash .no-copy }
 	dbg all> attach $a 108581
 	0/16 ranks connected... (timeout in 299 seconds)
 	0/16 ranks connected... (timeout in 298 seconds)

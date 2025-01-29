@@ -54,7 +54,7 @@ fi
 
 The wrapper above can be deployed using the following PBS job script:
 
-```bash
+```bash linenums="1" title="job_script.sh"
 #!/bin/bash -x
 #PBS -l select=4
 #PBS -l place=scatter

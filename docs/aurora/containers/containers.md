@@ -24,7 +24,7 @@ Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additi
     Refer to [job scheduling and execution](../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
 ### Load Modules on Compute Node
-```bash
+```bash linenums="1"
 # load apptainer
 module load spack-pe-gcc
 module load apptainer
@@ -36,20 +36,20 @@ Containers on Aurora can be built by writing Dockerfiles on a local machine and 
 
 Since Docker requires root privileges, which users do not have on Aurora, existing Docker containers must be converted to Apptainer. To build a Docker-based container on Aurora, use the following as an example:
 
-```bash
+```bash linenums="1"
 ## Build an image
 apptainer build intel-optimized-pytorch.sing docker://intel/intel-optimized-pytorch
 ```
 
 ### Example to run Hello World using Apptainer
-```bash
+```bash linenums="1"
 apptainer exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
 ```
 
 ### Example to run Postgres Database using Apptainer
 To run Postgres on an Aurora compute node, below is a full example.
 
-```bash
+```bash linenums="1" title="apptainer_aurora_example.sh"
 # qsub from a UAN/login node
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -l filesystems=<fs1:fs2> -I
 
