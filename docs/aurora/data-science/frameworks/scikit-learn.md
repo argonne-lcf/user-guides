@@ -33,7 +33,7 @@ from sklearnex.neighbors import NearestNeighbors
 
 Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. (If not, see the [Python page](../python.md).) dpctl implements oneAPI concepts like queues and devices.
 
-As described in more detail in Intel's documentation [here](https://intel.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU.
+As described in more detail in Intel's documentation [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU.
 
 1. Pass the input data to the algorithm as `dpctl.tensor.usm_ndarray`. Then the algorithm will run on the same device as the data and return the result as a usm_array on the same device.
 2. Configure Intel Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`.
@@ -55,7 +55,7 @@ Since you are importing the algorithm from `sklearnex` instead of `sklearn`, pat
 
 ### An Example Python Script
 
-This example is adapted from [an example](https://github.com/oneapi-src/oneDAL/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex GitHub repo.
+This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex GitHub repo.
 
 ```python
 import dpctl
