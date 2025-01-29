@@ -2,7 +2,7 @@
 
 [scikit-learn](https://scikit-learn.org/stable/) is a popular open-source Python library for machine learning. It has wide coverage of machine learning algorithms (other than neural networks), such as k-means clustering and random forests.
 
-scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs and adds support for additional functionality, such as incremental and distributed algorithms. For more information, see the [scikit-learn-intelex GitHub page](https://github.com/oneapi-src/oneDAL), [the documentation](https://intel.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw).
+scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs and adds support for additional functionality, such as incremental and distributed algorithms. For more information, see the [scikit-learn-intelex GitHub page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw).
 
 ## Environment Setup
 
@@ -14,9 +14,9 @@ Intel Extension for Scikit-learn is already pre-installed on Aurora, available i
 
 To accelerate existing scikit-learn code with minimal code changes, Intel Extension for Scikit-learn uses patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL).
 
-Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://intel.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, the Intel Extension will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://intel.github.io/scikit-learn-intelex/latest/verbose.html), for example with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
+Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, the Intel Extension will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example, with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
 
-There are multiple ways to patch scikit-learn with the Intel Extension, as Intel documents [here](https://intel.github.io/scikit-learn-intelex/latest/what-is-patching.html). For example, you can patch within the script, like this:
+There are multiple ways to patch scikit-learn with the Intel Extension, as Intel documents [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/what-is-patching.html). For example, you can patch within the script, like this:
 
 ```python
 from sklearnex import patch_sklearn
