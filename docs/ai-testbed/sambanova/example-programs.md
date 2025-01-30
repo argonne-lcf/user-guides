@@ -304,8 +304,8 @@ to a file with the same names into the current directory using your favorite edi
 or copy the contents from `/data/ANL/scripts/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/Gpt1.5B_base_single_run.sh`.
 
 ```bash
-cp /data/ANL/scripts/Gpt1.5B_base_single_compile.sh ~/apps/nlp/Gpt1.5B_single/
-cp /data/ANL/scripts/Gpt1.5B_base_single_run.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_compile.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_run.sh ~/apps/nlp/Gpt1.5B_single/
 ```
 
 Run the script with batch size as an argument(shown below with an example of 32).
