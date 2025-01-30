@@ -288,7 +288,7 @@ inner train loop time : 374.6789753437042 for 10 epochs, number of global steps:
 ## Gpt 1.5B
 
 The Gpt 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`.
-The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at the path `/data/ANL/scripts/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/Gpt1.5B_base_single_run.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. The scripts are provided for reference. 
+The scripts containing the `compile` and `run` commands for Gpt1.5B model can be accessed at the path '/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_compile.sh` and '/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_run.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. The scripts are provided for reference. 
 
 Change directory and copy files.
 
