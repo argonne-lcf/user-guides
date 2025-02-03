@@ -7,6 +7,28 @@
   |:--------|:---------:|:-------------:|:------------:|
   | Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
 
+Currently, as when used with Sunspot, [https://gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov) must be accessed via a proxy.
+
+The following command will connect to an Aurora login node from your local system and establish the required proxy: `ssh login.aurora.alcf.anl.gov -D localhost:25565`
+
+<small>(`25565` is the proxy port, it may be changed as needed.)</small>
+
+In order to use the proxy, configure your web browser to use a SOCKS proxy.
+
+##### Instructions for Firefox (other browsers are similar):
+1. Open Firefox settings
+2. Navigate to "General" > "Network Settings" > "Settings" 
+    <small>(at the bottom of the General settings page.)</small>
+3. Ensure "Manual proxy configuration" is selected
+4. Fill the "SOCKS Host" field with 'localhost'
+5. Fill the associated port field with '25565' (or an alternate port you specified in your ssh command)
+6. Ensure "SOCKS v5" is selected
+7. Ensure "Proxy DNS when using SOCKS v5" is selected"
+8. Select "OK"
+
+**NOTE: You will not have internet access in Firefox while using the proxy. Select "No proxy" to re-enable internet access.**
+
+For ease of use, many users have had success using extensions like FoxyProxy, or using a separate web browser for accessing resources that require the proxied connection.
 
 ### Examples of `.gitlab-ci.yml` files for Aurora:
 
