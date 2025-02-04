@@ -19,7 +19,7 @@ man tmux
 
 ## Running jobs on the wafer
 
-Follow these instructions to compile and train a small (111m parameters) GPT3 model.<br>
+Follow these instructions to compile and train a small (111m parameters) GPT3 model.
 
 ### Cerebras virtual environments
 
