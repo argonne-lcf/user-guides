@@ -1,4 +1,4 @@
-a cd # Example Multi-Node Programs
+# Example Multi-Node Programs
 
 In this section we will learn how to extend the UNet2d and Gpt1.5B applications scripts that we introduced in the [Example Programs](./example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes.
 
@@ -20,7 +20,7 @@ Copy and paste the contents of [Unet2d.sh](./files/Unet2d.sh "Unet2d.sh") and [u
 to files with the same name into the current directory using your favorite editor.
 
 ```bash
-ch    cd mod +x Unet2d.sh
+chmod +x Unet2d.sh
 chmod +x unet_batch.sh
 ```
 
