@@ -2,7 +2,7 @@ site_name: ALCF User Guides
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
-edit_url: 'edit/main/docs/'
+edit_uri: 'edit/main/docs/'
 
 theme:
   name: 'material'
@@ -46,7 +46,7 @@ theme:
     - navigation.indexes
     - navigation.path
     # - navigation.prune
-    - navigation.tabs
+    #- navigation.tabs
     - navigation.top
     - navigation.tracking
     - navigation.sections
