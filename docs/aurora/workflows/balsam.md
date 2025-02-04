@@ -101,9 +101,9 @@ balsam job ls
 
 To submit a batch job to PBS to execute the Balsam jobs in your site, you can do so at the command line from within your site directory:
 ```bash linenums="1"
-balsam queue submit -n 2 -t 10 -q lustre_scaling -A <project_name> -j mpi
+balsam queue submit -n 2 -t 10 -q debug-scaling -A <project_name> -j mpi
 ```
-This will submit a 2 node job (`-n` option) to the `lustre_scaling` queue in mpi mode (`-j` option).  Mpi-mode batch jobs like this one will execute applications with `mpiexec`.  The time limit for the batch job is set to 10 minutes (`-t` option).
+This will submit a 2 node job (`-n` option) to the `debug-scaling` queue in mpi mode (`-j` option).  Mpi-mode batch jobs like this one will execute applications with `mpiexec`.  The time limit for the batch job is set to 10 minutes (`-t` option).
 
 You can also submit jobs with the Python API:
 ```python linenums="1" title="submit_mpi_mode.py"
@@ -119,7 +119,7 @@ BatchJob.objects.create(
    num_nodes=2,
    wall_time_min=10,
    job_mode="mpi", # This mode will execute the application with mpiexec
-   queue="lustre_scaling",
+   queue="debug-scaling",
    project="Aurora_deployment", # put your <project_name> here
 )
 ```
