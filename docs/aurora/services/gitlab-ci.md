@@ -7,7 +7,7 @@
   |:--------|:---------:|:-------------:|:------------:|
   | Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
 
-Currently, as when used with Sunspot, [https://gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov) must be accessed via a proxy.
+Currently, [https://gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov) must be accessed via a proxy.
 
 The following command will connect to an Aurora login node from your local system and establish the required proxy: `ssh login.aurora.alcf.anl.gov -D localhost:25565`
 
