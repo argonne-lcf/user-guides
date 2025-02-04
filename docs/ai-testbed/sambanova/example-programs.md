@@ -259,7 +259,10 @@ Run these commands for training (compile + train):
 
 The `compile` and `run` arguments of the script can only be run with number of instances equal to 1, indicating that this is a simple 4 tile run without data parallel framework.
 For a image size of 256x256 and batch size 256 when running just 1 instance, the commands are provided as follows.
-Note: The compile runs for over 30 minutes.
+
+!!! note
+
+    The compilation runs for over 30 minutes.
 
 ```bash
 ./Unet2d.sh compile 256 256 1 unet2d_single_compile
