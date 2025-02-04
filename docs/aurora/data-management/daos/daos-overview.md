@@ -163,12 +163,12 @@ The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that D
 
 Job submission without requesting DAOS:  
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A debug -k doe -l filesystems=flare -q lustre_scaling ./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh  or - I 
 ```
 
 Job submission with DAOS: 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A debug -k doe -l filesystems=flare:daos_user -l daos=daos_user -q lustre_scaling ./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh  or - I 
 ```
 
 ## NIC and Core Binding
@@ -208,13 +208,13 @@ Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS.
 #!/bin/bash -x
 #PBS -l select=512
 #PBS -l walltime=01:00:00
-#PBS -A prod
-#PBS -q lustre_scaling
+#PBS -A <ProjectName>
+#PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
 #PBS -l daos=daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A prod -l filesystems=flare:daos_user -l daos=daos_user -q lustre_scaling ./pbs_script.sh or - I 
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -l daos=daos_user -q prod ./pbs_script.sh or - I 
 
 # please do not miss -l filesystems=daos_user and -l daos=daos_user in your qsub :'(
 
