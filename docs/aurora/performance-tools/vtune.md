@@ -113,7 +113,7 @@ When you open VTune GUI, your web browser will complain about VTune self-signed 
 * Set the passphrase:
 When you run the server for the first time, the URL that it outputs contains a one-time token. When you open such a URL in the browser, VTune server prompts you to set a passphrase. Other users can't access your VTune server without knowing this passphrase. The hash of the passphrase will be persisted on the server. Also, a secure HTTP cookie will be stored in your browser so that you do not need to enter the passphrase each time you open VTune GUI.
 
-![vtune-backend warning](images/FireFox-VTune02.png "Security warning (click 'Advanced...' and then 'Accept the Risk and Continue')")
+![vtune-backend warning](images/FireFox-VTune02.png "Security warning: click 'Advanced...' and then 'Accept the Risk and Continue'")
 
 ![vtune-backend on Firefox](images/FireFox-VTune05.png "GUI interface")
 
