@@ -173,7 +173,7 @@ nav:
         - Getting Started: aurora/getting-started-on-aurora.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         - Early User Notes and Known Issues: aurora/known-issues.md
-        - Machine Overview: aurora/hardware-overview/machine-overview.md
+        - Machine Overview: aurora/machine-overview.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Compiling and Linking:
           - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
@@ -292,7 +292,7 @@ nav:
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
-      - Machine Overview: crux/hardware-overview/machine-overview.md
+      - Machine Overview: crux/machine-overview.md
       - Getting Started: crux/getting-started.md
       - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
@@ -308,8 +308,7 @@ nav:
       - System Updates: polaris/system-updates.md
       - Contacting Support and Software Requests: polaris/contacting-support.md
       - Known Issues: polaris/known-issues.md
-      - Machine Overview: polaris/hardware-overview/machine-overview.md
-        # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
+      - Machine Overview: polaris/machine-overview.md
       - Compiling and Linking:
         - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
@@ -379,7 +378,7 @@ nav:
           - SmartSim: polaris/workflows/smartsim.md
 
     - Sophia:
-      - Machine Overview: sophia/hardware-overview/machine-overview.md
+      - Machine Overview: sophia/machine-overview.md
       - Getting Started: sophia/getting-started.md
       - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
