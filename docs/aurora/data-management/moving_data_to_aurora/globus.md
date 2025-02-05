@@ -1,6 +1,7 @@
 # Transferring Files through Globus
+For transfers to/from [Flare](../lustre/flare.md), you may use the Globus collection `alcf#dtn_flare`.
 
-Currently, only Globus Personal is supported on Aurora. Perform the following steps to transfer data to/from the Aurora login nodes.
+Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is supported. Perform the following steps to transfer data to/from there:
 
 1. On a fresh connection to the login nodes, ensure no proxies are being set (which may require commenting out the proxy settings in the `~/.bashrc` or `~/.bash_profile` files), and execute:
 
