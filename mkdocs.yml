@@ -170,11 +170,11 @@ nav:
 
   - Machines:
     - Aurora:
-        - Getting Started: aurora/getting-started-on-aurora.md
-        - Aurora Programming Environment: aurora/aurora-pe.md
-        - Early User Notes and Known Issues: aurora/known-issues.md
         - Machine Overview: aurora/machine-overview.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
+        - Getting Started: aurora/getting-started-on-aurora.md
+        - Early User Notes and Known Issues: aurora/known-issues.md
+        - Aurora Programming Environment: aurora/aurora-pe.md
         - Compiling and Linking:
           - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
           - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
@@ -304,11 +304,11 @@ nav:
         #- ParaView (Launch from Client): crux/visualization/paraview.md
 
     - Polaris:
+      - Machine Overview: polaris/machine-overview.md
       - Getting Started: polaris/getting-started.md
+      - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
       - Contacting Support and Software Requests: polaris/contacting-support.md
-      - Known Issues: polaris/known-issues.md
-      - Machine Overview: polaris/machine-overview.md
       - Compiling and Linking:
         - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
