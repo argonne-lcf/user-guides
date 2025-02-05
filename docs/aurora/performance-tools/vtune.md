@@ -26,7 +26,7 @@ Use VTune Profiler to locate or determine:
 
 ### GPU offload
 ```bash
-$ vtune –collect gpu-offload <target>
+vtune –collect gpu-offload <target>
 ```
 
 This analysis enables you to:
@@ -36,7 +36,7 @@ This analysis enables you to:
 
 ### GPU Compute/Media Hotspots
 ```bash
-$ vtune –collect gpu-hotspots <target>
+vtune –collect gpu-hotspots <target>
 ```
 
 Use the GPU Compute/Media Hotspots analysis to:
@@ -60,22 +60,22 @@ GPU hotspots analysis can be used as the first step. Without special knobs, its 
 module load oneapi
 
 ### To run an application on a single stack of a GPU
-$ ZE_AFFINITY_MASK=0.0 vtune -collect gpu-hotspots -r VTune_results_1S -- ./a.out
+ZE_AFFINITY_MASK=0.0 vtune -collect gpu-hotspots -r VTune_results_1S -- ./a.out
 
 ### To run an application on two stacks of a single GPU
-$ ZE_AFFINITY_MASK=0 vtune -collect gpu-hotspots -r VTune_results_2S -- ./a.out
+ZE_AFFINITY_MASK=0 vtune -collect gpu-hotspots -r VTune_results_2S -- ./a.out
 
 ### To run an MPI application (e.g., 24 MPI ranks on two Aurora nodes)
-$ mpirun -n 24 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_results_MPI -- ./a.out
+mpirun -n 24 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_results_MPI -- ./a.out
 
 ### To run an MPI application with VTune on a select MPI (e.g., MPI rank 5 out of 24 ranks)
-$ mpirun -n 5 gpu_tile_compact.sh ./a.out : -n 1 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_results_MPI_5 -- ./a.out : -n 18 ./a.out 
+mpirun -n 5 gpu_tile_compact.sh ./a.out : -n 1 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_results_MPI_5 -- ./a.out : -n 18 ./a.out 
 ```
 
 ### Checking if VTune collection is successful or not
 After successful VTune analysis, VTune provides *Hottest GPU Computing Tasks with High Sampler Usage* with non-zero data. The following is an example from a GeoSeries benchmark:
 
-```
+```output
 Hottest GPU Computing Tasks with High Sampler Usage
 Computing Task                                                                                                                         Total Time
 -------------------------------------------------------------------------------------------------------------------------------------  ----------
@@ -85,25 +85,24 @@ zeCommandListAppendMemoryCopy
 
 ### After collecting the performance data, *VTune profiler web server* can be used for the post-processing.
 
-Step 1: Open a new terminal and log into Sunspot login node (no X11 forwarding required)
+Step 1: Open a new terminal and log into an Aurora login node (no X11 forwarding required)
 ```bash
-$ ssh <username>@bastion.alcf.anl.gov
-$ ssh <username>@login.aurora.alcf.anl.gov
+ssh <username>@bastion.alcf.anl.gov
+ssh <username>@login.aurora.alcf.anl.gov
 ```
-Step 2: Start VTune server on a Sunspot login node after loading oneapi module and setting corresponding environmental variables for VTune
+Step 2: Start VTune server on an Aurora login node after loading the oneAPI module and setting the corresponding environmental variables for VTune
 ```bash
-$ module load oneapi
-$ vtune-backend --data-directory=<location of precollected VTune results>
+module load oneapi
+vtune-backend --data-directory=<location of precollected VTune results>
 ```
-Step 3: Open a new terminal with SSH port forwarding enabled (need 2 hops)
+Step 3: Open a new terminal with SSH port forwarding enabled
 ```bash
-$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@bastion.alcf.anl.gov
-$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@login.aurora.alcf.anl.gov
+ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@aurora.alcf.anl.gov
 ```
 
-Step 4: Check if the login nodes of Step 2 and Step 3 are the same or not. If not (e.g., aurora-uan-0009 from Step 2 and aurora-uan-0010 from Step 3), do `ssh` on the terminal for Step 3 to the login node of Step 2
+Step 4: Check if the login nodes of Step 2 and Step 3 are the same or not. If not (e.g., `aurora-uan-0009` from Step 2 and `aurora-uan-0010` from Step 3), run `ssh` on the terminal for Step 3 to the login node of Step 2
 ```bash
-$ ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> aurora-uan-xxxx
+ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> aurora-uan-xxxx
 ```
 
 Step 5: Open the URL printed by VTune server in Firefox web browser on your local computer. For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
@@ -123,7 +122,7 @@ When you run the server for the first time, the URL that it outputs contains a o
 ### VTune gpu-offload analysis
 
 ```bash
-$ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-offload -r VTune_gpu-offload ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
+mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-offload -r VTune_gpu-offload ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
 ![gpu offload 1](images/GPU-offload-01.png "gpu offload 1")
@@ -135,7 +134,7 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-offload -r VTune_gpu-offl
 ### VTune gpu-hotspots analysis
 
 ```bash
-$ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_gpu-hotspots ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
+mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_gpu-hotspots ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
 ![gpu hotspots 1](images/GPU-hotspots-01.png "gpu hotspots 1")
@@ -147,7 +146,7 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -r VTune_gpu-hot
 ### VTune instruction count analysis
 
 ```bash
-$ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob characterization-mode=instruction-count -r VTune_inst-count ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
+mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob characterization-mode=instruction-count -r VTune_inst-count ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
 ![GPU instruction count 1](images/Inst-count-01.png "GPU instruction count 1")
@@ -159,7 +158,7 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob characteri
 ### VTune source analysis
 
 ```bash
-$ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mode=source-analysis -r VTune_source ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
+mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mode=source-analysis -r VTune_source ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
 ![GPU source](images/Source-01.png "GPU source")
@@ -167,7 +166,7 @@ $ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-
 ### VTune memory latency analysis
 
 ```bash
-$ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mode=source-analysis -knob source-analysis=mem-latency -r VTune_mem-latency ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
+mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mode=source-analysis -knob source-analysis=mem-latency -r VTune_mem-latency ./Comp_GeoSeries_omp_mpicxx_DP 2048 1000
 ```
 
 ![GPU memory latency](images/mem-latency-01.png "GPU memory latency")

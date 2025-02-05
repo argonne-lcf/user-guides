@@ -1,6 +1,8 @@
 # DAOS Architecture
 
-DAOS is a scratch file system. Please note that data may be removed or unavailable at any time. 
+!!! warning
+
+    DAOS is a scratch file system. Please note that data may be removed or unavailable at any time. 
 
 DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes.
 DAOS is an open-source software-defined object store designed for massively distributed Non Volatile Memory (NVM) and NVMe SSD. 
@@ -9,7 +11,6 @@ Users can use DAOS for their I/O and checkpointing on Aurora.
 DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
 ![Aurora Storage Architecture](aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](dragonfly.png "Aurora Slingshot Dragonfly")
-
 
 
 ## DAOS Overview
@@ -21,11 +22,11 @@ Users should submit a request as noted below to have a DAOS pool created for you
 
 DAOS pool is a physically allocated dedicated storage space for your project. 
 
-Email support@alcf.anl.gov to request a DAOS pool with the following information.
+Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request a DAOS pool with the following information.
 
 * Project Name
-* Alcf User Names
-* Total Space requested  (typically 100 TBs++)
+* ALCF User Names
+* Total Space requested (typically 100 TBs++)
 * Justification
 * Preferred pool name 
 
@@ -33,7 +34,6 @@ Email support@alcf.anl.gov to request a DAOS pool with the following information
 ### Note
 This is an initial test DAOS configuration and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system.
 Warning will be given before the system is wiped to allow time for users to move any important data off.
-
 
 ## Modules
 Please load the `daos` module when using DAOS. This should be done on the login node (UAN) or in the compute node (jobscript):
@@ -44,17 +44,14 @@ module load daos/base
 ```
 
 ## Pool
-
 Pool is a dedicated space allocated to your project. Once your pool is allocated for your project space. 
 
 Confirm you are able to query the pool via:
-
 ```bash
 daos pool query <pool_name>
 ```
 
-Example output:
-```bash
+```output title="Example output:"
 daos pool query hacc
 Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=640, disabled=0, leader=2, version=131
 Pool space info:
@@ -82,7 +79,7 @@ There are 3 modes with which we can operate with the DAOS containers
 ### Create a POSIX container
 
 
-```bash
+```shell-session
 $ DAOS_POOL=datascience
 $ DAOS_CONT=LLM-GPT-1T
 $ daos container create --type POSIX ${DAOS_POOL}  ${DAOS_CONT} --properties rd_fac:1 
@@ -91,14 +88,12 @@ $ daos container create --type POSIX ${DAOS_POOL}  ${DAOS_CONT} --properties rd_
   Container Type : POSIX                               
 
 Successfully created container 59747044-016b-41be-bb2b-22693333a380
-
 ```
 
-If you prefer a higher data protection and recovery you can --properties rd_fac:2 and if you don't need data protection and recovery, you can remove --properties rd_fac:1.
-We recommend to have at least --properties rd_fac:1.
+If you prefer a higher data protection and recovery you can `--properties rd_fac:2` and if you don't need data protection and recovery, you can remove `--properties rd_fac:1`.
+We recommend to have at least `--properties rd_fac:1`.
 
 ![data model ](datamodel.png "DAOS data model")
-
 
 ## DAOS sanity checks
 
@@ -118,22 +113,20 @@ daos container get-prop  $DAOS_POOL_NAME  $DAOS_CONT_NAME
 
 ```
 
-* Look for messages like Rebuild busy and state degraded in the daos pool query. 
-* Look for messages like Health (status) : UNCLEAN in the get prop
-
+* Look for messages like `Rebuild busy and state degraded in the daos pool query.` 
+* Look for messages like `Health (status) : UNCLEAN in the get prop`
 
 ```bash
 daos pool      autotest  $DAOS_POOL_NAME 
 daos container check --pool=$DAOS_POOL_NAME --cont=$DAOS_CONT_NAME 
 ```
 
-
 ### Mount a POSIX container
+
 Currently, you must manually mount your container prior to use on any node you are working on.
 In the future, we hope to automate some of this via additional `qsub` options.
 
 #### To mount a POSIX container on a login node
-
 
 ```bash
 
@@ -148,13 +141,11 @@ cp ~/temp.txt ~ /tmp/${DAOS_POOL}/${DAOS_CONT}/
 cat /tmp/${DAOS_POOL}/${DAOS_CONT}/temp.txt
 
 fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} # To unmount
-
 ```
  
 #### To mount a POSIX container on Compute Nodes
 
 You need to mount the container on all compute nodes.
-
 
 ```bash
 launch-dfuse.sh ${DAOS_POOL_NAME}:${DAOS_CONT_NAME} # launched using pdsh on all compute nodes mounted at: /tmp/<pool>/<container>
@@ -168,18 +159,17 @@ DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_
 
 ## Job Submission
 
-The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:  
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare -q lustre_scaling ./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh  or - I 
 ```
 
 Job submission with DAOS: 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A Aurora_deployment -k doe -l filesystems=flare:daos_user -q lustre_scaling 	./pbs_script1.sh  or - I 
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh  or - I 
 ```
-
 
 ## NIC and Core Binding
 
@@ -187,14 +177,11 @@ Each Aurora compute node has 8 NICs and each DAOS server node has 2 NICs.
 Each NIC is capable of driving 20-25 GB/s unidirection for data transfer. 
 Every read and write goes over the NIC and hence NIC binding is the key to achieve good performance. 
 
-For 12 PPN, the following binding is recommended.
-
+For 12 PPN, the following binding is recommended:
 ```bash
 CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ```
 ![Sample NIC to Core binding](core-nic-binding.png "Sample NIC to Core binding")
-
-
 
 ## Interception library for POSIX containers
 
@@ -203,11 +190,7 @@ The libioil IL will intercept basic read and write POSIX calls while all metadat
 The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and commuNICates with DAOS directly in userspace.
 It will also take advantage of the multiple NICs on the node based on how many MPI processes are running on the node and which CPU socket they are on.
 
-
-
 ![Interception library](interception.png "Interception library")
-
-
 
 ```bash
 Interception library for POSIX mode 
@@ -215,29 +198,25 @@ Interception library for POSIX mode
 mpiexec                                            # no interception
 mpiexec --env LD_PRELOAD=/usr/lib64/libioil.so     # only data is intercepted 
 mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata and data is intercepted. This provides close to DFS mode performance.
-
-
 ```
-
 
 ## Sample job script
 
 Currently, ``--no-vni`` is required in the ``mpiexec`` command to use DAOS. 
 
-```bash
-
+```bash linenums="1"
 #!/bin/bash -x
 #PBS -l select=512
 #PBS -l walltime=01:00:00
-#PBS -A Aurora_deployment
-#PBS -q lustre_scaling
+#PBS -A <ProjectName>
+#PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
+#PBS -l daos=daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A Aurora_deployment -l filesystems=flare:daos_user -q lustre_scaling ./pbs_script.sh or - I 
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -l daos=daos_user -q prod ./pbs_script.sh or - I 
 
-
-# please do not miss -l filesystems=daos_user in your qsub :'(
+# please do not miss -l filesystems=daos_user and -l daos=daos_user in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
@@ -320,8 +299,6 @@ mpiexec  --env MPICH_MPIIO_HINTS = path_to_your_file*:cb_config_list=#*:2#
        :romio_cb_write=enable
        :cb_nodes=32 
        program daos:/mpi_io_file.data
-
-
 ```
 
 ## DFS Mode
@@ -337,7 +314,7 @@ The DFS API can provide the best overall performance for any scenario other than
 Reference code for using DAOS through DFS mode and DAOS APIs
 Full code at ``` /soft/daos/examples/src ```
 
-```bash
+```c linenums="1"
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
@@ -358,8 +335,6 @@ int main(int argc, char **argv)
     ret = daos_fini();
     ret = MPI_Finalize(); 
 }
-
-
 ```
 
 ## DAOS Hardware
@@ -371,8 +346,6 @@ Each DAOS server nodes is based on the Intel Coyote Pass platform.
 * (2) HPE Slingshot NIC
 
 ![DAOS Node](daos-node.png "DAOS CYP Node")
-
-
 
 ## Darshan profiler for DAOS 
 
@@ -400,7 +373,6 @@ mkdir /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs
 cd /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs
 ~/soft/profilers/darshan-daos/darshan/darshan-install/darshan-mk-log-dirs.pl
 ~/soft/profilers/darshan-daos/darshan-install/bin/darshan-config  --log-path
-
 ```
 
 Preload darshan first then DAOS interception library:
@@ -412,12 +384,10 @@ mpiexec --env LD_PRELOAD=~/soft/profilers/darshan-daos/darshan-install/lib/libda
             -i 5 -t 16M -b 2048M  -w  -r -C -e    -c  -v -o /ior_2.dat 
 ```
 
+Install `darshan-util` from laptop:
 
-Install darshan-util from laptop:
 
-
-```bash
-
+```bash linenums="1"
 conda info –envs
 conda activate env-non-mac-darshan-temp
 /Users/kvelusamy/Desktop/tools/spack/share/spack/setup-env.sh 
@@ -427,13 +397,11 @@ export DYLD_FALLBACK_LIBRARY_PATH=/Users/kvelusamy/Desktop/tools/spack/opt/spack
 
 darshan-parser ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-632270104473632905_1.darshan 
 python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-632270104473632905_1.darshan #coming soon
-
 ```
 
 ## Cluster Size
 
 DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
-
 
 ![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
 
@@ -442,7 +410,7 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 
 ```bash
 Check that you requested DAOS
-    qsub –l filesystems=daos_user
+    qsub –l filesystems=daos_user -l daos=daos_user
 Did you load DAOS module?
     module load daos
 Do you have your DAOS pool allocated?

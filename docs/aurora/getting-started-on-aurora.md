@@ -79,20 +79,28 @@ export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,po
 
 ### Home and Project Directories
 
-Home directories on Aurora are `/home/username`, available on login and compute nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. Note that bastions have a different `/home` and the default quota is 500 MB.
+Home directories on Aurora are `/home/username`, available on login and compute nodes. This is provided from `/lus/gecko/home`. The default quota is 50 GB. 
 
-Lustre project directories are under `/lus/flare/projects`. ALCF staff should use `/lus/flare/projects/Aurora_deployment` project directory. ESP project members should use their corresponding project directories. The project name is similar to the name on Polaris with an \_CNDA suffix (e.g., projectA\_aesp\_CNDA, CSC250ADABC\_CNDA). Default quota is 1 TB. The project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if their project requires additional storage.
-
-**Note:** The Project Lustre File system has changed from Gecko to Flare.
+Lustre project directories are under `/lus/flare/projects`. Default quota is 1 TB. The project PI should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if their project requires additional storage.
 
 #### DAOS
 
-The primary storage system on Aurora is not a file system, but rather an object store called the Distributed Asynchronous Object Store. This is a key-array based system embedded directly in the Slingshot fabric, which provides much faster I/O than conventional block-based parallel file systems such as Lustre (even those using non-spinning disk and/or burst buffers). Project PIs will have requested a storage pool on DAOS via INCITE/ALCC/DD allocation proposals.
+The primary storage system on Aurora is not a file system, but rather an
+object store called the Distributed Asynchronous Object Store. This is a
+key-array based system embedded directly in the Slingshot fabric, which
+provides much faster I/O than conventional block-based parallel file systems
+such as Lustre (even those using non-spinning disk and/or burst
+buffers). Project PIs will have requested a storage pool on DAOS via
+INCITE/ALCC/DD allocation proposals.
 
-Preproduction ESP Aurora project PIs should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request DAOS storage with the following information:
+Aurora project PIs should email
+[support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request DAOS storage
+with the following information:
 
-* Project name (e.g., FOO\_aesp\_CNDA)
-* Storage capacity (For ESP projects, if this is different than in the ESP proposal, please give brief justification)
+* Project name 
+* Storage capacity (if this is different than in the current project proposal, please give brief justification)
+* Who should be the designated owner of the pool (please provide their ALCF username). The owner can be the project PI or any other team member, but they need to have an active ALCF account.
+* Have you used DAOS in the past? Is yes, please provide details.
 
 See [DAOS Overview](./data-management/daos/daos-overview.md) for more on using DAOS for I/O.
 

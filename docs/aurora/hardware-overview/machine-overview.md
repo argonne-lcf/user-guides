@@ -10,6 +10,7 @@ Figure 1: Summary of the compute, memory, and communication hardware contained w
 
 The Intel Data Center GPU Max Series is based on X^e^ Core. Each X^e^ core consists of 8 vector engines and 8 matrix engines with 512 KB of L1 cache that can be configured as cache or Shared Local Memory (SLM). 16 X^e^ cores are grouped together to form a slice. 4 slices are combined along with a large L2 cache and 4 HBM2E memory controllers to form a stack or tile. One or more stacks/tiles can then be combined on a socket to form a GPU. More detailed information about node architecture can be found [here](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/max-series.html).
 
+
 ## Aurora Compute Node
 
 | NODE COMPONENT | DESCRIPTION                       | PER NODE  | AGGREGATE           |

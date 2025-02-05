@@ -94,8 +94,8 @@ To run from a job script:
 
 ```bash
 #!/bin/bash -x
-# qsub -l nodes=2:ncpus=208 -q workq  -l walltime=02:00:00 -l filesystems=lustre_scaling -A  Aurora_deployment ./pbs_job_
-#PBS -A Aurora_deployment
+# qsub -l nodes=2:ncpus=208 -q workq  -l walltime=02:00:00 -l filesystems=lustre_scaling -A  prod ./pbs_job_
+#PBS -A <ProjectName>
 #PBS -k doe
 
 module load frameworks 
