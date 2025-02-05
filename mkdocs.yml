@@ -187,7 +187,6 @@ nav:
     - Aurora:
         - Getting Started: aurora/getting-started-on-aurora.md
         - Aurora Programming Environment: aurora/aurora-pe.md
-        - Sunspot to Aurora: aurora/sunspot-to-aurora.md
         - Early User Notes and Known Issues: aurora/known-issues.md
         - Machine Overview: aurora/hardware-overview/machine-overview.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
@@ -234,6 +233,7 @@ nav:
             - TensorFlow: aurora/data-science/frameworks/tensorflow.md
             - Dask: aurora/data-science/frameworks/dask.md
             - oneCCL: aurora/data-science/frameworks/oneCCL.md
+            - scikit-learn: aurora/data-science/frameworks/scikit-learn.md
             - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md

@@ -25,7 +25,7 @@ The executable `hello_affinity` can then be launched in a job script (or directl
 #PBS -l walltime=0:15:00
 #PBS -q <queue>
 #PBS -A <ProjectName>
-#PBS -l filesystems=home:flare
+#PBS -l filesystems=<fs1:fs2>
 
 #cd ${PBS_O_WORKDIR}
 

@@ -10,13 +10,12 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
 | prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> See table below                              |
-| prod-large    | 2049     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
+| prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
 !!! note
 
-	The debug queue has 32 exclusively dedicated nodes. 
-	If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
+  	The debug queue has 32 exclusively dedicated nodes. If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
 
 `prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
 
@@ -25,7 +24,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | tiny            | 32       | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
+| large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
 | backfill-tiny   | 32       | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
@@ -47,7 +46,7 @@ Note: Jobs should be submitted only from your allocated project directory and no
 For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 filesystems=flare -A <your_ProjectName> -q debug -I
+qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <your_ProjectName> -q debug -I
 ```
       
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
@@ -66,8 +65,10 @@ Recommended PBSPro options follow.
 #PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
-#PBS -q EarlyAppAccess
+#PBS -q <requested_Queue>
 ```
+
+More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/job-and-queue-scheduling.md).
 
 ## Working Around Node Failures
 
@@ -145,7 +146,7 @@ GPU-enabled applications will similarly run on the compute nodes using the above
 
 ## MPI rank and thread binding to cores and GPUs
 
-Each node on Aurora has 2 sockets, each with 2 CPUs and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
+Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
 
 A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
 

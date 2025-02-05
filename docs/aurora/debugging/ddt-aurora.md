@@ -24,6 +24,15 @@ Create a configuration named "aurora," and set it up like this example, replacin
 
 ![Configuration example for aurora](images/ddt_configure_aurora.png "Configuration example for aurora")
 
+The path in the **Remote Installation Directory** field changes when new versions of DDT are installed on Aurora. To find the correct path, use the `which` command. After you've loaded the `forge` module, this will show you the path to use (remove the `/bin/ddt` portion when entering it into the DDT client **Remote Installation Directory** field):
+
+```
+aurora-uan-0011> which ddt
+/opt/aurora/24.180.3/support/tools/forge/24.1.1/bin/ddt
+aurora-uan-0011>
+
+```
+
 You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time password:
 
 ![Example DDT remote connection login prompt](images/ddt_login_prompt.png "Example DDT remote connection login prompt")
@@ -41,8 +50,9 @@ module load forge
 If you are using a wrapper script to map MPI ranks to PVC GPU tiles, you must set this environment variable to the full path to that wrapper script:
 
 ```
-export FORGE_DEBUGGER_WRAPPER=/opt/aurora/24.180.1/support/tools/mpi_wrapper_utils/gpu_tile_compact.sh
+export FORGE_DEBUGGER_WRAPPER=/opt/aurora/24.180.3/support/tools/mpi_wrapper_utils/gpu_tile_compact.sh
 ```
+(The path to the default `gpu_tile_compact.sh` script changes when there's a new default software module update. You may find the up-to-date path using the command `which gpu_tile_compact.sh`.)
 
 As discussed with respect to [gdb-oneapi](./gdb-oneapi.md), you must explicitly enable GPU debugging on all the PVC GPUs you are using, on all the nodes you are using. One way to do this is to create a script and execute it across all your compute nodes using `mpiexec`. Here is an example script, which takes an argument `1` to enable debugging or `0` to disable it:
 
@@ -66,7 +76,6 @@ eu_debug_toggle() {
 # One rank per node toggles eu debug:
 if [ ${MY_LOCAL_RANK} -eq 0 ]; then
     eu_debug_toggle $1
-    touch eu_debugs/eu_debug_toggled0_${MY_NODE}.flag
 fi
 ```
 
@@ -77,10 +86,10 @@ export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
 ```
 
-To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example:
+To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 16 nodes, with 12 MPI ranks per node:
 
 ```
-ddt --connect --mpi=generic --mpiargs="-l --np 12 -ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
+ddt --nodes=16 --connect --mpi=generic --mpiargs="-l --ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
 ```
 
 On the client, you should see a connection pop-up like this:
