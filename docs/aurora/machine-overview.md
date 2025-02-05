@@ -2,7 +2,7 @@
 
 Aurora is a 10,624-node HPE Cray-Ex based system. It has 166 racks with 21,248 CPUs and 63,744 GPUs. Each node consists of 2 Intel Xeon CPU Max Series (codename Sapphire Rapids or SPR) with on-package HBM and 6 Intel Data Center GPU Max Series (codename Ponte Vecchio or PVC). Each Xeon CPU has 52 physical cores supporting 2 hardware threads per core and 64 GB of HBM. Each CPU socket has 512 GB of DDR5 memory. The GPUs are connected all-to-all with Intel X^e^ Link interfaces. Each node has 8 HPE Slingshot-11 NICs, and the system is connected in a Dragonfly topology. The GPUs may send messages directly to the NIC via PCIe, without the need to copy into CPU memory.
 
-![Aurora Node Diagram](../images/aurora_node_dataflow.png)
+![Aurora Node Diagram](../aurora_node_dataflow.png)
 
 /// caption
 Figure 1: Summary of the compute, memory, and communication hardware contained within a single Aurora node.
