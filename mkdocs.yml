@@ -423,12 +423,12 @@ not_in_nav: |
   TODO.md
   notes.md
   # TODO: complete or remove Aurora placeholder pages
-  llvm-compilers-aurora.md
-  gnu-compilers-aurora.md
-  cce-compilers-aurora.md
+  aurora/compiling-and-linking/llvm-compilers-aurora.md
+  aurora/compiling-and-linking/gnu-compilers-aurora.md
+  aurora/compiling-and-linking/cce-compilers-aurora.md
   aurora/applications-and-libraries/libraries/math-libraries.md
   aurora/applications-and-libraries/libraries/mkl.md
   aurora/applications-and-libraries/libraries/mpi.md
+  # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
-  aurora/workflows/balsam.md
