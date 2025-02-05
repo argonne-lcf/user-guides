@@ -4,15 +4,15 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_2.3.0
-cd ~/R_2.3.0
+mkdir ~/R_2.4.0
+cd ~/R_2.4.0
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.3.0
+git checkout Release_2.4.0
 ```
 <!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.3.0/anl_shared
+cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.4.0/anl_shared
 --->
 
 <!---
@@ -23,18 +23,18 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment and make sure that requirements are installed.
 
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 --->
 
@@ -49,7 +49,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_2.3.0/anl_shared/braggnn/tf
+cd ~/R_2.4.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -69,20 +69,20 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 ```
-Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.3.0/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
+Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.4.0/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
@@ -113,18 +113,18 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
 ```console
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 
 Then
 
 ```console
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:
@@ -140,22 +140,22 @@ The last parts of the output should resemble the following:
 2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
 ```
 
-## Llama-7B 
-The Cerebras llama7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
+## Llama2-7B 
+The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
 
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 Instructions for training:
 ```bash
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
-cp /software/cerebras/dataset/params_llama_7b.yaml configs/params_llama_7b.yaml
-export MODEL_DIR=model_dir_llamma
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
+cp /software/cerebras/dataset/params_llama2_7b.yaml configs/params_llama2_7b.yaml
+export MODEL_DIR=model_dir_llama2_7b
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=llama_7b --params configs/params_llama_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
 ```
 
 Please find a sample output
@@ -255,16 +255,16 @@ The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/m
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 ```bash
-source ~/R_2.3.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.3.0/modelzoo/requirements.txt
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.3.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
 export MODEL_DIR=model_dir_esm2
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.3.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 ```
 
 Sample output
@@ -349,3 +349,101 @@ Sample output
 2024-08-02 21:38:42,923 INFO:   Processed 819200 training sample(s) in 2716.994790088 seconds.
 ```
 
+## Vision Transformer
+The cerebras transformer based vision classifier model implementation can be found at `modelzoo/models/vision/vision_transformer`. Configs for base and huge model of the vision transformer can be found at `modelzoo/models/vision/vision_transformer/configs`. This examples uses the ImageNet dataset preprocessed at path `/software/datasets/imagenet/`. 
+
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
+```bash
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
+```
+Instructions for training (for 400 steps):
+```bash
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
+export MODEL_DIR=model_dir_vt
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+cp  /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
+python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+```
+
+Sample output
+```bash
+2024-12-21 00:40:15,426 INFO:   No need to use DLS for loss when half dtype is bfloat16. Disabling gradient scaling.
+2024-12-21 00:40:15,600 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "model_dir_vt" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
+2024-12-21 00:40:15,601 INFO:   No checkpoints were found in "model_dir_vt".
+2024-12-21 00:40:15,601 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
+2024-12-21 00:40:15,602 INFO:   Effective batch size is 2850.
+2024-12-21 00:40:15,605 INFO:   The following sequence is used to transform data:
+Compose(
+    Resize(size=[256, 256], interpolation=bilinear, max_size=None, antialias=None)
+    RandomResizedCrop(size=[224, 224], scale=(0.08, 1.0), ratio=(0.75, 1.33), interpolation=bilinear, antialias=True)
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    LambdaWithParam(args=(torch.bfloat16,), kwargs={})
+)
+2024-12-21 00:40:55,243 INFO:   Starting training loop 1, from global step 0 to 132225
+...
+2024-12-21 00:41:25,467 INFO:   Compiling the model. This may take a few minutes.
+...
+2024-12-21 00:45:49,911 INFO:   Compiling at original per-box batch size 2850
+2024-12-21 00:46:00,124 INFO:   Compiling image...
+2024-12-21 00:46:00,273 INFO:   Compiling kernels
+2024-12-21 00:48:10,561 INFO:   Compiling final image
+2024-12-21 00:51:53,676 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_9892963798577744835
+2024-12-21 00:51:59,530 INFO:   Compile was successful!
+2024-12-21 00:51:59,531 INFO:   Waiting for weight initialization to complete
+2024-12-21 00:51:59,531 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
+2024-12-21 00:51:59,919 INFO:   Initiating a new execute wsjob against the cluster server.
+...
+2024-12-21 00:53:37,788 INFO:   Finished sending initial weights
+2024-12-21 00:53:37,789 INFO:   Finalizing appliance staging for the run
+2024-12-21 00:53:58,206 INFO:   Waiting for device programming to complete
+2024-12-21 00:55:57,939 INFO:   Device programming is complete
+2024-12-21 00:55:58,865 INFO:   Using network type: ROCE
+2024-12-21 00:55:58,866 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2024-12-21 00:55:58,883 INFO:   Input workers have begun streaming input data
+2024-12-21 00:56:00,346 INFO:   Appliance staging is complete
+2024-12-21 00:56:00,346 INFO:   Beginning appliance run
+2024-12-21 00:56:01,022 INFO:   | Train Device=CSX, Step=1, Loss=7.00964, Rate=4626.81 samples/sec, GlobalRate=4626.69 samples/sec
+2024-12-21 00:56:01,773 INFO:   | Train Device=CSX, Step=2, Loss=7.02971, Rate=4128.64 samples/sec, GlobalRate=4170.71 samples/sec
+2024-12-21 00:56:04,670 INFO:   | Train Device=CSX, Step=3, Loss=7.03938, Rate=2241.66 samples/sec, GlobalRate=2005.18 samples/sec
+2024-12-21 00:56:05,276 INFO:   | Train Device=CSX, Step=4, Loss=7.02248, Rate=3718.21 samples/sec, GlobalRate=2340.86 samples/sec
+2024-12-21 00:56:08,100 INFO:   | Train Device=CSX, Step=5, Loss=7.02704, Rate=2092.96 samples/sec, GlobalRate=1852.26 samples/sec
+```
+
+
+## Diffusion Transformer
+The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
+
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
+```bash
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
+```
+
+Instructions for training (for 400 steps):
+```bash
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+export MODEL_DIR=model_dir_dit
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+cp  /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
+python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --model_dir ${MODEL_DIR} |& tee mytest.log
+```
+
+???+ example "Example output:"
+    ``` { .output .no-copy }
+    2025-01-24 21:53:05,710 INFO:   | Train Device=CSX, Step=397, Loss=0.18575, Rate=405.81 samples/sec, 
+    GlobalRate=405.41 samples/sec
+    2025-01-24 21:53:08,405 INFO:   | Train Device=CSX, Step=398, Loss=0.18720, Rate=407.14 samples/sec, 
+    GlobalRate=405.42 samples/sec
+    2025-01-24 21:53:11,080 INFO:   | Train Device=CSX, Step=399, Loss=0.18482, Rate=409.63 samples/sec, 
+    GlobalRate=405.44 samples/sec 
+    2025-01-24 21:53:13,749 INFO:   | Train Device=CSX, Step=400, Loss=0.18625, Rate=411.09 samples/sec, 
+    GlobalRate=405.45 samples/sec
+    2025-01-24 21:53:13,761 INFO:   Saving checkpoint at step 400
+    Transferring weights from server: 4556 tensors [02:34, 29.52 tensors/s]                                                                                                                         
+    2025-01-24 21:56:05,648 INFO:   Saved checkpoint dit_model_dir/checkpoint_400.mdl
+    2025-01-24 21:56:28,429 INFO:   Training completed successfully!
+    2025-01-24 21:56:28,435 INFO:   Processed 440000 training sample(s) in 1888.733046122 seconds.
+    ```

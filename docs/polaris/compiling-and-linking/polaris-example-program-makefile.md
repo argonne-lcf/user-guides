@@ -1,17 +1,17 @@
 # Example Programs and Makefiles for Polaris
 
-Several simple examples of building CPU and GPU-enabled codes on Polaris are available in the [ALCF GettingStart repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris) for several programming models. If build your application is problematic for some reason (e.g. absence of a GPU), then users are encouraged to build and test applications directly on one of the Polaris compute nodes via an interactive job. The discussion below makes use of the `NVHPC` compilers in the default environment as illustrative examples. Similar examples for other compilers on Polaris are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris).
+Several simple examples of building CPU and GPU-enabled codes on Polaris are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris) for several programming models. If building your application is problematic for some reason (e.g., absence of a GPU), then users are encouraged to build and test applications directly on one of the Polaris compute nodes via an interactive job. The discussion below makes use of the `NVHPC` compilers in the default environment as illustrative examples. Similar examples for other compilers on Polaris are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris).
 
 ## CPU MPI+OpenMP Example
 
-One of the first useful tasks with any new machine, scheduler, and job launcher is to ensure one is binding MPI ranks and OpenMP threads to the host cpu as intended. A simple HelloWorld MPI+OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp) to get started with.
+One of the first useful tasks with any new machine, scheduler, and job launcher is to ensure one is binding MPI ranks and OpenMP threads to the host CPU as intended. A simple HelloWorld MPI+OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp) to get started with.
 
 The application can be straightforwardly compiled using the Cray compiler wrappers.
 ```
 CC -fopenmp main.cpp -o hello_affinity
 ```
 
-The executable `hello_affinity` can then be launched in a job script (or directly in shell of interactive job) using `mpiexec` as discussed here.
+The executable `hello_affinity` can then be launched in a job script (or directly in the shell of an interactive job) using `mpiexec` as discussed here.
 
 [//]: # (ToDo: Add link to running jobs page)
 
@@ -36,7 +36,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 ## CUDA
 
-Several variants of C/C++ and Fortran CUDA examples are available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/CUDA) that include MPI and multi-gpu examples.
+Several variants of C/C++ and Fortran CUDA examples are available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/CUDA) that include MPI and multi-GPU examples.
 
 One can use the Cray compiler wrappers to compile GPU-enabled applications as well. This [example](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/CUDA/vecadd) of simple vector addition uses the NVIDIA compilers.
 
@@ -95,7 +95,7 @@ If the application instead relies on the job launcher to bind MPI ranks to avail
 
 ## GPU OpenCL
 
-A simple OpenCL example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenCL/vecadd). The OpenCL headers and library are available in the NVHPC SDK and cuda toolkits. The environment variable `NVIDIA_PATH` is defined for the `PrgEnv-nvhpc` programming environment. 
+A simple OpenCL example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenCL/vecadd). The OpenCL headers and library are available in the NVHPC SDK and CUDA toolkits. The environment variable `NVIDIA_PATH` is defined for the `PrgEnv-nvhpc` programming environment. 
 ```
 CC -o vecadd -g -O3 -std=c++0x  -I${NVIDIA_PATH}/cuda/include main.o -L${NVIDIA_PATH}/cuda/lib64 -lOpenCL
 ```
@@ -118,7 +118,7 @@ Result is CORRECT!! :)
 
 ## GPU OpenMP
 
-A simple MPI-parallel OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenMP/vecadd_mpi). Compilation proceeds similar to the above examples except for use of the `-mp=gpu` compiler flag to indicated compilation of OpenMP code for GPUs.
+A simple MPI-parallel OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenMP/vecadd_mpi). Compilation proceeds similar to the above examples except for the use of the `-mp=gpu` compiler flag to indicate compilation of OpenMP code for GPUs.
 
 ```
 CC -g -O3 -std=c++0x -mp=gpu -gpu=cc80,cuda11.0 -c main.cpp -o vecadd

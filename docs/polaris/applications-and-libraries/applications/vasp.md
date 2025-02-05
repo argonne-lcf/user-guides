@@ -1,35 +1,33 @@
 # VASP
 
 ## What is VASP?
-The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used that to perform density functional theory (DFT) calculations in a planewave basis using the projector augemented wave (PAW) method. A more complete description of VASP can be found here:
-[https://www.vasp.at](https://www.vasp.at)
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. A more complete description of VASP can be found here: [https://www.vasp.at](https://www.vasp.at)
 
 ## Using VASP at ALCF
-VASP is commercial software. Access to binaries compiled by ALCF can only be accessed after the user requesting access has been verified to be on the VASP license by an official VASP license distributor. 
+VASP is commercial software. Access to binaries compiled by ALCF can only be granted after the user requesting access has been verified to be on the VASP license by an official VASP license distributor.
 
-To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5 - 10 business days to verify a VASP license.
+To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5–10 business days to verify a VASP license.
 
 Information to provide:
 - User’s full name:
 - User’s ALCF username:
-- Name of organization that purchased the VASP license:
+- Name of the organization that purchased the VASP license:
 - Principal investigator who is the POC for the VASP license:
 - VASP license number:
-- Version of VASP requested (VASP5, VASP6): 
+- Version of VASP requested (VASP5, VASP6):
 
 ## VASP support policy
-ALCF compiles the latest release of VASP on a per request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. 
-Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at run time. 
+ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
 
 ## How to obtain the code
-The VASP souce can only be obtained by an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
+The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
 ## VASP 6.x.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
 
 ### General compiling/installing instructions provided by VASP support 
-Instructions and samples of `makefile.include` could be found in the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
+Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
 
-The follow `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
+The following `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
 ```makefile
 # Precompiler options
@@ -81,7 +79,7 @@ CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
 
 LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
 
-# Software emulation of quadruple precsion
+# Software emulation of quadruple precision
 QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
@@ -124,7 +122,7 @@ BINDIR     = ../../bin
 
 #### Setting up compiler and libraries with `module`
 
-The follow modules will update the include and libraries paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
+The following modules will update the include and library paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
 ```
 module restore
@@ -148,11 +146,9 @@ make -j1
 
 ### Running VASP in Polaris
 
-An example of a submission script could be found here ` /soft/applications/vasp/script.sh` , which would looks something similar to:
-
+An example of a submission script can be found here `/soft/applications/vasp/script.sh`, which would look something similar to:
 
 ``` example-script.sh
-#!/bin/sh
 #!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -187,7 +183,7 @@ cd $PBS_O_WORKDIR
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} $bin
 ```
 
-Submission scripts should have executable attibutes to be used with `qsub` script mode.
+Submission scripts should have executable attributes to be used with `qsub` script mode.
 
 ```
 chmod +x script.sh
@@ -197,9 +193,7 @@ qsub script.sh
 ### Known issues versions: >= 6.4.x in Polaris (OLD)
 ---
 
-* Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The  `MPIX_Query_cuda_support` is not included in`cray-mpich`. One workaround to this
-issue is to comment this function call.
-See the follow suggested changes marked by `!!!!!CHANGE HERE ` in the `file:src/openacc.F`
+* Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The `MPIX_Query_cuda_support` is not included in `cray-mpich`. One workaround to this issue is to comment this function call. See the following suggested changes marked by `!!!!!CHANGE HERE` in the `file:src/openacc.F`
 
 ```fortran
 +!!!!!CHANGE HERE 
@@ -232,4 +226,3 @@ See the follow suggested changes marked by `!!!!!CHANGE HERE ` in the `file:src/
 +       CALL GET_ENVIRONMENT_VARIABLE("MPICH_GPU_SUPPORT_ENABLED", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
 +       IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
 ```
-
