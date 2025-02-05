@@ -1,6 +1,6 @@
 # Balsam on Aurora
 
-[Balsam](https://github.com/argonne-lcf/balsam) is a toolkit for managing large computational campaigns on hpc systems. Balsam helps users to execute large numbers of jobs, with inter-job dependencies, track job outcomes, and manage postprocessing analysis.  The command line interface and Python API make it easy for users to adopt: after wrapping the command line for an application in a few lines of Python code, users can describe jobs with accompanying options.  These jobs are stored persistently in the Balsam database.  Balsam is especially well suited for executing large ensembles of MPI tasks with a variety of sizes.
+[Balsam](https://github.com/argonne-lcf/balsam) is a toolkit for managing large computational campaigns on HPC systems. Balsam helps users execute large numbers of jobs with inter-job dependencies, track job outcomes, and manage post-processing analysis. The command line interface and Python API make it easy for users to adopt: after wrapping the command line for an application in a few lines of Python code, users can describe jobs with accompanying options. These jobs are stored persistently in the Balsam database. Balsam is especially well-suited for executing large ensembles of MPI tasks with a variety of sizes.
 
 A user's Balsam service consists of a Balsam Site process that runs on a login node that orchestrates the execution of work, and a Balsam Site directory space where job and workflow results are stored. When the user submits a batch job to PBS through Balsam, the Site process pulls Balsam jobs from the database and executes them within the PBS batch job, achieving high throughput while incurring only a single wait-time in the queue.
 
@@ -20,9 +20,9 @@ pip install --pre balsam
 
 Alternatively, Balsam can be installed in a conda environment also with pip.
 
-The Balsam command line tool will now be in your path.  To get information on how to use the command line tool, you can type `balsam --help` in your shell.
+The Balsam command line tool will now be in your path. To get information on how to use the command line tool, you can type `balsam --help` in your shell.
 
-To use Balsam, users need an account on the Balsam server.  Users can get an account by contacting the [ALCF Help Desk](mailto:support@alcf.anl.gov).  Once a user has an account, they can login and make a new site.  A Balsam site is a project space for your workflow. You will be prompted to select what machine (Aurora) you are working on when creating a new site:
+To use Balsam, users need an account on the Balsam server. Users can get an account by contacting the [ALCF Help Desk](mailto:support@alcf.anl.gov). Once a user has an account, they can log in and make a new site. A Balsam site is a project space for your workflow. You will be prompted to select what machine (Aurora) you are working on when creating a new site:
 
 ```bash linenums="1"
 balsam login
@@ -33,15 +33,15 @@ balsam site start
 
 ## Aurora specific notes
 
-In the Balsam configuration for Aurora, a Balsam `gpu` refers to an Aurora node GPU tile.  Setting the Balsam job option `gpus_per_rank = 1` will place one rank per GPU tile.  Setting `gpus_per_rank = 2` will place one rank per GPU.
+In the Balsam configuration for Aurora, a Balsam `gpu` refers to an Aurora node GPU tile. Setting the Balsam job option `gpus_per_rank = 1` will place one rank per GPU tile. Setting `gpus_per_rank = 2` will place one rank per GPU.
 
 ## Simple MPI ensemble on Aurora with Balsam
 
-Here is an example that runs an application `hello_affinity` from our getting started guide in `mpi-mode` which will execute the application with `mpiexec`.  We also show an example of executing an echo command that takes an argument and runs on a single GPU tile.
+Here is an example that runs an application `hello_affinity` from our getting started guide in `mpi-mode`, which will execute the application with `mpiexec`. We also show an example of executing an echo command that takes an argument and runs on a single GPU tile.
 
 !!! warning
 
-    Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job.  This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris.  This is due to a known issue with Slingshot and will be fixed in the future.  Users running MPI application ensembles on Aurora with Balsam should take this into account when configuring their workflows.
+    Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job. This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris. This is due to a known issue with Slingshot and will be fixed in the future. Users running MPI application ensembles on Aurora with Balsam should take this into account when configuring their workflows.
 
 ```python linenums="1" title="balsam_job_ensemble.py"
 from balsam.api import ApplicationDefinition, Job
@@ -87,7 +87,7 @@ echo_jobs = [Job( site_name="test_aurora",
 echo_jobs = Job.objects.bulk_create(echo_jobs)
 ```
 
-After execution of this script, your site will have two registered apps and several Balsam jobs.  Use the Balsam CLI tool to query them:
+After execution of this script, your site will have two registered apps and several Balsam jobs. Use the Balsam CLI tool to query them:
 
 To check apps registered in a site:
 ```bash linenums="1"
@@ -103,7 +103,7 @@ To submit a batch job to PBS to execute the Balsam jobs in your site, you can do
 ```bash linenums="1"
 balsam queue submit -n 2 -t 10 -q debug-scaling -A <project_name> -j mpi
 ```
-This will submit a 2 node job (`-n` option) to the `debug-scaling` queue in mpi mode (`-j` option).  Mpi-mode batch jobs like this one will execute applications with `mpiexec`.  The time limit for the batch job is set to 10 minutes (`-t` option).
+This will submit a 2-node job (`-n` option) to the `debug-scaling` queue in mpi mode (`-j` option). MPI-mode batch jobs like this one will execute applications with `mpiexec`.  The time limit for the batch job is set to 10 minutes (`-t` option).
 
 You can also submit jobs with the Python API:
 ```python linenums="1" title="submit_mpi_mode.py"
@@ -140,7 +140,7 @@ cat data/demo/*/job.out
 
 Batch jobs created by Balsam will have a name beginning with `qlaunch` when queried with the `PBS` command `qstat`.
 
-Balsam has additional features that will submit work to PBS elastically, a special app type for native python code, and a `serial` job mode for executing tasks that are single core/gpu that do not require MPI launching.  More information can be found in the [Balsam documentation](https://balsam.readthedocs.io/en/latest).
+Balsam has additional features that will submit work to PBS elastically, a special app type for native Python code, and a `serial` job mode for executing tasks that are single core/GPU that do not require MPI launching. More information can be found in the [Balsam documentation](https://balsam.readthedocs.io/en/latest).
 
 ## Troubleshooting
 
