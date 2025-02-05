@@ -8,16 +8,15 @@ CUDA-GDB is the NVIDIA tool for debugging CUDA applications running on Polaris. 
 
 ## Step-by-step guide
 ### Debug Compilation
-NVCC, the NVIDIA CUDA compiler driver, provides a mechanism for generating the debugging information necessary for CUDA-GDB to work properly. The -g -G option pair must be passed to NVCC when an application is compiled for ease of debugging with CUDA-GDB; for example,
+NVCC, the NVIDIA CUDA compiler driver, provides a mechanism for generating the debugging information necessary for CUDA-GDB to work properly. The `-g -G` option pair must be passed to NVCC when an application is compiled for ease of debugging with CUDA-GDB; for example,
 ```
 nvcc -g -G foo.cu -o foo
 ```
-Using this line to compile the CUDA application `foo.cu`
-* forces `-O0` compilation, with the exception of very limited dead-code eliminations and register-spilling optimizations.
-* makes the compiler include debug information in the executable
+Using this line to compile the CUDA application `foo.cu`:
+* Forces `-O0` compilation, with the exception of very limited dead-code eliminations and register-spilling optimizations.
+* Makes the compiler include debug information in the executable.
 
-
-### Running CUDA-gdb on Polaris compute nodes
+### Running CUDA-GDB on Polaris compute nodes
 Start an interactive job mode on Polaris as follows:  
 ```
 $ qsub -I -l select=1 -l walltime=1:00:00
@@ -41,7 +40,6 @@ $ cuda-gdb foo
 jkwack@polaris-login-02:~> qsub -I -l select=1 -l walltime=1:00:00
 qsub: waiting for job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 qsub: job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
-
 
 Currently Loaded Modules:
   1) craype-x86-rome          4) perftools-base/22.05.0   7) cray-dsmml/0.2.2   10) cray-pmi-lib/6.0.17  13) PrgEnv-nvhpc/8.3.3
@@ -144,5 +142,4 @@ Dot         828446.963  0.00065     0.00066     0.00065
 (cuda-gdb) q
 
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> 
-
 ```

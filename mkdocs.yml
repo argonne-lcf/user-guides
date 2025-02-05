@@ -64,6 +64,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.blocks.definition
+  - pymdownx.blocks.caption
 
 validation:
   omitted_files: warn
@@ -92,9 +93,11 @@ nav:
     - index.md
 
   - Account and Project Management:
-    - Accounts and Access: account-project-management/accounts-and-access/user-account-overview.md
-    - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
-    - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+    - Accounts and Access:
+      - MyALCF: account-project-management/accounts-and-access/MyALCF.md
+      - User Account: account-project-management/accounts-and-access/user-account-overview.md
+      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
     - Project Management:
       - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
       - Managing Your Team Members: account-project-management/project-management/team-management.md
@@ -183,7 +186,6 @@ nav:
     - Aurora:
         - Getting Started: aurora/getting-started-on-aurora.md
         - Aurora Programming Environment: aurora/aurora-pe.md
-        - Sunspot to Aurora: aurora/sunspot-to-aurora.md
         - Early User Notes and Known Issues: aurora/known-issues.md
         - Machine Overview: aurora/hardware-overview/machine-overview.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
@@ -218,16 +220,20 @@ nav:
         - Data Science:
           #- Julia: aurora/data-science/julia.md
           - Python: aurora/data-science/python.md
+          - Jupyter: aurora/data-science/jupyter.md
           #- Applications:
             #- gpt-neox: aurora/data-science/applications/gpt-neox.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
+            - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
             #- JAX: aurora/data-science/frameworks/jax.md
             - PyTorch: aurora/data-science/frameworks/pytorch.md
             - TensorFlow: aurora/data-science/frameworks/tensorflow.md
             - Dask: aurora/data-science/frameworks/dask.md
             - oneCCL: aurora/data-science/frameworks/oneCCL.md
+            - scikit-learn: aurora/data-science/frameworks/scikit-learn.md
+            - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
           - AI Inference:
@@ -255,8 +261,8 @@ nav:
           - GitLab: aurora/services/gitlab-ci.md
           #- JupyterHub: aurora/services/jupyterhub.md
         - Workflows:
-          - ADIOS2: aurora/workflows/adios.md        
-          # - Balsam: aurora/workflows/balsam.md
+          - ADIOS2: aurora/workflows/adios.md
+          - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
           # - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md

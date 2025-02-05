@@ -19,13 +19,13 @@ mpicxx -g -fopenmp -O3 main.cpp
 The executable `hello_affinity` can then be launched in a job script (or directly in shell of an interactive job) using `mpiexec` as discussed here.
 
 ```
-#!/bin/sh
+#!/bin/bash -l
 #PBS -l select=1
 #PBS -l place=scatter
 #PBS -l walltime=0:15:00
-#PBS -q workq
-#PBS -A Catalyst
-#PBS -l filesystems=home
+#PBS -q <queue>
+#PBS -A <ProjectName>
+#PBS -l filesystems=<fs1:fs2>
 
 #cd ${PBS_O_WORKDIR}
 

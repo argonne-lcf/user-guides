@@ -323,7 +323,7 @@ Then submit the the workflow with a PBS batch script:
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -q debug
-#PBS -A Aurora_deployment
+#PBS -A <ProjectName>
 
 cd ${PBS_O_WORKDIR}
 
@@ -332,4 +332,3 @@ python my_workflow_script.py
 ```
 
 Note that if the workflow does not complete before the end of the PBS job, outstanding tasks will not complete.
-
