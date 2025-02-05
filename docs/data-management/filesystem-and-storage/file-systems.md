@@ -62,8 +62,8 @@ setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 
 - Directories on Eagle or Flare are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Directories can be created as stand-alone allocations. Use the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests) to submit requests for an allocation on Eagle. 
 - Directory paths:
-    - Eagle: /eagle or /lus/eagle/projects
-    - Flare: /flare or /lus/flare/projects
+    - Eagle: `/eagle` or `/lus/eagle/projects`
+    - Flare: `/flare` or `/lus/flare/projects`
 
 These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](disk-quota.md).
 
