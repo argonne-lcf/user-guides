@@ -2,15 +2,15 @@
 
 ## Overview
 
-SYCL is an open, royalty-free, cross-platform abstraction layer that enables code for heterogeneous and offload processors to be written using modern ISO C++, and provides APIs and abstractions to find devices (CPUs, GPUs, FPGAs ...) on which code can be executed and to manage data resources and code execution on those devices.
+SYCL is an open, royalty-free, cross-platform abstraction layer that enables code for heterogeneous and offload processors to be written using modern ISO C++. It provides APIs and abstractions to find devices (CPUs, GPUs, FPGAs, etc.) on which code can be executed and to manage data resources and code execution on those devices.
 
-The specification can be found here: https://registry.khronos.org/SYCL/specs/sycl-2020/
+The specification can be found here: [SYCL 2020 Specification](https://registry.khronos.org/SYCL/specs/sycl-2020/)
 
 ## Setting the environment to use SYCL on Aurora
 
 The Intel oneAPI Programming Environment is the main environment on Aurora. oneAPI has SYCL support. The oneAPI module is loaded by default in your environment:
 
-```
+```bash
 $ module list
 
 Currently Loaded Modules:
@@ -22,12 +22,11 @@ Currently Loaded Modules:
 
 ## Building on Aurora
 
-Simply use `-fsycl`.
-For CMAKE, use `find_package(IntelSYCL REQUIRED)` see `cat $CMPLR_ROOT/lib/cmake/IntelSYCL/IntelSYCLConfig.cmake` for more details.
+Simply use `-fsycl`. For CMake, use `find_package(IntelSYCL REQUIRED)`. See `cat $CMPLR_ROOT/lib/cmake/IntelSYCL/IntelSYCLConfig.cmake` for more details.
 
 ## Example
 
-```
+```cpp
 $ cat hello_sycl.cpp
 #include <sycl/sycl.hpp>
 int main(int argc, char **argv) {
@@ -39,7 +38,7 @@ int main(int argc, char **argv) {
 
   // Allocate device memory
   int *A = sycl::malloc_device<int>(global_range, Q);
-  // Blocking kernel that use the memory
+  // Blocking kernel that uses the memory
   Q.parallel_for(global_range, [=](auto id) { A[id] = id; }).wait();
   // Allocate Host Memory
   std::vector<int> A_host(global_range);
@@ -56,4 +55,4 @@ $ icpx -fsycl hello_sycl.cpp
 $ ./a.out
 ```
 
-More examples can be found here https://github.com/argonne-lcf/sycltrain/tree/master/9_sycl_of_hell
+More examples can be found here: [SYCL Training Examples](https://github.com/argonne-lcf/sycltrain/tree/master/9_sycl_of_hell)

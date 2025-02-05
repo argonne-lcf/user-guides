@@ -1,28 +1,18 @@
 # ADIOS2
 
-The Adaptable Input/Output (I/O) System (ADIOS2)
-is a framework for I/O and streaming of scientific data developed as part of the U.S. DOE Exascale Computing Project.
-ADIOS2 conveniently provides C, C++, Fortran, and Python API for traditional file system I/O, 
-as well as API for transporting data between applications running concurrently on HPC systems. 
-Data transport with ADIOS2 can be performed via the file system, wide-area-networks (WAN), remote direct memory access (RDMA), 
-or MPI to construct a variety of workflows, such as in-situ (or in-transit) visualization, data analysis, and ML training and inference 
-from ongoing simulations.
+The Adaptable Input/Output (I/O) System (ADIOS2) is a framework for I/O and streaming of scientific data developed as part of the U.S. DOE Exascale Computing Project. ADIOS2 conveniently provides C, C++, Fortran, and Python APIs for traditional file system I/O, as well as APIs for transporting data between applications running concurrently on HPC systems. Data transport with ADIOS2 can be performed via the file system, wide-area networks (WAN), remote direct memory access (RDMA), or MPI to construct a variety of workflows, such as in-situ (or in-transit) visualization, data analysis, and ML training and inference from ongoing simulations.
 
 Users are invited to find more information about ADIOS2 on their [GitHub page](https://github.com/ornladios/ADIOS2) and their [documentation](https://adios2.readthedocs.io/en/v2.10.2/).
 
 ## Accessing ADIOS2 on Aurora
 
-Pre-built modules are available to all users which enable access to the latest version of ADIOS2 (v2.10).
-These modules can be displayed with `module avail adios2` and comprise of a CPU only build and a SYCL build of the library, with the SYCL build being the default.
-Note that both ADIOS2 modules also load a Spack installation of Python 3.10 with the `numpy`, `mpi4py`, and `adios2` packages.
-For instance, the default SYCL build can be loaded by executing
+Pre-built modules are available to all users, enabling access to the latest version of ADIOS2 (v2.10). These modules can be displayed with `module avail adios2` and comprise a CPU-only build and a SYCL build of the library, with the SYCL build being the default. Note that both ADIOS2 modules also load a Spack installation of Python 3.10 with the `numpy`, `mpi4py`, and `adios2` packages. For instance, the default SYCL build can be loaded by executing
 
 ```bash
 module load adios2
 ```
 
-A custom build of ADIOS2 is also possible on Aurora.
-In this case, we recommend the users start with the following install script for a base build
+A custom build of ADIOS2 is also possible on Aurora. In this case, we recommend users start with the following install script for a base build:
 
 ```bash linenums="1" title="install_adios2.sh"
 export CRAYPE_LINK_TYPE=dynamic
@@ -47,18 +37,13 @@ cd ..
 
 !!! info "Building the Python bindings"
 
-	The Python bindings for ADIOS2 can be built by setting `ADIOS2_USE_Python=ON`, however this requires a Python 3 installation to be found. We recommend users load the Python AI/ML module with `module load frameworks` and build ADIOS2 under this environment. This will require users to augemnt their Python path with `export PYTHONPATH=$PYTHONPATH:/path/to/adios2-build/install/lib/python3.10/site-packages` in order to use the `adios2` package. Alternatively, users can use a custom Python installation, but note that ADIOS2 requires `numpy` and `mpi4py` as well. 
+    The Python bindings for ADIOS2 can be built by setting `ADIOS2_USE_Python=ON`; however, this requires a Python 3 installation to be found. We recommend users load the Python AI/ML module with `module load frameworks` and build ADIOS2 under this environment. This will require users to augment their Python path with `export PYTHONPATH=$PYTHONPATH:/path/to/adios2-build/install/lib/python3.10/site-packages` in order to use the `adios2` package. Alternatively, users can use a custom Python installation, but note that ADIOS2 requires `numpy` and `mpi4py` as well.
 
-A full list of CMake options is available at the [documentation](https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#install-from-source).
+A full list of CMake options is available in the [documentation](https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#install-from-source).
 
 ## Mixed C++ and Python Hello World Example
 
-Here we show a basic example of using ADIOS2 to stream data between a C++ data producer (e.g., a simulation) and a Python data consumer (e.g., a data analysis or ML component).
-Both applications are MPI programs.
-In this simple workflow, each application loops over a workflow iteration loop, in which the producer writes data to the stream and the consumer reads the data.
-The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to pause execution until the consumer has read the data for a given step.
-This is not a requirement, and can be modified with the `RendezvousReaderCount`, `QueueFullPolicy` and `QueueLimit` parameters.
-More information on the SST engine can be found at the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport) as wall as in the provided [examples](https://github.com/ornladios/ADIOS2/tree/master/examples).
+Here we show a basic example of using ADIOS2 to stream data between a C++ data producer (e.g., a simulation) and a Python data consumer (e.g., a data analysis or ML component). Both applications are MPI programs. In this simple workflow, each application loops over a workflow iteration loop, in which the producer writes data to the stream and the consumer reads the data. The ADIOS2 IO engine is set to SST for data streaming, and the engine parameters are set to force the producer to pause execution until the consumer has read the data for a given step. This is not a requirement and can be modified with the `RendezvousReaderCount`, `QueueFullPolicy`, and `QueueLimit` parameters. More information on the SST engine can be found in the [documentation](https://adios2.readthedocs.io/en/latest/engines/engines.html#sst-sustainable-staging-transport) as well as in the provided [examples](https://github.com/ornladios/ADIOS2/tree/master/examples).
 
 ```c++ linenums="1" title="producer.cpp"
 #include <iostream>
@@ -185,7 +170,7 @@ if __name__ == '__main__':
             stream.end_step()
 ```
 
-To build the C++ producer, use the following CMake file
+To build the C++ producer, use the following CMake file:
 
 ```cmake linenums="1" title="CMakeLists.txt"
 cmake_minimum_required(VERSION 3.12)
@@ -211,7 +196,7 @@ target_link_libraries(producer adios2::cxx11_mpi MPI::MPI_CXX)
 install(TARGETS producer RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 ```
 
-and execute the following commands
+and execute the following commands:
 
 ```bash
 module load adios2
@@ -221,9 +206,7 @@ cmake ./
 make
 ```
 
-The example can be run from an interactive session with the following script, 
-which runs the producer and consumer with two ranks per node and places the producer on sockect 0 and the consumer on socket 1 of each node.
-The producer and consumer can also be run on separare nodes by specifying the `--hostfile` or `--hostlist` in the `mpiexec` commands.
+The example can be run from an interactive session with the following script, which runs the producer and consumer with two ranks per node and places the producer on socket 0 and the consumer on socket 1 of each node. The producer and consumer can also be run on separate nodes by specifying the `--hostfile` or `--hostlist` in the `mpiexec` commands.
 
 ```bash linenums="1" title="run_adios_example.sh"
 #!/bin/bash
@@ -245,4 +228,4 @@ wait
 
 !!! info "Selecting the SST Data Transport Plane"
 
-	The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA, however note that it requires running the applications on more than 1 node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
+    The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA; however, note that it requires running the applications on more than one node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
