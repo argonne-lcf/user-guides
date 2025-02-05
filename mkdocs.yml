@@ -46,13 +46,13 @@ theme:
     - navigation.indexes
     - navigation.path
     # - navigation.prune
-    #- navigation.tabs
+    #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
     - navigation.sections
     - tabs
     - toc.follow
-    - toc.integrate
+    #- toc.integrate  # move right-side intra-page TOC within left nav sidebar
     - search.highlight
     - search.suggest
 
