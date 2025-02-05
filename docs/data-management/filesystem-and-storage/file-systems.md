@@ -1,6 +1,6 @@
 # ALCF File Systems
 
-Our HPC systems store project data in file systems called Eagle and Flare. Eagle and Flare are a Lustre file systems mounted as /eagle and /flare respectively. For more information on the Lustre file systems, here is a document on Lustre File Striping Basics.
+Our HPC systems store project data in file systems called Eagle and Flare. Eagle and Flare are Lustre file systems mounted as `/eagle` and `/flare`, respectively. For more information on the Lustre file systems, here is a document on Lustre File Striping Basics.
 
 * [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
