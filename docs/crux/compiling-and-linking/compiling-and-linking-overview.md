@@ -1,7 +1,7 @@
 # Compiling and Linking on Crux
 
 ## Overview
-Crux has AMD processors on the login nodes (crux-login-01,02) and AMD processors on the compute nodes (see [Machine Overview](../hardware-overview/machine-overview.md) page). The login nodes can be used to compile software, create containers, and launch jobs. For larger, parallel builds, it will be beneficial to compile those directly on the compute nodes.
+Crux has AMD processors on the login nodes (crux-login-01,02) and AMD processors on the compute nodes (see [Machine Overview](../machine-overview.md) page). The login nodes can be used to compile software, create containers, and launch jobs. For larger, parallel builds, it will be beneficial to compile those directly on the compute nodes.
 
 To launch an interactive job and acquire a compute node for compiling, use:
 

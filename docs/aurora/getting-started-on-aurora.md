@@ -10,7 +10,7 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
 ## Hardware Overview
 
-An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./hardware-overview/machine-overview.md) page.
+An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
 
 ## Compiling Applications
 
