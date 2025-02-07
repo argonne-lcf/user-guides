@@ -1,42 +1,50 @@
-# Continuous Integration via Gitlab-CI For Aurora
+# Continuous Integration via GitLab-CI For Aurora
 
-### Changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) needed for Aurora:
--  #### Instead of [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov), use [gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov).
--  #### Note the specific variables for Aurora's scheduler:
+## Changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) needed for Aurora:
+
+- Instead of [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov), use [gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov).
+- Note the specific variables for Aurora's scheduler:
+
   | Cluster | Scheduler | Variable Name | Support docs |
   |:--------|:---------:|:-------------:|:------------:|
-  | Aurora | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS  | [Aurora Getting Started](../getting-started-on-aurora.md) |
+  | Aurora | PBS       | `ANL_AURORA_SCHEDULER_PARAMETERS`  | [Aurora Getting Started](../getting-started-on-aurora.md) |
+
+## Set up proxy from a terminal
 
 Currently, [https://gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov) must be accessed via a proxy.
 
-The following command will connect to an Aurora login node from your local system and establish the required proxy: `ssh login.aurora.alcf.anl.gov -D localhost:25565`
+The following command will connect to an Aurora login node from your local system and establish the required proxy:[^1]
+```bash linenums="1"
+ssh aurora.alcf.anl.gov -D localhost:25565
+```
 
-<small>(`25565` is the proxy port, it may be changed as needed.)</small>
+## Instructions for Firefox Browser
 
-In order to use the proxy, configure your web browser to use a SOCKS proxy.
+In order to use the proxy, you must configure your local web browser to use a SOCKS proxy. The instructions for other browsers are similar.
 
-##### Instructions for Firefox (other browsers are similar):
 1. Open Firefox settings
 2. Navigate to "General" > "Network Settings" > "Settings" 
     <small>(at the bottom of the General settings page.)</small>
 3. Ensure "Manual proxy configuration" is selected
-4. Fill the "SOCKS Host" field with 'localhost'
-5. Fill the associated port field with '25565' (or an alternate port you specified in your ssh command)
+4. Fill the "SOCKS Host" field with `localhost`
+5. Fill the associated port field with `25565` (or the alternate port you specified in your SSH command)
 6. Ensure "SOCKS v5" is selected
 7. Ensure "Proxy DNS when using SOCKS v5" is selected"
 8. Select "OK"
 
-**NOTE: You will not have internet access in Firefox while using the proxy. Select "No proxy" to re-enable internet access.**
+!!! warning 
+
+	You will not have internet access in Firefox while using the proxy. Select "No proxy" to re-enable internet access.
 
 For ease of use, many users have had success using extensions like FoxyProxy, or using a separate web browser for accessing resources that require the proxied connection.
 
-### Examples of `.gitlab-ci.yml` files for Aurora:
+## Examples of `.gitlab-ci.yml` files for Aurora:
 
-See the [large-example .gitlab-ci.yml file](https://gitlab-sunspot.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml) for additional examples.
+See the [large-example `.gitlab-ci.yml` file](https://gitlab-sunspot.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml) for additional examples.
 
 _Example: A `.gitlab-ci.yml` file for an Aurora project_
 
-```yaml
+```yaml linenums="1"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -65,7 +73,7 @@ batch_test:
 
 _Example: Running a batch job on the Aurora HPC_
 
-```yaml
+```yaml linenums="1"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -85,7 +93,7 @@ batch_test:
 
 _Example: Aurora pipeline with custom stages_
 
-```yaml
+```yaml linenums="1"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -117,9 +125,9 @@ test2:
     - echo "Job 2 end"
 ```
 
-_Example: Gitlab job designed to only run on merge requests_
+_Example: GitLab job designed to only run on merge requests_
 
-```yaml
+```yaml linenums="1"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -138,3 +146,5 @@ test1:
   script:
     - echo "Run test 1"
 ```
+
+[^1]: `25565` is the proxy port, it may be changed as needed.
