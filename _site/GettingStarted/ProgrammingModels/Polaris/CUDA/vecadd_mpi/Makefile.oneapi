@@ -1,0 +1,56 @@
+# Use LLVM compiler w/ ALCF provided OpenMPI
+#
+# module restore
+# module load craype-accel-nvidia80
+# module use /soft/modulefiles
+# module load oneapi/upstream
+# module load mpiwrappers/cray-mpich-oneapi-upstream
+#
+# Definition of MACROS
+
+CXX = mpicxx
+CXXFLAGS_BASE = -g --cuda-gpu-arch=sm_80
+CXXFLAGS = $(CXXFLAGS_BASE) -x cuda
+
+CPP = cpp -P -traditional
+CPPFLAGS =
+
+LD = $(CXX)
+LDFLAGS = $(CXXFLAGS_BASE)
+LIB =
+LIB += -L$(CUDA_HOME)/lib64 -lcudart
+#LIB += -L/opt/cray/pe/mpich/8.1.16/gtl/lib -lmpi_gtl_cuda
+LIB += $(PE_MPICH_GTL_DIR_nvidia80) $(PE_MPICH_GTL_LIBS_nvidia80)
+
+BINROOT=./
+EX=vecadd
+SHELL=/bin/sh
+
+SRC = $(wildcard *.cpp)
+INC = $(wildcard *.h)
+OBJ = $(SRC:.cpp=.o)
+
+#
+# -- target : 	Dependencies
+# --		Rule to create target
+
+$(EX): 	$(OBJ)
+	$(LD) -o $@ $(LDFLAGS) $(OBJ) $(LIB)
+
+####################################################################
+
+$(OBJ): %.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+#
+# -- Remove *.o and *~ from the directory
+clean:
+	rm -f *.o *~
+#
+# -- Remove *.o, *~, and executable from the directory
+realclean:
+	rm -f *.o *~ ./$(EX)
+
+#
+# -- Simple dependencies
+
+$(OBJ) : $(INC)

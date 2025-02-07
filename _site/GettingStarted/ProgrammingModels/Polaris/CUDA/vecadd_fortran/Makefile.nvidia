@@ -1,0 +1,47 @@
+#
+# Definition of MACROS
+
+F90 = ftn
+F90FLAGS = -g -Mfree -cuda -O3
+F90FLAGS += -D_SINGLE_PRECISION
+
+CPP = cpp -P -traditional
+CPPFLAGS =
+
+LD = $(F90)
+LIB = 
+
+BINROOT=./
+EX=vecadd
+SHELL=/bin/sh
+
+# -- subset of src files with cuda kernels
+SRC = $(wildcard *.F)
+MOD = $(wildcard *.mod)
+OBJ = $(SRC:.F=.o)
+
+#
+# -- target : 	Dependencies
+# --		Rule to create target
+
+$(EX): 	$(OBJ)
+	$(LD) -o $@ $(F90FLAGS) $(OBJ) $(LIB)
+
+####################################################################
+
+$(OBJ): %.o: %.F
+	$(F90) $(F90FLAGS) -c $<
+
+#
+# -- Remove *.o and *~ from the directory
+clean:
+	rm -f *.o *.mod *~
+#
+# -- Remove *.o, *~, and executable from the directory
+realclean:
+	rm -f *.o *.mod *~ ./$(EX)
+
+#
+# -- Simple dependencies
+
+$(OBJ) : $(MOD)

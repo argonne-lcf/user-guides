@@ -1,0 +1,8 @@
+mpiexec -n 8 ./stencil_carttopo_chkpt_coll 32 10 10 4 2 patch     /* collective checkpoint */
+mpiexec -n 8 ./stencil_carttopo_chkpt_coll 32 10 10 4 2 patch 5   /* restart from iter 5 */
+mpiexec -n 8 ./stencil_carttopo_chkpt_icoll 32 10 10 4 2 patch    /* non-blocking collective checkpoint */
+mpiexec -n 8 ./stencil_carttopo_chkpt_icoll 32 10 10 4 2 patch 2  /* restart from iter 2 */
+mpiexec -n 8 ./stencil_carttopo_chkpt_indep 32 10 10 4 2 patch    /* independent checkpoint */
+mpiexec -n 8 ./stencil_carttopo_chkpt_indep 32 10 10 4 2 patch 3  /* restart from iter 3 */
+mpiexec -n 8 ./stencil_carttopo_chkpt_serial 32 10 10 4 2 patch   /* legacy checkpoint with POSIX */
+mpiexec -n 8 ./stencil_carttopo_chkpt_serial 32 10 10 4 2 patch 6 /* restart from iter 6 */

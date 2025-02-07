@@ -1,0 +1,36 @@
+# /* ----------------------------------------------------------------------   
+#  Makefile for ThetaGPU at ALCF
+# ------------------------------------------------------------------------- */
+
+# which file will be copied to Makefile.lammps
+
+PATH_TO_NVCC = $(shell which nvcc)
+CUDA_BASE = $(shell echo ${PATH_TO_NVCC} | rev | cut -d '/' -f 4- | rev)
+CUDA_HOME = $(CUDA_BASE)/cuda
+
+EXTRAMAKE = Makefile.lammps.standard
+
+NVCC = nvcc 
+
+CUDA_ARCH = -arch=sm_80
+
+CUDA_PRECISION = -D_SINGLE_DOUBLE
+CUDA_INCLUDE = #-I$(CUDA_HOME)/include
+CUDA_LIB = #-L$(CUDA_HOME)/lib64  -Xlinker -rpath -Xlinker $(CUDA_HOME)/lib64 -lcudart
+CUDA_OPTS = -DUNIX -O3 --use_fast_math  --ftz=true
+
+#CUDR_CPP = CC -cuda -DMPI_GERYON -DUCL_NO_EXIT -I$(CUDA_HOME)/include -std=c++11 -DCUDA_MPS_SUPPORT
+CUDR_CPP = CC -cuda -DMPI_GERYON -DUCL_NO_EXIT -std=c++11 -DCUDA_MPS_SUPPORT
+CUDR_OPTS = -O3 -DLAMMPS_SMALLBIG
+#CUDR_OPTS = -O3 -fast -DLAMMPS_SMALLBIG
+
+BIN_DIR = ./
+OBJ_DIR = ./
+LIB_DIR = ./
+AR = ar
+BSH = /bin/sh
+
+CUDPP_OPT = # -DUSE_CUDPP -Icudpp_mini
+
+include Nvidia.makefile
+

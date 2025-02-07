@@ -1,0 +1,1 @@
+mpiexec -n 4 ./stencil 100 10 1000 2 2

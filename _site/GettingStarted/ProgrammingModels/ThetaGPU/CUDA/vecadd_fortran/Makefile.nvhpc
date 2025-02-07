@@ -1,0 +1,56 @@
+#module load nvhpc-nompi
+#module switch openmpi/openmpi-4.0.5 openmpi/openmpi-4.0.5_ucx-1.10.0_nvhpc-21.7
+#
+# Definition of MACROS
+
+PATH_TO_NVCC = $(shell which nvcc)
+PATH_TO_NVHPC = $(shell echo ${PATH_TO_NVCC} | rev | cut -d '/' -f 4- | rev)
+
+$(info PATH_TO_NVHPC= [${PATH_TO_NVHPC}])
+
+CUDA = ${PATH_TO_NVHPC}/cuda
+
+F90 = pgf90
+F90FLAGS = -g -Mfree -Mcuda=cc80,cuda11.0 -O3 -I$(CUDA)/include
+F90FLAGS += -D_SINGLE_PRECISION
+
+CPP = cpp -P -traditional
+CPPFLAGS =
+
+LD = $(F90)
+LIB = -L$(CUDA)/lib64 -lcudart
+
+BINROOT=./
+EX=vecadd
+SHELL=/bin/sh
+
+# -- subset of src files with cuda kernels
+SRC = $(wildcard *.F)
+MOD = $(wildcard *.mod)
+OBJ = $(SRC:.F=.o)
+
+#
+# -- target : 	Dependencies
+# --		Rule to create target
+
+$(EX): 	$(OBJ)
+	$(LD) -o $@ $(F90FLAGS) $(OBJ) $(LIB)
+
+####################################################################
+
+$(OBJ): %.o: %.F
+	$(F90) $(F90FLAGS) -c $<
+
+#
+# -- Remove *.o and *~ from the directory
+clean:
+	rm -f *.o *.mod *~
+#
+# -- Remove *.o, *~, and executable from the directory
+realclean:
+	rm -f *.o *.mod *~ ./$(EX)
+
+#
+# -- Simple dependencies
+
+$(OBJ) : $(MOD)
