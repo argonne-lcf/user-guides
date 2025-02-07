@@ -42,9 +42,7 @@ For ease of use, many users have had success using extensions like FoxyProxy, or
 
 See the [large-example `.gitlab-ci.yml` file](https://gitlab-sunspot.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml) for additional examples.
 
-_Example: A `.gitlab-ci.yml` file for an Aurora project_
-
-```yaml linenums="1"
+```yaml linenums="1" title="Generic example for an Aurora project"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -71,9 +69,7 @@ batch_test:
     - echo "Job end"
 ```
 
-_Example: Running a batch job on the Aurora HPC_
-
-```yaml linenums="1"
+```yaml linenums="1" title="Example: Running a batch job on the Aurora HPC"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -91,9 +87,7 @@ batch_test:
     - echo "Job end"
 ```
 
-_Example: Aurora pipeline with custom stages_
-
-```yaml linenums="1"
+```yaml linenums="1" title="Example: Aurora pipeline with custom stages"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -125,9 +119,7 @@ test2:
     - echo "Job 2 end"
 ```
 
-_Example: GitLab job designed to only run on merge requests_
-
-```yaml linenums="1"
+```yaml linenums="1" title="Example: GitLab job designed to only run on merge requests"
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
   - project: 'anl/ci-resources/defaults'
