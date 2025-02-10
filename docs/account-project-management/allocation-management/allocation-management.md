@@ -24,13 +24,7 @@ to determine active allocations.
 
 ## Getting More Time
 
-To request an extension of your existing discretionary allocation or to request additional hours, please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with answers to the following:
-
-- What have you accomplished with your original allocation?
-- Please include a brief description of any publications or major presentations that were (or will be) generated in full or in part because of this allocation.
-- What will you do with the extra time?
-- What are you requesting as your new expiration date?
-- How many additional hours are you requesting?
+To request an extension of your existing discretionary allocation or to request additional hours, please complete an allocation renewal request [here](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
 ## Sub-allocations
 

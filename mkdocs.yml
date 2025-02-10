@@ -381,6 +381,10 @@ nav:
       - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
 
+  - Contacting Support:
+      - Technical Support: technical-support.md
+      - Software Requests: software-requests.md
+
   - Questions / Issues: issues.md
 
 not_in_nav: |
