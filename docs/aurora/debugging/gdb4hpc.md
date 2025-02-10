@@ -1,10 +1,12 @@
 # HPE gdb4hpc on Aurora
+
 The gdb4hpc is not a GPU-aware debugger but can be used to debug general code problems at scale. This debugger will apply commands to all threads in the MPI process group.
 
 ## Attaching to a running job
 
 Determine the `jobid` of interest:
-```bash linenums="1"
+
+```bash
 qstat -u $USER
 ```
 
@@ -28,7 +30,7 @@ harms@aurora-uan-0009:~/working/all2all> qstat -f 127750 | grep exec_vnode
 exec_vnode = (x4305c2s6b0n0:ncpus=1)+(x4305c2s7b0n0:ncpus=1)+(x4305c4s0b0n0
 ```
 
-Login to this node, find your `mpiexec` process id and run `gdb4hpc`:
+Log in to this node, find your `mpiexec` process id, and run `gdb4hpc`:
 
 ```bash linenums="1"
 ssh x4305c2s6b0n0
