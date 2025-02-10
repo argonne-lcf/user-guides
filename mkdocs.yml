@@ -282,7 +282,6 @@ nav:
     - Polaris:
       - Getting Started: polaris/getting-started.md
       - System Updates: polaris/system-updates.md
-      - Contacting Support and Software Requests: polaris/contacting-support.md
       - Known Issues: polaris/known-issues.md
       - Machine Overview: polaris/hardware-overview/machine-overview.md
         # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -382,8 +381,8 @@ nav:
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
 
   - Contacting Support:
-      - Technical Support: technical-support.md
-      - Software Requests: software-requests.md
+      - Technical Support: contacting-support/technical-support.md
+      - Software Requests: contacting-support/software-requests.md
 
   - Questions / Issues: issues.md
 
