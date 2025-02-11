@@ -101,15 +101,15 @@ clush --hostfile ${PBS_NODEFILE} ps –ef | grep agent | grep -v grep'  | dshbak
 export DAOS_POOL=Your_allocated_pool_name
 daos pool query ${DAOS_POOL}
 daos cont list ${DAOS_POOL}
-daos container get-prop  $DAOS_POOL_NAME  $DAOS_CONT_NAME
+daos container get-prop  $DAOS_POOL  $DAOS_CONT
 ```
 
 * Look for messages like `Rebuild busy and state degraded in the daos pool query.`
 * Look for messages like `Health (status) : UNCLEAN in the get prop`
 
 ```bash
-daos pool      autotest  $DAOS_POOL_NAME
-daos container check --pool=$DAOS_POOL_NAME --cont=$DAOS_CONT_NAME
+daos pool      autotest  $DAOS_POOL
+daos container check --pool=$DAOS_POOL --cont=$DAOS_CONT
 ```
 
 ### Mount a POSIX container
@@ -119,18 +119,19 @@ In the future, we hope to automate some of this via additional `qsub` options.
 
 #### To mount a POSIX container on a login node
 
+<<<<<<< HEAD
 ```bash linenums="1"
-mkdir –p /tmp/${DAOS_POOL}/${DAOS_CONT}
-start-dfuse.sh -m /tmp/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
+mkdir –p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
 mount | grep dfuse # To confirm if its mounted
 
 # Mode 1
-ls /tmp/${DAOS_POOL}/${DAOS_CONT}
-cd /tmp/${DAOS_POOL}/${DAOS_CONT}
-cp ~/temp.txt ~ /tmp/${DAOS_POOL}/${DAOS_CONT}/
-cat /tmp/${DAOS_POOL}/${DAOS_CONT}/temp.txt
+ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+cd /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+cp ~/temp.txt ~ /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/
+cat /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/temp.txt
 
-fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} # To unmount
+fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount
 ```
 
 #### To mount a POSIX container on Compute Nodes
@@ -138,12 +139,12 @@ fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} # To unmount
 You need to mount the container on all compute nodes.
 
 ```bash linenums="1"
-launch-dfuse.sh ${DAOS_POOL_NAME}:${DAOS_CONT_NAME} # launched using pdsh on all compute nodes mounted at: /tmp/<pool>/<container>
+launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using pdsh on all compute nodes mounted at: /tmp/<pool>/<container>
 mount | grep dfuse # To confirm if its mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 
-clean-dfuse.sh  ${DAOS_POOL_NAME}:${DAOS_CONT_NAME} # To unmount on all nodes
+clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes 
 ```
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
@@ -222,11 +223,12 @@ daos container get-prop  ${DAOS_POOL}  ${DAOS_CONT} #optional
 daos container list      ${DAOS_POOL}               #optional
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT}           # To mount on a compute node
 
-# mkdir -p /tmp/${DAOS_POOL}/${DAOS_CONT}           # To mount on a login node
-# start-dfuse.sh -m /tmp/${DAOS_POOL}/${DAOS_CONT}     --pool ${DAOS_POOL} --cont ${DAOS_CONT}  # To mount on a login node
+# mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}           # To mount on a login node
+# start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}     --pool ${DAOS_POOL} --cont ${DAOS_CONT}  # To mount on a login node
 
 mount|grep dfuse                                    #optional
-ls /tmp/${DAOS_POOL}/${DAOS_CONT}                   #optional
+ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}	        #optional for login node
+ls /tmp/${DAOS_POOL}/${DAOS_CONT}                   #optional for compute node
 
 # cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 /tmp/${DAOS_POOL}/${DAOS_CONT} #one time
 # daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 --dst daos://tmp/${DAOS_POOL}/${DAOS_CONT}  # check https://docs.daos.io/v2.4/testing/datamover/
@@ -256,7 +258,7 @@ LD_PRELOAD=/usr/lib64/libpil4dfs.so mpiexec -np ${NRANKS} -ppn ${RANKS_PER_NODE}
 date
 
 clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
-# fusermount3 -u /tmp/${DAOS_POOL}/${DAOS_CONT} #to unmount on login node
+# fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} #to unmount on login node
 
 ```
 
