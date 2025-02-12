@@ -91,6 +91,14 @@ python run_libe_forces.py -n 7
 
 And you will see it runs with two cores (mpi ranks) and two GPUs are used per worker.
 
+## Live viewing GPU usage
+
+To see GPU usage, ssh into a compute node you are on in another window and run:
+
+```bash
+module load xpu-smi
+watch -n 0.1 xpu-smi dump -d -1 -m 0 -n 1
+```
 
 ## Using Tiles as GPUs
 
@@ -135,6 +143,14 @@ then the first run we did will use 12 instead of 13 workers:
 ```bash
 python run_libe_forces.py -n 12
 ```
+
+## Dynamic resource assignment
+
+In the forces directory you will also find:
+
+`forces_gpu_var_resources` uses varying processor/GPU counts per simulation.
+
+`forces_multi_app` uses varying processor/GPU counts per simulation and also uses two different user executables, one which is CPU-only and one which uses GPUs. This allows highly efficient use of nodes for multi-application ensembles.
 
 ## Demonstration
 
