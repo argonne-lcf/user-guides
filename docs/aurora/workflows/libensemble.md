@@ -104,5 +104,5 @@ A [video demonstration](https://youtu.be/H2fmbZ6DnVc) of the `forces_gpu` exampl
 
 More details:
 - [libEnsemble Documentation](https://libensemble.readthedocs.io)
-- [libEnsemble github page](https://github.com/Libensemble/libensemble)
+- [libEnsemble GitHub page](https://github.com/Libensemble/libensemble)
 - [libEnsemble Documentation Aurora page](https://libensemble.readthedocs.io/en/main/platforms/aurora.html)
