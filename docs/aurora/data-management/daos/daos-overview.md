@@ -9,8 +9,8 @@ DAOS is an open-source software-defined object store designed for massively dist
 DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5.
 Users can use DAOS for their I/O and checkpointing on Aurora. 
 DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
-![Aurora Storage Architecture](aurora-storage-architecture.png "Aurora Storage Architecture")
-![Aurora Interconnect](dragonfly.png "Aurora Slingshot Dragonfly")
+![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
+![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
 
 
 ## DAOS Overview
@@ -93,7 +93,7 @@ Successfully created container 59747044-016b-41be-bb2b-22693333a380
 If you prefer a higher data protection and recovery you can `--properties rd_fac:2` and if you don't need data protection and recovery, you can remove `--properties rd_fac:1`.
 We recommend to have at least `--properties rd_fac:1`.
 
-![data model ](datamodel.png "DAOS data model")
+![data model](images/datamodel.png "DAOS data model")
 
 ## DAOS sanity checks
 
@@ -181,7 +181,7 @@ For 12 PPN, the following binding is recommended:
 ```bash
 CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ```
-![Sample NIC to Core binding](core-nic-binding.png "Sample NIC to Core binding")
+![Sample NIC to Core binding](images/core-nic-binding.png "Sample NIC to Core binding")
 
 ## Interception library for POSIX containers
 
@@ -190,7 +190,7 @@ The libioil IL will intercept basic read and write POSIX calls while all metadat
 The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and commuNICates with DAOS directly in userspace.
 It will also take advantage of the multiple NICs on the node based on how many MPI processes are running on the node and which CPU socket they are on.
 
-![Interception library](interception.png "Interception library")
+![Interception library](images/interception.png "Interception library")
 
 ```bash
 Interception library for POSIX mode 
@@ -345,7 +345,7 @@ Each DAOS server nodes is based on the Intel Coyote Pass platform.
 * (16) 15.3TB Samsung PM1733 NVMe
 * (2) HPE Slingshot NIC
 
-![DAOS Node](daos-node.png "DAOS CYP Node")
+![DAOS Node](images/daos-node.png "DAOS CYP Node")
 
 ## Darshan profiler for DAOS 
 
@@ -403,7 +403,7 @@ python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-6
 
 DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
 
-![expected Bandwidth](expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
+![expected Bandwidth](images/expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
 
 
 ## Best practices
