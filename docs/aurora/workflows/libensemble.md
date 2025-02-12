@@ -26,7 +26,7 @@ See the ALCF docs for more details on using [Python on Aurora](https://docs.alcf
 
 To run the [forces_gpu](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html) tutorial on Aurora.
 
-To obtain the example, you can clone the `libEnsemble` repository—although only the `forces` sub-directory is needed:
+To obtain the example, you can clone the `libEnsemble` repository--- although only the `forces` sub-directory is needed:
 
 ```bash
 git clone https://github.com/Libensemble/libensemble
