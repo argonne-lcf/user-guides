@@ -18,7 +18,7 @@ python -m venv /path/to-venv --system-site-packages
 . /path/to-venv/bin/activate
 ```
 
-where /path/to-venv can be anywhere you have write access. For future sessions, just load the frameworks module and run the activate line.
+where `/path/to-venv` can be anywhere you have write access. For future sessions, just load the frameworks module and run the activate line.
 
 To obtain libEnsemble::
 
