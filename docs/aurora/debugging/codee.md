@@ -4,7 +4,7 @@ The Codee tool automatically analyzes your code line by line to identify and fix
 
 ## Load the tool
 
-```
+```bash linenums="1"
 module use /soft/modulefiles
 module load codee/2025.1
 ```
