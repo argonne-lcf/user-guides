@@ -245,6 +245,7 @@ nav:
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
+          - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md
           - SmartSim: aurora/workflows/smartsim.md
 
