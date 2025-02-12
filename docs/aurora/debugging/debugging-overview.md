@@ -8,4 +8,4 @@ There are 3 debuggers available on Aurora:
 
 There is also a correctness tool for Fortran:
 
-1. [Codee](./codee.md)
+1. [Codee](./codee.md) - This is a tool from Codee which can automatically analyze your code line-by-line to identify and fix opportunities for correctness, modernization, security and optimization. It is especially useful for legacy Fortran codes.
