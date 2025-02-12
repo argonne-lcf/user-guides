@@ -1,6 +1,6 @@
 # Using Codee to analyze Fortran code for correctness and modernization 
 
-The Codee tool automatically analyzes your code line by line to identify and fix opportunities for correctness, modernization, security and optimization. 
+The Codee tool automatically analyzes your code line-by-line to identify and fix opportunities for correctness, modernization, security and optimization. 
 
 ## Load the tool
 
