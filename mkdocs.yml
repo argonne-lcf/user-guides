@@ -83,8 +83,6 @@ extra:
 
 plugins:
   - include-markdown
-  - codeinclude:
-      title_mode: pymdownx.tabbed
   - search:
       lang: en
 

@@ -2,5 +2,4 @@ mkdocs-material
 mkdocs>=1.5.0
 mkdocs-video
 mkdocs-include-markdown-plugin
-mkdocs-codeinclude-plugin>=0.2.1
 pymdown-extensions>=10.12
