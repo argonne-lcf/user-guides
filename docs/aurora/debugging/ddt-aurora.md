@@ -26,7 +26,7 @@ Create a configuration named "aurora," and set it up like this example, replacin
 
 The path in the **Remote Installation Directory** field changes when new versions of DDT are installed on Aurora. To find the correct path, use the `which` command. After you've loaded the `forge` module, this will show you the path to use (remove the `/bin/ddt` portion when entering it into the DDT client **Remote Installation Directory** field):
 
-```bash
+```console
 aurora-uan-0011> which ddt
 /opt/aurora/24.180.3/support/tools/forge/24.1.1/bin/ddt
 aurora-uan-0011>
@@ -79,9 +79,9 @@ if [ ${MY_LOCAL_RANK} -eq 0 ]; then
 fi
 ```
 
-From the interactive prompt on your lead Aurora compute node, issue
+From the interactive prompt on your lead Aurora compute node, issue the following commands:
 
-```bash
+```bash linenums="1"
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
 ZET_ENABLE_PROGRAM_DEBUGGING=1

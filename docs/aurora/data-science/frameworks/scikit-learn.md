@@ -44,7 +44,7 @@ Patching (described above) can be helpful in the case of functionality that alre
 
 To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is tested more thoroughly on Aurora.
 
-!!! warning "Warning"
+!!! warning "Multi-GPU scaling performance"
     The current version of Intel Extension to scikit-learn does not scale well to multiple GPUs. The cause has been identified, and we're waiting on a fix. However, if you use the oneDAL C++ API, the scaling is much better.
 
 1. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
@@ -57,7 +57,7 @@ Since you are importing the algorithm from `sklearnex` instead of `sklearn`, pat
 
 This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex GitHub repo.
 
-```python
+```python linenums="1" title="knn_mpi4py_spmd.py"
 import dpctl
 import dpctl.tensor as dpt
 from mpi4py import MPI
@@ -88,7 +88,7 @@ model_spmd.fit(dpt_X, dpt_y)
 
 Below we give an example job script. Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
 
-```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="30-37"
+```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="13"
 module use /soft/modulefiles
 module load frameworks
 
@@ -106,3 +106,4 @@ export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-7
 # Launch the script
 mpiexec -np 12 -ppn 12 --cpu-bind ${CPU_BIND} gpu_tile_compact.sh python knn_mpi4py_spmd.py
 ```
+The highlighted line, which pins each of the 12 MPI ranks to specific CPU physical cores, is essential to achieving good performance across all 12 GPU Tiles on an Aurora node.

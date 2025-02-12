@@ -122,8 +122,6 @@ extra:
 
 plugins:
   - include-markdown
-  - codeinclude:
-      title_mode: pymdownx.tabbed
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
@@ -231,6 +229,7 @@ nav:
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
           - DDT: aurora/debugging/ddt-aurora.md
           - gdb4hpc: aurora/debugging/gdb4hpc.md
+          - Codee: aurora/debugging/codee.md
         - Performance Tools:
         #  - Overview: aurora/performance-tools/performance-overview.md
           - Advisor: aurora/performance-tools/advisor.md

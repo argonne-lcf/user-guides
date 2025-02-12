@@ -2,7 +2,6 @@ mkdocs-material>=9.6.0
 mkdocs>=1.6.1
 mkdocs-video
 mkdocs-include-markdown-plugin
-mkdocs-codeinclude-plugin>=0.2.1  # TODO: remove this single example in favor of snippets
 pymdown-extensions>=10.12
 mkdocs-get-deps
 #mkdocs-git-authors-plugin
