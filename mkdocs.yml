@@ -111,11 +111,15 @@ validation:
 
 extra:
   homepage: 'https://docs.alcf.anl.gov'
-  social:
+  social:  # placed in overridden footer
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'
+    - icon: 'fontawesome/brands/youtube'
+      link: 'https://www.youtube.com/c/argonneleadershipcomputingfacility'
     - icon: 'fontawesome/brands/x-twitter'
       link: 'https://x.com/argonne_lcf'
+    - icon: 'fontawesome/brands/facebook'
+      link: 'https://www.facebook.com/argonne.lcf/'
   analytics:
     provider: google
     property: G-4M48E2L33R
