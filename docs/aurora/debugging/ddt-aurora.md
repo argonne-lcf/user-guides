@@ -84,12 +84,13 @@ From the interactive prompt on your lead Aurora compute node, issue
 ```bash
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
+ZET_ENABLE_PROGRAM_DEBUGGING=1
 ```
 
 To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to Aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 16 nodes, with 12 MPI ranks per node:
 
 ```bash
-ddt --nodes=16 --connect --mpi=generic --mpiargs="-l --ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
+ddt --np=192 --connect --mpi=generic --mpiargs="-l --ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
 ```
 
 On the client, you should see a connection pop-up like this:
