@@ -148,9 +148,8 @@ python run_libe_forces.py -n 12
 
 In the forces directory you will also find:
 
-`forces_gpu_var_resources` uses varying processor/GPU counts per simulation.
-
-`forces_multi_app` uses varying processor/GPU counts per simulation and also uses two different user executables, one which is CPU-only and one which uses GPUs. This allows highly efficient use of nodes for multi-application ensembles.
+- `forces_gpu_var_resources` uses varying processor/GPU counts per simulation.
+- `forces_multi_app` uses varying processor/GPU counts per simulation and also uses two different user executables, one which is CPU-only and one which uses GPUs. This allows highly efficient use of nodes for multi-application ensembles.
 
 ## Demonstration
 
