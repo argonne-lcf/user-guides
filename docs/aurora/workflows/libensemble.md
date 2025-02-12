@@ -93,7 +93,7 @@ And you will see it runs with two cores (mpi ranks) and two GPUs are used per wo
 
 ## Live viewing GPU usage
 
-To see GPU usage, ssh into a compute node you are on in another window and run:
+To see GPU usage, SSH into a compute node you are on in another window and run:
 
 ```bash
 module load xpu-smi
