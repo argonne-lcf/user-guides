@@ -19,7 +19,7 @@ To obtain libEnsemble::
 
     pip install libensemble
 
-See the ALCF docs for more details on using [Python on Aurora](https://docs.alcf.anl.gov/aurora/data-science/python/).
+See the ALCF docs for more details on using [Python on Aurora](../data-science/python.md).
 
 
 # Example
