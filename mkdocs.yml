@@ -241,7 +241,7 @@ nav:
         # - Visualization:
         #   - ParaView: aurora/visualization/paraview.md
         - Services:
-          - GitLab: aurora/services/gitlab-ci.md
+          - GitLab CI: aurora/services/gitlab-ci.md
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
@@ -400,7 +400,7 @@ nav:
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
-      - Gitlab-CI: services/gitlab-ci.md
+      - GitLab CI: services/gitlab-ci.md
 
   - Facility Policies:
     - Overview of Policies: policies/facility-policies.md
