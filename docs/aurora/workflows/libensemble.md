@@ -10,14 +10,21 @@ libEnsemble can be used in a consistent manner on laptops, clusters, and superco
 
 ## Configuring Python and Installation
 
-To obtain Python use:
+To obtain Python and create a virtual environment:
 
-    module use /soft/modulefiles
-    module load frameworks
+```bash
+module load frameworks
+python -m venv /path/to-venv --system-site-packages
+. /path/to-venv/bin/activate
+```
+
+where /path/to-venv can be anywhere you have write access. For future sessions, just load the frameworks module and run the activate line.
 
 To obtain libEnsemble::
 
-    pip install libensemble
+```bash
+pip install libensemble
+```
 
 See the ALCF docs for more details on using [Python on Aurora](../data-science/python.md).
 
@@ -55,26 +62,35 @@ ensemble.exit_criteria = ExitCriteria(sim_max=nsim_workers*2)
 Now grab an interactive session on two nodes (or use the batch script at `../submission_scripts/submit_pbs_aurora.sh`):
 
 ```bash
-qsub -A <myproject> -l select=2 -l walltime=15:00 -lfilesystems=home -q EarlyAppAccess -I
+qsub -A <myproject> -l select=2 -l walltime=15:00 -lfilesystems=home:flare -q debug -I
 ```
 
-Once in the interactive session, you may need to reload the frameworks module:
+Once in the interactive session, you may need to reactivate your virtual environment:
 
 ```bash
 cd $PBS_O_WORKDIR
-module use /soft/modulefiles
-module load frameworks
+. /path/to-venv/bin/activate
 ```
 
 Then, run:
 
 ```bash
-python run_libe_forces.py --comms local --nworkers 13
+python run_libe_forces.py -n 13
 ```
 
 This provides twelve workers for running simulations (one for each GPU across two nodes). An extra worker runs the persistent generator. GPU settings for each worker simulation are printed.
 
 Looking at `libE_stats.txt` will provide a summary of the runs.
+
+Try running
+
+```bash
+./cleanup.sh
+python run_libe_forces.py -n 7
+```
+
+And you will see it runs with two cores (mpi ranks) and two GPUs are used per worker.
+
 
 ## Using Tiles as GPUs
 
@@ -91,12 +107,34 @@ ensemble.libE_specs = LibeSpecs(
 Now, rerun with twice the workers:
 
 ```bash
-python run_libe_forces.py --comms local --nworkers 25
+python run_libe_forces.py -n 25
 ```
 
 The `forces` example will automatically use the GPUs available to each worker (one MPI rank per GPU). If fewer workers are provided, multiple GPUs will be used per simulation.
 
 Also, see `forces_gpu_var_resources` and `forces_multi_app` examples for cases using varying processor/GPU counts per simulation.
+
+
+## Running generator on the manager
+
+An alternative is to run the generator on a thread on the manager. The
+number of workers can then be set to the number of simulation workers.
+
+Change the `libE_specs` in **run_libe_forces.py** as follows:
+
+```python
+nsim_workers = ensemble.nworkers
+
+# Persistent gen does not need resources
+ensemble.libE_specs = LibeSpecs(
+    gen_on_manager=True,
+```
+
+then the first run we did will use 12 instead of 13 workers:
+
+```bash
+python run_libe_forces.py -n 12
+```
 
 ## Demonstration
 
