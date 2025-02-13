@@ -41,16 +41,16 @@ theme:
     - content.action.view
     - content.code.copy
     - content.code.annotate
-    #- content.code.select # experimental
-    - instant
+    #- content.code.select # insiders-4.32.0
     - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.path
-    # - navigation.prune
-    #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
+    #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
+    # - navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
     - navigation.sections
-    - tabs
     - toc.follow
     #- toc.integrate  # move right-side intra-page TOC within left nav sidebar
     - search.highlight
