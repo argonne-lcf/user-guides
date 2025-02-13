@@ -110,7 +110,7 @@ aprun -N 4 -n 16 --cc=core --cpus-per-pe 8 $EXE +replicas 16 init.conf --source 
 
 We recommend using the provided NAMD binaries.
 
-The following instructions are for the GPU-offload version build on top of Slingshot-11 generic Charm++.
+The following instructions are for building the GPU-offload version on top of a Slingshot-11-optimized Charm++ library:
 
 1. `module swap PrgEnv-nvhpc PrgEnv-gnu`
 2. Download NAMD source [code](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
