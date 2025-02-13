@@ -10,13 +10,13 @@ Our HPC systems also mount a Lustre home file system, either agile-home or gecko
 
 The agile-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
-| Name                                 | Accessible From | Type   | Path                                                                                  | Production                                    | Backed-up | Usage                                                                  |
-|--------------------------------------|-----------------|--------|---------------------------------------------------------------------------------------|-----------------------------------------------|-----------|------------------------------------------------------------------------| 
-| agile-home                           | Polaris         | Lustre | /home or /lus/agile/home	                                                          | Yes                                           | Yes       | General use                                                            |
-| gecko-home                           | Aurora          | Lustre | /home or /lus/gecko/home                                                              | Yes                                           | No        | General use                                                            |
-| Eagle	                               | Polaris         | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                          | No        | Community sharing via Globus; <br /> Intensive job output, large files |
-| Flare                                | Aurora          | Lustre | /flare or /lus/flare/projects                                                         | Yes                                           | No        | Community sharing via Globus; <br /> Intensive job output, large files |
-| Node SSD <br /><br /> (Compute node only)	 | Polaris         | xfs    | /local/scratch (Polaris)                                                              | Yes                                           | No        | Local node scratch during run                                          |                               |
+| Name                                 | Accessible From | Type   | Path                              | Production | Backed-up | Usage                                                                  |
+|--------------------------------------|-----------------|--------|-----------------------------------|------------|-----------|------------------------------------------------------------------------|
+| agile-home                           | Polaris         | Lustre | `/home` or `/lus/agile/home`      | Yes        | Yes       | General use                                                            |
+| eagle                                | Polaris         | Lustre | `/eagle` or `/lus/eagle/projects` | Yes        | No        | Community sharing via Globus; <br /> Intensive job output, large files |
+| Node SSD <br /> (Compute node only)  | Polaris         | xfs    | `/local/scratch`                  | Yes        | No        | Local node scratch during run                                          |
+| gecko-home                           | Aurora          | Lustre | `/home` or `/lus/gecko/home`      | Yes        | No        | General use                                                            |
+| flare                                | Aurora          | Lustre | `/flare` or `/lus/flare/projects` | Yes        | No        | Community sharing via Globus; <br /> Intensive job output, large files |
 
 ## Available Directories
 
