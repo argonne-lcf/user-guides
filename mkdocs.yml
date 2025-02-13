@@ -41,6 +41,7 @@ theme:
     - content.action.view
     - content.code.copy
     - content.code.annotate
+    - content.tooltips
     #- content.code.select # insiders-4.32.0
     - navigation.indexes
     - navigation.instant
@@ -168,7 +169,7 @@ nav:
       - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
       - Machine Reservations: running-jobs/machine-reservations.md
-      - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
+      - Cobalt to PBS- Comparing Options: running-jobs/pbs-qsub-options-table.md
 
   - Machines:
     - Aurora:
