@@ -2,32 +2,18 @@
 <!-- --------------------------------------------------------------------- -->
 
 <!-- component: header -->
-
-
 	{% set class = "md-header" %}
 	<header class="{{ class }}" data-md-component="header">
-
-
 	<div class="header--primary">
-
-
 	<div class="grid">
 
 		<div class="header__site-title">
 			<h1><a href="https://www.alcf.anl.gov/">Argonne Leadership Computing Facility</a></h1>
 		</div>
-
-
-
-
-
 		<nav class="header__nav-primary">
 			<ul>
-
-
 				<li id="nav-res" class="js-drop" data-menu="menu-res">
 					<a href="https://www.alcf.anl.gov/alcf-resources">ALCF Resources</a>
-
 					<div id="menu-res" class="dropdown js-dropdown-hidden">
 						<nav>
 							<div class="dropdown__intro">
@@ -194,11 +180,8 @@
 						</nav>
 					</div>
 				</li>
-
-
 				<li id="nav-abt" class="js-drop" data-menu="menu-abt">
 					<a href="https://www.alcf.anl.gov/about">About</a>
-
 					<div id="menu-abt" class="dropdown js-dropdown-hidden">
 						<nav>
 							<div class="dropdown__intro">
@@ -211,7 +194,6 @@
 									</p>
 								</div>
 							</div>
-
 							<div class="dropdown__links-1">
 								<div class="dropdown__links-group">
 									<h3>Get to Know More</h3>
@@ -225,7 +207,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<div class="dropdown__links-2">
 								<div class="dropdown__links-group">
 									<h3>Visit</h3>
@@ -235,7 +216,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<div class="dropdown__links-21">
 								<div class="dropdown__links-group">
 									<h3>Latest</h3>
@@ -245,7 +225,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<div class="dropdown__links-22">
 								<div class="dropdown__links-group">
 									<h3>Press Kits</h3>
@@ -260,11 +239,8 @@
 						</nav>
 					</div>
 				</li>
-
-
 				<li id="nav-sup" class="js-drop" data-menu="menu-sup">
 					<a href="https://www.alcf.anl.gov/support-center">Support</a>
-
 					<div id="menu-sup" class="dropdown js-dropdown-hidden">
 						<nav>
 							<div class="dropdown__intro">
@@ -282,7 +258,6 @@
 									</small>
 								</div>
 							</div>
-
 							<div class="dropdown__links-1">
 								<div class="dropdown__links-group">
 									<h3>Current</h3>
@@ -302,7 +277,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<div class="dropdown__links-2">
 								<div class="dropdown__links-group">
 									<h3>Guides</h3>
@@ -320,7 +294,6 @@
 									</ul>
 								</div>
 							</div>
-
 							<div class="dropdown__featured">
 								<a href="https://www.alcf.anl.gov/support-center/get-started">
 									<div class="dropdown__featured-title">
@@ -328,52 +301,40 @@
 											Featured: Get Started
 										</h3>
 									</div>
-
 									<div class="dropdown__featured-image">
 										<div class="img-wrapper">
 											<img src="{{ config.site_url }}/images/getstarted.png" />
 										</div>
 									</div>
 								</a>
-
 								<a href="https://my.alcf.anl.gov">
 									<div class="dropdown__featured-title">
 										<h3>
 											Featured: MyALCF
 										</h3>
 									</div>
-
 									<div class="dropdown__featured-image">
 										<div class="img-wrapper">
 											<img src="{{ config.site_url }}/images/myalcf.png" />
 										</div>
 									</div>
 								</a>
-
 							</div>
-
 						</nav>
 					</div>
 				</li>
-
-
 			</ul>
 		</nav>
-
 		<nav class="header__nav-secondary">
 			<!-- wrapper needed to hang right -->
 			<div class="header__nav-secondary--right"> 
 				<ul>
-					<li><a href="https://www.alcf.anl.gov/news"> News </a></li>
-					<li><a href="https://www.alcf.anl.gov/events"> Events </a></li>
-					<li><a href="https://www.alcf.anl.gov/about/people"> People </a></li>
-					<li><a href="https://www.alcf.anl.gov/about/careers"> Careers </a></li>
-					<li><a href="https://my.alcf.anl.gov" style="text-transform:none;"> MyALCF</a></li>
+				  <li><a href="https://www.alcf.anl.gov/news"> News </a></li>
+				  <li><a href="https://www.alcf.anl.gov/events"> Events </a></li>
+				  <li><a href="https://www.alcf.anl.gov/about/people"> People </a></li>
+				  <li><a href="https://www.alcf.anl.gov/about/careers"> Careers </a></li>
+				  <li><a href="https://my.alcf.anl.gov" style="text-transform:none;"> MyALCF</a></li>
 				</ul>
-
-			
-			
-
       <!-- Search interface -->
       <label class="md-header__button md-icon" for="__search">
         {% include ".icons/material/magnify.svg" %}
@@ -381,34 +342,17 @@
 
       <!-- Search interface -->
       {% include "partials/search.html" %}
-
-				  
-			
-
 			</div>
 		</nav>
 
 	</div>
 	</div> <!-- end header--primary -->
-
-
 	</header>
-
-
-
-
-
-
-
-
-
-
 
 <!-- Mobile Header -->
 <!-- --------------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------------- -->
 <!-- --------------------------------------------------------------------- -->
-
 
 <header class="{{ class }} header--mobile" data-md-component="header">
   <nav
