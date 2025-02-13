@@ -411,3 +411,39 @@ Compose(
 2024-12-21 00:56:05,276 INFO:   | Train Device=CSX, Step=4, Loss=7.02248, Rate=3718.21 samples/sec, GlobalRate=2340.86 samples/sec
 2024-12-21 00:56:08,100 INFO:   | Train Device=CSX, Step=5, Loss=7.02704, Rate=2092.96 samples/sec, GlobalRate=1852.26 samples/sec
 ```
+
+
+## Diffusion Transformer
+The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
+
+First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
+```bash
+source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+pip install -r ~/R_2.4.0/modelzoo/requirements.txt
+```
+
+Instructions for training (for 400 steps):
+```bash
+cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+export MODEL_DIR=model_dir_dit
+if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
+cp  /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
+python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --model_dir ${MODEL_DIR} |& tee mytest.log
+```
+
+???+ example "Example output:"
+    ``` { .output .no-copy }
+    2025-01-24 21:53:05,710 INFO:   | Train Device=CSX, Step=397, Loss=0.18575, Rate=405.81 samples/sec, 
+    GlobalRate=405.41 samples/sec
+    2025-01-24 21:53:08,405 INFO:   | Train Device=CSX, Step=398, Loss=0.18720, Rate=407.14 samples/sec, 
+    GlobalRate=405.42 samples/sec
+    2025-01-24 21:53:11,080 INFO:   | Train Device=CSX, Step=399, Loss=0.18482, Rate=409.63 samples/sec, 
+    GlobalRate=405.44 samples/sec 
+    2025-01-24 21:53:13,749 INFO:   | Train Device=CSX, Step=400, Loss=0.18625, Rate=411.09 samples/sec, 
+    GlobalRate=405.45 samples/sec
+    2025-01-24 21:53:13,761 INFO:   Saving checkpoint at step 400
+    Transferring weights from server: 4556 tensors [02:34, 29.52 tensors/s]                                                                                                                         
+    2025-01-24 21:56:05,648 INFO:   Saved checkpoint dit_model_dir/checkpoint_400.mdl
+    2025-01-24 21:56:28,429 INFO:   Training completed successfully!
+    2025-01-24 21:56:28,435 INFO:   Processed 440000 training sample(s) in 1888.733046122 seconds.
+    ```

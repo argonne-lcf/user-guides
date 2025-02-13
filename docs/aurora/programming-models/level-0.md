@@ -4,12 +4,12 @@
 
 The objective of the ‘[oneAPI](https://oneapi-spec.uxlfoundation.org/)’
 Level-Zero Application Programming Interface (API) is to provide
-direct-to-metal interfaces to offload accelerator devices.  Its programming
-interface can be tailored to any device needs and can be adapted to support
-broader set of languages features such as function pointers, virtual functions,
+direct-to-metal interfaces to offload accelerator devices. Its programming
+interface can be tailored to any device's needs and can be adapted to support a
+broader set of language features such as function pointers, virtual functions,
 unified memory, and I/O capabilities.
 
-## Setting the environment to use Level-Zero  on Aurora
+## Setting the environment to use Level-Zero on Aurora
 
 The Intel Programming Environment is the main environment on Aurora. The Intel
 Compute Runtime is part of this environment and grants access to Level-Zero.
@@ -29,11 +29,11 @@ Currently Loaded Modules:
 Level-Zero is a C API that can be used in your application by including the
 `ze_api.h` file:
 
-```C
+```c
 #include <ze_api.h>
 ```
 
-Application that use the Level-Zero API need to be linked to the Level-Zero
+Applications that use the Level-Zero API need to be linked to the Level-Zero
 loader library by using the `-lze_loader` linker flag.
 
 ## Level-Zero Documentation

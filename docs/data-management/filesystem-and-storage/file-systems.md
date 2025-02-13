@@ -1,20 +1,22 @@
 # ALCF File Systems
 
-Our HPC systems store project data in a file system called Eagle. Eagle is a Lustre file system mounted as `/eagle`. For more information on the Lustre file system, here is a document on Lustre File Striping Basics.
+Our HPC systems store project data in file systems called Eagle and Flare. Eagle and Flare are Lustre file systems mounted as `/eagle` and `/flare`, respectively. For more information on the Lustre file systems, here is a document on Lustre File Striping Basics.
 
 * [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
 For information on the AI Testbed storage systems, refer to the AI Testbed storage page: [https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/](https://argonne-lcf.github.io/ai-testbed-userdocs/common/storage/)
 
-Our HPC systems also share a Lustre home file system, called agile-home. The home file system is mounted as `/home` and should generally be used for small files and any binaries to be run on Polaris. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
+Our HPC systems also mount a Lustre home file system, either agile-home or gecko-home. The home file system is mounted as `/home` and should generally be used for small files and any binaries to be run on Polaris or Aurora. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
 
 The agile-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
 | Name                                 | Accessible From | Type   | Path                                                                                  | Production                                    | Backed-up | Usage                                                                  |
 |--------------------------------------|-----------------|--------|---------------------------------------------------------------------------------------|-----------------------------------------------|-----------|------------------------------------------------------------------------| 
 | agile-home                           | Polaris         | Lustre | /home or /lus/agile/home	                                                          | Yes                                           | Yes       | General use                                                            |
-| Eagle	                               | Polaris         | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                          | No        | Community sharing via Globus; <br /> Intensive job output, large files | 
-| Node SSD <br /><br /> (Compute node only)	 | Polaris         | xfs    | /local/scratch (Polaris)                                                              | Yes                                           | No        | Local node scratch during run                                          |
+| gecko-home                           | Aurora          | Lustre | /home or /lus/gecko/home                                                              | Yes                                           | No        | General use                                                            |
+| Eagle	                               | Polaris         | Lustre | /eagle or /lus/eagle/projects	                                                      | Yes	                                          | No        | Community sharing via Globus; <br /> Intensive job output, large files |
+| Flare                                | Aurora          | Lustre | /flare or /lus/flare/projects                                                         | Yes                                           | No        | Community sharing via Globus; <br /> Intensive job output, large files |
+| Node SSD <br /><br /> (Compute node only)	 | Polaris         | xfs    | /local/scratch (Polaris)                                                              | Yes                                           | No        | Local node scratch during run                                          |                               |
 
 ## Available Directories
 
@@ -58,9 +60,10 @@ setfacl -R -m u:gilgamesh:rX /home/username/subdirectoryname
 
 ### Project Directories
 
-- Directories on Eagle are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Eagle directories can be created as stand-alone allocations. Use the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests) to submit requests for an allocation on Eagle. 
+- Directories on Eagle or Flare are created when an allocation (INCITE, ALCC, Discretionary, etc.) is awarded. Directories can be created as stand-alone allocations. Use the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests) to submit requests for an allocation on Eagle. 
 - Directory paths:
-    - Eagle: /eagle or /lus/eagle/projects
+    - Eagle: `/eagle` or `/lus/eagle/projects`
+    - Flare: `/flare` or `/lus/flare/projects`
 
 These project spaces do not have user quotas but a directory quota, meaning that ALL files contained within a project directory, regardless of the username, cannot exceed the disk space allocation granted to the project. For more information on quotas, see the [Disk Quota page](disk-quota.md).
 
