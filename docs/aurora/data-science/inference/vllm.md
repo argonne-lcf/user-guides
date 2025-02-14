@@ -50,10 +50,9 @@ ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP
 
 #### Using Single Tile
 
-Following serves `meta-llama/Llama-2-7b-chat-hf` on single tile of single node. 
-```bash
+The following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
+```bash linenums="1"
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float16
-```
 
 #### Using Multiple Tiles
 
