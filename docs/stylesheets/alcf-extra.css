@@ -67,7 +67,8 @@
   --md-default-bg-color--lighter: hsla(var(--md-hue), 15%, 14%, 0.26);
   --md-default-bg-color--lightest: hsla(var(--md-hue), 15%, 14%, 0.07);
   --md-code-fg-color: hsla(var(--md-hue), 18%, 86%, 0.82);
-  --md-code-bg-color: hsla(var(--md-hue), 15%, 18%, 1);
+  --md-code-bg-color: #222222;
+  /*--md-code-bg-color: hsla(var(--md-hue), 15%, 18%, 1);*/
   --md-code-hl-color: #b8e2de;
   --md-code-hl-color--light: #2977ff;
   --md-code-hl-number-color: #e6695b;
@@ -76,12 +77,12 @@
   --md-code-hl-constant-color: #9383e2;
   --md-code-hl-keyword-color: #6791e0;
   --md-code-hl-string-color: #2fb170;
-  --md-code-hl-name-color: var(--md-code-fg-color);
-  --md-code-hl-operator-color: var(--md-default-fg-color--light);
-  --md-code-hl-punctuation-color: var(--md-default-fg-color--light);
-  --md-code-hl-comment-color: var(--md-default-fg-color--light);
-  --md-code-hl-generic-color: var(--md-default-fg-color--light);
-  --md-code-hl-variable-color: var(--md-default-fg-color--light);
+  /* --md-code-hl-name-color: var(--md-code-fg-color); */
+  /* --md-code-hl-operator-color: var(--md-default-fg-color--light); */
+  /* --md-code-hl-punctuation-color: var(--md-default-fg-color--light); */
+  /* --md-code-hl-comment-color: var(--md-default-fg-color--light); */
+  /* --md-code-hl-generic-color: var(--md-default-fg-color--light); */
+  /* --md-code-hl-variable-color: var(--md-default-fg-color--light); */
   --md-typeset-color: var(--md-default-fg-color);
   --md-typeset-kbd-color: hsla(var(--md-hue), 15%, 90%, 0.12);
   --md-typeset-kbd-accent-color: hsla(var(--md-hue), 15%, 90%, 0.2);
