@@ -38,7 +38,7 @@ export HF_TOKEN="YOUR_HF_TOKEN"
 For small models that fit within a single tile's memory (64 GB), no additional configuration is required to serve the model. Simply set `TP=1` (Tensor Parallelism). This configuration ensures the model is run on a single tile without the need for distributed setup.
 
 To utilize multiple tiles for larger models (`TP>1`), a more advanced setup is necessary. This involves configuring a Ray cluster and setting the `ZE_FLAT_DEVICE_HIERARCHY` environment variable.
-```bash
+```bash linenums="1"
 export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
