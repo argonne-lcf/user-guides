@@ -313,7 +313,6 @@ nav:
       - Getting Started: polaris/getting-started.md
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
-      - Contacting Support and Software Requests: polaris/contacting-support.md
       - Compiling and Linking:
         - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
@@ -418,7 +417,10 @@ nav:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
-  - Questions / Issues: issues.md
+  - Contacting Support:
+      - Technical Support: contacting-support/technical-support.md
+      - Software Requests: contacting-support/software-requests.md
+      - User Guide Questions / Issues: issues.md
 
 not_in_nav: |
   not_in_nav/
