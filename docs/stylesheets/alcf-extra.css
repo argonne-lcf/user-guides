@@ -159,6 +159,7 @@ body {
 .md-header__inner .md-logo img {
   height: auto;
   width: 100px;
+  vertical-align: middle;
 }
 
 /* primary header */
