@@ -7,8 +7,9 @@
   <div class="header--primary">
     <div class="grid">
       <div class="header__site-title">
-	<h1><a href="https://www.alcf.anl.gov/">Argonne Leadership Computing Facility</a></h1>
+        <h1><a href="https://www.alcf.anl.gov/">Argonne Leadership Computing Facility</a></h1>
       </div>
+
       <nav class="header__nav-primary">
 	<ul>
 	  <li id="nav-res" class="js-drop" data-menu="menu-res">
@@ -302,6 +303,42 @@
 	  </label>
 	  <!-- Search interface -->
 	  {% include "partials/search.html" %}
+
+    <!-- Color palette -->
+    {% if not config.theme.palette is mapping %}
+    <form class="md-header__option" data-md-component="palette">
+      {% for option in config.theme.palette %}
+      {% set scheme = option.scheme | d("default", true) %}
+      <input
+        class="md-option"
+        data-md-color-media="{{ option.media }}"
+        data-md-color-scheme="{{ scheme | replace(' ', '-') }}"
+        data-md-color-primary="{{ option.primary | replace(' ', '-') }}"
+        data-md-color-accent="{{ option.accent | replace(' ', '-') }}"
+        {% if option.toggle %}
+        aria-label="{{ option.toggle.name }}"
+        {% else  %}
+        aria-hidden="true"
+        {% endif %}
+        type="radio"
+        name="__palette"
+        id="__palette_{{ loop.index }}"
+        />
+      {% if option.toggle %}
+      <label
+        class="md-header__button md-icon"
+        title="{{ option.toggle.name }}"
+        for="__palette_{{ loop.index0 or loop.length }}"
+        hidden
+        >
+        {% include ".icons/" ~ option.toggle.icon ~ ".svg" %}
+      </label>
+      {% endif %}
+      {% endfor %}
+    </form>
+    {% endif %}
+
+
 	</div>
       </nav>
     </div>
