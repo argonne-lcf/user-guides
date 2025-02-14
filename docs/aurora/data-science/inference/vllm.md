@@ -44,10 +44,6 @@ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export tiles=12
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
-```
-!!! info "DLPack notes on Aurora"
-	- The number of GPU devices visible on each node depends on the `ZE_FLAT_DEVICE_HIERARCHY` environment variable. When ZE_FLAT_DEVICE_HIERARCHY=FLAT, the system exposes 12 devices (tiles).
-    - The --num-gpus parameter in the Ray cluster setup command should match the number of tiles you intend to use on each node.
 
 
 ## Serve Small Models 
