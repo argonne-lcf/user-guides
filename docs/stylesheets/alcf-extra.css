@@ -10,25 +10,54 @@
 /* #D1D1D1 #666666 */
 
 [data-md-color-scheme="alcf"] {
-  color-scheme: light;
-  --md-primary-fg-color: #0061af;
+  /* Colors */
+  --md-primary-fg-color: #0261AF;
+  --md-default-heading-color: #1d1651;
+  /* added this setting in 2025; removed hardcoded versions from below */
   --md-primary-fg-color--light: #FFFFFF;
   --md-primary-fg-color--dark: #080813;
-  --md-accent-fg-color: #118ACB;
+  /* --md-accent-fg-color: #118ACB;   --- modified in 2025 to slightly darker blue, line below */
+  --md-accent-fg-color: #0261AF;
   --md-accent-fg-color--transparent: hsla(#{hex2hsl($md-accent-fg-color)}, 0.1);
   --md-accent-bg-color: hsla(0, 0%, 100%, 1);
   --md-accent-bg-color--light: hsla(0, 0%, 100%, 0.7);
+
   .md-header {
     background-color: #0061af;
   }
+
+  .header--primary .header__nav-primary a {
+    color: #FFF;
+  }
+
+  .header--primary .header__nav-primary a:hover {
+    color: #badef5;
+  }
+
+  .header--primary .header__nav-secondary a {
+    color: #badef5;
+  }
+
+  .header--primary .header__nav-secondary a:hover {
+    color: #fff;
+  }
+
+  .header--primary a:hover {
+    color: #b8e2de;
+  }
+
 }
 
 [data-md-color-scheme="slate"] {
   --md-typeset-a-color: #badef5;
   --md-default-heading-color: #b8e2de;
-  --md-primary-fg-color: #1A1C23;
-  --md-default-bg-color: #111317;
-  --md-header-bg-color: #1A1C23;
+  --md-primary-fg-color: #222222;
+  --md-default-bg-color: #1c1c1c;
+  --md-header-bg-color: #222222;
+  /* --md-primary-fg-color: #1A1C23; */
+  /* --md-default-bg-color: #111317; */
+  /* --md-header-bg-color: #1A1C23; */
+  --md-accent-fg-color: #00A19C;
   /* --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1); */
   --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82);
   --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.56);
@@ -40,7 +69,7 @@
   --md-code-fg-color: hsla(var(--md-hue), 18%, 86%, 0.82);
   --md-code-bg-color: hsla(var(--md-hue), 15%, 18%, 1);
   --md-code-hl-color: #b8e2de;
-  --md-code-hl-color--light: #2977ff1a;
+  --md-code-hl-color--light: #2977ff;
   --md-code-hl-number-color: #e6695b;
   --md-code-hl-special-color: #f06090;
   --md-code-hl-function-color: #c973d9;
@@ -81,7 +110,7 @@ body {
 }
 
 .md-typeset h1 {
-	color: var(--md-default-heading-color);
+  color: var(--md-default-heading-color);
 }
 
 .md-typeset h1,
@@ -96,18 +125,15 @@ body {
   margin: auto;
 }
 
-/* .md-typeset li{ */
-/* 	margin-block-start: 0; */
-/* } */
-
+.md-typeset a:focus,
+.md-typeset a:hover {
+  color: var(--md-accent-fg-color);
+  text-decoration: underline;
+}
 
 .md-typeset ul {
   list-style-type: disc;
 }
-
-/* .md-typeset ul > li { */
-/* 	text-indent: -15px; */
-/* } */
 
 .md-typeset ul>li:before {
   /* content: " "; */
@@ -119,9 +145,6 @@ body {
 .md-typeset :target {
   --md-scroll-margin: 9rem;
 }
-
-
-
 
 /* layout(ish) */
 
@@ -137,9 +160,6 @@ body {
   height: auto;
   width: 100px;
 }
-
-
-
 
 /* primary header */
 /* ------------------------------------------------------------------------- */
@@ -166,7 +186,7 @@ body {
     padding-inline-end: 5pt !important;
     font-weight: 600;
     display: inline-block;
-    margin-block-end: 5pt;
+    margin-block-end: 0pt;
   }
 
   .header--primary .header__nav-secondary--right {
@@ -206,16 +226,21 @@ body {
   color: #FFF;
 }
 
+
+.header--primary .header__nav-primary a:hover {
+  color: var(--md-accent-fg-color);
+}
+
 .header--primary .header__nav-secondary a {
-  color: #badef5;
+  color: var(--md-a);
 }
 
 .header--primary .header__nav-secondary a:hover {
-  color: #118acb;
+  color: var(--md-accent-fg-color);
 }
 
 .header--primary a:hover {
-  color: #118acb;
+  color: var(--md-accent-fg-color);
 }
 
 
@@ -263,7 +288,7 @@ body {
   padding-inline-end: 27px;
   font-weight: 600;
   display: inline-block;
-  margin-block-end: 5pt;
+  margin-block-end: 0pt;
 }
 
 .header--primary .header__nav-primary .dropdown a {
@@ -664,20 +689,20 @@ body {
 
 .md-header__button {
   float: right;
-    margin: auto;
+  margin: auto;
 }
 
 .md-header__button {
-	color: currentcolor;
-	cursor: pointer;
-	outline-color: var(--md-accent-fg-color);
-	padding: 0;
-	position: relative;
-	transition: opacity .25s;
-	vertical-align: inherit;
-	z-index: 1;
-	/* padding-block-start: 10pt; */
-	padding-inline-start: 10pt;
+  color: currentcolor;
+  cursor: pointer;
+  outline-color: var(--md-accent-fg-color);
+  padding: 0;
+  position: relative;
+  transition: opacity .25s;
+  vertical-align: inherit;
+  z-index: 1;
+  /* padding-block-start: 10pt; */
+  padding-inline-start: 10pt;
 }
 
 
