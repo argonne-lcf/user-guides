@@ -380,6 +380,7 @@ body {
 .md-search__scrollwrap p {
   text-transform: none;
   letter-spacing: 0;
+  color: var(--md-default-fg-color-light);
 }
 
 .md-search-result__article--document .md-search-result__title {
@@ -393,15 +394,6 @@ body {
   font-weight: 600;
   color: var(--md-accent-fg-color);
 }
-
-.md-search__scrollwrap p {
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 15px;
-  /* line-height: 18px; */
-}
-
-
 
 .dropdown {
   grid-column: 1 / span 5;
