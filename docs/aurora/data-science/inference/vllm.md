@@ -76,7 +76,7 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 #### Using Multiple Nodes
 
-Use [setup_ray_cluster.sh](./setup_ray_cluster.sh) script to setup ray cluster across nodes. 
+Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup ray cluster across nodes. 
 
 Following serves `meta-llama/Llama-3.3-70B-Instruct` using 2 nodes with `TP=8` and `PP=2` 
 
@@ -86,7 +86,7 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 ## Serve Large Models 
 
-Use [setup_ray_cluster.sh](./setup_ray_cluster.sh) script to setup a Ray cluster across nodes. 
+Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup a Ray cluster across nodes. 
 
 Following serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2` 
 ```bash
