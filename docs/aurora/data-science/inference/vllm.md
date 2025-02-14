@@ -4,7 +4,7 @@ vLLM is an open-source library designed to optimize the inference and serving. O
 
 ## Install vLLM 
 
-Install vllm using pre-built wheels. 
+Install vLLM using pre-built wheels. 
 ```bash
 module load frameworks
 conda create --name vllm python=3.10 -y
