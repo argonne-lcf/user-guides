@@ -73,4 +73,5 @@ All users share the same login nodes, so please be courteous and respectful of y
 There are 50 gateway nodes. These nodes are not user-accessible but are used transparently for access to the storage systems. Each node has a single 200 Gbps HDR IB card for access to the storage area network. This gives a theoretical peak bandwidth of 1,250 GB/s, which is approximately the aggregate bandwidth of the global file systems (1,300 GB/s).
 
 ## Storage
-Polaris has access to the ALCF global file systems. Details on storage can be found [here](../../data-management/filesystem-and-storage/data-storage.md).
+
+Polaris has access to the ALCF global file systems. Details on storage can be found [here](../data-management/filesystem-and-storage/data-storage.md).
