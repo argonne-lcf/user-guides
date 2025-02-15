@@ -1,4 +1,4 @@
-# Polaris Machine Overview 
+# Polaris Machine Overview
 Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a single 2.8 GHz AMD EPYC Milan 7543P 32-core CPU with 512 GB of DDR4 RAM, four NVIDIA A100 GPUs connected via NVLink, a pair of local 1.6TB SSDs in RAID0 for user use, and a pair of Slingshot 11 network adapters. There are two nodes per chassis, seven chassis per rack, and 40 racks for a total of 560 nodes. More detailed specifications are as follows:
 
 ## Polaris Compute Nodes
@@ -10,8 +10,8 @@ Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a sing
 | GPUs | NVIDIA A100 | 4 | 2,240 |
 | Local SSD | 1.6 TB | 2/3.2 TB | 1,120/1.8 PB |
 
-Note 1: 256 MB shared L3 cache, 512 KB L2 cache per core, 32 KB L1 cache per core  
-Note 2: 8 memory channels rated at 204.8 GiB/s
+- _Note 1_: 256 MB shared L3 cache, 512 KB L2 cache per core, 32 KB L1 cache per core
+- _Note 2_: 8 memory channels rated at 204.8 GiB/s
 
 ## Polaris A100 GPU Information
 | DESCRIPTION | A100 PCIe | A100 HGX (Polaris) |
@@ -37,17 +37,18 @@ Note 2: 8 memory channels rated at 204.8 GiB/s
 |              |               | mlx5_0 | SYS  | SYS  | SYS  | PHB  | X      | SYS    |
 |              |               | mlx5_1 | SYS  | PHB  | SYS  | SYS  | SYS    | X      |
 
-### Legend:
+!!! info "Legend"
 
-**X** = Self  
-**SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)  
-**NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node  
-**PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)  
-**PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)  
-**PIX** = Connection traversing at most a single PCIe bridge  
-**NV#** = Connection traversing a bonded set of # NVLinks  
+    - **X** = Self
+    - **SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+    - **NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+    - **PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+    - **PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+    - **PIX** = Connection traversing at most a single PCIe bridge
+    - **NV#** = Connection traversing a bonded set of # NVLinks
 
 Links to detailed NVIDIA A100 documentation:
+
 - [NVIDIA A100 Tensor Core GPU Architecture](https://images.nvidia.com/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf)
 - [NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth/)
 
@@ -64,9 +65,9 @@ All users share the same login nodes, so please be courteous and respectful of y
 | GPUs (Note 3) | No GPUs | 0 | 0 |
 | Local SSD | None | 0 | 0 |
 
-Note 1: 256 MB shared L3 cache, 512 KB L2 cache per core, 32 KB L1 cache per core  
-Note 2: 8 memory channels rated at 204.8 GiB/s per socket  
-Note 3: If your build requires the physical presence of a GPU, you will need to build on a compute node.
+- _Note 1_: 256 MB shared L3 cache, 512 KB L2 cache per core, 32 KB L1 cache per core
+- _Note 2_: 8 memory channels rated at 204.8 GiB/s per socket
+- _Note 3_: If your build requires the physical presence of a GPU, you will need to build on a compute node.
 
 ## Gateway Nodes
 There are 50 gateway nodes. These nodes are not user-accessible but are used transparently for access to the storage systems. Each node has a single 200 Gbps HDR IB card for access to the storage area network. This gives a theoretical peak bandwidth of 1,250 GB/s, which is approximately the aggregate bandwidth of the global file systems (1,300 GB/s).

@@ -83,8 +83,6 @@ extra:
 
 plugins:
   - include-markdown
-  - codeinclude:
-      title_mode: pymdownx.tabbed
   - search:
       lang: en
 
@@ -252,6 +250,7 @@ nav:
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
           - DDT: aurora/debugging/ddt-aurora.md
           - gdb4hpc: aurora/debugging/gdb4hpc.md
+          - Codee: aurora/debugging/codee.md
         - Performance Tools:
         #  - Overview: aurora/performance-tools/performance-overview.md
           - Advisor: aurora/performance-tools/advisor.md
@@ -265,7 +264,7 @@ nav:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
           # - DeepHyper: aurora/workflows/deephyper.md
-          # - libEnsemble: aurora/workflows/libensemble.md
+          - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md
           - SmartSim: aurora/workflows/smartsim.md
     - Crux:
@@ -283,7 +282,6 @@ nav:
     - Polaris:
       - Getting Started: polaris/getting-started.md
       - System Updates: polaris/system-updates.md
-      - Contacting Support and Software Requests: polaris/contacting-support.md
       - Known Issues: polaris/known-issues.md
       - Machine Overview: polaris/hardware-overview/machine-overview.md
         # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -382,7 +380,11 @@ nav:
       - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
 
-  - Questions / Issues: issues.md
+  - Contacting Support:
+      - Technical Support: contacting-support/technical-support.md
+      - Software Requests: contacting-support/software-requests.md
+
+  - User Guide Questions / Issues: issues.md
 
 not_in_nav: |
   not_in_nav/
