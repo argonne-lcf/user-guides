@@ -44,8 +44,8 @@ theme:
     - content.tooltips
     #- content.code.select # insiders-4.32.0
     - navigation.indexes
-    - navigation.instant
-    - navigation.instant.progress
+    #- navigation.instant
+    #- navigation.instant.progress
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     # - navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
@@ -262,7 +262,7 @@ nav:
         #- Performance Tools: ai-testbed/cerebras/performance-tools.md
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
         - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
-        - CSL: ai-testbed/cerebras/csl.md        
+        - CSL: ai-testbed/cerebras/csl.md
       - Graphcore:
         - System Overview: ai-testbed/graphcore/system-overview.md
         - Getting Started: ai-testbed/graphcore/getting-started.md
