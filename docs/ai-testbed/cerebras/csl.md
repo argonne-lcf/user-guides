@@ -81,6 +81,10 @@ To access the GUI from your local computer, forward port 8000 from the login nod
 
 ## SDK with Appliance Mode
 
+!!! bug "Examples currently not working"
+
+	With the release of the Cerebras SDK version 2.4.0, the examples in the below tutorial are known to be broken on the CS-2. A fix and updates are forthcoming.
+
 Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode.
 
 ### Setup
