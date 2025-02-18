@@ -4,6 +4,23 @@ vLLM is an open-source library designed to optimize the inference and serving. O
 
 ## Install vLLM 
 
+```bash
+ssh <username>@aurora.alcf.anl.gov
+```
+Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
+
+!!! note
+
+    The instructions below should be **run directly from a compute node**.
+
+    Explicitly, to request an interactive job (from `aurora-uan`):
+    ```bash
+    qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
+    ```
+
+    Refer to [job scheduling and execution](../../running-jobs/job-and-queue-scheduling.md) for additional information.
+
+
 Install vLLM using pre-built wheels. 
 ```bash linenums="1"
 module load frameworks
@@ -68,32 +85,26 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --
 
 ## Serve Medium Models 
 
-#### Using single Node
+#### Using Single Node
 
 Following sets up ray cluster and servers `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
+
 ```bash
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
 vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
 ```
 
-#### Using Multiple Nodes
-
-Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup ray cluster across nodes. 
-
-Following serves `meta-llama/Llama-3.3-70B-Instruct` using 2 nodes with `TP=8` and `PP=2` 
-
-```bash
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --device xpu --dtype float16 --trust-remote-code
-```
-
 ## Serve Large Models 
 
-Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup a Ray cluster across nodes. 
+### Using multiple nodes
 
 Following serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. 
+
+Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup a Ray cluster across nodes.
+
 ```bash
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --device xpu --dtype float16 --trust-remote-code --max-model-len 1024
 ```
-Setting `--max-model-len` is important in order to fit this mode on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
+Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
 
