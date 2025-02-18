@@ -31,6 +31,8 @@ To ensure your workflows utilize the preloaded model weights and datasets, updat
 export HF_HOME="/flare/datascience/model-weights/hub"
 export HF_DATASETS_CACHE="/flare/datascience/model-weights/hub"
 export HF_TOKEN="YOUR_HF_TOKEN"
+export RAY_TMPDIR="/tmp"
+export TMPDIR="/tmp"
 ```
 
 ## Common Configuration Recommendations 
