@@ -88,7 +88,7 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --
 
 #### Using Single Node
 
-Following sets up ray cluster and servers `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
+These commands set up a Ray cluster and serves `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
 
 ```bash
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
