@@ -4,9 +4,10 @@ vLLM is an open-source library designed to optimize the inference and serving. O
 
 ## Install vLLM 
 
-```bash
+```bash linenums="1"
 ssh <username>@aurora.alcf.anl.gov
 ```
+
 Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
 
 !!! note
@@ -18,7 +19,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
     ```
 
-    Refer to [job scheduling and execution](../../running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
 Install vLLM using pre-built wheels. 
