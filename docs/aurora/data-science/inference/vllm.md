@@ -46,7 +46,7 @@ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export tiles=12
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
-
+```
 
 ## Serve Small Models 
 
@@ -55,6 +55,7 @@ ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP
 The following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
 ```bash linenums="1"
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float16
+```
 
 #### Using Multiple Tiles
 
@@ -63,7 +64,7 @@ The following commands set up the Ray cluster and serve `meta-llama/Llama-3.3-70
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
-
+```
 
 ## Serve Medium Models 
 
