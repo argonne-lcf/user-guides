@@ -1,20 +1,24 @@
-# Support Issues & Software Requests
+# Technical Support
 
-## Contacting Support
 
 For user support issues or questions, please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
-
-Please be aware there is a list of known issues on Polaris that can be found [here](./known-issues.md).
 
 When contacting support, please include the following information:
 
 * Your ALCF Username
 * Your project name
-* The system you're on (Polaris, Sophia, etc.)
+* The system you're on (Polaris, Sophia, Aurora, etc.)
 
-### Job Failures
+### Known Issues Pages
 
-If you are having issues running your job, or your job is failing, please include the following in your email to support:
+Please be aware of existing **Known Issues** pages for the following systems:
+
+* [Polaris](../polaris/known-issues.md)
+* [Aurora](../aurora/known-issues.md)
+
+## Job Failures
+
+If you are having issues running your job, or your job is failing, please include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
 * All job IDs of the failures
 * Your `qsub` submission script if you're submitting a batch job, or your full `qsub` command if you're submitting an interactive job
@@ -26,9 +30,9 @@ If you are having issues running your job, or your job is failing, please includ
 
     Support does not have access to your home directory or your project directory. Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
 
-### Python Issues
+## Python Issues
 
-If you need to open a ticket related to Python, please be sure to include the following in your email to support:
+If you need to open a ticket related to Python, please be sure to include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
 * Your `qsub` submission script
 * Which base conda module and environment you are using
@@ -43,24 +47,12 @@ By including the above information, this will help ALCF Support staff quickly ro
 
     We encourage the use of the pre-installed `conda` environment. Any custom environments are supported on a best-effort basis only.
 
-### Installation & Compiling Issues
+## Installation & Compiling Issues
 
-If you are having issues installing and/or compiling your app, please include the following in your email to support:
+If you are having issues installing and/or compiling your app, please include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
 - The output from `module list`
 - If you are on a login node or a compute node
 - A link to the app you are attempting to install (if possible)
 - The full command you're using to compile
 - Any other necessary steps Support will need to recreate the issue
-
-## Software Requests
-
-!!! warning
-
-    Software install requests can take several months to receive approval before testing and installation. Therefore, it is strongly encouraged to attempt to install the app yourself before contacting support for it to be installed system-wide.
-
-If you want to request a package be installed on Polaris, please include the following when reaching out to support:
-
-* A link to the package/app you want to be installed
-* The reason you need the package installed
-* Why the currently provided applications/modules will not work for your workflow (if applicable)

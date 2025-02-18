@@ -147,6 +147,7 @@ nav:
         #- Performance Tools: ai-testbed/cerebras/performance-tools.md
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
         - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
+        - CSL: ai-testbed/cerebras/csl.md        
       - Graphcore:
         - System Overview: ai-testbed/graphcore/system-overview.md
         - Getting Started: ai-testbed/graphcore/getting-started.md
@@ -282,7 +283,6 @@ nav:
     - Polaris:
       - Getting Started: polaris/getting-started.md
       - System Updates: polaris/system-updates.md
-      - Contacting Support and Software Requests: polaris/contacting-support.md
       - Known Issues: polaris/known-issues.md
       - Machine Overview: polaris/hardware-overview/machine-overview.md
         # - Polaris Machine Overview: polaris/hardware-overview/machine-overview.md
@@ -381,7 +381,11 @@ nav:
       - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS option Comparison: running-jobs/pbs-qsub-options-table.md
 
-  - Questions / Issues: issues.md
+  - Contacting Support:
+      - Technical Support: contacting-support/technical-support.md
+      - Software Requests: contacting-support/software-requests.md
+
+  - User Guide Questions / Issues: issues.md
 
 not_in_nav: |
   not_in_nav/
