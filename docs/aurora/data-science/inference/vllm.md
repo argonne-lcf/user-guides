@@ -37,7 +37,7 @@ export TMPDIR="/tmp"
 
 ## Common Configuration Recommendations 
 
-For small models that fit within a single tile's memory (64 GB), no additional configuration is required to serve the model. Simply set `TP=1` (Tensor Parallelism). This configuration ensures the model is run on a single tile without the need for distributed setup.
+For small models that fit within a single tile's memory (64 GB), no additional configuration is required to serve the model. Simply set `TP=1` (Tensor Parallelism). This configuration ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 7 billion parameters typically fit within a single tile.
 
 To utilize multiple tiles for larger models (`TP>1`), a more advanced setup is necessary. This involves configuring a Ray cluster and setting the `ZE_FLAT_DEVICE_HIERARCHY` environment variable.
 ```bash linenums="1"
@@ -58,7 +58,7 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float1
 
 #### Using Multiple Tiles
 
-The following commands set up the Ray cluster and serve `meta-llama/Llama-2-7b-chat-hf` on 8 tiles on single node. 
+The following commands set up the Ray cluster and serve `meta-llama/Llama-3.3-70b-chat-hf` on 8 tiles on single node. 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
@@ -69,7 +69,7 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --
 
 #### Using single Node
 
-Following sets up ray cluster and servers `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. 
+Following sets up ray cluster and servers `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
 ```bash
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
@@ -90,7 +90,7 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 Use [setup_ray_cluster.sh](../../../../GettingStarted/DataScience/vLLM/setup_ray_cluster.sh) script to setup a Ray cluster across nodes. 
 
-Following serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2` 
+Following serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. 
 ```bash
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --device xpu --dtype float16 --trust-remote-code --max-model-len 1024
 ```
