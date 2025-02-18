@@ -98,7 +98,7 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 ## Serve Large Models 
 
-### Using multiple nodes
+### Using Multiple Nodes
 
 Following serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. 
 
