@@ -22,8 +22,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
 
 
-Install vLLM using pre-built wheels. 
-```bash linenums="1"
+```bash linenums="1" title "Install vLLM using pre-built wheels"
 module load frameworks
 conda create --name vllm python=3.10 -y
 conda activate vllm
