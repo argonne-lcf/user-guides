@@ -81,9 +81,9 @@ To access the GUI from your local computer, forward port 8000 from the login nod
 
 ## SDK with Appliance Mode
 
-!!! bug "Examples currently not working"
+!!! bug "Examples dont exit gracefully"
 
-	With the release of the Cerebras SDK version 2.4.0, the examples in the below tutorial are known to be broken on the CS-2. A fix and updates are forthcoming.
+	With the release of the Cerebras SDK version 2.4.0, the examples in the below tutorial don't exit gracefully after successfuly execution. Use `Ctrl+C` to exit. A fix and updates are forthcoming.
 
 Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode.
 
@@ -91,10 +91,8 @@ Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster
 
 **Create Virtual Environment:** Follow these steps to set up the virtual environment for the Cerebras SDK:
 ```bash linenums="1"
-mkdir ~/cs_appliance_sdk
-cd ~/cs_appliance_sdk
-deactivate
 rm -r cs_appliance_sdk
+deactivate
 /software/cerebras/python3.8/bin/python3.8 -m venv cs_appliance_sdk
 source cs_appliance_sdk/bin/activate
 pip install --upgrade pip
@@ -102,7 +100,6 @@ pip install --upgrade pip
 
 **Install SDK Packages:** Install the `cerebras_appliance` and `cerebras_sdk` Python packages in the virtual environment, specifying the appropriate Cerebras Software release:
 ```bash linenums="1"
-pip install --upgrade pip
 pip install cerebras_appliance==2.4.0
 pip install cerebras_sdk==2.4.0
 ```
@@ -114,40 +111,38 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 ```bash linenums="1"
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.2.0
-cd ~/csl-examples/benchmarks/gemm-collectives_2d
+git checkout rel-sdk-1.3.0
+cd ~/csl-examples/tutorials/gemv-01-complete-program/appliance_compile.py
 ```
 
 #### Compile Code
 
-Use the following `compile.py` script to compile the code in the respective example directory:
+Use the following `appliance_compile.py` script to compile the code in the respective example directory:
 
 ```python title="compile.py" linenums="1"
 import json
-from cerebras_appliance.sdk import SdkCompiler
+from cerebras.sdk.client import SdkCompiler
 
 # Instantiate copmiler
 compiler = SdkCompiler()
 
 # Launch compile job
-artifact_id = compiler.compile(
+artifact_path = compiler.compile(
     ".",
     "layout.csl",
-    # For running on CS-2
     "--fabric-dims=757,996 --fabric-offsets=4,1 --memcpy --channels=1 -o out",
-    # For Running Fabric Simulator
-    #"--fabric-dims=8,3 --fabric-offsets=4,1 --memcpy --channels=1 -o out",
+    "."
 )
 
-# Write the artifact_id to a JSON file
-with open("artifact_id.json", "w", encoding="utf8") as f:
-    json.dump({"artifact_id": artifact_id,}, f)
+# Write the artifact_path to a JSON file
+with open("artifact_path.json", "w", encoding="utf8") as f:
+    json.dump({"artifact_path": artifact_path,}, f)
 ```
 
 ??? note "Sample Output"
 
 	``` { .bash .nocopy }
-    $ python compile.py
+    $ python appliance_compile.py
     2023-10-11 00:55:33,107 DEBUG    ClusterClient: server=10.140.65.35:443, authority=cluster-server.cerebras1.lab.alcf.anl.gov, cert=/opt/cerebras/certs/tls.crt, client-lease-strategy=0, heartbeat_options=HeartBeatOptions(cycle_seconds=10, cycle_threshold=12, lease_duration_seconds_override=0), options=[('grpc.service_config', '{"methodConfig": [{"name": [{"service": "cluster.cluster_mgmt_pb.ClusterManagement"}], "retryPolicy": {"maxAttempts": 3, "initialBackoff": "3s", "maxBackoff": "10s", "backoffMultiplier": 2, "retryableStatusCodes": ["UNAVAILABLE"]}}]}'), ('grpc.enable_retries', 1), ('grpc.default_authority', 'cluster-server.cerebras1.lab.alcf.anl.gov')]
     2023-10-11 00:55:33,128 INFO     Initiating a new SDK compile job against the cluster server
     2023-10-11 00:55:33,142 DEBUG    Run meta is available at /srv/projects/datascience/sraskar/cs2/cs_sdk/gemv/run_meta.json.
@@ -163,20 +158,27 @@ with open("artifact_id.json", "w", encoding="utf8") as f:
 	```
 
 The only difference between CS-2 and simuator run is the `fabric_dims`. It should be set to minimum required for simulatored runs.
-Above script generates `artifact.json` which is used by the `run.py` script.
+Above script generates `artifact.json` which is used by the `appliance_run.py` script.
 
 #### Run Code
 
-Use the following `run.py` script to run the code in the respective example directory:
+Use the following `appliance_run.py` script to run the code in the respective example directory:
 
 ```python title="run.py" linenums="1"
-import json
-import os
+#!/usr/bin/env cs_python
 
+import argparse
+import json
 import numpy as np
 
-from cerebras_appliance.pb.sdk.sdk_common_pb2 import MemcpyDataType, MemcpyOrder
-from cerebras_appliance.sdk import SdkRuntime
+from cerebras.appliance.pb.sdk.sdk_common_pb2 import MemcpyDataType, MemcpyOrder
+from cerebras.sdk.client import SdkRuntime
+
+
+# Read the artifact_path from the JSON file
+with open("artifact_path.json", "r", encoding="utf8") as f:
+        data = json.load(f)
+        artifact_path = data["artifact_path"]
 
 # Matrix dimensions
 M = 4
@@ -190,13 +192,9 @@ b = np.full(shape=M, fill_value=2.0, dtype=np.float32)
 # Calculate expected y
 y_expected = A@x + b
 
-# Read the artifact_id from the JSON file
-with open("artifact_id.json", "r", encoding="utf8") as f:
-    data = json.load(f)
-    artifact_id = data["artifact_id"]
-
-# Instantiate a runner object using a context manager
-with SdkRuntime(artifact_id, simulator=False) as runner:
+# Instantiate a runner object using a context manager.
+# Set simulator=False if running on CS system within appliance.
+with SdkRuntime(artifact_path, simulator=False) as runner:
     # Launch the init_and_compute function on device
     runner.launch('init_and_compute', nonblock=False)
 
@@ -214,7 +212,7 @@ print("SUCCESS!")
 ??? note "Sample Output"
 
 	``` { .bash .nocopy }
-    $ python run.py
+    $ python appliance_run.py
     2023-10-11 00:56:21,281 DEBUG    ClusterClient: server=10.140.65.35:443, authority=cluster-server.cerebras1.lab.alcf.anl.gov, cert=/opt/cerebras/certs/tls.crt, client-lease-strategy=0, heartbeat_options=HeartBeatOptions(cycle_seconds=10, cycle_threshold=12, lease_duration_seconds_override=0), options=[('grpc.service_config', '{"methodConfig": [{"name": [{"service": "cluster.cluster_mgmt_pb.ClusterManagement"}], "retryPolicy": {"maxAttempts": 3, "initialBackoff": "3s", "maxBackoff": "10s", "backoffMultiplier": 2, "retryableStatusCodes": ["UNAVAILABLE"]}}]}'), ('grpc.enable_retries', 1), ('grpc.default_authority', 'cluster-server.cerebras1.lab.alcf.anl.gov')]
     2023-10-11 00:56:21,304 INFO     Initiating a new SDK execute job against the cluster server
     2023-10-11 00:56:21,316 DEBUG    Run meta is available at /srv/projects/datascience/sraskar/cs2/cs_sdk/gemv/run_meta.json.
