@@ -364,7 +364,7 @@ body {
 }
 
 .md-nav--primary .md-nav__title {
-  display: none;
+  display: block;
   /* position: inherit; */
 }
 
