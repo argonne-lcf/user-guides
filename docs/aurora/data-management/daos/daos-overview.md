@@ -147,6 +147,8 @@ clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes
 ```
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
+To optimize performance, you may need to copy the contents of `launch-dfuse.sh`, add `-o multi-user`, enable caching, and then use the updated file to mount the container.
+
 ## Job Submission
 
 The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
