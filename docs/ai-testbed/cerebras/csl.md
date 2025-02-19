@@ -124,7 +124,7 @@ Use the following `compile.py` script to compile the code in the respective exam
 
 ```python title="compile.py" linenums="1"
 import json
-from cerebras_appliance.sdk import SdkCompiler
+from cerebras.sdk.client import SdkCompiler
 
 # Instantiate copmiler
 compiler = SdkCompiler()
@@ -175,8 +175,8 @@ import os
 
 import numpy as np
 
-from cerebras_appliance.pb.sdk.sdk_common_pb2 import MemcpyDataType, MemcpyOrder
-from cerebras_appliance.sdk import SdkRuntime
+from cerebras.appliance.pb.sdk.sdk_common_pb2 import MemcpyDataType, MemcpyOrder
+from cerebras.sdk.client import SdkRuntime
 
 # Matrix dimensions
 M = 4
