@@ -112,7 +112,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
 git checkout rel-sdk-1.3.0
-cd ~/csl-examples/tutorials/gemv-01-complete-program/appliance_compile.py
+cd ~/csl-examples/tutorials/gemv-01-complete-program/
 ```
 
 #### Compile Code
