@@ -30,8 +30,8 @@ module use /opt/aurora/24.180.3/spack/unified/0.8.0/install/modulefiles/oneapi/2
 module use /soft/preview/pe/24.347.0-RC2/modulefiles
 module add oneapi/release
 
-pip install /flare/datascience/sraskar/vllm-install/wheels/*
-pip install /flare/datascience/sraskar/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8545.d20250129.xpu-py3-none-any.whl
+pip install /flare/datasets/softwares/vllm-install/wheels/*
+pip install /flare/datasets/softwares/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8545.d20250129.xpu-py3-none-any.whl
 ```
 
 ## Access Model Weights
