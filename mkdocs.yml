@@ -296,6 +296,10 @@ nav:
         - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
         - SambaNova Documentation: ai-testbed/sambanova/documentation.md
         # - Performance Tools: ai-testbed/sambanova/performance-tools.md
+      - SambaStudio: 
+        - System Overview: ai-testbed/sambastudio/system-overview.md
+        - Getting Started: ai-testbed/sambastudio/getting-started.md
+        - Running a Model/Program: ai-testbed/sambastudio/running-a-model-or-program.md        
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
