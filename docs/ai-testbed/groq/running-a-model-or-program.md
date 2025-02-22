@@ -1,6 +1,6 @@
 # Running a Model/Program
 
-Jobs are launched from any GroqRack node, or from login nodes. <br>
+Jobs are launched from any GroqRack node. <br>
 If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
 
 ```bash
