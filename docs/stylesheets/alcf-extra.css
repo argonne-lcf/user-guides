@@ -13,6 +13,8 @@
   /* Colors */
   --md-primary-fg-color: #0261AF;
   --md-default-heading-color: #1d1651;
+  --md-header-bg-color: #0061AF;
+  --md-header-fg-color: #fff;
   /* added this setting in 2025; removed hardcoded versions from below */
   --md-primary-fg-color--light: #FFFFFF;
   --md-primary-fg-color--dark: #080813;
@@ -21,10 +23,6 @@
   --md-accent-fg-color--transparent: hsla(#{hex2hsl($md-accent-fg-color)}, 0.1);
   --md-accent-bg-color: hsla(0, 0%, 100%, 1);
   --md-accent-bg-color--light: hsla(0, 0%, 100%, 0.7);
-
-  .md-header {
-    background-color: #0061af;
-  }
 
   .header--primary .header__nav-primary a {
     color: #FFF;
@@ -49,15 +47,19 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --md-typeset-a-color: #badef5;
-  --md-default-heading-color: #b8e2de;
+  /* --md-typeset-a-color: #18B9B4; */
+  /* --md-typeset-a-color: rgb(184, 226, 255); */
+  /* --md-typeset-a-color: rgb(55, 176, 241); */
+  --md-typeset-a-color: rgb(100, 226, 255);
+  --md-default-heading-color: #eeeeee;
   --md-primary-fg-color: #222222;
   --md-default-bg-color: #1c1c1c;
   --md-header-bg-color: #222222;
+  --md-header-fg-color: #cccccc;
   /* --md-primary-fg-color: #1A1C23; */
   /* --md-default-bg-color: #111317; */
   /* --md-header-bg-color: #1A1C23; */
-  --md-accent-fg-color: #00A19C;
+  --md-accent-fg-color: #18B9B4;
   /* --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1); */
   --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82);
   --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.56);
@@ -105,6 +107,17 @@
   max-width: 1440px;
 }
 
+.md-header {
+  background-color: var(--md-header-bg-color);
+  color: var(--md-header-fg-color);
+}
+
+.md-main__inner {
+	display: flex;
+	height: 100%;
+  margin-top: auto;
+}
+
 /* typography */
 body {
   font-family: proxima-nova, sans-serif;
@@ -112,12 +125,20 @@ body {
 
 .md-typeset h1 {
   color: var(--md-default-heading-color);
+  margin-block-end: 0.5rem;
+  font-weight: 700;
 }
 
-.md-typeset h1,
-.md-typeset h2,
-.md-typeset h3 {
+.md-typeset h2 {
+  color: var(--md-default-heading-color);
+  margin-block: 0.33rem;
   font-weight: 600;
+}
+
+.md-typeset h3 {
+  color: var(--md-default-heading-color);
+  margin-block: 0.25rem;
+  font-weight: 500;
 }
 
 .md-typeset p,
@@ -224,8 +245,12 @@ body {
   /* max-width: 59.8rem; */
 }
 
+.header--secondary .header__nav-secondary a {
+  color: var(--md-header-fg-color);
+}
+
 .header--primary .header__nav-primary a {
-  color: #FFF;
+  color: var(--md-header-fg-color);
 }
 
 
@@ -259,10 +284,8 @@ body {
 
 .header--primary .header__site-title h1 {
   color: #b8e2de;
-  /* font-size: 36px; */
   font-weight: 600;
   margin-block: 5pt;
-  /* line-height: 36px; */
 }
 
 .header--primary .header__nav-primary {
