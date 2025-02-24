@@ -34,14 +34,13 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 While the Anaconda environment automatically loaded with the `frameworks` module contains many 
 of the most commonly used Python packages for our users, you may still 
 encounter a scenario in which you need to extend the functionality of the 
-environment (i.e. install additional packages).
-In this case, we suggest the use of Python virtual environments. 
+environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
 
 !!! warning
 	
 	There are several alternative approaches for extending or modifying the base Anaconda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
 
-Creating and activating a new virtual environment (`venv`) is straightforward:
+Creating and activating a new virtual environment (`venv`) is straightforward. After loading the above module, execute:
 
 ```bash
 python3 -m venv /path/to/new/venv --system-site-packages
@@ -62,6 +61,8 @@ pip install --ignore-installed ... # or -I
 The base environment is not writable, so it is not possible to remove or 
 uninstall packages from it. The packages installed with the above `pip` command 
 should shadow those installed in the base environment.
+
+Any time you wish to use this virtual environment in future shell sessions, be sure to first execute `module load frameworks` before `source /path/to/new/venv/bin/activate`.
 
 An alternative, although not recommended, approach to creating a `venv` is to install packages with
 ```bash
