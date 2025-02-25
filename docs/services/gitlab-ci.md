@@ -22,7 +22,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 * When ready to run CI/CD jobs, users will add a `.gitlab-ci.yml` file to their git repositories.
 * They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
 
-_Example: `.gitlab-ci.yml` file_
+_Example: `.gitlab-ci.yml` file for Aurora_
 ```yaml
 # this include allows us to reference defaults in anl/ci-resource/defaults
 include:
@@ -32,19 +32,21 @@ include:
       - '/runners.yml'
 
 stages:
-  - polaris_batch # stages may have any name
+  - my_batch # stages may have any name
 
 # the below submits a batch job to the scheduler
 submit_batch: # CI jobs may have any name
-  stage: polaris_batch  # from the stages list above
-  extends: .polaris-batch-runner # this includes the defaults provided in the 'anl/ci-resources/defaults' project
+  stage: my_batch  # from the stages list above
+  extends: .aurora-batch-runner # this includes the defaults provided in the 'anl/ci-resources/defaults' project
   variables:  # scheduler parameters must be included, adjust the below to match your values
-    ANL_POLARIS_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
+    ANL_AURORA_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
     - id
     - hostname
     - echo "Running on $(hostname) with setuid shell runner"
 ```
+
+To run a stage on a different system, change the `extends` key and the scheduler parameters. The list of ALCF provided `extends` is in the `include`ed [runners.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/defaults/-/blob/main/runners.yml?ref_type=heads) file.
 
 For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml?ref_type=heads) file in the [large-example](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example) project.
 
@@ -188,7 +190,8 @@ _Cluster Tag(s)_
 
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
-| Polaris   | polaris   | This tag will send jobs to the Polaris HPC runners  |
+| Polaris | polaris   | This tag will send jobs to the Polaris HPC runners  |
+| Aurora  | aurora    | This tag will send jobs to the Polaris HPC runners  |
 
 _Job Type Tag(s)_
 
@@ -236,7 +239,8 @@ If you are planning to submit jobs to a scheduler, then you will need to specify
 
 | Cluster | Scheduler | Variable Name | Support docs |
 |:--------|:---------:|:-------------:|:------------:|
-| Polaris   | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
+| Polaris | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
+| Aurora  | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../aurora/getting-started-on-aurora.md) |
 
 _Example: Running a batch job_
 ```yaml
