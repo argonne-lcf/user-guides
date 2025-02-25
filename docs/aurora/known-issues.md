@@ -70,6 +70,7 @@ then most likely your application will crash or hang. If you see these, the best
 ```console
 $ pbsnodes x4307c2s6b0n0 |grep comment
      comment = StabilityDB 2025-02-24T04:38:14: hbm_controller_errors
+```
 
 <!-- #### PBS failures -->
 
