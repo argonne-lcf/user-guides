@@ -1,11 +1,13 @@
 # Continuous Integration via GitLab-CI For Aurora
 
-## As of Febuary 25 2025, no changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) for GitLab-CI are required for Aurora.
+### As of Febuary 25 2025, no changes from the [general documentation](https://docs.alcf.anl.gov/services/gitlab-ci/) for GitLab-CI are required for Aurora.
 
 
-The below information is only for those users who have projects created prior to that date and that still use `gitlab-sunspot.alcf.anl.gov`:
+### The below information is *only* for those users who have projects created prior to that date and that still use `gitlab-sunspot.alcf.anl.gov`:
+
 
 Currently, [https://gitlab-sunspot.alcf.anl.gov](https://gitlab-sunspot.alcf.anl.gov) must be accessed via a proxy.
+
 
 The following command will connect to an Aurora login node from your local system and establish the required proxy:[^1]
 ```bash linenums="1"
