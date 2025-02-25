@@ -62,7 +62,7 @@ ping failed on x4707c6s4b0n0: Couldn't forward RPC ping(24c93b8c-3434-4fb5-a8f0-
 ping RPC timeout from x4212c7s0b0n0.hostmgmt2212.cm.aurora.alcf.anl.gov after 120s
 ```
 
-```
+```output
 ping failed on x4304c1s6b0n0: No reply from x4307c2s6b0n0.hostmgmt2307.cm.aurora.alcf.anl.gov after 87s
 ```
 
