@@ -52,9 +52,9 @@ As always, INCITE and ALCC projects should report all issues to the Catalyst poi
 
 #### Ping Failures
 
-Network and compute node instabilities may lead to unaccessible compute nodes. If your job output shows an error message like these:
+Network and compute node instabilities may lead to inaccessible compute nodes, which will cause MPI ranks on those nodes to become unreachable. If your job output shows an error message like these:
 
-```
+```output
 ping failed on x4707c6s4b0n0: Couldn't forward RPC ping(24c93b8c-3434-4fb5-a8f0-53cff4cbbe42) to child x4707c7s6b0n0.hostmgmt2707.cm.aurora.alcf.anl.gov: Resource temporarily unavailable
 ```
 
@@ -67,10 +67,9 @@ ping failed on x4304c1s6b0n0: No reply from x4307c2s6b0n0.hostmgmt2307.cm.aurora
 ```
 
 then most likely your application will crash or hang. If you see these, the best action is to kill the job and re-run it (from the last checkpoint, if there has been one). Potential issues can be discovered when the non-responsive node gets brought back online. Users may query PBS for more info.
-```
-pbsnodes x4307c2s6b0n0 |grep comment
+```console
+$ pbsnodes x4307c2s6b0n0 |grep comment
      comment = StabilityDB 2025-02-24T04:38:14: hbm_controller_errors
-```
 
 <!-- #### PBS failures -->
 
@@ -196,4 +195,4 @@ To increase the chances that a large job does not terminate due to a node failur
 
 * A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
-* Application failures at single-node are tracked in the JLSE wiki/confluence [page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
+* Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
