@@ -3,11 +3,11 @@
 ## Porting applications to the CS-2
 
 Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
-[Ways to port your model](https://docs.cerebras.net/en/latest/wsc/port/index.html)
+[Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
 
 ## Grafana WsJob Dashboard for Cerebras jobs
 A Grafana dashboard provides support for visualizing, querying, and exploring the CS2 system’s metrics and enables to access system logs and traces.
-See the Cerebras documentation for the [Job Information Dashboard](https://docs.cerebras.net/en/latest/wsc/getting-started/grafana.html#wsjob-dashboard)
+See the Cerebras documentation for the [ML User Dashboard](https://training-docs.cerebras.ai/cluster-monitoring/cerebras-job-scheduling-and-monitoring/cluster-monitoring-with-grafana#ml-user-dashboard)
 
 Here is a summary (tested to work on Ubuntu and MacOS)<br>
 

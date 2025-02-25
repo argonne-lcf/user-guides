@@ -1,4 +1,4 @@
-# System Overview
+  # System Overview
 
 The Cerebras CS-2 is a wafer-scale deep learning accelerator comprising 850,000 processing cores, each providing 48KB of dedicated SRAM memory for an on-chip total of 40GB and interconnected to optimize bandwidth and latency. Its software platform integrates the popular machine learning framework PyTorch.
 
@@ -11,18 +11,17 @@ For an overview of Cerebras CS-2 systems, see this whitepaper:<br>
 <a href="https://cerebras.net/wp-content/uploads/2021/04/Cerebras-CS-2-Whitepaper.pdf">Cerebras Systems: Achieving Industry Best AI Performance Through A Systems Approach</a>.
 -->
 
-The public Cerebras documentation is available [here](https://docs.cerebras.net/en/latest/index.html).
+The public Cerebras documentation is available [here](https://training-docs.cerebras.ai/getting-started/overview).
 
 A typical Cerebras Wafer-Scale Cluster is shown in the figure.<br>
 Users connect (ssh) to one of the three login nodes. Either ssh to `cerebras.ai.alcf.anl.gov`, which randomly resolves to one of cer-login-0[1-3].ai.alcf.anl.gov, or ssh to a specific node, `cer-login-01.ai.alcf.anl.gov`, `cer-login-02.ai.alcf.anl.gov`, `cer-login-03.ai.alcf.anl.gov`.
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
 The trees `/home`, `/projects`, and `/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 <figure markdown>
-  <!--![CS-2 cluster figure](files/cs-getting-started.png){ width="700" }-->
-  ![CS-2 cluster figure](https://docs.cerebras.net/en/latest/_images/topology-of-weight-streaming-on-wsc.png){ width="700" }
+  ![CS-2 cluster figure](https://mintlify.s3.us-west-1.amazonaws.com/cerebras-training/images/concepts/topology-of-weight-streaming-on-wsc.png){ width="700" }
   <figcaption>CS-2 cluster figure</figcaption>
 </figure>
 (Figure from
-[https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html](https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html))
+[https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster](https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster))
 
 As indicated in the figures, the CS-2 nodes on the right are responsible only for running and accelerating the computations for training and predictions with the model. The other work, including compilation, is performed by input nodes, and by MemoryX nodes, which are used for weight storage and broadcast, and SwarmX nodes, which are used for gradient accumulation. Some model verification work can be done on login nodes.
