@@ -47,27 +47,23 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 
 The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
 
-<!-- BEGIN COMPARISON of mkdocs-codeinclude-plugin and pymdownx.snippets -->
-<!--codeinclude-->
-<!-- [Identifying physical or virtual GPU by UUID](../../GettingStarted/Examples/Polaris/affinity_gpu/main.cpp) block:uuid_print -->
-<!--/codeinclude-->
-
 <!-- Snippets paths are relative to base location, by default the current working directory (relative to mkdocs.yml?). You can specify a new base location by setting the base_path. base_path is a list of paths. When evaluating paths, they are done in the order specified. The specified snippet will be evaluated against each base path and the first base path that yields a valid snippet will be returned. -->
 
+<!-- note: "===" is from older pymdownx.tabbed feature. TODO: consider replacing with code block title or pymdownx.blocks.tab -->
 === "Identifying physical or virtual GPU by UUID"
-```c++
+```c++ linenums="1"
 ---8<---
-./GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
+GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
 ---8<---
 ```
 
-<!--- example of other pymdownx.snippets syntax. ; temp disables it -->
+<!--- example of alternative pymdownx.snippets syntax. "; temporarily disables it -->
 ---8<--- "; docs/running-jobs/pbs-qsub-options-table.md"
 
-<!-- END COMPARISON -->
-
 !!! warning inline end "Zsh users"
-    If you are a `zsh` user, you will need to ensure **all** PBS job submission and shell scripts include the `-l` flag following `#!/bin/bash` as seen in the example above to ensure your environment is being instantiated properly. `zsh` is **not** officially supported by HPE and support from ALCF will be best effort only.*
+
+    If you are a `zsh` user, you will need to ensure **all** PBS job submission and shell scripts include the `-l` flag following `#!/bin/bash` as seen in the example above to ensure your environment is being instantiated properly. `zsh` is **not** officially supported by HPE and support from ALCF will be best effort only.
+
 
 Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores).
 
@@ -205,11 +201,15 @@ As in the previous hardware threads example, the MPI ranks are spaced apart assu
 In this script, we have added `-j oe` to the list of PBS options; `-j oe` combines stdout and stderr to the same file and uses the stdout filename provided (if provided). `-j eo` would do the same but use the stderr filename provided. Without these options, separate files containing stdout and stderr of the job are produced.
 
 Here we compare two bare-bones PBS submission scripts for a CUDA example with and without MPI:
+=== "No MPI"
+	```bash linenums="1"
+	---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_cu.sh"
+	```
 
-<!--codeinclude-->
-[No MPI](../../ALCFBeginnersGuide/polaris/examples/01_example_cu.sh)
-[With MPI](../../ALCFBeginnersGuide/polaris/examples/01_example_mpi.sh)
-<!--/codeinclude-->
+=== "With MPI"
+	```bash linenums="1"
+	---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_mpi.sh"
+	```
 
 ### Setting GPU affinity for each MPI rank
 
@@ -217,9 +217,9 @@ The `CUDA_VISIBLE_DEVICES` environment variable is provided for users to set whi
 
 A copy of the small helper script provided in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) is provided below for reference:
 
-<!--codeinclude-->
-[GPU affinity script](../../GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh)
-<!--/codeinclude-->
+```bash linenums="1" title="set_affinity_gpu_polaris.sh"
+---8<--- "GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh"
+```
 
 !!! note
 

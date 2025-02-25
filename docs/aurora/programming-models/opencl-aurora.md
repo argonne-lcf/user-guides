@@ -2,19 +2,11 @@
 
 ## Overview
 
-OpenCL™ (Open Computing Language) is an open, royalty-free standard for
-cross-platform, parallel programming of diverse accelerators found in
-supercomputers, cloud servers, personal computers, mobile devices and embedded
-platforms. OpenCL greatly improves the speed and responsiveness of a wide
-spectrum of applications in numerous market categories including professional
-creative tools, scientific and medical software, vision processing, and neural
-network training and inferencing.
+OpenCL™ (Open Computing Language) is an open, royalty-free standard for cross-platform, parallel programming of diverse accelerators found in supercomputers, cloud servers, personal computers, mobile devices, and embedded platforms. OpenCL greatly improves the speed and responsiveness of a wide spectrum of applications in numerous market categories, including professional creative tools, scientific and medical software, vision processing, and neural network training and inferencing.
 
 ## Setting the environment to use OpenCL on Aurora
 
-The Intel Programming Environment is the main environment on Aurora. The Intel
-Compute Runtime is part of this environment and grants access to OpenCL.
-The Intel Compute Runtime is loaded by default in your environment.
+The Intel Programming Environment is the main environment on Aurora. The Intel Compute Runtime is part of this environment and grants access to OpenCL. The Intel Compute Runtime is loaded by default in your environment.
 
 ```
 > module list
@@ -27,36 +19,31 @@ Currently Loaded Modules:
 
 ## Building on Aurora
 
-OpenCL is a C API that can be used in your application by including the
-`CL/opencl.h` file:
+OpenCL is a C API that can be used in your application by including the `CL/opencl.h` file:
 
-```C
+```c
 #include <CL/opencl.h>
 ```
 
-Application that use the OpenCL API need to be linked to the OpenCL
-loader library by using the `-lOpenCL` linker flag when using Make.
-For CMake based builds, you can find the OpenCL package and then link
-it to your targets as shown below:
-```CMake
+Applications that use the OpenCL API need to be linked to the OpenCL loader library by using the `-lOpenCL` linker flag when using Make. For CMake-based builds, you can find the OpenCL package and then link it to your targets as shown below:
+
+```cmake
 find_package(OpenCL REQUIRED)
 target_link_libraries(my_target PRIVATE OpenCL::OpenCL)
 ```
-During the configure step, CMake may need help finding the OpenCL
-library. You can provide hints to CMake by setting the `OpenCL_LIBRARY`
-and `OpenCL_INCLUDE_DIR` variables. If you use `icx` or `icpx` on
-Aurora, you can do the following during the configure step:
-```CMake
+
+During the configure step, CMake may need help finding the OpenCL library. You can provide hints to CMake by setting the `OpenCL_LIBRARY` and `OpenCL_INCLUDE_DIR` variables. If you use `icx` or `icpx` on Aurora, you can do the following during the configure step:
+
+```bash
 export OPENCL_BASE_DIR=$(dirname $(which icx))/..
 cmake -DOpenCL_LIBRARY=${OPENCL_BASE_DIR}/lib/libOpenCL.so \
       -DOpenCL_INCLUDE_DIR=${OPENCL_BASE_DIR}/include/sycl \
       <other_cmake_options>
 ```
 
-C++ bindings exist and can be used in C++ applications by including the
-`CL/opencl.hpp` file:
+C++ bindings exist and can be used in C++ applications by including the `CL/opencl.hpp` file:
 
-```C++
+```cpp
 #include <CL/opencl.hpp>
 ```
 

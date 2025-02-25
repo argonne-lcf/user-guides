@@ -211,7 +211,7 @@ Here are the steps to run the above code on Aurora:
    ```
 1. [Request a one-node interactive job](../../running-jobs-aurora.md#submitting-a-job) for 30 minutes:
    ```bash
-   qsub -q debug -l select=1,walltime=30:00 -A <your_project_name> -k doe -j oe -I
+   qsub -q debug -A <your_project_name> -l select=1,walltime=30:00 -l filesystems=home:flare -k doe -j oe -I
    ```
 1. Copy the above Python script into a file called `pytorch_xpu.py` and make it executable with `#!bash chmod a+x pytorch_xpu.py`.
 1. [Load the frameworks module](../python.md#aiml-framework-module):
@@ -343,9 +343,9 @@ Here are the steps to run the above code on Aurora:
    ```bash
    ssh <username>@aurora.alcf.anl.gov
    ```
-1. [Request a one-node interactive job](../../running-jobs-aurora.md#submitting-a-job) for 30 minutes:
+1. [Request an interactive job on two nodes](../../running-jobs-aurora.md#submitting-a-job) for 30 minutes:
    ```bash
-   qsub -q debug -l select=2,walltime=30:00 -A <your_project_name> -k doe -j oe -I
+   qsub -q debug -A <your_project_name> -l select=2,walltime=30:00 -l filesystems=home:flare -k doe -j oe -I
    ```
 1. Copy the above Python script into a file called `pytorch_ddp.py` and make it executable with `#!bash chmod a+x pytorch_ddp.py`.
 1. [Load the frameworks module](../python.md#aiml-framework-module):
