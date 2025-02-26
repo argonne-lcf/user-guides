@@ -491,7 +491,7 @@ Here we see that the first CPU on the node (hardware threads 0-51 and 104-155) a
 
 To specify in which memory ranks allocate, you can use several methods:
 
-1. Use the memkind library (https://github.com/memkind/memkind) with explicit calls like:
+1. Use the [memkind library](https://github.com/memkind/memkind) with explicit calls like:
       ```
       void* hbw_malloc(size_t size);
       void hbw_free(void *ptr)
