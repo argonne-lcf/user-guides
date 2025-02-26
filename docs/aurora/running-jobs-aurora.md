@@ -502,7 +502,7 @@ to allocate and free memory in HBM. By default, `malloc` will be in DDR.
 ```
 mpirun -n 2 --cpu-bind=list:0-51:52-103 numactl -m 2-3 ./app
 ```
-This uses the `-m` flag to allocate memory only in node 2 and node 3, which is the HBM associated with the first and second CPUs, respectively. Or you can use the `--perferred` flag to specify that you would prefer that the memory allocations begin on the HBM, but if memory cannot be allocated there fall back to the DDR. For example, to allocated first in Numa node 2 and fall back to DDR if needed:
+This uses the `-m` flag to allocate memory only in node 2 and node 3, which is the HBM associated with the first and second CPUs, respectively. Or you can use the `--preferred` flag to specify that you would prefer that the memory allocations begin on the HBM, but if memory cannot be allocated there fall back to the DDR. For example, to allocated first in NUMA node 2 and fall back to DDR if needed:
 ```
 mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
 ```
