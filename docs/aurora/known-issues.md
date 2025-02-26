@@ -14,9 +14,9 @@ Expect unplanned outages and downtime. The stability of the Aurora system has im
 
 The current queue policy for Aurora is set up based on experiences to date to help maximize productive use of the machine by projects.
 
-* The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
-
-* Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code+runs and start generating science results. Initially, the prod queue will only allow 2048 nodes max. Except for ESP projects, project teams will be required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales).
+- The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
+- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results. Initially, the `prod` routing queue will only allow 2048 nodes max. 
+- Except for ESP projects, project teams will be required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Queues) for more details. 
 
 ### Storage
 
@@ -38,13 +38,11 @@ These won’t be mounted on Aurora initially, but they might be mounted around M
 
 ### Checkpointing
 
-Checkpointing is absolutely essential. The mean time between application interrupts caused by system instability may be as short as an hour for larger jobs. The frequency of checkpointing is something that needs to be decided for each individual application based on the scale of runs.
+Checkpointing is absolutely essential. The mean time between application interrupts caused by system instability may be as short as an hour for larger jobs. The frequency of checkpointing is something that needs to be decided for each individual application based on the scale of runs:
 
-* If checkpointing has minimal overhead, consider checkpointing once every 15 minutes.
-
-* If checkpointing has substantial overhead, then consider checkpointing every 30-60 minutes.
-
-* It may be the case that the highest throughput initially will be with creating job dependency chains where scripts are able to 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
+- If checkpointing has minimal overhead, consider checkpointing once every 15 minutes.
+- If checkpointing has substantial overhead, then consider checkpointing every 30-60 minutes.
+- It may be the case that the highest throughput initially will be with creating job dependency chains where scripts are able to 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
 
 ### Troubleshooting Common Issues
 
@@ -58,7 +56,7 @@ Network and compute node instabilities may lead to inaccessible compute nodes, w
 ping failed on x4707c6s4b0n0: Couldn't forward RPC ping(24c93b8c-3434-4fb5-a8f0-53cff4cbbe42) to child x4707c7s6b0n0.hostmgmt2707.cm.aurora.alcf.anl.gov: Resource temporarily unavailable
 ```
 
-```
+```output
 ping RPC timeout from x4212c7s0b0n0.hostmgmt2212.cm.aurora.alcf.anl.gov after 120s
 ```
 
@@ -92,7 +90,7 @@ The best tools for debugging these are `gdb-oneapi` and `DDT`, both of which all
 
 This is a collection of known issues that have been encountered during Aurora's early user phase. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
 
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hw/sw resource account for access.
+A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/softare resource account for access.
 
 ### Runtime Errors
 
@@ -100,7 +98,7 @@ A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Know
 
 `Cassini Event Queue overflow detected` errors may occur for certain MPI communications and may happen for a variety of reasons - software and hardware, job placement, job routing, and the state of the machine. Simply speaking, it means one of the network interfaces is getting messages too fast and cannot keep up with processing them.
 
-```
+```output
 libfabric:16642:1701636928::cxi:core:cxip_cq_eq_progress():531<warn> x4204c1s3b0n0: Cassini Event Queue overflow detected.
 ```
 
@@ -120,7 +118,7 @@ It may be useful to use other libfabric environment settings. In particular, the
 
 If you see
 
-```
+```output
 _libm_template.c:(.text+0x7): failed to convert GOTPCREL relocation against '__libm_acos_chosen_core_func_x'; relink with --no-relax
 ```
 
@@ -128,9 +126,9 @@ try linking with `-flink-huge-device-code`
 
 #### 3. SYCL Device Free Memory Query Error
 
-Note that if you are querying the free memory on a device with the Intel SYCL extension "get_info<sycl::ext::intel::info::device::free_memory>();", you will need to set `export ZES_ENABLE_SYSMAN=1`. Otherwise, you may see an error like:
+Note that if you are querying the free memory on a device with the Intel SYCL extension `get_info<sycl::ext::intel::info::device::free_memory>();`, you will need to set `export ZES_ENABLE_SYSMAN=1`. Otherwise, you may see an error like:
 
-```
+```output
 x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
 x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: terminate called after throwing an instance of 'sycl::_V1::invalid_object_error'
   what():  The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
@@ -145,7 +143,7 @@ If you see an error like `start failed on x4102c5s2b0n0: No VNIs available in in
 
 When running on a single node, you may observe this error message:
 
-```
+```output
 PMIX ERROR: PMIX_ERR_NOT_FOUND in file dstore_base.c at line 1567 
 PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 ```
@@ -156,25 +154,25 @@ These errors can be safely ignored.
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
 
-```
+```output
 comment = Job held by <USER> on Tue Feb 6 05:20:00 2024 and terminated
 ```
 
 The user has placed the job on hold; the user can `qrls` the job when ready for it to be queued again.
 
-```
+```output
 comment = Not Running: Queue not started. and terminated
 ```
 
 The user has submitted to a queue that is not currently running; the user should `qmove` the job to an appropriate queue.
 
-```
+```output
 comment = job held, too many failed attempts to run
 ```
 
 The job tried and failed to start. In this scenario, the user should find that their job was placed on hold. This does not indicate a problem with the user's job script, but indicates PBS made several attempts to find a set of nodes to run the job and was not able to. Users can `qdel` the job and resubmit or `qrls` the job to try running it again.
 
-```
+```output
 comment = Not Running: Node is in an ineligible state: down and terminated
 ```
 
@@ -184,7 +182,7 @@ In the event of a node going down during a job, users may encounter messages suc
 
 Use of the `qsub -V` flag (note: upper-case) is discouraged, as it can lead to startup failures. The following message (found via `pbsnodes -l`):
 
-```
+```output
 failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
 ```
 
