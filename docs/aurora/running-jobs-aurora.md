@@ -508,7 +508,7 @@ mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
 ```
 Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
 
-3. Use the `--mem-bind` flag for mpirun to restrict where the MPI ranks can allocate memory. For example:
+3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example:
 
 To allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
 ```
