@@ -72,7 +72,7 @@
   --md-code-bg-color: #222222;
   /*--md-code-bg-color: hsla(var(--md-hue), 15%, 18%, 1);*/
   --md-code-hl-color: #b8e2de;
-  --md-code-hl-color--light: rgba(41,119,255,0.2);
+  --md-code-hl-color--light: rgba(41, 119, 255, 0.2);
   --md-code-hl-number-color: #e6695b;
   --md-code-hl-special-color: #f06090;
   --md-code-hl-function-color: #c973d9;
@@ -113,14 +113,9 @@
 }
 
 .md-main__inner {
-	display: flex;
-	height: 100%;
+  display: flex;
+  height: 100%;
   margin-top: auto;
-}
-
-/* typography */
-body {
-  font-family: proxima-nova, sans-serif;
 }
 
 .md-typeset h1 {
@@ -151,6 +146,17 @@ body {
 .md-typeset a:hover {
   color: var(--md-accent-fg-color);
   text-decoration: underline;
+}
+
+.md-typeset .admonition p {
+  margin-block-start: 5pt;
+}
+
+[dir="ltr"] .md-typeset .admonition-title,
+[dir="ltr"] .md-typeset summary {
+  padding-left: 2rem;
+  padding-right: .6rem;
+  margin-block-start: 0;
 }
 
 .md-typeset ul {
