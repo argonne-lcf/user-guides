@@ -9,13 +9,11 @@ Interactions with SambaStudio are from any machine that has network access to Sa
 
 See [SambaNova SN40L: Scaling the AI Memory Wall with Dataflow and Composition of Experts](https://arxiv.org/pdf/2405.07518) for more about the SN40L.
 
-Figure here (leaving cerebras for placeholder)
+TODO Figure here (leaving cerebras for placeholder)
 
-A typical Cerebras Wafer-Scale Cluster is shown in the figure.<br>
 <figure markdown>
-  <!--![CS-2 cluster figure](files/cs-getting-started.png){ width="700" }-->
-  ![CS-2 cluster figure](https://docs.cerebras.net/en/latest/_images/topology-of-weight-streaming-on-wsc.png){ width="700" }
+  ![CS-2 cluster figure](https://mintlify.s3.us-west-1.amazonaws.com/cerebras-training/images/concepts/topology-of-weight-streaming-on-wsc.png){ width="700" }
   <figcaption>CS-2 cluster figure</figcaption>
 </figure>
 (Figure from
-[https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html](https://docs.cerebras.net/en/latest/wsc/cerebras-basics/how-cerebras-works.html))
+[https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster](https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster))

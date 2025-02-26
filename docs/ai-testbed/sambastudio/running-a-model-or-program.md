@@ -36,11 +36,13 @@ LLM example using a chat bot endpoint, e.g. LLama
 #### CLI
 
 Install the SambaStudio CLI into a python virtual environment.
-See [SambaStudio CLI setup guide](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html) for more details. 
+See [SambaStudio CLI setup guide](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html) for more details.
+You will need python 3.9 or 3.10 available. If needed, install in the usual way for your operating system. (e.g. `sudo apt install python3.9` in Debian Linuxes). (Note: simple install of a new python version will not override your default python command.)
 
-First, create and activate a virtual environment:
+First, create and activate a virtual environment. 
 ```console
-python3 -m venv ~/SambaStudio_cli_venv
+# or python3.10
+python3.9 -m venv ~/SambaStudio_cli_venv
 source ~/SambaStudio_cli_venv/bin/activate
 pip3 install -U pip
 ```
@@ -62,8 +64,8 @@ Click on Download SNAPI and download it to your selected location.
 Install the packages in the following order. These examples assume download to ~/Downloads and a specific release name. 
 
 ```
-pip3 install ~/Downloads/snsdk-<downloaded-release-version-name>.whl
-pip3 install ~/Downloads/SambaStudio_API_Client-<downloaded-release-version-name>.whl
+pip3 install ~/Downloads/snsdk-25.1.1+rc3-py3-none-any.whl
+pip3 install ~/Downloads/SambaStudio_API_Client-25.1.1+rc3-py3-none-any.whl 
 ```
 
 Make a snapi config directory:
@@ -81,9 +83,9 @@ In the `~/.snapi` directory, create a `config.json` with the following contents:
 ```
 
 - Create a file named secret.txt under the ~/.snapi directory.
-- Paste your API key into secret.txt.
+- Paste your API key into `~/.snapi/secret.txt`. 
 - Save, and then close it.
-- Set permissions to chmod 600 secret.txt.
+- Set permissions to user-only: `chmod 600 ~/.snapi/secret.txt`
 
 Set the default tenant.
 ```
@@ -104,8 +106,10 @@ The three available SambaStudio APIs are described at
 [API reference documents](https://docs.sambanova.ai/sambastudio/latest/api-ref-landing.html)
 
 Sample curl command. (DePlot)
-How to get curl commands from the GUI, for supported applications.
-Curl command templates.
+
+How to get full curl commands from the GUI, for supported applications.
+
+Example of curl command template. 
 
 Use jq for output parsing. (install if needed, e.g. on a laptop. Most ANL ai testbed hosts will have it.)
 
@@ -115,21 +119,7 @@ SambaNova's documentation for the Pyton SDK is at
 [SambaStudio Python SDK](https://docs.sambanova.ai/snsdk-api/index.html)
 
 Package installs. (Not spotting docs for this?)
-Sample
+Sample (crib from SN documentation, with link)
 
 
-The (Thirteen) Seasons:
 
-Winter
-Fool's Spring
-Second Winter
-Spring of Deception <-- you are here
-Third Winter
-The Pollening
-Mud Season
-Actual Spring
-Summer
-Hell's Front Porch
-False Fall
-Second Summer
-Actual Fall
