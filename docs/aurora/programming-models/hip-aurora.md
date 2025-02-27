@@ -8,7 +8,7 @@ Below is a simple example of setting the HIP environment, building, and running 
 
 ### Setting the environment to use HIP on Aurora
 
-```bash
+```bash linenums="1"
 module use /soft/modulefiles
 module load chipStar/1.2.1
 ```
