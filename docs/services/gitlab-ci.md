@@ -418,10 +418,11 @@ In order to find the project ID, navigate to the project homepage in the GitLab 
 button with three vertical dots in the upper right corner of the page and then click `Copy project ID` (see
 the figure below).
 
-<figure markdown>
-  ![GitLab Project ID](files/gitlab-ci/GitLabProjectID.png){ width="700" }
-  <figcaption>GitLab Project ID screenshot</figcaption>
-</figure>
+![GitLab Project ID](files/gitlab-ci/GitLabProjectID.png){ width="700" }
+
+/// caption
+GitLab Project ID screenshot
+///
 
 We use the `curl` command to interact with the GitLab REST API. First, lets get all the pipeline ids for the
 given project id.
