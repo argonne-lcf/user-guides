@@ -92,7 +92,7 @@
 | VCS     | Version Control System |
 | VMC     | Variational Monte Carlo |
 | VNC     | Virtual Network Computing |
-| XALT    | Executable Tracking System |
+| XALT    | [System tracking of users codes on clusters](https://github.com/xalt/xalt) |
 | XLA     | Accelerated Linear Algebra |
 | XPU     | Any Processing Unit (CPU, GPU, FPGA, ASIC) in Intel's [heterogeneous computing strategy](https://www.intel.com/content/www/us/en/architecture-and-technology/xpu.html) |
 | QMC     | Quantum Monte Carlo |
