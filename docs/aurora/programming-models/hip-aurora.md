@@ -13,7 +13,7 @@ module use /soft/modulefiles
 module load chipStar/1.2.1
 ```
 
-With this, the `hipcc` executable should be in your path. For projects using cmake, there is support via a `FindHIP.cmake` module, and `find_package(HIP REQUIRED)` can be used with chipStar.
+With this, the `hipcc` executable should be in your path. For projects using CMake, there is support via a `FindHIP.cmake` module, and `find_package(HIP REQUIRED)` can be used with chipStar.
 
 ```cpp linenums="1" title="saxpy.cpp"
 #include <stdio.h>
