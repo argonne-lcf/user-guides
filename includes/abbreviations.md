@@ -92,6 +92,7 @@
 *[XPU]: Any Processing Unit (CPU, GPU, FPGA, ASIC) in Intel's heterogeneous computing strategy
 *[QMC]: Quantum Monte Carlo
 *[QMCPACK]: Quantum Monte Carlo Package
+*[RAID]: Redundant Array of Independent Disks
 *[LAPACK]: Linear Algebra Package
 *[LAMMPS]: Large-scale Atomic/Molecular Massively Parallel Simulator
 *[LDAP]: Lightweight Directory Access Protocol

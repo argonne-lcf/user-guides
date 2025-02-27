@@ -97,5 +97,6 @@
 | XPU     | Any Processing Unit (CPU, GPU, FPGA, ASIC) in Intel's [heterogeneous computing strategy](https://www.intel.com/content/www/us/en/architecture-and-technology/xpu.html) |
 | QMC     | Quantum Monte Carlo |
 | QMCPACK | [Quantum Monte Carlo Package](https://qmcpack.org/) |
+| RAID    | Redundant Array of Independent Disks |
 | DRAM    | Dynamic Random-Access Memory |
 | NFS     | Network File System | 
