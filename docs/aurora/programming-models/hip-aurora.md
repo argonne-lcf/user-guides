@@ -67,7 +67,7 @@ int main(void)
 
 ### Building HIP code on Aurora
 
-```bash
+```console
 > hipcc saxpy.cpp
 ```
 
