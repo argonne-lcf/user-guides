@@ -105,13 +105,49 @@ Use CLI - example (llava, perhaps?)
 The three available SambaStudio APIs are described at
 [API reference documents](https://docs.sambanova.ai/sambastudio/latest/api-ref-landing.html)
 
-Sample curl command. (DePlot)
+SambaStudio suggests templating scripts that use curl to access the api.
+Here's an example, for conversion of a paper figure to a table using a DePlot endpoint.
 
-How to get full curl commands from the GUI, for supported applications.
+Either copy to a script, e.g. `post_deplot.sh` and executed with `bash post_deplot.sh`, or simply copy the commands to your command line.
+
+Get the sample image file, an image from the DePlot arxiv paper,
+[DePlot: One-shot visual language reasoning by plot-to-table translation](https://arxiv.org/abs/2212.10505).
+```
+wget http://localhost:8000/ai-testbed/sambastudio/files/deplot_vs_baselines_chartqa.png
+```
+Or download it with your browser, using this [link](files/deplot_vs_baselines_chartqa.png).
+
+You will need to edit the ENDPOINT_KEY and the PREDICT_URL to match the DePlot endpoint that you are using. 
+```bash
+#!/bin/bash
+
+# Set endpoint key and prediction (inference) url
+# Edit these for the DePlot instance being used
+export ENDPOINT_KEY=0b4d7b17-f319-48eb-a5dd-fa53aad3f4bb
+export PREDICT_URL=https://sjc3-e3.sambanova.net/api/predict/generic/d5937c37-8a90-4114-867f-4208ff76b996/e515bdf9-af6a-40f7-9971-b6569f70ebcd
+
+# Convert image of a paper figure to base64
+export IMAGE_PATH=./deplot_vs_baselines_chartqa.png
+export IMG_BASE64_DATA=$(cat "$IMAGE_PATH" | base64 -w 0)
+
+# Build the request json using a template
+echo '{"instances":["'"$IMG_BASE64_DATA"'"], "params":{"max_new_tokens":{"type":"int","value":"512"}}}' > ./input_deplot.json
+
+# Request a prediction, in this case conversion of an image to a table. 
+curl -X POST -H 'Content-Type: application/json' -H "key: $ENDPOINT_KEY" --data @./input.json $PREDICT_URL > output_deplot.json
+
+# Get prediction from output, and format it as a table. 
+cat output_deplot.json | jq .predictions[0] | sed 's/\\n/\n/g' | sed 's/^"//' | sed 's/"$//' > prediction.md
+cat prediction.md
+```
+
+Use `bash -x post_deplot.sh` to see details of the constructed curl command.
+
+For supported applications, the UI will give sample code for the snapi tool, for curl, and a sample python script.
 
 Example of curl command template. 
 
-Use jq for output parsing. (install if needed, e.g. on a laptop. Most ANL ai testbed hosts will have it.)
+This sample uses jq for parsing of the output JSON. (Install it if needed, e.g. on a laptop. Most ANL ai testbed hosts will have it.)
 
 ##### Python SDK
 
