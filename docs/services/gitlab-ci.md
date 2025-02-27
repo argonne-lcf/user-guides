@@ -434,7 +434,7 @@ source ./secrets.data
 # GitLab project ID
 PROJ_ID="18"
 # Gitlab project URL
-PROJ_URL="https://gitlab-sunspot.alcf.anl.gov/api/v4/projects/${PROJ_ID}/"
+PROJ_URL="https://gitlab-ci.alcf.anl.gov/api/v4/projects/${PROJ_ID}/"
 
 # GitLab API endpoint to list pipelines.
 PIPELINE_URL="${PROJ_URL}/pipelines"
@@ -459,7 +459,7 @@ for the user.
 The `jq` command is used to parse the JSON response from the GitLab REST API and extract the pipeline IDs
 (you can read more about the `jq` command at [jq Manual](https://jqlang.org/manual/)).
 Note that you may want to change the `PROJ_URL` based on the root endpoint of your GitLab instance (i.e.,
-appropriately replace `gitlab-sunspot.alcf.anl.gov` with your GitLab instance URL).
+appropriately replace `gitlab-ci.alcf.anl.gov` with your GitLab instance URL).
 Once the pipeline IDs are obtained, we can fetch the logs and artifacts for a specific pipeline as shown below.
 
 ```bash
@@ -475,8 +475,8 @@ mkdir -p "$LOG_DIR"
 
 # Function to get all jobs in a given pipeline
 get_pipeline_jobs() {
-    curl --header "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
-         "${PROJ_URL}/pipelines/${PIPELINE_ID}/jobs"
+  curl --header "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
+       "${PROJ_URL}/pipelines/${PIPELINE_ID}/jobs"
 }
 
 # Function to download the log of a given job
