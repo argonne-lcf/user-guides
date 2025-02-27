@@ -457,6 +457,68 @@ wait
 
 Users will likely find it beneficial to launch processes across CPU cores in both sockets of a node.
 
+
+## Using the HBM on the Sapphire Rapids CPUs
+
+As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions. By default, allocating memory from a CPU will go into the 512 GB DDR associated with that CPU.
+
+This configuration can be seen from running `numactl -H` on an Aurora node:
+
+
+```output
+available: 4 nodes (0-3)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155
+node 0 size: 515524 MB
+node 0 free: 497948 MB
+node 1 cpus: 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207
+node 1 size: 514994 MB
+node 1 free: 497013 MB
+node 2 cpus:
+node 2 size: 65536 MB
+node 2 free: 65424 MB
+node 3 cpus:
+node 3 size: 65536 MB
+node 3 free: 65433 MB
+node distances:
+node   0   1   2   3 
+  0:  10  21  13  23 
+  1:  21  10  23  13 
+  2:  13  23  10  23 
+  3:  23  13  23  10 
+```
+
+Here we see that the first CPU on the node (hardware threads 0-51 and 104-155) are associated with 512 GB memory in NUMA node 0 (node 0), and the second CPU (hardware threads 52-103 and 156-207) are also associated with 512 GB memory in `NUMA node 1 (node 1)`. The 64 GB HBM for the first CPU is in `node 2` and the second is `node 3`. Note that the "nodes" listed here refer to a NUMA domain on one node and not a different physical node.
+
+To specify in which memory ranks allocate, you can use several methods:
+
+1. Use the [memkind library](https://github.com/memkind/memkind) with explicit calls like:
+      ```c
+      void* hbw_malloc(size_t size);
+      void hbw_free(void *ptr)
+      ```
+to allocate and free memory in HBM. By default, `malloc` will be in DDR.
+
+2. Use `numactl` to specify in which NUMA domain (based on `numactl -H` output) to allocate memory. For example, you can use
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 numactl -m 2-3 ./app
+```
+This uses the `-m` flag to allocate memory only in NUMA node 2 and NUMA node 3, which is the HBM associated with the first and second CPUs, respectively. Or you can use the `--preferred` flag to specify that you would prefer that the memory allocations begin on the HBM, but if memory cannot be allocated there fall back to the DDR. For example, to allocated first in NUMA node 2 and fall back to DDR if needed:
+```
+mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
+```
+Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
+
+3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example:
+
+To allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1 
+```
+To allocate memory for rank 0 in NUMA node 2 (HBM) and rank 1 in NUMA node 3 (HBM):
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:2:3
+```
+
 ## <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
 
 Currently, the only access to the internet is via a proxy.  Here are the proxy environment variables for Aurora:

@@ -4,12 +4,12 @@
 To find MyALCF, either use the myALCF link at the [ALCF homepage](https://alcf.anl.gov) or visit the [MyALCF homepage](https://my.alcf.anl.gov)
 
 ## Logging In
-Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./alcf-passcode-tokens.md)
+Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./accounts-and-access/alcf-passcode-tokens.md)
 
 ## Home Screen Dashboard
 Once logged in to MyALCF, a home screen is presented with useful information pertaining to an individual's projects and the facility. The navigation menu links to get to more in depth tools and information. Simple icons show the current status of ALCF systems. Up-to-date data about current compute project allocations are shown as a high-level view of current activity (if there are no current allocations, there will be a link to request a new allocation). Links for support help, training event information, and facility news updates complete the home screen dashboard.
 
-![Dashboard Screenshot](images/dash.jpg)
+![Dashboard Screenshot](accounts-and-access/images/dash.jpg)
 
 /// caption
 Example appearance of home screen dashboard.
@@ -27,7 +27,7 @@ Collection of data showing status and usage of compute allocations. If there are
 - **Compute Allocation**: The project name, system, award type, allocation ID and dates.
 - **On-track Trend**: Comparison of project activity to a linear usage of hours. Expanding the graph shows a more detailed version of the graph with node hour percentage used and months specified. A second graph shows job sizes needed to use all node hours available in the remaining time. 
   
-  ![On-track Trend Screenshot](images/ontrack_expand.jpg) 
+  ![On-track Trend Screenshot](accounts-and-access/images/ontrack_expand.jpg) 
   /// caption
   Screenshot of example expanded on-track graph.
   ///
@@ -35,14 +35,14 @@ Collection of data showing status and usage of compute allocations. If there are
 - **Node Hour Usage**: Total node hours available, used, and remaining in the allocation.
 - **14 Day Jobs Activity**: show a simple graph of the last two weeks of activity. Expanding it gives a more detailed view with node hour counts per day and per month.
 
-  ![Activity Screenshot](images/activity_expand.jpg) 
+  ![Activity Screenshot](accounts-and-access/images/activity_expand.jpg) 
   /// caption
   Screenshot of example expanded activity graph.
   ///
   
 - **Hours by Size**: How the jobs in the allocation are split in terms of machine nodes used. Expanding this graph will give a visualization of how that split has occurred over time.
 
-  ![Jobs By Size Screenshot](images/jobsize_expand.jpg) 
+  ![Jobs By Size Screenshot](accounts-and-access/images/jobsize_expand.jpg) 
   /// caption
   Screenshot of example expanded jobs by size graph.
   ///
@@ -64,7 +64,7 @@ sbank is the compute node hour accounting system at ALCF. It has historically be
 
 - **Command Builder**: The Command Builder is a point-and-click style interface that allows for typing commands into the top command bar and/or selecting options from input boxes and/or dropdowns to create specific sbank commands. The default command is ‘sbank-list-allocations’. You can switch to sbank-list-jobs, sbank-detail-allocations, etc. under the top command bar and refine the command below via the input fields. Dynamic help is offered when a field is highlighted to explain the command and give examples. The output commands can be altered in the ‘view options’ panel accessed via the "View Options" button.
 
-  ![Command Builder Screenshot](images/commandbuilder.jpg)
+  ![Command Builder Screenshot](accounts-and-access/images/commandbuilder.jpg)
   /// caption
   Screenshot of command builder portion of sbank page.
   ///
@@ -74,7 +74,7 @@ sbank is the compute node hour accounting system at ALCF. It has historically be
    - Filters: Allows for toggling between different sets of rows available. By default, output is for active allocations.
    - Display Options: Allows for toggling items shown in the output.
 
-	![View Options Screenshot](images/viewoptions.jpg) 
+	![View Options Screenshot](accounts-and-access/images/viewoptions.jpg) 
 	/// caption
 	Screenshot of the view options portion of sbank page.
 	/// 
