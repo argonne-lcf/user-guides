@@ -138,8 +138,8 @@ nav:
     - index.md
 
   - Account and Project Management:
+    - MyALCF: account-project-management/MyALCF.md
     - Accounts and Access:
-      - MyALCF: account-project-management/accounts-and-access/MyALCF.md
       - User Account: account-project-management/accounts-and-access/user-account-overview.md
       - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
       - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
