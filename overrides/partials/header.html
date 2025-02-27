@@ -393,3 +393,123 @@
   {% endif %}
   {% endif %}
 </header>
+
+<!-- Script to fix theme toggle cycling and sync between desktop and mobile -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function setupThemeToggle() {
+      // Fix for theme toggle cycling
+      var desktopToggles = Array.from(document.querySelectorAll('input[id^="__palette_desktop_"]'));
+      var mobileToggles = Array.from(document.querySelectorAll('input[id^="__palette_mobile_"]'));
+      
+      if (desktopToggles.length === 3 && mobileToggles.length === 3) {
+        // Set up proper cycling order for desktop
+        var desktopLabels = document.querySelectorAll('label[for^="__palette_desktop_"]');
+        if (desktopLabels.length === 3) {
+          // Auto -> Light -> Dark -> Auto
+          desktopLabels[0].setAttribute('for', '__palette_desktop_2'); // Auto -> Light
+          desktopLabels[1].setAttribute('for', '__palette_desktop_3'); // Light -> Dark
+          desktopLabels[2].setAttribute('for', '__palette_desktop_1'); // Dark -> Auto
+        }
+        
+        // Set up proper cycling order for mobile
+        var mobileLabels = document.querySelectorAll('label[for^="__palette_mobile_"]');
+        if (mobileLabels.length === 3) {
+          // Auto -> Light -> Dark -> Auto
+          mobileLabels[0].setAttribute('for', '__palette_mobile_2'); // Auto -> Light
+          mobileLabels[1].setAttribute('for', '__palette_mobile_3'); // Light -> Dark
+          mobileLabels[2].setAttribute('for', '__palette_mobile_1'); // Dark -> Auto
+        }
+        
+        // Improved sync function that uses a simpler, more direct approach
+        function syncThemeState() {
+          // Get the currently active theme index
+          let activeIndex = -1;
+          
+          // Check desktop toggles first
+          for (let i = 0; i < desktopToggles.length; i++) {
+            if (desktopToggles[i].checked) {
+              activeIndex = i;
+              break;
+            }
+          }
+          
+          // If no desktop toggle is active, check mobile
+          if (activeIndex === -1) {
+            for (let i = 0; i < mobileToggles.length; i++) {
+              if (mobileToggles[i].checked) {
+                activeIndex = i;
+                break;
+              }
+            }
+          }
+          
+          // If we found an active index, make sure both desktop and mobile are in sync
+          if (activeIndex !== -1) {
+            desktopToggles[activeIndex].checked = true;
+            mobileToggles[activeIndex].checked = true;
+          } else {
+            // If nothing is checked, default to the first option
+            desktopToggles[0].checked = true;
+            mobileToggles[0].checked = true;
+          }
+        }
+        
+        // Sync initially
+        syncThemeState();
+        
+        // Set up direct listeners for all toggle changes
+        desktopToggles.forEach(function(toggle, index) {
+          toggle.addEventListener('change', function() {
+            if (this.checked) {
+              // Directly set the corresponding mobile toggle
+              mobileToggles[index].checked = true;
+              
+              // Explicitly trigger a change event for the mobile toggle
+              mobileToggles[index].dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+          });
+        });
+        
+        mobileToggles.forEach(function(toggle, index) {
+          toggle.addEventListener('change', function() {
+            if (this.checked) {
+              // Directly set the corresponding desktop toggle
+              desktopToggles[index].checked = true;
+              
+              // Explicitly trigger a change event for the desktop toggle
+              desktopToggles[index].dispatchEvent(new Event('change', { 'bubbles': true }));
+            }
+          });
+        });
+        
+        // Handle localStorage theme preference sync
+        window.addEventListener('storage', function(e) {
+          if (e.key && (e.key.includes('__palette') || e.key.includes('scheme') || e.key.includes('color'))) {
+            // If theme preference changes in localStorage, sync the toggles
+            setTimeout(syncThemeState, 10); // Small delay to let other listeners process
+          }
+        });
+      }
+    }
+    
+    // Run on page load
+    setupThemeToggle();
+    
+    // Also run when DOM changes (for instant loading)
+    if (document.querySelector('.md-content')) {
+      var observer = new MutationObserver(function() {
+        setupThemeToggle();
+      });
+      
+      observer.observe(document.querySelector('.md-content'), {
+        childList: true,
+        subtree: true
+      });
+    }
+    
+    // Extra listener for instant navigation events
+    document.addEventListener('DOMContentLoaded', setupThemeToggle);
+    document.addEventListener('mdx-instant-load-success', setupThemeToggle);
+  });
+</script>
