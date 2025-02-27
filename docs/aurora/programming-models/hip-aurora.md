@@ -15,8 +15,7 @@ module load chipStar/1.2.1
 
 With this, the `hipcc` executable should be in your path. For projects using cmake, there is support via a `FindHIP.cmake` module, and `find_package(HIP REQUIRED)` can be used with chipStar.
 
-```cpp
-> cat saxpy.cpp
+```cpp linenums="1" title="saxpy.cpp"
 #include <stdio.h>
 #include <math.h>
 #include "hip/hip_runtime.h"
