@@ -426,7 +426,8 @@ nav:
       - Technical Support: contacting-support/technical-support.md
       - Software Requests: contacting-support/software-requests.md
       - User Guide Questions / Issues: issues.md
-      - Acronyms: acronyms.md
+
+  - Acronyms: acronyms.md
 
 not_in_nav: |
   not_in_nav/
