@@ -73,6 +73,7 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - abbr
   - pymdownx.critic
   - pymdownx.inlinehilite
   - pymdownx.keys
@@ -85,6 +86,8 @@ markdown_extensions:
       dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.inlinehilite
@@ -419,10 +422,11 @@ nav:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
-  - Contacting Support:
+  - Contacting Support / Help:
       - Technical Support: contacting-support/technical-support.md
       - Software Requests: contacting-support/software-requests.md
       - User Guide Questions / Issues: issues.md
+      - Acronyms: acronyms.md
 
 not_in_nav: |
   not_in_nav/
@@ -441,3 +445,6 @@ not_in_nav: |
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
+
+watch:
+  - includes
