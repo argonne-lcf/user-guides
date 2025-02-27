@@ -75,6 +75,7 @@ int main(void)
 
 ```bash
 > ./a.out
+Max error: 0.000000
 ```
 
 There are additional details in the [chipStar user documentation](https://github.com/CHIP-SPV/chipStar/blob/main/docs/Using.md).
