@@ -73,7 +73,7 @@ int main(void)
 
 ### Running HIP code on Aurora
 
-```bash
+```console
 > ./a.out
 Max error: 0.000000
 ```
