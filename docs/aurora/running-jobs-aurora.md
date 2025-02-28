@@ -460,7 +460,7 @@ Users will likely find it beneficial to launch processes across CPU cores in bot
 
 ## Using the HBM on the Sapphire Rapids CPUs
 
-As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions. By default, allocating memory from a CPU will go into the 512 GB DDR associated with that CPU.
+As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions.
 
 This configuration can be seen from running `numactl -H` on an Aurora node:
 
@@ -509,7 +509,6 @@ mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
 Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
 
 3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example:
-
 To allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
 ```
 mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1 
