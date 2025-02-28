@@ -542,12 +542,12 @@ Content coming soon.
 -->
 
 ## Placement 
-On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2 across by 4 high arrangement numbered 0-7, going left to right, bottom to top.  Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.  Similarly, every rack is a dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called tier0 with a rack identifier (like x4519) and tier1 with a rack and chassis identifier (like x4519c3).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier:
+On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2-across by 4-high arrangement numbered 0-7, going left to right, bottom to top. Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.  Similarly, every rack is a Dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called `tier0` with a rack identifier (like `x4519`) and `tier1` with a rack and chassis identifier (like `x4519c3`).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier:
 
 ```bash
 -l select=8:system=foo,place=scatter:group=tier0
 ```
-If you wanted everything in the same chassis, replace tier0 with tier1. Note that you must explicitly specify the place when you use group. If you wanted a specific rack or dragonfly group instead of any of them, you are back to the:
+If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the place when you use group. If you wanted a specific rack or Dragonfly group instead of any of them, you are back to the:
 
 ```bash
 select: -l select 10:tier0=x4519
