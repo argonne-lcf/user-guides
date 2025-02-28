@@ -1,5 +1,4 @@
 <!-- Header -->
-<!-- --------------------------------------------------------------------- -->
 
 <!-- component: header -->
 {% set class = "md-header" %}
@@ -308,32 +307,32 @@
     {% if not config.theme.palette is mapping %}
     <form class="md-header__option" data-md-component="palette">
       {% for option in config.theme.palette %}
-      {% set scheme = option.scheme | d("default", true) %}
-      <input
-        class="md-option"
-        data-md-color-media="{{ option.media }}"
-        data-md-color-scheme="{{ scheme | replace(' ', '-') }}"
-        data-md-color-primary="{{ option.primary | replace(' ', '-') }}"
-        data-md-color-accent="{{ option.accent | replace(' ', '-') }}"
+        {% set scheme = option.scheme | d("default", true) %}
+        <input
+          class="md-option"
+          data-md-color-media="{{ option.media }}"
+          data-md-color-scheme="{{ scheme | replace(' ', '-') }}"
+          data-md-color-primary="{{ option.primary | replace(' ', '-') }}"
+          data-md-color-accent="{{ option.accent | replace(' ', '-') }}"
+          {% if option.toggle %}
+          aria-label="{{ option.toggle.name }}"
+          {% else  %}
+          aria-hidden="true"
+          {% endif %}
+          type="radio"
+          name="__palette"
+          id="__palette_desktop_{{ loop.index }}"
+          />
         {% if option.toggle %}
-        aria-label="{{ option.toggle.name }}"
-        {% else  %}
-        aria-hidden="true"
+          <label
+            class="md-header__button md-icon"
+            title="{{ option.toggle.name }}"
+            for="__palette_desktop_{{ loop.index }}"
+            hidden
+            >
+            {% include ".icons/" ~ option.toggle.icon ~ ".svg" %}
+          </label>
         {% endif %}
-        type="radio"
-        name="__palette"
-        id="__palette_desktop_{{ loop.index }}"
-        />
-      {% if option.toggle %}
-      <label
-        class="md-header__button md-icon"
-        title="{{ option.toggle.name }}"
-        for="__palette_desktop_{{ loop.index }}"
-        hidden
-        >
-        {% include ".icons/" ~ option.toggle.icon ~ ".svg" %}
-      </label>
-      {% endif %}
       {% endfor %}
     </form>
     {% endif %}
@@ -346,9 +345,6 @@
 </header>
 
 <!-- Mobile Header -->
-<!-- --------------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------------- -->
 
 <header class="{{ class }} header--mobile" data-md-component="header">
   <nav
@@ -381,14 +377,6 @@
       </div>
     </div>
 
-    <!-- Repository information -->
-    {% if config.repo_url %}
-    <div class="md-header__source">
-      {% include "partials/source.html" %}
-    </div>
-    {% endif %}
-
-
     <!-- Link to home -->
     <a
       href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}"
@@ -400,36 +388,43 @@
       {% include "partials/logo.html" %}
     </a>
 
+    <!-- Repository information -->
+    {% if config.repo_url %}
+    <div class="md-header__source">
+      {% include "partials/source.html" %}
+    </div>
+    {% endif %}
+
     <!-- Color palette - MOBILE VERSION with unique IDs -->
     {% if not config.theme.palette is mapping %}
     <form class="md-header__option" data-md-component="palette">
       {% for option in config.theme.palette %}
-      {% set scheme = option.scheme | d("default", true) %}
-      <input
-        class="md-option"
-        data-md-color-media="{{ option.media }}"
-        data-md-color-scheme="{{ scheme | replace(' ', '-') }}"
-        data-md-color-primary="{{ option.primary | replace(' ', '-') }}"
-        data-md-color-accent="{{ option.accent | replace(' ', '-') }}"
+        {% set scheme = option.scheme | d("default", true) %}
+        <input
+          class="md-option"
+          data-md-color-media="{{ option.media }}"
+          data-md-color-scheme="{{ scheme | replace(' ', '-') }}"
+          data-md-color-primary="{{ option.primary | replace(' ', '-') }}"
+          data-md-color-accent="{{ option.accent | replace(' ', '-') }}"
+          {% if option.toggle %}
+          aria-label="{{ option.toggle.name }}"
+          {% else  %}
+          aria-hidden="true"
+          {% endif %}
+          type="radio"
+          name="__palette"
+          id="__palette_mobile_{{ loop.index }}"
+          />
         {% if option.toggle %}
-        aria-label="{{ option.toggle.name }}"
-        {% else  %}
-        aria-hidden="true"
+          <label
+            class="md-header__button md-icon"
+            title="{{ option.toggle.name }}"
+            for="__palette_mobile_{{ loop.index }}"
+            hidden
+            >
+            {% include ".icons/" ~ option.toggle.icon ~ ".svg" %}
+          </label>
         {% endif %}
-        type="radio"
-        name="__palette"
-        id="__palette_mobile_{{ loop.index }}"
-        />
-      {% if option.toggle %}
-      <label
-        class="md-header__button md-icon"
-        title="{{ option.toggle.name }}"
-        for="__palette_mobile_{{ loop.index }}"
-        hidden
-        >
-        {% include ".icons/" ~ option.toggle.icon ~ ".svg" %}
-      </label>
-      {% endif %}
       {% endfor %}
     </form>
     {% endif %}
@@ -438,9 +433,9 @@
 
   <!-- Navigation tabs (sticky) -->
   {% if "navigation.tabs.sticky" in features %}
-  {% if "navigation.tabs" in features %}
-  {% include "partials/tabs.html" %}
-  {% endif %}
+    {% if "navigation.tabs" in features %}
+      {% include "partials/tabs.html" %}
+    {% endif %}
   {% endif %}
 </header>
 
