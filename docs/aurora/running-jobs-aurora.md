@@ -561,14 +561,21 @@ Figure: Liquid Cooled Cabinet Front and Chassis Numbering (Source: HPE Shasta Ha
 <!-- n = node -->
 <!-- # = single digit integers | -->
 
-Similarly, every rack is a Dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called `tier0` with a rack identifier (like `x4519`) and `tier1` with a rack and chassis identifier (like `x4519c3`).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier:
+As an example, for node `x4109c0s0b0n0`, this can be decomposed as:
+```
+x4109c0s0b0n0 == Rack Identifier x4109, Chassis c0, Slot s0, Board b0, Node n0
+```
+Note that the node names will always end in b0n0 (board 0, node 0) since there is only 1 board per blade, and 1 node per board.
+
+Every rack is a Dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called `tier0` with a rack identifier (like `x4519`) and `tier1` with a rack and chassis identifier (like `x4519c3`).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier to the `place` statement in PBS:
 
 ```bash
--l select=8:system=foo,place=scatter:group=tier0
+qsub -l select=8 -l place=group=tier0 pbs_submit_script.sh # allocating 8 nodes all in one rack (Dragonfly group)
 ```
 
-If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the place when you use group. If you wanted a specific rack or Dragonfly group instead of any of them, you are back to the:
+If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the `place` when you use `group`. If you wanted a specific rack or Dragonfly group instead of any of them, you can use:
 
 ```bash
-select: -l select 10:tier0=x4519
+qsub -l select=10 -l place=group=tier0=x4519 pbs_submit_script.sh # allocating 10 nodes in rack x4519
+qsub -l select=2 -l place=group=tier1=x4519c2 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
 ```
