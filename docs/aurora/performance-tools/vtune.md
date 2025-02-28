@@ -87,25 +87,19 @@ zeCommandListAppendMemoryCopy
 
 Step 1: Open a new terminal and log into an Aurora login node (no X11 forwarding required)
 ```bash
-ssh <username>@bastion.alcf.anl.gov
-ssh <username>@login.aurora.alcf.anl.gov
+ssh <username>@aurora.alcf.anl.gov
 ```
 Step 2: Start VTune server on an Aurora login node after loading the oneAPI module and setting the corresponding environmental variables for VTune
 ```bash
 module load oneapi
 vtune-backend --data-directory=<location of precollected VTune results>
 ```
-Step 3: Open a new terminal with SSH port forwarding enabled
+Step 3: Open a new terminal and login to the same login node on Step 2 (e.g., if Step 2 uses `aurora-uan-0009`, directly login to `aurora-uan-0009.aurora.alcf.anl.gov`) with SSH port forwarding enabled as follows:
 ```bash
-ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@aurora.alcf.anl.gov
+ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@aurora-uan-00xx.aurora.alcf.anl.gov
 ```
 
-Step 4: Check if the login nodes of Step 2 and Step 3 are the same or not. If not (e.g., `aurora-uan-0009` from Step 2 and `aurora-uan-0010` from Step 3), run `ssh` on the terminal for Step 3 to the login node of Step 2
-```bash
-ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> aurora-uan-xxxx
-```
-
-Step 5: Open the URL printed by VTune server in Firefox web browser on your local computer. For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
+Step 4: Open the URL printed by VTune server in Firefox web browser on your local computer. For a security warning, click "Advanced..." and then "Accept the Risk and Continue".
 
 * Accept VTune server certificate:
 When you open VTune GUI, your web browser will complain about VTune self-signed certificate. You either need to tell the web browser to proceed or install the VTune server certificate on your client machine so that the browser trusts it. To install the certificate, note the path to the public part of the certificate printed by VTune server in the output, copy it to your client machine, and add it to the trusted certificates.
