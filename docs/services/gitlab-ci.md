@@ -511,5 +511,8 @@ echo "$jobs" | jq -c '.[]' | while read -r job; do
 done
 ```
 
+Note that the `gitlab-ci.alcf.anl.gov` doesn't require a proxy or to be connected to Argonne network.
+If you run into issue, please contact [ALCF Support](mailto:support@alcf.anl.gov).
+
 [^1]: [GitLab REST API](https://docs.gitlab.com/api/rest/)
 
