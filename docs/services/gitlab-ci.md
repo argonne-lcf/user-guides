@@ -403,4 +403,115 @@ Inactivity is defined as, but not limited to:
 * No new commits to an existing project
 * Prolonged period of continuously failing CI/CD jobs (In the case of re-occurring scheduled jobs)
 
----
+## GitLab REST API
+The GitLab REST API provides programmatic access to read and modify GitLab resources by using standard HTTP
+methods and JSON data formats.[^1]
+The examples below demonstrate how to fetch the logs and artifacts from a GitLab pipeline in a GitLab project.
+
+In order to use the REST API,  a personal access token is required.
+Please follow the instructions at
+[GitLab Personal Access Token](https://docs.gitlab.com/user/profile/personal_access_tokens/) documentation to
+create one.
+This token is used to authenticate the user and must be kept secure and not shared with others.
+Next, we need to find the project id for the GitLab project.
+In order to find the project ID, navigate to the project homepage in the GitLab web interface and click the
+button with three vertical dots in the upper right corner of the page and then click `Copy project ID` (see
+the figure below).
+
+![GitLab Project ID](files/gitlab-ci/GitLabProjectID.png){ width="700" }
+
+/// caption
+GitLab Project ID screenshot
+///
+
+We use the `curl` command to interact with the GitLab REST API. First, lets get all the pipeline IDs for the
+given project ID. Each of the GitLab CI run (or a pipeline) has an unique ID.
+
+```bash linenums="1"
+source ./secrets.data
+
+# GitLab project ID
+PROJ_ID="18"
+# Gitlab project URL
+PROJ_URL="https://gitlab-ci.alcf.anl.gov/api/v4/projects/${PROJ_ID}/"
+
+# GitLab API endpoint to list pipelines.
+PIPELINE_URL="${PROJ_URL}/pipelines"
+
+# Make the request to list pipelines.
+response=$(curl --silent --header \
+  "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
+  "${PIPELINE_URL}")
+
+# Extract pipeline IDs
+pipeline_ids=$(echo "$response" | jq -r '.[].id')
+
+# Print pipeline IDs
+echo "Pipeline IDs:"
+for id in $pipeline_ids; do
+  echo "$id"
+done
+```
+
+The file `secret.data` contains the `SECRET_ACCESS_TOKEN` variable which stores the personal access token
+for the user.
+The `jq` command is used to parse the JSON response from the GitLab REST API and extract the pipeline IDs
+(you can read more about the `jq` command at [jq Manual](https://jqlang.org/manual/)).
+Note that you may want to change the `PROJ_URL` based on the root endpoint of your GitLab instance (i.e.,
+appropriately replace `gitlab-ci.alcf.anl.gov` with your GitLab instance URL).
+Once the pipeline IDs are obtained, we can fetch the logs and artifacts for a specific pipeline as shown below.
+
+```bash linenums="1"
+source ./secrets.data
+
+# GitLab pipeline ID
+PIPELINE_ID="2040"
+# Directory to save the logs
+LOG_DIR="pipeline_logs"
+
+# Create the log directory if it doesn't exist
+mkdir -p "$LOG_DIR"
+
+# Function to get all jobs in a given pipeline
+get_pipeline_jobs() {
+  curl --header "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
+       "${PROJ_URL}/pipelines/${PIPELINE_ID}/jobs"
+}
+
+# Function to download the log of a given job
+download_job_log() {
+  local job_id=$1
+  local job_name=$2
+  curl --header "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
+    "${PROJ_URL}/jobs/${job_id}/trace" \
+    -o "${LOG_DIR}/${job_id}_${job_name}.txt"
+  echo "Downloaded log for job ${job_name} (ID: ${job_id})"
+}
+
+# Function to download job artifacts
+download_job_artifacts() {
+  local job_id=$1
+  local job_name=$2
+  curl --header "PRIVATE-TOKEN: ${SECRET_ACCESS_TOKEN}" \
+    "${PROJ_URL}/jobs/${job_id}/artifacts" \
+    -o "${LOG_DIR}/${job_id}_${job_name}.zip"
+  echo "Downloaded artifacts for job ${job_name} (ID: ${job_id})"
+}
+
+# Get the list of jobs in the pipeline
+jobs=$(get_pipeline_jobs)
+
+# Extract job IDs and names from the jobs list and download their logs
+echo "$jobs" | jq -c '.[]' | while read -r job; do
+  job_id=$(echo "${job}" | jq -r '.id')
+  job_name=$(echo "${job}" | jq -r '.name')
+  download_job_log "${job_id}" "${job_name}"
+  download_job_artifacts "${job_id}" "${job_name}"
+done
+```
+
+Note that the `gitlab-ci.alcf.anl.gov` doesn't require a proxy or to be connected to Argonne network.
+If you run into issue, please contact [ALCF Support](mailto:support@alcf.anl.gov).
+
+[^1]: [GitLab REST API](https://docs.gitlab.com/api/rest/)
+
