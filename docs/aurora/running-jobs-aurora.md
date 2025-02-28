@@ -576,6 +576,6 @@ qsub -l select=8 -l place=group=tier0 pbs_submit_script.sh # allocating 8 nodes 
 If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the `place` when you use `group`. If you wanted a specific rack or Dragonfly group instead of any of them, you can use:
 
 ```bash
-qsub -l select=10 -l place=group=tier0=x4519 pbs_submit_script.sh # allocating 10 nodes in rack x4519
-qsub -l select=2 -l place=group=tier1=x4519c2 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
+qsub -l select=10:tier0=x4519 -l place=group=tier0 pbs_submit_script.sh # allocating 10 nodes in rack x4519
+qsub -l select=2:tier1=x4519c2 -l place=group=tier1 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
 ```
