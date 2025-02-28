@@ -424,11 +424,10 @@ the figure below).
 GitLab Project ID screenshot
 ///
 
-We use the `curl` command to interact with the GitLab REST API. First, lets get all the pipeline ids for the
-given project id.
-Each of the GitLab CI run (or a pipeline) has an unique ID.
+We use the `curl` command to interact with the GitLab REST API. First, lets get all the pipeline IDs for the
+given project ID. Each of the GitLab CI run (or a pipeline) has an unique ID.
 
-```bash
+```bash linenums="1"
 source ./secrets.data
 
 # GitLab project ID
@@ -462,7 +461,7 @@ Note that you may want to change the `PROJ_URL` based on the root endpoint of yo
 appropriately replace `gitlab-ci.alcf.anl.gov` with your GitLab instance URL).
 Once the pipeline IDs are obtained, we can fetch the logs and artifacts for a specific pipeline as shown below.
 
-```bash
+```bash linenums="1"
 source ./secrets.data
 
 # GitLab pipeline ID
