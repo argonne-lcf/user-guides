@@ -44,8 +44,8 @@ theme:
     - content.tooltips
     #- content.code.select # insiders-4.32.0
     - navigation.indexes
-    #- navigation.instant
-    #- navigation.instant.progress
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     # - navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
@@ -230,6 +230,7 @@ nav:
           - OpenCL: aurora/programming-models/opencl-aurora.md
           - OpenMP: aurora/programming-models/openmp-aurora.md
           - SYCL: aurora/programming-models/sycl-aurora.md
+          - HIP: aurora/programming-models/hip-aurora.md
         - Debugging Tools:
           - Overview: aurora/debugging/debugging-overview.md
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
