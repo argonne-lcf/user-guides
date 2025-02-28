@@ -460,7 +460,7 @@ Users will likely find it beneficial to launch processes across CPU cores in bot
 
 ## Using the HBM on the Sapphire Rapids CPUs
 
-As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions. By default, allocating memory from a CPU will go into the 512 GB DDR associated with that CPU.
+As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions.
 
 This configuration can be seen from running `numactl -H` on an Aurora node:
 
@@ -508,9 +508,8 @@ mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
 ```
 Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
 
-3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example:
-
-To allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
+3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example,
+ to allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
 ```
 mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1 
 ```
@@ -540,3 +539,42 @@ If you want to control the location of a few nodes, for example 2 out of 64, but
 ## <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
 Content coming soon.
 -->
+
+## Placement 
+On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2-across by 4-high arrangement numbered 0-7, going left to right, bottom to top. Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.
+
+![test](./images/AuroraChassisNumber.svg)
+/// caption
+Figure: Liquid Cooled Cabinet Front and Chassis Numbering (Source: HPE Shasta Hardware Architecture [documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00115093en_us&page=Shasta_Hardware_Architecture.html)
+///
+
+<!-- This is a very brief guide to translating the node xnames used in the ALCF.  This only addresses the nodes, but every component in the system has an xname that geo-locates it in the system.  For the nodes, an xname is of the form **xPQRRc#s#b#n#** where: -->
+
+<!-- x is always x -->
+<!-- P = system; single digit -->
+<!-- Q = row; single digit -->
+<!-- RR = rack; two digits -->
+<!-- c = chassis -->
+<!-- s = slot -->
+<!-- b = bmc (baseboard management controller) -->
+<!-- n = node -->
+<!-- # = single digit integers | -->
+
+As an example, for node `x4109c0s0b0n0`, this can be decomposed as:
+```
+x4109c0s0b0n0 == Rack Identifier x4109, Chassis c0, Slot s0, Board b0, Node n0
+```
+Note that the node names will always end in b0n0 (board 0, node 0) since there is only 1 board per blade, and 1 node per board.
+
+Every rack is a Dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called `tier0` with a rack identifier (like `x4519`) and `tier1` with a rack and chassis identifier (like `x4519c3`).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier to the `place` statement in PBS:
+
+```bash
+qsub -l select=8 -l place=scatter:group=tier0 pbs_submit_script.sh # allocating 8 nodes all in one rack (Dragonfly group)
+```
+
+If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the `place` when you use `group`. If you wanted a specific rack or Dragonfly group instead of any of them, you can use:
+
+```bash
+qsub -l select=10:tier0=x4519 -l place=scatter:group=tier0 pbs_submit_script.sh # allocating 10 nodes in rack x4519
+qsub -l select=2:tier1=x4519c2 -l place=scatter:group=tier1 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
+```
