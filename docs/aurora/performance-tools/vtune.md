@@ -94,7 +94,7 @@ Step 2: Start VTune server on an Aurora login node after loading the oneAPI modu
 module load oneapi
 vtune-backend --data-directory=<location of precollected VTune results>
 ```
-Step 3: Open a new terminal and login to the same login node on Step 2 (e.g., if Step 2 uses `aurora-uan-0009`, directly login to aurora-uan-0009.aurora.alcf.anl.gov) with SSH port forwarding enabled as follows:
+Step 3: Open a new terminal and login to the same login node on Step 2 (e.g., if Step 2 uses `aurora-uan-0009`, directly login to `aurora-uan-0009.aurora.alcf.anl.gov`) with SSH port forwarding enabled as follows:
 ```bash
 ssh -L 127.0.0.1:<port printed by vtune-backend>:127.0.0.1:<port printed by vtune-backend> <username>@aurora-uan-00xx.aurora.alcf.anl.gov
 ```
