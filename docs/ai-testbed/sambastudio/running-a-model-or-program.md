@@ -23,10 +23,36 @@ Models are the ML models available in SambaStudio. Each model has a model card t
 #### Endpoints
 
 
+### Creating a project
+Projects are easily created (and deleted) with the web GUI.
+
+1. Select the Projects button on the left menu
+2. Press the New Project button in the upper right
+3. Fill in the Project Name and Description fields
+4. Press the Create button
+
+![Create Project](files/SambaStudio_Create_Project.png)
+
+A project can also be created (or deleted) with snapi, if it is installed.
+For details: 
+```
+snapi project create --help
+```
+
+If a project is deleted, endpoints and jobs within it will also be deleted. 
+
 ### Using endpoints
 #### Making an endpoint, and stopping/restarting/deleting it.
 
+Endpoints are easily created (and deleted) using the web GUI
+
 Lots of screencaps.
+
+An endpoint can also be created (or deleted) with snapi, if it is installed.
+For details:
+```
+snapi endpoint create --help
+```
 
 #### GUI
 
@@ -52,10 +78,10 @@ From the help dropdown in the upper right of the SambaStudio GUI, select Resourc
 
 If you have not already done so:
 
-- Click on Generated API Key.
-- Click on Generate
-- Click on the icon to the right of the API key preview to copy it.
-- Save the key in a secure location.
+1. Click on Generated API Key.
+2. Click on Generate
+3. Click on the icon to the right of the API key preview to copy it.
+4. Save the key in a secure location.
 
 Click on Download SNSDK and download it to your selected location.
 
