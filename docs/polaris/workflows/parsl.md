@@ -10,7 +10,7 @@ For many applications, managing an ensemble of jobs into a workflow is a critica
 
 You can install parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the ``conda`` module to include parsl, but here is an example way to do it:
 
-```shell
+```bash linenums="1"
 # Load the Conda Module (needed every time you use parsl)
 module use /soft/modulefiles
 module load conda
@@ -32,7 +32,7 @@ pip install parsl
 
 Parsl has a variety of possible configuration settings. As an example, we provide the configuration below that will run one task per GPU:
 
-```python
+```python linenums="1"
 from parsl.config import Config
 
 # PBSPro is the right provider for Polaris:
@@ -104,7 +104,6 @@ config = Config(
         retries=2,
         app_cache=True,
 )
-
 ```
 
 ## Special notes for Polaris
