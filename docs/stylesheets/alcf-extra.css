@@ -1063,6 +1063,15 @@ table {
   overflow-wrap: break-word;
 }
 
+/* acronyms page */
+/* .md-typeset table:not([class]) { */
+/*   font-size: .9rem; */
+/* } */
+
+/* .md-typeset table:not([class]) td { */
+/*   padding: 0.5em 1em; */
+/* }  */
+
 /* Footer social media icons styling */
 .footer--social {
   display: flex;
