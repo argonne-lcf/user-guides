@@ -1,5 +1,5 @@
-site_name: ALCF User Guides
 repo_name: 'argonne-lcf/user-guides'
+site_name: ALCF User Guides
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 edit_uri: 'edit/main/docs/'
@@ -10,19 +10,19 @@ theme:
   language: 'en'
   palette:
     # Palette toggle for automatic mode
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: material/brightness-auto
-        name: Switch to light mode
+    # - media: "(prefers-color-scheme)"
+    #   toggle:
+    #     icon: material/brightness-auto
+    #     name: Switch to light mode
 
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: alcf
       primary: custom
       accent: custom
-
       toggle:
-        icon: material/brightness-7
+        # icon: material/brightness-7
+        icon: material/weather-sunny
         name: Switch to dark mode
 
     # Palette toggle for dark mode
@@ -31,8 +31,9 @@ theme:
       primary: custom
       accent: custom
       toggle:
-        icon: material/brightness-4
-        name: Switch to system preference
+        icon: material/weather-night
+        name: Switch to light mode
+
   font:
     text: proxima-nova   # removed in #545. remove again?
 
