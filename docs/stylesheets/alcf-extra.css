@@ -110,7 +110,7 @@
 .md-header {
   background-color: var(--md-header-bg-color);
   color: var(--md-header-fg-color);
-    position: inherit;
+  position: inherit;
 }
 
 .md-main__inner {
@@ -191,13 +191,13 @@
   vertical-align: middle;
 }
 
-.header--mobile .md-header__option {
-  display: flex!important;
-  flex-shrink: 0;
-  max-width: 100%;
-  transition: max-width 0ms .25s, opacity .25s .25s;
-  white-space: nowrap;
-}
+/* .header--mobile .md-header__option { */
+/*   display: flex !important; */
+/*   flex-shrink: 0; */
+/*   max-width: 100%; */
+/*   transition: max-width 0ms .25s, opacity .25s .25s; */
+/*   white-space: nowrap; */
+/* } */
 
 
 /* primary header */
@@ -228,6 +228,10 @@
     display: none;
   }
 
+  .header--primary .header__nav-secondary .md-search {
+    display: none !important;
+  }
+
   .md-header__inner .md-logo img {
     height: auto;
     width: 100px;
@@ -236,7 +240,7 @@
   }
 
   .header--mobile .md-header__option {
-    display: none!important;
+    display: none !important;
   }
 
   [dir="ltr"] .md-header__source {
@@ -702,11 +706,11 @@
 }
 
 .header--mobile .header__nav-secondary a:hover {
-  color: #118acb;
+  color: var(--md-accent-fg-color);
 }
 
 .header--mobile a:hover {
-  color: #118acb;
+  color: var(--md-accent-fg-color);
 }
 
 .header--mobile .header__site-title {
@@ -722,7 +726,7 @@
   margin-top: 12px;
 }
 
-@media only screen and (max-width: 1020px) {
+/ @media only screen and (max-width: 1020px) {
   .header--mobile .header__site-title h1 {
     font-size: 16px;
     /* line-height: 18px; */
@@ -749,27 +753,8 @@
 
 .header--mobile .header__mobIcons svg:hover {
   cursor: pointer;
-  fill: #118acb;
+  fill: var(--md-accent-fg-color);
 }
-
-.md-header__button {
-  float: right;
-  margin: auto;
-}
-
-.md-header__button {
-  color: currentcolor;
-  cursor: pointer;
-  outline-color: var(--md-accent-fg-color);
-  padding: 0;
-  position: relative;
-  transition: opacity .25s;
-  vertical-align: inherit;
-  z-index: 1;
-  /* padding-block-start: 10pt; */
-  padding-inline: 5pt;
-}
-
 
 .header--mobile .header__mobIcons .md-header__button svg {
   margin-top: 0px;
@@ -780,10 +765,6 @@
   margin-top: -12px;
   width: 36px;
 }
-
-
-
-
 
 .header--mobile .header__nav-primary a {
   padding-right: 27px;
