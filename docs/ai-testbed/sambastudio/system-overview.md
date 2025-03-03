@@ -9,7 +9,7 @@ SambaStudio is a rich, GUI-based platform that provides the functionality to tra
 
 The SambaStudio platform at the ALCF is the front end and management system for the SN40L cluster.
 
-Interactions with SambaStudio are from any machine that has network access to SambaStudio. [TODO assuming here that it is fully exposed to the internet.]
+Interactions with SambaStudio are from any machine that has network access to SambaStudio.
 
 See [SambaNova SN40L: Scaling the AI Memory Wall with Dataflow and Composition of Experts](https://arxiv.org/pdf/2405.07518) for more about the SN40L.
 
