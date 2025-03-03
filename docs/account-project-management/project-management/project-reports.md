@@ -6,19 +6,19 @@ PIs of INCITE, ALCC, and ADSP projects are required to complete quarterly report
 
 ## Due dates
 
-### Due dates for the 2024 INCITE quarterly, EOY, and the EOP reports:
+### Due dates for the 2025 INCITE quarterly, EOY, and the EOP reports:
 
-- April 1, 2024 (CY2024 - Q1)
-- July 1, 2024 (CY2024 - Q2)
-- October 1, 2024 (CY2024 - Q3)
-- January 1, 2025 (CY2025 - EOY) or February 15, 2025 (entire allocation period - EOP)
+- April 1, 2025 (CY2025 - Q1)
+- July 1, 2025 (CY2025 - Q2)
+- October 1, 2025 (CY2025 - Q3)
+- January 1, 2026 (CY2025 - EOY) or February 15, 2026 (entire allocation period - EOP)
 
 ### Due dates for the 2023-2024 ALCC quarterly and the EOP reports:
 
-- October 1, 2023 (CY2023 - Q3)
-- January 1, 2024 (CY2024 - Q4)
-- April 1, 2024 (CY2024 - Q1)
-- August 15, 2024 (CY2024 - EOP)
+- October 1, 2024 (CY2024 - Q3)
+- January 1, 2025 (CY2025 - Q4)
+- April 1, 2024 (CY2025 - Q1)
+- August 15, 2025 (CY2025 - EOP)
 
 ## Penalties
 
