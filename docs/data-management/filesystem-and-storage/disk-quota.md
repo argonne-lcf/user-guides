@@ -32,7 +32,7 @@ myprojectquotas
 
 ```
 Lustre : Current Project Quota information for projects you're a member of:
- 
+
 Name                       Type        Filesystem          Used             Quota           Grace
 ==============================================================================================================
 projectX                  Project      eagle                1.87T             1000T            -
@@ -42,8 +42,14 @@ projectX                  Project      eagle                1.87T             10
 
 To request a new project with an allocation on Eagle (with or without a compute allocation), please fill out the [Director's Discretionary allocation form](https://my.alcf.anl.gov/accounts/#/allocationRequests). Note that all new compute projects will have the default file system.
 
+## Extending a Quota
+
+If you need to extend an expiring quota for your project directory, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the project name, filesystem, requested extension length, and reason for the extension.
+
 ## Quota Increases
 
+<!---
 If you need a quota increase for Director's Discretionary allocations, please fill out the [Director's Discretionary allocation form](https://my.alcf.anl.gov/accounts/#/allocationRequests).
+--->
 
-If you need a quota increase for your INCITE/ALCC/ESP project directory, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the machine, project name, new quota amount, and reason for the increase.
+If you need a quota increase for your project directory, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the project name, filesystem, new quota amount, and reason for the increase.
