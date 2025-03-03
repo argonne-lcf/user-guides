@@ -1,8 +1,9 @@
-repo_name: 'argonne-lcf/user-guides'
 site_name: ALCF User Guides
+repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 edit_uri: 'edit/main/docs/'
+
 
 theme:
   name: 'material'
@@ -10,10 +11,10 @@ theme:
   language: 'en'
   palette:
     # Palette toggle for automatic mode
-    # - media: "(prefers-color-scheme)"
-    #   toggle:
-    #     icon: material/brightness-auto
-    #     name: Switch to light mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
 
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
