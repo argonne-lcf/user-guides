@@ -1,7 +1,7 @@
 # Compiling and Linking on Sophia
 
 ## Overview
-Sophia has AMD processors on the login nodes (`sophia-login-01,02`) and AMD processors and NVIDIA A100 GPUs on the compute nodes (see [Machine Overview](../hardware-overview/machine-overview.md) page). The login nodes can be used to create containers and launch jobs.
+Sophia has AMD processors on the login nodes (`sophia-login-01,02`) and AMD processors and NVIDIA A100 GPUs on the compute nodes (see [Machine Overview](../machine-overview.md) page). The login nodes can be used to create containers and launch jobs.
 
 !!! warning inline end "Must compile on a compute node" 
     

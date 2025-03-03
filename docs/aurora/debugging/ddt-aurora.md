@@ -26,7 +26,7 @@ Create a configuration named "aurora," and set it up like this example, replacin
 
 The path in the **Remote Installation Directory** field changes when new versions of DDT are installed on Aurora. To find the correct path, use the `which` command. After you've loaded the `forge` module, this will show you the path to use (remove the `/bin/ddt` portion when entering it into the DDT client **Remote Installation Directory** field):
 
-```bash
+```console
 aurora-uan-0011> which ddt
 /opt/aurora/24.180.3/support/tools/forge/24.1.1/bin/ddt
 aurora-uan-0011>
@@ -79,17 +79,18 @@ if [ ${MY_LOCAL_RANK} -eq 0 ]; then
 fi
 ```
 
-From the interactive prompt on your lead Aurora compute node, issue
+From the interactive prompt on your lead Aurora compute node, issue the following commands:
 
-```bash
+```bash linenums="1"
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
+ZET_ENABLE_PROGRAM_DEBUGGING=1
 ```
 
 To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to Aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 16 nodes, with 12 MPI ranks per node:
 
 ```bash
-ddt --nodes=16 --connect --mpi=generic --mpiargs="-l --ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
+ddt --np=192 --connect --mpi=generic --mpiargs="-l --ppn 12 --cpu-bind verbose,list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203 -envall" ./a.out
 ```
 
 On the client, you should see a connection pop-up like this:
