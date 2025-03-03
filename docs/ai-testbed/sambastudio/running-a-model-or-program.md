@@ -54,12 +54,20 @@ For details:
 snapi endpoint create --help
 ```
 
+When not using an endpoint for an extended period, please stop it using the Stop button from the pulldown at the upper right, or with snapi as shown below, replacing project name and endpoint name.  The endpoint can be restarted quickly (e.g. a minute or two) when needed.
+```
+snapi endpoint stop --help --project=<project name> --endpoint=<endpoint name>
+```
+TODO The above isn't working???
+
 #### GUI
 
 Lots of screencaps.
 LLM example using a chat bot endpoint, e.g. LLama
 
 #### CLI
+
+Note: if using Windows, follow the instructions at [SambaStudio setup guide: Windows](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html#_user_guide_windows)
 
 Install the SambaStudio CLI into a python virtual environment.
 See [SambaStudio CLI setup guide](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html) for more details.
@@ -182,6 +190,8 @@ SambaNova's documentation for the Pyton SDK is at
 
 Package installs. (Not spotting docs for this?)
 Sample (crib from SN documentation, with link)
+
+
 
 
 

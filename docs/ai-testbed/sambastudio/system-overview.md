@@ -1,6 +1,7 @@
 # System Overview
 
 The SambaNova Suite at ALCF comprises:
+
 - A cluster of four SambaNova SN40L nodes. A SN40L node comprises eight SN40L RDU sockets and a host. RDUs use a 3-tier memory system, with 8GB SRAM, 1TB HBM, and 24TB DDR.
 - SambaStudio, a rich, GUI-based platform that provides the functionality to train, deploy, and manage models.
 
