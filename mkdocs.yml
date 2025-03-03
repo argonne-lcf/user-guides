@@ -33,7 +33,7 @@ theme:
       accent: custom
       toggle:
         icon: material/weather-night
-        name: Switch to light mode
+        name: Switch to system preference
 
   font:
     text: proxima-nova   # removed in #545. remove again?
