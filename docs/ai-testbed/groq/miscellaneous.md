@@ -6,7 +6,7 @@
 
 Llama-2 7B requires all 9 nodes in a groqrack
 
-First, verify that there are no other PBS jobs using the rack. This can be done from a either groqrack node or a login node.
+First, verify that there are no other PBS jobs using the rack. This can be done from either a groqrack node or a login node.
 ```console
 qstat -wa
 ```
@@ -14,6 +14,17 @@ Also check to see if anyone is connected to any of the nodes: This can be done f
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
+
+Also verify that all nodes have eight unlocked cards:
+```
+for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl status | grep -a "Device Locked" | sed "s/ Device Locked/$host Device locked/" | uniq -c ; done
+```
+
+Also, check tsp status for all cards on all nodes; verify that all cards are "Up". 
+```
+for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl health-check | grep -v "Health-check" | jq .[].Summary.tsp_status | uniq -c; done
+```
+
 
 Connect to groq-r01-gn-01.ai.alcf.anl.gov with ssh:
 ```console
@@ -26,7 +37,7 @@ mkdir ~/groq_llama2-7b-kludge/
 cp /software/groq/examples/llama2-7b-kludge/*.sh ~/groq_llama2-7b-kludge/
 cp /software/groq/examples/llama2-7b-kludge/*.pbs ~/groq_llama2-7b-kludge/
 cd ~/groq_llama2-7b-kludge/
-
+```
 
 Reserve the cluster. This will launch a placeholder pbs job that reserves the entire cluster.  It just runs `sleep 24h` on a node.   The example reserves the cluster via PBS for 2hrs.  Adjust  values as needed.
 ```console
@@ -37,7 +48,8 @@ Install some packages into `~/.local/lib/python3.10/site-packages`.
 Warning; the packages installed (including dependencies) will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory when done running Llama2-7b. 
 
 ```console
-# only needed if conda is already deactivated
+# only needed if conda is already deactivated; twice, in case there are two levels
+conda deactivate
 conda deactivate
 pip install tqdm
 pip install torch
