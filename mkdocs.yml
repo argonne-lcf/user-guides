@@ -4,6 +4,7 @@ repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 edit_uri: 'edit/main/docs/'
 
+
 theme:
   name: 'material'
   custom_dir: overrides
@@ -20,9 +21,9 @@ theme:
       scheme: alcf
       primary: custom
       accent: custom
-
       toggle:
-        icon: material/brightness-7
+        # icon: material/brightness-7
+        icon: material/weather-sunny
         name: Switch to dark mode
 
     # Palette toggle for dark mode
@@ -31,8 +32,9 @@ theme:
       primary: custom
       accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-night
         name: Switch to system preference
+
   font:
     text: proxima-nova   # removed in #545. remove again?
 
