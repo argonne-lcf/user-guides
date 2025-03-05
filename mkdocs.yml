@@ -422,10 +422,11 @@ nav:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
-  - Contacting Support:
-      - Technical Support: contacting-support/technical-support.md
-      - Software Requests: contacting-support/software-requests.md
-      - User Guide Questions / Issues: issues.md
+  - User Support:
+      - How to Submit a Ticket : contacting-support/technical-support.md
+      - Requesting Software : contacting-support/software-requests.md
+      - Using ALCF Users Slack Workspace : contacting-support/alcf-users-slack.md
+      - Contributing to User Guides : issues.md
 
 not_in_nav: |
   not_in_nav/
