@@ -4,9 +4,13 @@ The ALCF Users Slack workspace is a platform intended for current, active ALCF u
 
 This workspace is a platform for the user community to interact and collaborate. ALCF staff may have a limited presence or not be present at all times to assist users with their queries. **The official mechanism for requesting support is to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) for technical issues and [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) for account and access-related issues.**
 
+*ALCF users working on scientific or research campaigns across various allocation types are eligible for access to the ALCF Users Slack workspace. Users participating in training events, instructional courses, or lighthouse projects are not eligible for User slack access.
+
+
 ## Getting access
 
 ALCF Users Slack access is automatically provided to members of INCITE, ALCC, and ESP projects. DD projects* can request Slack access for their teams by submitting a support ticket to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
+
 *ALCF users working on scientific or research campaigns across various allocation types are eligible for access to the ALCF Users Slack workspace. Users participating in training events, instructional courses, or lighthouse projects are not eligible for User slack access.
 
 ## Logging into Slack
@@ -19,4 +23,4 @@ Once you are logged into the Slack workspace, your default channels will show up
 
 The ALCF User Slack workspace should not be used to discuss, store, or operate any NDA/RSNDA, Official Use Only (OUO), or Business Sensitive information.
 
-Argonne's **[code of conduct]**(https://www.alcf.anl.gov/about/code-of-conduct) governs the use of all ALCF resources. By joining and using the workspace, you agree to these terms. Users violating Argonne's code of conduct may be removed from the workspace.
+Argonne's **[code of conduct](https://www.alcf.anl.gov/about/code-of-conduct)** governs the use of all ALCF resources. By joining and using the workspace, you agree to these terms. Users violating Argonne's code of conduct may be removed from the workspace.
