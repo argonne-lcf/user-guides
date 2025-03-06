@@ -108,6 +108,14 @@ Submit jobs using:
 ```bash
 qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 ```
+<!-- --8<-- [start:commoncontainerdoc] -->
+
+## Available Containers
+
+- Examples for running MPICH containers can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/mpi/Polaris).
+- Examples for running databases can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/databases).
+- Examples for using SHPC (containers as modules) can be found [here](https://github.com/argonne-lcf/container-registry/tree/main/containers/shpc).
+
 
 ## Troubleshooting Common Issues
 
@@ -117,4 +125,6 @@ qsub -v CONTAINER=mpich-4_latest.sif job_submission.sh
 - **Disabled Network Virtualization:** Network virtualization is disabled due to security constraints ([details](https://apptainer.org/docs/user/main/networking.html)).
 - **Starter-suid Error:** Always use the `--fakeroot` flag on Polaris compute nodes.
 
-For further assistance, contact ALCF support: `support@alcf.anl.gov
+For further assistance, contact ALCF support: `support@alcf.anl.gov`.
+
+<!-- --8<-- [end:commoncontainerdoc] -->
