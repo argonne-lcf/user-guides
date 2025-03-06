@@ -408,7 +408,7 @@
   grid-column: span 6;
   grid-row: 3;
   position: relative;
-  height: 16px;
+  height: auto;
 }
 
 .header--primary .header__nav-primary ul {
