@@ -1,6 +1,6 @@
 # HIP on Aurora
 
-Applications which use the HIP programming model are supported on Aurora via [chipStar](https://github.com/CHIP-SPV/chipStar). 
+ALCF experimentally supports applications which use the HIP programming model via [chipStar](https://github.com/CHIP-SPV/chipStar). 
 
 ## Example
 
