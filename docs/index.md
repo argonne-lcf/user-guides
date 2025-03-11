@@ -8,7 +8,7 @@ Our user guides contain information for:
 - [Aurora](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
 - [Polaris](polaris/getting-started.md): Information on how to get started our newest supercomputer.
 - [AI Testbed](ai-testbed/getting-started.md): Information on how to use our AI Accelerators.
-- [Services](services/getting-started.md): Information on how to use various services provided across clusters.
+- [Services](services/index.md): Information on how to use various services provided across clusters.
 - [Facility Policies](policies/facility-policies.md): Information on our policies and procedures.
 
 ## How to Get Access

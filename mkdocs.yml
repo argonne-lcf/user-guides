@@ -398,9 +398,8 @@ nav:
           - Visualization on Sophia: sophia/visualization/visualization.md
           - ParaView (Launch from Client): sophia/visualization/paraview.md
 
-  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
-    # it is a dropdown. Only linked to in base docs/index.md
-    - Getting Started: services/getting-started.md
+  - Services:
+    - services/index.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
