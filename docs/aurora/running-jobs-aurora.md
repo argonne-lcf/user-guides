@@ -74,7 +74,7 @@ More information on the PBS options above, as well as other PBS options, can be 
 
 As Aurora is in early production stage, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
 
-If you determine a node is bad, please send an email to [support@alcf.anl.gov](support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
+If you determine a node is bad, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
 
 We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
