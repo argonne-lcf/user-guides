@@ -4,7 +4,6 @@ repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 edit_uri: 'edit/main/docs/'
 
-
 theme:
   name: 'material'
   custom_dir: overrides
@@ -45,12 +44,15 @@ theme:
     - content.code.annotate
     - content.tooltips
     #- content.code.select # insiders-4.32.0
+    #- navigation.expand
     - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
+    #- navigation.instant.prefetch   # insiders-4.36
+    #- material.extensions.preview ... # insiders-4.52
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
-    # - navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
+    #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
     - navigation.sections
@@ -424,6 +426,12 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
+
+
+  # - Contacting Support / Help:
+  #     - Technical Support: contacting-support/technical-support.md
+  #     - Software Requests: contacting-support/software-requests.md
+  #     - User Guide Questions / Issues: issues.md
 
   - User Support:
       - Submit a Ticket: contacting-support/technical-support.md
