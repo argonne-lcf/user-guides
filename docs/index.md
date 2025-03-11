@@ -7,9 +7,9 @@ Our user guides contain information for:
 - [Data Management](data-management/filesystem-and-storage/data-storage.md): Information on our file systems that are mounted globally across all of our production systems.
 - [Aurora](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
 - [Polaris](polaris/getting-started.md): Information on how to get started our newest supercomputer.
-- [AI Testbed](ai-testbed/getting-started.md): Information on how to use our AI Accelerators.
+- [AI Testbed](ai-testbed/index.md): Information on how to use our AI Accelerators.
 - [Services](services/index.md): Information on how to use various services provided across clusters.
-- [Facility Policies](policies/facility-policies.md): Information on our policies and procedures.
+- [Facility Policies](policies/index.md): Information on our policies and procedures.
 
 ## How to Get Access
 Researchers interested in using the ALCF systems (including Polaris and the AI Testbed’s Cerebras CS-2 and SambaNova DataScale platforms) can now submit project proposals via the [ALCF’s Director’s Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Calls for proposals for additional allocation programs will be open at a later date.

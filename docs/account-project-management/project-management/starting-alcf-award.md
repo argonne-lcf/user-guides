@@ -96,9 +96,13 @@ Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Proje
 
 If you received an INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation.
 
-The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For more information, see the Quarterly Report webpage.
+The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For more information, see the [Quarterly Report webpage](./project-reports.md).
 
 ## Policies
+
+### Facility Policies
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../../policies/index.md).
+
 ### Pullback Policy
 Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
@@ -108,11 +112,8 @@ Please see this page for overburn/overuse eligibility for INCITE projects that h
 ### Acknowledgment In Publications
 Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy.md) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
-### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../../policies/facility-policies.md).
-
 ## Useful Allocation and Quota Commands
-We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
+We have an allocation management tool called sbank, and below are a few helpful sbank commands:
 
 - `myprojectquotas`: Log into Polaris and type this command to view the project directory quotas for all your projects.
 - `myquota`: Log into Polaris and type this command to view your home directory quota.

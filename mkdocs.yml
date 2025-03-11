@@ -254,7 +254,7 @@ nav:
           - SmartSim: aurora/workflows/smartsim.md
 
     - AI Testbed:
-      - Getting Started: ai-testbed/getting-started.md
+      - ai-testbed/index.md
       - Cerebras:
         - System Overview: ai-testbed/cerebras/system-overview.md
         - Getting Started: ai-testbed/cerebras/getting-started.md
@@ -406,7 +406,7 @@ nav:
       - GitLab CI: services/gitlab-ci.md
 
   - Facility Policies:
-    - Overview of Policies: policies/facility-policies.md
+    - policies/index.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
       - Accounts Policy: policies/accounts/accounts-policy.md
