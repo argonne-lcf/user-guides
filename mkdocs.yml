@@ -4,7 +4,6 @@ repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
 edit_uri: 'edit/main/docs/'
 
-
 theme:
   name: 'material'
   custom_dir: overrides
@@ -167,7 +166,7 @@ nav:
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
 
-  - Running Jobs with PBS at the ALCF:
+  - Running Jobs with PBS:
       - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
       - Machine Reservations: running-jobs/machine-reservations.md
