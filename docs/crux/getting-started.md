@@ -10,7 +10,7 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged i
 
 ## Hardware Overview
 
-An overview of the Crux system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
+An overview of the Crux system, including details on the compute node architecture, is available on the [Machine Overview](./index.md) page.
 
 ## Compiling Applications
 

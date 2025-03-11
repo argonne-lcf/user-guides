@@ -174,7 +174,7 @@ nav:
 
   - Machines:
     - Aurora:
-        - Machine Overview: aurora/machine-overview.md
+        - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
         - Early User Notes and Known Issues: aurora/known-issues.md
@@ -301,7 +301,7 @@ nav:
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
-      - Machine Overview: crux/machine-overview.md
+      - crux/index.md
       - Getting Started: crux/getting-started.md
       - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
@@ -313,7 +313,7 @@ nav:
         #- ParaView (Launch from Client): crux/visualization/paraview.md
 
     - Polaris:
-      - Machine Overview: polaris/machine-overview.md
+      - Machine Overview: polaris/index.md
       - Getting Started: polaris/getting-started.md
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
@@ -386,7 +386,7 @@ nav:
           - SmartSim: polaris/workflows/smartsim.md
 
     - Sophia:
-      - Machine Overview: sophia/machine-overview.md
+      - sophia/index.md
       - Getting Started: sophia/getting-started.md
       - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
