@@ -68,7 +68,7 @@ Recommended PBSPro options follow.
 #PBS -q <requested_Queue>
 ```
 
-More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/job-and-queue-scheduling.md).
+More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
 
 ## Working Around Node Failures
 

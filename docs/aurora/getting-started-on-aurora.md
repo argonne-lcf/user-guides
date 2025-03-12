@@ -24,7 +24,7 @@ module load autoconf cmake
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/index.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
 
 ## Early User Notes and Known Issues
 

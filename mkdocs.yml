@@ -167,7 +167,7 @@ nav:
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
 
   - Running Jobs with PBS:
-      - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
+      - running-jobs/index.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
       - Machine Reservations: running-jobs/machine-reservations.md
       - Cobalt to PBS- Comparing Options: running-jobs/pbs-qsub-options-table.md

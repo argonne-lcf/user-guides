@@ -18,7 +18,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
     ```
 
-    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ```bash linenums="1" title="Install vLLM using pre-built wheels"
 module load frameworks
