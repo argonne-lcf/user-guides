@@ -1,13 +1,15 @@
 # ALCF User Guides
 The ALCF user-facing documentation source material is hosted on GitHub, in order to facilitate contributions and issue reporting from the community.
 
-Our user guides contain information for: 
+Our user guides contain information for:
 
-- [Account and Project Management](account-project-management/accounts-and-access/user-account-overview.md): Information and instructions on how to manage your ALCF account and awarded project.  
+- [Account and Project Management](account-project-management/accounts-and-access/user-account-overview.md): Information and instructions on how to manage your ALCF account and awarded project.
 - [Data Management](data-management/filesystem-and-storage/data-storage.md): Information on our file systems that are mounted globally across all of our production systems.
-- [Aurora](https://www.alcf.anl.gov/support-center/aurora-sunspot): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
-- [Polaris](polaris/getting-started.md): Information on how to get started our newest supercomputer.
-- [AI Testbed](ai-testbed/index.md): Information on how to use our AI Accelerators.
+- [Aurora](aurora/index.md): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
+- [AI Testbed](ai-testbed/index.md): Information on the advanced, non-GPU AI accelerators housed within the ALCF
+- [Crux](crux/index.md): A 256-node, dual-socket AMD CPU platform
+- [Polaris](polaris/index.md): Our 560-node HPE system with NVIDIA A100 GPUs
+- [Sophia](sophia/index.md): Our 24-node NVIDIA DGX A100 system
 - [Services](services/index.md): Information on how to use various services provided across clusters.
 - [Facility Policies](policies/index.md): Information on our policies and procedures.
 
