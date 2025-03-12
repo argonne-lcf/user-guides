@@ -409,11 +409,11 @@ nav:
     - policies/index.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
-      - Accounts Policy: policies/accounts/accounts-policy.md
+      - policies/accounts/index.md
       - Account Sponsorship & Retention Policy: policies/accounts/account-sponsorship-retention-policy.md
       - User Authentication Policy: policies/accounts/user-authentication-policy.md
-    - Queue and Scheduling Policies:
-      - Queue and Scheduling Policy: policies/queue-scheduling/queue-and-scheduling-policy.md
+    - Scheduling Policies:
+      - policies/queue-scheduling/index.md
       - Refund Policy: policies/queue-scheduling/refund-policy.md
       - Pullback Policy: policies/queue-scheduling/pullback-policy.md
     - Data and Software Policies:
