@@ -1193,3 +1193,18 @@ table {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Ensure main content has minimum height to prevent navigation scrollbar */
+.md-content {
+  min-height: calc(100vh - var(--md-header-height, 0px) - var(--md-footer-height, 0px));
+}
+
+.md-main__inner {
+  min-height: calc(100vh - var(--md-header-height, 0px) - var(--md-footer-height, 0px));
+}
+
+/* Set a variable for footer height that can be used in calculations */
+:root {
+  --md-footer-height: 160px;
+  --md-header-height: 72px;
+}
