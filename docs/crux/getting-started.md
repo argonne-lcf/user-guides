@@ -10,7 +10,7 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged i
 
 ## Hardware Overview
 
-An overview of the Crux system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
+An overview of the Crux system, including details on the compute node architecture, is available on the [Machine Overview](./index.md) page.
 
 ## Compiling Applications
 
@@ -32,7 +32,7 @@ module load cmake
 
 ## Submitting and Running Jobs
 
-Please read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts.
+Please read through the [Running Jobs with PBS at the ALCF](../running-jobs/index.md) page for information on using the PBS scheduler and preparing job submission scripts.
 
 For more information on Crux queues and job submission, visit: [Running Jobs on Crux](./queueing-and-running-jobs/running-jobs.md).
 

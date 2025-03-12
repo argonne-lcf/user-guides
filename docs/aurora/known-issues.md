@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-### Last Updated: 2025-01-21 14:00 CST
+_Last Updated: 2025-02-26_
 
 ## Early User Notes
 
