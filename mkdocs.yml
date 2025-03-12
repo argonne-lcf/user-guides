@@ -168,7 +168,7 @@ nav:
           - Moving data to Aurora:
             - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
             - Globus: aurora/data-management/moving_data_to_aurora/globus.md
-            - SCP: aurora/data-management/moving_data_to_aurora/scp.md
+            #- SCP: aurora/data-management/moving_data_to_aurora/scp.md
         - Applications and Libraries:
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
