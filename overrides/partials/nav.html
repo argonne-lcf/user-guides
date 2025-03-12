@@ -14,8 +14,10 @@
     <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-nav__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
-  <a href="{{ '/' | url }}" title="{{ config.site_name }}">
-    {{ config.site_name }}
+  <a href="{{ '/' | url }}" title="{{ config.site_name }}" class="md-nav__link">
+    <span class="md-ellipsis">
+      {{ config.site_name }}
+    </span>
   </a>
   </label>
   {% if config.repo_url %}

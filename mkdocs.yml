@@ -446,8 +446,8 @@ exclude_docs: |
 # (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
 # content to Sophia and remove the rest entirely)
 
-# Pages still built during "mkdocs serve" for local testing
-# May trigger harmless not_in_nav warnings that will disappear during "mkdocs build"
+# Pages still built during "mkdocs serve" for local testing; appears to suppress not_in_nav WARNINGs too
+# emits harmless INFO logs that will disappear during "mkdocs build"
 draft_docs: |
   drafts/
   # TODO: complete or remove Aurora placeholder pages
@@ -460,6 +460,8 @@ draft_docs: |
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
+# note, trailing inline comments under draft_docs, etc blocks break mkdocs parsing,
+# despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 
 watch:
   - overrides/
