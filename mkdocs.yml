@@ -444,3 +444,6 @@ not_in_nav: |
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
+
+watch:
+  - overrides/
