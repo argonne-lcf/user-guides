@@ -1162,36 +1162,38 @@ table {
   fill: currentColor;
 }
 
-/* Custom styles for the navigation title link */
-.md-nav__title a.md-nav__link {
-  color: var(--md-default-fg-color);
-  display: inline-block;
-  margin-top: 0;
-  transition: color 125ms;
-}
-
-.md-nav__title a.md-nav__link:hover {
-  color: var(--md-accent-fg-color);
-  text-decoration: none;
-}
-
-/* Style for active state (current page) */
-.md-nav__title a.md-nav__link.md-nav__link--active {
-  color: var(--md-typeset-a-color);
-}
-
-/* Ensure hover effect works even when link is active */
-.md-nav__title a.md-nav__link.md-nav__link--active:hover {
-  color: var(--md-accent-fg-color);
-}
-
-.md-nav__title a.md-nav__link .md-ellipsis {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* Custom styles for the navigation title link - ONLY FOR DESKTOP */
+@media screen and (min-width: 76.1875em) {
+  .md-nav__title a.md-nav__link {
+    color: var(--md-default-fg-color);
+    display: inline-block;
+    margin-top: 0;
+    transition: color 125ms;
+  }
+  
+  .md-nav__title a.md-nav__link:hover {
+    color: var(--md-accent-fg-color);
+    text-decoration: none;
+  }
+  
+  /* Style for active state (current page) */
+  .md-nav__title a.md-nav__link.md-nav__link--active {
+    color: var(--md-typeset-a-color);
+  }
+  
+  /* Ensure hover effect works even when link is active */
+  .md-nav__title a.md-nav__link.md-nav__link--active:hover {
+    color: var(--md-accent-fg-color);
+  }
+  
+  .md-nav__title a.md-nav__link .md-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 /* Ensure main content has minimum height to prevent navigation scrollbar */
