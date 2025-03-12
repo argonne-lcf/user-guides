@@ -427,13 +427,29 @@ nav:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
+# Pages that are not in navigation but still built
+# These always end up in generated site, both mkdocs "build" and "serve"
 not_in_nav: |
   not_in_nav/
+  index.md
+  #account-project-management/allocation-management/not_in_nav/
+
+# Pages that will never end up in a generated site (implies not_in_nav)
+exclude_docs: |
   unused/
   old/
   todo.md
   TODO.md
   notes.md
+  sophia/not_in_nav/
+
+# (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
+# content to Sophia and remove the rest entirely)
+
+# Pages still built during "mkdocs serve" for local testing
+# May trigger harmless not_in_nav warnings that will disappear during "mkdocs build"
+draft_docs: |
+  drafts/
   # TODO: complete or remove Aurora placeholder pages
   aurora/compiling-and-linking/llvm-compilers-aurora.md
   aurora/compiling-and-linking/gnu-compilers-aurora.md
