@@ -69,26 +69,29 @@ If you are an ALCF user and are familiar with Cobalt, you will find the PBS comm
     * Occasionally, the job will still show up in `qstat` after you try and `qdel` it. When this happens you can try `qdel -W force <jobid>`. If it still won't go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you. DO NOT just default to using `-W force`. The force does not do all of the clean up and can cause problems of its own.
     * PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
-**Note: The page numbers in the PBS guides are unique. If you search for the specified page number it will take you directly to the relevant page.**
+!!! note
+
+	The page numbers in the PBS guides are unique. If you search for the specified page number it will take you directly to the relevant page.
 
 ## <a name="qsub"></a>`qsub`: submit a job to run
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf), Chapter 2, page UG-11 and [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Chapter 2, section 2.57, page RG-216
 
 At the ALCF, your qsub will likely use the following parameters:
-
-`qsub -A <project> -k doe -l select=<#>:system=<name>, walltime=HH:MM:SS, filesystems=fs1:fs2, place=scatter <your job script>`
+```bash
+qsub -A <project> -k doe -l select=<#>:system=<name>, walltime=HH:MM:SS, filesystems=fs1:fs2, place=scatter <your job script>
+```
 
 Where:
 
 * project is the project name associated with your allocation. What you check the balance of with the `sbank` command. This is a mandatory option at the ALCF. If you don't include it you will get `qsub: Account_Name is required to be set.`
-* -k doe is telling PBS to stream your output rather than buffer it on the compute nodes and then scp it at the end of the job. Note we will automatically add this if you don't specify it. We enforce this option, so if you try and specify any other output handling you will get an error.
-*  \# of chunks (typically nodes). Each of our systems has a PBS "*resource*" called `system` defined and set to the system name (polaris, sunspot, etc)
+* `-k doe` is telling PBS to stream your output rather than buffer it on the compute nodes and then `scp` it at the end of the job. Note we will automatically add this if you don't specify it. We enforce this option, so if you try and specify any other output handling you will get an error.
+*  \# of chunks (typically nodes). Each of our systems has a PBS "*resource*" called `system` defined and set to the system name (`polaris`, `aurora`, etc)
 *  `walltime=HH:MM:SS` specifying a wall time is mandatory at the ALCF. Valid wall times depend on the queue you are using. There is a table with the queues for each machine at the end of this section and in the machine specific documentation.
 *  `filesystems=fs1:fs2:...` Specifying which filesystems your application uses is mandatory at ALCF. The reason for this is if a filesystem goes down, we have a way of making PBS aware of that and it won't run jobs that need that filesystem. If you don't specify filesystems you will receive the following error: `qsub: Resource: filesystems is required to be set.`
 *  `place=scatter` is telling PBS you want each of your chunks on a separate vnode. By default, PBS will pack your chunks to get maximum utilization. If you requested `ncpus=1` and `chunks=64` **without** `place=scatter` on a system with `ncpus=64`, all your chunks would end up on one node.
 *  Your job script:  See [Example Job Scripts](./example-job-scripts.md) for more information about how to build your job script. For options that won't change, you do have the option of taking things off the command line and putting them in your job script. For instance the above command line could be simplified to `qsub -l select=<#> <your job script>` if you added the following to the top (the PBS directives have to be before any executable line) of your job script:
 
-```bash
+```bash linenums="1"
 #PBS -A <project>
 #PBS -k doe
 #PBS -l walltime=HH:MM:SS

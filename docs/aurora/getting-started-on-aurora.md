@@ -10,11 +10,11 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
 ## Hardware Overview
 
-An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
+An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./index.md) page.
 
 ## Compiling Applications
 
-Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/index.md) page and corresponding pages depending on the target compiler and programming model.
 
 Autotools and CMake are available in the default [Aurora Programming Environment (PE)](./aurora-pe.md) and can be loaded via Lmod modules:
 
@@ -24,7 +24,7 @@ module load autoconf cmake
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/index.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
 
 ## Early User Notes and Known Issues
 
