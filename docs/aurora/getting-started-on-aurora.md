@@ -14,7 +14,7 @@ An overview of the Aurora system, including details on the compute node architec
 
 ## Compiling Applications
 
-Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/index.md) page and corresponding pages depending on the target compiler and programming model.
 
 Autotools and CMake are available in the default [Aurora Programming Environment (PE)](./aurora-pe.md) and can be loaded via Lmod modules:
 

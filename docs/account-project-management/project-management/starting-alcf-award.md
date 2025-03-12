@@ -3,14 +3,13 @@
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Get Started with ALCF’s Systems
-To get started using our resources, please visit: 
-[Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
+To get started using our resources, please visit [Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
 - [Running on Polaris](../../polaris/running-jobs.md) 
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
-- [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/acdc-overview.md)
+- [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/index.md)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
