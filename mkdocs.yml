@@ -44,12 +44,15 @@ theme:
     - content.code.annotate
     - content.tooltips
     #- content.code.select # insiders-4.32.0
+    #- navigation.expand
     - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
+    #- navigation.instant.prefetch   # insiders-4.36
+    #- material.extensions.preview ... # insiders-4.52
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
-    # - navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
+    #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
     - navigation.sections
@@ -74,6 +77,7 @@ markdown_extensions:
   - tables
   - attr_list
   - md_in_html
+  - abbr
   - pymdownx.critic
   - pymdownx.inlinehilite
   - pymdownx.keys
@@ -86,6 +90,8 @@ markdown_extensions:
       dedent_subsections: True  # experimental; new in 9.10 (2023-03-05)
       check_paths: True
       url_download: True
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.inlinehilite
@@ -427,6 +433,8 @@ nav:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
+  - Acronyms: acronyms.md
+
 # Pages that are not in navigation but still built
 # These always end up in generated site, both mkdocs "build" and "serve"
 not_in_nav: |
@@ -464,4 +472,5 @@ draft_docs: |
 # despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 
 watch:
+  - includes/
   - overrides/
