@@ -14,7 +14,7 @@
     <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-nav__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
-  <a href="{{ '/' | url }}" title="{{ config.site_name }}" class="md-nav__link">
+  <a href="{{ '/' | url }}" title="{{ config.site_name }}" class="md-nav__link {% if page.url == '/' or page.url == '/index.html' or page.url == '' %}md-nav__link--active{% endif %}">
     <span class="md-ellipsis">
       {{ config.site_name }}
     </span>
