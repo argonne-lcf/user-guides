@@ -6,7 +6,7 @@
 *[ASIC]: Application-Specific Integrated Circuit
 <!-- *[CLI]: Command Line Interface -->
 <!-- *[CPU]: Central Processing Unit -->
-<!-- *[CSL]: Cerebras System Language -->
+*[CSL]: Cerebras System Language
 <!-- *[CUDA]: Compute Unified Device Architecture -->
 *[DFT]: Density Functional Theory
 *[DGX]: Data Center Graphics Accelerator (NVIDIA)
@@ -98,3 +98,4 @@
 *[LAMMPS]: Large-scale Atomic/Molecular Massively Parallel Simulator
 *[LDAP]: Lightweight Directory Access Protocol
 *[LLM]: Large Language Model 
+*[WSE]: Wafer-Scale Engine

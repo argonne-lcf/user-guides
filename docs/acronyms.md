@@ -1,5 +1,9 @@
 # Acronyms
 
+<!-- TODO: wait for an ability to disable the abbr extension on this page;
+https://github.com/squidfunk/mkdocs-material/discussions/5139, or new Instant Previews advanced Glossary 
+plugin replacement: https://github.com/squidfunk/mkdocs-material/issues/6704-->
+
 | Acronym | Term |
 | ------- | ---- |
 | ALCC    | [ASCR Leadership Computing Challenge](https://science.osti.gov/ascr/Facilities/Accessing-ASCR-Facilities/ALCC) |
