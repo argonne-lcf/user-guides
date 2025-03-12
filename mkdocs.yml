@@ -170,7 +170,7 @@ nav:
       - running-jobs/index.md
       - Example Job Scripts: running-jobs/example-job-scripts.md
       - Machine Reservations: running-jobs/machine-reservations.md
-      - Cobalt to PBS- Comparing Options: running-jobs/pbs-qsub-options-table.md
+      - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
 
   - Machines:
     - Aurora:
@@ -180,7 +180,7 @@ nav:
         - Early User Notes and Known Issues: aurora/known-issues.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         - Compiling and Linking:
-          - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
+          - aurora/compiling-and-linking/index.md
           - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
           - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
         # - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
@@ -233,7 +233,7 @@ nav:
           - SYCL: aurora/programming-models/sycl-aurora.md
           - HIP: aurora/programming-models/hip-aurora.md
         - Debugging Tools:
-          - Overview: aurora/debugging/debugging-overview.md
+          - aurora/debugging/index.md
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
           - DDT: aurora/debugging/ddt-aurora.md
           - gdb4hpc: aurora/debugging/gdb4hpc.md
@@ -309,11 +309,11 @@ nav:
       - Data Science:
         - Python: crux/data-science/python.md
       #- Visualization:
-        #- Visualization on Crux: crux/visualization/visualization.md
+        #- crux/visualization/index.md
         #- ParaView (Launch from Client): crux/visualization/paraview.md
 
     - Polaris:
-      - Machine Overview: polaris/index.md
+      - polaris/index.md
       - Getting Started: polaris/getting-started.md
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
@@ -370,7 +370,7 @@ nav:
       - Performance Tools:
           - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
       - Visualization:
-          - Visualization on Polaris: polaris/visualization/visualization.md
+          - polaris/visualization/index.md
           - ParaView (Launch from Client): polaris/visualization/paraview.md
           - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
           - VisIt: polaris/visualization/visit.md
@@ -395,7 +395,7 @@ nav:
           - Python: sophia/data-science/python.md
           - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
       - Visualization:
-          - Visualization on Sophia: sophia/visualization/visualization.md
+          - sophia/visualization/index.md
           - ParaView (Launch from Client): sophia/visualization/paraview.md
 
   - Services:
