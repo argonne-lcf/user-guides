@@ -16,6 +16,7 @@
 | DGX     | Data Center Graphics Accelerator (NVIDIA) |
 | DOE     | Department of Energy |
 | DPC     | Data Parallel C++ |
+| DRAM    | Dynamic Random-Access Memory |
 | DTN     | Data Transfer Node |
 | FFT     | Fast Fourier Transform |
 | FIFO    | First In, First Out |
@@ -35,13 +36,13 @@
 | I/O     | Input/Output |
 | INCITE  | [Innovative and Novel Computational Impact on Theory and Experiment](https://doeleadershipcomputing.org/) |
 | IPEX    | Intel Extension for PyTorch |
-| ITEX    | Intel Extension for TensorFlow |
 | IPU     | Intelligence Processing Unit |
+| ITEX    | Intel Extension for TensorFlow |
 | JIT     | Just-In-Time (compilation) |
-| LDAP    | Lightweight Directory Access Protocol |
-| LLM     | Large Language Model |
 | LAPACK  | Linear Algebra Package |
 | LAMMPS  | [Large-scale Atomic/Molecular Massively Parallel Simulator](https://www.lammps.org/) |
+| LDAP    | Lightweight Directory Access Protocol |
+| LLM     | Large Language Model |
 | MFA     | Multi-Factor Authentication |
 | MIG     | Multi-Instance GPU (NVIDIA) |
 | MKL     | Math Kernel Library |
@@ -50,6 +51,7 @@
 | MTBF    | Mean Time Between Failures |
 | NAMD    | [Nanoscale Molecular Dynamics](https://www.ks.uiuc.edu/Research/namd/) |
 | NCCL    | NVIDIA Collective Communications Library |
+| NFS     | Network File System |
 | NIC     | Network Interface Card |
 | NLP     | Natural Language Processing |
 | NUMA    | Non-Uniform Memory Access |
@@ -63,6 +65,9 @@
 | PCI     | Peripheral Component Interconnect |
 | PHB     | PCIe Host Bridge |
 | PMIx    | Process Management Interface for Exascale |
+| QMC     | Quantum Monte Carlo |
+| QMCPACK | [Quantum Monte Carlo Package](https://qmcpack.org/) |
+| RAID    | Redundant Array of Independent Disks |
 | RAM     | Random Access Memory |
 | RBC     | Red Blood Cells |
 | RDMA    | Remote Direct Memory Access |
@@ -80,8 +85,8 @@
 | SSO     | Single Sign-On |
 | SYCL    | Single-source heterogeneous programming using C++ |
 | TCP     | Transmission Control Protocol |
-| TOPS    | Tera Operations Per Second |
 | TDP     | Thermal Design Power |
+| TOPS    | Tera Operations Per Second |
 | UAN     | User Access Node |
 | UCX     | Unified Communication X |
 | UPI     | Ultra Path Interconnect |
@@ -95,8 +100,3 @@
 | XALT    | [System tracking of users codes on clusters](https://github.com/xalt/xalt) |
 | XLA     | Accelerated Linear Algebra |
 | XPU     | Any Processing Unit (CPU, GPU, FPGA, ASIC) in Intel's [heterogeneous computing strategy](https://www.intel.com/content/www/us/en/architecture-and-technology/xpu.html) |
-| QMC     | Quantum Monte Carlo |
-| QMCPACK | [Quantum Monte Carlo Package](https://qmcpack.org/) |
-| RAID    | Redundant Array of Independent Disks |
-| DRAM    | Dynamic Random-Access Memory |
-| NFS     | Network File System | 
