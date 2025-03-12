@@ -1161,3 +1161,25 @@ table {
   height: 100%;
   fill: currentColor;
 }
+
+/* Custom styles for the navigation title link */
+.md-nav__title a.md-nav__link {
+  color: var(--md-default-fg-color);
+  display: inline-block;
+  margin-top: 0;
+  transition: color 125ms;
+}
+
+.md-nav__title a.md-nav__link:hover {
+  color: var(--md-accent-fg-color);
+  text-decoration: none;
+}
+
+.md-nav__title a.md-nav__link .md-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
