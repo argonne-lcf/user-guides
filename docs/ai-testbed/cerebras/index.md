@@ -16,7 +16,7 @@ A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users conne
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
 The trees `/home`, `/projects`, and `/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 
-![CS-2 cluster figure](topology-of-weight-streaming-on-wsc.png)
+![CS-2 cluster figure](files/topology-of-weight-streaming-on-wsc.png)
 /// caption
 Figure: topology of CS-2 cluster ([source](https://training-docs.cerebras.ai/rel-2.4.0/concepts/cerebras-wafer-scale-cluster))
 ///
