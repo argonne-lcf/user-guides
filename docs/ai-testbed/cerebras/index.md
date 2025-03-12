@@ -16,10 +16,9 @@ A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users conne
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
 The trees `/home`, `/projects`, and `/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 
-![CS-2 cluster figure](https://mintlify.s3.us-west-1.amazonaws.com/cerebras-training/images/concepts/topology-of-weight-streaming-on-wsc.png){ width="700" }
+![CS-2 cluster figure](topology-of-weight-streaming-on-wsc.png)
 /// caption
-CS-2 cluster (Figure from
-[https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster](https://training-docs.cerebras.ai/concepts/cerebras-wafer-scale-cluster))
+Figure: topology of CS-2 cluster ([source](https://training-docs.cerebras.ai/rel-2.4.0/concepts/cerebras-wafer-scale-cluster))
 ///
 
 As indicated in the figures, the CS-2 nodes on the right are responsible only for running and accelerating the computations for training and predictions with the model. The other work, including compilation, is performed by input nodes, and by MemoryX nodes, which are used for weight storage and broadcast, and SwarmX nodes, which are used for gradient accumulation. Some model verification work can be done on login nodes.
