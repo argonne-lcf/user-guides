@@ -138,7 +138,7 @@ nav:
   - ALCF User Guides:
     - index.md
 
-  - Account and Project Management:
+  - Account & Project Management:
     - MyALCF: account-project-management/MyALCF.md
     - Accounts and Access:
       - account-project-management/accounts-and-access/index.md
@@ -292,7 +292,7 @@ nav:
         - Example Programs: ai-testbed/sambanova/example-programs.md
         - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
         # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
-        - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
+        - ModelZoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
         - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
         - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
         - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
@@ -422,8 +422,8 @@ nav:
 
   - User Support:
       - Submit a Ticket: contacting-support/technical-support.md
-      - Request a Software App: contacting-support/software-requests.md
-      - Using ALCF Users Slack Workspace: contacting-support/alcf-users-slack.md
+      - Request Software: contacting-support/software-requests.md
+      - ALCF Users Slack: contacting-support/alcf-users-slack.md
       - Contribute to User Guides: issues.md
 
 not_in_nav: |
