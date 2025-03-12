@@ -141,52 +141,18 @@ plugins:
       minify_html: true
 
 nav:
-  - ALCF User Guides:
-    - index.md
-
-  - Account and Project Management:
-    - MyALCF: account-project-management/MyALCF.md
-    - Accounts and Access:
-      - User Account: account-project-management/accounts-and-access/user-account-overview.md
-      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
-      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
-    - Project Management:
-      - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
-      - Managing Your Team Members: account-project-management/project-management/team-management.md
-      - Reporting: account-project-management/project-management/project-reports.md
-    - Allocations:
-      - Allocations on ALCF Computing Resources: account-project-management/allocation-management/overview.md
-      - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
-      - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
-
-  - Data Management:
-    - ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-    - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
-    - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
-    - Data Transfer:
-      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
-      - Using Globus: data-management/data-transfer/using-globus.md
-    - File System & Storage:
-      - File Systems: data-management/filesystem-and-storage/file-systems.md
-      - Data Storage: data-management/filesystem-and-storage/data-storage.md
-      - HPSS: data-management/filesystem-and-storage/hpss.md
-      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-
-  - Running Jobs with PBS at the ALCF:
-      - Job Scheduling and Execution: running-jobs/job-and-queue-scheduling.md
-      - Example Job Scripts: running-jobs/example-job-scripts.md
-      - Machine Reservations: running-jobs/machine-reservations.md
-      - Cobalt to PBS- Comparing Options: running-jobs/pbs-qsub-options-table.md
+  # - ALCF User Guides:
+  #   - index.md
 
   - Machines:
     - Aurora:
-        - Machine Overview: aurora/machine-overview.md
+        - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
         - Early User Notes and Known Issues: aurora/known-issues.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         - Compiling and Linking:
-          - Compiling and Linking Overview: aurora/compiling-and-linking/compiling-and-linking-overview.md
+          - aurora/compiling-and-linking/index.md
           - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
           - Example Program and Makefile: aurora/compiling-and-linking/aurora-example-program-makefile.md
         # - LLVM Compilers: aurora/compiling-and-linking/llvm-compilers-aurora.md
@@ -239,7 +205,7 @@ nav:
           - SYCL: aurora/programming-models/sycl-aurora.md
           - HIP: aurora/programming-models/hip-aurora.md
         - Debugging Tools:
-          - Overview: aurora/debugging/debugging-overview.md
+          - aurora/debugging/index.md
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
           - DDT: aurora/debugging/ddt-aurora.md
           - gdb4hpc: aurora/debugging/gdb4hpc.md
@@ -260,9 +226,9 @@ nav:
           - SmartSim: aurora/workflows/smartsim.md
 
     - AI Testbed:
-      - Getting Started: ai-testbed/getting-started.md
+      - ai-testbed/index.md
       - Cerebras:
-        - System Overview: ai-testbed/cerebras/system-overview.md
+        - ai-testbed/cerebras/index.md
         - Getting Started: ai-testbed/cerebras/getting-started.md
         - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
         - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
@@ -273,7 +239,7 @@ nav:
         - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
         - CSL: ai-testbed/cerebras/csl.md
       - Graphcore:
-        - System Overview: ai-testbed/graphcore/system-overview.md
+        - ai-testbed/graphcore/index.md
         - Getting Started: ai-testbed/graphcore/getting-started.md
         - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
         - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
@@ -282,7 +248,7 @@ nav:
         - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
         - Documentation: ai-testbed/graphcore/documentation.md
       - Groq:
-        - System Overview: ai-testbed/groq/system-overview.md
+        - ai-testbed/groq/index.md
         - Getting Started: ai-testbed/groq/getting-started.md
         - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
         #- Example Programs: ai-testbed/groq/example-programs.md
@@ -290,7 +256,7 @@ nav:
         - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
       - SambaNova:
-        - System Overview: ai-testbed/sambanova/system-overview.md
+        - ai-testbed/sambanova/index.md
         - Getting Started: ai-testbed/sambanova/getting-started.md
         - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
         - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
@@ -298,7 +264,7 @@ nav:
         - Example Programs: ai-testbed/sambanova/example-programs.md
         - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
         # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
-        - Modelzoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
+        - ModelZoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
         - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
         - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
         - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
@@ -307,7 +273,7 @@ nav:
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
-      - Machine Overview: crux/machine-overview.md
+      - crux/index.md
       - Getting Started: crux/getting-started.md
       - Running Jobs: crux/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: crux/compiling-and-linking/compiling-and-linking-overview.md
@@ -315,11 +281,11 @@ nav:
       - Data Science:
         - Python: crux/data-science/python.md
       #- Visualization:
-        #- Visualization on Crux: crux/visualization/visualization.md
+        #- crux/visualization/index.md
         #- ParaView (Launch from Client): crux/visualization/paraview.md
 
     - Polaris:
-      - Machine Overview: polaris/machine-overview.md
+      - polaris/index.md
       - Getting Started: polaris/getting-started.md
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
@@ -376,7 +342,7 @@ nav:
       - Performance Tools:
           - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
       - Visualization:
-          - Visualization on Polaris: polaris/visualization/visualization.md
+          - polaris/visualization/index.md
           - ParaView (Launch from Client): polaris/visualization/paraview.md
           - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
           - VisIt: polaris/visualization/visit.md
@@ -392,7 +358,7 @@ nav:
           - SmartSim: polaris/workflows/smartsim.md
 
     - Sophia:
-      - Machine Overview: sophia/machine-overview.md
+      - sophia/index.md
       - Getting Started: sophia/getting-started.md
       - Running Jobs: sophia/queueing-and-running-jobs/running-jobs.md
       - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
@@ -401,53 +367,97 @@ nav:
           - Python: sophia/data-science/python.md
           - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
       - Visualization:
-          - Visualization on Sophia: sophia/visualization/visualization.md
+          - sophia/visualization/index.md
           - ParaView (Launch from Client): sophia/visualization/paraview.md
 
-  - Services: # services/index.md  # Cant directly link to this in the nav sidebar, since
-    # it is a dropdown. Only linked to in base docs/index.md
-    - Getting Started: services/getting-started.md
+  - User Support:
+      - Submit a Ticket: contacting-support/technical-support.md
+      - Request Software: contacting-support/software-requests.md
+      - ALCF Users Slack: contacting-support/alcf-users-slack.md
+      - Contribute to User Guides: contacting-support/docs-issues.md
+
+  - Running Jobs with PBS:
+      - running-jobs/index.md
+      - Example Job Scripts: running-jobs/example-job-scripts.md
+      - Machine Reservations: running-jobs/machine-reservations.md
+      - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
+
+  - Data Management:
+    - File System & Storage:
+      - data-management/filesystem-and-storage/index.md
+      - HPSS: data-management/filesystem-and-storage/hpss.md
+      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+    - Data Transfer:
+      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
+      - Using Globus: data-management/data-transfer/using-globus.md
+    - Sharing Data:
+        #- ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
+        - data-management/acdc/index.md
+        - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+        - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
+
+  - Services:
+    - services/index.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
       - GitLab CI: services/gitlab-ci.md
 
+  - Account & Project Management:
+    - MyALCF: account-project-management/MyALCF.md
+    - Accounts and Access:
+      - account-project-management/accounts-and-access/index.md
+      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+    - Project Management:
+      - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
+      - Managing Your Team Members: account-project-management/project-management/team-management.md
+      - Reporting: account-project-management/project-management/project-reports.md
+    - Allocations:
+      - account-project-management/allocation-management/index.md
+      - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
+      - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
+
   - Facility Policies:
-    - Overview of Policies: policies/facility-policies.md
+    - policies/index.md
     - ALCF Acknowledgement Policy: policies/alcf-acknowledgement-policy.md
     - Account Policies:
-      - Accounts Policy: policies/accounts/accounts-policy.md
+      - policies/accounts/index.md
       - Account Sponsorship & Retention Policy: policies/accounts/account-sponsorship-retention-policy.md
       - User Authentication Policy: policies/accounts/user-authentication-policy.md
-    - Queue and Scheduling Policies:
-      - Queue and Scheduling Policy: policies/queue-scheduling/queue-and-scheduling-policy.md
+    - Scheduling Policies:
+      - policies/queue-scheduling/index.md
       - Refund Policy: policies/queue-scheduling/refund-policy.md
       - Pullback Policy: policies/queue-scheduling/pullback-policy.md
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
-
-  # - Contacting Support / Help:
-  #     - Technical Support: contacting-support/technical-support.md
-  #     - Software Requests: contacting-support/software-requests.md
-  #     - User Guide Questions / Issues: issues.md
-
-  - User Support:
-      - Submit a Ticket: contacting-support/technical-support.md
-      - Request a Software App: contacting-support/software-requests.md
-      - Using ALCF Users Slack Workspace: contacting-support/alcf-users-slack.md
-      - Contribute to User Guides: issues.md
-
   - Acronyms: acronyms.md
 
+# Pages that are not in navigation but still built
+# These always end up in generated site, both mkdocs "build" and "serve"
 not_in_nav: |
   not_in_nav/
+  index.md
+  #account-project-management/allocation-management/not_in_nav/
+
+# Pages that will never end up in a generated site (implies not_in_nav)
+exclude_docs: |
   unused/
   old/
   todo.md
   TODO.md
   notes.md
+  sophia/not_in_nav/
+
+# (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
+# content to Sophia and remove the rest entirely)
+
+# Pages still built during "mkdocs serve" for local testing; appears to suppress not_in_nav WARNINGs too
+# emits harmless INFO logs that will disappear during "mkdocs build"
+draft_docs: |
+  drafts/
   # TODO: complete or remove Aurora placeholder pages
   aurora/compiling-and-linking/llvm-compilers-aurora.md
   aurora/compiling-and-linking/gnu-compilers-aurora.md
@@ -458,6 +468,9 @@ not_in_nav: |
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
   aurora/visualization/paraview.md
+# note, trailing inline comments under draft_docs, etc blocks break mkdocs parsing,
+# despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 
 watch:
-  - includes
+  - includes/
+  - overrides/

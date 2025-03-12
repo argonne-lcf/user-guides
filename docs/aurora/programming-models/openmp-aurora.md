@@ -64,7 +64,7 @@ $ qsub -l select=1 -l walltime=0:30:00 -q EarlyAppAccess -A Project ./submit.sh
 
 In the above, having the PBS options in the script and on the command line is redundant, but we put it there to show both ways of launching. This submits the script to one node in the `EarlyAppAccess` queue on Aurora, requesting 30 minutes. It will charge project `Project` for the time. You should replace it with your project name.
 
-More details for setting up the job script are in the [Job Scheduling and Execution section](../../running-jobs/job-and-queue-scheduling.md).
+More details for setting up the job script are in the [Job Scheduling and Execution section](../../running-jobs/index.md).
 
 ## Example
 
