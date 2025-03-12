@@ -4,7 +4,7 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 Our user guides contain information for:
 
 - [Account and Project Management](account-project-management/accounts-and-access/index.md): Information and instructions on how to manage your ALCF account and awarded project.
-- [Data Management](data-management/filesystem-and-storage/data-storage.md): Information on our file systems that are mounted globally across all of our production systems.
+- [Data Management](data-management/filesystem-and-storage/index.md): Information on our file systems that are mounted globally across all of our production systems.
 - [Aurora](aurora/index.md): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
 - [AI Testbed](ai-testbed/index.md): Information on the advanced, non-GPU AI accelerators housed within the ALCF
 - [Crux](crux/index.md): A 256-node, dual-socket AMD CPU platform
