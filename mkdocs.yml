@@ -138,41 +138,6 @@ nav:
   - ALCF User Guides:
     - index.md
 
-  - Account & Project Management:
-    - MyALCF: account-project-management/MyALCF.md
-    - Accounts and Access:
-      - account-project-management/accounts-and-access/index.md
-      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
-      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
-    - Project Management:
-      - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
-      - Managing Your Team Members: account-project-management/project-management/team-management.md
-      - Reporting: account-project-management/project-management/project-reports.md
-    - Allocations:
-      - account-project-management/allocation-management/index.md
-      - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
-      - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
-
-  - Data Management:
-    - File System & Storage:
-      - data-management/filesystem-and-storage/index.md
-      - HPSS: data-management/filesystem-and-storage/hpss.md
-      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-    - Data Transfer:
-      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
-      - Using Globus: data-management/data-transfer/using-globus.md
-    - Sharing Data:
-        #- ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-        - data-management/acdc/index.md
-        - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
-        - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
-
-  - Running Jobs with PBS:
-      - running-jobs/index.md
-      - Example Job Scripts: running-jobs/example-job-scripts.md
-      - Machine Reservations: running-jobs/machine-reservations.md
-      - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
-
   - Machines:
     - Aurora:
         - aurora/index.md
@@ -399,12 +364,53 @@ nav:
           - sophia/visualization/index.md
           - ParaView (Launch from Client): sophia/visualization/paraview.md
 
+  - User Support:
+      - Submit a Ticket: contacting-support/technical-support.md
+      - Request Software: contacting-support/software-requests.md
+      - ALCF Users Slack: contacting-support/alcf-users-slack.md
+      - Contribute to User Guides: issues.md
+
+  - Running Jobs with PBS:
+      - running-jobs/index.md
+      - Example Job Scripts: running-jobs/example-job-scripts.md
+      - Machine Reservations: running-jobs/machine-reservations.md
+      - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
+
+  - Data Management:
+    - File System & Storage:
+      - data-management/filesystem-and-storage/index.md
+      - HPSS: data-management/filesystem-and-storage/hpss.md
+      - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
+    - Data Transfer:
+      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
+      - Using Globus: data-management/data-transfer/using-globus.md
+    - Sharing Data:
+        #- ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
+        - data-management/acdc/index.md
+        - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+        - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
+
   - Services:
     - services/index.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
       - GitLab CI: services/gitlab-ci.md
+
+  - Account & Project Management:
+    - MyALCF: account-project-management/MyALCF.md
+    - Accounts and Access:
+      - account-project-management/accounts-and-access/index.md
+      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+      - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
+    - Project Management:
+      - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
+      - Managing Your Team Members: account-project-management/project-management/team-management.md
+      - Reporting: account-project-management/project-management/project-reports.md
+    - Allocations:
+      - account-project-management/allocation-management/index.md
+      - Managing Your Allocations: account-project-management/allocation-management/allocation-management.md
+      - sbank Allocation Accounting System: account-project-management/allocation-management/sbank-allocation-accounting-system.md
 
   - Facility Policies:
     - policies/index.md
@@ -420,12 +426,6 @@ nav:
     - Data and Software Policies:
       - Data Policy: policies/data-and-software-policies/data-policy.md
       - Software Policy: policies/data-and-software-policies/software-policy.md
-
-  - User Support:
-      - Submit a Ticket: contacting-support/technical-support.md
-      - Request Software: contacting-support/software-requests.md
-      - ALCF Users Slack: contacting-support/alcf-users-slack.md
-      - Contribute to User Guides: issues.md
 
 not_in_nav: |
   not_in_nav/
