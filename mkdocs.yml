@@ -155,8 +155,7 @@ nav:
 
   - Data Management:
     - File System & Storage:
-      - File Systems: data-management/filesystem-and-storage/file-systems.md
-      - Data Storage: data-management/filesystem-and-storage/data-storage.md
+      - data-management/filesystem-and-storage/index.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
     - Data Transfer:
