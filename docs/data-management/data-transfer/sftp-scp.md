@@ -6,7 +6,7 @@ See [Globus](using-globus.md) for performing large data transfers.
 
 ## `scp`: Examples
 
-[^examples]: Examples copied from: [scp](https://tldr.inbrowser.app/pages/common/scp)
+Examples sourced from [this page](https://tldr.inbrowser.app/pages/common/scp)
 
 - Copy a local file to a remote host:
 
