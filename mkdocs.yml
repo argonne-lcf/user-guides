@@ -368,7 +368,7 @@ nav:
       - Submit a Ticket: contacting-support/technical-support.md
       - Request Software: contacting-support/software-requests.md
       - ALCF Users Slack: contacting-support/alcf-users-slack.md
-      - Contribute to User Guides: contacting-support/doc-issues.md
+      - Contribute to User Guides: contacting-support/docs-issues.md
 
   - Running Jobs with PBS:
       - running-jobs/index.md
