@@ -135,8 +135,8 @@ plugins:
       minify_html: true
 
 nav:
-  - ALCF User Guides:
-    - index.md
+  # - ALCF User Guides:
+  #   - index.md
 
   - Machines:
     - Aurora:
