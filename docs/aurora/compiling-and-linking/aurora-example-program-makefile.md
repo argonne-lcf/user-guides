@@ -91,7 +91,7 @@ To affinity and beyond!! nname= x1922c1s1b0n0  rnk= 11  list_cores= (11)  num_de
 This simple application does not handle binding of MPI ranks to GPUs, so each of the 12 MPI ranks detects all six GPUs on the node and by default all will select the first GPU listed. The binding of MPI ranks to GPUs can be handled by `mpiexec` in the near future, but for the time being a simple helper script is available for those that need it. There is a centrally installed general `gpu_tile_compact.sh` script available for use, but the examples include the following example script for convenience in case one would like to explore different CPU-GPU bindings (e.g., bind first _N_ MPI ranks to the first GPU).
 
 ```bash
-$ cat set_affinity_gpu_sunspot.sh 
+$ cat set_affinity_gpu_aurora.sh 
 #!/usr/bin/env bash
 
 num_gpu=6
@@ -113,7 +113,7 @@ echo "RANK= ${PALS_RANKID} LOCAL_RANK= ${PALS_LOCAL_RANKID} gpu= ${gpu_id}  tile
 The `ZE_AFFINITY_MASK` environment variable sets the devices that will be available to the CPU process and can be a comma-separated list of GPUs and/or GPU tiles. Each Aurora GPU consists of two tiles that can be separately bound to CPU processes. This simple script will set `ZE_AFFINITY_MASK` for each MPI rank such that GPU tiles on a node are round-robin assigned.
 
 ```bash
-$ mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_sunspot.sh ./hello_affinity
+$ mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_aurora.sh ./hello_affinity
 NUM_OF_NODES= 1 TOTAL_NUM_RANKS= 12 RANKS_PER_NODE= 12 THREADS_PER_RANK= 1
 
   Using OPENMP v5.0
@@ -160,10 +160,10 @@ Note, this particular example makes use of the Level-Zero API and requires linki
 ```bash
 $ make
 
-$ mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_sunspot.sh ./hello_affinity
+$ mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_aurora.sh ./hello_affinity
 
 NUM_OF_NODES= 1 TOTAL_NUM_RANKS= 12 RANKS_PER_NODE= 12 THREADS_PER_RANK= 1
-COMMAND= mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_sunspot.sh ./hello_affinity
+COMMAND= mpiexec -n 12 --ppn 12 --depth=1 --cpu-bind depth ./set_affinity_gpu_aurora.sh ./hello_affinity
 
 "RANK= 0 LOCAL_RANK= 0 gpu= 0 tile= 0"
 "RANK= 1 LOCAL_RANK= 1 gpu= 0 tile= 1"
