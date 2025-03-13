@@ -398,7 +398,7 @@ nav:
 
   - Data Management:
     - data-management/index.md
-    - File System & Storage:
+    - File System & Storage: # TODO: next index.md might be better as above level-1 section index.md
       - data-management/filesystem-and-storage/index.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
@@ -409,7 +409,6 @@ nav:
         #- ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
         - data-management/acdc/index.md
         - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
-        - Transferring Data to Eagle: data-management/acdc/transferring-data-to-eagle.md
 
   - Services:
     - services/index.md
