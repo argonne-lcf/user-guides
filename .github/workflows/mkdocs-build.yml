@@ -19,4 +19,4 @@ jobs:
       - name: Setup Python environment
         run: pip install -r requirements.txt
       - name: Build docs with --strict
-        run: mkdocs build --strict
+        run: make build
