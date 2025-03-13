@@ -14,7 +14,7 @@
 
 # Documentation structure
 # Note: Specific docs ownership is defined in docs/CODEOWNERS
-/docs/                              @felker @bethcerny @keceli
+####/docs/                              @??
 /overrides/                         @felker @saforem2
 /includes/                          @felker
 

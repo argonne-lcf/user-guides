@@ -3,56 +3,56 @@
 # All paths are relative to the docs directory
 
 # Default owners for all documentation
-*                                   @felker @bethcerny @keceli
+#*                                   @???
 
 # Machine-specific documentation
-# /aurora/                            @felker @keceli @zhenghh04 @bertoni @rickybalin @TApplencourt
-# /polaris/                           @felker @keceli @cjknight @saforem2 @jfrancis-anl
-# /sophia/                            @felker @keceli
-# /crux/                              @felker @keceli
+# /aurora/                            
+# /polaris/                           
+# /sophia/                            
+# /crux/                              
 /ai-testbed/                        @vksastry @wcarnold1010 @bethcerny
 /ai-testbed/cerebras/               @sraskar
 
 # Compilers documentation
-**/compiling-and-linking/**         @TApplencourt @colleeneb
+aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Programming models
 **/programming-models/kokkos-*.md   @zippy @masterleinad
 **/programming-models/sycl-*.md     @TApplencourt @colleeneb
 
 # Data Science frameworks across all machines
-**/frameworks/pytorch.md            @felker @khossain4337 @FilippoSimini @saforem2
-**/frameworks/tensorflow.md         @felker @zhenghh04 @khossain4337 @cjknight
+**/frameworks/pytorch.md            @khossain4337 @FilippoSimini @saforem2
+**/frameworks/tensorflow.md         @zhenghh04 @khossain4337 @cjknight
 **/frameworks/deepspeed.md          @saforem2 @hatanp
 **/frameworks/megatron-deepspeed.md @saforem2 @hatanp
-**/frameworks/jax.md                @cjknight @khossain4337 @felker
+**/frameworks/jax.md                @cjknight @khossain4337
 **/frameworks/scikit-learn.md       @BethanyL
+**onedal.md                         @BethanyL
 **/frameworks/dask.md               @okafor @FilippoSimini
-**/frameworks/pyg.md                @ @FilippoSimini
+**/frameworks/pyg.md                @FilippoSimini
 **/frameworks/gpytorch.md           @mngom2
-**/frameworks/oneCCL.md             @ @kaushikvelusamy @khossain4337 @hatanp
+**/frameworks/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
 **/frameworks/libtorch.md           @rickybalin
-**/inference/vllm.md                @sraskar
 
 # Applications across all machines
 **/applications/gpt-neox.md         @saforem2 @hatanp
 **/applications/megatron-deepspeed.md @atanikan @saforem2 @hatanp
 
 # Python documentation across all machines
-**/python.md                        @felker @keceli @khossain4337
+**/python.md                        @keceli @khossain4337
 
 # Julia documentation
 **/julia.md                         @michel2323
 
 # Inference documentation
 **/inference/                       @rickybalin
+**/inference/vllm.md                @sraskar
 
 # Profiling documentation
 **/profiling_dl.md                  @zhenghh04 @khossain4337
 **/performance-tools/vtune.md       @jkwack
 
 # Libraries documentation
-**/libraries/onedal.md              @BethanyL
 **/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
 **/libraries/cabana-*.md            @zippy
 **/libraries/spack-pe.md            @koysean
@@ -65,16 +65,16 @@
 **/data-management/lustre/          @kaushikvelusamy @zhenghh04 @kevin-harms
 **/data-management/copper/          @kaushikvelusamy @kevin-harms
 **/filesystem-and-storage/          @kevin-harms
-#/data-management/                   @bethcerny @felker @jfrancis-anl @keceli @kaushikvelusamy @peterupton
+#/data-management/                   @???
 
 # All container documentation
 **/containers/                      @atanikan
 
 # Account & Project Management documentation
-/account-project-management/        @bethcerny @felker @keceli @mantrala-ops @dymil
+#/account-project-management/	    @mantrala-ops
 
 # Running Jobs documentation
-/running-jobs/                      @felker @keceli @pmrich
+#/running-jobs/                      @????
 **/running-jobs.md                  @pmrich
 **/queueing-and-running-jobs/       @pmrich
 **/pbs-*.md                         @pmrich
@@ -83,8 +83,7 @@
 /policies/                          @bethcerny 
 
 # Services documentation
-/services/                          @felker @keceli
-/services/gitlab-ci.md              @peterupton @thilinarmtb
+/services/                          @keceli
 **/services/gitlab-ci.md            @peterupton @thilinarmtb
 
 # Workflows
@@ -92,13 +91,5 @@
 **/workflows/                       @cms21
 
 # User Support documentation
-/contacting-support/                @felker @bethcerny @joconne @alcf-haritha @jfrancis-anl
-**/technical-support.md             @alcf-haritha @jfrancis-anl
+/contacting-support/                @alcf-haritha @jfrancis-anl
 
-# Images and stylesheets
-/images/                            @felker @saforem2
-/stylesheets/                       @felker @saforem2
-/javascripts/                       @felker @saforem2
-
-# HTML files
-**/*.html                           @saforem2 @felker 
