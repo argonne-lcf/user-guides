@@ -13,6 +13,7 @@ SOURCE_FILE = "includes/validate-inbound-URLs.txt"
 TARGET_FILE = "docs/inbound-links.md"
 MKDOCS_CONFIG = "mkdocs.yml"
 BASE_URL = "https://docs.alcf.anl.gov"
+DOCS_DIR = "docs"
 
 def load_redirects():
     """Load redirects from mkdocs.yml."""
@@ -45,6 +46,31 @@ def load_redirects():
         print(f"Error loading redirects: {e}")
     
     return redirects
+
+def find_markdown_file(path):
+    """Find the correct markdown file for a given path.
+    
+    Checks multiple possible file paths and returns the one that exists.
+    """
+    # Remove leading and trailing slashes
+    path = path.strip('/')
+    
+    # Possible file paths to check
+    possible_paths = [
+        os.path.join(DOCS_DIR, f"{path}.md"),                  # path.md
+        os.path.join(DOCS_DIR, path, "index.md"),              # path/index.md
+        os.path.join(DOCS_DIR, f"{path}/index.md")             # path/index.md (alternative format)
+    ]
+    
+    # Check if any of the possible paths exist
+    for file_path in possible_paths:
+        if os.path.exists(file_path):
+            # Convert to relative path for markdown link
+            rel_path = file_path[len(DOCS_DIR)+1:]  # +1 for the slash
+            return f"./{rel_path}"
+    
+    # If no file exists, return a default path
+    return f"./{path}.md"
 
 def main():
     """Convert URLs to relative links."""
@@ -82,28 +108,15 @@ These links are automatically validated during the build process with `mkdocs bu
             if lookup_path in redirects:
                 target_path = redirects[lookup_path]
                 print(f"Redirecting {lookup_path} to {target_path}")
-                
-                # Create a relative link to the target
-                if target_path.endswith('/index'):
-                    # It's a directory index
-                    md_path = f"{target_path}.md"
-                elif target_path.endswith('/'):
-                    # It's a directory
-                    md_path = f"{target_path}index.md"
-                else:
-                    # It's a file
-                    md_path = f"{target_path}.md"
+                path_to_check = target_path
             else:
-                # Not redirected, use original path
-                if original_path.endswith('/'):
-                    # It's a directory
-                    md_path = f"{original_path.rstrip('/')}index.md"
-                else:
-                    # It's a file
-                    md_path = f"{original_path}.md"
+                path_to_check = lookup_path
+            
+            # Find the correct markdown file
+            md_path = find_markdown_file(path_to_check)
             
             # Add the link to the content
-            content += f"[{url}](.{md_path})\n\n"
+            content += f"[{url}]({md_path})\n\n"
 
     # Write the content to the target file
     with open(TARGET_FILE, "w") as f:
