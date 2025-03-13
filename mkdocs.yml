@@ -139,12 +139,26 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+  - redirects:
+      redirect_maps:
+        # broken links from header.html in this repo, main site, and my.alcf.anl.gov
+        # eventually, update those links, remove redirects, and freeze these paths via PR CI checks
+        'ai-testbed/getting-started.md': 'ai-testbed/index.md'
+        'policies/facility-policies.md': 'policies/index.md'
+        'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
+        'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
+        # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
+        'machines/index.md': 'index.md'
+        'contacting-support/index.md': 'contacting-support/technical-support.md'
+        'data-management/index.md': 'data-management/filesystem-and-storage/index.md'
+        'account-project-management/index.md': 'account-project-management/MyALCF.md'
 
 nav:
   # - ALCF User Guides:
   #   - index.md
 
   - Machines:
+    - machines/index.md
     - Aurora:
         - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
@@ -370,18 +384,20 @@ nav:
           - ParaView (Launch from Client): sophia/visualization/paraview.md
 
   - User Support:
-      - Submit a Ticket: contacting-support/technical-support.md
-      - Request Software: contacting-support/software-requests.md
-      - ALCF Users Slack: contacting-support/alcf-users-slack.md
-      - Contribute to User Guides: contacting-support/docs-issues.md
+    - contacting-support/index.md
+    - Submit a Ticket: contacting-support/technical-support.md
+    - Request Software: contacting-support/software-requests.md
+    - ALCF Users Slack: contacting-support/alcf-users-slack.md
+    - Contribute to User Guides: contacting-support/docs-issues.md
 
   - Running Jobs with PBS:
-      - running-jobs/index.md
-      - Example Job Scripts: running-jobs/example-job-scripts.md
-      - Machine Reservations: running-jobs/machine-reservations.md
-      - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
+    - running-jobs/index.md
+    - Example Job Scripts: running-jobs/example-job-scripts.md
+    - Machine Reservations: running-jobs/machine-reservations.md
+    - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
 
   - Data Management:
+    - data-management/index.md
     - File System & Storage:
       - data-management/filesystem-and-storage/index.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
@@ -403,6 +419,7 @@ nav:
       - GitLab CI: services/gitlab-ci.md
 
   - Account & Project Management:
+    - account-project-management/index.md
     - MyALCF: account-project-management/MyALCF.md
     - Accounts and Access:
       - account-project-management/accounts-and-access/index.md
