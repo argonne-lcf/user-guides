@@ -10,10 +10,23 @@ install-dev:
 generate-inbound-links:
 	python3 scripts/generate_inbound_links.py
 
+# .PHONY: build-docs
+# build-docs: generate-inbound-links
+# 	mkdocs build --strict
+# 	rm -rfd site/inbound-links
 .PHONY: build-docs
-build-docs: generate-inbound-links
+build-docs:
+	@echo "Building site..."
 	mkdocs build --strict
-	rm -rfd site/inbound-links
+	@echo "Validating inbound links..."
+	python3 scripts/validate_inbound_links.py
+
+.PHONY: clean
+clean:
+	@echo "Cleaning up generated files..."
+	rm -rf site/
+	rm -f docs/inbound-links.md
+	@echo "Clean complete."
 
 .PHONY: all
 all: build-docs
