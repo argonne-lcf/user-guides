@@ -20,6 +20,17 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/programming-models/kokkos-*.md   @zippy @masterleinad
 **/programming-models/sycl-*.md     @TApplencourt @colleeneb
 
+# Computational chemistry and molecular dynamics
+**/applications/namd.md             @cjknight
+**/applications/gromacs.md          @cjknight
+**/applications/lammps.md           @cjknight
+**/applications/amber.md            @cjknight
+**/applications/openmm.md           @cjknight
+
+# Example programs and makefiles
+**/example-program-makefile.md      @cjknight
+**/example-program*.md              @cjknight
+
 # Data Science frameworks across all machines
 **/frameworks/pytorch.md            @khossain4337 @FilippoSimini @saforem2
 **/frameworks/tensorflow.md         @zhenghh04 @khossain4337 @cjknight
@@ -75,8 +86,8 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Running Jobs documentation
 #/running-jobs/                      @????
-**/running-jobs.md                  @pmrich
-**/queueing-and-running-jobs/       @pmrich
+**/running-jobs.md                  @pmrich @cjknight
+**/queueing-and-running-jobs/       @pmrich @cjknight
 **/pbs-*.md                         @pmrich
 
 # Policies documentation
