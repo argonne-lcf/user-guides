@@ -6,16 +6,20 @@ install-dev:
 	pip install -r requirements.txt
 
 
-.PHONY: build-docs
-build-docs:
-	mkdocs build --strict
+.PHONY: generate-inbound-links
+generate-inbound-links:
+	python3 scripts/generate_inbound_links.py
 
+.PHONY: build-docs
+build-docs: generate-inbound-links
+	mkdocs build --strict
+	rm -rfd site/inbound-links
 
 .PHONY: all
 all: build-docs
 
 .PHONY: serve
-serve:
+serve: generate-inbound-links
 	@echo "Finding available port..."
 	$(eval PORT := $(shell python scripts/find_port.py))
 	@echo "Starting MkDocs server on port $(PORT)..."
