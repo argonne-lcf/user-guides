@@ -144,7 +144,7 @@ plugins:
         # broken links from header.html in this repo, main site, and my.alcf.anl.gov
         # eventually, update those links, remove redirects, and freeze these paths via PR CI checks
         'ai-testbed/getting-started.md': 'ai-testbed/index.md'
-        'policies/getting-started.md': 'policies/index.md'
+        'policies/facility-policies.md': 'policies/index.md'
         'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
         'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
         # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
