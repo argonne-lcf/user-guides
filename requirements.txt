@@ -7,3 +7,4 @@ mkdocs-get-deps
 #mkdocs-git-authors-plugin
 mkdocs-material-extensions
 mkdocs-minify-plugin
+mkdocs-redirects
