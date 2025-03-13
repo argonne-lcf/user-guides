@@ -145,7 +145,7 @@ plugins:
         # eventually, update those links, remove redirects, and freeze these paths via PR CI checks
         'ai-testbed/getting-started.md': 'ai-testbed/index.md'
         'policies/getting-started.md': 'policies/index.md'
-        'filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
+        'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
         'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
         # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
         'machines/index.md': 'index.md'
