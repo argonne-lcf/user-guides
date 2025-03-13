@@ -73,7 +73,7 @@
 *[SSD]: Solid State Drive
 <!-- *[SSH]: Secure Shell -->
 *[SSO]: Single Sign-On
-*[SYCL]: Single-source heterogeneous programming using C++
+<!-- *[SYCL]: -->
 *[TCP]: Transmission Control Protocol
 *[TOPS]: Tera Operations Per Second
 *[TDP]: Thermal Design Power
