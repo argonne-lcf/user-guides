@@ -1,15 +1,6 @@
 # ALCF User Guide
 Source for the documentation located at https://docs.alcf.anl.gov/
 
-## Inbound Links Validation
-External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
-
-There are two ways to validate inbound links:
-1. Using MkDocs' built-in validation with `--strict` flag: `make check-inbound-links`
-2. Using a lightweight post-build validation: `make validate-inbound-links`
-
-The lightweight approach directly checks if the URLs in `validate-inbound-URLs.txt` correspond to files that exist in the built site directory, without relying on MkDocs' strict mode.
-
 ## Contributing to documentation
 
 ### Python environment
@@ -81,3 +72,9 @@ git push origin YOURBRANCH         # push the changes from local branch up to yo
 ```
 * Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
 
+## Inbound Links Validation
+External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
+
+There are two Python `scripts/` that perform this function:
+1. (works with `mkdocs build` and `serve`): Translate URLs to relative path links to their matching source `.md` files; write these links to `docs/inbound-links.md`. Use MkDocs' built-in validation (adding `--strict` flag when running `mkdocs build`, in order to return an error code if they are invalid).
+2. (works with `mkdocs build`, only): Use a lightweight post-build validation on generated `site/` directory HTML contents.

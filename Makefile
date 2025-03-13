@@ -10,10 +10,13 @@ install-dev:
 generate-inbound-links:
 	python3 scripts/generate_inbound_links.py
 
+# URL validation approach #1
 # .PHONY: build-docs
 # build-docs: generate-inbound-links
 # 	mkdocs build --strict
 # 	rm -rfd site/inbound-links
+
+# URL validation approach #2
 .PHONY: build-docs
 build-docs:
 	@echo "Building site..."
@@ -31,6 +34,7 @@ clean:
 .PHONY: all
 all: build-docs
 
+# URL validation approach #1
 .PHONY: serve
 serve: generate-inbound-links
 	@echo "Finding available port..."
