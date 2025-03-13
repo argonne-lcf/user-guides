@@ -26,6 +26,9 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/applications/lammps.md           @cjknight
 **/applications/amber.md            @cjknight
 **/applications/openmm.md           @cjknight
+**/applications/QMCPACK.md          @yeluo
+**/applications/QuantumESPRESSO.md  @yeluo
+**/applications/vasp.md             @alvarovm
 
 # Example programs and makefiles
 **/example-program-makefile.md      @cjknight
@@ -76,7 +79,6 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/data-management/lustre/          @kaushikvelusamy @zhenghh04 @kevin-harms
 **/data-management/copper/          @kaushikvelusamy @kevin-harms
 **/filesystem-and-storage/          @kevin-harms
-#/data-management/                   @???
 
 # All container documentation
 **/containers/                      @atanikan
@@ -100,6 +102,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 # Workflows
 **/workflows/parsl.md               @cms21
 **/workflows/                       @cms21
+**/workflows/libensemble.md         @shudson
 
 # User Support documentation
 /contacting-support/                @alcf-haritha @jfrancis-anl
