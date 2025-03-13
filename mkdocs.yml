@@ -163,8 +163,9 @@ nav:
         - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
-        - Early User Notes and Known Issues: aurora/known-issues.md
+        - Early User Notes & Known Issues: aurora/known-issues.md
         - Aurora Programming Environment: aurora/aurora-pe.md
+        # TODO: "&" vs. "and" in sidebar page titles?
         - Compiling and Linking:
           - aurora/compiling-and-linking/index.md
           - Programming Models: aurora/compiling-and-linking/aurora-programming-models.md
@@ -402,13 +403,11 @@ nav:
       - data-management/filesystem-and-storage/index.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-    - Data Transfer:
+    - Transfer & Sharing:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
-    - Sharing Data:
-        #- ALCF Community Data Co-Op: data-management/acdc/acdc-overview.md
-        - data-management/acdc/index.md
-        - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+      - ALCF Community Data Co-Op: data-management/acdc/index.md
+      - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
 
   - Services:
     - services/index.md
