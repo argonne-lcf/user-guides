@@ -1,0 +1,24 @@
+# CODEOWNERS file for ALCF User Guides
+# Format: path/to/file/or/directory @username1 @username2
+
+# Default owners for everything in the repo
+# These owners will be the default owners for everything in the repository
+# unless a later match takes precedence
+*                                   @felker @bethcerny @keceli
+
+# Core configuration files
+/mkdocs.yml                         @felker @saforem2
+/requirements.txt                   @felker
+/Makefile                           @felker
+/.github/                           @felker
+
+# Documentation structure
+# Note: Specific docs ownership is defined in docs/CODEOWNERS
+/docs/                              @felker @bethcerny @keceli
+/overrides/                         @felker @saforem2
+/includes/                          @felker
+
+# HTML, CSS, and theme-related files
+/overrides/                         @saforem2 @felker
+*.html                              @saforem2 @felker
+*.css                               @saforem2 @felker 

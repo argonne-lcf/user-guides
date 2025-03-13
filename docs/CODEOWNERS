@@ -1,0 +1,78 @@
+# CODEOWNERS file for ALCF User Guides documentation
+# Format: path/to/file/or/directory @username1 @username2
+# All paths are relative to the docs directory
+
+# Default owners for all documentation
+*                                   @felker @bethcerny @keceli
+
+# Machine-specific documentation
+# /aurora/                            @felker @keceli @zhenghh04 @bertoni @rickybalin @TApplencourt
+# /polaris/                           @felker @keceli @cjknight @saforem2 @jfrancis-anl
+# /sophia/                            @felker @keceli
+# /crux/                              @felker @keceli
+/ai-testbed/                        @vksastry @wcarnold1010 @bethcerny
+
+# Data Science frameworks across all machines
+**/frameworks/pytorch.md            @felker @khossain4337 @FilippoSimini @saforem2
+**/frameworks/tensorflow.md         @felker @zhenghh04 @khossain4337 @cjknight
+**/frameworks/deepspeed.md          @saforem2 @hatanp
+**/frameworks/megatron-deepspeed.md @saforem2 @hatanp
+**/frameworks/jax.md                @cjknight @khossain4337 @felker
+**/frameworks/scikit-learn.md       @BethanyL
+**/frameworks/dask.md               @okafor @FilippoSimini
+**/frameworks/pyg.md                @ @FilippoSimini
+**/frameworks/gpytorch.md           @mngom2
+**/frameworks/oneCCL.md             @ @kaushikvelusamy @khossain4337 @hatanp
+**/frameworks/libtorch.md           @rickybalin
+
+# Applications across all machines
+**/applications/gpt-neox.md         @saforem2 @hatanp
+**/applications/megatron-deepspeed.md @atanikan @saforem2 @hatanp
+
+# Python documentation across all machines
+**/python.md                        @felker @keceli @khossain4337
+
+# Julia documentation
+**/julia.md                         @michel2323
+
+# Inference documentation
+**/inference/                       @rickybalin
+
+# Profiling documentation
+**/profiling_dl.md                  @zhenghh04 @khossain4337
+
+# Libraries documentation
+**/libraries/onedal.md              @BethanyL
+**/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
+
+# Data management across all machines
+**/data-management/daos/            @kaushikvelusamy @zhenghh04
+**/data-management/lustre/          @kaushikvelusamy @zhenghh04
+**/data-management/copper/          @kaushikvelusamy
+#/data-management/                   @bethcerny @felker @jfrancis-anl @keceli @kaushikvelusamy @peterupton
+
+# All container documentation
+**/containers/                      @atanikan
+
+# Account & Project Management documentation
+/account-project-management/        @bethcerny @felker @keceli @mantrala-ops @dymil
+
+# Running Jobs documentation
+/running-jobs/                      @felker @keceli
+
+# Policies documentation
+/policies/                          @bethcerny 
+
+# Services documentation
+/services/                          @felker @keceli
+
+# User Support documentation
+/contacting-support/                @felker @bethcerny @joconne
+
+# Images and stylesheets
+/images/                            @felker @saforem2
+/stylesheets/                       @felker @saforem2
+/javascripts/                       @felker @saforem2
+
+# HTML files
+**/*.html                           @saforem2 @felker 
