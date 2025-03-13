@@ -11,6 +11,14 @@
 # /sophia/                            @felker @keceli
 # /crux/                              @felker @keceli
 /ai-testbed/                        @vksastry @wcarnold1010 @bethcerny
+/ai-testbed/cerebras/               @sraskar
+
+# Compilers documentation
+**/compiling-and-linking/**         @TApplencourt @colleeneb
+
+# Programming models
+**/programming-models/kokkos-*.md   @zippy @masterleinad
+**/programming-models/sycl-*.md     @TApplencourt @colleeneb
 
 # Data Science frameworks across all machines
 **/frameworks/pytorch.md            @felker @khossain4337 @FilippoSimini @saforem2
@@ -24,6 +32,7 @@
 **/frameworks/gpytorch.md           @mngom2
 **/frameworks/oneCCL.md             @ @kaushikvelusamy @khossain4337 @hatanp
 **/frameworks/libtorch.md           @rickybalin
+**/inference/vllm.md                @sraskar
 
 # Applications across all machines
 **/applications/gpt-neox.md         @saforem2 @hatanp
@@ -40,15 +49,22 @@
 
 # Profiling documentation
 **/profiling_dl.md                  @zhenghh04 @khossain4337
+**/performance-tools/vtune.md       @jkwack
 
 # Libraries documentation
 **/libraries/onedal.md              @BethanyL
 **/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
+**/libraries/cabana-*.md            @zippy
+**/libraries/spack-pe.md            @koysean
+
+# Visualization documentation
+**/visualization/**                 @srizzi88
 
 # Data management across all machines
-**/data-management/daos/            @kaushikvelusamy @zhenghh04
-**/data-management/lustre/          @kaushikvelusamy @zhenghh04
-**/data-management/copper/          @kaushikvelusamy
+**/data-management/daos/            @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/lustre/          @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/copper/          @kaushikvelusamy @kevin-harms
+**/filesystem-and-storage/          @kevin-harms
 #/data-management/                   @bethcerny @felker @jfrancis-anl @keceli @kaushikvelusamy @peterupton
 
 # All container documentation
@@ -58,16 +74,26 @@
 /account-project-management/        @bethcerny @felker @keceli @mantrala-ops @dymil
 
 # Running Jobs documentation
-/running-jobs/                      @felker @keceli
+/running-jobs/                      @felker @keceli @pmrich
+**/running-jobs.md                  @pmrich
+**/queueing-and-running-jobs/       @pmrich
+**/pbs-*.md                         @pmrich
 
 # Policies documentation
 /policies/                          @bethcerny 
 
 # Services documentation
 /services/                          @felker @keceli
+/services/gitlab-ci.md              @peterupton @thilinarmtb
+**/services/gitlab-ci.md            @peterupton @thilinarmtb
+
+# Workflows
+**/workflows/parsl.md               @cms21
+**/workflows/                       @cms21
 
 # User Support documentation
-/contacting-support/                @felker @bethcerny @joconne
+/contacting-support/                @felker @bethcerny @joconne @alcf-haritha @jfrancis-anl
+**/technical-support.md             @alcf-haritha @jfrancis-anl
 
 # Images and stylesheets
 /images/                            @felker @saforem2
