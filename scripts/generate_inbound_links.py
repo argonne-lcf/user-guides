@@ -55,11 +55,24 @@ def find_markdown_file(path):
     # Remove leading and trailing slashes
     path = path.strip('/')
     
+    # Handle paths with /index or /index.html at the end
+    base_path = path
+    if path.endswith('/index.html'):
+        base_path = path[:-11]  # Remove /index.html
+    elif path.endswith('/index'):
+        base_path = path[:-6]   # Remove /index
+    elif path.endswith('index.html'):
+        base_path = path[:-10]  # Remove index.html
+    elif path.endswith('index'):
+        base_path = path[:-5]   # Remove index
+    
     # Possible file paths to check
     possible_paths = [
         os.path.join(DOCS_DIR, f"{path}.md"),                  # path.md
         os.path.join(DOCS_DIR, path, "index.md"),              # path/index.md
-        os.path.join(DOCS_DIR, f"{path}/index.md")             # path/index.md (alternative format)
+        os.path.join(DOCS_DIR, f"{path}/index.md"),            # path/index.md (alternative format)
+        os.path.join(DOCS_DIR, f"{base_path}.md"),             # base_path.md (for URLs with /index or /index.html)
+        os.path.join(DOCS_DIR, base_path, "index.md")          # base_path/index.md (for URLs with /index or /index.html)
     ]
     
     # Check if any of the possible paths exist
@@ -69,8 +82,12 @@ def find_markdown_file(path):
             rel_path = file_path[len(DOCS_DIR)+1:]  # +1 for the slash
             return f"./{rel_path}"
     
-    # If no file exists, return a default path
-    return f"./{path}.md"
+    # If no file exists, return a default path based on the base_path
+    # This is more likely to be correct for URLs with /index or /index.html
+    if path != base_path:
+        return f"./{base_path}.md"
+    else:
+        return f"./{path}.md"
 
 def main():
     """Convert URLs to relative links."""
@@ -104,13 +121,27 @@ These links are automatically validated during the build process with `mkdocs bu
             # Remove trailing slash for lookup
             lookup_path = original_path.rstrip('/')
             
+            # Handle paths with /index or /index.html at the end for redirect lookup
+            base_lookup_path = lookup_path
+            if lookup_path.endswith('/index.html'):
+                base_lookup_path = lookup_path[:-11]  # Remove /index.html
+            elif lookup_path.endswith('/index'):
+                base_lookup_path = lookup_path[:-6]   # Remove /index
+            elif lookup_path.endswith('index.html'):
+                base_lookup_path = lookup_path[:-10]  # Remove index.html
+            elif lookup_path.endswith('index'):
+                base_lookup_path = lookup_path[:-5]   # Remove index
+            
             # Check if this path is redirected
+            path_to_check = lookup_path
             if lookup_path in redirects:
                 target_path = redirects[lookup_path]
                 print(f"Redirecting {lookup_path} to {target_path}")
                 path_to_check = target_path
-            else:
-                path_to_check = lookup_path
+            elif base_lookup_path in redirects:
+                target_path = redirects[base_lookup_path]
+                print(f"Redirecting {base_lookup_path} to {target_path}")
+                path_to_check = target_path
             
             # Find the correct markdown file
             md_path = find_markdown_file(path_to_check)
