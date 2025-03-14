@@ -10,14 +10,14 @@
 # /polaris/                           
 # /sophia/                            
 # /crux/                              
-/ai-testbed/                        @vksastry @wcarnold1010 @bethcerny
+/ai-testbed/                        @vksastry @wcarnold1010
 /ai-testbed/cerebras/               @sraskar
 
 # Compilers documentation
 aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Programming models
-**/programming-models/kokkos-*.md   @zippy @masterleinad
+**/programming-models/kokkos-*.md   @zippy  # @masterleinad
 **/programming-models/sycl-*.md     @TApplencourt @colleeneb
 
 # Computational chemistry and molecular dynamics
@@ -36,10 +36,10 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Data Science frameworks across all machines
 **/frameworks/pytorch.md            @khossain4337 @FilippoSimini @saforem2
-**/frameworks/tensorflow.md         @zhenghh04 @khossain4337 @cjknight
+**/frameworks/tensorflow.md         @zhenghh04 @khossain4337
 **/frameworks/deepspeed.md          @saforem2 @hatanp
 **/frameworks/megatron-deepspeed.md @saforem2 @hatanp
-**/frameworks/jax.md                @cjknight @khossain4337
+**/frameworks/jax.md                @khossain4337
 **/frameworks/scikit-learn.md       @BethanyL
 **onedal.md                         @BethanyL
 **/frameworks/dask.md               @okafor @FilippoSimini
@@ -53,7 +53,8 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/applications/megatron-deepspeed.md @atanikan @saforem2 @hatanp
 
 # Python documentation across all machines
-**/python.md                        @keceli @khossain4337
+**/python.md                        @felker @khossain4337
+**/jupyter*			    @keceli
 
 # Julia documentation
 **/julia.md                         @michel2323
