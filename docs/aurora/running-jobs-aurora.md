@@ -93,11 +93,13 @@ We recommend against using `-W tolerate_node_failures=all` in your qsub command,
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
+See below section for more details on node [Placement](#placement).
+
 ## <a name="Aurora-MPICH"></a>Aurora MPICH
 
 The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
 
-There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in
+There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in:
 
 ```bash
 $MPI_ROOT/share/doc/mpich/README.envvar
@@ -579,4 +581,46 @@ If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note
 ```bash
 qsub -l select=10:tier0=x4519 -l place=scatter:group=tier0 pbs_submit_script.sh # allocating 10 nodes in rack x4519
 qsub -l select=2:tier1=x4519c2 -l place=scatter:group=tier1 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
+```
+
+Another example that requests 10 nodes (8 unspecified nodes + 2 specific compute nodes) would use:
+```bash
+#PBS -l select=8:tier1=x4000c0+1:host=x4311c1s0b0n0+1:host=x4311c1s1b0n0
+```
+
+You can also easily check what tier a node is a member of before your job submission: 
+
+```console
+> pbsnodes x4000c0s0b0n0 | grep tier
+resources_available.tier0 = x4000
+resources_available.tier1 = x4000c0
+```
+
+To check if a specific node is available:
+
+```console
+> pbsnodes -Sv <node>
+```
+
+Another useful shell function for querying the compute node IDs and statuses available in a given `at_queue` (use `lustre_scaling`) and (optionally) matching status type `{free, job-exclusive, down}`:
+```bash
+pbsnodes_queue() {
+  local at_queue="${1}"
+  local state="${2:-}"
+
+  if [ -z "${state}" ]; then
+    pbsnodes -avF JSON | jq --arg queue "${at_queue}" -r '.nodes[] | select(.resources_available.at_queue|split(",")|.[]|contains($queue)) | [.resources_available.vnode,.state,.comment]|join(",")'
+  else
+    pbsnodes -avF JSON | jq --arg queue "${at_queue}" --arg state "${state}" -r '.nodes[] | select(.resources_available.at_queue|split(",")|.[]|contains($queue))|select(.state == $state) | [.resources_available.vnode,.state,.comment]|join(",")'
+  fi
+}
+```
+If this shell function is defined (e.g. in your local `~/.bashrc`), you can see the nodes that are currently `down` for example:
+```console
+❯ pbsnodes_queue lustre_scaling down
+x4713c3s2b0n0,down,
+x4013c0s7b0n0,down,EXECJOB_BEGIN: RECHECK 1/40 grand mdc disconnect threshold exceeded(3/10min) (job 2471003)
+x4703c6s4b0n0,down,
+x4703c7s4b0n0,down,EXECJOB_END: RECHECK 2/40 grand mdc disconnect threshold exceeded(3/10min) (job 1070810)
+x4210c2s1b0n0,down,node down: communication closed
 ```
