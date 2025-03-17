@@ -453,13 +453,14 @@ nav:
   - Acronyms: acronyms.md
 
 # Pages that are not in navigation but still built
-# These always end up in generated site, both mkdocs "build" and "serve"
+# These always end up in the generated site (both mkdocs "build" and "serve")
 not_in_nav: |
   not_in_nav/
   index.md
+  inbound-links.md
   #account-project-management/allocation-management/not_in_nav/
 
-# Pages that will never end up in a generated site (implies not_in_nav)
+# Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)
 exclude_docs: |
   unused/
   old/
@@ -471,7 +472,8 @@ exclude_docs: |
 # (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
 # content to Sophia and remove the rest entirely)
 
-# Pages still built during "mkdocs serve" for local testing; appears to suppress not_in_nav WARNINGs too
+# Pages still built during "mkdocs serve" for local testing, but not during "mkdocs build"
+# appears to suppress not_in_nav WARNINGs for these pages, too
 # emits harmless INFO logs that will disappear during "mkdocs build"
 draft_docs: |
   drafts/
