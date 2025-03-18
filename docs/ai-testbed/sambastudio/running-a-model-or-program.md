@@ -56,9 +56,8 @@ snapi endpoint create --help
 
 When not using an endpoint for an extended period, please stop it using the Stop button from the pulldown at the upper right, or with snapi as shown below, replacing project name and endpoint name.  The endpoint can be restarted quickly (e.g. a minute or two) when needed.
 ```
-snapi endpoint stop --help --project=<project name> --endpoint=<endpoint name>
+snapi endpoint stop --project=<project name> --endpoint=<endpoint name>
 ```
-TODO The above isn't working???
 
 #### GUI
 
@@ -73,6 +72,12 @@ Install the SambaStudio CLI into a python virtual environment.
 See [SambaStudio CLI setup guide](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html) for more details.
 You will need python 3.9 or 3.10 available. If needed, install in the usual way for your operating system. (e.g. `sudo apt install python3.9` in Debian Linuxes). (Note: simple install of a new python version will not override your default python command.)
 
+Note: the CLI can be also be installed in, and used from, your enviroment on a SambaNova login node, which has python 3.9 installed.
+```bash
+ssh ALCFUserID@sambanova.alcf.anl.gov
+Password: < MobilePASS+ code >
+```
+
 First, create and activate a virtual environment. 
 ```console
 # or python3.10
@@ -82,18 +87,24 @@ pip3 install -U pip
 ```
 
 Next, download the SDK to your workstation
-From the help dropdown in the upper right of the SambaStudio GUI, select Resources. (TODO; image here)
+From the help dropdown in the upper right of the SambaStudio GUI, select Resources.
+
+![Create Project](files/SambaStudio_upper_right.png)
+
+This panel will open:
+
+![Create Project](files/SambaStudio_Resources.png) 
 
 If you have not already done so:
 
-1. Click on Generated API Key.
-2. Click on Generate
+1. Click on `Generate API Key`
+2. Click on `Generate`
 3. Click on the icon to the right of the API key preview to copy it.
 4. Save the key in a secure location.
 
-Click on Download SNSDK and download it to your selected location.
+Click on `Download SNSDK` and download it to your selected location.
 
-Click on Download SNAPI and download it to your selected location.
+Click on `Download SNAPI` and download it to your selected location.
 
 Install the packages in the following order. These examples assume download to ~/Downloads and a specific release name. 
 
@@ -110,7 +121,7 @@ mkdir ~/.snapi
 In the `~/.snapi` directory, create a `config.json` with the following contents:
 ```
 {
-    "HOST_NAME": "https://<SambaStudio-hostname>",
+    "HOST_NAME": "https://metis.alcf.anl.gov/",
     "CONFIG_DIR": "./",
     "DISABLE_SSL_WARNINGS": "false"
 }
