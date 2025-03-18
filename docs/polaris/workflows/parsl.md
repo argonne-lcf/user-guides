@@ -10,7 +10,7 @@ For many applications, managing an ensemble of jobs into a workflow is a critica
 
 You can install parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the ``conda`` module to include parsl, but here is an example way to do it:
 
-```shell
+```bash linenums="1"
 # Load the Conda Module (needed every time you use parsl)
 module use /soft/modulefiles
 module load conda
@@ -32,17 +32,15 @@ pip install parsl
 
 Parsl has a variety of possible configuration settings. As an example, we provide the configuration below that will run one task per GPU:
 
-```python
+```python linenums="1"
 from parsl.config import Config
 
 # PBSPro is the right provider for Polaris:
 from parsl.providers import PBSProProvider
 # The high throughput executor is for scaling to HPC systems:
 from parsl.executors import HighThroughputExecutor
-# You can use the MPI launcher, but may want the Gnu Parallel launcher, see below
-from parsl.launchers import MpiExecLauncher, GnuParallelLauncher
-# address_by_interface is needed for the HighThroughputExecutor:
-from parsl.addresses import address_by_interface
+# Use the MPI launcher to create one worker per GPU
+from parsl.launchers import MpiExecLauncher
 # For checkpointing:
 from parsl.utils import get_all_checkpoints
 
@@ -58,7 +56,6 @@ user_opts = {
     "nodes_per_block":  3, # think of a block as one job on polaris, so to run on the main queues, set this >= 10
     "cpus_per_node":    32, # Up to 64 with multithreading
     "available_accelerators": 4, # Each Polaris node has 4 GPUs, setting this ensures one worker per GPU
-    "cores_per_worker": 8, # this will set the number of cpu hardware threads per worker.  
 }
 
 checkpoints = get_all_checkpoints(run_dir)
@@ -71,20 +68,17 @@ config = Config(
                 heartbeat_period=15,
                 heartbeat_threshold=120,
                 worker_debug=True,
-                available_accelerators=user_opts["available_accelerators"], # if this is set, it will override other settings for max_workers if set
-                cores_per_worker=user_opts["cores_per_worker"],
-                address=address_by_interface("bond0"),
-                cpu_affinity="block-reverse",
+                available_accelerators=user_opts["available_accelerators"],
+                max_workers_per_node=user_opts["available_accelerators"],
+                # This give optimal binding of threads to GPUs on a Polaris node
+                cpu_affinity="list:24-31,56-63:16-23,48-55:8-15,40-47:0-7,32-39",
                 prefetch_capacity=0,
-                start_method="spawn",  # Needed to avoid interactions between MPI and os.fork
                 provider=PBSProProvider(
                     launcher=MpiExecLauncher(bind_cmd="--cpu-bind", overrides="--depth=64 --ppn 1"),
-                    # Which launcher to use?  Check out the note below for some details.  Try MPI first!
-                    # launcher=GnuParallelLauncher(),
                     account=user_opts["account"],
                     queue=user_opts["queue"],
                     select_options="ngpus=4",
-                    # PBS directives (header lines): for array jobs pass '-J' option
+                    # PBS directives (header lines)
                     scheduler_options=user_opts["scheduler_options"],
                     # Command to be run before starting a worker, such as:
                     worker_init=user_opts["worker_init"],
@@ -104,13 +98,5 @@ config = Config(
         retries=2,
         app_cache=True,
 )
-
 ```
 
-## Special notes for Polaris
-
-On Polaris, there is a known bug where Python applications launched with `mpi` and that use ``fork`` to spawn processes can sometimes have unexplained hangs. For this reason, it is recommended to use ``start_method="spawn"`` on Polaris when using the ``MpiExecLauncher`` as shown in the example config above. Alternatively, another solution is to use the ``GNUParallelLauncher`` which uses ``GNU Parallel`` to spawn processes. ``GNU Parallel`` can be loaded in your environment with the command ``module load gnu-parallel``. Both of these approaches will circumvent the hang issue from using ``fork``.
-
-## Updates
-
-For ``parsl`` versions after July 2023, the ``address`` passed in the ``HighThroughputExecutor`` needs to be set to ``address = address_by_interface("bond0")``. With ``parsl`` versions prior to July 2023, it was recommended to use ``address = address_by_hostname()`` on Polaris, but with later versions, this will not work on Polaris (or any other machine).

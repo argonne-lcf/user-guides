@@ -3,14 +3,13 @@
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Get Started with ALCF’s Systems
-To get started using our resources, please visit: 
-[Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
+To get started using our resources, please visit [Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
-- [Running on Polaris](https://docs.alcf.anl.gov/polaris/running-jobs/) 
+- [Running on Polaris](../../polaris/running-jobs.md) 
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
-- [Community Data Sharing with ACDC (using Eagle)](https://docs.alcf.anl.gov/data-management/acdc/acdc-overview/)
+- [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/index.md)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
@@ -70,7 +69,9 @@ The PI or a proxy must approve each team member to access ALCF resources and run
 
 PI/proxies with active ALCF accounts can also approve new account requests, project membership requests, account reactivation requests, and add existing active ALCF users to the project by logging into the ALCF Account and Project Management application.
 
-**Note:** If PI/proxies need to request an ALCF account, see the section below for instructions on "how to apply" for an account.
+!!! note
+	
+	If PI/proxies need to request an ALCF account, see the section below for instructions on "how to apply" for an account.
 
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
@@ -92,27 +93,31 @@ Shortly after your allocation begins, we will begin sending you a weekly project
 Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Project Status Report for [PROJECT SHORT NAME]
 
 ## Reporting Requirements for INCITE, ALCC, and ADSP
-**Note:** PIs that are awarded a Director's Discretionary allocation are not required to submit project reports.
+
+!!! note
+
+    PIs that are awarded a Director's Discretionary allocation are not required to submit project reports.
 
 If you received an INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation.
 
-The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For more information, see the Quarterly Report webpage.
+The ALCF will send you a report template at the end of each quarter. Please complete the report promptly and submit it via email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For more information, see the [Quarterly Report webpage](./project-reports.md).
 
 ## Policies
+
+### Facility Policies
+Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../../policies/index.md).
+
 ### Pullback Policy
 Please be aware that we will periodically monitor, and could potentially adjust, your project allocation if a large portion of it goes unused. You may view: [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
 
 ### Allocation Overburn Policy
-Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../policies/queue-scheduling/queue-and-scheduling-policy.md#incitealcc-overburn-policy)
+Please see this page for overburn/overuse eligibility for INCITE projects that have exhausted their allocation in the first 11 months of its allocation year: [Allocation Overburn](../../policies/queue-scheduling/index.md#incitealcc-overburn-policy)
 
 ### Acknowledgment In Publications
 Please follow the guidelines provided on the [ALCF Acknowledgement Policy page](../../policies/alcf-acknowledgement-policy.md) to properly acknowledge the use of ALCF resources in all of your publications, both online and print.
 
-### Facility Policies
-Facility policies have been established to provide consistent and reliable services. Please read about our [ALCF Facility Policies](../../policies/facility-policies.md).
-
 ## Useful Allocation and Quota Commands
-We have an allocation management tool called sbank, and below are a few helpful sbank commands.  
+We have an allocation management tool called sbank, and below are a few helpful sbank commands:
 
 - `myprojectquotas`: Log into Polaris and type this command to view the project directory quotas for all your projects.
 - `myquota`: Log into Polaris and type this command to view your home directory quota.

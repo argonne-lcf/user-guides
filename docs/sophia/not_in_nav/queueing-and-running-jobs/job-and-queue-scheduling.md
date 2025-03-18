@@ -431,7 +431,7 @@ For more information on Cobalt commands and their options, consult the manpages 
 
 ## Using the Job Resource Manager: Commands, Options, and Examples
 
-This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. For an introduction to using the job resource manager and running jobs on ThetaGPU, see [Running Jobs on ThetaGPU](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta-gpu/queueing-running-jobs/job-and-queue-scheduling.md).
+This document provides examples of how to submit jobs on our systems. It also provides examples of commands that can be used to query the status of jobs, what partitions are available, etc. For an introduction to using the job resource manager and running jobs on ThetaGPU, see [Running Jobs on ThetaGPU](https://github.com/argonne-lcf/alcf-userguide/blob/main/docs/theta-gpu/queueing-running-jobs/index.md).
 
 ### Submit a Job Request
 

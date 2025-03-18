@@ -14,7 +14,6 @@ This page aims to give you a high-level overview of key performance numbers for 
    - To improve reproducibility, only the “best” numbers are reported (e.g., we take the minimum time of repetition step). When doing "real" science, please perform better statistical analysis.
    - The code will use a mixture of OpenMP and SYCL in C++ (sorry, Fortran, Python, and Level Zero lovers).
 
-The asterisk (`*`) means that the data was collected on Sunspot with an older software stack.
 
 ## Micro-benchmarks
 

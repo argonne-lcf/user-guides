@@ -18,7 +18,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
     ```
 
-    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ```bash linenums="1" title="Install vLLM using pre-built wheels"
 module load frameworks
@@ -30,8 +30,8 @@ module use /opt/aurora/24.180.3/spack/unified/0.8.0/install/modulefiles/oneapi/2
 module use /soft/preview/pe/24.347.0-RC2/modulefiles
 module add oneapi/release
 
-pip install /flare/datascience/sraskar/vllm-install/wheels/*
-pip install /flare/datascience/sraskar/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8545.d20250129.xpu-py3-none-any.whl
+pip install /flare/datasets/softwares/vllm-install/wheels/*
+pip install /flare/datasets/softwares/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8545.d20250129.xpu-py3-none-any.whl
 ```
 
 ## Access Model Weights

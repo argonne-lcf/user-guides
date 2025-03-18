@@ -9,7 +9,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
-| prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> See table below                              |
+| prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**           |
 | prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
@@ -68,11 +68,13 @@ Recommended PBSPro options follow.
 #PBS -q <requested_Queue>
 ```
 
-More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/job-and-queue-scheduling.md).
+More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
 
 ## Working Around Node Failures
 
-As Aurora is still a pre-production supercomputer, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
+As Aurora is in early production stage, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
+
+If you determine a node is bad, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
 
 We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
@@ -91,11 +93,13 @@ We recommend against using `-W tolerate_node_failures=all` in your qsub command,
 
 It is important to note that all nodes marked as faulty by PBS will not be used in subsequent jobs. This mechanism only provides you with a means to execute additional mpiexec commands under the same interactive job after manually removing nodes identified as faulty. Once your PBS job has exited, those faulty nodes will remain offline until further intervention by Aurora staff.
 
+See below section for more details on node [Placement](#placement).
+
 ## <a name="Aurora-MPICH"></a>Aurora MPICH
 
 The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
 
-There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in
+There are many, many configuration and tuning parameters for Aurora MPICH. Simple ASCII text documentation of the environment variables usable to control behavior is in:
 
 ```bash
 $MPI_ROOT/share/doc/mpich/README.envvar
@@ -457,6 +461,67 @@ wait
 
 Users will likely find it beneficial to launch processes across CPU cores in both sockets of a node.
 
+
+## Using the HBM on the Sapphire Rapids CPUs
+
+As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions.
+
+This configuration can be seen from running `numactl -H` on an Aurora node:
+
+
+```output
+available: 4 nodes (0-3)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155
+node 0 size: 515524 MB
+node 0 free: 497948 MB
+node 1 cpus: 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207
+node 1 size: 514994 MB
+node 1 free: 497013 MB
+node 2 cpus:
+node 2 size: 65536 MB
+node 2 free: 65424 MB
+node 3 cpus:
+node 3 size: 65536 MB
+node 3 free: 65433 MB
+node distances:
+node   0   1   2   3 
+  0:  10  21  13  23 
+  1:  21  10  23  13 
+  2:  13  23  10  23 
+  3:  23  13  23  10 
+```
+
+Here we see that the first CPU on the node (hardware threads 0-51 and 104-155) are associated with 512 GB memory in NUMA node 0 (node 0), and the second CPU (hardware threads 52-103 and 156-207) are also associated with 512 GB memory in `NUMA node 1 (node 1)`. The 64 GB HBM for the first CPU is in `node 2` and the second is `node 3`. Note that the "nodes" listed here refer to a NUMA domain on one node and not a different physical node.
+
+To specify in which memory ranks allocate, you can use several methods:
+
+1. Use the [memkind library](https://github.com/memkind/memkind) with explicit calls like:
+      ```c
+      void* hbw_malloc(size_t size);
+      void hbw_free(void *ptr)
+      ```
+to allocate and free memory in HBM. By default, `malloc` will be in DDR.
+
+2. Use `numactl` to specify in which NUMA domain (based on `numactl -H` output) to allocate memory. For example, you can use
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 numactl -m 2-3 ./app
+```
+This uses the `-m` flag to allocate memory only in NUMA node 2 and NUMA node 3, which is the HBM associated with the first and second CPUs, respectively. Or you can use the `--preferred` flag to specify that you would prefer that the memory allocations begin on the HBM, but if memory cannot be allocated there fall back to the DDR. For example, to allocated first in NUMA node 2 and fall back to DDR if needed:
+```
+mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
+```
+Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
+
+3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example,
+ to allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1 
+```
+To allocate memory for rank 0 in NUMA node 2 (HBM) and rank 1 in NUMA node 3 (HBM):
+```
+mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:2:3
+```
+
 ## <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
 
 Currently, the only access to the internet is via a proxy.  Here are the proxy environment variables for Aurora:
@@ -478,3 +543,84 @@ If you want to control the location of a few nodes, for example 2 out of 64, but
 ## <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
 Content coming soon.
 -->
+
+## Placement 
+On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2-across by 4-high arrangement numbered 0-7, going left to right, bottom to top. Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.
+
+![test](./images/AuroraChassisNumber.svg)
+/// caption
+Figure: Liquid Cooled Cabinet Front and Chassis Numbering (Source: HPE Shasta Hardware Architecture [documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00115093en_us&page=Shasta_Hardware_Architecture.html)
+///
+
+<!-- This is a very brief guide to translating the node xnames used in the ALCF.  This only addresses the nodes, but every component in the system has an xname that geo-locates it in the system.  For the nodes, an xname is of the form **xPQRRc#s#b#n#** where: -->
+
+<!-- x is always x -->
+<!-- P = system; single digit -->
+<!-- Q = row; single digit -->
+<!-- RR = rack; two digits -->
+<!-- c = chassis -->
+<!-- s = slot -->
+<!-- b = bmc (baseboard management controller) -->
+<!-- n = node -->
+<!-- # = single digit integers | -->
+
+As an example, for node `x4109c0s0b0n0`, this can be decomposed as:
+```
+x4109c0s0b0n0 == Rack Identifier x4109, Chassis c0, Slot s0, Board b0, Node n0
+```
+Note that the node names will always end in b0n0 (board 0, node 0) since there is only 1 board per blade, and 1 node per board.
+
+Every rack is a Dragonfly group, so if your job is 64 nodes or less you can save switch hops if all your nodes are in the same rack.  Every node has a PBS resource called `tier0` with a rack identifier (like `x4519`) and `tier1` with a rack and chassis identifier (like `x4519c3`).  PBS is configured so that it will preferentially place your jobs in the same chassis or rack if it can without delaying the start of your job.  If you want to guarantee all your nodes are grouped in a rack, you can add the group specifier to the `place` statement in PBS:
+
+```bash
+qsub -l select=8 -l place=scatter:group=tier0 pbs_submit_script.sh # allocating 8 nodes all in one rack (Dragonfly group)
+```
+
+If you wanted everything in the same chassis, replace `tier0` with `tier1`. Note that you must explicitly specify the `place` when you use `group`. If you wanted a specific rack or Dragonfly group instead of any of them, you can use:
+
+```bash
+qsub -l select=10:tier0=x4519 -l place=scatter:group=tier0 pbs_submit_script.sh # allocating 10 nodes in rack x4519
+qsub -l select=2:tier1=x4519c2 -l place=scatter:group=tier1 pbs_submit_script.sh # allocating 2 nodes in rack x4519 chassis c2
+```
+
+Another example that requests 10 nodes (8 unspecified nodes + 2 specific compute nodes) would use:
+```bash
+#PBS -l select=8:tier1=x4000c0+1:host=x4311c1s0b0n0+1:host=x4311c1s1b0n0
+```
+
+You can also easily check what tier a node is a member of before your job submission: 
+
+```console
+> pbsnodes x4000c0s0b0n0 | grep tier
+resources_available.tier0 = x4000
+resources_available.tier1 = x4000c0
+```
+
+To check if a specific node is available:
+
+```console
+> pbsnodes -Sv <node>
+```
+
+Another useful shell function for querying the compute node IDs and statuses available in a given `at_queue` (use `lustre_scaling`) and (optionally) matching status type `{free, job-exclusive, down}`:
+```bash
+pbsnodes_queue() {
+  local at_queue="${1}"
+  local state="${2:-}"
+
+  if [ -z "${state}" ]; then
+    pbsnodes -avF JSON | jq --arg queue "${at_queue}" -r '.nodes[] | select(.resources_available.at_queue|split(",")|.[]|contains($queue)) | [.resources_available.vnode,.state,.comment]|join(",")'
+  else
+    pbsnodes -avF JSON | jq --arg queue "${at_queue}" --arg state "${state}" -r '.nodes[] | select(.resources_available.at_queue|split(",")|.[]|contains($queue))|select(.state == $state) | [.resources_available.vnode,.state,.comment]|join(",")'
+  fi
+}
+```
+If this shell function is defined (e.g. in your local `~/.bashrc`), you can see the nodes that are currently `down` for example:
+```console
+❯ pbsnodes_queue lustre_scaling down
+x4713c3s2b0n0,down,
+x4013c0s7b0n0,down,EXECJOB_BEGIN: RECHECK 1/40 grand mdc disconnect threshold exceeded(3/10min) (job 2471003)
+x4703c6s4b0n0,down,
+x4703c7s4b0n0,down,EXECJOB_END: RECHECK 2/40 grand mdc disconnect threshold exceeded(3/10min) (job 1070810)
+x4210c2s1b0n0,down,node down: communication closed
+```
