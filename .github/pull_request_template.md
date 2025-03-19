@@ -1,6 +1,21 @@
 ## Description
 <!-- Describe your changes in detail -->
 
+## Screenshots (if applicable)
+<details>
+<summary>Before</summary>
+
+<!-- Add your "before" screenshots here -->
+
+</details>
+
+<details>
+<summary>After</summary>
+
+<!-- Add your "after" screenshots here -->
+
+</details>
+
 ## Related Issue(s)
 <!-- If this PR is related to an issue, please link it here -->
 
