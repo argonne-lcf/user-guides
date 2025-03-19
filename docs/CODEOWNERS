@@ -16,7 +16,7 @@
 # Default owners for everything in the repo
 # These owners will be the default owners for everything in the repository,
 # unless a later match takes precedence
-*                                   @felker @bethcerny @keceli
+#### *                                   @???
 
 
 # Machine-specific documentation
@@ -103,8 +103,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 #####/account-project-management/	    @mantrala-ops @???
 
 # Running Jobs documentation
-#/running-jobs/                      @????
-**/running-jobs.md                  @pmrich @cjknight
+#/running-jobs*                      @????
 **/queueing-and-running-jobs/       @pmrich @cjknight
 **/pbs-*.md                         @pmrich
 
@@ -121,7 +120,8 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 #**/workflows/libensemble.md        @shuds13
 
 # User Support documentation
-/contacting-support/                @alcf-haritha @jfrancis-anl
+###**/contacting-support/                @alcf-haritha @jfrancis-anl
+support*                @alcf-haritha @jfrancis-anl
 
 # Core configuration files
 /mkdocs.yml                         @felker @saforem2
