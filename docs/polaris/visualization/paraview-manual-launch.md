@@ -1,3 +1,11 @@
+---
+tags:
+  - filesystem
+  - mpi
+  - polaris
+  - visualization
+---
+
 # Manually launching a ParaView server on Polaris
 
 Sometimes it is convenient to manually launch an instance of the ParaView server. In this section, we will explain an alternative method to run the ParaView server on Polaris using an interactive job, where the user can launch the ParaView server from the command line interface.

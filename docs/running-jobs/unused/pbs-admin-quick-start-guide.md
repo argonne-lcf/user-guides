@@ -1,3 +1,13 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - job submission
+  - pbs
+  - pbs admin quick start guide
+  - running jobs
+---
+
 # PBS Admin Quick Start Guide
 The single most important thing I can tell you is where to get the [PBS BigBook](https://anl.box.com/s/rj7ac90tv6wxeu20lvfqf5j0cga76owc).  It is very good and a search will usually get you what you need if it isn't in here.
 

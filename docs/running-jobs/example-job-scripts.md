@@ -1,3 +1,16 @@
+---
+tags:
+  - example job scripts
+  - filesystem
+  - gpu
+  - job submission
+  - mpi
+  - openmp
+  - pbs
+  - performance
+  - running jobs
+---
+
 # Example Job Scripts
 
 This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./index.md).

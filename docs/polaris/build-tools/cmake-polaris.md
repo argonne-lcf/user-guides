@@ -1,3 +1,9 @@
+---
+tags:
+  - cmake
+  - polaris
+---
+
 # CMake
 
 ## CMake

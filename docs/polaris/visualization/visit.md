@@ -1,3 +1,10 @@
+---
+tags:
+  - polaris
+  - visit on polaris
+  - visualization
+---
+
 # VisIt on Polaris
 
 ## Getting Started

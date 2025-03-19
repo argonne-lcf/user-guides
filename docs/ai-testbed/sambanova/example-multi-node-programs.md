@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - example multi-node programs
+  - mpi
+  - performance
+---
+
 # Example Multi-Node Programs
 
 In this section we will learn how to extend the UNet2d and Gpt1.5B applications scripts that we introduced in the [Example Programs](./example-programs.md) to compile and run multiple instances of the model in a data parallel fashion across multiple tiles or across multiple nodes.

@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - debugging
+  - gpu
+  - hpe gdb4hpc on aurora
+  - mpi
+---
+
 # HPE gdb4hpc on Aurora
 
 The gdb4hpc is not a GPU-aware debugger but can be used to debug general code problems at scale. This debugger will apply commands to all threads in the MPI process group.

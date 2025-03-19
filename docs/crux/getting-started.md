@@ -1,3 +1,13 @@
+---
+tags:
+  - crux
+  - getting started on crux
+  - gpu
+  - mpi
+  - openmp
+  - performance
+---
+
 # Getting Started on Crux
 
 ## Logging Into Crux

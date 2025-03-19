@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - cabana
+  - gpu
+  - openmp
+---
+
 # Cabana
 
 ## Cabana

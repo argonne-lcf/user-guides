@@ -1,3 +1,11 @@
+---
+tags:
+  - getting started on sophia
+  - mpi
+  - performance
+  - sophia
+---
+
 # Getting Started on Sophia
 
 ## Logging Into Sophia

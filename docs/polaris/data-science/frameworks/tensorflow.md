@@ -1,3 +1,15 @@
+---
+tags:
+  - data science
+  - gpu
+  - mpi
+  - performance
+  - polaris
+  - pytorch
+  - tensorflow
+  - tensorflow on polaris
+---
+
 # TensorFlow on Polaris
 
 TensorFlow is a popular, open-source deep learning framework developed and released by Google. The [TensorFlow home page](https://www.tensorflow.org/) has more information about TensorFlow, which you can refer to. For troubleshooting on Polaris, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).

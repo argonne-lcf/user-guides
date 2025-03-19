@@ -1,3 +1,12 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - multi-instance gpu (mig) mode
+  - polaris
+  - workflows
+---
+
 # Multi-Instance GPU (MIG) mode
 
 MIG mode can be enabled and configured on Polaris by passing a valid configuration file to `qsub`:

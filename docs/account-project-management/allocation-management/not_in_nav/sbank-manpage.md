@@ -1,3 +1,8 @@
+---
+tags:
+  - manpage for sbank commands
+---
+
 # Manpage for sbank Commands
 
 ## sbank <meta-command> <command> [options] <args>

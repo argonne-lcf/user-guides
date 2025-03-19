@@ -1,3 +1,14 @@
+---
+tags:
+  - polaris
+  - running jobs
+  - job submission
+  - pbs
+  - hpc
+  - gpu
+  - queues
+---
+
 # Running Jobs on Polaris
 
 ## Queues

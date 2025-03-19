@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - data science
+  - gpu
+  - megatron-deepspeed
+---
+
 # Megatron-DeepSpeed
 
 [Megatron-DeepSpeed](https://github.com/argonne-lcf/Megatron-DeepSpeed) is a

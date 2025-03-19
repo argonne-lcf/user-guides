@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - gpu
+  - libensemble on aurora
+  - mpi
+  - openmp
+  - workflows
+---
+
 # libEnsemble on Aurora
 
 [libEnsemble](https://libensemble.readthedocs.io/en/main/) is a Python toolkit for running dynamic ensembles of calculations.

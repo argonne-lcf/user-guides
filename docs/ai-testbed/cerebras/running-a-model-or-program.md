@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - pytorch
+  - running a model/program
+---
+
 # Running a Model/Program
 
 ## Getting Started

@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - mpi
+  - performance
+---
+
 # Aurora Programming Environment
 
 ## Overview

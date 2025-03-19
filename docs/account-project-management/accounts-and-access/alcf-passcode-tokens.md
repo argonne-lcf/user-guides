@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf passcode tokens
+---
+
 # ALCF Passcode Tokens
 
 Please note: An account can be associated with a single token only (Mobile or Physical token). Please contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to change your token preference.

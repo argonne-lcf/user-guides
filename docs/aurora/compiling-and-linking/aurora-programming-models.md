@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - aurora programming models
+  - building
+  - compiling
+  - gpu
+  - mpi
+  - openmp
+---
+
 # Aurora Programming Models
 
 The software environment on Aurora supports several parallel programming models targeting the CPUs and GPUs.

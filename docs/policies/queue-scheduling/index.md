@@ -1,3 +1,8 @@
+---
+tags:
+  - queue and scheduling policy
+---
+
 # Queue and Scheduling Policy
 
 ## General Policy

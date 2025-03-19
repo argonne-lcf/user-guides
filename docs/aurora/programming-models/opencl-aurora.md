@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - gpu
+  - mpi
+  - opencl
+---
+
 # OpenCL
 
 ## Overview

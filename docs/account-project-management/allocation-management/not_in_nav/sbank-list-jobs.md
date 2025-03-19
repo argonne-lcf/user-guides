@@ -1,3 +1,8 @@
+---
+tags:
+  - manpage for sbank-list-jobs
+---
+
 # Manpage for sbank-list-jobs
 
 ## sbank-list-jobs [options]

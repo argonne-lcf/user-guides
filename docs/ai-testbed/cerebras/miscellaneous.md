@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - miscellaneous
+  - pytorch
+---
+
 # Miscellaneous
 
 ## Porting applications to the CS-2

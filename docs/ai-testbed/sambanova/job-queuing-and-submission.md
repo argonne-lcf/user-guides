@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - job queueing and submission
+  - mpi
+---
+
 # Job Queueing and Submission
 
 ## Introduction

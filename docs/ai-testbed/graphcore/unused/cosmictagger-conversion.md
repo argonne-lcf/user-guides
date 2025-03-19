@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - cosmictagger conversion
+  - gpu
+  - pytorch
+---
+
 # CosmicTagger Conversion
 
 The intent of this page is to show conceptually how to convert a model to run on the Graphcore system.

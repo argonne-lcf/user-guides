@@ -1,3 +1,11 @@
+---
+tags:
+  - data science
+  - gpytorch on polaris
+  - polaris
+  - pytorch
+---
+
 # GPyTorch on Polaris
 
 ## 1. Login and queue a job

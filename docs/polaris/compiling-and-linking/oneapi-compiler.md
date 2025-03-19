@@ -1,3 +1,13 @@
+---
+tags:
+  - building
+  - compiling
+  - gpu
+  - mpi
+  - oneapi compilers and support
+  - polaris
+---
+
 # oneAPI Compilers and Support
 
 The Intel oneAPI compiler and Codeplay plugins for Nvidia GPUs are available on Polaris. The oneAPI compilers are not enabled under the Cray Programming Environment system but can be used separately. Two oneAPI variants are provided, the first being a "release" version based on Intel's officially released oneAPI toolkit. [Intel Release Notes](https://www.intel.com/content/www/us/en/developer/articles/release-notes/intel-oneapi-toolkit-release-notes.html)

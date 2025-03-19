@@ -1,3 +1,15 @@
+---
+tags:
+  - data management
+  - storage
+  - filesystem
+  - files
+  - home
+  - projects
+  - grand
+  - eagle
+---
+
 # ALCF File Systems and Storage
 
 <!-- ### Home
@@ -16,7 +28,7 @@ For information on the AI Testbed storage systems, refer to the [AI Testbed Data
 
 Our HPC systems also mount a Lustre home file system, either agile-home or gecko-home. The home file system is mounted as `/home` and should generally be used for small files and any binaries to be run on Polaris or Aurora. The performance of this file system is reasonable, but using it for intensive I/O from the compute nodes is discouraged because I/O from the compute nodes uses the project data file systems, which are fast parallel systems and have far more storage space and greater I/O performance than the home directory space.
 
-The agile-home file system is regularly backed up to tape. The data file system is not backed up. It is the user’s responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
+The agile-home file system is regularly backed up to tape. The data file system is not backed up. It is the user's responsibility to ensure that copies of any critical data on the data file system have either been archived to tape or stored elsewhere.
 
 | Name                                 | Accessible From | Type   | Path                              | Production | Backed-up | Usage                                                                  |
 |--------------------------------------|-----------------|--------|-----------------------------------|------------|-----------|------------------------------------------------------------------------|

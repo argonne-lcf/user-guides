@@ -1,3 +1,13 @@
+---
+tags:
+  - ai-testbed
+  - example programs
+  - gpu
+  - mpi
+  - performance
+  - tensorflow
+---
+
 # Example Programs
 
 You can use the link to the tutorials on the SambaNova GitHub site or the examples on the compute node (as explained below).

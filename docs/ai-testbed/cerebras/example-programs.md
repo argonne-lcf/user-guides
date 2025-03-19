@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - example programs
+  - mpi
+  - performance
+  - pytorch
+---
+
 # Example Programs
 
 ## Use a local copy of the model zoo

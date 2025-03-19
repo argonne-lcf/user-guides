@@ -1,3 +1,12 @@
+---
+tags:
+  - filesystem
+  - job submission
+  - machine reservations
+  - pbs
+  - running jobs
+---
+
 # Machine Reservations
 
 To get a reservation, you must first demonstrate a need to run outside of the normal queueing policies. Reservations are available only to projects with a positive allocation.

@@ -1,3 +1,12 @@
+---
+tags:
+  - gpu
+  - mpi
+  - nccl
+  - performance
+  - polaris
+---
+
 # NCCL 
 
 NVIDIA NCCL (pronounced "Nickel") is a standalone library of standard communication routines for GPUs, implementing all-reduce, all-gather, reduce, broadcast, reduce-scatter, as well as any send/receive-based communication pattern. It has been optimized to achieve high bandwidth on platforms using PCIe, NVLink, NVswitch, as well as networking using InfiniBand Verbs or TCP/IP sockets. NCCL supports an arbitrary number of GPUs installed in a single node or across multiple nodes and can be used in either single- or multi-process (e.g., MPI) applications.

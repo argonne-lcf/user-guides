@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - data science
+  - filesystem
+  - gpu
+  - inference with vllm
+  - mpi
+---
+
 # Inference with vLLM
 
 vLLM is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.

@@ -1,3 +1,10 @@
+---
+tags:
+  - data management
+  - filesystem
+  - performance
+---
+
 # Sharing Data on Eagle Using Globus Guest Collections
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+tags:
+  - manpage for sbank-list-users
+---
+
 # Manpage for sbank-list-users
 
 ## sbank-list-users [options]

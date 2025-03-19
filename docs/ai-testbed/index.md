@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - alcf ai testbed
+  - performance
+---
+
 # ALCF AI Testbed
 
 <figure markdown>

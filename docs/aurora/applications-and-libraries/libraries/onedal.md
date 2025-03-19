@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - gpu
+  - mpi
+  - onedal
+---
+
 # oneDAL
 
 [oneAPI Data Analytics Library (oneDAL)](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onedal.html) is a library for big data analysis, which includes support for CPUs and GPUs. It includes machine learning algorithms such as k-means clustering and random forests, and it provides support for batch, online, and distributed processing modes. This page is about using the C++ API on Aurora. However, oneDAL can also be used in Python via the Intel Extension for scikit-learn, which we document in the Data Science section. 

@@ -1,3 +1,11 @@
+---
+tags:
+  - gpu
+  - performance
+  - sophia
+  - sophia machine overview
+---
+
 # Sophia Machine Overview
 
 Sophia is comprised of 24 NVIDIA DGX A100 nodes. Each DGX A100 node comprises eight NVIDIA A100 Tensor Core GPUs and two AMD Rome CPUs that provide 22 nodes with 320 GB of GPU memory and two nodes with 640 GB of GPU memory (8,320 GB in total) for training artificial intelligence (AI) datasets, while also enabling GPU-specific and -enhanced high-performance computing (HPC) applications for modeling and simulation.

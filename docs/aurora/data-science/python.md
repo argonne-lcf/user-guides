@@ -1,3 +1,17 @@
+---
+tags:
+  - aurora
+  - data science
+  - filesystem
+  - gpu
+  - mpi
+  - performance
+  - python
+  - python on aurora
+  - pytorch
+  - tensorflow
+---
+
 # Python on Aurora
 
 !!! warning "Importing Python modules at scale"

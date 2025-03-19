@@ -1,3 +1,14 @@
+---
+tags:
+  - building
+  - compiling
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - sophia
+---
+
 # Compiling and Linking on Sophia
 
 ## Overview

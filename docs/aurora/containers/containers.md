@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - containers
+  - containers on aurora
+  - filesystem
+  - pytorch
+---
+
 # Containers on Aurora
 Users of Aurora can benefit from container-based workloads for seamless compatibility across Intel systems. This guide details the use of containers on Aurora, including custom container creation, large-scale execution, and common pitfalls.
 

@@ -1,3 +1,12 @@
+---
+tags:
+  - data science
+  - gpu
+  - python
+  - sophia
+  - tensorflow
+---
+
 # Python
 
 We provide prebuilt `conda` environments containing GPU-supported builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly-used Python modules.

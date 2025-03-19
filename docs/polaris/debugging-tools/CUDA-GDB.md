@@ -1,3 +1,11 @@
+---
+tags:
+  - cuda-gdb
+  - debugging
+  - mpi
+  - polaris
+---
+
 # CUDA-GDB
 
 ## References  

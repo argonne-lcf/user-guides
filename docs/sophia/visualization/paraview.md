@@ -1,3 +1,12 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - paraview on sophia
+  - sophia
+  - visualization
+---
+
 # ParaView on Sophia
 
 The recommended way of running ParaView on Sophia is in client/server mode. This consists of running the ParaView client on your local resource and the ParaView server on the Sophia compute nodes. The ParaView client needs to first be installed on your local resource and needs to match the version that you run on Sophia.

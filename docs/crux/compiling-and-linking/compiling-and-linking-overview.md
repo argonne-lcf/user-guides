@@ -1,3 +1,12 @@
+---
+tags:
+  - building
+  - compiling
+  - compiling and linking on crux
+  - crux
+  - mpi
+---
+
 # Compiling and Linking on Crux
 
 ## Overview

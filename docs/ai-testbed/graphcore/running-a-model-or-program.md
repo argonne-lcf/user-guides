@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - pytorch
+  - steps to run a model/program
+---
+
 # Steps to Run a Model/Program
 
 > **Note**:  Please be mindful of how you are using the system.

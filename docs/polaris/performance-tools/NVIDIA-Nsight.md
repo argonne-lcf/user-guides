@@ -1,3 +1,14 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - mpi
+  - nvidia nsight tools
+  - performance
+  - polaris
+  - visualization
+---
+
 # NVIDIA Nsight tools
 
 ## References  

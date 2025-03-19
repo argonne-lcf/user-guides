@@ -1,3 +1,8 @@
+---
+tags:
+  - questions/issues on alcf docs
+---
+
 # Questions/Issues on ALCF Docs
 
 The ALCF documentation source code is hosted on GitHub to make it easier to contribute and collaborate.

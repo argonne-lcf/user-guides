@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - gpu
+  - mpi
+  - sycl on aurora
+---
+
 # SYCL on Aurora
 
 ## Overview

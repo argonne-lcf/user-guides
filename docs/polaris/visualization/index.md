@@ -1,3 +1,10 @@
+---
+tags:
+  - polaris
+  - visualization
+  - visualization on polaris
+---
+
 # Visualization on Polaris
 
 Starting in January 2024, Polaris will serve as the primary production resource for visualization and analysis.

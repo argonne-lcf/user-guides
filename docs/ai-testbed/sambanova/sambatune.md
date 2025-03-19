@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+---
+
 # Profiling and performance tuning with SambaTune
 
 This section covers how to use the SambaTune profiling performance tuning tool, and the SambaTune UI for viewing the results.

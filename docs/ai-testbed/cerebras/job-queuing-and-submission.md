@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - job queuing and submission
+  - pytorch
+---
+
 # Job Queuing and Submission
 
 The CS-2 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>

@@ -1,3 +1,14 @@
+---
+tags:
+  - building
+  - compiling
+  - gpu
+  - mpi
+  - nvidia compilers on polaris
+  - openmp
+  - polaris
+---
+
 # NVIDIA Compilers on Polaris
 
 The NVIDIA compilers (`nvc`, `nvc++`, `nvcc`, and `nvfortran`) are available on Polaris via the `PrgEnv-nvhpc` and `nvhpc` modules. There is currently a `PrgEnv-nvidia` module available, but that will soon be deprecated in Cray's PE, thus it is not recommended for use.

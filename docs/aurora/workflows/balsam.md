@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - balsam on aurora
+  - gpu
+  - mpi
+  - workflows
+---
+
 # Balsam on Aurora
 
 [Balsam](https://github.com/argonne-lcf/balsam) is a toolkit for managing large computational campaigns on HPC systems. Balsam helps users execute large numbers of jobs with inter-job dependencies, track job outcomes, and manage post-processing analysis. The command line interface and Python API make it easy for users to adopt: after wrapping the command line for an application in a few lines of Python code, users can describe jobs with accompanying options. These jobs are stored persistently in the Balsam database. Balsam is especially well-suited for executing large ensembles of MPI tasks with a variety of sizes.

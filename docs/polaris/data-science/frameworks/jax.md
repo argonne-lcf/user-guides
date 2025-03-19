@@ -1,3 +1,15 @@
+---
+tags:
+  - data science
+  - gpu
+  - jax
+  - mpi
+  - performance
+  - polaris
+  - pytorch
+  - tensorflow
+---
+
 # JAX
 
 JAX is another popular Python package for accelerated computing. JAX is built on XLA (the same XLA TensorFlow uses) as well as AutoGrad, and additionally has acceleration tools that operate on functions such as `vmap`, `jit`, etc. JAX is not as widespread in machine learning as TensorFlow and PyTorch for traditional models (Computer Vision, Language Models), though it is quickly gaining prominence. JAX is very powerful when a program needs non-traditional autodifferentiation or vectorization, such as forward-mode AD, higher-order derivatives, Jacobians, Hessians, or any combination of the above. Users of JAX on Polaris are encouraged to read the [user documentation](https://jax.readthedocs.io/en/latest/) in detail, particularly the details about pure-functional programming, no in-place operations, and the common mistakes in writing functions for the `@jit` decorator.

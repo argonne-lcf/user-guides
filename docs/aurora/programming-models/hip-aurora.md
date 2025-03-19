@@ -1,3 +1,9 @@
+---
+tags:
+  - aurora
+  - hip on aurora
+---
+
 # HIP on Aurora
 
 ALCF experimentally supports applications which use the HIP programming model via [chipStar](https://github.com/CHIP-SPV/chipStar). 

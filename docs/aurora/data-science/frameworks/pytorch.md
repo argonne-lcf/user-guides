@@ -1,3 +1,16 @@
+---
+tags:
+  - aurora
+  - data science
+  - filesystem
+  - gpu
+  - mpi
+  - performance
+  - pytorch
+  - pytorch on aurora
+  - tensorflow
+---
+
 # PyTorch on Aurora
 
 PyTorch is a popular, open-source deep learning framework developed and 

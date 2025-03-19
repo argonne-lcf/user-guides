@@ -1,3 +1,13 @@
+---
+tags:
+  - filesystem
+  - job submission
+  - mpi
+  - pbs
+  - pbs pro `qsub` options
+  - running jobs
+---
+
 # PBS Pro `qsub` Options
 
 Version 1.2 2021-04-28 

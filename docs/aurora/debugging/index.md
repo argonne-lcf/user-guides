@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - debugging
+  - gpu
+  - mpi
+---
+
 # Debugging on Aurora - Overview
 
 There are 3 debuggers available on Aurora:

@@ -1,3 +1,16 @@
+---
+tags:
+  - crux
+  - filesystem
+  - job submission
+  - mpi
+  - openmp
+  - pbs
+  - performance
+  - running jobs
+  - running jobs on crux
+---
+
 # Running Jobs on Crux
 
 ## Queues

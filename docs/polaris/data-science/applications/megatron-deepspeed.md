@@ -1,3 +1,12 @@
+---
+tags:
+  - data science
+  - gpu
+  - megatron-deepspeed
+  - mpi
+  - polaris
+---
+
 # Megatron-DeepSpeed
 
 We describe below the instructions for launching distributed training with Microsoft's Megatron-DeepSpeed and briefly describe some parallelism strategies and various optimizations that are supported.

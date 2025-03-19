@@ -1,3 +1,8 @@
+---
+tags:
+  - ai-testbed
+---
+
 # Tunneling and Forwarding Ports
 
 Port forwarding is covered here.  This is specifically for TensorBoard.

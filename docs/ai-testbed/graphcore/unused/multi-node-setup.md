@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - multi-node setup
+---
+
 # Multi-node Setup
 
 These steps only need to be executed once per user.

@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - job queueing and submission
+---
+
 # Job Queueing and Submission
 
 ## Introduction

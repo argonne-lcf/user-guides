@@ -1,3 +1,15 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - job submission
+  - mpi
+  - openmp
+  - pbs
+  - running jobs
+  - running jobs using pbs
+---
+
 # Running Jobs using PBS
 
 ## Documentation / Tools

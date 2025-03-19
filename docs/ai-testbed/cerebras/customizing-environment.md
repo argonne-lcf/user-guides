@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - customizing environments
+  - pytorch
+  - tensorflow
+---
+
 # Customizing Environments
 
 ## Using virtual Python environments

@@ -1,3 +1,13 @@
+---
+tags:
+  - gpu
+  - job submission
+  - pbs
+  - running jobs
+  - running jobs on sophia
+  - sophia
+---
+
 # Running Jobs on Sophia
 
 ### Nodes vs Queue

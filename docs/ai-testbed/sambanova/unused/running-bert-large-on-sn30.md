@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+---
+
 # Running BERT-Large on SambaNova DataScale SN30-8
 
 <!-- ## Getting started

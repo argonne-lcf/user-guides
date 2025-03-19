@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - copper
+  - data management
+  - filesystem
+  - mpi
+  - performance
+---
+
 # Copper
 
 Copper is a co-operative caching layer for scalable parallel data movement in Exascale Supercomputers developed at Argonne Leadership Computing Facility.

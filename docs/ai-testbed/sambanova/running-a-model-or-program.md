@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - running a model/program
+---
+
 # Running a Model/Program
 
 > **Note**:  Please be mindful of how you are using the system.

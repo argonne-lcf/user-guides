@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - data management
+  - filesystem
+  - flare filesystem
+  - performance
+---
+
 # Flare Filesystem
 
 **Flare** is a 91 PB Lustre Filesystem with 160 OSTs, 40 MDTs, and 48 Gateway nodes mounted at `/lus/flare/projects/` with a peak theoretical performance of 650 GB/s. You should launch jobs only from this Flare space.

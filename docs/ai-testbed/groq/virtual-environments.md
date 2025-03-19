@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - virtual environments
+---
+
 # Virtual Environments
 
 ## Install conda 

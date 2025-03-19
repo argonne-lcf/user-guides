@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - example programs
+  - mpi
+  - pytorch
+  - tensorflow
+---
+
 # Example Programs
 
 Graphcore provides examples of some well-known AI applications in their repository at https://github.com/graphcore/examples.git.

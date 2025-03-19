@@ -1,3 +1,13 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - mpi
+  - namd on polaris
+  - performance
+  - polaris
+---
+
 # NAMD on Polaris
 
 ## What is NAMD?

@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - daos architecture
+  - data management
+  - filesystem
+  - gpu
+  - mpi
+  - performance
+---
+
 # DAOS Architecture
 
 !!! warning

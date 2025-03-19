@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - sambanova model zoo samples
+---
+
 # SambaNova Model Zoo samples
 
 The [SambaNova Model Zoo](https://github.com/sambanova/modelzoo/tree/main) is SambaNova's new github repository for delivering RDU-compatible source code, including example applications for compiling and running models on SambaNova hardware.

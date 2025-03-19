@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf resource software use
+---
+
 # ALCF Resource Software Use
 
 All software used on ALCF computers must be appropriately acquired and used according to the appropriate licensing. Possession or use of illegally copied software is prohibited. Likewise, users shall not copy copyrighted software, except as permitted by the owner of the copyright. Currently, the use of export-controlled codes is prohibited.

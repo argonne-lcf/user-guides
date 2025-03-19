@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf services
+---
+
 # ALCF Services
 
 Below is a list of some of the services ALCF offers.

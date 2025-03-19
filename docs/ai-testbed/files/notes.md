@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - notes
+---
+
 # Notes
 
 ```console

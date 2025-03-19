@@ -1,3 +1,10 @@
+---
+tags:
+  - balsam
+  - polaris
+  - workflows
+---
+
 # Balsam
 
 [Balsam](https://balsam.readthedocs.io/en/latest/) is a Python-based workflow manager that helps users execute large numbers of jobs, potentially with inter-job dependencies, track job outcomes, and manage post-processing analysis. A Balsam Site runs on a node with access to the job scheduler, where it can submit and monitor jobs. Overall job state is aggregated on the Balsam Server, making job data from all Sites accessible from any individual site (or the user's laptop) via the command-line interface or the Python API. To get information on how to use the command-line tool, you can type `balsam --help` in your shell.

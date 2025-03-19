@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - building
+  - compiling
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+---
+
 # Compiling and Linking Overview
 
 ## Compiling on Aurora Login and Compute Nodes

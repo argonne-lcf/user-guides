@@ -1,3 +1,10 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - sbank example commands
+---
+
 # sbank Example Commands
 
 Below is a set of helpful commands to help you better manage the projects you have running at the ALCF.

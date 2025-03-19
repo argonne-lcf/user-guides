@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+  - pytorch
+  - scaling resnet50
+---
+
 # Scaling ResNet50
 
 Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.

@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - getting started
+---
+
 # Getting Started
 
 ## On-Boarding

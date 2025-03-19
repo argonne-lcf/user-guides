@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - getting started
+---
+
 <!---# Connecting to a CS-2 node--->
 # Getting Started
 

@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+  - pytorch
+  - system overview
+---
+
 # System Overview
 
 The Cerebras CS-2 is a wafer-scale deep learning accelerator comprising 850,000 processing cores, each providing 48KB of dedicated SRAM memory for an on-chip total of 40GB and interconnected to optimize bandwidth and latency. Its software platform integrates the popular machine learning framework PyTorch.

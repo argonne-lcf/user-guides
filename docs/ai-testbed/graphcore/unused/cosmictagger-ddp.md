@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - cosmictagger conversion
+  - pytorch
+---
+
 # CosmicTagger Conversion
 
 The intent of this page is to show conceptually how to convert a Graphcore model to run on Distributed Data Parallel

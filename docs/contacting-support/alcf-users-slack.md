@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf users slack workspace
+---
+
 # ALCF Users Slack Workspace
 
 The ALCF Users Slack workspace is a platform intended for current, active ALCF users[^1] where the user community can interact, collaborate, and help one another. This workspace is a pilot program valid for 1 year. 

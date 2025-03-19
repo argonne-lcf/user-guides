@@ -1,3 +1,11 @@
+---
+tags:
+  - gpu
+  - sophia
+  - visualization
+  - visualization on sophia
+---
+
 # Visualization on Sophia
 
 With its powerful NVIDIA GPUs, Sophia offers an excellent environment for visualization.

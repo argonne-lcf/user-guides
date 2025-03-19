@@ -1,3 +1,9 @@
+---
+tags:
+  - continuous integration
+  - mpi
+---
+
 # Continuous Integration
 
 ## Continuous Integration

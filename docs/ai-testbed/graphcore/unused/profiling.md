@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - profiling
+  - tensorflow
+  - visualization
+---
+
 # Profiling
 
 This is an adaptation of [Capturing IPU Reports](https://docs.graphcore.ai/projects/graph-analyser-userguide/en/latest/user-guide.html#capturing-ipu-reports).

@@ -1,3 +1,10 @@
+---
+tags:
+  - containers
+  - containers on crux
+  - crux
+---
+
 # Containers on Crux
 
 Apptainer will be supported on Crux at a future date.

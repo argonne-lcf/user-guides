@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - building
+  - compiling
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+---
+
 # Aurora Example Program Makefile
 
 [//]: * (All GettingStarted references will need correct links added for publishing)

@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - openmp on aurora
+---
+
 # OpenMP on Aurora
 
 ## Overview

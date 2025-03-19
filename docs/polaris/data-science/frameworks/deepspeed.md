@@ -1,3 +1,12 @@
+---
+tags:
+  - data science
+  - deepspeed
+  - gpu
+  - mpi
+  - polaris
+---
+
 # DeepSpeed
 
 The base `conda` environment on Polaris comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. Instructions for using/cloning the base environment can be found [here](../python.md).

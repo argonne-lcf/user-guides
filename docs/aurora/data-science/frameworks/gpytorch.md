@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - data science
+  - filesystem
+  - gpu
+  - gpytorch on aurora
+  - pytorch
+---
+
 # GPyTorch on Aurora
 
 ## 1. Login and Queue a Job

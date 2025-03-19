@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - performance
+  - performance tools
+---
+
 # Performance Tools
 
 ## Tile Status

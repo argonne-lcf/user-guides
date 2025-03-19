@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - data science
+  - gpu
+  - model inference with openvino
+  - mpi
+  - performance
+  - pytorch
+---
+
 # Model Inference with OpenVINO
 
 OpenVINO is a library developed by Intel specifically designed for accelerating inference of ML models on their CPU and GPU hardware. 

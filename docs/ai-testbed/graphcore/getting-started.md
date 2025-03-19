@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - getting started
+---
+
 # Getting Started
 
 Connection to a Graphcore node is a two-step process.

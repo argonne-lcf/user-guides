@@ -1,3 +1,9 @@
+---
+tags:
+  - aurora
+  - cmake
+---
+
 # CMake
 
 ## CMake

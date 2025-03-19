@@ -1,3 +1,13 @@
+---
+tags:
+  - building
+  - cce compilers on polaris
+  - compiling
+  - gpu
+  - mpi
+  - polaris
+---
+
 # CCE Compilers on Polaris
 
 The Cray Compiling Environment (CCE) compilers are available on Polaris via the `PrgEnv-cray` module.

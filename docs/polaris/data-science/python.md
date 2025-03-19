@@ -1,3 +1,13 @@
+---
+tags:
+  - data science
+  - gpu
+  - mpi
+  - polaris
+  - python
+  - tensorflow
+---
+
 # Python
 
 We provide prebuilt `conda` environments containing GPU-supported builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly-used Python modules.

@@ -1,3 +1,14 @@
+---
+tags:
+  - building
+  - compiling
+  - gpu
+  - llvm compilers on polaris
+  - mpi
+  - openmp
+  - polaris
+---
+
 # LLVM Compilers on Polaris
 
 This page is not about LLVM-based Cray Compiling Environment (CCE) compilers from `PrgEnv-cray` but about open-source LLVM compilers.

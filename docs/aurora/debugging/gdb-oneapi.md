@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - debugging
+  - gpu
+  - mpi
+  - openmp
+---
+
 # Debugging on Aurora with `gdb-oneapi`
 
 The `gdb-oneapi` tool is part of Intel's oneAPI software and is available via the default modules loaded on Aurora. It provides the ability to debug kernels offloaded to the PVC GPUs, as well as CPU code debugging. It does _not_ provide multiprocess or multinode debugging; it is not integrated with MPI. For parallel debugging, we recommend using [DDT](./ddt-aurora.md). You may also use noninteractive debugging for all or selected MPI ranks.

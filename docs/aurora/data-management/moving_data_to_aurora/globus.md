@@ -1,3 +1,10 @@
+---
+tags:
+  - aurora
+  - data management
+  - filesystem
+---
+
 # Transferring Files through Globus
 
 ## Flare filesystem

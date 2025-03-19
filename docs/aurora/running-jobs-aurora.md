@@ -1,3 +1,17 @@
+---
+tags:
+  - aurora
+  - running jobs
+  - job submission
+  - pbs
+  - mpi
+  - openmp
+  - gpu
+  - affinity
+  - cpu binding
+  - placement
+  - interactive jobs
+---
 
 # Running Jobs on Aurora
 
@@ -358,7 +372,7 @@ tile_id=$((PALS_LOCAL_RANKID % num_tile))
 unset EnableWalkerPartition
 export ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
 export ZE_AFFINITY_MASK=$gpu_id.$tile_id
-#echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
+#echo "RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}"
 exec "$@"
 ```
 
@@ -539,11 +553,6 @@ If you wish to have your job run on specific nodes form your select like this: `
 
 If you want to control the location of a few nodes, for example 2 out of 64, but the rest don't matter, you can do something like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>+62:system=foo`.
 
-<!--
-## <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
-Content coming soon.
--->
-
 ## Placement 
 On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2-across by 4-high arrangement numbered 0-7, going left to right, bottom to top. Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.
 
@@ -551,18 +560,6 @@ On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total 
 /// caption
 Figure: Liquid Cooled Cabinet Front and Chassis Numbering (Source: HPE Shasta Hardware Architecture [documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00115093en_us&page=Shasta_Hardware_Architecture.html)
 ///
-
-<!-- This is a very brief guide to translating the node xnames used in the ALCF.  This only addresses the nodes, but every component in the system has an xname that geo-locates it in the system.  For the nodes, an xname is of the form **xPQRRc#s#b#n#** where: -->
-
-<!-- x is always x -->
-<!-- P = system; single digit -->
-<!-- Q = row; single digit -->
-<!-- RR = rack; two digits -->
-<!-- c = chassis -->
-<!-- s = slot -->
-<!-- b = bmc (baseboard management controller) -->
-<!-- n = node -->
-<!-- # = single digit integers | -->
 
 As an example, for node `x4109c0s0b0n0`, this can be decomposed as:
 ```

@@ -1,3 +1,14 @@
+---
+tags:
+  - building
+  - compiling
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - polaris
+---
+
 # Compiling and Linking Overview on Polaris
 
 ## Compiling on Polaris Login and Compute Nodes

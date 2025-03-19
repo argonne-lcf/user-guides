@@ -1,3 +1,11 @@
+---
+tags:
+  - filesystem
+  - paraview on polaris
+  - polaris
+  - visualization
+---
+
 # ParaView on Polaris
 
 The recommended way of running ParaView on Polaris is in client/server mode. This consists of running the ParaView client on your local resource and the ParaView server on the Polaris compute nodes. The ParaView client needs to first be installed on your local resource and must match the version that you run on Polaris.

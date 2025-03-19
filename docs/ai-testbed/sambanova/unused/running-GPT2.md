@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - running gpt2
+---
+
 # Running GPT2
 
 The Pile and OWT data are located in:

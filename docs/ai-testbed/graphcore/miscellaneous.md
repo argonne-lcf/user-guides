@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - miscellaneous
+---
+
 # Miscellaneous
 
 ## Status

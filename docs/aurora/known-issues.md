@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - gpu
+  - mpi
+  - performance
+---
+
 # Early User Notes and Known Issues
 
 _Last Updated: 2025-02-26_

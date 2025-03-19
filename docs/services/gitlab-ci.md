@@ -1,3 +1,8 @@
+---
+tags:
+  - filesystem
+---
+
 # Continuous Integration via GitLab-CI
 
 ## GitLab-CI

@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - data management
+  - filesystem
+  - gpu
+---
+
 # Data Management for the AI Testbed 
 ## Home File System Space
 Users have a shared home filesystem `/home` shared across the ALCF AI testbed systems, including the login and compute nodes. Default user quota is `1 TB` storage and `1,000,000 files`. This space is backed up. 

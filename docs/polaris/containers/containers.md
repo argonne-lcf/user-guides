@@ -1,3 +1,15 @@
+---
+tags:
+  - containers
+  - containers on polaris
+  - filesystem
+  - gpu
+  - mpi
+  - polaris
+  - pytorch
+  - tensorflow
+---
+
 # Containers on Polaris
 
 Polaris, equipped with NVIDIA A100 GPUs, leverages container-based workloads for seamless compatibility across NVIDIA systems. This guide provides detailed instructions on using containers on Polaris, including setup, container creation, large-scale execution, and troubleshooting common issues.

@@ -1,3 +1,9 @@
+---
+tags:
+  - getting started on myalcf
+  - visualization
+---
+
 # Getting Started on MyALCF
 
 ## Access MyALCF

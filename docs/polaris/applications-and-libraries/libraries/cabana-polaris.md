@@ -1,3 +1,11 @@
+---
+tags:
+  - cabana
+  - gpu
+  - openmp
+  - polaris
+---
+
 # Cabana
 
 ## Cabana

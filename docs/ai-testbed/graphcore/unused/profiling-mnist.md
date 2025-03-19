@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - profiling mnist
+  - pytorch
+---
+
 # Profiling MNIST
 
 Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.

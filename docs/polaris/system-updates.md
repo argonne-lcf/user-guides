@@ -1,3 +1,15 @@
+---
+tags:
+  - gpu
+  - mpi
+  - openmp
+  - polaris
+  - polaris system updates
+  - pytorch
+  - tensorflow
+  - visualization
+---
+
 # Polaris System Updates
 
 ## 2024-09-09

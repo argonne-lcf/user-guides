@@ -1,3 +1,8 @@
+---
+tags:
+  - accounts policy
+---
+
 # Accounts Policy
 
 All holders of user accounts must abide by all appropriate Argonne Leadership Computing Facility and Argonne National Laboratory computing usage policies. The policy details are outlined in the following documents:

@@ -1,3 +1,8 @@
+---
+tags:
+  - manpage for sbank-detail
+---
+
 # Manpage for sbank-detail
 
 ## sbank-detail <entity> [options]

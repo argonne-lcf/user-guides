@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+  - pytorch
+---
+
 # GroqView profiler and visualizer tool
 
 This section covers how to remotely use the GroqView profiler and visualizer tool.

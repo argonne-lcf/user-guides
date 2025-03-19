@@ -1,3 +1,15 @@
+---
+tags:
+  - acronyms
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - performance
+  - pytorch
+  - tensorflow
+---
+
 # Acronyms
 
 <!-- TODO: wait for an ability to disable the abbr extension on this page;

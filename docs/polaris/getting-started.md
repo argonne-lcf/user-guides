@@ -1,3 +1,11 @@
+---
+tags:
+  - getting started on polaris
+  - mpi
+  - performance
+  - polaris
+---
+
 # Getting Started on Polaris
 
 ## Logging Into Polaris

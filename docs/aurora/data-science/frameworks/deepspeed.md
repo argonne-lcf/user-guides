@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - data science
+  - deepspeed
+  - filesystem
+  - gpu
+  - mpi
+---
+
 # DeepSpeed
 
 The base `frameworks` environment on Aurora does not come with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed, and it needs to be installed by the user. Further instructions for working with the base environment can be found [here](../python.md).

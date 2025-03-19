@@ -1,3 +1,13 @@
+---
+tags:
+  - advisor
+  - aurora
+  - gpu
+  - mpi
+  - openmp
+  - performance
+---
+
 # Advisor
 
 ## References  

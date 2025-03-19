@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - cosmictagger conversion
+  - gpu
+  - pytorch
+  - tensorflow
+---
+
 # CosmicTagger Conversion
 
 The intent of this page is to show conceptually how to convert a model to run on the SambaNova system.

@@ -1,3 +1,14 @@
+---
+tags:
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - performance
+  - polaris
+  - vasp
+---
+
 # VASP
 
 ## What is VASP?

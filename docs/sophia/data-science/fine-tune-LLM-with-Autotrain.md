@@ -1,3 +1,10 @@
+---
+tags:
+  - autotrain
+  - data science
+  - sophia
+---
+
 # Autotrain
 
 Autotrain, developed by Hugging Face, is a platform designed to simplify training cutting-edge models in various fields: NLP, LLM, CV, etc. [Read more](https://huggingface.co/docs/autotrain/main/en/tasks/llm_finetuning).

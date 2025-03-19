@@ -1,3 +1,8 @@
+---
+tags:
+  - sbank-detail-jobs
+---
+
 # sbank-detail-jobs
 
 ## sbank-detail-jobs [options] [ <jobid.resource> | <event_id> ... <jobid.resource> | <event_id>]

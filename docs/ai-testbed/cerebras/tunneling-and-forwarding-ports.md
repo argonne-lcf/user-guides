@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - gpu
+---
+
 # Tunneling and Forwarding Ports
 
 <!--[TODO a Cerebras-specific example.-->

@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - profiling resnet50
+  - pytorch
+---
+
 # Profiling ResNet50
 
 Follow all the instructions in [Getting Started](../getting-started.md) to log into a Graphcore node.

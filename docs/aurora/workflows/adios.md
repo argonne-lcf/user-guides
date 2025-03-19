@@ -1,3 +1,14 @@
+---
+tags:
+  - adios2
+  - aurora
+  - filesystem
+  - mpi
+  - performance
+  - visualization
+  - workflows
+---
+
 # ADIOS2
 
 The Adaptable Input/Output (I/O) System (ADIOS2) is a framework for I/O and streaming of scientific data developed as part of the U.S. DOE Exascale Computing Project. ADIOS2 conveniently provides C, C++, Fortran, and Python APIs for traditional file system I/O, as well as APIs for transporting data between applications running concurrently on HPC systems. Data transport with ADIOS2 can be performed via the file system, wide-area networks (WAN), remote direct memory access (RDMA), or MPI to construct a variety of workflows, such as in-situ (or in-transit) visualization, data analysis, and ML training and inference from ongoing simulations.

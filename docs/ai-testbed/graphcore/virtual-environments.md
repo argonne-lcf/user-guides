@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - pytorch
+  - tensorflow
+  - virtual environments
+---
+
 # Virtual Environments
 
 ## Poplar SDK Setup

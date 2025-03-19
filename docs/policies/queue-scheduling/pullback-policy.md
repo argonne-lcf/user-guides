@@ -1,3 +1,8 @@
+---
+tags:
+  - pullback policy
+---
+
 # Pullback Policy
 
 In an effort to ensure that valuable ALCF computing resources are used judiciously, a pullback policy has been instituted. Projects granted allocations under the INCITE and ALCC programs that have not used a significant amount of their allocation will be evaluated and adjusted during the year following the policies outlined on this page.

@@ -1,3 +1,16 @@
+---
+tags:
+  - aurora
+  - data science
+  - filesystem
+  - gpu
+  - mpi
+  - performance
+  - pytorch
+  - tensorflow
+  - tensorflow on aurora
+---
+
 # TensorFlow on Aurora
 
 TensorFlow is a popular, open-source deep learning framework developed and 

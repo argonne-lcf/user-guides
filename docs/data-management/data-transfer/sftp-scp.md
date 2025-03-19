@@ -1,3 +1,10 @@
+---
+tags:
+  - data management
+  - performance
+  - sftp and scp
+---
+
 # SFTP and SCP
 
 These standard utilities are available for local area transfers of small files. They are not recommended for use with large data transfers due to poor performance and excess resource utilization on the login nodes.

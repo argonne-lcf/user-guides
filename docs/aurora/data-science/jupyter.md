@@ -1,3 +1,9 @@
+---
+tags:
+  - aurora
+  - data science
+---
+
 # Running JupyterLab and Jupyter Notebook on Aurora
 
 ALCF provides a [JupyterHub](https://jupyter.alcf.anl.gov/) for running JupyterLab and Jupyter Notebook on Polaris and Sophia with minimal setup required from the user. While this service is not yet available on Aurora, users can still run JupyterLab and Notebook using SSH tunneling and port forwarding.

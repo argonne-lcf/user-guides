@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - gpu
+  - level-zero on aurora
+  - mpi
+---
+
 # Level-Zero on Aurora
 
 ## Overview

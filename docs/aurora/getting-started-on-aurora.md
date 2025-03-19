@@ -1,3 +1,14 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - getting started on aurora
+  - mpi
+  - performance
+  - pytorch
+  - tensorflow
+---
+
 # Getting Started on Aurora
 
 ## Logging Into Aurora:

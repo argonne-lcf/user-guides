@@ -1,3 +1,10 @@
+---
+tags:
+  - polaris
+  - visualization
+  - vnc on polaris
+---
+
 # VNC on Polaris
 
 ## Overview

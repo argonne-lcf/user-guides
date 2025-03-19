@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf facility policies
+---
+
 # ALCF Facility Policies
 
 Be sure to familiarize yourself with the various policies and procedures for ALCF users, categorized below.

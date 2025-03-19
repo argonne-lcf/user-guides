@@ -1,3 +1,8 @@
+---
+tags:
+  - software requests
+---
+
 # Software Requests
 
 !!! warning

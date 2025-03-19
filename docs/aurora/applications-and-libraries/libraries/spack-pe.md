@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - mpi
+  - performance
+  - spack pe
+---
+
 # Spack PE
 
 The Spack PE is a software stack that provides various build tools, utilities, and libraries. The Spack PE consists of two parts: `spack-pe-gcc` and `spack-pe-oneapi`. `spack-pe-gcc` contains commonly used software packages compiled for CPU. `spack-pe-oneapi` is based on the [E4S Project](https://e4s-project.github.io/) and provides performant HPC libraries built with the OneAPI SDK. `spack-pe-oneapi` depends on both `spack-pe-gcc` and the OneAPI SDK; in combination, the Spack PE with the OneAPI SDK and MPICH constitute the Aurora PE.

@@ -1,3 +1,12 @@
+---
+tags:
+  - aurora
+  - gpu
+  - mpi
+  - openmp
+  - performance
+---
+
 # Single node "GPU-Peak" benchmarks
 
 > This work was done on a pre-production supercomputer with early versions of the Aurora software development kit.

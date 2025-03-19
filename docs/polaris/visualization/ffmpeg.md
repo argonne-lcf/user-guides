@@ -1,3 +1,10 @@
+---
+tags:
+  - ffmpeg on polaris
+  - polaris
+  - visualization
+---
+
 # FFmpeg on Polaris
 
 ## NOTE: The FFmpeg module is currently missing on Polaris after a recent upgrade. A Spack build of FFmpeg will be available soon.

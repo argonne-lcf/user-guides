@@ -1,3 +1,9 @@
+---
+tags:
+  - alcf user account overview
+  - mpi
+---
+
 # ALCF User Account Overview
 
 All computing carried out on the ALCF systems is associated with a user "account." This account is used to log onto the login servers and run jobs on the resources. If someone has a user account, then they have a login name that is recorded in the user database. This web page describes the process that users will need to understand to manage account details, including policies and procedures.

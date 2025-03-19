@@ -1,3 +1,9 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+---
+
 # Getting Started with Cerebras CSL
 
 Cerebras CSL (Cerebras System Language) is a low-level kernel programming language designed for the Cerebras system. It enables users to write code that runs on individual Processing Elements (PEs) and to define the placement of programs and the routing of data on the Wafer-Scale Engine (WSE).

@@ -1,3 +1,10 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - running a model/program
+---
+
 # Running a Model/Program
 
 Jobs are launched from any GroqRack node. <br>

@@ -1,3 +1,13 @@
+---
+tags:
+  - aurora
+  - filesystem
+  - gpu
+  - mpi
+  - parsl on aurora
+  - workflows
+---
+
 # Parsl on Aurora
 
 [Parsl](https://parsl.readthedocs.io/en/stable/) is a parallel programming library for Python.  It can be used to deploy large numbers of tasks in parallel and with complex dependencies on ALCF machines, and is particularly well suited to run high-throughput workflows.  While Parsl is a Python library, it can execute tasks that run any compiled application.  Parsl can also execute tasks that run mpi applications.

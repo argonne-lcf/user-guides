@@ -1,3 +1,8 @@
+---
+tags:
+  - managing your team members
+---
+
 # Managing Your Team Members
 
 The PI or Proxy must approve each member of the team to gain access and to run project jobs on the ALCF's resources. If you have an active ALCF account, you can manage your project team by logging into the ALCF account and project management website and navigating to [https://my.alcf.anl.gov/](https://my.alcf.anl.gov/)

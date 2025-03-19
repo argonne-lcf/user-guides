@@ -1,3 +1,10 @@
+---
+tags:
+  - imagemagick on polaris
+  - polaris
+  - visualization
+---
+
 # ImageMagick on Polaris
 
 To use ImageMagick on Polaris, first load the corresponding module:

@@ -1,3 +1,8 @@
+---
+tags:
+  - alcf acknowledgement policy
+---
+
 # ALCF Acknowledgement Policy
 
 As a U.S. Department of Energy user facility dedicated to the advancement of scientific discoveries, the Argonne Leadership Computing Facility (ALCF) provides unique computing resources and expertise to a user community that is bound by certain policies designed to acknowledge and promote the work of others as well as the resources used to accomplish this work.

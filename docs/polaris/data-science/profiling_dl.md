@@ -1,3 +1,14 @@
+---
+tags:
+  - data science
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - polaris
+  - pytorch
+---
+
 # Profiling Deep Learning Applications
 
 We can use both a framework-specific (for example, PyTorch-specific) native profiler and the vendor-specific NVIDIA [Nsys profiler](https://developer.nvidia.com/nsight-systems/get-started) to get high-level profiling information and a timeline of execution for an application. For kernel-level information, we may use [Nsight Compute profiler](https://developer.nvidia.com/tools-overview/nsight-compute/get-started). Refer to the respective documentation for more details:

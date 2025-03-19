@@ -1,3 +1,14 @@
+---
+tags:
+  - gpu
+  - mpi
+  - polaris
+  - pytorch
+  - smartsim and smartredis
+  - tensorflow
+  - workflows
+---
+
 # SmartSim and SmartRedis
 
 SmartSim is an open-source tool developed by Hewlett Packard Enterprise (HPE) designed to facilitate the integration of traditional HPC simulation applications with machine learning workflows. There are two core components to SmartSim:

@@ -1,3 +1,12 @@
+---
+tags:
+  - gpu
+  - mpi
+  - openmp
+  - polaris
+  - sycl
+---
+
 # SYCL
 
 > SYCL (pronounced ‘sickle’) is a royalty-free, cross-platform abstraction layer that enables code for heterogeneous processors to be written using standard ISO C++ with the host and kernel code for an application contained in the same source file.

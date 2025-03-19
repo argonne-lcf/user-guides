@@ -1,3 +1,15 @@
+---
+tags:
+  - building
+  - compiling
+  - filesystem
+  - gpu
+  - mpi
+  - openmp
+  - performance
+  - polaris
+---
+
 # Example Programs and Makefiles for Polaris
 
 Several simple examples of building CPU and GPU-enabled codes on Polaris are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris) for several programming models. If building your application is problematic for some reason (e.g., absence of a GPU), then users are encouraged to build and test applications directly on one of the Polaris compute nodes via an interactive job. The discussion below makes use of the `NVHPC` compilers in the default environment as illustrative examples. Similar examples for other compilers on Polaris are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris).

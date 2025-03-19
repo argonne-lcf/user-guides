@@ -1,3 +1,11 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+  - system overview
+---
+
 # System Overview
 ALCF's Groq system consists of a single `GroqRackTM compute cluster` that provides an extensible accelerator network consisting of 9 `GroqNodeTM` [ `groq-r01-gn-01` through `groq-r01-gn-09` ] nodes with a rotational multi-node network topology. Each of these GroqNodes consists of 8 GroqCardTM accelerators in them with integrated chip-to-chip connections with a dragonfly multi-chip topology.
 

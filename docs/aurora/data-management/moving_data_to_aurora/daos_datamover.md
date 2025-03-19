@@ -1,3 +1,11 @@
+---
+tags:
+  - aurora
+  - data management
+  - filesystem
+  - mpi
+---
+
 # To move data to your DAOS POSIX container
 
 ## Using `cp`

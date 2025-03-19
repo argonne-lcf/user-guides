@@ -1,3 +1,14 @@
+---
+tags:
+  - containers
+  - containers on sophia
+  - filesystem
+  - gpu
+  - pytorch
+  - sophia
+  - tensorflow
+---
+
 # Containers on Sophia
 
 Sophia, powered by NVIDIA A100 GPUs, benefits from container-based workloads for seamless compatibility across NVIDIA systems. This guide details the use of containers on Sophia, including custom container creation, large-scale execution, and common pitfalls.

@@ -1,3 +1,12 @@
+---
+tags:
+  - ai-testbed
+  - mpi
+  - performance
+  - sambatune
+  - visualization
+---
+
 # SambaTune
 
 ## Notes

@@ -1,3 +1,11 @@
+---
+tags:
+  - gpu
+  - mpi
+  - polaris
+  - spack pe
+---
+
 # Spack PE
 
 Spack is an HPC-oriented package manager that ALCF uses to install software for the user environment.

@@ -1,3 +1,13 @@
+---
+tags:
+  - gpu
+  - kokkos
+  - mpi
+  - openmp
+  - performance
+  - polaris
+---
+
 # Kokkos
 
 ## Kokkos

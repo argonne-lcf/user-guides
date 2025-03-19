@@ -1,3 +1,14 @@
+---
+tags:
+  - building
+  - compiling
+  - gpu
+  - mpi
+  - openmp
+  - polaris
+  - programming models on polaris
+---
+
 # Programming Models on Polaris
 
 The software environment on Polaris supports several parallel programming models targeting the CPUs and GPUs.

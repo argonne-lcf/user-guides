@@ -1,3 +1,9 @@
+---
+tags:
+  - filesystem
+  - refund policy
+---
+
 # Refund Policy
 
 If a system problem affects your run, ALCF will consider a refund of node hours. The ALCF expects all applications to regularly checkpoint, so refunds are typically capped at four hours of runtime for the affected job, unless the problem in question prevented checkpoints.

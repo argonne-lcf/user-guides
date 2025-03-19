@@ -1,3 +1,9 @@
+---
+tags:
+  - filesystem
+  - managing your allocations
+---
+
 # Managing Your Allocations
 
 Allocations require management – balance checks, resource allocation, requesting more time, etc.
