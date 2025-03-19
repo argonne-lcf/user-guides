@@ -1,17 +1,32 @@
-# CODEOWNERS file for ALCF User Guides documentation
-# Format: path/to/file/or/directory @username1 @username2
-# All paths are relative to the docs directory
+# CODEOWNERS file for ALCF User Guides
 
-# Default owners for all documentation
-#*                                   @???
+# Directory format #1: /path/dir_name/ @username1 @username2
+# ---> path is relative to the repository root
+# ---> any file in the /path/dir_name/ directory in the root of your repository and any of its subdirectories.
+
+# Directory format #2: path/dir_name/ @username1 @username2
+# ---> any file in a directory/ anywhere in your repository (and any of their subdirs?)
+
+# Directory format #3: **/path/dir_name/ @username1 @username2
+# ---> any file in a `/path/dir_name` directory such as `/build/path/dir_name`, `/scripts/path/dir_name`,
+# and `/deeply/nested/path/dir_name` (same as #2?)
+
+###############
+
+# Default owners for everything in the repo
+# These owners will be the default owners for everything in the repository,
+# unless a later match takes precedence
+*                                   @felker @bethcerny @keceli
+
 
 # Machine-specific documentation
-# /aurora/                            
-# /polaris/                           
-# /sophia/                            
-# /crux/                              
-/ai-testbed/                        @vksastry @wcarnold1010
-/ai-testbed/cerebras/               @sraskar
+ai-testbed/                        @vksastry @wcarnold1010
+ai-testbed/cerebras/               @sraskar
+# aurora/
+# polaris/
+# sophia/
+# crux/
+
 
 # Compilers documentation
 aurora/compiling-and-linking/**         @TApplencourt @colleeneb
@@ -94,10 +109,10 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/pbs-*.md                         @pmrich
 
 # Policies documentation
-/policies/                          @bethcerny 
+**/policies/                          @bethcerny 
 
 # Services documentation
-/services/                          @keceli
+**/services/                          @keceli
 **/services/gitlab-ci.md            @peterupton @thilinarmtb
 
 # Workflows
@@ -108,3 +123,16 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 # User Support documentation
 /contacting-support/                @alcf-haritha @jfrancis-anl
 
+# Core configuration files
+/mkdocs.yml                         @felker @saforem2
+/requirements.txt                   @felker
+/Makefile                           @felker
+/.github/                           @felker
+
+# Metadata and developer tools
+/includes/                          @felker
+
+# HTML, CSS, and theme-related files
+/overrides/                         @saforem2 @felker
+*.html                              @saforem2 @felker
+*.css                               @saforem2 @felker
