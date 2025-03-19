@@ -33,7 +33,7 @@ The first time you want to run a server on Aurora and have it connect to your lo
 Kitware, the developers of ParaView, maintain a database of server configurations that you can retrieve through the ParaView client.
 
 !!! note "NOTE"
-    At this time, there are no specific files for Aurora available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac](serverfiles/aurora.pvsc) [Windows](serverfiles/windowsToAurora.pvsc)
+    At this time, there are no specific files for Aurora available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac/Linux](serverfiles/aurora.pvsc)  |  [Windows](serverfiles/windowsToAurora.pvsc)
 
 #### 3. Use ParaView
 
