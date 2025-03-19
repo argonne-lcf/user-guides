@@ -64,7 +64,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Applications across all machines
 **/applications/gpt-neox.md         @saforem2 @hatanp
-**/applications/megatron-deepspeed.md @atanikan @saforem2 @hatanp
+**/applications/megatron-deepspeed.md @saforem2 @hatanp
 
 # Python documentation across all machines
 **/python.md                        @felker @khossain4337
