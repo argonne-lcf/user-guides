@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: ALCF Documentation Website
+    url: https://docs.alcf.anl.gov/
+    about: Check the official documentation first to see if your question is already answered.
+  - name: ALCF Support
+    url: https://www.alcf.anl.gov/support-center
+    about: Contact ALCF support directly for urgent issues or account-related questions. 
