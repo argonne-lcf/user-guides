@@ -27,7 +27,6 @@ ai-testbed/cerebras/               @sraskar
 # sophia/
 # crux/
 
-
 # Compilers documentation
 aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
@@ -121,7 +120,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # User Support documentation
 ###**/contacting-support/                @alcf-haritha @jfrancis-anl
-support*                @alcf-haritha @jfrancis-anl
+*support*                @alcf-haritha @jfrancis-anl
 
 # Core configuration files
 /mkdocs.yml                         @felker @saforem2
