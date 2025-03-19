@@ -60,6 +60,7 @@ theme:
     #- toc.integrate  # move right-side intra-page TOC within left nav sidebar
     - search.highlight
     - search.suggest
+    - tags
 
   logo: images/logo.svg
   favicon: "images/favicon.svg"
@@ -137,6 +138,8 @@ plugins:
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - tags:
+      tags_file: tags.md
   - minify:
       minify_html: true
   - redirects:
@@ -448,6 +451,7 @@ nav:
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
   - Acronyms: acronyms.md
+  - Tags: tags.md
 
 # Pages that are not in navigation but still built
 # These always end up in the generated site (both mkdocs "build" and "serve")
