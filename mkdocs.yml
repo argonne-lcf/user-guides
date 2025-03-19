@@ -228,10 +228,13 @@ nav:
         #  - Overview: aurora/performance-tools/performance-overview.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
-        # - Visualization:
-        #   - ParaView: aurora/visualization/paraview.md
         - Services:
           - GitLab CI: aurora/services/gitlab-ci.md
+        - Visualization:
+          - aurora/visualization/index.md
+          - ParaView (Launch from Client): aurora/visualization/paraview.md
+          - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
+
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
@@ -483,7 +486,6 @@ draft_docs: |
   aurora/applications-and-libraries/libraries/mpi.md
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
-  aurora/visualization/paraview.md
 # note, trailing inline comments under draft_docs, etc blocks break mkdocs parsing,
 # despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 
