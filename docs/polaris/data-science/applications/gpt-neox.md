@@ -35,10 +35,10 @@ A batch submission script for the following example is available [here](https://
    ```bash
    cd gpt-neox
    ```
-   <div class="admonition note" style="display:inline-block;margin-top:auto;">
-   <p class="admonition-title">Note</p>
-   <p>The remaining instructions assume you're inside the <code>gpt-neox</code> directory.</p>
-   </div>
+   
+    !!! note 
+   
+        The remaining instructions assume you're inside the `gpt-neox` directory.
 
 5. Create a DeepSpeed compliant `hostfile` (each line is formatted as `hostname, slots=N`):
    ```bash
