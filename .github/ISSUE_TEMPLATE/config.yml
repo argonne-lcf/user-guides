@@ -1,8 +1,8 @@
-#blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
   - name: ALCF Users Slack Workspace
     url: https://alcf-users.slack.com/
-    about: User community for discussion, collaboration, and assistance. This pilot program is only open to select users, see [here](https://docs.alcf.anl.gov/contacting-support/alcf-users-slack/) for details
+    about: User community for discussion, collaboration, and assistance. This pilot program is only open to select users; for details, see https://docs.alcf.anl.gov/contacting-support/alcf-users-slack/
   - name: ALCF Support (Open a Ticket)
     url: mailto:support@alcf.anl.gov
     about: For technical user support issues or questions after reading the user-guides, our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays.
