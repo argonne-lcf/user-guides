@@ -27,8 +27,9 @@ ai-testbed/cerebras/               @sraskar
 # sophia/
 # crux/
 
-# Compilers documentation
+# Aurora compilers, PE documentation
 aurora/compiling-and-linking/**         @TApplencourt @colleeneb
+aurora/aurora-pe.md                @koysean
 
 # Programming models
 **/programming-models/kokkos-*.md   @zippylab  # @masterleinad
