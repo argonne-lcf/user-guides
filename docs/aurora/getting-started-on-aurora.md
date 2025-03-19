@@ -67,12 +67,23 @@ If the node you are on doesn’t have outbound network connectivity, add the fol
 
 ```bash linenums="1"
 # proxy settings
-export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
-export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
-export http_proxy="http://proxy.alcf.anl.gov:3128"
-export https_proxy="http://proxy.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
+if [[ ! "${HOSTNAME}" =~ 'aurora-uan' ]]
+  export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
+  export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
+  export http_proxy="http://proxy.alcf.anl.gov:3128"
+  export https_proxy="http://proxy.alcf.anl.gov:3128"
+  export ftp_proxy="http://proxy.alcf.anl.gov:3128"
+  export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
+fi
+```
+
+For `ssh` connection to `github`, add the following to your `~/.ssh/config`
+
+```
+Match originalhost github.com exec "hostname -s | (grep -qv aurora-uan)"
+     Port 443
+     hostname ssh.github.com
+     ProxyCommand socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
 ```
 
 ## File Systems and DAOS
