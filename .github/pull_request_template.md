@@ -5,7 +5,7 @@
 <details>
 <summary>Before</summary>
 
-<!-- Add your "before" screenshots here -->
+<!-- Add your "before" screenshots here via paste and ![]() image link/include syntax -->
 
 </details>
 
@@ -17,7 +17,7 @@
 </details>
 
 ## Related Issue(s)
-<!-- If this PR is related to an issue, please link it here -->
+<!-- If this PR is related to an issue, please link it here, e.g. "#1" -->
 
 ## Type of Change
 <!-- Please check the one that applies to this PR using "x". -->
