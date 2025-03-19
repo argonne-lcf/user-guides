@@ -17,7 +17,7 @@
 aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Programming models
-**/programming-models/kokkos-*.md   @zippy  # @masterleinad
+**/programming-models/kokkos-*.md   @zippylab  # @masterleinad
 **/programming-models/sycl-*.md     @TApplencourt @colleeneb
 
 # Computational chemistry and molecular dynamics
@@ -42,7 +42,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/frameworks/jax.md                @khossain4337
 **/frameworks/scikit-learn.md       @BethanyL
 **onedal.md                         @BethanyL
-**/frameworks/dask.md               @okafor @FilippoSimini
+**/frameworks/dask.md               @okaforn @FilippoSimini
 **/frameworks/pyg.md                @FilippoSimini
 **/frameworks/gpytorch.md           @mngom2
 **/frameworks/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
@@ -57,7 +57,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/jupyter*			    @keceli
 
 # Julia documentation
-**/julia.md                         @michel2323
+#**/julia.md                         @michel2323
 
 # Inference documentation
 **/inference/                       @rickybalin
@@ -69,7 +69,7 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 
 # Libraries documentation
 **/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
-**/libraries/cabana-*.md            @zippy
+**/libraries/cabana-*.md            @zippylab
 **/libraries/spack-pe.md            @koysean
 
 # Visualization documentation
