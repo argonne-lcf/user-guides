@@ -26,8 +26,8 @@ aurora/compiling-and-linking/**         @TApplencourt @colleeneb
 **/applications/lammps.md           @cjknight
 **/applications/amber.md            @cjknight
 **/applications/openmm.md           @cjknight
-**/applications/QMCPACK.md          @yeluo
-**/applications/QuantumESPRESSO.md  @yeluo
+**/applications/QMCPACK.md          @ye-luo
+**/applications/QuantumESPRESSO.md  @ye-luo
 **/applications/vasp.md             @alvarovm
 
 # Example programs and makefiles
