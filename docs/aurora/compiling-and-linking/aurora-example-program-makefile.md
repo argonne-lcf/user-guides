@@ -147,7 +147,7 @@ To affinity and beyond!! nname= x1922c1s1b0n0  rnk= 10  list_cores= (10)  num_de
 To affinity and beyond!! nname= x1922c1s1b0n0  rnk= 11  list_cores= (11)  num_devices= 1  gpu_id= 0
 ```
 
-# GPU SYCL Example
+## GPU SYCL Example
 
 A simple SYCL offload example is available here. Compilation proceeds similarly to the above examples except for the compiler flags enabling GPU offload.
 
@@ -203,7 +203,7 @@ Upon carefully comparing the UUIDs from each rank, one can see the first field d
 To affinity and beyond!! nname= x1922c2s6b0n0  rnk= 0  list_cores= (0)  num_devices= 6  gpu_uuid=  00000000-0000-0000-dbb1-2f985946b0dd 00000000-0000-0000-9d4c-a3a038130bd2 00000000-0000-0000-f684-455a4554b231 00000000-0000-0000-d04a-9a289a53274e 00000000-0000-0000-a178-e2f3a2a0df2b 00000000-0000-0000-1b72-105049dfed26
 ```
 
-# GPU OpenCL Example
+## GPU OpenCL Example
 
 A simple OpenCL example is available here. The `include` and `lib` directories for the OpenCL headers and libraries are in the default environment. One simply needs to link the application against `-lOpenCL`.
 
