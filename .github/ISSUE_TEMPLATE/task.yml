@@ -1,0 +1,46 @@
+name: Task (docs content and structure)
+description: Create a new task
+type: Task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for creating a task!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the task in detail
+      placeholder: |
+        What needs to be done? What content needs to be added or reorganized?
+        - [ ] Criteria 1
+        - [ ] Criteria 2
+        - [ ] Criteria 3
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Decisions, questions, uncertainties, and dependencies
+      description: Are there any open questions or decisions before completing this task
+      placeholder: List them here
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How urgent is this task?
+      options:
+        - Critical (Must be done immediately)
+        - High (Important and time-sensitive)
+        - Medium (Normal priority)
+        - Low (Can be done when time permits)
+    validations:
+      required: true
+  - type: checkboxes
+    id: label-confirmation
+    attributes:
+      label: Label Confirmation
+      description: I confirm that I have selected at least one appropriate label for this issue using the GitHub UI
+      options:
+        - label: I have selected at least one appropriate label
+          required: true
