@@ -62,23 +62,23 @@ Example:
 5.13.2
 ```
 
-**Client port:** it is safe to use the default value.
+-**Client port:** it is safe to use the default value.
 
-**Server port:** it is safe to use the default value.
+-**Server port:** it is safe to use the default value.
 
-**Number of nodes to reserve:** enter the number of Aurora compute nodes you want to use for your job.
+-**Number of nodes to reserve:** enter the number of Aurora compute nodes you want to use for your job.
 
-**Number of ranks per node:** enter the number of ranks per node.
+-**Number of ranks per node:** enter the number of ranks per node.
 
-**Number of minutes to reserve:** the duration of your job in minutes.
+-**Number of minutes to reserve:** the duration of your job in minutes.
 
-**Account:** enter here the name of your ALCF allocation.
+-**Account:** enter here the name of your ALCF allocation.
 
-**Queue:** the name of the Aurora queue you would like to use (e.g., `debug`, `debug-scaling`, `prod`, `prod-large`).
+-**Queue:** the name of the Aurora queue you would like to use (e.g., `debug`, `debug-scaling`, `prod`, `prod-large`).
 
-**File Systems:** enter here the file systems you need for your job, separated with colons, no spaces. Keep in mind that your job may not run if one of these file systems is not available at that time, so enter these values carefully.
+-**File Systems:** enter here the file systems you need for your job, separated with colons, no spaces. Keep in mind that your job may not run if one of these file systems is not available at that time, so enter these values carefully.
 
-**Job name:** safe to use the default value. The PBS scheduler will assign this name to your job.
+-**Job name:** safe to use the default value. The PBS scheduler will assign this name to your job.
 
 Now you can press OK to establish the connection with a ParaView server on Aurora.
 
