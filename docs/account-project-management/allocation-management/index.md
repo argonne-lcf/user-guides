@@ -19,11 +19,13 @@ Director's Discretionary and NAIRR awardees will receive information in the awar
 Depending on the allocation program, users can choose from some or all of the following resources when requesting an allocation:
 
 **Compute:**
-* HPC Systems - Aurora, Polaris, Sophia, Crux
-* AI Accelerators - Groq, Graphcore, SambaNova, Cerebras
 
-**File System:** 
-* Eagle (storage-only allocations)
+- HPC Systems: Aurora, Polaris, Sophia, Crux
+- AI Accelerators: Groq, Graphcore, SambaNova, Cerebras
+
+**File Systems:**
+
+- Eagle (storage-only allocations)
 
 ## Policy Information Related to Allocations
 * [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
