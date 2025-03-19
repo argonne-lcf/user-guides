@@ -25,32 +25,25 @@ From the ParaView client, choose to connect to a server by either clicking on th
 
 or selecting File->Connect from the main menu.
 
-<figure markdown>
-  ![Select connect](images/ParaviewConnectMenu.png){ width="700" }
-</figure>
+![Select connect](images/ParaviewConnectMenu.png){ width="700" }
 
 #### 2. Set Up Servers (first time only)
 The first time you want to run a server on Aurora and have it connect to your local ParaView client, you will need to set up a server. Once this server is set up, you can reuse it each time you run the ParaView client with the ParaView server on Aurora.
 
-Kitware, the developers of ParaView, maintain a database of server configurations that you can retrieve through the ParaView client. In the File->Connect menu, press the button named "Fetch Servers" and select AURORA@ANL. Windows users should select "windows to AURORA@ANL". Press "Import Selected".
+Kitware, the developers of ParaView, maintain a database of server configurations that you can retrieve through the ParaView client.
 
-<figure markdown>
-  ![Load servers](images/ParaviewFetchServers.png){ width="700" }
-</figure>
+!!! note "NOTE"
+    At this time, there are no specific files for Aurora available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac](serverfiles/aurora.pvsc) [Windows](serverfiles/windowsToAurora.pvsc)
 
 #### 3. Use ParaView
 
 After the previous step, you can now select AURORA@ANL in the File->Connect menu and press Connect.
 
-<figure markdown>
-  ![Load servers](images/ParaviewChooseServerConfig.png){ width="700" }
-</figure>
+![Load servers](images/ParaviewChooseServerConfig.png){ width="700" }
 
 At this point, a new window will pop up.
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnectionOptions.png){ width="700" }
-</figure>
+![Load servers](images/ParaviewConnectionOptions.png){ width="700" }
 
 There are a number of parameters that you must enter manually here:
 
@@ -58,7 +51,7 @@ There are a number of parameters that you must enter manually here:
 
 **SSH executable:** the name of your SSH command. It may be different on Windows depending on the SSH client installed (e.g., PuTTY).
 
-**Remote machine:** leave this value at polaris.alcf.anl.gov.
+**Remote machine:** leave this value at aurora.alcf.anl.gov.
 
 **Username:** your ALCF username.
 
@@ -93,15 +86,11 @@ An SSH connection will be established with a Aurora login node, and a password w
 
 After you enter your password, a job will be queued, and you will see a window like this:
 
-<figure markdown>
-  ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
-</figure>
+![Load servers](images/ParaviewWaitForServer.png){ width="700" }
 
 When the job is launched on the compute nodes, the previous window will go away, and ParaView will show it is connected to Aurora in its Pipeline Browser:
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnected.png){ width="700" }
-</figure>
+![Load servers](images/ParaviewConnected.png){ width="700" }
 
 At this point, you can open datasets stored on the ALCF file systems and use ParaView normally.
 
