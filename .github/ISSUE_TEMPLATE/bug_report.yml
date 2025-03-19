@@ -15,6 +15,17 @@ body:
     validations:
       required: true
   - type: textarea
+    id: pages
+    attributes:
+      label: Page(s) Affected
+      description: Provide the URL(s) or path(s) to the affected documentation
+      placeholder: |
+        Example:
+        - https://docs.example.com/page1
+        - /path/to/page2
+    validations:
+      required: false
+  - type: textarea
     id: steps
     attributes:
       label: Steps to Reproduce
@@ -41,5 +52,19 @@ body:
         - High (Significant impact)
         - Medium (Moderate impact)
         - Low (Minor impact)
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What type of documentation issue is this?
+      options:
+        - Web Rendering Error
+        - Content Error (incorrect information, broken code example or set of instructions, etc.)
+        - Missing Content
+        - Unclear/Confusing Content
+        - Formatting Issue
+        - Other
     validations:
       required: true
