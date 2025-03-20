@@ -3,8 +3,10 @@
 ## Getting Started
 
 ### Connecting to SambaStudio
-The GUI is accessible at URL HERE.
+The GUI is accessible at `https://metis.alcf.anl.gov``
 Login is via 2FA. Use your ALCF username/password, and an authetication code from the MobilePASS+ application.
+After logging in, change the tenant using the botton at the top of the screen, from `default` to `metis`.
+You will need to change the current tenant to `metis` after every login. If resources are not showing as expected, check the tenant setting.
 
 ### SambaStudio Object Types
 The main abstractions in SambaStudio are projects, models, datasets, and endpoints. Tenants and users control or share resources.
@@ -46,7 +48,26 @@ If a project is deleted, endpoints and jobs within it will also be deleted.
 
 Endpoints are easily created (and deleted) using the web GUI
 
-Lots of screencaps.
+First, find the model that you want to use as an endpoint.
+Select "Models" in the left menu. Then find the model that you want to use.
+Check the existing public endpoints to verify that the model is not already made available as an endpoint.
+In this example, we filter using the `ML App` selector for `Samba1 Llama3.2 Experts`
+
+![Filter Model Hub](files/Filter_Model_Hub_with_ML_App.png)
+
+The filtered list of models looks like this:
+
+![Filter list of models](files/files/Filtered_list_of_models.png)
+
+Select the smallest model, `Meta-Llama-3.2-1B-Instruct`
+The model card for the model will be displayed.
+Consider copying the model name for labeling the endpoint
+If the model to be used shows "Download" in the upper right corner, not "Available", press the download button and wait for it to complete.
+
+![SambaStudio Model Download button](files/SambaStudio_Model_Download_button.png)
+
+Select your project, or create a new project as describe in a previous section
+
 
 An endpoint can also be created (or deleted) with snapi, if it is installed.
 For details:
@@ -58,7 +79,6 @@ When not using an endpoint for an extended period, please stop it using the Stop
 ```
 snapi endpoint stop --project=<project name> --endpoint=<endpoint name>
 ```
-
 #### GUI
 
 Lots of screencaps.
