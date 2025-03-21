@@ -57,9 +57,9 @@ In this example, we filter using the `ML App` selector for `Samba1 Llama3.2 Expe
 
 The filtered list of models looks like this:
 
-![Filter list of models](files/files/Filtered_list_of_models.png)
+![Filter list of models](files/Filtered_list_of_models.png)
 
-Select the smallest model, `Meta-Llama-3.2-1B-Instruct`
+Select a model, for example `Meta-Llama-3.2-1B-Instruct`
 The model card for the model will be displayed.
 Consider copying the model name for labeling the endpoint
 If the model to be used shows "Download" in the upper right corner, not "Available", press the download button and wait for it to complete.
@@ -68,6 +68,23 @@ If the model to be used shows "Download" in the upper right corner, not "Availab
 
 Select your project, or create a new project as describe in a previous section
 
+Scroll down, and click on the `New Endpoint` button.
+
+![New Endpoint](files/SambaStudio_New_Endpoint.png)
+
+The `New Endpoint` form will pop up. Fill in the fields. In this example, we leave most fields with the defaults, filling in the `Endpoint Name`, `Description`, `ML App`, `Select Model`
+
+![Create Endpoint](files/SambaStudio_Create_Endpoint.png)
+
+Press the `Add an Endpoint` button.
+![Add an Endpoint](files/SambaStudio_Add_an_Endpoint.png)
+
+This message panel will pop up:
+![Endpoint Created](files/SambaStudio_Endpoint_Created.png)
+
+Dismiss it, or press the `View Endpoint` button.
+
+Wait until the endpoint has `Live` status (in green). This will take at least several minutes, and more for larger models. 
 
 An endpoint can also be created (or deleted) with snapi, if it is installed.
 For details:
@@ -75,10 +92,15 @@ For details:
 snapi endpoint create --help
 ```
 
-When not using an endpoint for an extended period, please stop it using the Stop button from the pulldown at the upper right, or with snapi as shown below, replacing project name and endpoint name.  The endpoint can be restarted quickly (e.g. a minute or two) when needed.
+Live endpoints are allocated RDUs. 
+
+When not using an endpoint for an extended period, please stop it using the Stop button from the pulldown at the upper right, or the `...` pulldown in the endpoint list, or with snapi as shown below, replacing project name and endpoint name.  The endpoint can be restarted quickly (e.g. a minute or two) when needed.
 ```
 snapi endpoint stop --project=<project name> --endpoint=<endpoint name>
 ```
+
+TODO currently restarting an endpoint with snapi is kludgy, and uses update and an instance count greater than zero. This may be correctly soon.
+
 #### GUI
 
 Lots of screencaps.
