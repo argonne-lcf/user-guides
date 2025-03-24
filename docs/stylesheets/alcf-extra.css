@@ -65,8 +65,8 @@
   --md-header-bg-color: #222222;
   --md-header-fg-color: #eeeeee;
   --md-default-fg-color: #d7d7d7;
+  /* --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82); */
   --md-accent-fg-color: #18b9b4;
-  --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82);
   --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.56);
   --md-default-fg-color--lighter: hsla(var(--md-hue), 15%, 90%, 0.32);
   --md-default-fg-color--lightest: hsla(var(--md-hue), 15%, 90%, 0.12);
