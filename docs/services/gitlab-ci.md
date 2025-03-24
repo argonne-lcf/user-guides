@@ -46,7 +46,7 @@ submit_batch: # CI jobs may have any name
     - echo "Running on $(hostname) with setuid shell runner"
 ```
 
-To run a stage on a different system, change the `extends` key and the scheduler parameters. The list of ALCF provided `extends` is in the `include`ed [runners.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/defaults/-/blob/main/runners.yml?ref_type=heads) file.
+To run a stage on a different system, change the `extends` key and the scheduler parameters. The list of ALCF provided `extends` is in the `include`ed [runners.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/defaults/-/blob/main/runners.yml?ref_type=heads) file. For Crux, proxy variables are provided through the same file.
 
 For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml?ref_type=heads) file in the [large-example](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example) project.
 
@@ -191,7 +191,8 @@ _Cluster Tag(s)_
 | Cluster | tag | Description |
 |:--------|:---------:|:-------------:|
 | Polaris | polaris   | This tag will send jobs to the Polaris HPC runners  |
-| Aurora  | aurora    | This tag will send jobs to the Polaris HPC runners  |
+| Aurora  | aurora    | This tag will send jobs to the Aurora HPC runners  |
+| Crux    | crux      | This tag will send jobs to the Crux HPC runners |
 
 _Job Type Tag(s)_
 
@@ -241,6 +242,7 @@ If you are planning to submit jobs to a scheduler, then you will need to specify
 |:--------|:---------:|:-------------:|:------------:|
 | Polaris | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
 | Aurora  | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../aurora/getting-started-on-aurora.md) |
+| Crux    | PBS       | ANL_CRUX_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../crux/getting-started.md) |
 
 _Example: Running a batch job_
 ```yaml
