@@ -147,7 +147,7 @@ mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env O
 
 GPU-enabled applications will similarly run on the compute nodes using the above example script.
 
-- The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers.
+- The environment variable `MPIR_CVAR_ENABLE_GPU=1` enables GPU-aware MPI support whereby the MPI library sends and receives data directly from GPU buffers. Default value is `MPIR_CVAR_ENABLE_GPU=1`. For applications that doesn't need support for GPU-aware MPI, it is beneficial to disable by setting `MPIR_CVAR_ENABLE_GPU=0`.
 - If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `ZE_AFFINITY_MASK` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `ZE_AFFINITY_MASK=0,1` could be used.
 
 ## MPI rank and thread binding to cores and GPUs
