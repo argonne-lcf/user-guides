@@ -242,7 +242,7 @@ If you are planning to submit jobs to a scheduler, then you will need to specify
 |:--------|:---------:|:-------------:|:------------:|
 | Polaris | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../polaris/getting-started.md) |
 | Aurora  | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../aurora/getting-started-on-aurora.md) |
-| Crux    | PBS       | ANL_CRUX_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../crux/getting-started.md) |
+| Crux    | PBS       | ANL_CRUX_SCHEDULER_PARAMETERS   | [Crux Getting Started](../crux/getting-started.md) |
 
 _Example: Running a batch job_
 ```yaml
