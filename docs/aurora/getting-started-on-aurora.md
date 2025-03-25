@@ -10,11 +10,11 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
 ## Hardware Overview
 
-An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
+An overview of the Aurora system, including details on the compute node architecture, is available on the [Machine Overview](./index.md) page.
 
 ## Compiling Applications
 
-Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/index.md) page and corresponding pages depending on the target compiler and programming model.
 
 Autotools and CMake are available in the default [Aurora Programming Environment (PE)](./aurora-pe.md) and can be loaded via Lmod modules:
 
@@ -24,7 +24,7 @@ module load autoconf cmake
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/index.md) page for information on using the PBS scheduler and preparing job submission scripts. For Aurora-specific job documentation, refer to [Running Jobs on Aurora](./running-jobs-aurora.md).
 
 ## Early User Notes and Known Issues
 
@@ -67,12 +67,23 @@ If the node you are on doesn’t have outbound network connectivity, add the fol
 
 ```bash linenums="1"
 # proxy settings
-export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
-export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
-export http_proxy="http://proxy.alcf.anl.gov:3128"
-export https_proxy="http://proxy.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
+if [[ ! "${HOSTNAME}" =~ 'aurora-uan' ]]
+  export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
+  export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
+  export http_proxy="http://proxy.alcf.anl.gov:3128"
+  export https_proxy="http://proxy.alcf.anl.gov:3128"
+  export ftp_proxy="http://proxy.alcf.anl.gov:3128"
+  export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
+fi
+```
+
+For `ssh` connection to `github`, add the following to your `~/.ssh/config`
+
+```
+Match originalhost github.com exec "hostname -s | (grep -qv aurora-uan)"
+     Port 443
+     hostname ssh.github.com
+     ProxyCommand socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
 ```
 
 ## File Systems and DAOS

@@ -58,21 +58,15 @@
 }
 
 [data-md-color-scheme="slate"] {
-  /* --md-typeset-a-color: #18B9B4; */
-  /* --md-typeset-a-color: rgb(184, 226, 255); */
-  /* --md-typeset-a-color: rgb(55, 176, 241); */
   --md-typeset-a-color: rgb(100, 226, 255);
-  --md-default-heading-color: #eeeeee;
+  --md-default-heading-color: #f5f5f5;
   --md-primary-fg-color: #222222;
   --md-default-bg-color: #1c1c1c;
   --md-header-bg-color: #222222;
-  --md-header-fg-color: #cccccc;
-  /* --md-primary-fg-color: #1A1C23; */
-  /* --md-default-bg-color: #111317; */
-  /* --md-header-bg-color: #1A1C23; */
+  --md-header-fg-color: #eeeeee;
+  --md-default-fg-color: #d7d7d7;
+  /* --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82); */
   --md-accent-fg-color: #18b9b4;
-  /* --md-default-bg-color: hsla(var(--md-hue), 15%, 14%, 1); */
-  --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.82);
   --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.56);
   --md-default-fg-color--lighter: hsla(var(--md-hue), 15%, 90%, 0.32);
   --md-default-fg-color--lightest: hsla(var(--md-hue), 15%, 90%, 0.12);
@@ -81,7 +75,6 @@
   --md-default-bg-color--lightest: hsla(var(--md-hue), 15%, 14%, 0.07);
   --md-code-fg-color: hsla(var(--md-hue), 18%, 86%, 0.82);
   --md-code-bg-color: #222222;
-  /*--md-code-bg-color: hsla(var(--md-hue), 15%, 18%, 1);*/
   --md-code-hl-color: #b8e2de;
   --md-code-hl-color--light: rgba(41, 119, 255, 0.2);
   --md-code-hl-number-color: #e6695b;
@@ -90,12 +83,6 @@
   --md-code-hl-constant-color: #9383e2;
   --md-code-hl-keyword-color: #6791e0;
   --md-code-hl-string-color: #2fb170;
-  /* --md-code-hl-name-color: var(--md-code-fg-color); */
-  /* --md-code-hl-operator-color: var(--md-default-fg-color--light); */
-  /* --md-code-hl-punctuation-color: var(--md-default-fg-color--light); */
-  /* --md-code-hl-comment-color: var(--md-default-fg-color--light); */
-  /* --md-code-hl-generic-color: var(--md-default-fg-color--light); */
-  /* --md-code-hl-variable-color: var(--md-default-fg-color--light); */
   --md-typeset-color: var(--md-default-fg-color);
   --md-typeset-kbd-color: hsla(var(--md-hue), 15%, 90%, 0.12);
   --md-typeset-kbd-accent-color: hsla(var(--md-hue), 15%, 90%, 0.2);
@@ -118,10 +105,31 @@
   max-width: 1440px;
 }
 
+/* .md-header { */
+/*   background-color: var(--md-header-bg-color); */
+/*   color: var(--md-header-fg-color); */
+/*   position: inherit; */
+/* } */
+
 .md-header {
   background-color: var(--md-header-bg-color);
+  box-shadow: 0 0 .2rem #0000, 0 .2rem .4rem #0000;
   color: var(--md-header-fg-color);
-  position: inherit;
+  /* position: unset; */
+}
+
+.header--primary {
+  position: revert;
+/* ||||||| Stash base */
+/*   position: inherit; */
+/* ======= */
+  display: block;
+  left: 0;
+  position: sticky;
+  right: 0;
+  top: 0;
+  z-index: 4;
+/* >>>>>>> Stashed changes */
 }
 
 .md-main__inner {
@@ -178,7 +186,7 @@
   list-style-type: disc;
 }
 
-.md-typeset ul > li:before {
+.md-typeset ul>li:before {
   /* content: " "; */
   /* margin-right: 1rem; */
   font-weight: 600;
@@ -212,9 +220,13 @@
 /* primary header */
 /* ------------------------------------------------------------------------- */
 
-.header--primary .header__nav-secondary--right {
-  z-index: 100000000000000;
-}
+/* .header--primary .header__nav-secondary--right { */
+/*   z-index: 100000000000000; */
+/* } */
+/**/
+/* .header--primary .header__nav-secondary--right { */
+/*   z-index: 100000000000000; */
+/* } */
 
 /* hide material header at large sizes, and the alcf header at small sizes */
 @media only screen and (max-width: 1020px) {
@@ -260,12 +272,11 @@
     right: 0;
     display: inline-flex;
     margin: auto;
-    z-index: 100000000000000;
   }
 
-  .md-header {
-    z-index: unset;
-  }
+  /* .md-header { */
+  /*   z-index: unset; */
+  /* } */
 }
 
 .header--primary .header__nav-secondary ul {
@@ -276,6 +287,16 @@
   margin: auto;
 }
 
+@media only screen and (min-width: 1251px) {
+  .md-header {
+    position: sticky;
+  }
+
+  .header--primary {
+    position: sticky;
+  }
+}
+
 @media only screen and (max-width: 1020px) {
   .header--primary .header__nav-secondary--right {
     position: absolute;
@@ -283,9 +304,18 @@
     display: inline-flex;
     margin-block-start: unset !important;
   }
+
+  .header--mobile {
+    position: sticky;
+  }
 }
 
 @media only screen and (min-width: 1021px) and (max-width: 1250px) {
+
+  .header--mobile {
+    position: sticky;
+  }
+
   .md-header__source {
     display: block;
     max-width: 11.7rem;
@@ -408,7 +438,7 @@
   grid-column: span 6;
   grid-row: 3;
   position: relative;
-  height: 16px;
+  height: auto;
 }
 
 .header--primary .header__nav-primary ul {
@@ -439,7 +469,7 @@
   margin-top: 6px;
 }
 
-.md-nav__item--section > .md-nav__link[for] {
+.md-nav__item--section>.md-nav__link[for] {
   color: var(--md-default-fg-color);
 }
 
@@ -487,7 +517,7 @@
 }
 
 @media screen and (min-width: 60em) and (max-width: 76.1875em) {
-  [data-md-toggle="search"]:checked ~ .md-header .md-search__inner {
+  [data-md-toggle="search"]:checked~.md-header .md-search__inner {
     width: 18rem;
   }
 }
@@ -502,12 +532,12 @@
 }
 
 @media screen and (min-width: 76.25em) {
-  [data-md-toggle="search"]:checked ~ .md-header .md-search__inner {
+  [data-md-toggle="search"]:checked~.md-header .md-search__inner {
     width: 18rem;
   }
 }
 
-[data-md-toggle="search"]:checked ~ .md-header .md-search__scrollwrap {
+[data-md-toggle="search"]:checked~.md-header .md-search__scrollwrap {
   width: 100%;
 }
 
@@ -666,7 +696,7 @@
   width: 100%;
 }
 
-.dropdown .dropdown__featured-image > div {
+.dropdown .dropdown__featured-image>div {
   position: absolute;
   top: 0;
   left: 0;
@@ -703,6 +733,7 @@
   /* height: 66px; */
   font-size: 19px;
   /* line-height: 24px; */
+  /* position: sticky; */
 }
 
 @media only screen and (min-width: 1251px) {
@@ -1122,6 +1153,15 @@ table {
   overflow-wrap: break-word;
 }
 
+/* acronyms page */
+/* .md-typeset table:not([class]) { */
+/*   font-size: .9rem; */
+/* } */
+
+/* .md-typeset table:not([class]) td { */
+/*   padding: 0.5em 1em; */
+/* }  */
+
 /* Footer social media icons styling */
 .footer--social {
   display: flex;
@@ -1160,4 +1200,53 @@ table {
   width: 100%;
   height: 100%;
   fill: currentColor;
+}
+
+/* Custom styles for the navigation title link - ONLY FOR DESKTOP */
+@media screen and (min-width: 76.1875em) {
+  .md-nav__title a.md-nav__link {
+    color: var(--md-default-fg-color);
+    display: inline-block;
+    margin-top: 0;
+    transition: color 125ms;
+  }
+
+  .md-nav__title a.md-nav__link:hover {
+    color: var(--md-accent-fg-color);
+    text-decoration: none;
+  }
+
+  /* Style for active state (current page) */
+  .md-nav__title a.md-nav__link.md-nav__link--active {
+    color: var(--md-typeset-a-color);
+  }
+
+  /* Ensure hover effect works even when link is active */
+  .md-nav__title a.md-nav__link.md-nav__link--active:hover {
+    color: var(--md-accent-fg-color);
+  }
+
+  .md-nav__title a.md-nav__link .md-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Ensure main content has minimum height to prevent navigation scrollbar */
+.md-content {
+  min-height: calc(100vh - var(--md-header-height, 0px) - var(--md-footer-height, 0px));
+}
+
+.md-main__inner {
+  min-height: calc(100vh - var(--md-header-height, 0px) - var(--md-footer-height, 0px));
+}
+
+/* Set a variable for footer height that can be used in calculations */
+:root {
+  --md-footer-height: 160px;
+  --md-header-height: 72px;
 }

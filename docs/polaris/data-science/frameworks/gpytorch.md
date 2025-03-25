@@ -14,7 +14,7 @@ ssh alcfusername@polaris.alcf.anl.gov
     qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00 -I
     ```
 
-    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ## 2. Load Modules
 
