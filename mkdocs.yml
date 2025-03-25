@@ -156,7 +156,7 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-
+  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
   - Machines:
     - machines/index.md
     - Aurora:
