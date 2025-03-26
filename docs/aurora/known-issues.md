@@ -152,7 +152,7 @@ These errors can be safely ignored.
 
 #### 6. Incorrect results in receive buffer in GPU memory 
 
-In the default mpich module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next mpich module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
+In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
 
 ### Submitting Jobs
 
