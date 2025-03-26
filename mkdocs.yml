@@ -388,6 +388,7 @@ nav:
     - Request Software: contacting-support/software-requests.md
     - ALCF Users Slack: contacting-support/alcf-users-slack.md
     - Contribute to User Guides: contacting-support/docs-issues.md
+    - Aurora Office Hours: contacting-support/office-hours.md
 
   - Running Jobs with PBS:
     - running-jobs/index.md

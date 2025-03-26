@@ -121,6 +121,14 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 
+## Aurora Center of Excellence (COE) Office Hours
+
+Aurora users are invited to join our Office Hours with the Intel Center of Excellence (COE) @ ALCF. See [Aurora COE Office Hours](https://docs.alcf.anl.gov/contacting-support/office-hours/) for details.
+
+## ALCF Users Slack 
+
+The ALCF Users Slack workspace is a platform intended for current, active ALCF users1 where the user community can interact, collaborate, and help one another. See [ALCF Users Slack](https://docs.alcf.anl.gov/contacting-support/alcf-users-slack/) for details.
+
 ## Getting Assistance
 
-Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support. See our [Support](https://docs.alcf.anl.gov/contacting-support/technical-support/) page for more information.
