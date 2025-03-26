@@ -150,6 +150,10 @@ PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 
 These errors can be safely ignored.
 
+#### 6. Incorrect results in receive buffer in GPU memory 
+
+In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
