@@ -152,6 +152,16 @@ nav:
   # - ALCF User Guides:
   #   - index.md
   - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+
+  - User Support:
+    - contacting-support/index.md
+    - Contact:
+      - Submit a Ticket: contacting-support/technical-support.md
+      - Request Software: contacting-support/software-requests.md
+      - ALCF Users Slack: contacting-support/alcf-users-slack.md
+      - Contribute to User Guides: contacting-support/docs-issues.md
+      - Aurora Office Hours: contacting-support/office-hours.md
+
   - Machines:
     - machines/index.md
     - Aurora:
@@ -381,14 +391,6 @@ nav:
       - Visualization:
         - sophia/visualization/index.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
-
-  - User Support:
-    - contacting-support/index.md
-    - Submit a Ticket: contacting-support/technical-support.md
-    - Request Software: contacting-support/software-requests.md
-    - ALCF Users Slack: contacting-support/alcf-users-slack.md
-    - Contribute to User Guides: contacting-support/docs-issues.md
-    - Aurora Office Hours: contacting-support/office-hours.md
 
   - Running Jobs with PBS:
     - running-jobs/index.md
