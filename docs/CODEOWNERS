@@ -115,7 +115,10 @@ aurora/aurora-pe.md                @koysean
 **/services/gitlab-ci.md            @peterupton @thilinarmtb
 
 # Workflows
-**/workflows/                       @cms21
+####**/workflows/                       @???
+**/smartsim.md                      @rickybalin
+###**/adios.md                      @rickybalin
+*adios*                      @rickybalin   # TOOD: how fleixlbe is single-glob pattern matching?
 **/workflows/parsl.md               @cms21
 #**/workflows/libensemble.md        @shuds13
 
