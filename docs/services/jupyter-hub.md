@@ -17,7 +17,7 @@ The Polaris JupyterHub server runs on a Polaris login node and launches individu
 - Queue Name: This field provides a list of available queues on the system.
 - Project List: This field displays the active projects associated with the user on Polaris.
 - Number of Nodes: This field allows the user to select the number of compute nodes to be allocated.
-- Runtime (minutes:seconds): This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the [Polaris queue scheduling policy](../polaris/running-jobs.md) for minimum and maximum runtime allowed for the selected queue.
+- Runtime (minutes:seconds): This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the [Polaris queue scheduling policy](../polaris/running-jobs/running-jobs.md) for minimum and maximum runtime allowed for the selected queue.
 - File Systems: This field allows the user to select the file systems to be mounted. By default, all the file systems are selected.
 
 <figure markdown>
