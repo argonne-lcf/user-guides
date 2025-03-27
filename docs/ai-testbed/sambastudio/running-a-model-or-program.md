@@ -3,27 +3,38 @@
 ## Getting Started
 
 ### Connecting to SambaStudio
-The GUI is accessible at `https://metis.alcf.anl.gov``
+The GUI is accessible at `https://metis.alcf.anl.gov`
 Login is via 2FA. Use your ALCF username/password, and an authetication code from the MobilePASS+ application.
+
 After logging in, change the tenant using the botton at the top of the screen, from `default` to `metis`.
 You will need to change the current tenant to `metis` after every login. If resources are not showing as expected, check the tenant setting.
 
 ### SambaStudio Object Types
 The main abstractions in SambaStudio are projects, models, datasets, and endpoints. Tenants and users control or share resources.
 
-[TODO] diagram here. Either from the GUI, or maybe a UML diagram.
 ![SambaStudio left menu](files/SambaStudio_left_menu.png)
 
 #### Projects
-A project is logical grouping of workloads and artifacts within a tenant. It contains endpoints, and batch jobs for training and inference. Projects are created and owned by users, who are members of one or more tenants. (TODO: Will ALCF expose tenants to users?) 
+A project is logical grouping of workloads and artifacts within a tenant. It contains endpoints, and batch jobs for training and inference. Projects are created and owned by users, who are members of one or more tenants. (TODO: Will ALCF expose tenants to users?)
+
+The SambaStudio documentation for projects is [Projects](https://docs.sambanova.ai/sambastudio/latest/projects.html)
 
 #### Models
-Models are the ML models available in SambaStudio. Each model has a model card that may be viewed in the GUI. 
+Models are the ML models available in SambaStudio. Each model has a model card that may be viewed in the GUI.
+
+The SambaStudio documentation for models is [Models](https://docs.sambanova.ai/sambastudio/latest/model-hub.html)
 
 #### Datasets
 
+TODO what isa dataset? The SN documentation is not helpful.
+
+The SambaStudio documentation for datasets is [Datasets](https://docs.sambanova.ai/sambastudio/latest/add-datasets.html)
+
 #### Endpoints
 
+Endpoints are how SambaStudio exposes models for inference.
+
+The SambaStudio documentation for endpoints is [Create and use endpoints](https://docs.sambanova.ai/sambastudio/latest/endpoints.html)
 
 ### Creating a project
 Projects are easily created (and deleted) with the web GUI.
@@ -193,6 +204,7 @@ The three available SambaStudio APIs are described at
 [API reference documents](https://docs.sambanova.ai/sambastudio/latest/api-ref-landing.html)
 
 SambaStudio suggests templating scripts that use curl to access the api.
+TODO: This example is not present in the ANL SN40L SambaNova Suite
 Here's an example, for conversion of a paper figure to a table using a DePlot endpoint.
 
 Either copy to a script, e.g. `post_deplot.sh` and executed with `bash post_deplot.sh`, or simply copy the commands to your command line.
