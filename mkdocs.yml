@@ -370,7 +370,6 @@ nav:
         - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
         - VNC: polaris/visualization/vnc.md
       - Workflows:
-        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md

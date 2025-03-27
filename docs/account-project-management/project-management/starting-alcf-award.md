@@ -7,7 +7,8 @@ To get started using our resources, please visit [Connect & Login](https://www.a
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
-- [Running on Polaris](../../polaris/running-jobs.md) 
+- [Running on Polaris](../../polaris/running-jobs/running-jobs.mdrunning-jobs.md)
+- [Running on Aurora](../../aurora/running-jobs-aurora.md)
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 - [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/index.md)
 
