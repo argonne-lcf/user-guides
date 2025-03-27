@@ -4,7 +4,7 @@ Polaris compute nodes each have 4 Nvida A100 GPUs, more details are in [Machine 
 
 ## Discovering GPUs
 
-When on a compute node (for example in an Interactive Job), you can discover information about the available GPUs, and processes running on them, with the command `nvidia-smi`.
+When on a compute node (for example in an [Interactive Job](./running-jobs.md#interactive-jobs-on-compute-nodes)), you can discover information about the available GPUs, and processes running on them, with the command `nvidia-smi`.
 
 ## Running GPU-enabled Applications
 
@@ -119,6 +119,8 @@ And the output should look like this:
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 ```
+
+In some instances, users may find it useful to set the environment variable `CUDA_MPS_ACTIVE_THREAD_PERCENTAGE` which limits the fraction of the GPU available to a MPS process.  Over provisioning of the GPU is permitted, i.e. the sum across all MPS processes may exceed 100 per cent.
 
 ### Using MPS in Multi-node Jobs
 

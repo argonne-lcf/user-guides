@@ -317,7 +317,9 @@ nav:
         - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
       - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
-      - Running Jobs: polaris/running-jobs.md
+      - Running Jobs: 
+        - Running Jobs: polaris/running-jobs/running-jobs.md
+        - Using GPUs: polaris/running-jobs/using-gpus.md
       - Applications and Libraries:
         - Applications:
           - Amber: polaris/applications-and-libraries/applications/amber.md
