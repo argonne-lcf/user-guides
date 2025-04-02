@@ -4,11 +4,11 @@ Polaris compute nodes each have 4 NVIDIA A100 GPUs; more details are in [Machine
 
 ## Discovering GPUs
 
-When on a compute node (for example in an [Interactive Job](./running-jobs.md#interactive-jobs-on-compute-nodes)), you can discover information about the available GPUs, and processes running on them, with the command `nvidia-smi`.
+When on a compute node (for example in an [Interactive Job](./index.md#interactive-jobs-on-compute-nodes)), you can discover information about the available GPUs, and processes running on them, with the command `nvidia-smi`.
 
 ## Running GPU-enabled Applications
 
-GPU-enabled applications will run on the compute nodes using PBS submission scripts like the ones in [Running Jobs](./running-jobs.md).
+GPU-enabled applications will run on the compute nodes using PBS submission scripts like the ones in [Running Jobs](./index.md).
 
 Some GPU specific considerations:
 

@@ -14,7 +14,7 @@ An overview of the Polaris system, including details on the compute node archite
 
 ## Compiling Applications
 
-Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/index.md) page and corresponding pages depending on the target compiler and programming model.
 
 ## Accessing Additional Software
 
@@ -38,7 +38,7 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 ## Proxy
 
-If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
+If the node you are on doesn't have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
 
 ```bash
 # proxy settings

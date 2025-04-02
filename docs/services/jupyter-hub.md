@@ -13,11 +13,11 @@ We describe below how to use JupyterHub on Polaris in more detail.
 
 The Polaris JupyterHub server runs on a Polaris login node and launches individual users' environments on the compute nodes through the PBS job scheduler. After the authentication step, the user will be presented with the menu of the available job options to start the Jupyter instance.
 
-- Select a job profile: This field lists the available profiles, which is limited to “Polaris Compute Node” at this time.
+- Select a job profile: This field lists the available profiles, which is limited to "Polaris Compute Node" at this time.
 - Queue Name: This field provides a list of available queues on the system.
 - Project List: This field displays the active projects associated with the user on Polaris.
 - Number of Nodes: This field allows the user to select the number of compute nodes to be allocated.
-- Runtime (minutes:seconds): This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the [Polaris queue scheduling policy](../polaris/running-jobs/running-jobs.md) for minimum and maximum runtime allowed for the selected queue.
+- Runtime (minutes:seconds): This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the [Polaris queue scheduling policy](../polaris/running-jobs/index.md) for minimum and maximum runtime allowed for the selected queue.
 - File Systems: This field allows the user to select the file systems to be mounted. By default, all the file systems are selected.
 
 <figure markdown>
@@ -25,7 +25,7 @@ The Polaris JupyterHub server runs on a Polaris login node and launches individu
   <figcaption>Polaris Job options</figcaption>
 </figure>
 
-Once the appropriate information is provided, the user will click the “Start” button and wait for the job to spawn. If there's an extended wait time due to a lengthy job queue, the interface might time out, leading to the job's removal from the queue. If not, the job kicks off and it begins to use up the user's allocation based on the chosen job options. It's crucial for users to shut down the server when resources are no longer required. Failing to do so will result in continued consumption of the allocated time until the predetermined runtime concludes.
+Once the appropriate information is provided, the user will click the "Start" button and wait for the job to spawn. If there's an extended wait time due to a lengthy job queue, the interface might time out, leading to the job's removal from the queue. If not, the job kicks off and it begins to use up the user's allocation based on the chosen job options. It's crucial for users to shut down the server when resources are no longer required. Failing to do so will result in continued consumption of the allocated time until the predetermined runtime concludes.
 
 <figure markdown>
   ![Job queued](files/Jupyter-3-job-queued.png){ width="700" }
@@ -94,7 +94,7 @@ Please note that one can run any shell command directly on a Jupyter notebook by
 
 ### Ending a Jupyter Notebook running on a compute node
 
-Failing to correctly end a running Jupyter Notebook will continue to consume the selected project's allocation on the resource in question. When a user has completed their task in Jupyter, the user should stop the Jupyter instance running on the compute node before logging out. To stop the Notebook, click the “Control Panel” button in the top right, then click “Stop My Server”.
+Failing to correctly end a running Jupyter Notebook will continue to consume the selected project's allocation on the resource in question. When a user has completed their task in Jupyter, the user should stop the Jupyter instance running on the compute node before logging out. To stop the Notebook, click the "Control Panel" button in the top right, then click "Stop My Server".
 
 <figure markdown>
   ![Stop panel](files/Jupyter-4-stop-panel.png){ width="700" }
