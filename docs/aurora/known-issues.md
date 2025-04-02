@@ -192,7 +192,7 @@ failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
 
 indicates such a failure. It is recommended to instead use `-v` (note: lower-case) and explicitly export any environment variables that your job may require.
 
-To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
+To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](./running-jobs-aurora.md#working-around-node-failures) for more information.
 
 ### Other Issues
 

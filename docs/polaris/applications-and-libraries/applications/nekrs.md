@@ -15,7 +15,7 @@ ALCF provides assistance with build instructions, compiling executables, submitt
 
 nekRS is an open-source code and can be downloaded from the [website](https://github.com/Nek5000/nekRS/archive/refs/tags/v24.0.tar.gz). Alternatively, the user can clone from the [nekRS GitHub](https://github.com/Nek5000/nekRS/tree/master) repository. We recommend using the [next](https://github.com/Nek5000/nekRS/tree/next) branch since it is the most updated branch with some of the latest features, including the in-situ visualization capability. 
 
-```
+```bash linenums="1"
 git clone https://github.com/Nek5000/nekRS.git
 git checkout next
 ```
@@ -28,7 +28,7 @@ The user should remove previous build and installation directories whenever ther
 
 ### Building using GNU compilers
 The following modules are to be loaded for this particular build.
-```
+```bash linenums="1"
 module restore
 module load craype-accel-nvidia80
 module swap PrgEnv-nvhpc PrgEnv-gnu
@@ -40,13 +40,13 @@ module load spack-pe-base cmake
 ```
 
 To build and install the code, run:
-```
+```bash linenums="1"
 CC=cc CXX=CC FC=ftn ./build.sh -DCMAKE_INSTALL_PREFIX=/path/to/installation/directory
 ```
 During the installation process, you will be prompted to verify the configuration options. If everything was done correctly, you should see the correct compilers and the `Default backend : CUDA` in the `Summary` section of the output. If you see this, press `Enter` to continue with the build and installation process.
 
 After installation, execute the following commands to set up the environment. 
-```
+```bash linenums="1"
 export NEKRS_HOME=/path/to/installation/directory
 export PATH=$NEKRS_HOME/bin:$PATH
 ```
@@ -56,7 +56,7 @@ Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `sou
 ### Building using NVHPC compilers
 
 The following modules are to be loaded for this particular build. The initial `module restore` is just setting the default environment as the starting point.
-```
+```bash linenums="1"
 module restore
 module load craype-accel-nvidia80
 
@@ -72,11 +72,11 @@ The correct options to execute the script are as follows:
 > NEKRS_HOME= *</path/to/nekrs/install>* PROJ_ID=*<Your_Project_ID>* QUEUE=*<queue_to_submit>* ./run.sh *<casename>* *<number_of_nodes_requested>* *<walltime(hh:mm:ss)>*
 
 Users can copy the script below into a file `run.sh` and execute it using the command above.
-```
+```bash linenums="1" title="run.sh"
 #!/bin/bash
 : ${PROJ_ID:=""}
 
-: ${QUEUE:="prod"} # debug, debug-scaling, prod https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/
+: ${QUEUE:="prod"} # debug, debug-scaling, prod
 : ${NEKRS_HOME:="$HOME/.local/nekrs"}
 : ${NEKRS_CACHE_BCAST:=1}
 : ${NEKRS_SKIP_BUILD_ONLY:=0}

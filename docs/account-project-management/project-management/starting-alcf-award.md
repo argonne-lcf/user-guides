@@ -2,19 +2,20 @@
 
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Get Started with ALCF’s Systems
+## Get Started with ALCF's Systems
 To get started using our resources, please visit [Connect & Login](https://www.alcf.anl.gov/support-center/get-started/connect-and-login)
 
 We also encourage you to take full advantage of ALCF's training programs and user services. Some useful introductory materials and videos are listed below:
 
-- [Running on Polaris](../../polaris/running-jobs.md) 
+- [Running on Polaris](../../polaris/running-jobs/index.md)
+- [Running on Aurora](../../aurora/running-jobs-aurora.md)
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
 - [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/index.md)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
 
-- **Project Short Name**: The assigned, shortened name for your project. This will be the name that you’ll use to access your project on the systems.
+- **Project Short Name**: The assigned, shortened name for your project. This will be the name that you'll use to access your project on the systems.
 - **Project Proxies**: Project members designated by PIs that are authorized to add or renew project members on your behalf.
 - **Allocation System(s) and Allocation Amount**: The approved system(s) and amount of your award in node hours.
 - **Approved Quota**: The approved amount of disk space for your project directory.
@@ -37,7 +38,7 @@ If you are a foreign national and do not have current authorization credentials,
 **Note:** This does not apply to Director's Discretionary awards.
 
 ### Institution Master Agreement for INCITE, ALCC, and ADSP
-If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne’s user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
+If you are not an employee of Argonne National Laboratory, a user agreement must be signed by your home institution to perform research at Argonne's user facilities. This policy applies to every member of the project team who will be conducting research on ALCF resources.
 
 A list of home institutions that have master agreements in place is located on this webpage: [https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-Facility-Agreements](https://www.aps.anl.gov/Users-Information/Legal-Financial/Argonne-User-Facility-Agreements)
 

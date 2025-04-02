@@ -43,6 +43,18 @@ If there are free nodes in production, then debug jobs can take another 16 nodes
 - **Note 3:** All of these queues have a limit of one hundred (100) jobs queued (not accruing score) **per-project**.
 - **Note 4:** As of January 2023, it is recommended to submit jobs with a maximum node count of 476-486 nodes given current rates of downed nodes (larger jobs may sit in the queue indefinitely).
 
+## Interactive Jobs on Compute Nodes
+
+Here is how to submit an interactive job to, for example, edit/build/test an application on Polaris compute nodes:
+```bash
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
+```
+
+This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the `/home` and `/eagle` filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing GPU affinity scripts on the compute node.
+
+!!! info
+    If you want to `ssh` or `scp` to one of your assigned compute nodes, you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
+
 ## Running MPI+OpenMP Applications
 
 Once a submitted job is running, calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec`, and some helpful options follow.
@@ -77,66 +89,6 @@ echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NR
 # Change the directory to work directory, which is the directory you submit the job.
 cd $PBS_O_WORKDIR
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} ./hello_affinity
-```
-
-## Running GPU-enabled Applications
-
-GPU-enabled applications will similarly run on the compute nodes using the above example script.
-- The environment variable `MPICH_GPU_SUPPORT_ENABLED=1` needs to be set if your application requires MPI-GPU support whereby the MPI library sends and receives data directly from GPU buffers. In this case, it will be important to have the `craype-accel-nvidia80` module loaded both when compiling your application and during runtime to correctly link against a GPU Transport Layer (GTL) MPI library. Otherwise, you'll likely see `GPU_SUPPORT_ENABLED is requested, but GTL library is not linked` errors during runtime.
-- If running on a specific GPU or subset of GPUs is desired, then the `CUDA_VISIBLE_DEVICES` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `CUDA_VISIBLE_DEVICES=0,1` could be used.
-
-### Binding MPI ranks to GPUs
-
-The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `CUDA_VISIBLE_DEVICES` for each MPI rank. One example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_gpu) where each MPI rank is similarly bound to a single GPU with round-robin assignment.
-
-An example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
-
-```bash
-#!/bin/bash -l
-num_gpus=4
-# need to assign GPUs in reverse order due to topology
-# See Polaris Device Affinity Information:
-# https://www.alcf.anl.gov/support/user-guides/polaris/hardware-overview/machine-overview/index.html
-gpu=$((${num_gpus} - 1 - ${PMI_LOCAL_RANK} % ${num_gpus}))
-export CUDA_VISIBLE_DEVICES=$gpu
-echo "RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}"
-exec "$@"
-```
-This script can be placed just before the executable in the `mpiexec` command like so.
-```bash
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
-```
-Users with different needs, such as assigning multiple GPUs per MPI rank, can modify the above script to suit their needs.
-
-## Interactive Jobs on Compute Nodes
-
-Here is how to submit an interactive job to, for example, edit/build/test an application on Polaris compute nodes:
-```bash
-qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
-```
-
-This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the /home and eagle filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing GPU affinity scripts on the compute node.
-
-**NOTE:** If you want to `ssh` or `scp` to one of your assigned compute nodes, you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
-
-## Running Multiple MPI Applications on a Node
-
-Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `CUDA_VISIBLE_DEVICES` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the example below, four instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-7 on CPUs 24-31 and using GPU 0. This mapping is based on output from the `nvidia-smi topo -m` command and pairs CPUs with the closest GPU.
-
-```bash
-export CUDA_VISIBLE_DEVICES=0
-mpiexec -n 8 --ppn 8 --cpu-bind list:24:25:26:27:28:29:30:31 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=1
-mpiexec -n 8 --ppn 8 --cpu-bind list:16:17:18:19:20:21:22:23 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=2
-mpiexec -n 8 --ppn 8 --cpu-bind list:8:9:10:11:12:13:14:15 ./hello_affinity &
-
-export CUDA_VISIBLE_DEVICES=3
-mpiexec -n 8 --ppn 8 --cpu-bind list:0:1:2:3:4:5:6:7 ./hello_affinity &
-
-wait
 ```
 
 ## Compute Node Access to the Internet
