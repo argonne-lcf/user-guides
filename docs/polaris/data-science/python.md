@@ -6,7 +6,7 @@ Users can activate this environment by first loading the `conda` module and then
 
 Explicitly (either from an interactive job or inside a job script):
 
-```bash
+```bash linenums="1"
 module use /soft/modulefiles; module load conda; conda activate base
 ```
 
@@ -16,7 +16,7 @@ This will load and activate the base environment.
 
     We encourage users to use the pre-installed conda environment. Any custom environments are supported on a best-effort basis only.
 
-For Python issues or questions, please see the [Contacting Support](../../contacting-support/technical-support.md) page.
+For Python issues or questions, please see the [Technical Support](../../support/technical-support.md) page.
 
 ## Virtual environments via `venv`
 
