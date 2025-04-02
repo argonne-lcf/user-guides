@@ -14,7 +14,7 @@ module load conda
 conda activate base
 ```
 
-See the docs for more details on using [Python on Polaris](../python.md)
+See the docs for more details on using [Python on Polaris](../data-science/python.md)
 
 ???+ example "Creating a virtual environment and updating `libEnsemble`"
 
