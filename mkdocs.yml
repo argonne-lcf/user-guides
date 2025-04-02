@@ -312,7 +312,7 @@ nav:
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
       - Compiling and Linking:
-        - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
+        - polaris/compiling-and-linking/index.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
         - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
         - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
@@ -322,7 +322,9 @@ nav:
         - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
       - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
-      - Running Jobs: polaris/running-jobs.md
+      - Running Jobs:
+        - polaris/running-jobs/index.md
+        - Using GPUs: polaris/running-jobs/using-gpus.md
       - Applications and Libraries:
         - Applications:
           - Amber: polaris/applications-and-libraries/applications/amber.md
@@ -373,7 +375,6 @@ nav:
         - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
         - VNC: polaris/visualization/vnc.md
       - Workflows:
-        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
