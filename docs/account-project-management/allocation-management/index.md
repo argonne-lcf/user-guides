@@ -29,8 +29,8 @@ Depending on the allocation program, users can choose from some or all of the fo
 
 ## Policy Information Related to Allocations
 * [Pullback Policy](../../policies/queue-scheduling/pullback-policy.md)
-* [Reports and Penalties](https://docs.alcf.anl.gov/account-project-management/project-management/project-reports/#penalties)
-* [Other Facility Policies](https://docs.alcf.anl.gov/policies/)
+* [Reports and Penalties](../project-management/project-reports.md#penalties)
+* [Other Facility Policies](../../policies/index.md)
 
 ## Requesting Additional Allocation Hours
-If you are a PI of a Director's Discretionary project that has an active allocation, you can request additional time or an extension for your compute allocations using the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests). To renew or extend storage allocations, see instructions [here](https://docs.alcf.anl.gov/account-project-management/accounts-and-access/accounts-and-access-faqs/#i-am-unable-to-sign-in-to-the-accounts-website-what-do-i-do)
+If you are a PI of a Director's Discretionary project that has an active allocation, you can request additional time or an extension for your compute allocations using the [allocation request form](https://my.alcf.anl.gov/accounts/#/allocationRequests). To renew or extend storage allocations, see instructions [here](../accounts-and-access/accounts-and-access-faqs.md#sign-in-help)
