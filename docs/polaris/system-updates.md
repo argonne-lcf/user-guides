@@ -42,7 +42,7 @@ Older versions of the Cray PE (older than 23.12) are deprecated as they are inco
 We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
 
 To use the new environment, type:
-```bash
+```bash linenums="1"
 module use /soft/modulefiles 
 module load conda; conda activate
 ```
@@ -57,7 +57,7 @@ Adding `module use /soft/modulefiles` to your profile should approximate the old
 
 The following modules have been removed:
 
-```
+```output
    aocl/3.2.0                                                        hpctoolkit/2022.07.27
    aocl/4.0                                                   (D)    hpctoolkit/2023.03.27                                                    (D)
    ascent/develop/2024-01-08-492f9b0                                 imagemagick/imagemagick-7.1.1-11
@@ -93,7 +93,7 @@ The following modules have been removed:
 
 The following modules have been newly installed:
 
-```
+```output
    cabana/dev-9a1ad605/kokv/4.2.01/PrgEnv-gnu/8.5.0/gnu/12.3/cuda_cudatoolkit_12.2.91
    cuda-PrgEnv-nvidia/12.2.91
    cudatoolkit-standalone/12.2.2                                                      (D)
@@ -115,7 +115,7 @@ We have newly installed Spack deployments in `/soft`. Spack is an HPC-oriented p
 The base suite of software tools and libraries can be accessed by loading the `spack-pe-base` module. This adds a path to `$MODULEPATH` which contains numerous modules.
 
 For example, to load `cmake` starting from the default environment, a user should run the following commands:
-```bash
+```bash linenums="1"
 module use /soft/modulefiles
 module load spack-pe-base
 module load cmake
@@ -126,10 +126,10 @@ In addition to the base stack, a suite of higher-level libraries are installed i
 
 Note that not all software is installed through Spack; many applications and libraries are installed as standalone packages in `/soft`. Users are encouraged to browse the available modules with `module avail` to see what software is installed on the system.
 
-### ParaView and Visit
-The ParaView module has been updated. For more information, see [ParaView Documentation](https://docs.alcf.anl.gov/polaris/visualization/paraview/) and [ParaView Manual Launch](https://docs.alcf.anl.gov/polaris/visualization/paraview-manual-launch/).
+### ParaView and VisIt
+The ParaView module has been updated. For more information, see [ParaView Documentation](./visualization/paraview.md) and [ParaView Manual Launch](./visualization/paraview-manual-launch.md).
 
-The Visit module is in the process of being updated.
+The VisIt module is in the process of being updated.
 
 ### Changes to Memory Limits on Login Nodes
 
