@@ -32,7 +32,7 @@ export CUDA_VISIBLE_DEVICES=$gpu
 echo "RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}"
 exec "$@"
 ```
-This script can be placed just before the executable in the `mpiexec` command like so.
+This script can be placed just before the executable in the `mpiexec` command like so:
 ```bash
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
 ```
