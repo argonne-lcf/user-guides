@@ -6,6 +6,8 @@
 https://docs.alcf.anl.gov/account-project-management/
 https://docs.alcf.anl.gov/data-management/
 https://docs.alcf.anl.gov/ai-testbed/
+https://docs.alcf.anl.gov/support/
+https://docs.alcf.anl.gov/running-jobs/
 https://docs.alcf.anl.gov/policies/
 https://docs.alcf.anl.gov/crux/
 https://docs.alcf.anl.gov/crux/index
