@@ -147,15 +147,20 @@ plugins:
         'policies/facility-policies.md': 'policies/index.md'
         'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
         'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
-        # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
-        'machines/index.md': 'index.md'
-        'contacting-support/index.md': 'contacting-support/technical-support.md'
-        'data-management/index.md': 'data-management/filesystem-and-storage/index.md'
-        'account-project-management/index.md': 'account-project-management/MyALCF.md'
 
 nav:
   # - ALCF User Guides:
   #   - index.md
+  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+
+  - User Support:
+    - contacting-support/index.md
+    - Contact:
+      - Submit a Ticket: contacting-support/technical-support.md
+      - Request Software: contacting-support/software-requests.md
+      - ALCF Users Slack: contacting-support/alcf-users-slack.md
+      - Contribute to User Guides: contacting-support/docs-issues.md
+      - Aurora Office Hours: contacting-support/office-hours.md
 
   - Machines:
     - machines/index.md
@@ -387,14 +392,6 @@ nav:
       - Visualization:
         - sophia/visualization/index.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
-
-  - User Support:
-    - contacting-support/index.md
-    - Submit a Ticket: contacting-support/technical-support.md
-    - Request Software: contacting-support/software-requests.md
-    - ALCF Users Slack: contacting-support/alcf-users-slack.md
-    - Contribute to User Guides: contacting-support/docs-issues.md
-    - Aurora Office Hours: contacting-support/office-hours.md
 
   - Running Jobs with PBS:
     - running-jobs/index.md
