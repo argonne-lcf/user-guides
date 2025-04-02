@@ -2,10 +2,11 @@
 
 JupyterHub is an open-source service application that enables users to launch separate Jupyter instances on a remote server. [ALCF JupyterHub](https://jupyter.alcf.anl.gov) provides access to Polaris with the same [authentication protocol](../account-project-management/accounts-and-access/alcf-passcode-tokens.md) that is used to access these systems, but through a web interface rather than a terminal. On the [ALCF JupyterHub home page](https://jupyter.alcf.anl.gov), users can choose their desired system. Upon selection, they'll be directed to the sign-in page to enter their ALCF username and [passcode token](../account-project-management/accounts-and-access/alcf-passcode-tokens.md).
 
-<figure markdown>
-  ![JupyterHub](files/Jupyter-0-login.png){ width="700" }
-  <figcaption>ALCF JupyterHub home page and sign-in screen</figcaption>
-</figure>
+![JupyterHub](files/Jupyter-0-login.png)
+
+/// caption
+ALCF JupyterHub home page and sign-in screen
+///
 
 We describe below how to use JupyterHub on Polaris in more detail.
 
@@ -20,19 +21,23 @@ The Polaris JupyterHub server runs on a Polaris login node and launches individu
 - Runtime (minutes:seconds): This field allows the user to set the runtime of the job in minutes and seconds. The user should refer to the [Polaris queue scheduling policy](../polaris/running-jobs/index.md) for minimum and maximum runtime allowed for the selected queue.
 - File Systems: This field allows the user to select the file systems to be mounted. By default, all the file systems are selected.
 
-<figure markdown>
-  ![Add options](files/Jupyter-6-job-options.png){ width="700" }
-  <figcaption>Polaris Job options</figcaption>
-</figure>
+![Add options](files/Jupyter-6-job-options.png)
+
+/// caption
+Polaris Job options
+///
 
 Once the appropriate information is provided, the user will click the "Start" button and wait for the job to spawn. If there's an extended wait time due to a lengthy job queue, the interface might time out, leading to the job's removal from the queue. If not, the job kicks off and it begins to use up the user's allocation based on the chosen job options. It's crucial for users to shut down the server when resources are no longer required. Failing to do so will result in continued consumption of the allocated time until the predetermined runtime concludes.
 
-<figure markdown>
-  ![Job queued](files/Jupyter-3-job-queued.png){ width="700" }
-  <figcaption>Job queued</figcaption>
-</figure>
+![Job queued](files/Jupyter-3-job-queued.png)
 
-> **_NOTE:_** If you would like to change your selection about where to run the Jupyter instance after the Notebook has started, you need to stop the server to be able to see the drop-down menu again.
+/// caption
+Job queued
+///
+
+!!! warning
+
+    If you would like to change your selection about where to run the Jupyter instance after the Notebook has started, you need to stop the server to be able to see the drop-down menu again.
 
 ## Known Issues
 
@@ -96,15 +101,17 @@ Please note that one can run any shell command directly on a Jupyter notebook by
 
 Failing to correctly end a running Jupyter Notebook will continue to consume the selected project's allocation on the resource in question. When a user has completed their task in Jupyter, the user should stop the Jupyter instance running on the compute node before logging out. To stop the Notebook, click the "Control Panel" button in the top right, then click "Stop My Server".
 
-<figure markdown>
-  ![Stop panel](files/Jupyter-4-stop-panel.png){ width="700" }
-  <figcaption>Stop panel</figcaption>
-</figure>
+![Stop panel](files/Jupyter-4-stop-panel.png)
 
-<figure markdown>
-  ![Stop server](files/Jupyter-5-stop-server.png){ width="700" }
-  <figcaption>Stop server</figcaption>
-</figure>
+/// caption
+Stop panel
+///
+
+![Stop server](files/Jupyter-5-stop-server.png)
+
+/// caption
+Stop server
+///
 
 ## Resources
 
