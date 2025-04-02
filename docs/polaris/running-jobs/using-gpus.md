@@ -21,7 +21,7 @@ The Cray MPI on Polaris does not currently support binding MPI ranks to GPUs. Fo
 
 An example `set_affinity_gpu_polaris.sh` script follows where GPUs are assigned round-robin to MPI ranks.
 
-```bash
+```bash linenums="1" title="set_affinity_gpu_polaris.sh"
 #!/bin/bash -l
 num_gpus=4
 # need to assign GPUs in reverse order due to topology
