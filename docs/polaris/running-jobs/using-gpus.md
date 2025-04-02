@@ -1,6 +1,6 @@
 # Using GPUs on Polaris Compute Nodes
 
-Polaris compute nodes each have 4 Nvida A100 GPUs, more details are in [Machine Overview](../index.md).
+Polaris compute nodes each have 4 NVIDIA A100 GPUs; more details are in [Machine Overview](../index.md).
 
 ## Discovering GPUs
 
