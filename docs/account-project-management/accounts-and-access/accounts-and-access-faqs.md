@@ -1,6 +1,6 @@
 # Accounts and Access FAQ
 
-## I am unable to sign in to the MyALCF portal. What do I do?
+## <a name="sign-in-help"></a>I am unable to sign in to the MyALCF portal. What do I do?
 Only users with active ALCF accounts can sign in to the MyALCF user portal. If you have an active account, verify that you are using the correct ALCF username. Note that the username is case-sensitive. If you forgot your username, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For passcode token issues, please review the troubleshooting information on this page: [Passcode Tokens](./alcf-passcode-tokens.md).
 
 If your account is inactive, please submit a reactivation request here: [https://my.alcf.anl.gov/accounts/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate).
