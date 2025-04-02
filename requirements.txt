@@ -5,6 +5,6 @@ mkdocs-include-markdown-plugin
 pymdown-extensions>=10.12
 mkdocs-get-deps
 #mkdocs-git-authors-plugin
-mkdocs-material-extensions
+#mkdocs-material-extensions
 mkdocs-minify-plugin
 mkdocs-redirects
