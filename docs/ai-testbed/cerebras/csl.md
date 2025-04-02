@@ -226,3 +226,16 @@ print("SUCCESS!")
     SUCCESS!
     2023-10-11 00:57:44,184 DEBUG    Signaling heartbeat thread to stop for wsjob-nm4gmz7jtq3khck2ltadbv
 	```
+
+<!--- KGF: no way to disable a tooltip abbreviation from the include/abbreviations.md glossary used by
+https://squidfunk.github.io/mkdocs-material/reference/tooltips/#adding-a-glossary , unlike more basic extension https://python-markdown.github.io/extensions/abbreviations/ -->
+
+<!-- *[CSL]: '' -->
+
+<!--- and there is no way to even override a definition, since pymdownx.snippets auto_append option will always be last entry on a page, e.g.: -->
+
+<!-- *[CSL]: test -->
+
+<!-- but you can add more abbreviations (locally, per page) that arent in the shared, auto-appended glossary -->
+
+<!-- *[CS-2]: test -->

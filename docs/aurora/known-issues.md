@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-### Last Updated: 2025-01-21 14:00 CST
+_Last Updated: 2025-02-26_
 
 ## Early User Notes
 
@@ -150,6 +150,10 @@ PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 
 These errors can be safely ignored.
 
+#### 6. Incorrect results in receive buffer in GPU memory 
+
+In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
@@ -188,10 +192,19 @@ failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
 
 indicates such a failure. It is recommended to instead use `-v` (note: lower-case) and explicitly export any environment variables that your job may require.
 
-To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
+To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](./running-jobs-aurora.md#working-around-node-failures) for more information.
 
 ### Other Issues
 
 * A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
+
+
+## Aurora Bug Tracking repository and table
+
+The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To open a new Issue, fill out the form [here](https://github.com/argonne-lcf/AuroraBugTracking/issues/new?template=1-BugReportForm.yaml).
+
+For convenience, a recent copy of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
+
+---8<--- "AuroraBugTracking/bugs.md:2"

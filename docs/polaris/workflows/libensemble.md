@@ -2,42 +2,39 @@
 
 [libEnsemble](https://libensemble.readthedocs.io/en/main/) is a Python toolkit for running dynamic ensembles of calculations.
 
-Users provide generator and simulator functions to express their ensembles, where the generator can steer the ensemble based on previous results. These functions can portably submit external executables at any scale.
-
-System details are detected, and dynamic resource management is provided. This includes automatically detecting, assigning, and reassigning GPUs for ensemble members.
-
-libEnsemble can be used in a consistent manner on laptops, clusters, and supercomputers with minimal required dependencies.
+Users provide generator and simulator functions to express their ensembles, where the generator can steer the ensemble based on previous results. These functions can portably submit external executables at any scale. System details are detected, and dynamic resource management is provided. This includes automatically detecting, assigning, and reassigning GPUs for ensemble members. libEnsemble can be used in a consistent manner on laptops, clusters, and supercomputers with minimal required dependencies.
 
 ## Getting libEnsemble on Polaris
 
 libEnsemble is provided on Polaris in the **conda** module:
 
-    module use /soft/modulefiles
-    module load conda
-    conda activate base
+```bash linenums="1"
+module use /soft/modulefiles
+module load conda
+conda activate base
+```
 
-See the docs for more details on using [Python on Polaris](https://docs.alcf.anl.gov/polaris/data-science/python/).
+See the docs for more details on using [Python on Polaris](../data-science/python.md)
 
-<details>
-  <summary>Example: creating a virtual environment and updating libEnsemble</summary>
+???+ example "Creating a virtual environment and updating `libEnsemble`"
 
     E.g., to create a virtual environment that allows installation of
     further packages with pip:
 
-    ```bash
+    ```bash linenums="1"
     python -m venv /path/to-venv --system-site-packages
     . /path/to-venv/bin/activate
     ```
 
-    Where ``/path/to-venv`` can be anywhere you have write access.
+    Where `/path/to-venv` can be anywhere you have write access.
     For future uses, just load the conda module and run the activate line.
 
     You can also ensure you are using the latest version of libEnsemble:
 
-    ```bash
+    ```bash linenums="1"
     pip install libensemble
     ```
-</details>
+
 
 ## libEnsemble examples
 
@@ -51,28 +48,30 @@ libEnsemble runs on the compute nodes on Polaris using either Python's ``multipr
 
 A simple example batch script for a libEnsemble use case that runs five workers on one node:
 
-```shell
-    #!/bin/bash -l
-    #PBS -l select=1:system=polaris
-    #PBS -l walltime=00:15:00
-    #PBS -l filesystems=home:eagle
-    #PBS -q debug
-    #PBS -A <myproject>
+```bash linenums="1" title="submit_libe.sh"
+#!/bin/bash -l
+#PBS -l select=1:system=polaris
+#PBS -l walltime=00:15:00
+#PBS -l filesystems=home:eagle
+#PBS -q debug
+#PBS -A <myproject>
 
-    export MPICH_GPU_SUPPORT_ENABLED=1
-    cd $PBS_O_WORKDIR
-    python run_libe_forces.py --comms local --nworkers 5
+export MPICH_GPU_SUPPORT_ENABLED=1
+cd $PBS_O_WORKDIR
+python run_libe_forces.py --comms local --nworkers 5
 ```
 
 The script can be run with:
-
-    qsub submit_libe.sh
+```bash linenums="1"
+qsub submit_libe.sh
+```
 
 Or you can run an interactive session with:
-
-    qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
+```bash linenums="1"
+qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
+```
 
 ## Further links
 
-Docs: <https://libensemble.readthedocs.io> <br>
-GitHub: <https://github.com/Libensemble/libensemble>
+- [libEnsemble Documentation](https://libensemble.readthedocs.io)
+- [libEnsemble GitHub repo](https://github.com/Libensemble/libensemble)

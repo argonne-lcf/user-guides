@@ -18,7 +18,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
     ```
 
-    Refer to [job scheduling and execution](../../../running-jobs/job-and-queue-scheduling.md) for additional information.
+    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ```bash linenums="1" title="Install vLLM using pre-built wheels"
 module load frameworks
@@ -42,8 +42,8 @@ Model weights for commonly used open-weight models are downloaded and available 
 ```
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 ```bash linenums="1"
-export HF_HOME="/flare/datascience/model-weights/hub"
-export HF_DATASETS_CACHE="/flare/datascience/model-weights/hub"
+export HF_HOME="/flare/datasets/model-weights/hub"
+export HF_DATASETS_CACHE="/flare/datasets/model-weights/hub"
 export HF_TOKEN="YOUR_HF_TOKEN"
 export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
