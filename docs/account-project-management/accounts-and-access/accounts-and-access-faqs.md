@@ -1,14 +1,14 @@
 # Accounts and Access FAQ
 
 ## I am unable to sign in to the MyALCF portal. What do I do?
-Only users with active ALCF accounts can sign in to the MyALCF user portal. If you have an active account, verify that you are using the correct ALCF username. Note that the username is case-sensitive. If you forgot your username, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For passcode token issues, please review the troubleshooting information on this page: [Passcode Tokens](https://docs.alcf.anl.gov/account-project-management/accounts-and-access/alcf-passcode-tokens/).
+Only users with active ALCF accounts can sign in to the MyALCF user portal. If you have an active account, verify that you are using the correct ALCF username. Note that the username is case-sensitive. If you forgot your username, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For passcode token issues, please review the troubleshooting information on this page: [Passcode Tokens](./alcf-passcode-tokens.md).
 
 If your account is inactive, please submit a reactivation request here: [https://my.alcf.anl.gov/accounts/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate).
 
 If you never had an ALCF account, please apply for one here: [https://my.alcf.anl.gov/accounts/#/accountRequest](https://my.alcf.anl.gov/accounts/#/accountRequest). Note that all ALCF accounts must be associated with a project with an active allocation.
 
 ## How do I request a new project/allocation?
-Please see [Allocations on ALCF Systems](https://docs.alcf.anl.gov/account-project-management/allocation-management/)
+Please see [Allocations on ALCF Systems](../allocation-management/index.md)
 
 ## Who do I contact if my Discretionary Project Allocation expires or if I need to request additional hours?
 To renew or request an extension or request additional hours for your existing compute allocations, please fill out the [Allocation Request Form](https://my.alcf.anl.gov/accounts/#/allocationRequests). 
