@@ -199,3 +199,12 @@ To increase the chances that a large job does not terminate due to a node failur
 * A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
+
+
+## Aurora Bug Tracking repository and table
+
+The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To open a new Issue, fill out the form [here](https://github.com/argonne-lcf/AuroraBugTracking/issues/new?template=1-BugReportForm.yaml).
+
+For convenience, a recent copy of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
+
+---8<--- "AuroraBugTracking/bugs.md:2"
