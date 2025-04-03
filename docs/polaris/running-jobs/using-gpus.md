@@ -181,6 +181,7 @@ mpiexec -n ${NNODES} --ppn 1 ./disable_mps_polaris.sh
 MIG mode can be enabled and configured on Polaris by passing a valid configuration file to `qsub`:
 ```bash
 qsub ... -l mig_config=/home/ME/path/to/mig_config.json ...
+```
 
 You can find a concise explanation of MIG concepts and terms at [NVIDIA MIG User Guide](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html#concepts).
 
