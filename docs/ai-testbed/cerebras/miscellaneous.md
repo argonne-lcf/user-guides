@@ -47,25 +47,6 @@ https://grafana.cerebras1.lab.alcf.anl.gov:8443/d/WebHNShVz/wsjob-dashboard?orgI
 Login to the dashboard with user admin, and password prom-operator
 
 
-<!---
-## Determining the CS-2 version
-
-TODO
-Need another approach for the new worker nodes with general ANL access.
-These queries will only work on cer-usr-01 due to networking constraints:
-```
-...$ # Query the firmware level for cs2-01
-...$ curl -k -X GET 'https://10.140.89.251/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
- "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
-...$
-
-...$ # Query the firmware level for cs2-02
-...$ curl -k -X GET 'https://10.140.89.252/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
- "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
-...$
-
-```
---->
 <!--- NO LONGER NEEDED; direct login.
 ## Copying files
 To copy a file to your CS-2 home dir (same on both CS-2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
