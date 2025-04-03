@@ -205,6 +205,6 @@ To increase the chances that a large job does not terminate due to a node failur
 
 The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To report an issue, please reach out to [ALCF Support](../support/technical-support.md).
 
-For convenience, a recent copy of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
+For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
 
 ---8<--- "AuroraBugTracking/bugs.md:2"
