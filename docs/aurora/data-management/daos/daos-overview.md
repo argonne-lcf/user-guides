@@ -4,7 +4,7 @@
 
     DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
 
-DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
+DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
 ![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
 
@@ -143,7 +143,7 @@ mount | grep dfuse # To confirm if its mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 
-clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes 
+clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes
 ```
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
