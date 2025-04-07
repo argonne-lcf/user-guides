@@ -45,6 +45,7 @@ Reserve the cluster. This will launch a placeholder pbs job that reserves the en
 ```
 
 Install some packages into `~/.local/lib/python3.10/site-packages`.
+Set the PYTHONPATH.
 Warning; the packages installed (including dependencies) will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory when done running Llama2-7b. 
 
 ```console
@@ -53,6 +54,7 @@ conda deactivate
 conda deactivate
 pip install tqdm
 pip install torch
+export PYTHONPATH=/home/$(whoami)/.local/lib/python3.10/site-packages:/opt/groq/runtime/site-packages:/usr/local/lib/python3.10/dist-packages:/usr/lib/python3/dist-packages
 ```
 
 Then run Llama2-7b. 
