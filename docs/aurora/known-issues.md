@@ -36,6 +36,14 @@ The performance of DAOS has been impressive, but we continue to experience crash
 
 These won’t be mounted on Aurora initially, but they might be mounted around May 2025, depending on feasibility. Similarly, Flare will not initially be mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
 
+### Scaling out of lustre and /soft
+
+Applications which dynamically load libraries out of shared filesystems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
+
+- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared filesystems entirely.
+- Statically link application binaries, as this reduces the number of dynamically loaded files.
+- If loading many small (≲100MB) files, use [Copper](data-management/copper/copper.md).
+
 ### Checkpointing
 
 Checkpointing is absolutely essential. The mean time between application interrupts caused by system instability may be as short as an hour for larger jobs. The frequency of checkpointing is something that needs to be decided for each individual application based on the scale of runs:
