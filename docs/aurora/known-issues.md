@@ -42,7 +42,7 @@ Applications which dynamically load libraries out of shared filesystems such as 
 
 - Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared filesystems entirely.
 - Statically link application binaries, as this reduces the number of dynamically loaded files.
-- If loading many small (≲100MB) files, use [Copper](data-management/copper/copper.md).
+- If loading many small (≲100MB) shared libraries or Python modules, use [Copper](data-management/copper/copper.md).
 
 ### Checkpointing
 
