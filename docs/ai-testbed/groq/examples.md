@@ -1,10 +1,10 @@
-# Miscellaneous
+# Examples
 
-## Status
-
-### Running Llama-2 7B on the Groqrack
+## Running Llama-2 7B on the Groqrack
 
 Llama-2 7B requires all 9 nodes in a groqrack.
+
+### Checking status
 
 First, verify that there are no other PBS jobs using the groqrack. This can be done from either a groqrack node or a login node.
 ```console
@@ -25,6 +25,7 @@ Also, check tsp status for all cards on all nodes; verify that all cards are "Up
 for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl health-check | grep -v "Health-check" | jq .[].Summary.tsp_status | sed "s/^/$host /" | uniq -c; done
 ```
 
+### Running Llama2 7B
 
 Connect to groq-r01-gn-01.ai.alcf.anl.gov with ssh:
 ```console
