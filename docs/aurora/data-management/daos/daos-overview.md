@@ -381,6 +381,22 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 
 ![expected Bandwidth](images/expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
 
+## Libfabric endpoint creation error
+
+Occasionally at a high number of nodes and/or high PPN the following error that looks like this may show up in your stderr log:
+
+```output
+04/02-11:03:16.60 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.708457] mercury->ctx [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5400 na_ofi_eq_open() fi_cq_open failed, rc: -17 (File exists)
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722714] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5191 na_ofi_basic_ep_open() Could not open event queues
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722737] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5158 na_ofi_endpoint_open() na_ofi_basic_ep_open() failed
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722743] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:7712 na_ofi_initialize() Could not create endpoint
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722976] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na.c:879 NA_Initialize_opt2() Could not initialize plugin
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722988] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury_core.c:1347 hg_core_init() Could not initialize NA class (info_string=ofi+cxi://cxi4, listen=0)
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.723007] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury_core.c:6074 HG_Core_init_opt2() Cannot initialize core class
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.723014] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury.c:1128 HG_Init_opt2() Could not create HG core class
+```
+
+You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
 
 ## Best practices
 
