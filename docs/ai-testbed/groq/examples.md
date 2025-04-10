@@ -10,7 +10,9 @@ First, verify that there are no other PBS jobs using the groqrack. This can be d
 ```console
 qstat -wa
 ```
-Also check to see if anyone is connected to any of the nodes: This can be done from a either grokrack node or a login node.
+If `qstat -wa` shows any jobs active, do not attempt to start Llama2.
+
+Also check to see if anyone is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; not an actual conflict. 
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
