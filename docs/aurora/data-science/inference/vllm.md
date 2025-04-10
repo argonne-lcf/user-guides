@@ -21,11 +21,8 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ```bash linenums="1" title="Install vLLM using pre-built wheels"
-export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
-export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
-export http_proxy="http://proxy.alcf.anl.gov:3128"
-export https_proxy="http://proxy.alcf.anl.gov:3128"
-export ftp_proxy="http://proxy.alcf.anl.gov:3128"
+export http_proxy="proxy.alcf.anl.gov:3128"
+export https_proxy="proxy.alcf.anl.gov:3128"
 module load frameworks
 conda create --name vllm python=3.10 -y
 conda activate vllm
