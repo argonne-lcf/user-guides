@@ -47,8 +47,9 @@ Reserve the cluster. This will launch a placeholder PBS job that reserves the en
 ./stage1_reserve_cluster_via.pbs
 ```
 
-Install some packages into `~/.local/lib/python3.10/site-packages`.
-Set the PYTHONPATH.
+Install some packages into `~/.local/lib/python3.10/site-packages`. The multi-node Llama2 cannot be run using a conda env.
+
+Set the PYTHONPATH to include the `~/.local/lib/python3.10/site-packages`
 
 Warning; the packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory (or renaming it) when done running Llama2-7b. 
 
