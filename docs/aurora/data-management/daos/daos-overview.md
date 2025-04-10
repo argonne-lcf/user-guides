@@ -385,7 +385,8 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 
 Occasionally at a high number of nodes and/or high PPN the following error that looks like this may show up in your stderr log:
 
-```04/02-11:03:16.60 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.708457] mercury->ctx [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5400 na_ofi_eq_open() fi_cq_open failed, rc: -17 (File exists)
+```output
+04/02-11:03:16.60 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.708457] mercury->ctx [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5400 na_ofi_eq_open() fi_cq_open failed, rc: -17 (File exists)
 04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722714] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5191 na_ofi_basic_ep_open() Could not open event queues
 04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722737] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5158 na_ofi_endpoint_open() na_ofi_basic_ep_open() failed
 04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722743] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:7712 na_ofi_initialize() Could not create endpoint
