@@ -18,7 +18,7 @@ for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
 
 Also verify that all nodes have eight unlocked cards:
-```
+```bash
 for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl status | grep -a "Device Locked" | sed "s/ Device Locked/$host Device locked/" | uniq -c ; done
 ```
 
@@ -42,7 +42,7 @@ cp /software/groq/examples/llama2-7b-kludge/*.pbs ~/groq_llama2-7b-kludge/
 cd ~/groq_llama2-7b-kludge/
 ```
 
-Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It just runs `sleep 24h` on a node.   The example reserves the cluster via PBS for 2hrs.  Adjust  values as needed.
+Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It simply runs `sleep 24h` on a node. The following example script reserves the cluster via PBS for 2hrs. Adjust the values as needed.
 ```console
 ./stage1_reserve_cluster_via.pbs
 ```
