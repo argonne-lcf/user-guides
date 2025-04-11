@@ -21,8 +21,8 @@
 
 ## Type of Change
 <!-- Please check the one that applies to this PR using "x". -->
-- [ ] Documentation content update
-- [ ] Bug fix
+- [ ] Documentation content update (new page, formatting/typo changes, adding more info, etc.)
+- [ ] Functionality bug fix
 - [ ] New feature (`mkdocs` feature, `mkdocs-material` style changes, HTML/CSS/JS customization, developer or repo tool)
 
 ## Checklist
