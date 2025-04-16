@@ -346,7 +346,7 @@ Users are encouraged to use the `gpu_tile_compact.sh` script for instances where
 Note that `gpu_tile_compact.sh` requires `ZE_FLAT_DEVICE_HIERARCHY`=`COMPOSITE` (the default in the environment).
 The `frameworks` module set `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, so if you wish to bind MPI ranks to devices instead of tiles, `gpu_dev_compact.sh` (also in your path by default) can be used.
 
-More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found here: https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html
+More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html). 
 
 This script can be placed just before the executable in an `mpiexec` command like so.
 
