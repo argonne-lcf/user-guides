@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-02-26_
+_Last Updated: 2025-04-16_
 
 ## Early User Notes
 
@@ -8,7 +8,7 @@ Please check back here often for updates (indicated by the "Last Updated" timest
 
 ### Outages and Downtime – Expectations
 
-Expect unplanned outages and downtime. The stability of the Aurora system has improved significantly over the months leading up to production availability, but stability issues remain. Early users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
+Users should expect weekly preventative maintenance (PM) on the system, although  PMs will be deferred where possible. The stability of the Aurora system has improved significantly in the recent past, but there are still a number of improvement efforts ongoing in cooperation with HPE and Intel, to improve the user experience. Users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
 
 ### Scheduling
 
