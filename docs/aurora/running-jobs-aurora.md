@@ -344,9 +344,6 @@ For applications that need this support, this instead can be handled by use of a
 Users are encouraged to use the `gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment. `gpu_tile_compact.sh` should be in your path by default. 
 
 Note that `gpu_tile_compact.sh` requires `ZE_FLAT_DEVICE_HIERARCHY`=`COMPOSITE` (the default in the environment).
-The `frameworks` module set `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, so if you wish to bind MPI ranks to devices instead of tiles, `gpu_dev_compact.sh` (also in your path by default) can be used.
-
-More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html). 
 
 This script can be placed just before the executable in an `mpiexec` command like so.
 
@@ -372,6 +369,26 @@ exec "$@"
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `gpu_tile_compact.sh` (`which gpu_tile_compact.sh` will show the location of the script) to suit their needs.
 
 One example below shows a common mapping of MPI ranks to cores and GPUs.
+
+The `frameworks` module set `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, so if you wish to bind MPI ranks to devices instead of tiles, it can be done the following way:
+
+```bash
+#!/bin/bash
+num_gpus=12
+gpu_id=$((PMIX_RANK % ${num_gpus} ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+Caution: This will narrow the affinity mask down and generate PyTorch warnings.
+
+A more verbose way of doing the bindings properly, while using the `frameworks`
+module would be to write the affinity explicitly in the job submission script
+
+```bash
+export ZE_AFFINITY_MASK="0,1,2,3,4,5,6,7,8,9,10,11"
+```
+
+More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html).
 
 #### Example 1: 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU
 
