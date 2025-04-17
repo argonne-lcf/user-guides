@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-02-26_
+_Last Updated: 2025-04-16_
 
 ## Early User Notes
 
@@ -8,7 +8,7 @@ Please check back here often for updates (indicated by the "Last Updated" timest
 
 ### Outages and Downtime – Expectations
 
-Expect unplanned outages and downtime. The stability of the Aurora system has improved significantly over the months leading up to production availability, but stability issues remain. Early users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
+Users should expect weekly preventative maintenance (PM) on the system, although  PMs will be deferred where possible. The stability of the Aurora system has improved significantly in the recent past, but there are still a number of improvement efforts ongoing in cooperation with HPE and Intel, to improve the user experience. Users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
 
 ### Scheduling
 
@@ -16,7 +16,7 @@ The current queue policy for Aurora is set up based on experiences to date to he
 
 - The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
 - Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results. Initially, the `prod` routing queue will only allow 2048 nodes max. 
-- Except for ESP projects, project teams will be required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
+- Project teams are required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
 
 ### Storage
 
