@@ -48,7 +48,7 @@ For example, a one-node interactive job requiring access to the `/flare` filesys
 ```bash
 qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <your_ProjectName> -q debug -I
 ```
-      
+
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
 
 !!! tip
@@ -107,7 +107,7 @@ $MPI_ROOT/share/doc/mpich/README.envvar
 
 This includes, for example, settings to select different optional sub-algorithms used in MPI collective operations.
 
-## <a name="Running-MPI+OpenMP-Applications"></a>Running MPI+OpenMP Applications
+## <a name="Running-MPI+OpenMP+SYCL-Applications"></a>Running MPI+OpenMP+SYCL Applications
 
 Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
 
@@ -130,6 +130,9 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -q debug-scaling
 #PBS -A <MYPROJECT>
 
+export TZ='/usr/share/zoneinfo/US/Central'
+cd ${PBS_O_WORKDIR}
+
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=28 # Number of MPI ranks to spawn per node
 NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
@@ -139,7 +142,6 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
 
-cd /home/knight/affinity
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity
 ```
 
@@ -152,22 +154,117 @@ GPU-enabled applications will similarly run on the compute nodes using the above
 
 ## MPI rank and thread binding to cores and GPUs
 
-Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
+!!! warning
 
-A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
+    Since March 31, 2025, cores 0 (104) and 52 (156)--the first physical cores on each CPU socket—have been reserved for system services, and are no longer available for user applications.
+
+Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical cores (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical cores on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical cores and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
+
+A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical cores. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
 
 <figure markdown>
   ![Aurore node](images/aurora_node_simple.png){ width="1000" }
   <figcaption>Simplified representation of Aurora node </figcaption>
 </figure>
 
-For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core. 
+For the two CPUs, the numbers inside the boxes identify the specific logical cores in the core. That is, logical core 0 and 104 are the 2 logical cores on the first physical core. logical cores 1 and 105 are the 2 logical cores that share the second physical core. Since there are 208 logical cores, the numbers run from 0 to 207. For i from 0 to 51, logical cores i and i+104 share a physical core.
 
 For the six GPUs, the GPU number identifies the GPU, and the tile numbers identify the tile in the GPU, with tiles from 0 to 5 with each GPU have two tiles each $gpu.0 and $gpu.1.
 
+```c++
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <iomanip>
+#include <iomanip>
+#include <string.h>
+#include <mpi.h>
+#include <sched.h>
+#include <sycl/sycl.hpp>
+#include <omp.h>
+
+int main(int argc, char *argv[]){
+  MPI_Init(&argc, &argv);
+
+  int size;
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  int rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+  char name[MPI_MAX_PROCESSOR_NAME];
+  int resultlength;
+  MPI_Get_processor_name(name, &resultlength);
+
+  // If ZE_AFFINITY_MASK is set, capture visible GPUs
+  const char* gpu_id_list;
+  const char* ze_affinity_mask = getenv("ZE_AFFINITY_MASK");
+  if(ze_affinity_mask == NULL){
+    gpu_id_list = "N/A";
+  }
+  else{
+    gpu_id_list = ze_affinity_mask;
+  }
+
+  // Find how many GPUs L0 runtime says are available
+  int num_devices = 0;
+  std::vector<sycl::device> sycl_all_devs = sycl::device::get_devices(sycl::info::device_type::gpu);
+  num_devices = sycl_all_devs.size();
+
+  int hwthread = 0;
+  int thread_id = 0;
+
+  if(num_devices == 0){
+#pragma omp parallel default(shared) private(hwthread, thread_id)
+    {
+      thread_id = omp_get_thread_num();
+      hwthread = sched_getcpu();
+
+      printf("MPI %03d - OMP %03d - HWT %03d - Node %s\n",
+             rank, thread_id, hwthread, name);
+    }
+  }
+  else{
+    std::string busid = "";
+    std::string busid_list = "";
+    std::string rt_gpu_id_list = "";
+
+    // Loop over the GPUs available to each MPI rank
+    for(int i=0; i<num_devices; i++){
+      // Get the PCIBusId for each GPU and use it to query for UUID
+      busid = sycl_all_devs[i].get_info<sycl::ext::intel::info::device::pci_address>();
+
+      // Concatenate per-MPIrank GPU info into strings for print
+      if(i > 0) rt_gpu_id_list.append(",");
+      rt_gpu_id_list.append(std::to_string(i));
+
+      std::string temp_busid(busid);
+
+      if(i > 0) busid_list.append(",");
+      busid_list.append(temp_busid.substr(5,2));
+    }
+
+#pragma omp parallel default(shared) private(hwthread, thread_id)
+    {
+#pragma omp critical
+      {
+        thread_id = omp_get_thread_num();
+        hwthread = sched_getcpu();
+
+        printf("MPI %03d - OMP %03d - HWT %03d - Node %s - RT_GPU_ID %s - GPU_ID %s - Bus_ID %s\n",
+               rank, thread_id, hwthread, name, rt_gpu_id_list.c_str(), gpu_id_list, busid_list.c_str());
+      }
+    }
+  }
+
+  MPI_Finalize();
+  return 0;
+}
+```
+
 ### Binding MPI ranks and threads to cores
 
-Using the `–cpu-bind` argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to `mpiexec`, see [Running MPI+OpenMP Applications](#Running-MPI+OpenMP-Applications). Four examples of using `mpiexec` are given below to show how the `cpu-bind=depth`, `cpu-bind=list`, `--depth` arguments affect where MPI ranks and OpenMP threads are mapped.
+Using the `--cpu-bind` argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical cores on the CPUs. For more information about the flags to `mpiexec`, see [Running MPI+OpenMP+SYCL Applications](#Running-MPI+OpenMP+SYCL-Applications). Four examples of using `mpiexec` are given below to show how the `cpu-bind=depth`, `cpu-bind=list`, `--depth` arguments affect where MPI ranks and OpenMP threads are mapped.
 
 #### Example 1: 2 nodes, 4 ranks/node, 1 thread/rank
 
@@ -176,8 +273,8 @@ mpiexec -n 8 -ppn 4 --depth 1 --cpu-bind=depth <app> <app_args>
 ```
 
 - The `-n 8` argument says to use 8 MPI ranks in total and `-ppn 4` places 4 ranks per node.
-- The `--depth 1` argument says to use 1 logical processor for each MPI rank.
-- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
+- The `--depth 1` argument says to use 1 logical core for each MPI rank.
+- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical cores, first putting one rank on the first logical core of one physical core, and then looping back to put a second one on the second logical core. This is done such that there's N logical cores for each MPI rank, where N is the value from the --depth argument (so it's 1 in this case).
 
 This is the same as
 
@@ -185,20 +282,20 @@ This is the same as
 mpiexec -n 8 -ppn 4 --cpu-bind=list:0:1:2:3 <app> <app_args>
 ```
 
-- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processor 0, rank 1 to logical processor 1, etc.
+- The `--cpu-bind=list` argument explicitly lists which logical core to bind to per node. Each MPI rank is bound to the logical cores that are listed between `:`. So here, rank 0 to logical core 0, rank 1 to logical core 1, etc.
 
 
 #### Resulting mapping
-MPI ranks 0,1,2,3,4,5,6,7 map to logical processors 0,1,2,3 on each of the two nodes. Assuming the job was allocated on node 0 and node 1:
+MPI ranks 0,1,2,3,4,5,6,7 map to logical cores 0,1,2,3 on each of the two nodes. Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0 → node 0, logical processor 0
-- MPI rank 1 → node 0, logical processor 1
-- MPI rank 2 → node 0, logical processor 2
-- MPI rank 3 → node 0, logical processor 3
-- MPI rank 4 → node 1, logical processor 0
-- MPI rank 5 → node 1, logical processor 1
-- MPI rank 6 → node 1, logical processor 2
-- MPI rank 7 → node 1, logical processor 3
+- MPI rank 0 → node 0, logical core 0
+- MPI rank 1 → node 0, logical core 1
+- MPI rank 2 → node 0, logical core 2
+- MPI rank 3 → node 0, logical core 3
+- MPI rank 4 → node 1, logical core 0
+- MPI rank 5 → node 1, logical core 1
+- MPI rank 6 → node 1, logical core 2
+- MPI rank 7 → node 1, logical core 3
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -215,10 +312,10 @@ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --depth 2 --cpu-bind=de
 ```
 
 - The `-n 4` argument says to use 4 MPI ranks in total and `-ppn 2` places 2 ranks per node.
-- The `--depth 2` argument says to use 2 logical processor for each MPI rank.
-- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical core, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
+- The `--depth 2` argument says to use 2 logical core for each MPI rank.
+- The `--cpu-bind depth` argument says to spread out the ranks in a round robin manner across the logical cores, first putting one rank on the first logical core of one physical core, and then looping back to put a second one on the second logical core. This is done such that there's N logical cores for each MPI rank, where N is the value from the --depth argument (so it's 2 in this case).
 - OMP_NUM_THREADS=2 launches two threads per MPI rank
-- OMP_PLACES=threads says to bind the OpenMP threads to logical processors
+- OMP_PLACES=threads says to bind the OpenMP threads to logical cores
 
 This is the same as:
 
@@ -226,19 +323,19 @@ This is the same as:
 OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --cpu-bind=list:0,1:2,3 <app> <app_args>
 ```
 
-- The `--cpu-bind list` argument explicitly lists which logical processor to bind to. Each MPI rank is bound to the logical processors that are listed between `:`. Between `:`, the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 0 and 1, rank 2 to logical processors 2 and 3. OMP_PLACES=threads then binds the specific threads to the logical processors in the list.
+- The `--cpu-bind=list` argument explicitly lists which logical core to bind to. Each MPI rank is bound to the logical cores that are listed between `:`. Between `:`, the logical cores to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical cores 0 and 1, rank 2 to logical cores 2 and 3. OMP_PLACES=threads then binds the specific threads to the logical cores in the list.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0, OpenMP thread 0 → node 0, logical processor 0
-- MPI rank 0, OpenMP thread 1 → node 0, logical processor 1
-- MPI rank 1, OpenMP thread 0 → node 0, logical processor 2
-- MPI rank 1, OpenMP thread 1 → node 0, logical processor 3
-- MPI rank 2, OpenMP thread 0 → node 1, logical processor 0
-- MPI rank 2, OpenMP thread 1 → node 1, logical processor 1
-- MPI rank 3, OpenMP thread 0 → node 1, logical processor 2
-- MPI rank 3, OpenMP thread 1 → node 1, logical processor 3
+- MPI rank 0, OpenMP thread 0 → node 0, logical core 0
+- MPI rank 0, OpenMP thread 1 → node 0, logical core 1
+- MPI rank 1, OpenMP thread 0 → node 0, logical core 2
+- MPI rank 1, OpenMP thread 1 → node 0, logical core 3
+- MPI rank 2, OpenMP thread 0 → node 1, logical core 0
+- MPI rank 2, OpenMP thread 1 → node 1, logical core 1
+- MPI rank 3, OpenMP thread 0 → node 1, logical core 2
+- MPI rank 3, OpenMP thread 1 → node 1, logical core 3
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -253,15 +350,15 @@ The figure below shows the mapping, where the different colors are different MPI
 mpiexec -n 4 -ppn 2 --cpu-bind=list:0:104 <app> <app_args>
 ```
 
-- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processor 0, rank 1 to logical processor 104, which share the same physical core.
+- The `--cpu-bind=list` argument explicitly lists which logical core to bind to per node. Each MPI rank is bound to the logical cores that are listed between `:`. So here, rank 0 to logical core 0, rank 1 to logical core 104, which share the same physical core.
 
 #### Resulting mapping
 Assuming the job was allocated on node 0 and node 1:
 
-- MPI rank 0 → node 0, logical processor 0
-- MPI rank 1 → node 0, logical processor 104
-- MPI rank 2 → node 1, logical processor 0
-- MPI rank 3 → node 1, logical processor 104
+- MPI rank 0 → node 0, logical core 0
+- MPI rank 1 → node 0, logical core 104
+- MPI rank 2 → node 1, logical core 0
+- MPI rank 3 → node 1, logical core 104
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -272,32 +369,50 @@ The figure below shows the mapping, where the different colors are different MPI
 
 #### Example 4: 1 node, 12 ranks/node
 
-This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding is needed here to avoid binding a MPI rank to a logical processor on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used). 
+This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding to cores is needed here to avoid binding a MPI rank to a logical core on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used).
 
 ```bash
-mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 <app> <app_args>
+export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
+mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} <app> <app_args>
 ```
 
-- The `--cpu-bind list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processors 0-7, rank 1 to logical processors 8-15, etc.
+- The `--cpu-bind=list:` argument explicitly lists which logical core to bind to per node. Each MPI rank is bound to the logical cores that are listed between `:`. So here, rank 0 to cores 1-8, rank 1 to cores 9-16, etc.
 
 #### Resulting mapping
-Assuming the job was allocated on node 0 and node 1, the mapping looks like:
+Assuming the job was allocated on single-node, the mapping looks like:
 
+- Node 0
+  - Socket 0
+    - MPI rank 0: logical cores 1–8
+    - MPI rank 1: logical cores 9–16
+    - MPI rank 2: logical cores 17–24
+    - MPI rank 3: logical cores 25–32
+    - MPI rank 4: logical cores 33–40
+    - MPI rank 5: logical cores 41–48
+  - Socket 1
+    - MPI rank 6: logical cores 53–60
+    - MPI rank 7: logical cores 61–68
+    - MPI rank 8: logical cores 69–76
+    - MPI rank 9: logical cores 77–84
+    - MPI rank 10: logical cores 85–92
+    - MPI rank 11: logical cores 93–100
 
-- MPI rank 0 → node 0, socket 0, logical processors 0-7
-- MPI rank 1 → node 0, socket 0, logical processor 8-15
-- MPI rank 2 → node 0, socket 0, logical processor 16-23
-- MPI rank 3 → node 0, socket 0, logical processor 24-31
-- MPI rank 4 → node 0, socket 0, logical processor 32-39
-- MPI rank 5 → node 0, socket 0, logical processor 40-47
-- MPI rank 6 → node 0, socket 1, logical processor 52-59
-- MPI rank 7 → node 0, socket 1, logical processor 60-67
-- MPI rank 8 → node 0, socket 1, logical processor 68-75
-- MPI rank 9 → node 0, socket 1, logical processor 76-83
-- MPI rank 10 → node 0, socket 1, logical processor 84-91
-- MPI rank 11 → node 0, socket 1, logical processor 92-99
-
-The important point here is that with explicit binding, we were able to ensure socket 0 had 6 ranks and socket 1 has 6 ranks. Note how MPI rank 5 ends at logical processor 47, but MPI rank 6 begins with logical processor 52, so this involves leaving several cores empty. However, it allows the cores to be spread evenly across the two sockets.   
+```bash
+$ export OMP_NUM_THREADS=1
+$ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 008 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 016 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 024 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 032 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 040 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 048 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 060 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 068 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 008 - OMP 000 - HWT 076 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 009 - OMP 000 - HWT 084 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 010 - OMP 000 - HWT 092 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 011 - OMP 000 - HWT 100 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+```
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -307,27 +422,42 @@ The figure below shows the mapping, where the different colors are different MPI
 </figure>
 
 
-If instead we used `--depth` as so:
-```bash
-mpiexec -n 12 -ppn 12 --depth 8 --cpu-bind=depth <app> <app_args>
+If instead we used `--cpu-bind=depth` as so, then the mapping is:
 ```
-then the mapping is:
+$ export OMP_NUM_THREADS=1
+$ mpiexec -n 12 -ppn 12 --depth=8 --cpu-bind=depth ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 008 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 016 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 024 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 032 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 040 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 048 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 057 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 065 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 008 - OMP 000 - HWT 073 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 009 - OMP 000 - HWT 081 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 010 - OMP 000 - HWT 089 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 011 - OMP 000 - HWT 097 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+```
+The cores assigned to MPI ranks are evenly distributed across socket 0 and socket 1, with the first 6 ranks allocated to socket 0 and the next 6 ranks to socket 1.
 
-- MPI rank 0 → node 0, socket 0, logical processors 0-7
-- MPI rank 1 → node 0, socket 0, logical processor 8-15
-- MPI rank 2 → node 0, socket 0, logical processor 16-23
-- MPI rank 3 → node 0, socket 0, logical processor 24-31
-- MPI rank 4 → node 0, socket 0, logical processor 32-39
-- MPI rank 5 → node 0, socket 0, logical processor 40-47
-- MPI rank 6 → node 0, socket 0 and socket 1, logical processor 48-55
-- MPI rank 7 → node 0, socket 1, logical processor 56-63
-- MPI rank 8 → node 0, socket 1, logical processor 64-71
-- MPI rank 9 → node 0, socket 1, logical processor 72-79
-- MPI rank 10 → node 0, socket 1, logical processor 80-87
-- MPI rank 11 → node 0, socket 1, logical processor 88-95
-
-
-Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks and avoid splitting one over two sockets. This is shown in the image below. Note that the pink MPI rank (rank 6) is split between socket 0 and socket 1.
+A slight misconfiguration of the `--depth` option—for example, with `--depth=7`—can lead to an imbalance, where MPI ranks 0 through 6 are bound to socket 0 and ranks 7 through 11 to socket 1. To maximize locality and performance, care must be taken to ensure MPI processes are evenly distributed across both sockets.
+```
+$ export OMP_NUM_THREADS=1
+$ mpiexec -n 12 -ppn 12 --depth=7 --cpu-bind=depth ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 007 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 014 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 021 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 028 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 035 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 042 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 049 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 057 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 008 - OMP 000 - HWT 064 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 009 - OMP 000 - HWT 071 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 010 - OMP 000 - HWT 078 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 011 - OMP 000 - HWT 085 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+```
 
 <figure markdown>
   ![Example4](images/example4_bad.png){ width="700" }
@@ -336,18 +466,15 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
 
 !!! info
 
-	For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
+    For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation.
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
-Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment. `gpu_tile_compact.sh` should be in your path by default. Note that `gpu_tile_compact.sh` requires `ZE_FLAT_DEVICE_HIERARCHY`=`COMPOSITE` (the default in the environment). If you wish to bind MPI ranks to devices instead of tiles, `gpu_dev_compact.sh` (also in your path by default) can be used.
+In this section, the above mentioned MPI+OpenMP+SYCL affinity code will be used to show how to map MPI processes with GPUs.
+The CPU mapping part of this example is very similar to the examples used above, so the focus here will be on the GPU mapping part.
 
-This script can be placed just before the executable in an `mpiexec` command like so.
-
-```bash
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth gpu_tile_compact.sh ./hello_affinity
-```
-
-A simple version of this script is below to illustrate how `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
+In general, GPU mapping can be accomplished in different ways:
+- (a) Mapping to 12 GPU Tiles — Users are encouraged to use the `gpu_tile_compact.sh` script provided in the Aurora PE. This script binds each MPI rank to a single GPU tile using a round-robin strategy. Note that `gpu_tile_compact.sh` requires the environment variable `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, which is set by default in the Aurora PE. Below is a simplified version of this script, illustrating how the `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
+Alternative Mapping Strategy — Mapping to 6 GPU Devices: If an application prefers to bind MPI ranks to entire GPU devices rather than individual tiles, the `gpu_dev_compact.sh` script (also available in your default path) can be used.
 
 ```bash linenums="1"
 #!/bin/bash -l
@@ -362,42 +489,108 @@ export ZE_AFFINITY_MASK=$gpu_id.$tile_id
 exec "$@"
 ```
 
+This script can be placed just before the executable in an `mpiexec` command like so.
+```bash
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind=depth gpu_tile_compact.sh ./hello_affinity_aurora.out | sort
+```
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `gpu_tile_compact.sh` (`which gpu_tile_compact.sh` will show the location of the script) to suit their needs.
 
-One example below shows a common mapping of MPI ranks to cores and GPUs.
-
-#### Example 1: 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU
-
-```bash
-mpiexec -n 12 -ppn 12 --cpu-bind=list:0-7:8-15:16-23:24-31:32-39:40-47:52-59:60-67:68-75:76-83:84-91:92-99 gpu_tile_compact.sh <app> <app_args>
-```
+#### Example 1: (Explicit Scaling) 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU-tile
 
 - The `-n 12` argument says to use 12 MPI ranks in total and `-ppn 12` places 12 ranks per node.
-- The `--cpu-bind list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
-- The `gpu_tile_compact.sh` wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0, Tile 0, rank 1 maps to GPU 0, Tile 1, rank 2 naps to GPU 1, Tile 0 etc. in a round-robin compact fashion.  
+- The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The `gpu_tile_compact.sh` wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0:Tile 0, rank 1 maps to GPU 0:Tile 1, rank 2 maps to GPU 1:Tile 0 etc. in a round-robin compact fashion.
 
-#### Resulting mapping
-
-This is one of the most common cases, with 1 MPI rank targeting each GPU tile. A figure representing this is below. The different MPI ranks are represented by different colors. Assuming the job was allocated on node 0 and node 1, the mapping looks like:
-
-- MPI rank 0 → node 0, socket 0, logical processors 0-7, GPU 0, Tile 0
-- MPI rank 1 → node 0, socket 0, logical processor 8-15, GPU 0, Tile 1
-- MPI rank 2 → node 0, socket 0, logical processor 16-23, GPU 1, Tile 0
-- MPI rank 3 → node 0, socket 0, logical processor 24-31, GPU 1, Tile 1
-- MPI rank 4 → node 0, socket 0, logical processor 32-39, GPU 2, Tile 0
-- MPI rank 5 → node 0, socket 0, logical processor 40-47, GPU 2, Tile 1
-- MPI rank 6 → node 0, socket 1, logical processor 52-59, GPU 3, Tile 0
-- MPI rank 7 → node 0, socket 1, logical processor 60-67, GPU 3, Tile 1
-- MPI rank 8 → node 0, socket 1, logical processor 68-75, GPU 4, Tile 0
-- MPI rank 9 → node 0, socket 1, logical processor 76-83, GPU 4, Tile 1
-- MPI rank 10 → node 0, socket 1, logical processor 84-91, GPU 5, Tile 0
-- MPI rank 11 → node 0, socket 1, logical processor 92-99, GPU 5, Tile 1
-
+```bash
+$ export OMP_NUM_THREADS=1
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
+$ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} gpu_tile_compact.sh ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 008 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
+MPI 002 - OMP 000 - HWT 024 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
+MPI 003 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
+MPI 004 - OMP 000 - HWT 040 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
+MPI 005 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
+MPI 006 - OMP 000 - HWT 060 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
+MPI 007 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
+MPI 008 - OMP 000 - HWT 076 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
+MPI 009 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
+MPI 010 - OMP 000 - HWT 092 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
+MPI 011 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
+```
 <figure markdown>
   ![Example5](images/example5.png){ width="700" }
   <figcaption>Example 1 GPU Tile Mapping </figcaption>
 </figure>
 
+#### Example 2: (Implicit Scaling) 1 node, 6 ranks/node, 1 thread/rank, 1 rank/GPU
+
+- The `-n 6` argument says to use 6 MPI ranks in total and `-ppn 6` places 6 ranks per node.
+- The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The `gpu_dev_compact.sh` wrapper sets ZE_AFFINITY_MASK for each of the 6 ranks such that rank 0 maps to GPU 0, rank 1 maps to GPU 1 etc. in a round-robin compact fashion.
+
+```bash
+$ export OMP_NUM_THREADS=1
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-16:17-32:33-48:53-68:69-84:85-100"
+$ mpiexec -n 6 -ppn 6 ${CPU_BIND_SCHEME} gpu_tile_compact.sh ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1 - Bus_ID 42
+MPI 002 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2 - Bus_ID 6c
+MPI 003 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 18
+MPI 004 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4 - Bus_ID 42
+MPI 005 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5 - Bus_ID 6c
+```
+<figure markdown>
+  ![Example5](images/example5.png){ width="700" }
+  <figcaption>Example 1 GPU Tile Mapping </figcaption>
+</figure>
+
+- (b) Binding MPI ranks to GPUs can be accomplished via `--gpu-bind` option from MPICH.
+
+Similar to the `--cpu-bind` option, which maps MPI ranks to specific CPU cores, the `--gpu-bind` option enables mapping MPI ranks to GPUs. While this feature is still under active development and has several limitations, a common use case is mapping 12 MPI ranks to the 12 GPU tiles available per node.
+
+#### Example 1: (Explicit Scaling) 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU-tile
+
+- The `-n 12` argument says to use 12 MPI ranks in total and `-ppn 12` places 12 ranks per node.
+- The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
+- The `--gpu-bind=list` argument gives the mapping of MPI ranks to GPU-tiles.
+
+```bash
+$ export OMP_NUM_THREADS=1
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:0.0:0.1:1.0:1.1:2.0:2.1:3.0:3.1:4.0:4.1:5.0:5.1"
+$ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 008 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
+MPI 002 - OMP 000 - HWT 024 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
+MPI 003 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
+MPI 004 - OMP 000 - HWT 040 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
+MPI 005 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
+MPI 006 - OMP 000 - HWT 060 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
+MPI 007 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
+MPI 008 - OMP 000 - HWT 076 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
+MPI 009 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
+MPI 010 - OMP 000 - HWT 092 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
+MPI 011 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
+```
+
+!!! warning
+
+    There are several limitations with using `--gpu-bind=list` namely (a) for implict-scaling via `--gpu-bind=list:0:1:2:3:4:5`, (b) With a different device-discovery hierarchy, `ZE_FLAT_DEVICE_HIERARCHY=FLAT`.
+
+```bash
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-16:17-32:33-48:53-68:69-84:85-100"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:0:1:2:3:4:5"
+$ mpiexec -n 6 -ppn 6 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
+launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
+$
+$
+$ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:"--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
+$ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
+launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
+```
 
 ## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
 
@@ -415,22 +608,22 @@ This command requests 1 node for a period of 1 hour in the `workq` queue. After 
 
 ## <a name="Running-with-Multiple-CCS"></a>Running with Multiple Compute Command Streamers (CCSs)
 
-The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
+The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools.
 These pools can then be accessed by separate processes thereby allowing users to bind multiple processes to a single tile and enabling applications to run up to 48 MPI processes per node on the 6 PVC available.
 Enabling multiple CCSs on Aurora is similar to the MPS capabilities on NVIDIA GPUs.
-By default, all EUs are assigned to a single CCS, but EUs can be distributed equally into 2 or 4 groups by exposing 2 or 4 CCSs, respectively. 
+By default, all EUs are assigned to a single CCS, but EUs can be distributed equally into 2 or 4 groups by exposing 2 or 4 CCSs, respectively.
 This feature is enabled with the `ZEX_NUMBER_OF_CCS` environment variable, which takes a comma-separated list of device-mode pairs.
 For example, to enable 4 CCSs on all 6 PVC, execute
 ```bash
 export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4
 ```
 
-!!! info "Additional notes when running with multiple CCSs" 
+!!! info "Additional notes when running with multiple CCSs"
 
 	- Please be mindful of the device hierarchy selected. When running with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, 6 PVC are exposed to the applications and the above command should be used, noting that `export ZEX_NUMBER_OF_CCS=0:4` exposes 4 CCSs on both tiles of GPU 0. When running with `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, the 12 PVC tiles are exposed to the applications (tile-as-device), thus `export ZEX_NUMBER_OF_CCS=0:4` only refers to tile 0 of GPU 0. To expose multiple CCSs on all tiles, users should use `export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4`.
 	- Users should also be mindful of the CPU binding affinity guidelines described above, ensuring that MPI processes are bound to the correct socket and GPU pairs.
 	- `ZE_AFFINITY_MASK` is read by the Level Zero driver prior to `ZEX_NUMBER_OF_CCS`, thus `ZEX_NUMBER_OF_CCS` should refer to the GPU IDs of the masked devices.
-	- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node. 
+	- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node.
 
 More information can be found on Intel's [documentation](https://www.intel.com/content/www/us/en/docs/oneapi/optimization-guide-gpu/2024-1/multi-tile-advanced-topics.html) and [GitHub](https://github.com/intel/compute-runtime/blob/master/level_zero/doc/experimental_extensions/MULTI_CCS_MODES.md) pages.
 
@@ -444,17 +637,17 @@ export OMP_NUM_THREADS=1
 export ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
 
 export ZE_AFFINITY_MASK=0.0
-mpiexec --np 4 --ppn 4 --cpu-bind list:0:1:2:3 ./hello_affinity &
+mpiexec --np 4 --ppn 4 --cpu-bind=list:0:1:2:3 ./hello_affinity &
 
 export ZE_AFFINITY_MASK=0.1
-mpiexec -n 4 --ppn 4 --cpu-bind list:4:5:6:7 ./hello_affinity &
+mpiexec -n 4 --ppn 4 --cpu-bind=list:4:5:6:7 ./hello_affinity &
 
 export ZE_AFFINITY_MASK=1.0
-mpiexec -n 4 --ppn 4 --cpu-bind list:8:9:10:11 ./hello_affinity &
+mpiexec -n 4 --ppn 4 --cpu-bind=list:8:9:10:11 ./hello_affinity &
 
 
 export ZE_AFFINITY_MASK=5.1
-mpiexec -n 4 --ppn 4 --cpu-bind list:40:41:42:43 ./hello_affinity &    
+mpiexec -n 4 --ppn 4 --cpu-bind=list:40:41:42:43 ./hello_affinity &
 
 wait
 ```
@@ -484,11 +677,11 @@ node 3 cpus:
 node 3 size: 65536 MB
 node 3 free: 65433 MB
 node distances:
-node   0   1   2   3 
-  0:  10  21  13  23 
-  1:  21  10  23  13 
-  2:  13  23  10  23 
-  3:  23  13  23  10 
+node   0   1   2   3
+  0:  10  21  13  23
+  1:  21  10  23  13
+  2:  13  23  10  23
+  3:  23  13  23  10
 ```
 
 Here we see that the first CPU on the node (hardware threads 0-51 and 104-155) are associated with 512 GB memory in NUMA node 0 (node 0), and the second CPU (hardware threads 52-103 and 156-207) are also associated with 512 GB memory in `NUMA node 1 (node 1)`. The 64 GB HBM for the first CPU is in `node 2` and the second is `node 3`. Note that the "nodes" listed here refer to a NUMA domain on one node and not a different physical node.
@@ -515,7 +708,7 @@ Note that `--preferred` takes only one node number, so to set it differently for
 3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example,
  to allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
 ```
-mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1 
+mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1
 ```
 To allocate memory for rank 0 in NUMA node 2 (HBM) and rank 1 in NUMA node 3 (HBM):
 ```
@@ -544,7 +737,7 @@ If you want to control the location of a few nodes, for example 2 out of 64, but
 Content coming soon.
 -->
 
-## Placement 
+## Placement
 On Aurora, racks consist of 8 chassis, each of which holds 8 nodes, for a total of 64 nodes per rack.  The chassis are in a 2-across by 4-high arrangement numbered 0-7, going left to right, bottom to top. Each chassis has switching built in that the nodes plug into, so if you have a job that is 8 nodes or less you can save switch hops if all the nodes are in the same chassis.
 
 ![test](./images/AuroraChassisNumber.svg)
@@ -588,7 +781,7 @@ Another example that requests 10 nodes (8 unspecified nodes + 2 specific compute
 #PBS -l select=8:tier1=x4000c0+1:host=x4311c1s0b0n0+1:host=x4311c1s1b0n0
 ```
 
-You can also easily check what tier a node is a member of before your job submission: 
+You can also easily check what tier a node is a member of before your job submission:
 
 ```console
 > pbsnodes x4000c0s0b0n0 | grep tier
