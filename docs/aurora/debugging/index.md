@@ -11,8 +11,8 @@ There is also a correctness tool for Fortran:
 1. [Codee](./codee.md) - This is a tool from Codee which can automatically analyze your code line-by-line to identify and fix opportunities for correctness, modernization, security and optimization. It is especially useful for legacy Fortran codes.
 
 
-##  Preliminary step
+##  Preliminary steps
 
-- You can use the `mpich/dbg`. It enables runtime checks during MPICH execution.
-- This allows you to run `valgrind` (`valgrind` module): `mpirun $OPT valgring $BIN` 
-- You can also use `-faddress-sanitizer` on your code (will work for both CPU and GPU)
+- You can use the module `mpich/dbg`. The module enables runtime checks during MPICH execution.
+- The `mpich/dbg` module also allows you to run [valgrind](https://valgrind.org/) (from `module load valgrind`) as: `mpirun $OPT valgrind $BIN` 
+- You can also recompile your code with `-fsanitize=address` to help detect memory access errors (will work for both CPU and GPU, see [Intel documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/find-bugs-quickly-using-sanitizers-with-oneapi-compiler.html) for more details)
