@@ -5,6 +5,7 @@
 Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
 [Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
 
+<!--- Disabled for now
 ## Grafana WsJob Dashboard for Cerebras jobs
 A Grafana dashboard provides support for visualizing, querying, and exploring the CS2 system’s metrics and enables to access system logs and traces.
 See the Cerebras documentation for the [ML User Dashboard](https://training-docs.cerebras.ai/cluster-monitoring/cerebras-job-scheduling-and-monitoring/cluster-monitoring-with-grafana#ml-user-dashboard)
@@ -43,42 +44,7 @@ Open browser to a job grafana url shown in csctl get jobs, adding :8443 to hostn
 ```console
 https://grafana.cerebras1.lab.alcf.anl.gov:8443/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-49b7uuojdelvtrcxu3cwbw&from=1684859330000&to=noww
 ```
-
-Login to the dashboard with user admin, and password prom-operator
-
-
-<!---
-## Determining the CS-2 version
-
-TODO
-Need another approach for the new worker nodes with general ANL access.
-These queries will only work on cer-usr-01 due to networking constraints:
-```
-...$ # Query the firmware level for cs2-01
-...$ curl -k -X GET 'https://10.140.89.251/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
- "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
-...$
-
-...$ # Query the firmware level for cs2-02
-...$ curl -k -X GET 'https://10.140.89.252/redfish/v1/Managers/manager' --header 'Authorization: Basic YWRtaW46YWRtaW4=' 2> /dev/null | python -m json.tool | grep FirmwareVersion
- "FirmwareVersion": "1.7.1-202302011928-7-9d6aea6f",
-...$
-
-```
 --->
-<!--- NO LONGER NEEDED; direct login.
-## Copying files
-To copy a file to your CS-2 home dir (same on both CS-2 clusters), replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
-```console
-scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" filename ALCFUserID@cs2-01-master:~/
-```
-
-To copy a file from your CS-2 home dir (same on both CS-2 clusters) to the current local directory, replacing <strong>both instances</strong> of ALCFUserID with your ALCF user id:
-```console
-scp -o "ProxyJump ALCFUserID@cerebras.alcf.anl.gov" ALCFUserID@cs2-01-master:~/filename .
-```
---->
-
 <!---
 NO LONGER NEEDED - python environments are available, and singularity not available
 

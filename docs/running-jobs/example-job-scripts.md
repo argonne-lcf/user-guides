@@ -157,7 +157,7 @@ The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ens
 
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
-    For applications that support GPU-enabled MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
+    For applications that support GPU-aware MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
 
 !!! info "`./set_affinity_gpu_polaris.sh`"
 
@@ -229,116 +229,6 @@ A copy of the small helper script provided in the [Getting Started repo](https:/
 
     If planning large-scale runs with many thousands of MPI ranks, it is advised to comment out the `echo` command above so as not to have thousands of lines of output written to `stdout`.
 
-### Using MPS on the GPUs
-
-Documentation for the NVIDIA Multi-Process Service (MPS) can be found [here](https://docs.nvidia.com/deploy/mps/index.html)
-
-In the script below, note that if you are going to run this as a multi-node job you will need to do this on every compute node, and you will need to ensure that the paths you specify for `CUDA_MPS_PIPE_DIRECTORY` and `CUDA_MPS_LOG_DIRECTORY` do not "collide" and end up with all the nodes writing to the same place.
-
-An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps) and discussed below. The local SSDs or `/dev/shm` or incorporation of the node name into the path would all be possible ways of dealing with that issue.
-
-```bash
-#!/bin/bash -l
-export CUDA_MPS_PIPE_DIRECTORY=</path/writeable/by/you>
-export CUDA_MPS_LOG_DIRECTORY=</path/writeable/by/you>
-CUDA_VISIBLE_DEVICES=0,1,2,3 nvidia-cuda-mps-control -d
-echo "start_server -uid $( id -u )" | nvidia-cuda-mps-control
-```
-
-To verify the control service is running:
-
-```bash linenums="1"
-nvidia-smi | grep -B1 -A15 Processes
-```
-
-And the output should look similar to this:
-
-``` { .bash .no-copy}
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|    0   N/A  N/A     58874      C   nvidia-cuda-mps-server             27MiB |
-|    1   N/A  N/A     58874      C   nvidia-cuda-mps-server             27MiB |
-|    2   N/A  N/A     58874      C   nvidia-cuda-mps-server             27MiB |
-|    3   N/A  N/A     58874      C   nvidia-cuda-mps-server             27MiB |
-+-----------------------------------------------------------------------------+
-```
-
-To shut down the service:
-
-`echo "quit" | nvidia-cuda-mps-control`
-
-To verify the service shut down properly:
-
-`nvidia-smi | grep -B1 -A15 Processes`
-
-And the output should look like this:
-
-``` { .bash .no-copy}
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|  No running processes found                                                 |
-+-----------------------------------------------------------------------------+
-```
-
-### Using MPS in Multi-node Jobs
-
-As stated earlier, it is important to start the MPS control service on each node in a job that requires it. An example is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/mps). The helper script `enable_mps_polaris.sh` can be used to start the MPS on a node.
-
-```bash linenums="1"
-#!/bin/bash -l
-
-export CUDA_MPS_PIPE_DIRECTORY=/tmp/nvidia-mps
-export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-log
-CUDA_VISIBLE_DEVICES=0,1,2,3 nvidia-cuda-mps-control -d
-echo "start_server -uid $( id -u )" | nvidia-cuda-mps-control
-```
-
-The helper script `disable_mps_polaris.sh` can be used to disable MPS at appropriate points during a job script, if needed.
-
-```bash linenums="1"
-#!/bin/bash -l
-
-echo quit | nvidia-cuda-mps-control
-```
-
-In the example job script `submit.sh` below, MPS is first enabled on all nodes in the job using `mpiexec -n ${NNODES} --ppn 1` to launch the enablement script using a single MPI rank on each compute node. The application is then run as normally. If desired, a similar one-rank-per-node `mpiexec` command can be used to disable MPS on all the nodes in a job.
-
-```bash linenums="1"
-#!/bin/bash -l
-#PBS -l select=1:system=polaris
-#PBS -l place=scatter
-#PBS -l walltime=0:30:00
-#PBS -q debug
-#PBS -A Catalyst
-#PBS -l filesystems=home:eagle
-
-cd ${PBS_O_WORKDIR}
-
-# MPI example w/ 8 MPI ranks per node spread evenly across cores
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=8
-NDEPTH=8
-NTHREADS=1
-
-NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
-echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
-
-# Enable MPS on each node allocated to job
-mpiexec -n ${NNODES} --ppn 1 ./enable_mps_polaris.sh
-
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./hello_affinity
-
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth ./set_affinity_gpu_polaris.sh ./hello_affinity
-
-# Disable MPS on each node allocated to job
-mpiexec -n ${NNODES} --ppn 1 ./disable_mps_polaris.sh
-```
 
 ## Single-node Ensemble Calculations Example
 

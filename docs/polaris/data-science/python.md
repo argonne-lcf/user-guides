@@ -6,7 +6,7 @@ Users can activate this environment by first loading the `conda` module and then
 
 Explicitly (either from an interactive job or inside a job script):
 
-```bash
+```bash linenums="1"
 module use /soft/modulefiles; module load conda; conda activate base
 ```
 
@@ -16,7 +16,7 @@ This will load and activate the base environment.
 
     We encourage users to use the pre-installed conda environment. Any custom environments are supported on a best-effort basis only.
 
-For Python issues or questions, please see the [Contacting Support](../../contacting-support/technical-support.md) page.
+For Python issues or questions, please see the [Technical Support](../../support/technical-support.md) page.
 
 ## Virtual environments via `venv`
 
@@ -104,4 +104,4 @@ from mpi4py import MPI
 
 ## Creating a Jupyter Kernel
 
-If you need to use your Python `venv` on JupyterHub, you will need to create a [custom Jupyter kernel](https://docs.alcf.anl.gov/services/jupyter-hub/#custom-ipython-kernels) for it.
+If you need to use your Python `venv` on JupyterHub, you will need to create a [custom Jupyter kernel](../../services/jupyter-hub.md#custom-ipython-kernels) for it.
