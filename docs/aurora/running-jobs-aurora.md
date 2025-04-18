@@ -109,69 +109,9 @@ This includes, for example, settings to select different optional sub-algorithms
 
 ## <a name="Running-MPI+OpenMP+SYCL-Applications"></a>Running MPI+OpenMP+SYCL Applications
 
-Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
+A simple MPI+OpenMP+SYCL code snippet (hello_affinity_aurora.out) will be used to clarify the mappings between MPI ranks, CPU logical processors, OpenMP threads, GPU visiblity and GPU-affinity mappings.
 
-* `-n` total number of MPI ranks
-* `-ppn` number of MPI ranks per node
-* `--cpu-bind` CPU binding for application
-* `--depth` number of cpus per rank (useful with `--cpu-bind`)
-* `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
-* `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
-
-A sample submission script with directives is below for a 4-node job with 28 MPI ranks on each node and 4 OpenMP threads per rank (1 per CPU core).
-
-```bash linenums="1"
-#!/bin/bash -l
-#PBS -N AFFINITY
-#PBS -l select=4
-#PBS -l place=scatter
-#PBS -l walltime=0:10:00
-#PBS -l filesystems=<fs1:fs2>
-#PBS -q debug-scaling
-#PBS -A <MYPROJECT>
-
-export TZ='/usr/share/zoneinfo/US/Central'
-cd ${PBS_O_WORKDIR}
-
-NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=28 # Number of MPI ranks to spawn per node
-NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
-NTHREADS=4 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
-
-NTOTRANKS=$(( NNODES * NRANKS ))
-
-echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
-
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity
-```
-
-## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
-
-GPU-enabled applications will similarly run on the compute nodes using the above example script.
-
-- The environment variable `MPIR_CVAR_ENABLE_GPU=1` enables GPU-aware MPI support whereby the MPI library sends and receives data directly from GPU buffers. Default value is `MPIR_CVAR_ENABLE_GPU=1`. For applications that doesn't need support for GPU-aware MPI, it is beneficial to disable by setting `MPIR_CVAR_ENABLE_GPU=0`.
-- If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `ZE_AFFINITY_MASK` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `ZE_AFFINITY_MASK=0,1` could be used.
-
-## MPI rank and thread binding to cores and GPUs
-
-!!! warning
-
-    Since March 31, 2025, cores 0 (104) and 52 (156)--the first physical cores on each CPU socket—have been reserved for system services, and are no longer available for user applications.
-
-Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
-
-A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
-
-<figure markdown>
-  ![Aurore node](images/aurora_node_simple.png){ width="1000" }
-  <figcaption>Simplified representation of Aurora node </figcaption>
-</figure>
-
-For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core.
-
-For the six GPUs, the GPU number identifies the GPU, and the tile numbers identify the tile in the GPU, with tiles from 0 to 5 with each GPU have two tiles each $gpu.0 and $gpu.1.
-
-```c++
+```c++ linenums="1"
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -261,6 +201,73 @@ int main(int argc, char *argv[]){
   return 0;
 }
 ```
+
+The above code snippet can be compiled via:
+```bash
+mpiexec -fsycl -qopenmp hello_affinity_aurora.cpp -o hello_affinity_aurora.out
+```
+
+Once a submitted job is running calculations can be launched on the compute nodes using `mpiexec` to start an MPI application. Documentation is accessible via `man mpiexec` and some helpful options follow.
+
+* `-n` total number of MPI ranks
+* `-ppn` number of MPI ranks per node
+* `--cpu-bind` CPU binding for application
+* `--depth` number of cpus per rank (useful with `--cpu-bind`)
+* `--env` set environment variables (`--env OMP_NUM_THREADS=2`)
+* `--hostfile` indicate file with hostnames (the default is `--hostfile $PBS_NODEFILE`)
+
+A sample submission script with directives is below for a 4-node job with 28 MPI ranks on each node and 4 OpenMP threads per rank (1 per CPU core).
+
+```bash linenums="1"
+#!/bin/bash -l
+#PBS -N AFFINITY
+#PBS -l select=4
+#PBS -l place=scatter
+#PBS -l walltime=0:10:00
+#PBS -l filesystems=<fs1:fs2>
+#PBS -q debug-scaling
+#PBS -A <MYPROJECT>
+
+export TZ='/usr/share/zoneinfo/US/Central'
+cd ${PBS_O_WORKDIR}
+
+NNODES=`wc -l < $PBS_NODEFILE`
+NRANKS=28 # Number of MPI ranks to spawn per node
+NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
+NTHREADS=4 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
+
+NTOTRANKS=$(( NNODES * NRANKS ))
+
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
+
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity_aurora.out
+```
+
+## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
+
+GPU-enabled applications will similarly run on the compute nodes using the above templated PBS job-script.
+
+- The environment variable `MPIR_CVAR_ENABLE_GPU=1` enables GPU-aware MPI support whereby the MPI library sends and receives data directly from GPU buffers. Default value is `MPIR_CVAR_ENABLE_GPU=1`. For applications that doesn't need support for GPU-aware MPI, it is beneficial to disable by setting `MPIR_CVAR_ENABLE_GPU=0`.
+- If running on a specific GPU or subset of GPUs and/or tiles is desired, then the `ZE_AFFINITY_MASK` environment variable can be used. For example, if one only wanted an application to access the first two GPUs on a node, then setting `ZE_AFFINITY_MASK=0,1` could be used.
+
+## MPI rank and thread binding to cores and GPUs
+
+!!! warning
+
+    Since March 31, 2025, cores 0 (104) and 52 (156)--the first physical cores on each CPU socket—have been reserved for system services, and are no longer available for user applications.
+
+Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
+
+A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles.
+
+<figure markdown>
+  ![Aurore node](images/aurora_node_simple.png){ width="1000" }
+  <figcaption>Simplified representation of Aurora node </figcaption>
+</figure>
+
+For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core.
+
+For the six GPUs, the GPU number identifies the GPU, and the tile numbers identify the tile in the GPU, with tiles from 0 to 5 with each GPU have two tiles each $gpu.0 and $gpu.1.
 
 ### Binding MPI ranks and threads to cores
 
