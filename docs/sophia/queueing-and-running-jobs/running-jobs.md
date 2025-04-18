@@ -12,8 +12,8 @@ There are three production queues you can target in your `qsub` command (`-q <qu
 
 | Queue Name  | Node/GPU Min | Node/GPU Max                             | Time Min | Time Max |
 |-------------|--------------|------------------------------------------|----------|----------|
-| `by-gpu `     | 1 GPU        | 8 GPUs (valid values are 1, 2, 4, and 8) | 5 min    | 12 hr    |
-| `by-node`     | 1 Node       | 8 Nodes                                  | 5 min    | 12 hr    |
+| `by-gpu `     | 1 GPU        | 8 GPUs (valid values are 1, 2, 4, and 8) | 5 min    | 24 hr    |
+| `by-node`     | 1 Node       | 8 Nodes                                  | 5 min    | 24 hr    |
 | `bigmem`      | 1 Node       | 1 Node                                   | 5 min    | 12 hrs   |
 
 !!! note
