@@ -9,3 +9,11 @@ There are 3 debuggers available on Aurora:
 There is also a correctness tool for Fortran:
 
 1. [Codee](./codee.md) - This is a tool from Codee which can automatically analyze your code line-by-line to identify and fix opportunities for correctness, modernization, security and optimization. It is especially useful for legacy Fortran codes.
+segfault 
+
+
+##  Preliminary step
+
+- You can use the `mpich/dbg`. It enables runtime checks during MPICH execution.
+- This allows you to run `valgrind` (`valgrind` module): `mpirun $OPT valgring $BIN` 
+- You can also use `-faddress-sanitizer` on your code (will work for both CPU and GPU)
