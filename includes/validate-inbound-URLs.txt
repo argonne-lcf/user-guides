@@ -3,14 +3,16 @@
 # Each line should contain a single URL that points to a page within the ALCF User Guides.
 # Lines starting with # are comments and will be ignored.
 
-https://docs.alcf.anl.gov/account-project-management/accounts-and-access/user-account-overview/
-https://docs.alcf.anl.gov/data-management/filesystem-and-storage/file-systems/
-https://docs.alcf.anl.gov/ai-testbed/getting-started/
-https://docs.alcf.anl.gov/policies/facility-policies/
-https://docs.alcf.anl.gov/crux/getting-started/
-https://docs.alcf.anl.gov/crux/getting-started/index
-https://docs.alcf.anl.gov/crux/getting-started/index.html
-https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/
-https://docs.alcf.anl.gov/polaris/getting-started/
-https://docs.alcf.anl.gov/services/jupyter-hub/
-https://docs.alcf.anl.gov/sophia/getting-started/
+https://docs.alcf.anl.gov/account-project-management/
+https://docs.alcf.anl.gov/data-management/
+https://docs.alcf.anl.gov/ai-testbed/
+https://docs.alcf.anl.gov/support/
+https://docs.alcf.anl.gov/running-jobs/
+https://docs.alcf.anl.gov/policies/
+https://docs.alcf.anl.gov/crux/
+https://docs.alcf.anl.gov/crux/index
+https://docs.alcf.anl.gov/crux/index.html
+https://docs.alcf.anl.gov/aurora
+https://docs.alcf.anl.gov/polaris
+https://docs.alcf.anl.gov/services
+https://docs.alcf.anl.gov/sophia

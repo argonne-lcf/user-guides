@@ -1,16 +1,15 @@
 # Technical Support
 
-
 For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support - [support@alcf.anl.gov](mailto:support@alcf.anl.gov). Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays.
 
 ## Best practices
 When contacting support, please follow these recommended guidelines:
 
-* Review the ["Known Issues Pages"](https://docs.alcf.anl.gov/contacting-support/technical-support/#known-issues-pages) listed below, before contacting ALCF Support.
+* Review the ["Known Issues Pages"](./technical-support.md#known-issues-pages) listed below, before contacting ALCF Support.
 * Include your ALCF Username, your project shortname, and the system(s) you're having issues on (Polaris, Sophia, Aurora, etc.)
 * Do not respond to closed tickets as your response will **NOT** re-open the ticket
 * Do not use an existing ticket to ask for assistance on new topics, submit a new ticket by emailing Support.
-* See ["Job Failures"](https://docs.alcf.anl.gov/contacting-support/technical-support/#job-failures), ["Python Issues"](https://docs.alcf.anl.gov/contacting-support/technical-support/#python-issues), ["Installation/compilation issues"](https://docs.alcf.anl.gov/contacting-support/technical-support/#installation-compiling-issues) sections below for additional details to be included in your ticket
+* See ["Job Failures"](./technical-support.md#job-failures), ["Python Issues"](./technical-support.md#python-issues), ["Installation/compilation issues"](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
 
 ## Known Issues Pages
 
@@ -18,8 +17,6 @@ Please be aware of existing **Known Issues** pages for the following systems:
 
 * [Polaris](../polaris/known-issues.md)
 * [Aurora](../aurora/known-issues.md)
-
-
 
 ## Job Failures
 

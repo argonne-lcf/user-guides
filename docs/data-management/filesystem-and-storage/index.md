@@ -20,11 +20,11 @@ The agile-home file system is regularly backed up to tape. The data file system 
 
 | Name                                 | Accessible From | Type   | Path                              | Production | Backed-up | Usage                                                                  |
 |--------------------------------------|-----------------|--------|-----------------------------------|------------|-----------|------------------------------------------------------------------------|
-| agile-home                           | Polaris         | Lustre | `/home` or `/lus/agile/home`      | Yes        | Yes       | General use                                                            |
-| eagle                                | Polaris         | Lustre | `/eagle` or `/lus/eagle/projects` | Yes        | No        | Community sharing via Globus; <br /> Intensive job output, large files |
+| agile-home                           | Polaris, Crux, Sophia         | Lustre | `/home` or `/lus/agile/home`      | Yes        | Yes       | General use                                                     |
+| eagle                                | Polaris, Crux, Sophia         | Lustre | `/eagle` or `/lus/eagle/projects` | Yes        | No        | Community sharing via Globus; <br /> Intensive job output, large files |
 | Node SSD <br /> (Compute node only)  | Polaris         | xfs    | `/local/scratch`                  | Yes        | No        | Local node scratch during run                                          |
 | gecko-home                           | Aurora          | Lustre | `/home` or `/lus/gecko/home`      | Yes        | No        | General use                                                            |
-| flare                                | Aurora          | Lustre | `/flare` or `/lus/flare/projects` | Yes        | No        | Community sharing via Globus; <br /> Intensive job output, large files |
+| flare                                | Aurora          | Lustre | `/flare` or `/lus/flare/projects` | Yes        | No        | Intensive job output, large files |
 
 ## Available Directories
 
