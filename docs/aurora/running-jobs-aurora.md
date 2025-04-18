@@ -370,23 +370,15 @@ Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/til
 
 One example below shows a common mapping of MPI ranks to cores and GPUs.
 
-The `frameworks` module set `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, so if you wish to bind MPI ranks to devices instead of tiles, it can be done the following way:
+The `frameworks` module set `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, treating each tile as a device, and bind ranks appropriately. 
+Our current recommendation is to __not__ use the `gpu_tile_compact.sh` script 
+during the job submission.
 
-```bash
-#!/bin/bash
-num_gpus=12
-gpu_id=$((PMIX_RANK % ${num_gpus} ))
-export ZE_AFFINITY_MASK=$gpu_id
-exec "$@"
-```
-Caution: This will narrow the affinity mask down and generate PyTorch warnings.
-
-A more verbose way of doing the bindings properly, while using the `frameworks`
-module would be to write the affinity explicitly in the job submission script
-
-```bash
-export ZE_AFFINITY_MASK="0,1,2,3,4,5,6,7,8,9,10,11"
-```
+If specific use cases require leveraging the device hierarchy differently, 
+special attention needs to be paid toward the effects of the narrowing of the 
+affinity mask, as some components of the `frameworks` expect full visibility of
+the available devices. A narrow affinity mask leads to PyTorch warnings and 
+caution must be exercised to proceed with this.  
 
 More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html).
 
