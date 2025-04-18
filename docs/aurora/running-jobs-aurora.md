@@ -339,7 +339,11 @@ Note that the threads MPI rank 6 are bound to cross both socket 0 and socket 1, 
 	For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation. 
 
 ### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
-Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank. Users are encouraged to use the `gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment. `gpu_tile_compact.sh` should be in your path by default. Note that `gpu_tile_compact.sh` requires `ZE_FLAT_DEVICE_HIERARCHY`=`COMPOSITE` (the default in the environment). If you wish to bind MPI ranks to devices instead of tiles, `gpu_dev_compact.sh` (also in your path by default) can be used.
+Support in MPICH on Aurora to bind MPI ranks to GPUs is currently work-in-progress. 
+For applications that need this support, this instead can be handled by use of a small helper script that will appropriately set `ZE_AFFINITY_MASK` for each MPI rank.
+Users are encouraged to use the `gpu_tile_compact.sh` script for instances where each MPI rank is to be bound to a single GPU tile with a round-robin assignment. `gpu_tile_compact.sh` should be in your path by default. 
+
+Note that `gpu_tile_compact.sh` requires `ZE_FLAT_DEVICE_HIERARCHY`=`COMPOSITE` (the default in the environment).
 
 This script can be placed just before the executable in an `mpiexec` command like so.
 
@@ -365,6 +369,21 @@ exec "$@"
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `gpu_tile_compact.sh` (`which gpu_tile_compact.sh` will show the location of the script) to suit their needs.
 
 One example below shows a common mapping of MPI ranks to cores and GPUs.
+
+The `frameworks` module set the `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, treating each tile as a device.
+Our current recommendation is to __not__ use the `gpu_tile_compact.sh` script during the job submission while using the `frameworks` module. 
+If you wish to bind MPI ranks to devices instead of tiles, this can be done the following way:
+
+```bash linenums="1"
+#!/bin/bash
+num_gpus=12
+gpu_id=$((PMIX_RANK % ${num_gpus} ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+Caution: This will narrow the affinity mask down and generate PyTorch warnings. If you want to avoid that, don't use this binding script and do the binding manually inside your apps. 
+
+More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html).
 
 #### Example 1: 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU
 
