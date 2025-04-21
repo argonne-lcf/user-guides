@@ -116,14 +116,42 @@ A simple MPI+OpenMP+SYCL code snippet (hello_affinity_aurora.out) will be used t
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
-#include <iomanip>
 #include <string.h>
 #include <mpi.h>
 #include <sched.h>
 #include <sycl/sycl.hpp>
+#include <sys/syscall.h>
 #include <omp.h>
+#include <sched.h>
+#include <unistd.h>
+
+std::string get_cpu_affinity_range() {
+  cpu_set_t mask;
+  CPU_ZERO(&mask);
+  pid_t pid = syscall(SYS_gettid); // You could also use 0 for current process
+  if (sched_getaffinity(pid, sizeof(mask), &mask) == -1) {
+    perror("sched_getaffinity");
+    return "";
+  }
+
+  std::string result;
+  int i = 0;
+  while (i < CPU_SETSIZE) {
+    if (CPU_ISSET(i, &mask)) {
+      int start = i;
+      while (i + 1 < CPU_SETSIZE && CPU_ISSET(i + 1, &mask)) ++i;
+      if (!result.empty()) result += ",";
+      result += (start == i) ? std::to_string(start)
+        : std::to_string(start) + "-" + std::to_string(i);
+    }
+    ++i;
+  }
+
+  return result.empty() ? "No CPUs found in affinity mask." : result;
+}
 
 int main(int argc, char *argv[]){
+
   MPI_Init(&argc, &argv);
 
   int size;
@@ -151,49 +179,38 @@ int main(int argc, char *argv[]){
   std::vector<sycl::device> sycl_all_devs = sycl::device::get_devices(sycl::info::device_type::gpu);
   num_devices = sycl_all_devs.size();
 
-  int hwthread = 0;
+  std::string hwthread;
   int thread_id = 0;
+  std::string busid = "";
+  std::string busid_list = "";
+  std::string rt_gpu_id_list = "";
 
-  if(num_devices == 0){
+  // Loop over the GPUs available to each MPI rank
+  for(int i=0; i<num_devices; i++) {
+    // Get the PCIBusId for each GPU and use it to query for UUID
+    busid = sycl_all_devs[i].get_info<sycl::ext::intel::info::device::pci_address>();
+
+    // Concatenate per-MPIrank GPU info into strings for print
+    if(i > 0) rt_gpu_id_list.append(",");
+    rt_gpu_id_list.append(std::to_string(i));
+
+    std::string temp_busid(busid);
+
+    if(i > 0) busid_list.append(",");
+    busid_list.append(temp_busid.substr(5,2));
+
+  }
+
 #pragma omp parallel default(shared) private(hwthread, thread_id)
+  {
+#pragma omp critical
     {
       thread_id = omp_get_thread_num();
-      hwthread = sched_getcpu();
+      hwthread = get_cpu_affinity_range();
+      int running_cpu = sched_getcpu();  // This gives current logical core ID
 
-      printf("MPI %03d - OMP %03d - HWT %03d - Node %s\n",
-             rank, thread_id, hwthread, name);
-    }
-  }
-  else{
-    std::string busid = "";
-    std::string busid_list = "";
-    std::string rt_gpu_id_list = "";
-
-    // Loop over the GPUs available to each MPI rank
-    for(int i=0; i<num_devices; i++){
-      // Get the PCIBusId for each GPU and use it to query for UUID
-      busid = sycl_all_devs[i].get_info<sycl::ext::intel::info::device::pci_address>();
-
-      // Concatenate per-MPIrank GPU info into strings for print
-      if(i > 0) rt_gpu_id_list.append(",");
-      rt_gpu_id_list.append(std::to_string(i));
-
-      std::string temp_busid(busid);
-
-      if(i > 0) busid_list.append(",");
-      busid_list.append(temp_busid.substr(5,2));
-    }
-
-#pragma omp parallel default(shared) private(hwthread, thread_id)
-    {
-#pragma omp critical
-      {
-        thread_id = omp_get_thread_num();
-        hwthread = sched_getcpu();
-
-        printf("MPI %03d - OMP %03d - HWT %03d - Node %s - RT_GPU_ID %s - GPU_ID %s - Bus_ID %s\n",
-               rank, thread_id, hwthread, name, rt_gpu_id_list.c_str(), gpu_id_list, busid_list.c_str());
-      }
+      printf("MPI %03d - OMP %03d - HWT %s (Running on: %03d) - Node %s - RT_GPU_ID %s - GPU_ID %s - Bus_ID %s\n",
+             rank, thread_id, hwthread.c_str(), running_cpu, name, rt_gpu_id_list.c_str(), gpu_id_list, busid_list.c_str());
     }
   }
 
@@ -278,15 +295,16 @@ Note: In this section, we intentionally do not bind GPUs to specific MPI ranks. 
 #### Example 1: 2 nodes, 4 ranks/node, 1 thread/rank
 
 ```bash
+$ export OMP_NUM_THREADS=1
 $ mpiexec -n 8 -ppn 4 --depth 1 --cpu-bind=depth ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 001 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 002 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 003 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 004 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 004 - OMP 000 - HWT 001 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 005 - OMP 000 - HWT 002 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 006 - OMP 000 - HWT 003 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 007 - OMP 000 - HWT 004 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 2 (Running on: 002) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 3 (Running on: 003) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 4 (Running on: 004) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 2 (Running on: 002) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 3 (Running on: 003) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 4 (Running on: 004) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 
 - The `-n 8` argument says to use 8 MPI ranks in total and `-ppn 4` places 4 ranks per node.
@@ -298,14 +316,14 @@ The same can be achieved with the `--cpu-bind=list` argument that explicitly lis
 ```bash
 $ export OMP_NUM_THREADS=1
 $ mpiexec -n 8 -ppn 4 --cpu-bind=list:1:2:3:4 ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 001 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 002 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 003 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 004 - Node x4316c7s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 004 - OMP 000 - HWT 001 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 005 - OMP 000 - HWT 002 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 006 - OMP 000 - HWT 003 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 007 - OMP 000 - HWT 004 - Node x4316c7s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 2 (Running on: 002) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 3 (Running on: 003) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 4 (Running on: 004) - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 2 (Running on: 002) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 3 (Running on: 003) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 4 (Running on: 004) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -317,35 +335,35 @@ The figure below shows the mapping, where the different colors are different MPI
 #### Example 2: 2 nodes, 2 ranks/node, 2 thread/rank
 
 - The `-n 4` argument says to use 4 MPI ranks in total and `-ppn 2` places 2 ranks per node.
-- The `--depth=51` argument provides a spread of 51 cores between each MPI rank so as to provide an even distribution among sockets. The applications needs to consider an even distribution of the MPI-ranks and their binding configurations between the dual-sockets available on the CPU.
-- The `--cpu-bind=depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical processor, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the `--depth` argument (so it's 51 in this case).
+- The `--depth=2` argument says to use 2 logical processor for each MPI rank.
+- The `--cpu-bind=depth` argument says to spread out the ranks in a round robin manner across the logical processors, first putting one rank on the first logical processor of one physical processor, and then looping back to put a second one on the second logical processor. This is done such that there's N logical processors for each MPI rank, where N is the value from the `--depth` argument (so it's 2 in this case).
 - `OMP_NUM_THREADS=2` launches two threads per MPI rank
 - `OMP_PLACES=threads` says to bind the OpenMP threads to logical processors
 
 ```bash
-$ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --depth=51 --cpu-bind=depth ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 001 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 000 - OMP 001 - HWT 027 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 053 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 001 - HWT 079 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 001 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 001 - HWT 027 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 053 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 001 - HWT 079 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+$ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --depth=2 --cpu-bind=depth ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 1 (Running on: 001) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 001 - HWT 2 (Running on: 002) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 3 (Running on: 003) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 001 - HWT 4 (Running on: 004) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 1 (Running on: 001) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 001 - HWT 2 (Running on: 002) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 3 (Running on: 003) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 001 - HWT 4 (Running on: 004) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 
-This is the same as explictly using the `--cpu-bind=list` argument. Each MPI rank is bound to the logical processors that are listed between `:`. Between `:`, the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 1 and 27, rank 1 to logical processors 53 and 79 on every node. `OMP_PLACES=threads` then binds the specific threads to the logical processors in the list for every MPI rank.
+This is the same as explictly using the `--cpu-bind=list` argument. Each MPI rank is bound to the logical processors that are listed between `:`. Between :, the logical processors to bind to are listed in a comma-separated manner. So here, rank 0 is bound to logical processors 1 and 2, rank 2 to logical processors 3 and 4. `OMP_PLACES=threads` then binds the specific threads to the logical processors in the list.
 
 ```bash
-$ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --cpu-bind=list:1,27:53,79 ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 001 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 000 - OMP 001 - HWT 027 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 053 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 001 - HWT 079 - Node x4206c4s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 001 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 001 - HWT 027 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 053 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 001 - HWT 079 - Node x4206c4s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+$ OMP_PLACES=threads OMP_NUM_THREADS=2 mpiexec -n 4 -ppn 2 --cpu-bind=list:1,2:3,4 ./hello_affinity_aurora.out | sort
+MPI 000 - OMP 000 - HWT 1 (Running on: 001) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 001 - HWT 2 (Running on: 002) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 3 (Running on: 003) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 001 - HWT 4 (Running on: 004) - Node x4707c0s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 1 (Running on: 001) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 001 - HWT 2 (Running on: 002) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 3 (Running on: 003) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 001 - HWT 4 (Running on: 004) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -359,10 +377,10 @@ The figure below shows the mapping, where the different colors are different MPI
 ```bash
 $ export OMP_NUM_THREADS=1
 $ mpiexec -n 4 -ppn 2 --cpu-bind=list:1:105 ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 001 - Node x4118c5s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 105 - Node x4118c5s6b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 001 - Node x4118c5s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 105 - Node x4118c5s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 000 - HWT 1 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 105 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 1 - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 105 - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to logical processor 0, rank 1 to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
 
@@ -375,28 +393,24 @@ The `--cpu-bind=list` argument explicitly lists which logical processor to bind 
 
 This setup is a common case for applications: 12 ranks/node, where each rank will offload to one of the 12 GPU tiles. Note that explicit list binding to cores is needed here to avoid binding a MPI rank to a logical core on different socket than the GPU it might be targetting (as would happen if cpu_bind=depth was used).
 
-```bash
-export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} <app> <app_args>
-```
-
 - The `--cpu-bind=list:` argument explicitly lists which logical processor to bind to per node. Each MPI rank is bound to the logical processors that are listed between `:`. So here, rank 0 to processors 1-8, rank 1 to processors 9-16, etc.
 
 ```bash
 $ export OMP_NUM_THREADS=1
+$ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 008 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 016 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 024 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 032 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 004 - OMP 000 - HWT 040 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 005 - OMP 000 - HWT 048 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 006 - OMP 000 - HWT 060 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 007 - OMP 000 - HWT 068 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 008 - OMP 000 - HWT 076 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 009 - OMP 000 - HWT 084 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 010 - OMP 000 - HWT 092 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 011 - OMP 000 - HWT 100 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 000 - HWT 1-8 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 9-16 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 17-24 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 25-32 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 33-40 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 41-48 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 53-60 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 61-68 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 008 - OMP 000 - HWT 69-76 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 009 - OMP 000 - HWT 77-84 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 010 - OMP 000 - HWT 85-92 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 011 - OMP 000 - HWT 93-100 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
@@ -411,38 +425,20 @@ If instead we used `--cpu-bind=depth` as so, then the mapping is:
 ```
 $ export OMP_NUM_THREADS=1
 $ mpiexec -n 12 -ppn 12 --depth=8 --cpu-bind=depth ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 008 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 016 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 024 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 032 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 004 - OMP 000 - HWT 040 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 005 - OMP 000 - HWT 048 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 006 - OMP 000 - HWT 057 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 007 - OMP 000 - HWT 065 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 008 - OMP 000 - HWT 073 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 009 - OMP 000 - HWT 081 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 010 - OMP 000 - HWT 089 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 011 - OMP 000 - HWT 097 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 000 - OMP 000 - HWT 1-8 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 001 - OMP 000 - HWT 9-16 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 002 - OMP 000 - HWT 17-24 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 003 - OMP 000 - HWT 25-32 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 004 - OMP 000 - HWT 33-40 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 005 - OMP 000 - HWT 41-48 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 006 - OMP 000 - HWT 49-51,53-57 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 007 - OMP 000 - HWT 58-65 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 008 - OMP 000 - HWT 66-73 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 009 - OMP 000 - HWT 74-81 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 010 - OMP 000 - HWT 82-89 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
+MPI 011 - OMP 000 - HWT 90-97 - Node x4407c6s2b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
-The cores assigned to MPI ranks are evenly distributed across socket 0 and socket 1, with the first 6 ranks allocated to socket 0 and the next 6 ranks to socket 1.
-
-A slight misconfiguration of the `--depth` option—for example, with `--depth=7`—can lead to an imbalance, where MPI ranks 0 through 6 are bound to socket 0 and ranks 7 through 11 to socket 1. To maximize locality and performance, care must be taken to ensure MPI processes are evenly distributed across both sockets.
-```
-$ export OMP_NUM_THREADS=1
-$ mpiexec -n 12 -ppn 12 --depth=7 --cpu-bind=depth ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 007 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 001 - OMP 000 - HWT 014 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 002 - OMP 000 - HWT 021 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 003 - OMP 000 - HWT 028 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 004 - OMP 000 - HWT 035 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 005 - OMP 000 - HWT 042 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 006 - OMP 000 - HWT 049 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 007 - OMP 000 - HWT 057 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 008 - OMP 000 - HWT 064 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 009 - OMP 000 - HWT 071 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 010 - OMP 000 - HWT 078 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-MPI 011 - OMP 000 - HWT 085 - Node x4212c6s0b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
-```
+A small misconfiguration of the `--depth` option for instance, using `--depth=8` can result in an imbalance. All MPI ranks except rank 6 may end up bound to logical processors spanning both CPU sockets 0 and 1. To ensure optimal locality and performance, it's important to evenly distribute MPI processes across both sockets.
 
 <figure markdown>
   ![Example4](images/example4_bad.png){ width="700" }
@@ -490,18 +486,18 @@ Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/til
 $ export OMP_NUM_THREADS=1
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} gpu_tile_compact.sh ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 008 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
-MPI 001 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
-MPI 002 - OMP 000 - HWT 024 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
-MPI 003 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
-MPI 004 - OMP 000 - HWT 040 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
-MPI 005 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
-MPI 006 - OMP 000 - HWT 060 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
-MPI 007 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
-MPI 008 - OMP 000 - HWT 076 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
-MPI 009 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
-MPI 010 - OMP 000 - HWT 092 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
-MPI 011 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
+MPI 000 - OMP 000 - HWT 1-8 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 9-16 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
+MPI 002 - OMP 000 - HWT 17-24 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
+MPI 003 - OMP 000 - HWT 25-32 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
+MPI 004 - OMP 000 - HWT 33-40 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
+MPI 005 - OMP 000 - HWT 41-48 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
+MPI 006 - OMP 000 - HWT 53-60 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
+MPI 007 - OMP 000 - HWT 61-68 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
+MPI 008 - OMP 000 - HWT 69-76 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
+MPI 009 - OMP 000 - HWT 77-84 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
+MPI 010 - OMP 000 - HWT 85-92 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
+MPI 011 - OMP 000 - HWT 93-100 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
 ```
 <figure markdown>
   ![Example5](images/example5.png){ width="700" }
@@ -518,12 +514,12 @@ MPI 011 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bu
 $ export OMP_NUM_THREADS=1
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-16:17-32:33-48:53-68:69-84:85-100"
 $ mpiexec -n 6 -ppn 6 ${CPU_BIND_SCHEME} gpu_dev_compact.sh ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0 - Bus_ID 18
-MPI 001 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1 - Bus_ID 42
-MPI 002 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2 - Bus_ID 6c
-MPI 003 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 18
-MPI 004 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4 - Bus_ID 42
-MPI 005 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5 - Bus_ID 6c
+MPI 000 - OMP 000 - HWT 1-16 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 17-32 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 1 - Bus_ID 42
+MPI 002 - OMP 000 - HWT 33-48 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 2 - Bus_ID 6c
+MPI 003 - OMP 000 - HWT 53-68 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 18
+MPI 004 - OMP 000 - HWT 69-84 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 4 - Bus_ID 42
+MPI 005 - OMP 000 - HWT 85-100 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 5 - Bus_ID 6c
 ```
 <figure markdown>
   ![Example5](images/example5.png){ width="700" }
@@ -545,18 +541,18 @@ $ export OMP_NUM_THREADS=1
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
 $ export GPU_BIND_SCHEME="--gpu-bind=list:0.0:0.1:1.0:1.1:2.0:2.1:3.0:3.1:4.0:4.1:5.0:5.1"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
-MPI 000 - OMP 000 - HWT 008 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
-MPI 001 - OMP 000 - HWT 016 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
-MPI 002 - OMP 000 - HWT 024 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
-MPI 003 - OMP 000 - HWT 032 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
-MPI 004 - OMP 000 - HWT 040 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
-MPI 005 - OMP 000 - HWT 048 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
-MPI 006 - OMP 000 - HWT 060 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
-MPI 007 - OMP 000 - HWT 068 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
-MPI 008 - OMP 000 - HWT 076 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
-MPI 009 - OMP 000 - HWT 084 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
-MPI 010 - OMP 000 - HWT 092 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
-MPI 011 - OMP 000 - HWT 100 - Node x4520c2s0b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
+MPI 000 - OMP 000 - HWT 1-8 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 0.0 - Bus_ID 18
+MPI 001 - OMP 000 - HWT 9-16 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 0.1 - Bus_ID 18
+MPI 002 - OMP 000 - HWT 17-24 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 1.0 - Bus_ID 42
+MPI 003 - OMP 000 - HWT 25-32 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 1.1 - Bus_ID 42
+MPI 004 - OMP 000 - HWT 33-40 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 2.0 - Bus_ID 6c
+MPI 005 - OMP 000 - HWT 41-48 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 2.1 - Bus_ID 6c
+MPI 006 - OMP 000 - HWT 53-60 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 3.0 - Bus_ID 18
+MPI 007 - OMP 000 - HWT 61-68 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 3.1 - Bus_ID 18
+MPI 008 - OMP 000 - HWT 69-76 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 4.0 - Bus_ID 42
+MPI 009 - OMP 000 - HWT 77-84 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 4.1 - Bus_ID 42
+MPI 010 - OMP 000 - HWT 85-92 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 5.0 - Bus_ID 6c
+MPI 011 - OMP 000 - HWT 93-100 - Node x4407c6s2b0n0 - RT_GPU_ID 0 - GPU_ID 5.1 - Bus_ID 6c
 ```
 
 !!! warning
