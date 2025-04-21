@@ -21,11 +21,11 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                                                                              |
 |-----------------|----------|----------|----------|----------|----------------------------------------------------------------------------------------------------|
-| tiny            | 32       | 512      | 5 min    | 6 hrs    |                                                                                                    |
+| tiny            | 32 (1 node starting 4/23/25)       | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
 | large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
-| backfill-tiny   | 32       | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
+| backfill-tiny   | 32 (1 node starting 4/23/25)     | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
 | backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue*** <br/> Low priority, negative project balance |
