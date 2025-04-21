@@ -459,7 +459,13 @@ In general, GPU mapping can be accomplished in two different ways: 1) with the `
 
 #### 1) Binding MPI ranks to GPUs using `gpu_tile_compact.sh` and `gpu_dev_compact.sh` scripts
 
-Users are encouraged to use the `gpu_tile_compact.sh` script provided in the Aurora PE. This script binds each MPI rank to a single GPU tile ("Explicit Scaling") using a round-robin strategy. Note that `gpu_tile_compact.sh` requires the environment variable `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, which is set by default in the Aurora PE. Below is a simplified version of this script, illustrating how the `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
+Users are encouraged to use the `gpu_tile_compact.sh` script provided in the Aurora PE. This script binds each MPI rank to a single GPU tile ("Explicit Scaling") using a round-robin strategy. Note that `gpu_tile_compact.sh` requires the environment variable `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, which is set by default in the Aurora PE. The script can be placed just before the executable in an `mpiexec` command like so.
+
+```bash
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind=depth gpu_tile_compact.sh <app> <app_args>
+```
+
+Below is a simplified version of this script, illustrating how the `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
 
 A simple version of `gpu_tile_compact.sh` script is below to illustrate how `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
 ```bash linenums="1"
@@ -487,11 +493,6 @@ exec "$@"
 ```
 Caution: This will narrow the affinity mask down and generate PyTorch warnings. If you want to avoid that, don't use this binding script and do the binding manually inside your apps. 
 More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html).
-
-The script can be placed just before the executable in an `mpiexec` command like so.
-```bash
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind=depth gpu_tile_compact.sh <app> <app_args>
-```
 
 If an application prefers to bind MPI ranks to entire GPU devices rather than individual tiles, the `gpu_dev_compact.sh` script (also available in your default path) can be used. Binding to a full device instead of a tile is refered to as "Implicit Scaling". Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `gpu_tile_compact.sh` (`which gpu_tile_compact.sh` will show the location of the script) to suit their needs.
 
