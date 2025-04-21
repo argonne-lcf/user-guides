@@ -2,7 +2,7 @@
 
 ## Compiling on Polaris Login and Compute Nodes
 
-If your build system does not require GPUs for the build process, as is usually the case, the compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require GPUs, you cannot yet compile on the Polaris login nodes, as they do not currently have GPUs installed. In this case, you may compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs.md#interactive-jobs-on-compute-nodes) or running your build system in a batch job.
+Most build systems for GPU applications do not require the use a GPU to compile and link the binary. In such cases, the compilation of GPU-accelerated codes is generally expected to work well on the Polaris login nodes. If your build system _does_ require usable GPUs, you cannot yet compile on the Polaris login nodes. They each currently have a single A100 installed on each, but user processes are forbidden from executing on these GPUs. In this case, you may compile your applications on the Polaris compute nodes. Do this by submitting an [interactive single-node job](../running-jobs/index.md#interactive-jobs-on-compute-nodes) or running your build system in a batch job.
 
 ### Home File System
 
@@ -24,7 +24,7 @@ Each of these wrappers can select a specific vendor compiler based on the PrgEnv
 
 The output from these commands may be useful in build scripts where a compiler other than that invoked by a compiler wrapper is desired. Defining some variables as such may prove useful in those situations.
 
-```
+```bash linenums="1"
 CRAY_CFLAGS=$(cc --cray-print-opts=cflags)
 CRAY_LIB=$(cc --cray-print-opts=libs)
 ```
@@ -35,7 +35,7 @@ Further documentation and options are available via `man cc` and similar.
 
 The default programming environment on Polaris is currently `NVHPC`. The `GNU` compilers are available via another programming environment. The following sequence of `module` commands can be used to switch to the `GNU` programming environment (gcc, g++, gfortran) and also have `NVIDIA` compilers available in your path.
 
-```
+```bash linenums="1"
 module swap PrgEnv-nvhpc PrgEnv-gnu
 module load nvhpc-mixed
 ```
@@ -62,7 +62,7 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 ## Notes on Default Modules
 
-* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with GPU-enabled MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
+* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with GPU-aware MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
 
 * `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 
@@ -80,7 +80,7 @@ This module also adds GPU Transport Layer (GTL) libraries to the link-line to su
 
 For additional information on the Cray wrappers, please refer to the man pages.
 
-```
+```bash linenums="1"
 man cc
 man CC
 man ftn

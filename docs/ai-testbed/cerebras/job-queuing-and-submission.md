@@ -13,7 +13,6 @@ NAME                          AGE  DURATION  PHASE    SYSTEMS     USER     LABEL
 wsjob-thjj8zticwsylhppkbmjqe  13s  1s        RUNNING  cer-cs2-01  username name=unet_pt  https://grafana.cerebras1.lab.alcf.anl.gov/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-thjj8zticwsylhppkbmjqe&from=1691705374000&to=now
 (venv_cerebras_pt) $
 ```
-To view the grafana databoard for a job, follow the instructions at [Grafana WsJob Dashboard for Cerebras jobs](./miscellaneous.md#grafana-wsjob-dashboard-for-cerebras-jobs)
 
 Jobs can be canceled as shown:
 

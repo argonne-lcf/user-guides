@@ -1,0 +1,23 @@
+name: Blank Issue
+description: Create an issue with minimal structure (for experienced authors)
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a minimal template for experienced docs authors and developers who prefer to structure their own issues.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the issue
+      placeholder: What's the issue?
+    validations:
+      required: true
+  - type: checkboxes
+    id: label-confirmation
+    attributes:
+      label: Label Confirmation
+      description: I confirm that I have selected at least one appropriate label for this issue using the GitHub UI
+      options:
+        - label: I have selected at least one appropriate label
+          required: true

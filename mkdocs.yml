@@ -69,6 +69,8 @@ extra_css:
 
 extra_javascript:
   - javascripts/alcf-extra.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
 
 markdown_extensions:
   - footnotes
@@ -147,15 +149,20 @@ plugins:
         'policies/facility-policies.md': 'policies/index.md'
         'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
         'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
-        # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
-        'machines/index.md': 'index.md'
-        'contacting-support/index.md': 'contacting-support/technical-support.md'
-        'data-management/index.md': 'data-management/filesystem-and-storage/index.md'
-        'account-project-management/index.md': 'account-project-management/MyALCF.md'
 
 nav:
   # - ALCF User Guides:
   #   - index.md
+  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+
+  - User Support:
+    - support/index.md
+    - Contact:
+      - Submit a Ticket: support/technical-support.md
+      - Request Software: support/software-requests.md
+      - ALCF Users Slack: support/alcf-users-slack.md
+      - Contribute to User Guides: support/docs-issues.md
+      - Aurora Office Hours: support/office-hours.md
 
   - Machines:
     - machines/index.md
@@ -228,10 +235,13 @@ nav:
         #  - Overview: aurora/performance-tools/performance-overview.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
-        # - Visualization:
-        #   - ParaView: aurora/visualization/paraview.md
         - Services:
           - GitLab CI: aurora/services/gitlab-ci.md
+        - Visualization:
+          - aurora/visualization/index.md
+          - ParaView (Launch from Client): aurora/visualization/paraview.md
+          - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
+
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
@@ -308,7 +318,7 @@ nav:
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
       - Compiling and Linking:
-        - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
+        - polaris/compiling-and-linking/index.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
         - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
         - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
@@ -317,63 +327,64 @@ nav:
         - LLVM Compilers: polaris/compiling-and-linking/llvm-compilers-polaris.md
         - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
       - Build Tools:
-          - CMake: polaris/build-tools/cmake-polaris.md
-      - Running Jobs: polaris/running-jobs.md
+        - CMake: polaris/build-tools/cmake-polaris.md
+      - Running Jobs:
+        - polaris/running-jobs/index.md
+        - Using GPUs: polaris/running-jobs/using-gpus.md
       - Applications and Libraries:
-          - Applications:
-              - Amber: polaris/applications-and-libraries/applications/amber.md
-              - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
-              - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
-              - NAMD: polaris/applications-and-libraries/applications/namd.md
-              - NekRS: polaris/applications-and-libraries/applications/nekrs.md
-              - OpenMM: polaris/applications-and-libraries/applications/openmm.md
-              - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
-              - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
-              - VASP: polaris/applications-and-libraries/applications/vasp.md
-          - Libraries:
-              - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
-              - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
-              - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
-              - NCCL: polaris/applications-and-libraries/libraries/nccl.md
-              - XALT: polaris/applications-and-libraries/libraries/xalt.md
+        - Applications:
+          - Amber: polaris/applications-and-libraries/applications/amber.md
+          - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
+          - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
+          - NAMD: polaris/applications-and-libraries/applications/namd.md
+          - NekRS: polaris/applications-and-libraries/applications/nekrs.md
+          - OpenMM: polaris/applications-and-libraries/applications/openmm.md
+          - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
+          - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
+          - VASP: polaris/applications-and-libraries/applications/vasp.md
+        - Libraries:
+          - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
+          - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
+          - Spack PE: polaris/applications-and-libraries/libraries/spack-pe.md
+          - NCCL: polaris/applications-and-libraries/libraries/nccl.md
+          - XALT: polaris/applications-and-libraries/libraries/xalt.md
       - Containers: polaris/containers/containers.md
       - Data Science:
-          - Julia: polaris/data-science/julia.md
-          - Python: polaris/data-science/python.md
-          - Profiling: polaris/data-science/profiling_dl.md
-          - Frameworks:
-              - TensorFlow: polaris/data-science/frameworks/tensorflow.md
-              - PyTorch: polaris/data-science/frameworks/pytorch.md
-              - JAX: polaris/data-science/frameworks/jax.md
-              - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
-              - LibTorch: polaris/data-science/frameworks/libtorch.md
-              - GPyTorch: polaris/data-science/frameworks/gpytorch.md
-          - Applications:
-              - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
-              - gpt-neox: polaris/data-science/applications/gpt-neox.md
+        - Julia: polaris/data-science/julia.md
+        - Python: polaris/data-science/python.md
+        - Profiling: polaris/data-science/profiling_dl.md
+        - Frameworks:
+          - TensorFlow: polaris/data-science/frameworks/tensorflow.md
+          - PyTorch: polaris/data-science/frameworks/pytorch.md
+          - JAX: polaris/data-science/frameworks/jax.md
+          - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
+          - LibTorch: polaris/data-science/frameworks/libtorch.md
+          - GPyTorch: polaris/data-science/frameworks/gpytorch.md
+        - Applications:
+          - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
+          - gpt-neox: polaris/data-science/applications/gpt-neox.md
       - Programming Models:
-          - OpenMP: polaris/programming-models/openmp-polaris.md
-          - SYCL: polaris/programming-models/sycl-polaris.md
-          - Kokkos: polaris/programming-models/kokkos-polaris.md
+        - OpenMP: polaris/programming-models/openmp-polaris.md
+        - SYCL: polaris/programming-models/sycl-polaris.md
+        - Kokkos: polaris/programming-models/kokkos-polaris.md
       - Debugging Tools:
-          - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
+        - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
       - Performance Tools:
-          - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
+        - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
       - Visualization:
-          - polaris/visualization/index.md
-          - ParaView (Launch from Client): polaris/visualization/paraview.md
-          - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
-          - VisIt: polaris/visualization/visit.md
-          - FFmpeg: polaris/visualization/ffmpeg.md
-          - ImageMagick: polaris/visualization/imagemagick.md
-          - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
-          - VNC: polaris/visualization/vnc.md
+        - polaris/visualization/index.md
+        - ParaView (Launch from Client): polaris/visualization/paraview.md
+        - ParaView (Manual Launch): polaris/visualization/paraview-manual-launch.md
+        - VisIt: polaris/visualization/visit.md
+        - FFmpeg: polaris/visualization/ffmpeg.md
+        - ImageMagick: polaris/visualization/imagemagick.md
+        - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
+        - VNC: polaris/visualization/vnc.md
       - Workflows:
-          - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
-          - Balsam: polaris/workflows/balsam.md
-          - Parsl: polaris/workflows/parsl.md
-          - libEnsemble: polaris/workflows/libensemble.md
-          - SmartSim: polaris/workflows/smartsim.md
+        - Balsam: polaris/workflows/balsam.md
+        - Parsl: polaris/workflows/parsl.md
+        - libEnsemble: polaris/workflows/libensemble.md
+        - SmartSim: polaris/workflows/smartsim.md
 
     - Sophia:
       - sophia/index.md
@@ -382,18 +393,11 @@ nav:
       - Compiling and Linking: sophia/compiling-and-linking/compiling-and-linking-overview.md
       - Containers: sophia/containers/containers.md
       - Data Science:
-          - Python: sophia/data-science/python.md
-          - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
+        - Python: sophia/data-science/python.md
+        - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
       - Visualization:
-          - sophia/visualization/index.md
-          - ParaView (Launch from Client): sophia/visualization/paraview.md
-
-  - User Support:
-    - contacting-support/index.md
-    - Submit a Ticket: contacting-support/technical-support.md
-    - Request Software: contacting-support/software-requests.md
-    - ALCF Users Slack: contacting-support/alcf-users-slack.md
-    - Contribute to User Guides: contacting-support/docs-issues.md
+        - sophia/visualization/index.md
+        - ParaView (Launch from Client): sophia/visualization/paraview.md
 
   - Running Jobs with PBS:
     - running-jobs/index.md
@@ -487,7 +491,6 @@ draft_docs: |
   aurora/applications-and-libraries/libraries/mpi.md
   # KGF: nothing in aurora/applications-and-libraries/applications/ !
   aurora/performance-tools/performance-overview.md
-  aurora/visualization/paraview.md
 # note, trailing inline comments under draft_docs, etc blocks break mkdocs parsing,
 # despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 

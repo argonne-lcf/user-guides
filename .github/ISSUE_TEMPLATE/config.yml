@@ -1,0 +1,19 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ALCF Users Slack Workspace
+    url: https://alcf-users.slack.com/
+    about: User community for discussion, collaboration, and assistance. This pilot program is only open to select users; for details, see https://docs.alcf.anl.gov/support/alcf-users-slack/
+  - name: ALCF Help Desk (Open a Ticket)
+    url: https://alcf.anl.gov/support-center
+    about: For technical user support issues or questions after reading the user-guides, our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays. Email support@alcf.anl.gov
+  - name: ALCF Service Desk (Accounts Issues)
+    url: https://docs.alcf.anl.gov/account-project-management/accounts-and-access/
+    about: Contact ALCF support directly for account-related questions. Email accounts@alcf.anl.gov
+  - name: ALCF Homepage
+    url: https://alcf.anl.gov/
+  - name: MyALCF Account Management
+    url: https://my.alcf.anl.gov/
+    about: For self-management of ALCF account, allocations, and project membership.
+  - name: ALCF User Guides
+    url: https://docs.alcf.anl.gov/
+    about: Check the official documentation first to see if your question is already answered.

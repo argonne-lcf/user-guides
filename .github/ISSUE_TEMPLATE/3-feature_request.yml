@@ -1,0 +1,42 @@
+name: Feature Request
+description: Suggest new content or features for the ALCF user guides
+type: Feature
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe what you'd like to see added
+      placeholder: What's the feature?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add any other relevant details
+      placeholder: Any additional context or examples
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature?
+      options:
+        - Critical (Essential for core functionality)
+        - High (Significant value)
+        - Medium (Nice to have)
+        - Low (Optional enhancement)
+    validations:
+      required: true
+  - type: checkboxes
+    id: label-confirmation
+    attributes:
+      label: Label Confirmation
+      description: I confirm that I have selected at least one appropriate label for this issue using the GitHub UI
+      options:
+        - label: I have selected at least one appropriate label
+          required: true

@@ -1,11 +1,10 @@
 # Job Queueing and Submission
 
-Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler.<br>
-Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)<br>
-For additional information, see 
-[https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/](https://docs.alcf.anl.gov/running-jobs/job-and-queue-scheduling/)<br>
+Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler. Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System).
+For additional information, see [Running Jobs using PBS](../../running-jobs/index.md)
+
 Man pages are available. These are the key commands:
-```console
+```console linenums="1"
 # qsub - to submit a batch job using a script
 man qsub
 # qstat - to display queue information
