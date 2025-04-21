@@ -454,9 +454,10 @@ In this section, the above mentioned MPI+OpenMP+SYCL affinity code will be used 
 The CPU mapping part of this example is very similar to the examples used above, so the focus here will be on the GPU mapping part.
 
 In general, GPU mapping can be accomplished in different ways:
-- (a) Mapping to 12 GPU Tiles — Users are encouraged to use the `gpu_tile_compact.sh` script provided in the Aurora PE. This script binds each MPI rank to a single GPU tile using a round-robin strategy. Note that `gpu_tile_compact.sh` requires the environment variable `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, which is set by default in the Aurora PE. Below is a simplified version of this script, illustrating how the `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
-Alternative Mapping Strategy — Mapping to 6 GPU Devices: If an application prefers to bind MPI ranks to entire GPU devices rather than individual tiles, the `gpu_dev_compact.sh` script (also available in your default path) can be used.
+- (a) (Explicit Scaling) Mapping to 12 GPU Tiles — Users are encouraged to use the `gpu_tile_compact.sh` script provided in the Aurora PE. This script binds each MPI rank to a single GPU tile using a round-robin strategy. Note that `gpu_tile_compact.sh` requires the environment variable `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, which is set by default in the Aurora PE. Below is a simplified version of this script, illustrating how the `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
+Alternative Mapping Strategy — (Implicit Scaling) Mapping to 6 GPU Devices: If an application prefers to bind MPI ranks to entire GPU devices rather than individual tiles, the `gpu_dev_compact.sh` script (also available in your default path) can be used.
 
+A simple version of `gpu_tile_compact.sh` script is below to illustrate how `ZE_AFFINITY_MASK` is uniquely set for each MPI rank.
 ```bash linenums="1"
 #!/bin/bash -l
 num_gpu=6
@@ -470,13 +471,28 @@ export ZE_AFFINITY_MASK=$gpu_id.$tile_id
 exec "$@"
 ```
 
-This script can be placed just before the executable in an `mpiexec` command like so.
+The `frameworks` module set the `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, treating each tile as a device.
+Our current recommendation is to __not__ use the `gpu_tile_compact.sh` script during the job submission while using the `frameworks` module. 
+If you wish to bind MPI ranks to devices instead of tiles, this can be done the following way:
+
+```bash linenums="1"
+#!/bin/bash
+num_gpus=12
+gpu_id=$((PMIX_RANK % ${num_gpus} ))
+export ZE_AFFINITY_MASK=$gpu_id
+exec "$@"
+```
+Caution: This will narrow the affinity mask down and generate PyTorch warnings. If you want to avoid that, don't use this binding script and do the binding manually inside your apps. 
+More information on `ZE_FLAT_DEVICE_HIERARCHY` can be found in [Intel's online documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/flattening-gpu-tile-hierarchy.html).
+
+The script can be placed just before the executable in an `mpiexec` command like so.
 ```bash
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind=depth gpu_tile_compact.sh <app> <app_args>
 ```
 Users with different MPI-GPU affinity needs, such as assigning multiple GPUs/tiles per MPI rank, are encouraged to modify a local copy of `gpu_tile_compact.sh` (`which gpu_tile_compact.sh` will show the location of the script) to suit their needs.
 export OMP_NUM_THREADS=1
 #### Example 1: (Explicit Scaling) 1 node, 12 ranks/node, 1 thread/rank, 1 rank/GPU-tile
+One example below shows a common mapping of MPI ranks to cores and GPUs.
 
 - The `-n 12` argument says to use 12 MPI ranks in total and `-ppn 12` places 12 ranks per node.
 - The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
