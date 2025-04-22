@@ -160,13 +160,14 @@ The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that D
 Job submission without requesting DAOS:
 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh  or - I
+# replace `./pbs_script1.sh` with `-I` for an interactive job
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh
 ```
 
 Job submission with DAOS:
 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh  or - I
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh
 ```
 
 ## NIC and Core Binding
@@ -196,8 +197,6 @@ CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 |                48                 |                49                 |                50                 |                51                 |                100                |                101                |                102                |                103                |
 
 : Sample NIC to Core binding
-
-<!-- ![Sample NIC to Core binding](images/core-nic-binding.png "Sample NIC to Core binding") -->
 
 ## Interception library for POSIX containers
 
@@ -414,8 +413,6 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 |  800  |    78%     |  20 TB/s   |
 | 1024  |    100%    |  30 TB/s   |
 
-<!-- ![expected Bandwidth](images/expectedBW.png "Expected number of daos servers and its approximate expected bandwidth") -->
-
 ## Libfabric endpoint creation error
 
 Occasionally at a high number of nodes and/or high PPN the following error that looks like this may show up in your stderr log:
@@ -499,31 +496,3 @@ You can disregard this, as the DAOS client will simply retry the operation until
     ```
 
 1. If you are still having issues, please contact [help @ ALCF](mailto:help@alcf.anl.gov)
-
-<!--
-
-```bash
-Check that you requested DAOS
-    qsub –l filesystems=daos_user -l daos=daos_user
-Did you load DAOS module?
-    module load daos
-Do you have your DAOS pool allocated?
-    daos pool query datascience
-Is DAOS client running on all your nodes?
-    ps –ef | grep daos
-Is your container mounted on all nodes?
-    mount | grep dfuse
-Can you ls in your container?
-    ls /tmp/${DAOS_POOL}/${DAOS_CONT}
-Did your I/O actually fail?
-What is the health property in your container?
-    daos container get-prop $DAOS_POOL $CONT
-Is your space full? Min and max
-    daos pool query datascience
-Does your query show failed targets or rebuild in process?
-    daos pool query datascience
- daos pool autotest
- daos container check
-```
-
--->
