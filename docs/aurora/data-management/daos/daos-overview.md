@@ -456,7 +456,7 @@ You can disregard this, as the DAOS client will simply retry the operation until
 1. Check that the DAOS client is **running** on all your nodes:
 
     ```bash
-    ps –ef | grep daos
+    ps -ef | grep daos
     ```
 
 1. Check that your container is **mounted** on all nodes:
