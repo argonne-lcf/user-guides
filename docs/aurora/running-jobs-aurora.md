@@ -642,13 +642,13 @@ export OMP_NUM_THREADS=1
 export ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
 
 export ZE_AFFINITY_MASK=0.0
-mpiexec --np 4 --ppn 4 --cpu-bind=list:0:1:2:3 ./hello_affinity &
+mpiexec --np 4 --ppn 4 --cpu-bind=list:1:2:3:4 ./hello_affinity &
 
 export ZE_AFFINITY_MASK=0.1
-mpiexec -n 4 --ppn 4 --cpu-bind=list:4:5:6:7 ./hello_affinity &
+mpiexec -n 4 --ppn 4 --cpu-bind=list:5:6:7:8 ./hello_affinity &
 
 export ZE_AFFINITY_MASK=1.0
-mpiexec -n 4 --ppn 4 --cpu-bind=list:8:9:10:11 ./hello_affinity &
+mpiexec -n 4 --ppn 4 --cpu-bind=list:9:10:11:12 ./hello_affinity &
 
 
 export ZE_AFFINITY_MASK=5.1
@@ -702,22 +702,22 @@ to allocate and free memory in HBM. By default, `malloc` will be in DDR.
 
 2. Use `numactl` to specify in which NUMA domain (based on `numactl -H` output) to allocate memory. For example, you can use
 ```
-mpirun -n 2 --cpu-bind=list:0-51:52-103 numactl -m 2-3 ./app
+mpirun -n 2 --cpu-bind=list:1-51:53-103 numactl -m 2-3 ./app
 ```
 This uses the `-m` flag to allocate memory only in NUMA node 2 and NUMA node 3, which is the HBM associated with the first and second CPUs, respectively. Or you can use the `--preferred` flag to specify that you would prefer that the memory allocations begin on the HBM, but if memory cannot be allocated there fall back to the DDR. For example, to allocated first in NUMA node 2 and fall back to DDR if needed:
 ```
-mpirun -n 1 --cpu-bind=list:0-51 numactl --preferred 2 ./app
+mpirun -n 1 --cpu-bind=list:1-51 numactl --preferred 2 ./app
 ```
 Note that `--preferred` takes only one node number, so to set it differently for each MPI rank, a script similar to `gpu_tile_compact.sh` can be written that sets `numactl --preferred` based on the MPI rank.
 
 3. Use the `--mem-bind` flag for `mpirun` to restrict where the MPI ranks can allocate memory. For example,
  to allocate memory for rank 0 in NUMA node 0 (DDR) and rank 1 on NUMA node 1 (DDR):
 ```
-mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:0:1
+mpirun -n 2 --cpu-bind=list:1-51:53-103 --mem-bind=list:0:1
 ```
 To allocate memory for rank 0 in NUMA node 2 (HBM) and rank 1 in NUMA node 3 (HBM):
 ```
-mpirun -n 2 --cpu-bind=list:0-51:52-103 --mem-bind=list:2:3
+mpirun -n 2 --cpu-bind=list:1-51:53-103 --mem-bind=list:2:3
 ```
 
 ## <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
