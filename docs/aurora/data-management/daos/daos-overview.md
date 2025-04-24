@@ -123,7 +123,7 @@ In the future, we hope to automate some of this via additional `qsub` options.
 #### To mount a POSIX container on a login node
 
 ```bash linenums="1"
-mkdir –p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
 start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
 mount | grep dfuse # To confirm if its mounted
 
