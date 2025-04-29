@@ -63,7 +63,7 @@ This will make available a handful of additional software modules, such as `kokk
 
 ## Proxy
 
-If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
+Compute nodes don't have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host. These examples will exclude the use of the proxy while on the UANs, where the proxy will not function.
 
 ```bash linenums="1"
 # proxy settings
