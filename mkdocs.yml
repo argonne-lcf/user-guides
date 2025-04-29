@@ -172,6 +172,7 @@ nav:
         - Getting Started: aurora/getting-started-on-aurora.md
         - Known Issues: aurora/known-issues.md
         - Aurora Programming Environment: aurora/aurora-pe.md
+        - System Updates: aurora/system-updates.md
         # TODO: "&" vs. "and" in sidebar page titles?
         - Compiling and Linking:
           - aurora/compiling-and-linking/index.md
