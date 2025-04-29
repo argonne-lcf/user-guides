@@ -86,9 +86,8 @@ meaning that the offload target for a Python library call, or a hand-written ker
 does not need to be specified directly when making the call.
 Instead, the offload target is inferred from the input arguments to the library call.
 With this programming model, the user only needs to specify the offload target when creating the tensor/ndarray objects.
-Note that operating on arrays created on different devices will raise an exception.
-
 For example,
+
 ```python linenums="1"
 import dpctl.tensor as dpt
 
@@ -106,24 +105,40 @@ print(sqx_gpu.device) # (2)!
 	Device(level_zero:gpu:0)
 	```
 
+However, note that operating on arrays created on different devices will raise an exception.
 
 ### Accessing the DPEP Packages
 
-!!! warning "Integration of DPEP packaged with AI/ML frameworks"
-	The current `frameworks` module does not come with the DPEP packages installed. Users need to install them separately as shown below. This will be addressed in the next `frameworks` module.
+Users can access the dpnp (v. 0.16.3) and dpctl (v. 0.18.3) packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
 
-Users can obtain the DPEP packages by executing
-
-```bash
-module load frameworks
-conda create -y --prefix /path/to/dpep_env python=3.11 pip
-conda activate /path/to/dpep_env
-conda install -y -c https://software.repos.intel.com/python/conda/ -c conda-forge dpctl dpnp numba-dpex
-```
+!!! warning "Accessing numba-dpex on Aurora"
+	The current `frameworks` module does not come with the numba-dpex package installed, thus users need to install it separately. 
+	This issue will be addressed in the next `frameworks` module, but in the mean time users can either create a new environment and install the dpnp and dpctl packages with
+	```bash
+	module load frameworks
+	module load cmake
+    conda create -y --prefix /path/to/dpep_env python=3.10 pip
+	conda install -y -c https://software.repos.intel.com/python/conda/linux-64 -c conda-forge --strict-channel-priority dpctl==0.18.3 dpnp==0.16.3
+	```
+	or clone the base environment with
+	```bash
+	module load frameworks
+	conda create --prefix /path/to/dpep_env --clone /opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0
+	```
+	and then install numba-dpex from source with
+	```bash
+	conda install -y scikit-build numba==0.59* -c conda-forge
+    pip install versioneer
+    git clone https://github.com/IntelPython/numba-dpex.git
+    cd numba-dpex
+    CXX=$(which dpcpp) python setup.py develop
+	```
 
 ### dpnp
-The dpnp library implements the Numpy API using DPC++ and is meant as a drop-in replacement for `numpy`.
-Following the minimal example below
+The dpnp library implements the Numpy API using DPC++ and is meant as a drop-in replacement for NumPy, similarly to CuPy for CUDA devices.
+Therefore, dpnp should be used to port NumPy and CuPy code to Intel GPU, however, please refer to this [comparison table](https://intelpython.github.io/dpnp/reference/comparison.html) to check the current coverage of dpnp API relative to NumPy and CuPy.
+
+Below is a minimal example using dpnp to create and operate on an array allocated on the PVC.
 
 ```python linenums="1"
 import dpnp as np
