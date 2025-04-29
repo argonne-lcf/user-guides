@@ -1,0 +1,78 @@
+name: Bug Report
+description: Report a problem with the docs technical content, or unexpected behavior with the rendering of the website
+type: Bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the bug clearly and concisely
+      placeholder: What's the bug?
+    validations:
+      required: true
+  - type: textarea
+    id: pages
+    attributes:
+      label: Page(s) Affected
+      description: Provide the URL(s) or path(s) to the affected documentation
+      placeholder: |
+        Example:
+        - https://docs.example.com/page1
+        - /path/to/page2
+    validations:
+      required: false
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context / Expected vs. Actual Behavior
+      description: Add any other relevant details. For web rendering issues, please attach a screenshot of what you're observing.
+      placeholder: Any additional context or screenshots
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Bug Severity
+      description: How severe is this problem?
+      options:
+        - Critical (Blocks core functionality)
+        - High (Significant impact)
+        - Medium (Moderate impact)
+        - Low (Minor impact)
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What type of documentation issue is this?
+      options:
+        - Web Rendering Error
+        - Content Error (incorrect information, broken code example or set of instructions, etc.)
+        - Missing Content
+        - Unclear/Confusing Content
+        - Formatting Issue
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: label-confirmation
+    attributes:
+      label: Label Confirmation
+      description: I confirm that I have selected at least one appropriate label for this issue using the GitHub UI
+      options:
+        - label: I have selected at least one appropriate label
+          required: true

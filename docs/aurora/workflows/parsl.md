@@ -60,7 +60,7 @@ aurora_single_tile_config = Config(
             available_accelerators=tile_names,
             max_workers_per_node=12,
             # Distributes threads to workers/tiles in a way optimized for Aurora
-            cpu_affinity="list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203",
+            cpu_affinity="list:1-8,105-112:9-16,113-120:17-24,121-128:25-32,129-136:33-40,137-144:41-48,145-152:53-60,157-164:61-68,165-172:69-76,173-180:77-84,181-188:85-92,189-196:93-100,197-204",
             # Increase if you have many more tasks than workers
             prefetch_capacity=0,
             # Options that specify properties of PBS Jobs
@@ -300,7 +300,7 @@ aurora_single_tile_config = Config(
             available_accelerators=tile_names,
             max_workers_per_node=12,
             # Distributes threads to workers/tiles in a way optimized for Aurora
-            cpu_affinity="list:0-7,104-111:8-15,112-119:16-23,120-127:24-31,128-135:32-39,136-143:40-47,144-151:52-59,156-163:60-67,164-171:68-75,172-179:76-83,180-187:84-91,188-195:92-99,196-203",
+            cpu_affinity="list:1-8,105-112:9-16,113-120:17-24,121-128:25-32,129-136:33-40,137-144:41-48,145-152:53-60,157-164:61-68,165-172:69-76,173-180:77-84,181-188:85-92,189-196:93-100,197-204",
             # Increase if you have many more tasks than workers
             prefetch_capacity=0,
             # Options that specify properties of PBS Jobs

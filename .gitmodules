@@ -4,3 +4,6 @@
 [submodule "ALCFBeginnersGuide"]
 	path = ALCFBeginnersGuide
 	url = https://github.com/jtchilders/ALCFBeginnersGuide.git
+[submodule "AuroraBugTracking"]
+	path = AuroraBugTracking
+	url = https://github.com/argonne-lcf/AuroraBugTracking

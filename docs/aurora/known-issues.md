@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-### Last Updated: 2025-01-21 14:00 CST
+_Last Updated: 2025-04-16_
 
 ## Early User Notes
 
@@ -8,7 +8,7 @@ Please check back here often for updates (indicated by the "Last Updated" timest
 
 ### Outages and Downtime – Expectations
 
-Expect unplanned outages and downtime. The stability of the Aurora system has improved significantly over the months leading up to production availability, but stability issues remain. Early users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
+Users should expect weekly preventative maintenance (PM) on the system, although  PMs will be deferred where possible. The stability of the Aurora system has improved significantly in the recent past, but there are still a number of improvement efforts ongoing in cooperation with HPE and Intel, to improve the user experience. Users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
 
 ### Scheduling
 
@@ -16,7 +16,7 @@ The current queue policy for Aurora is set up based on experiences to date to he
 
 - The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
 - Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results. Initially, the `prod` routing queue will only allow 2048 nodes max. 
-- Except for ESP projects, project teams will be required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
+- Project teams are required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
 
 ### Storage
 
@@ -35,6 +35,14 @@ The performance of DAOS has been impressive, but we continue to experience crash
 #### Grand/Eagle
 
 These won’t be mounted on Aurora initially, but they might be mounted around May 2025, depending on feasibility. Similarly, Flare will not initially be mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
+
+### Scaling out of Flare (Lustre) and `/soft` (NFS)
+
+Applications which dynamically load libraries out of shared filesystems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
+
+- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared filesystems entirely.
+- Statically link application binaries, as this reduces the number of dynamically loaded files.
+- If loading many small (≲100MB) shared libraries or Python modules, use [Copper](data-management/copper/copper.md).
 
 ### Checkpointing
 
@@ -150,6 +158,10 @@ PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 
 These errors can be safely ignored.
 
+#### 6. Incorrect results in receive buffer in GPU memory 
+
+In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
@@ -188,10 +200,19 @@ failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
 
 indicates such a failure. It is recommended to instead use `-v` (note: lower-case) and explicitly export any environment variables that your job may require.
 
-To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/#working-around-node-failures) for more information.
+To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](./running-jobs-aurora.md#working-around-node-failures) for more information.
 
 ### Other Issues
 
 * A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
+
+
+## Aurora Bug Tracking repository and table
+
+The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To report an issue, please reach out to [ALCF Support](../support/technical-support.md).
+
+For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
+
+---8<--- "AuroraBugTracking/bugs.md:2"

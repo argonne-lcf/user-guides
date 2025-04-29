@@ -2,19 +2,19 @@
 
 ## Overview
 
-Disk quotas are enabled on project directories. ALCF's HPC systems use the agile-home file system located at `/lus/agile/home`, where quotas are also enforced. Details on the home file system are listed in [file systems](file-systems.md). Below are descriptions and examples for the home file system, as well as the Eagle project filesystems.
+Disk quotas are enabled on project directories. ALCF's HPC systems use the agile-home file system located at `/lus/agile/home`, where quotas are also enforced. Details on the home file system are listed in [file systems](index.md). Below are descriptions and examples for the home file system, as well as the Eagle project filesystems.
 
 ## Home Directory Quotas
 
-By default, each home directory is assigned a quota of 50GB. File ownership determines disk space usage.
+By default, each home directory is assigned a quota of 50 GB. File ownership determines disk space usage.
 
 To check the home directory usage, enter this command:
 
-```bash
+```bash linenums="1"
 myquota
 ```
 
-```
+```output
 Name                           Type     Filesystem        Used               Quota          Grace
 =========================================================================================================
 userX                         User     /lus/agile         44.13G          50.00G             none
@@ -26,11 +26,11 @@ The amount of data stored under `/lus/grand/projects/PROJECT_NAME` cannot exceed
 
 To check project quota usage on the file systems, enter this command:
 
-```bash
+```bash linenums="1"
 myprojectquotas
 ```
 
-```
+```output
 Lustre : Current Project Quota information for projects you're a member of:
 
 Name                       Type        Filesystem          Used             Quota           Grace
