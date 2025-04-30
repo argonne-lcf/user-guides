@@ -10,7 +10,7 @@ After logging in, change the tenant using the botton at the top of the screen, f
 You will need to change the current tenant to `metis` after every login. If resources are not showing as expected, check the tenant setting.
 
 ### SambaStudio Object Types
-The main abstractions in SambaStudio are projects, models, datasets, and endpoints. Tenants and users control or share resources.
+The main resource abstractions in SambaStudio are models, datasets, and endpoints. Tenants and users control or share resources. Users own projects, which contain endpoints and jobs. Jobs have two types: training and batch inference. 
 
 ![SambaStudio left menu](files/SambaStudio_left_menu.png)
 
@@ -255,6 +255,8 @@ SambaNova's documentation for the Pyton SDK is at
 
 Package installs. (Not spotting docs for this?)
 Sample (crib from SN documentation, with link)
+
+
 
 
 

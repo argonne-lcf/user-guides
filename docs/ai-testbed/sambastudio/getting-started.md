@@ -11,4 +11,5 @@ Login for the SambaStudio web UI is with your ALCF username, and an MFA passcode
 
 You will need the web UI to get the API Authorization Key, even if otherwise scripting interactions.
 
+If you want to use the SambaStudio CLI, or the SambaStudio Python API, a SambaNova login node may be used. Those nodes have the required version of Python available. See [Log in to Login Node](../sambanova/getting-started.md/#log-in-to-login-node).
 
