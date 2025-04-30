@@ -76,6 +76,18 @@ As Aurora is in early production stage, node failures are a fact of life. If you
 
 If you determine a node is bad, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
 
+### Removing "know" bad nodes
+
+If you hitting a bad node, over and over again you can do in your PBS script:
+
+```
+    ```bash linenums="1"
+    cat $PBS_NODEFILE > local.hostfile
+    # edit local.hostfile to remove problem nodes
+    mpiexec --hostfile local.hostfile <other mpiexec arguments>
+```
+
+### Using `tolerate_node_failures=all`
 We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
 1. Start your interactive job
