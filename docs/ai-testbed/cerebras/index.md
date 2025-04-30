@@ -2,13 +2,9 @@
 
 The Cerebras CS-2 is a wafer-scale deep learning accelerator comprising 850,000 processing cores, each providing 48KB of dedicated SRAM memory for an on-chip total of 40GB and interconnected to optimize bandwidth and latency. Its software platform integrates the popular machine learning framework PyTorch.
 
-The ALCF CS-2 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to and well beyond 1 billion parameters) and large-scale inputs. The cluster contains two CS-2 systems and can distribute jobs across one or both CS-2 systems in a data-parallel framework. The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch, with data-parallel distribution when using more than one CS-2. This installation supports both Pipelined execution for models up to 1 billion parameters and Weight Streaming execution for models up to and above 1 billion parameters.
-<!--[You can Learn more about execution modes in Cerebras Execution Modes.]-->
+The ALCF CS-2 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to and well beyond 1 billion parameters) and large-scale inputs. **The cluster contains two CS-2 systems, but one has failed.** Ordinarily, the cluster controller can distribute jobs across one or both CS-2 systems in a data-parallel framework.
 
-<!--
-For an overview of Cerebras CS-2 systems, see this whitepaper:<br>
-<a href="https://cerebras.net/wp-content/uploads/2021/04/Cerebras-CS-2-Whitepaper.pdf">Cerebras Systems: Achieving Industry Best AI Performance Through A Systems Approach</a>.
--->
+The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch, with data-parallel distribution when using more than one CS-2. This installation supports both Pipelined execution for models up to 1 billion parameters and Weight Streaming execution for models up to and above 1 billion parameters.
 
 The public Cerebras documentation is available [here](https://training-docs.cerebras.ai/getting-started/overview).
 
