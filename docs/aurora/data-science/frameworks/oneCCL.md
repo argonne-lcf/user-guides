@@ -10,18 +10,24 @@ oneCCL can be used through:
 
 ## Aurora oneCCL environment
 
-```bash
-kaushikvelusamy@aurora-uan-0012:~> module load frameworks
-(/opt/aurora/24.180.0/frameworks/aurora_nre_models_frameworks-2024.2.1_u1) kaushikvelusamy@aurora-uan-0012:~> echo $CCL_ROOT
-/opt/aurora/24.180.0/CNDA/oneapi/ccl/2021.13.1_20240808.145507
+```bash linenums="1"
+hossainm@aurora-uan-0011:~> module load frameworks
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> echo $CCL_ROOT
+/opt/aurora/24.347.0/oneapi/ccl/latest
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> cd /opt/aurora/24.347.0/oneapi/ccl/
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl> ls
+2021.14  latest
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl>
 ```
+`2021.14` is the current version of oneCCL that is available to users 
+through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
 We have identified a set of environment settings that typically provide better performance or address potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. Users are encouraged to check this page regularly.
 
-```bash
+```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE_SCALEOUT=direct:0-1048576;rabenseifner:1048577-max  # currently best allreduce algorithm at large scale
@@ -43,7 +49,7 @@ unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 
 The following additional set of environment variable setups might be application-dependent. Users are encouraged to try to set them and see whether they help their applications.
 
-```bash
+```bash linenums="1"
 ulimit -c unlimited
 export FI_MR_ZE_CACHE_MONITOR_ENABLED=0
 export FI_MR_CACHE_MONITOR=disabled
@@ -62,13 +68,13 @@ export CCL_OP_SYNC=1 # to avoid potential hang at large scale
 
 **Algorithm selection**
 
-```bash
+```bash linenums="1"
 export CCL_COLLECTIVENAME=topo
 export CCL_COLLECTIVENAME_SCALEOUT=ALGORITHM_NAME
 ```
 More info on Algorithm selection: [oneCCL Environment Variables](https://oneapi-src.github.io/oneCCL/env-variables.html)
 
-```bash
+```bash linenums="1"
 export CCL_ALLREDUCE=topo
 export CCL_ALLREDUCE_SCALEOUT=rabenseifner 
 ```
@@ -79,7 +85,7 @@ You can compile examples from the oneCCL Git repository and use the library from
 
 To build the C++ benchmark examples:
 
-```bash
+```bash linenums="1"
 cd oneccl
 mkdir build
 cd build
@@ -92,7 +98,7 @@ rm -rf _install/bin/* _install/lib/*mpi* _install/lib/*fabric* _install/opt/
 
 To run from a job script:
 
-```bash
+```bash linenums="1"
 #!/bin/bash -x
 # qsub -l nodes=2:ncpus=208 -q workq  -l walltime=02:00:00 -l filesystems=lustre_scaling -A  prod ./pbs_job_
 #PBS -A <ProjectName>
@@ -107,7 +113,8 @@ RANKS_PER_NODE=12          # Number of MPI ranks per node
 NRANKS=$(( NNODES * RANKS_PER_NODE ))
 echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NRANKS}  RANKS_PER_NODE=${RANKS_PER_NODE}"
 
-CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
+export CCL_WORKER_AFFINITY=1,9,17,25,33,41,53,61,69,77,85,93
+export CPU_BINDING1="list:2-8:10-16:18-24:26-32:34-40:42-48:54-60:62-68:70-76:78-84:86-92:94-100"
 EXT_ENV="--env FI_CXI_DEFAULT_CQ_SIZE=1048576"
 APP1=/lus/flare/projects/Aurora_deployment/kaushik/all_reduce_frameworks/gitrepos/oneCCL/build/_install/examples/benchmark/benchmark
 
@@ -155,7 +162,7 @@ For more information on oneCCL benchmark, please refer to: [oneCCL Benchmark Use
 
 TensorFlow Horovod example:
 
-```python
+```python linenums="1"
 import datetime
 from time import perf_counter_ns
 import sys
@@ -194,7 +201,7 @@ if hvd.rank() == 0:
 
 PyTorch Horovod example:
 
-```python
+```python linenums="1"
 from time import perf_counter_ns
 import sys
 import intel_extension_for_pytorch  # Added Extra
@@ -231,7 +238,7 @@ if hvd.rank() == 0:
 
 ## PyTorch DDP
 
-```python
+```python linenums="1"
 import datetime
 from time import perf_counter_ns
 import sys
