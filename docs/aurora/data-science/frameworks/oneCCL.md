@@ -100,7 +100,7 @@ To run from a job script:
 
 ```bash linenums="1"
 #!/bin/bash -x
-# qsub -l nodes=2:ncpus=208 -q workq  -l walltime=02:00:00 -l filesystems=lustre_scaling -A  prod ./pbs_job_
+# qsub -l nodes=2:ncpus=208 -q debug  -l walltime=02:00:00 -l filesystems=home:flare -A <Project Name> ./pbs_job_
 #PBS -A <ProjectName>
 #PBS -k doe
 
@@ -113,8 +113,16 @@ RANKS_PER_NODE=12          # Number of MPI ranks per node
 NRANKS=$(( NNODES * RANKS_PER_NODE ))
 echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NRANKS}  RANKS_PER_NODE=${RANKS_PER_NODE}"
 
-export CCL_WORKER_AFFINITY=1,9,17,25,33,41,53,61,69,77,85,93
-export CPU_BINDING1="list:2-8:10-16:18-24:26-32:34-40:42-48:54-60:62-68:70-76:78-84:86-92:94-100"
+## Option 1
+export CPU_BINDING1="list:4:9:14:19:20:25:56:61:66:71:74:79" # 12 ppn to 12 cores
+## Option 2
+export CPU_BINDING2="list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # 12 ppn with each rank having 4 cores
+
+## Option 1 for oneCCL worker affinity 
+export CCL_WORKER_AFFINITY=42,43,44,45,46,47,94,95,96,97,98,99
+
+## Option 2
+unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
 EXT_ENV="--env FI_CXI_DEFAULT_CQ_SIZE=1048576"
 APP1=/lus/flare/projects/Aurora_deployment/kaushik/all_reduce_frameworks/gitrepos/oneCCL/build/_install/examples/benchmark/benchmark
 
@@ -157,6 +165,17 @@ done
 # For CPU only, change benchmark options to : --backend host --sycl_dev_type host
 ```
 For more information on oneCCL benchmark, please refer to: [oneCCL Benchmark User Guide](https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html)
+
+In the provided CPU binding list we have provided two options. First one is 
+based on one CPU core per rank. In the second option, we assign 4 CPU cores per
+rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
+rank. Notice that, these cores are picked out from the last 12 cores of each 
+socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs 
+to the first socket, and 94-99 belongs to the second socket. We leave a few 
+cores free, in case, the user may want to use other services like copper and
+DAOS along with their application. The second oneCCL option is to delegate 
+task of picking cores to the system. In this case, the user should not declare
+or export the `CCL_WORKER_AFFINITY` variable. 
 
 ## Horovod
 
