@@ -209,7 +209,7 @@ You can do this the following way:
 ## Option 1
 export CPU_BIND="list:4:9:14:19:20:25:56:61:66:71:74:79" # 12 ppn to 12 cores
 
-## Option 1
+## Option 2
 export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # 12 ppn with each rank having 4 cores
 mpiexec ... --cpu-bind=${CPU_BIND}
 ```
