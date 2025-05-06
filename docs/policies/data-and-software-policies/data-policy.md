@@ -69,7 +69,7 @@ These Lustre global parallel file systems have community sharing abilities and a
 Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
 **Access Termination Policy:** 
-Project endpoints that have exhibited no activity* for a period of 6 months will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+Project endpoints that have exhibited no activity* for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
 Activity is defined as, but not limited to:
 
@@ -95,7 +95,7 @@ The archive space is intended for offline storage of results you wish to retain 
 | File Server Metadata Redundancy                | yes         | yes                                                                                                      |
 | File Server Metadata Replication ^4^           | yes         | yes                                                                                                      |
 | File Server Data Replication ^5^               | yes         | no                                                                                                       |
-| Data Purged from Disk                          | n/a         | After 6 months of inactivity (see Access termination policy listed in the section above) ^8^             |
+| Data Purged from Disk                          | n/a         | After 6 months of inactivity once project ends (see Access termination policy listed in the section above) ^8^             |
 
 ### Tape Capacity and Retention Policies
 
