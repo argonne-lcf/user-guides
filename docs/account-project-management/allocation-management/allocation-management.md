@@ -34,6 +34,10 @@ To request an extension of your existing discretionary allocation or to request 
 
 Suballocations let PIs control who in their team can run jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates).
 
+!!! note
+
+    Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID or the suballocationName. You can no longer submit jobs with just the project name.
+
 ### Step 1: Create Suballocations (Project PI):
 
 PI creates suballocations 
