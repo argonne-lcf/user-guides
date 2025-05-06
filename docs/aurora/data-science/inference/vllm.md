@@ -21,6 +21,8 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 
 ```bash linenums="1" title="Install vLLM using pre-built wheels"
+export http_proxy="proxy.alcf.anl.gov:3128"
+export https_proxy="proxy.alcf.anl.gov:3128"
 module load frameworks
 conda create --name vllm python=3.10 -y
 conda activate vllm
@@ -38,7 +40,7 @@ pip install /flare/datasets/softwares/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8
 
 Model weights for commonly used open-weight models are downloaded and available in the following directory on Aurora:
 ```bash linenums="1"
-/flare/datascience/model-weights/hub
+/flare/datasets/model-weights/hub
 ```
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 ```bash linenums="1"

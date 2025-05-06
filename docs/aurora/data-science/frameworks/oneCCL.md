@@ -10,18 +10,24 @@ oneCCL can be used through:
 
 ## Aurora oneCCL environment
 
-```bash
-kaushikvelusamy@aurora-uan-0012:~> module load frameworks
-(/opt/aurora/24.180.0/frameworks/aurora_nre_models_frameworks-2024.2.1_u1) kaushikvelusamy@aurora-uan-0012:~> echo $CCL_ROOT
-/opt/aurora/24.180.0/CNDA/oneapi/ccl/2021.13.1_20240808.145507
+```bash linenums="1"
+hossainm@aurora-uan-0011:~> module load frameworks
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> echo $CCL_ROOT
+/opt/aurora/24.347.0/oneapi/ccl/latest
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> cd /opt/aurora/24.347.0/oneapi/ccl/
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl> ls
+2021.14  latest
+(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl>
 ```
+`2021.14` is the current version of oneCCL that is available to users 
+through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
 We have identified a set of environment settings that typically provide better performance or address potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. Users are encouraged to check this page regularly.
 
-```bash
+```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE_SCALEOUT=direct:0-1048576;rabenseifner:1048577-max  # currently best allreduce algorithm at large scale
@@ -43,7 +49,7 @@ unset MPIR_CVAR_COLL_SELECTION_TUNING_JSON_FILE
 
 The following additional set of environment variable setups might be application-dependent. Users are encouraged to try to set them and see whether they help their applications.
 
-```bash
+```bash linenums="1"
 ulimit -c unlimited
 export FI_MR_ZE_CACHE_MONITOR_ENABLED=0
 export FI_MR_CACHE_MONITOR=disabled
@@ -62,13 +68,13 @@ export CCL_OP_SYNC=1 # to avoid potential hang at large scale
 
 **Algorithm selection**
 
-```bash
+```bash linenums="1"
 export CCL_COLLECTIVENAME=topo
 export CCL_COLLECTIVENAME_SCALEOUT=ALGORITHM_NAME
 ```
 More info on Algorithm selection: [oneCCL Environment Variables](https://oneapi-src.github.io/oneCCL/env-variables.html)
 
-```bash
+```bash linenums="1"
 export CCL_ALLREDUCE=topo
 export CCL_ALLREDUCE_SCALEOUT=rabenseifner 
 ```
@@ -79,7 +85,7 @@ You can compile examples from the oneCCL Git repository and use the library from
 
 To build the C++ benchmark examples:
 
-```bash
+```bash linenums="1"
 cd oneccl
 mkdir build
 cd build
@@ -92,9 +98,9 @@ rm -rf _install/bin/* _install/lib/*mpi* _install/lib/*fabric* _install/opt/
 
 To run from a job script:
 
-```bash
+```bash linenums="1"
 #!/bin/bash -x
-# qsub -l nodes=2:ncpus=208 -q workq  -l walltime=02:00:00 -l filesystems=lustre_scaling -A  prod ./pbs_job_
+# qsub -l nodes=2:ncpus=208 -q debug  -l walltime=02:00:00 -l filesystems=home:flare -A <Project Name> ./pbs_job_
 #PBS -A <ProjectName>
 #PBS -k doe
 
@@ -107,7 +113,16 @@ RANKS_PER_NODE=12          # Number of MPI ranks per node
 NRANKS=$(( NNODES * RANKS_PER_NODE ))
 echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NRANKS}  RANKS_PER_NODE=${RANKS_PER_NODE}"
 
-CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
+## Option 1
+export CPU_BINDING1="list:4:9:14:19:20:25:56:61:66:71:74:79" # 12 ppn to 12 cores
+## Option 2
+export CPU_BINDING2="list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # 12 ppn with each rank having 4 cores
+
+## Option 1 for oneCCL worker affinity 
+export CCL_WORKER_AFFINITY=42,43,44,45,46,47,94,95,96,97,98,99
+
+## Option 2
+unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
 EXT_ENV="--env FI_CXI_DEFAULT_CQ_SIZE=1048576"
 APP1=/lus/flare/projects/Aurora_deployment/kaushik/all_reduce_frameworks/gitrepos/oneCCL/build/_install/examples/benchmark/benchmark
 
@@ -151,11 +166,22 @@ done
 ```
 For more information on oneCCL benchmark, please refer to: [oneCCL Benchmark User Guide](https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html)
 
+In the provided CPU binding list we have provided two options. First one is 
+based on one CPU core per rank. In the second option, we assign 4 CPU cores per
+rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
+rank. Notice that, these cores are picked out from the last 12 cores of each 
+socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs 
+to the first socket, and 94-99 belongs to the second socket. We leave a few 
+cores free, in case, the user may want to use other services like copper and
+DAOS along with their application. The second oneCCL option is to delegate 
+task of picking cores to the system. In this case, the user should not declare
+or export the `CCL_WORKER_AFFINITY` variable. 
+
 ## Horovod
 
 TensorFlow Horovod example:
 
-```python
+```python linenums="1"
 import datetime
 from time import perf_counter_ns
 import sys
@@ -194,7 +220,7 @@ if hvd.rank() == 0:
 
 PyTorch Horovod example:
 
-```python
+```python linenums="1"
 from time import perf_counter_ns
 import sys
 import intel_extension_for_pytorch  # Added Extra
@@ -231,7 +257,7 @@ if hvd.rank() == 0:
 
 ## PyTorch DDP
 
-```python
+```python linenums="1"
 import datetime
 from time import perf_counter_ns
 import sys

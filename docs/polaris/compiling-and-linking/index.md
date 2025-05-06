@@ -62,7 +62,7 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 ## Notes on Default Modules
 
-* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with GPU-enabled MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
+* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with GPU-aware MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
 
 * `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 
