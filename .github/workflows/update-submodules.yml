@@ -1,0 +1,26 @@
+name: Update Submodules
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # 3 AM CDT (8 AM UTC)
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Update submodules
+        run: |
+          git submodule update --remote --merge
+          git add .
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -m "chore: update submodules" || echo "No changes to commit"
+          git push

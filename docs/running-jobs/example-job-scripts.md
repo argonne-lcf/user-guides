@@ -157,7 +157,7 @@ The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ens
 
 !!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
 
-    For applications that support GPU-enabled MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
+    For applications that support GPU-aware MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
 
 !!! info "`./set_affinity_gpu_polaris.sh`"
 
@@ -299,7 +299,7 @@ NTOTRANKS=$(( NUM_NODES_PER_MPI * NRANKS_PER_NODE ))
 echo "NUM_OF_NODES= ${NNODES} NUM_NODES_PER_MPI= ${NUM_NODES_PER_MPI} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS_PER_NODE} THREADS_PER_RANK= ${NTHREADS}"
 
 # Increase value of suffix-length if more than 99 jobs
-split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_NODEFILE local_hostfile.
+split --lines=${NUM_NODES_PER_MPI} --numeric-suffixes=1 --suffix-length=2 $PBS_NODEFILE local_hostfile
 
 for lh in local_hostfile*
 do
