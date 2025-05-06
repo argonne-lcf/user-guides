@@ -109,7 +109,7 @@ However, note that operating on arrays created on different devices will raise a
 
 ### Accessing the DPEP Packages
 
-Users can access the dpnp (v. 0.16.3) and dpctl (v. 0.18.3) packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
+Users can access the `dpnp` (v0.16.3) and `dpctl` (v0.18.3) packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
 
 !!! warning "Accessing numba-dpex on Aurora"
 	The current `frameworks` module does not come with the numba-dpex package installed, thus users need to install it separately. 
@@ -135,7 +135,7 @@ Users can access the dpnp (v. 0.16.3) and dpctl (v. 0.18.3) packages by simply l
 	```
 
 ### dpnp
-The dpnp library implements the Numpy API using DPC++ and is meant as a drop-in replacement for NumPy, similarly to CuPy for CUDA devices.
+The dpnp library implements the NumPy API using DPC++ and is meant to serve as a drop-in replacement for NumPy, similar to CuPy for CUDA devices.
 Therefore, dpnp should be used to port NumPy and CuPy code to Intel GPU, however, please refer to this [comparison table](https://intelpython.github.io/dpnp/reference/comparison.html) to check the current coverage of dpnp API relative to NumPy and CuPy.
 
 Below is a minimal example using dpnp to create and operate on an array allocated on the PVC.
