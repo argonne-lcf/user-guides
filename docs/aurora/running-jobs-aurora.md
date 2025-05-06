@@ -70,21 +70,20 @@ Recommended PBSPro options follow.
 
 More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
 
-## Working Around Node Failures
+## Working around node failures
 
 As Aurora is in early production stage, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
 
 If you determine a node is bad, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
 
-### Removing "know" bad nodes
+### Removing "known" bad nodes
 
-If you hitting a bad node, over and over again you can do in your PBS script:
+If you're encountering the same problematic node(s) repeatedly in your allocations, you can add the following lines in your noninteractive PBS script to exclude them from the MPICH execution command:
 
-```
-    ```bash linenums="1"
-    cat $PBS_NODEFILE > local.hostfile
-    # edit local.hostfile to remove problem nodes
-    mpiexec --hostfile local.hostfile <other mpiexec arguments>
+```bash linenums="1"
+cat $PBS_NODEFILE > local.hostfile
+# edit local.hostfile with sed/awk/etc. to remove problem node IDs
+mpiexec --hostfile local.hostfile <other mpiexec arguments>
 ```
 
 ### Using `tolerate_node_failures=all`
