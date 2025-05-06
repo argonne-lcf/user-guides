@@ -18,7 +18,7 @@ Then, you can `import` PyTorch in Python as usual (below showing results from th
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
-'2.3.1+cxx11.abi'
+'2.5.1+cxx11.abi'
 ```
 A simple but useful check could be to use PyTorch to get device information on a compute node. You can do this the following way:
 
@@ -217,6 +217,9 @@ Here are the steps to run the above code on Aurora:
 1. [Load the frameworks module](../python.md#aiml-framework-module):
    ```bash
    module load frameworks
+   export CCL_KVS_MODE=mpi
+   export CCL_KVS_CONNECTION_TIMEOUT=300
+   export FI_MR_CACHE_MONITOR=userfaultfd
    ```
 1. Run the script:
    ```bash
@@ -390,7 +393,7 @@ Here are the steps to run the above code on Aurora:
         environment variable settings:
 
         ```bash
-        HOROVOD_THREAD_AFFINITY="4,8,12,16,20,24,56,60,64,68,72,76"
+        HOROVOD_THREAD_AFFINITY="7,11,15,19,23,27,59,63,67,71,75,79"
 
         ## Option 1
         CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
@@ -402,7 +405,7 @@ Here are the steps to run the above code on Aurora:
         When running 12 ranks per node with these settings the `framework`s use 4 cores, 
         with Horovod tightly coupled with the `framework`s using one of the 4 cores, and 
         oneCCL using a separate core for better performance, e.g. with rank 0 the 
-        `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would 
+        `framework`s would use cores 4-7, Horovod would use core 7, and oneCCL would 
         use core 42.
 
         In the provided CPU binding list we have provided two options. First one is

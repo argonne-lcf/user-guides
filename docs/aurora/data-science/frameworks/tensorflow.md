@@ -218,7 +218,7 @@ These bindings should be used along with the following oneCCL and Horovod
 environment variable settings:
 
 ```bash
-HOROVOD_THREAD_AFFINITY="4,8,12,16,20,24,56,60,64,68,72,76"
+HOROVOD_THREAD_AFFINITY="7,11,15,19,23,27,59,63,67,72,75,79"
 
 ## Option 1
 CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
@@ -230,7 +230,7 @@ unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if
 When running 12 ranks per node with these settings the `framework`s use 4 cores, 
 with Horovod tightly coupled with the `framework`s using one of the 4 cores, and 
 oneCCL using a separate core for better performance, e.g. with rank 0 the 
-`framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would 
+`framework`s would use cores 4-7, Horovod would use core 7, and oneCCL would 
 use core 42.
 
 In the provided CPU binding list we have provided two options. First one is
@@ -372,9 +372,9 @@ export CCL_KVS_USE_MPI_RANKS=1
 
 
 export CCL_LOG_LEVEL="WARN"
-export CPU_BIND="verbose,list:2-8:10-16:18-24:26-32:34-40:42-48:54-60:62-68:70-76:78-84:86-92:94-100"
-HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
-CCL_WORKER_AFFINITY="1,9,17,25,33,41,53,61,69,77,85,93"
+export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79"
+HOROVOD_THREAD_AFFINITY="7,11,15,19,23,27,59,63,67,72,75,79"
+CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
 
 ulimit -c 0
 
