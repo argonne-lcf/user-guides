@@ -102,7 +102,7 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 	--8<-- "./GettingStarted/DataScience/vLLM/setup_ray_cluster.sh"
 	```
 
-From Head node, initiate ray cluster and execute vLLM serve:
+From a login node, initiate the Ray cluster and execute vLLM serve:
 ```bash linenums="1"
 source /path/to/setup_ray_cluster.sh
 main 
