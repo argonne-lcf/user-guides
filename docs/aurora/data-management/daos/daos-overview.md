@@ -1,9 +1,5 @@
 # DAOS Architecture
 
-!!! warning
-
-    DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
-
 DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
 ![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
@@ -62,33 +58,26 @@ Total size: 6.0 TB
 Rebuild done, 4 objs, 0 recs
 ```
 
-## DAOS Container
+## POSIX Containers
 
-The container is the basic unit of storage. A POSIX container can contain hundreds of millions of files, you can use it to store all of your data. You only need a small set of containers; perhaps just one per major unit of project work is sufficient.
+In DAOS general tems, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documention on DFS can be found here:  https://docs.daos.io/v2.6/user/filesystem
 
-There are 3 modes with which we can operate with the DAOS containers:
+With more than 1024 servers at full deployment, the user accessible cluster named daos_user has 16,384 solid state drives (SSDs) and 16,384 persistent memory modules, and without some amount of data redundancy a hardware failure on any one could result in the loss of your data.  DAOS has several data redundancy options available, and a tradeoff must be made between data resiliency and performance and volume.  The recommended tradeoff is to specify a redundancy factor of 2 on the container for both files and directories via the rd_fac:2 container property.  Then by default this means files will utilize an erasure coding algorithm with a ratio of 16 data blocks to 2 parity blocks, in DAOS file object class terms EC_16P2GX, which in simplest terms means 18 blocks of erasure coding stores 16 blocks of data.  For directories, the default is to create 2 full duplicates of the directory, which is basically an emulation of an inode in traditional file system terms, setting the directory object class to RP_3G1, where there is little performance tradeoff for directories for this redundancy since it just contains metadate, so no reason to not use RP_3G1 and full replication.  In this scenario, when a server failure occurs, be it a hardware failure of an SSD or persistent memory module, or a networking switch failure or even a software failure on up to 2 servers, a process called a rebuild occurs, whereby the data on the failed servers is reconstructed, preserving data integrity, and the servers with the failures are excluded from the cluster, at which point the servers or network can be repaired and the servers eventually reintegrated to the cluster.  The rebuild process in this scenario does not disrupt service and the cluster does not experience any outage.  If more than 2 servers are lost say due to a network issue or more servers are lost during the rebuild then the cluster will be taken offline to conduct repairs.  These parameters are set at container creation as follows along with others which will be described below for best practices:
 
-1. POSIX container POSIX Mode
-2. POSIX Container MPI-IO Mode
-3. DFS container through DAOS APIs.
-
-### Create a POSIX container
-
-```shell-session
-$ DAOS_POOL=datascience
-$ DAOS_CONT=LLM-GPT-1T
-$ daos container create --type POSIX ${DAOS_POOL}  ${DAOS_CONT} --properties rd_fac:1
-  Container UUID : 59747044-016b-41be-bb2b-22693333a380
-  Container Label: LLM-GPT-1T
-  Container Type : POSIX
-
-Successfully created container 59747044-016b-41be-bb2b-22693333a380
+```daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
 ```
+The chunk-size of 2mb and the ec_cell_sz (erasure coding cell size) of 128k work together to optimally stripe the data across the 16 data servers plus 2 parity servers (18 erasure coding servers) and set the amount of data written to an ssd on a server at one time by one client. The general rule of thumb is the number of data servers (exluding parity servers) multiplied by the ec_cell_sz should equal the chunk size, or at least be an even multiple of it.  DAOS containers have a property for both server and client checksum, whereby the client will retry the data transfer to or from the server in the case of corruption, however by default this is disabled, to enable it for best performance and acceptable accuracy usage of the crc32 algorithm is recommended with the above parameters cksum:crc32,srv_cksum:on.
 
-If you prefer a higher data protection and recovery you can `--properties rd_fac:2` and if you don't need data protection and recovery, you can remove `--properties rd_fac:1`.
-We recommend to have at least `--properties rd_fac:1`.
+Now, the GX in EC_16P2GX tells the container to stripe the data across all servers in the pool, which is optimum if your application is writing a single shared file, but instead if your application is writing many files, say file per process, for best performance you should change the GX to G32, the 32 being the hard coded number of servers the data in the file will be striped across.  You can do this in one of two ways:
+1. Use the --file-oclass parameter explicitly in the container creation - so then the call would look like:
+```daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P2G32  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
+```
+2. Create a subdirectory in the container and set the attribute on it - for example if your container was created with EC_16P2GX and you wanted a subdirectory <dir name> to have EC_16P2G32, mount the container (this is described in the 'Mount a POSIX container' section below) with directory <dir name> at /tmp/<pool name>/<container name> and then:
+```daos fs set-attr --path=/tmp/<pool name>/<cont name>/<dir name> --oclass=EC_16P2G32
+```
+By default any top-level directory created in a container will inherit the directory and file object class from the container, and any subdirectory inherits from its parent, so in this fashion you can change the default and have a mix of file object classes in the same container.
 
-![data model](images/datamodel.png "DAOS data model")
+There is maintenance overhead with containers, therefore it is advisable to create just one or a few containers and create multiple directories in the few containers to partition your work.
 
 ## DAOS sanity checks
 
@@ -155,7 +144,7 @@ To optimize performance, you may need to copy the contents of `launch-dfuse.sh`,
 
 ## Job Submission
 
-The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:
 
@@ -287,10 +276,10 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
 
 ```
 
-## MPI-IO Mode (Mode 2)
+## MPI-IO Container Access
 
 The ROMIO MPI-IO layer provides multiple I/O backends including a custom DAOS backend.
-MPI-IO can be used with dFuse and the interception library when using the `ufs` backend but the `daos` backend will provide optimal performance. In order to use this, one can prefix the file names with `daos:` which will tell MPI-IO to use the DAOS backend.
+MPI-IO can be used with dFuse and the interception library when using the `ufs` backend but the `daos` backend will provide optimal performance. By default ROMIO will auto-detect DFS and use the 'daos' backend.  
 
 ```bash linenums="1"
 export ROMIO_PRINT_HINTS=1
@@ -308,7 +297,7 @@ mpiexec  --env MPICH_MPIIO_HINTS = path_to_your_file*:cb_config_list=#*:2#
        program daos:/mpi_io_file.data
 ```
 
-## DFS Mode (Mode 3)
+## DFS Container Access
 
 DFS is the user level API for DAOS. This API is very similar to POSIX but still has many differences that would require code changes to utilize DFS directly. The DFS API can provide the best overall performance for any scenario other than workloads which benefit from caching.
 
