@@ -19,8 +19,8 @@ module load oneapi/upstream
 
 | User Application  | Component                                               |
 |-------------------|---------------------------------------------------------|
-| Compilers         | [DPC++](https://github.com/intel/llvm)                 |
-| oneMKL Interfaces | [oneMKL](https://github.com/oneapi-src/oneMKL)          |
+| Compilers         | [DPC++](https://github.com/intel/llvm)                  |
+| oneMath Interface | [oneMath](https://github.com/uxlfoundation/onemath)     |
 | oneDPL            | [oneDPL](https://github.com/oneapi-src/onedpl)          |
 | SYCLomatic/DPCT   | [dpct](https://github.com/oneapi-src/syclomatic)        |
 
@@ -231,26 +231,27 @@ For further details regarding the arguments passed to the `mpiexec` command show
 
 **Note:** By default, there is no GPU-aware MPI library linking support. The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.
 
-# oneAPI Math Kernel Library (oneMKL) Interfaces
-[oneMKL Interfaces](https://github.com/oneapi-src/oneMKL) is an open-source implementation of the oneMKL Data Parallel C++ (DPC++) interface according to the [oneMKL specification](https://spec.oneapi.io/versions/latest/elements/oneMKL/source/index.html). It works with multiple devices (backends) using device-specific libraries underneath.
+# oneAPI Math Library (oneMath)
+[oneMath](https://github.com/uxlfoundation/oneMath) is an open-source implementation of the oneMath interface according to the [oneMath specification](https://oneapi-spec.uxlfoundation.org/specifications/oneapi/latest/elements/onemath/source/). It works with multiple devices (backends) using device-specific libraries underneath.
 
-oneMKL is part of oneAPI. Various backends supported are shown below. More information [here](https://github.com/oneapi-src/oneMKL#supported-configurations).
+oneMath is part of oneAPI. Various backends supported are shown below. More information [here](https://github.com/uxlfoundation/oneMath#supported-configurations).
 
-| User Application | Third-Party Library                                          |
-|------------------|--------------------------------------------------------------|
-|                  | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
-| oneMKL interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
-|                  | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
+| User Application  | Third-Party Library                                          |
+|-------------------|--------------------------------------------------------------|
+|                   | [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html)     |
+| oneMath interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
+|                   | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
 
-## Example (using onemkl::gemm)
-The following snippet shows how to compile and run a SYCL code with the oneMKL library. For instance, a GPU-based GEMM is performed using the `mkl::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional BLAS (e.g., AOCL-BLIS) library.
+## Example (using math::gemm)
+
+The following snippet shows how to compile and run a SYCL code with the oneMath library. For instance, a GPU-based GEMM is performed using the `math::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional BLAS (e.g., AOCL-BLIS) library.
 ```c++
 #include <limits>
 #include <random>
 
 #include <sycl/sycl.hpp>
 
-#include <oneapi/mkl.hpp>  // ONEMKL GPU header
+#include <oneapi/math.hpp>  // ONEMATH GPU header
 #include <cblas.h>         // BLIS   CPU header
 
 // Matrix size constants
@@ -293,8 +294,8 @@ int main() {
   std::uniform_real_distribution<> dis(1.0, 2.0);
 
   // C = alpha * op(A) * op(B)  + beta * C
-  oneapi::mkl::transpose transA = oneapi::mkl::transpose::nontrans;
-  oneapi::mkl::transpose transB = oneapi::mkl::transpose::nontrans;
+  oneapi::math::transpose transA = oneapi::math::transpose::nontrans;
+  oneapi::math::transpose transB = oneapi::math::transpose::nontrans;
 
   // matrix data sizes
   int m = M;
@@ -313,12 +314,12 @@ int main() {
   // 1D arrays on host side
   double *A;
   double *B;
-  double *C_host_onemkl, *C_cblas;
+  double *C_host_onemath, *C_cblas;
 
   A = new double[M * N]{};
   B = new double[N * P]{};
   C_cblas = new double[M * P]{};
-  C_host_onemkl = new double[M * P]{};
+  C_host_onemath = new double[M * P]{};
 
   // prepare matrix data with ROW-major style
   // A(M, N)
@@ -337,32 +338,32 @@ int main() {
   cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, ldA, B, ldB, beta,
               C_cblas, ldC);
 
-  // Resultant matrix: C_onemkl
+  // Resultant matrix: C_onemath
   sycl::queue q(sycl::property_list{sycl::property::queue::in_order{}});
   std::cout << "Device: " << q.get_device().get_info<sycl::info::device::name>() << std::endl << std::endl;
 
   double* A_dev        = sycl::malloc_device<double>(M*N, q);
   double* B_dev        = sycl::malloc_device<double>(N*P, q);
-  double* C_dev_onemkl = sycl::malloc_device<double>(M*P, q);
+  double* C_dev_onemath = sycl::malloc_device<double>(M*P, q);
 
   q.memcpy(A_dev, A, (M*N) * sizeof(double));
   q.memcpy(B_dev, B, (N*P) * sizeof(double));
 
-  auto gemm_event = oneapi::mkl::blas::column_major::gemm(q, transB, transA, n, m, k, alpha, B_dev, ldB, A_dev, ldA, beta, C_dev_onemkl, ldC);
+  auto gemm_event = oneapi::math::blas::column_major::gemm(q, transB, transA, n, m, k, alpha, B_dev, ldB, A_dev, ldA, beta, C_dev_onemath, ldC);
 
-  q.memcpy(C_host_onemkl, C_dev_onemkl, (M*P) * sizeof(double));
+  q.memcpy(C_host_onemath, C_dev_onemath, (M*P) * sizeof(double));
 
   q.wait();
-  std::cout << "Verify results between OneMKL & CBLAS: ";
-  int result_cblas = VerifyResult(C_cblas, C_host_onemkl);
+  std::cout << "Verify results between Onemath & CBLAS: ";
+  int result_cblas = VerifyResult(C_cblas, C_host_onemath);
 
   delete[] A;
   delete[] B;
   delete[] C_cblas;
-  delete[] C_host_onemkl;
+  delete[] C_host_onemath;
   sycl::free(A_dev, q);
   sycl::free(B_dev, q);
-  sycl::free(C_dev_onemkl, q);
+  sycl::free(C_dev_onemath, q);
   return result_cblas;
 }
 ```
@@ -371,7 +372,11 @@ Compile and Run
 
 The user would need to provide paths to the math libraries as shown below. Also, please provide the AOCL library for CPU GEMM by `module load aocl`.
 Environment variables `MKLROOT` is defined with the `oneapi` module & `AOCL_ROOT` is defined with the `aocl` module.
-Note: Please pay attention to the linker options for AOCL & oneMKL libraries.
+Note: Please pay attention to the linker options for AOCL & oneMath libraries.
 ```bash
-$ clang++ -std=c++17 -sycl-std=2020 -O3 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 -L$AOCL_ROOT/lib -lblis -L$MKLROOT/lib -lonemkl sycl_onemkl_gemm.cpp -o sycl_onemkl_gemm.out
+$ clang++ -std=c++17 -sycl-std=2020 -O3 -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 -L$AOCL_ROOT/lib -lblis -L$MKLROOT/lib -lonemath sycl_onemath_gemm.cpp -o sycl_onemath_gemm.out
 ```
+
+## Further documentation
+
+There is additional documentation on how to get good performance available on the [Codeplay Developer website](https://developer.codeplay.com/products/oneapi/nvidia/2025.0.0/guides/performance/common-optimizations).
