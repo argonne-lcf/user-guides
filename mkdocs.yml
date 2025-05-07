@@ -170,7 +170,8 @@ nav:
         - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
-        - Early User Notes & Known Issues: aurora/known-issues.md
+        - Known Issues: aurora/known-issues.md
+        - System Updates: aurora/system-updates.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         # TODO: "&" vs. "and" in sidebar page titles?
         - Compiling and Linking:
