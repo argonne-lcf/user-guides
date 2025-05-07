@@ -27,6 +27,11 @@ Also, check tsp status for all cards on all nodes; verify that all cards are "Up
 for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl health-check | grep -v "Health-check" | jq .[].Summary.tsp_status | sed "s/^/$host /" | uniq -c; done
 ```
 
+Also, clear the memory registries of all the cards (LPUs): 
+```
+for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl clear | uniq -c; done
+```
+
 ### Running Llama2 7B
 
 Connect to `groq-r01-gn-01.ai.alcf.anl.gov` with `ssh`:
