@@ -2,9 +2,9 @@
 
 The Cerebras CS-2 is a wafer-scale deep learning accelerator comprising 850,000 processing cores, each providing 48KB of dedicated SRAM memory for an on-chip total of 40GB and interconnected to optimize bandwidth and latency. Its software platform integrates the popular machine learning framework PyTorch.
 
-The ALCF CS-2 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to and well beyond 1 billion parameters) and large-scale inputs. **The cluster contains two CS-2 systems, but one has failed.** Ordinarily, the cluster controller can distribute jobs across one or both CS-2 systems in a data-parallel framework.
+The ALCF CS-2 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to and well beyond 1 billion parameters) and large-scale inputs. The cluster currently contains one CS-2 system. 
 
-The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch, with data-parallel distribution when using more than one CS-2. This installation supports both Pipelined execution for models up to 1 billion parameters and Weight Streaming execution for models up to and above 1 billion parameters.
+The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch. This installation supports both Pipelined execution for models up to 1 billion parameters and Weight Streaming execution for models up to and above 1 billion parameters.
 
 The public Cerebras documentation is available [here](https://training-docs.cerebras.ai/getting-started/overview).
 
@@ -17,4 +17,4 @@ The trees `/home`, `/projects`, and `/software` are shared across all three logi
 Figure: topology of CS-2 cluster ([source](https://training-docs.cerebras.ai/rel-2.4.0/concepts/cerebras-wafer-scale-cluster))
 ///
 
-As indicated in the figures, the CS-2 nodes on the right are responsible only for running and accelerating the computations for training and predictions with the model. The other work, including compilation, is performed by input nodes, and by MemoryX nodes, which are used for weight storage and broadcast, and SwarmX nodes, which are used for gradient accumulation. Some model verification work can be done on login nodes.
+As indicated in the figures, which represent a two-CS2 cluster, a CS-2 node on the right is responsible only for running and accelerating the computations for training and predictions with the model. The other work, including compilation, is performed by input nodes, and by MemoryX nodes, which are used for weight storage and broadcast, and SwarmX nodes, which are used for gradient accumulation. Some model verification work can be done on login nodes.
