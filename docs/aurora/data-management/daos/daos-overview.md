@@ -80,7 +80,7 @@ daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P2G3
 ```
 2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P2GX` and you wanted a subdirectory `<dir name>` to have `EC_16P2G32`, mount the container (this is described in the 'Mount a POSIX container' section below) with directory `<dir name>` at `/tmp/<pool name>/<container name>` and then:
 ```bash
-daos fs set-attr --path=/tmp/<pool name>/<cont name>/<dir name> --oclass=EC_16P2G32
+daos fs set-attr --path=/tmp/<pool name>/<container name>/<dir name> --oclass=EC_16P2G32
 ```
 By default any top-level directory created in a container will inherit the directory and file object class from the container, and any subdirectory inherits from its parent, so in this fashion you can change the default and have a mix of file object classes in the same container.
 
@@ -165,7 +165,7 @@ qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=fla
 Job submission with DAOS:
 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -q debug ./pbs_script1.sh
 ```
 
 ## NIC and Core Binding
@@ -222,11 +222,10 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 #PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
-#PBS -l daos=daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -l daos=daos_user -q prod ./pbs_script.sh or - I
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -q prod ./pbs_script.sh or - I
 
-# please do not miss -l filesystems=daos_user and -l daos=daos_user in your qsub :'(
+# please do not miss -l filesystems=daos_user and in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
@@ -287,24 +286,26 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
 
 ## MPI-IO Container Access
 
-The ROMIO MPI-IO layer provides multiple I/O backends including a custom DAOS backend.
-MPI-IO can be used with dFuse and the interception library when using the `ufs` backend but the `daos` backend will provide optimal performance. By default ROMIO will auto-detect DFS and use the 'daos' backend.  
-
-```bash linenums="1"
-export ROMIO_PRINT_HINTS=1
-
-echo "cb_nodes 128" >> ${PBS_O_WORKDIR}/romio_hints
-
-mpiexec  --env ROMIO_HINTS = romio_hints_file program daos:/mpi_io_file.data
-
-# or
-
-mpiexec  --env MPICH_MPIIO_HINTS = path_to_your_file*:cb_config_list=#*:2#
-       :romio_cb_read=enable
-       :romio_cb_write=enable
-       :cb_nodes=32
-       program daos:/mpi_io_file.data
+The MPICH MPI-IO layer on Aurora (ROMIO) provides multiple I/O backends including one for DAOS. ROMIO can be used with dFuse and the interception library utilizing the UFS backend, but the DAOS backend will provide optimal performance. By default ROMIO will auto-detect DFS and use the DAOS backend.   MPI-IO itself is a common backend for many I/O libraries, including HDF5 and PNetCDF.  Whether using collective I/O MPI-IO calls directly or indirectly via an I/O library, a  process called collective buffering can be done where data from small non-contiguous chunks across many compute nodes in the collective is aggregated into larger contiguous buffers on a few compute nodes, referred to as aggregators, from which DFS API calls are made to write to or read from DAOS.  Collective buffering can improve or degrade I/O performance depending on the I/O pattern, and in the case of DAOS, disabling it can lead to I/O failures in some cases, where the I/O traffic directly from all the compute nodes in the collective to DAOS is too stressful in the form of extreme numbers of small non-contiguous data reads and writes.  In ROMIO there are hints that should be set to either optimally enable or disable collective buffering.  At this time you should explicitly enable collective buffering in the most optimal fashion, as disabling it or allowing it to default to disabled could result in I/O failures.  To optimally enable collective buffering, create a file with the following contents:
+```bash 
+romio_cb_write enable
+romio_cb_read enable
+cb_buffer_size 16777216
+cb_config_list *:8
+striping_unit 1048576
 ```
+
+Then simply set the following environment variable at run time to point to it:
+```bash 
+export ROMIO_HINTS=<path to hints file>
+```
+
+If you want to verify the settings, additionally set:
+```bash 
+export ROMIO_PRINT_HINTS=1
+```
+
+Which will print out all the ROMIO hints at run time.
 
 ## DFS Container Access
 
@@ -428,12 +429,33 @@ Occasionally at a high number of nodes and/or high PPN the following error that 
 
 You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
 
+## Issue with the gpu_tile_compact.sh bash script and the DAOS Interception Libraries
+
+There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script where you may get an error like this sporadically at scale:
+```bash 
+terminate called after throwing an instance of 'std::invalid_argument'
+  what():  stoul
+/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh: line 47: 38240 Aborted                 "$@"
+x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 134
+x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
+```
+
+This issue is still under investigation, in the mean time there is a workaround which is to take the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script and create your own version of it to do the LD_PRELOAD of the interception library within this script, so in the case of the libpil4dfs.so adding the line:
+```bash 
+export LD_PRELOAD=/usr/lib64/libpil4dfs.so
+```
+
+just before the execution of the binary.  For an example see: 
+```bash 
+/lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
+```
+
 ## Best practices
 
 1. Check that you **requested** DAOS:
 
     ```bash
-    qsub –l filesystems=daos_user -l daos=daos_user
+    qsub –l filesystems=daos_user
     ```
 
 1. Check that you **loaded** the DAOS module:
