@@ -2,11 +2,11 @@
 
 ## Running Llama-2 7B on the Groqrack
 
-Llama-2 7B requires all 9 nodes in a groqrack.
+Llama-2 7B requires all 9 nodes in a Groqrack.
 
 ### Checking status
 
-First, verify that there are no other PBS jobs using the groqrack. This can be done from either a groqrack node or a login node.
+First, verify that there are no other PBS jobs using the Groqrack. This can be done from either a Groqrack node or a login node.
 ```console
 qstat -wa
 ```
@@ -18,7 +18,7 @@ for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
 
 Also verify that all nodes have eight unlocked cards:
-```
+```bash
 for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl status | grep -a "Device Locked" | sed "s/ Device Locked/$host Device locked/" | uniq -c ; done
 ```
 
@@ -29,7 +29,7 @@ for host in groq-r01-gn-0{1..9}; do ssh $host tsp-ctl health-check | grep -v "He
 
 ### Running Llama2 7B
 
-Connect to groq-r01-gn-01.ai.alcf.anl.gov with ssh:
+Connect to `groq-r01-gn-01.ai.alcf.anl.gov` with `ssh`:
 ```console
 ssh  groq-r01-gn-01.ai.alcf.anl.gov
 ```
@@ -42,16 +42,18 @@ cp /software/groq/examples/llama2-7b-kludge/*.pbs ~/groq_llama2-7b-kludge/
 cd ~/groq_llama2-7b-kludge/
 ```
 
-Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It just runs `sleep 24h` on a node.   The example reserves the cluster via PBS for 2hrs.  Adjust  values as needed.
+Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It simply runs `sleep 24h` on a node. The following example script reserves the cluster via PBS for 2hrs. Adjust the values as needed.
 ```console
 ./stage1_reserve_cluster_via.pbs
 ```
 
 Install some packages into `~/.local/lib/python3.10/site-packages`. The multi-node Llama2 cannot be run using a conda env.
 
-Set the PYTHONPATH to include the `~/.local/lib/python3.10/site-packages`
+Set the `PYTHONPATH` to include the `~/.local/lib/python3.10/site-packages`
 
-Warning; the packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory (or renaming it) when done running Llama2-7b. 
+!!! warning
+
+    The packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory (or renaming it) when done running Llama2-7b. 
 
 ```console
 # only needed if conda is already deactivated; twice, in case there are two levels
@@ -86,7 +88,10 @@ then can run multiple queries
 groq-python groq_llama2_7b.py -p 'what are the most popular ice cream flavors'
 groq-python groq_llama2_7b.py -p 'what are some unique ice cream flavors'
 ```
-Note: the -b ('--bringup') flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a weird state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
+
+!!! note
+
+    The `-b` (`--bringup`) flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a abnormal state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
 
 When done, clean up. This deletes the all-rack PBS reservation. 
 ```console
