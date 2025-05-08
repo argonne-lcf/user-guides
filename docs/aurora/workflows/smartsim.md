@@ -20,10 +20,11 @@ For more resources on SmartSim, follow the links below:
 
 ## Installation
 
-Create a Python virtual environment based on the ML frameworks module:
+Create a Python virtual environment based on the ML frameworks module (note that git-lfs is also needed):
 
 ```bash
-module load frameworks/2024.2.1_u1
+module load frameworks
+module load git-lfs
 python -m venv --clear /path/to/_ssim_env --system-site-packages
 source /path/to/_ssim_env/bin/activate
 ```
@@ -60,14 +61,14 @@ make lib
 cd ..
 ```
 
-Known Issues:
+!!! info "Running with SmartSim"
+    When running a workload with SmartSim, please include the following in your run or submit scripts:
+    ```bash
+    export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+    export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+    ```
 
-* Pip installing SmartSim returns some warnings which can be safely ignored.
-* The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
-* The RedisAI backend requires an older version of TensorFlow relative to what is loaded with the frameworks module on Aurora. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
-* When running a workload with SmartSim, please include the following in your run or submit scripts:
-
-```bash
-export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
-export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
-```
+!!! warning "Known Issues"
+    * Pip installing SmartSim returns some warnings which can be safely ignored.
+    * The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
+    * The RedisAI backend requires an older version of TensorFlow relative to what is loaded with the frameworks module on Aurora. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
