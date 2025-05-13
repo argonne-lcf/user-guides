@@ -74,6 +74,7 @@ daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:2,
 The chunk-size of 2 MB and the `ec_cell_sz` (erasure coding cell size) of 128 KB work together to optimally stripe the data across the 16 data servers plus 2 parity servers (18 erasure coding servers) and set the amount of data written to an SSD on a server at one time by one client. The general rule of thumb is the number of data servers (excluding parity servers) multiplied by the `ec_cell_sz` should equal the chunk size, or at least be an even multiple of it.  DAOS containers have a property for both server and client checksum, whereby the client will retry the data transfer to or from the server in the case of corruption, however by default this is disabled, to enable it for best performance and acceptable accuracy usage of the CRC-32 algorithm is recommended with the above parameters `cksum:crc32,srv_cksum:on`.
 
 Now, the `GX` in `EC_16P2GX` tells the container to stripe the data across all servers in the pool, which is optimum if your application is writing a single shared file, but instead if your application is writing many files, say file per process, for best performance you should change the `GX` to `G32`, the 32 being the hard-coded number of servers the data in the file will be striped across.  You can do this in one of two ways:
+
 1. Use the `--file-oclass` parameter explicitly in the container creation. The call would look like:
 ```bash
 daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P2G32  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
@@ -292,7 +293,7 @@ romio_cb_write enable
 romio_cb_read enable
 cb_buffer_size 16777216
 cb_config_list *:8
-striping_unit 1048576
+striping_unit 2097152
 ```
 
 Then simply set the following environment variable at run time to point to it:
@@ -350,14 +351,14 @@ Each DAOS server node is based on the Intel Coyote Pass platform:
 
 ## Darshan profiler for DAOS
 
-Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
+Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary log file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
 
 On Aurora, Darshan has been built in the programming environment in `/soft`, however it has not yet been fully modularized so the shared library must be manually preloaded at run time via `LD_PRELOAD`, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
 ```bash 
 LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/hdf5-1.14.5-zrlo32i/lib/libhdf5.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/parallel-netcdf-1.12.3-cszcp66/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
 ```
 
-If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.  This generated binary file now has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.  By default, the binary analysis file is stored here:
+If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.  This generated binary log file now has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.  By default, the binary log file is stored here:
 ```bash 
 /lus/flare/logs/darshan/aurora/YYYY/M/D
 ```
@@ -373,7 +374,7 @@ module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
 module load darshan
 ```
 
-Then for example you could run the Darshan parser on the binary file to get a text output of all the metrics as follows:
+Then for example you could run the Darshan parser on the binany log file to get a text output of all the metrics as follows:
 ```bash 
 darshan-parser <binary file>  >  <text analysis file>
 ```
