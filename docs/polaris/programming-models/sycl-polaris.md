@@ -379,4 +379,4 @@ $ clang++ -std=c++17 -sycl-std=2020 -O3 -fsycl -fsycl-targets=nvptx64-nvidia-cud
 
 ## Further documentation
 
-There is additional documentation on how to get good performance available on the [Codeplay Developer website](https://developer.codeplay.com/products/oneapi/nvidia/2025.0.0/guides/performance/common-optimizations).
+There is additional documentation on how to get good performance available on the [Codeplay Developer website](https://developer.codeplay.com/products/oneapi/nvidia/latest/guides/performance/common-optimizations).
