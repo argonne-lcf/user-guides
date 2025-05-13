@@ -350,38 +350,35 @@ Each DAOS server node is based on the Intel Coyote Pass platform:
 
 ## Darshan profiler for DAOS
 
-Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found here:
+Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
 
-https://www.mcs.anl.gov/research/projects/darshan/documentation/
-
-On Aurora, darshan has been built in the programming environment in /soft, however it has not yet been fully modularized so the shared library must be manually preloaded at run time via LD_PRELOAD, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
+On Aurora, Darshan has been built in the programming environment in `/soft`, however it has not yet been fully modularized so the shared library must be manually preloaded at run time via `LD_PRELOAD`, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
 ```bash 
 LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/hdf5-1.14.5-zrlo32i/lib/libhdf5.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/parallel-netcdf-1.12.3-cszcp66/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
 ```
 
-If your application is using gpu_tile_compact.sh then this whole LD_PRELOAD will go in your personal copy of the bash script via export.  This generated binary file now has two additional modules, DFS for the DAOS file system API layer and DAOS for the underlying object store.  By default, the binary analysis file is stored here:
+If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.  This generated binary file now has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.  By default, the binary analysis file is stored here:
 ```bash 
 /lus/flare/logs/darshan/aurora/YYYY/M/D
 ```
 
-where the last 3 directories are the date the file is generated, with your user ID, job ID and timestamp in the file name.  Alternatively, at run time you can specify the file name to be saved with a specified name in a different location with the following environment variable:
-```bash 
-
+where the last 3 directories are the date the file is generated, with your user ID, job ID and timestamp in the file name.  Alternatively, at run time you can specify the file name to be saved with a specified name in a different location with the following environment variable:
+```bash
 export DARSHAN_LOGFILE=<full path to binary file name>
 ```
 
-To get the darshan utilities loaded into your programming environment do this:
+To get the Darshan utilities loaded into your programming environment, execute the following:
 ```bash 
 module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
 module load darshan
 ```
 
-Then for example you could run the darshan parser on the binary file to get a text output of all the metrics as follows:
+Then for example you could run the Darshan parser on the binary file to get a text output of all the metrics as follows:
 ```bash 
 darshan-parser <binary file>  >  <text analysis file>
 ```
 
-For usage of other utilities refer to the official documentation.  For help with interpreting the darshan-parser text output and analyzing your I/O pattern feel free to contact Paul Coffman on the ALCF Performance Engineering Team via email <pcoffman@anl.gov>.
+For usage of other utilities refer to the official documentation. For help with interpreting the `darshan-parser` text output and analyzing your I/O pattern feel free to contact Paul Coffman on the ALCF Performance Engineering Team via email [pcoffman@anl.gov](mailto:pcoffman@anl.gov).
 
 ## Cluster Size
 
@@ -414,7 +411,7 @@ Occasionally at a high number of nodes and/or high PPN the following error that 
 
 You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
 
-## Issue with the gpu_tile_compact.sh bash script and the DAOS Interception Libraries
+## Issue with the `gpu_tile_compact.sh` bash script and the DAOS Interception Libraries
 
 There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script where you may get an error like this sporadically at scale:
 ```bash 
@@ -425,12 +422,11 @@ x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 13
 x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
 ```
 
-This issue is still under investigation, in the mean time there is a workaround which is to take the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script and create your own version of it to do the LD_PRELOAD of the interception library within this script, so in the case of the libpil4dfs.so adding the line:
+This issue is still under investigation, in the mean time there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to do the `LD_PRELOAD` of the interception library within this script, so in the case of the `libpil4dfs.so` adding the line:
 ```bash 
 export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ```
-
-just before the execution of the binary.  For an example see: 
+(just before the execution of the binary). For an example, see: 
 ```bash 
 /lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
 ```
@@ -500,4 +496,4 @@ just before the execution of the binary.  For an example see:
     daos container check
     ```
 
-1. If you are still having issues, please contact [help @ ALCF](mailto:help@alcf.anl.gov)
+1. If you are still having issues, please contact [help @ ALCF](mailto:support@alcf.anl.gov)
