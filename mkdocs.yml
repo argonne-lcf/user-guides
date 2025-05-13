@@ -141,14 +141,9 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
-  - redirects:
-      redirect_maps:
-        # broken links from header.html in this repo, main site, and my.alcf.anl.gov
-        # eventually, update those links, remove redirects, and freeze these paths via PR CI checks
-        'ai-testbed/getting-started.md': 'ai-testbed/index.md'
-        'policies/facility-policies.md': 'policies/index.md'
-        'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
-        'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
+  # - redirects:
+  #     redirect_maps:
+        #'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
   # - ALCF User Guides:
@@ -170,7 +165,8 @@ nav:
         - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
-        - Early User Notes & Known Issues: aurora/known-issues.md
+        - Known Issues: aurora/known-issues.md
+        - System Updates: aurora/system-updates.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         # TODO: "&" vs. "and" in sidebar page titles?
         - Compiling and Linking:

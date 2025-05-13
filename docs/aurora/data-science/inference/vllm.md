@@ -40,7 +40,7 @@ pip install /flare/datasets/softwares/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8
 
 Model weights for commonly used open-weight models are downloaded and available in the following directory on Aurora:
 ```bash linenums="1"
-/flare/datascience/model-weights/hub
+/flare/datasets/model-weights/hub
 ```
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 ```bash linenums="1"
@@ -103,10 +103,13 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 	```bash linenums="1" title="setup_ray_cluster.sh"
 	--8<-- "./GettingStarted/DataScience/vLLM/setup_ray_cluster.sh"
 	```
-	
-Then, execute vLLM:
+
+From a login node, initiate the Ray cluster and execute vLLM serve:
 ```bash linenums="1"
+source /path/to/setup_ray_cluster.sh
+main 
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --device xpu --dtype float16 --trust-remote-code --max-model-len 1024
 ```
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
+In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in your environment. 
 
