@@ -62,7 +62,7 @@ export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk 
 export tiles=12
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
 
-export no_proxy="localhost,127.0.0.1" #Set this for the client to interact with the locally hosted model
+export no_proxy="localhost,127.0.0.1" #Set no_proxy for the client to interact with the locally hosted model
 ```
 
 ## Serve Small Models 
@@ -76,9 +76,8 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float1
 
 #### Using Multiple Tiles
 
-Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve the meta-llama/Llama-2-7b-chat-hf model across 8 tiles on a single node:
+Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve the `meta-llama/Llama-2-7b-chat-hf` model across 8 tiles on a single node:
 
-See  for setting up the Ray cluster. See script below to serve `meta-llama/Llama-2-7b-chat-hf` on 8 tiles on a single node. 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
