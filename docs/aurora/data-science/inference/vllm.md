@@ -44,8 +44,9 @@ Model weights for commonly used open-weight models are downloaded and available 
 ```
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 ```bash linenums="1"
-export HF_HOME="/flare/datasets/model-weights/hub"
-export HF_DATASETS_CACHE="/flare/datasets/model-weights/hub"
+export HF_HOME="/flare/datasets/model-weights"
+export HF_DATASETS_CACHE="/flare/datasets/model-weights"
+export HF_MODULES_CACHE="/flare/datasets/model-weights"
 export HF_TOKEN="YOUR_HF_TOKEN"
 export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
@@ -60,6 +61,8 @@ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export tiles=12
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
+
+export no_proxy="localhost,127.0.0.1" #Set this for the client to interact with the locally hosted model
 ```
 
 ## Serve Small Models 
@@ -73,10 +76,11 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float1
 
 #### Using Multiple Tiles
 
-The following commands set up the Ray cluster and serve `meta-llama/Llama-3.3-70b-chat-hf` on 8 tiles on single node. 
+Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve the meta-llama/Llama-2-7b-chat-hf model across 8 tiles on a single node:
+
+See  for setting up the Ray cluster. See script below to serve `meta-llama/Llama-2-7b-chat-hf` on 8 tiles on a single node. 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
 ```
 
@@ -84,12 +88,11 @@ vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --
 
 #### Using Single Node
 
-These commands set up a Ray cluster and serves `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
+Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=8&
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
+vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code --max-model-len 32768
 ```
 
 ## Serve Large Models 
@@ -112,4 +115,6 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
 ```
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
 In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in your environment. 
+
+
 
