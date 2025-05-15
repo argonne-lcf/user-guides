@@ -603,7 +603,7 @@ $
 $
 $ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-$ export GPU_BIND_SCHEME="--gpu-bind=list:"--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
 launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 ```
