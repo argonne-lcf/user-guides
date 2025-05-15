@@ -9,7 +9,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
-| prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**           |
+| prod          | 1        | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**       |
 | prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
@@ -21,11 +21,11 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                                                                              |
 |-----------------|----------|----------|----------|----------|----------------------------------------------------------------------------------------------------|
-| tiny            | 32 (1 node starting 4/23/25)       | 512      | 5 min    | 6 hrs    |                                                                                                    |
+| tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
 | large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
-| backfill-tiny   | 32 (1 node starting 4/23/25)     | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
+| backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
 | backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue*** <br/> Low priority, negative project balance |
@@ -70,12 +70,23 @@ Recommended PBSPro options follow.
 
 More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
 
-## Working Around Node Failures
+## Working around node failures
 
 As Aurora is in early production stage, node failures are a fact of life. If you would like to increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. To do this, you must run interactively and use must manually adjust your run on the fly to remove nodes that have been marked as failed.
 
 If you determine a node is bad, please send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the node name, reason why you believe it is bad, and a reproducer if one is available.
 
+### Removing "known" bad nodes
+
+If you're encountering the same problematic node(s) repeatedly in your allocations, you can add the following lines in your noninteractive PBS script to exclude them from the MPICH execution command:
+
+```bash linenums="1"
+cat $PBS_NODEFILE > local.hostfile
+# edit local.hostfile with sed/awk/etc. to remove problem node IDs
+mpiexec --hostfile local.hostfile <other mpiexec arguments>
+```
+
+### Using `tolerate_node_failures=all`
 We recommend against using `-W tolerate_node_failures=all` in your qsub command, but we acknowledge its use can be helpful. However, you MUST MANUALLY VERIFY your job and remove faulted nodes from your mpiexec command YOURSELF!
 
 1. Start your interactive job
@@ -592,7 +603,7 @@ $
 $
 $ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-$ export GPU_BIND_SCHEME="--gpu-bind=list:"--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
 launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 ```
