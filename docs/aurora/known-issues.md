@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-04-16_
+_Last Updated: 2025-05-05_
 
 ## Early User Notes
 
@@ -77,6 +77,8 @@ then most likely your application will crash or hang. If you see these, the best
 $ pbsnodes x4307c2s6b0n0 |grep comment
      comment = StabilityDB 2025-02-24T04:38:14: hbm_controller_errors
 ```
+
+Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to open a ticket if your application experiences ping failures, especially if these failures are frequent and/or involve the same problematic nodes. ALCF Operations may take such nodes offline.
 
 <!-- #### PBS failures -->
 

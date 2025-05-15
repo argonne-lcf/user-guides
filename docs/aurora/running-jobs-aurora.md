@@ -9,7 +9,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
-| prod          | 32       | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**           |
+| prod          | 1        | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**       |
 | prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
@@ -21,11 +21,11 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                                                                              |
 |-----------------|----------|----------|----------|----------|----------------------------------------------------------------------------------------------------|
-| tiny            | 32 (1 node starting 4/23/25)       | 512      | 5 min    | 6 hrs    |                                                                                                    |
+| tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
 | large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
-| backfill-tiny   | 32 (1 node starting 4/23/25)     | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
+| backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
 | backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue*** <br/> Low priority, negative project balance |
@@ -603,7 +603,7 @@ $
 $
 $ export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-$ export GPU_BIND_SCHEME="--gpu-bind=list:"--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
+$ export GPU_BIND_SCHEME="--gpu-bind=list:0:1:2:3:4:5:6:7:8:9:10:11"
 $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_aurora.out | sort
 launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 ```

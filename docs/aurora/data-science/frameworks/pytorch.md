@@ -378,24 +378,44 @@ Here are the steps to run the above code on Aurora:
         You can do this the following way (after having loaded all needed modules):
         
         ```bash
-        export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-72:78-80:86-88:94-96"
+        ## Option 1
+        export CPU_BIND="list:4:9:14:19:20:25:56:61:66:71:74:79" # 12 ppn to 12 cores
+
+        ## Option 2
+        export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # 12 ppn with each rank having 4 cores
         mpiexec ... --cpu-bind=${CPU_BIND}
         ```
-        
+
         These bindings should be used along with the following oneCCL and Horovod 
         environment variable settings:
-        
+
         ```bash
-        HOROVOD_THREAD_AFFINITY="4,12,20,28,36,44,56,64,72,80,88,96"
-        CCL_WORKER_AFFINITY="5,13,21,29,37,45,57,65,73,81,89,97"
+        HOROVOD_THREAD_AFFINITY="4,8,12,16,20,24,56,60,64,68,72,76"
+
+        ## Option 1
+        CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
+
+        ## Option 2
+        unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
         ```
-        
-        When running 12 ranks per node with these settings the `framework`s use 3 cores, 
-        with Horovod tightly coupled with the `framework`s using one of the 3 cores, and 
-        oneCCL using a separate core for better performance, eg. with rank 0 the 
-        `framework`s would use cores 2,3,4, Horovod would use core 4, and oneCCL would 
-        use core 5.
-        
+
+        When running 12 ranks per node with these settings the `framework`s use 4 cores, 
+        with Horovod tightly coupled with the `framework`s using one of the 4 cores, and 
+        oneCCL using a separate core for better performance, e.g. with rank 0 the 
+        `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would 
+        use core 42.
+
+        In the provided CPU binding list we have provided two options. First one is
+        based on one CPU core per rank. In the second option, we assign 4 CPU cores per
+        rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
+        rank. Notice that, these cores are picked out from the last 12 cores of each
+        socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs
+        to the first socket, and 94-99 belongs to the second socket. We leave a few
+        cores free, in case, the user may want to use other services like copper and
+        DAOS along with their application. The second oneCCL option is to delegate
+        task of picking cores to the system. In this case, the user should not declare
+        or export the `CCL_WORKER_AFFINITY` variable.
+
         Each workload may perform better with different settings. 
         The criteria for choosing the cpu bindings are:
         
