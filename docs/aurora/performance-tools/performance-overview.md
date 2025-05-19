@@ -4,7 +4,7 @@
 
 * [THAPI/iprof](./iprof.md)
 * [Intel unitrace](./unitrace.md)
-* Intel xpu-smi
+* [Intel xpu-smi](./xpu-smi.md)
 
 ## Intel Analyzers
 
