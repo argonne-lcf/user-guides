@@ -27,7 +27,7 @@ Copyright (C) 2009 Intel Corporation. All rights reserved.
 ```
 
 ### Usage of `aps` and `aps-report`
-```
+```console
 $ aps -h
 Intel(R) VTune(TM) Profiler 2025.0.1 (build 629235) Command Line Tool
 Copyright (C) 2009 Intel Corporation. All rights reserved.
