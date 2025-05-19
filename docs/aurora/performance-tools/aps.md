@@ -7,7 +7,7 @@ Use Application Performance Snapshot for a quick scan of performance aspects tha
 * MPI usage
 * OpenMP usage
 * Intel® oneAPI Collective Communications Library (oneCCL) usage
-* CPU usage
+* CPU/GPU usage
 * Efficiency of memory access
 * Vectorization
 * I/O and memory footprint
@@ -74,7 +74,7 @@ $ aps --report <aps_result_dir>
 #### Collection
 
 ```
-mpirun -n 48 gpu_tile_compact.sh aps -r aps_report_amr-wind_4N ../amr_wind abl_godunov_4N_ST100.inp 
+$ mpirun -n 48 gpu_tile_compact.sh aps -r aps_report_amr-wind_4N ../amr_wind abl_godunov_4N_ST100.inp 
 ==============================================================================
                 AMR-Wind (https://github.com/exawind/amr-wind)
 
@@ -91,7 +91,7 @@ Intel(R) VTune(TM) Profiler 2025.0.1 collection completed successfully. Use the 
 
 ```
 
-*** During the collection, the following warning can be ignored ***
+During the collection, the following warning can be ignored:
 ```
 vtune: Warning: EMON Collector Message: Warning: PMU counter(s) [FP0 FP1 FP2 ] is (are) already in use by other software and the data collected on these counter(s) may be incorrect
 ```
@@ -99,7 +99,7 @@ vtune: Warning: EMON Collector Message: Warning: PMU counter(s) [FP0 FP1 FP2 ] i
 #### Report
 
 ```
-aps --report /lus/flare/projects/Aurora_deployment/jkwack/JK_AT_Tools/Apps/amr-wind_v3.4.2/build_20250513/jk_test/aps_report_amr-wind_4N
+$ aps --report /lus/flare/projects/Aurora_deployment/jkwack/JK_AT_Tools/Apps/amr-wind_v3.4.2/build_20250513/jk_test/aps_report_amr-wind_4N
 | Summary information
 |--------------------------------------------------------------------
   Application                   : amr_wind
@@ -223,14 +223,14 @@ Graphical representation of this data is available in the HTML report: /lus/flar
 ```
 
 
-Download the HTML file and open it with a web browser.
+Download the HTML file and open it on a web browser.
 
-![APS HTML report snapshot](images/aps-01.png "APS HTML report snapshot")
-![APS HTML report](results/aps_report_20250519_001450.html "APS HTML report")
+![APS HTML report snapshot](images/aps-01.png "APS HTML report snapshot")  
+[APS HTML report for this example](results/aps_report_20250519_001450.html)
 
 
 ## References  
-[Intel Applicatino Performance Snapshot User's Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide-application-snapshot-linux/2025-0/overview.html)
+[Intel Application Performance Snapshot User's Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide-application-snapshot-linux/2025-0/overview.html)
 
 [2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_2_Intel_Analyzers.pdf)
 
