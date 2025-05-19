@@ -365,7 +365,7 @@ THAPI: Perfetto trace location: out.pftrace
 
 Download `out.pftrace` and open it with [Perfetto ](https://ui.perfetto.dev/#!/viewer)
 
-![iprof trace timeline with Perfetto](images/iprof-perfetto-01.png "iprof trace timeline with Perfetto")) 
+![iprof trace timeline with Perfetto](images/iprof-perfetto-01.png "iprof trace timeline with Perfetto") 
 
 ![iprof trace timeline with Perfetto zoom-in](images/iprof-perfetto-02.png "iprof trace timeline with Perfetto (zoom-in)")
 
