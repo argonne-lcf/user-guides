@@ -75,4 +75,5 @@ $ advisor --report=all --project-dir=Advisor_results --report-output=Advisor_res
 
 [Intel Advisor Performance Optimization Cookbook](https://www.intel.com/content/www/us/en/docs/advisor/cookbook/current/overview.html)
 
+[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_2_Intel_Analyzers.pdf)
 

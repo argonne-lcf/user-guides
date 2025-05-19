@@ -166,5 +166,7 @@ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mo
 
 [Downloadable documents for VTune Profiler](https://d1hdbi2t0py8f.cloudfront.net/vtune-docs/index.html)
 
+[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_2_Intel_Analyzers.pdf)
+
 
 
