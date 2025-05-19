@@ -1,11 +1,8 @@
 # THAPI/iprof
 
-## References
-[THAPI github repo](https://github.com/argonne-lcf/THAPI)
-
 ## Introduction
 
-THAPI is a portable tracing infrastructure for heterogeneous computing applications with backends for OpenCL, L0, CUDA HIP, OPMT and MPI.  
+THAPI is a portable tracing infrastructure for heterogeneous computing applications with backends for OpenCL, L0, CUDA HIP, OPMT and MPI. 
 `iprof` is a wrapper around the OpenCL, Level Zero, and CUDA tracers. It gives aggregated profiling information.
 
 ## Instruction
@@ -68,14 +65,14 @@ For complaints, praises, or bug reports please use: <(o )___
 
 ```
 
-### Running with MPI applications
+### Running with an MPI application
 ```
 $ mpirun <mpi arguments> iprof <iprof arguments> -- <application excutable binary> <application arguments>
 ```
 
 ## Simple examples
 
-### `iprof` for `amr-wind` application with 24 MPI ranks on 2 Aurora nodes
+### `iprof` for `amr-wind` application with 24 MPI ranks on two Aurora nodes
 
 ```
 $ mpirun -n 24 --ppn 12 gpu_tile_compact.sh iprof -- ../amr_wind abl_godunov.inp 
@@ -350,7 +347,7 @@ zeCommandListAppendMemoryCopy(M2D) |  29.95kB |   0.00% |    576 |  52.00B |  24
 
 
 ```
- mpirun -n 24 --ppn 12 gpu_tile_compact.sh iprof -l -- ../amr_wind abl_godunov.inp 
+$ mpirun -n 24 --ppn 12 gpu_tile_compact.sh iprof -l -- ../amr_wind abl_godunov.inp 
 ==============================================================================
                 AMR-Wind (https://github.com/exawind/amr-wind)
 
@@ -370,4 +367,11 @@ Download `out.pftrace` and open it with [Perfetto ](https://ui.perfetto.dev/#!/v
 
 ![iprof trace timeline with Perfetto](images/iprof-perfetto-01.png "iprof trace timeline with Perfetto")) 
 
-![iprof trace timeline with Perfetto zoom-in](images/iprof-perfetto-02.png "iprof trace timeline with Perfetto (zoom-in)")) 
+![iprof trace timeline with Perfetto zoom-in](images/iprof-perfetto-02.png "iprof trace timeline with Perfetto (zoom-in)")
+
+
+## References
+[THAPI github repository](https://github.com/argonne-lcf/THAPI)  
+[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
+
+
