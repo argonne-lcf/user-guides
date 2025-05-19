@@ -123,7 +123,7 @@ AMReX (25.04-9-g30a9768150c4) finalized
 
 Download json files and open them with [Perfetto ](https://ui.perfetto.dev/#!/viewer)
 
-![unitrace MPI/SYCL tracing](images/unitrace-perfetto-01.png "unitrace MPI/SYCL tracing")) 
+![unitrace MPI/SYCL tracing](images/unitrace-perfetto-01.png "unitrace MPI/SYCL tracing") 
 
 ![unitrace MPI/SYCL tracing (zoom-in)](images/unitrace-perfetto-02.png "unitrace MPI/SYCL tracing (zoom-in)")
 
