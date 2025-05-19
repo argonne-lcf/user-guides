@@ -55,7 +55,7 @@ Subcommands:
   log                         Collect GPU debug logs.
 
 
-xpu-smi -h dump
+$ xpu-smi -h dump
 Dump device statistics data.
 
 Usage: xpu-smi dump [Options]
@@ -127,7 +127,7 @@ Options:
 ### Discover the GPU devices on an Aurora compute node
 
 ```
-jkwack@x4013c2s0b0n0:/lus/flare/projects/Aurora_deployment/jkwack/JK_AT_Tools/Apps/amr-wind_v3.4.2/build_20250513/jk_test> xpu-smi discovery
+$ xpu-smi discovery
 +-----------+--------------------------------------------------------------------------------------+
 | Device ID | Device Information                                                                   |
 +-----------+--------------------------------------------------------------------------------------+
@@ -252,7 +252,7 @@ Timestamp, DeviceId, GPU Utilization (%), GPU Power (W), GPU Frequency (MHz), GP
 ```
 
 ## References
-[xpu-smi github repository](https://github.com/intel/xpumanager)  
+[XPU manager github repository](https://github.com/intel/xpumanager)  
 [2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
 
 
