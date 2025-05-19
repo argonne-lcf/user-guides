@@ -2,7 +2,7 @@
 
 ## Light-weight profiling tools
 
-* THAPI/iprof
+* [THAPI/iprof](./iprof.md)
 * Intel unitrace
 * Intel xpu-smi
 
