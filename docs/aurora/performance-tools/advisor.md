@@ -1,10 +1,5 @@
 # Advisor
 
-## References  
-[Intel Advisor User Guide](https://www.intel.com/content/www/us/en/docs/advisor/user-guide/current/overview.html)
-
-[Intel Advisor Performance Optimization Cookbook](https://www.intel.com/content/www/us/en/docs/advisor/cookbook/current/overview.html)
-
 ## Introduction
 
 Intel® Advisor is a design and analysis tool for developing performant code. The tool supports C, C++, Fortran, SYCL, OpenMP, OpenCL™ code, and Python. It helps with the following:
@@ -73,3 +68,11 @@ $ advisor --report=all --project-dir=Advisor_results --report-output=Advisor_res
 ![Advisor CPU/GPU roofline summary](images/Advisor-01.png "Advisor CPU/GPU roofline summary")
 
 ![Advisor GPU roofline regions](images/Advisor-02.png "Advisor GPU roofline regions")
+
+
+## References  
+[Intel Advisor User Guide](https://www.intel.com/content/www/us/en/docs/advisor/user-guide/current/overview.html)
+
+[Intel Advisor Performance Optimization Cookbook](https://www.intel.com/content/www/us/en/docs/advisor/cookbook/current/overview.html)
+
+
