@@ -10,4 +10,4 @@
 
 * [Intel VTune Profiler](./vtune.md)
 * [Intel Advisor](./advisor.md)
-* Intel APS (Application Performance Snapshot)
+* [Intel APS (Application Performance Snapshot)](./aps.md)
