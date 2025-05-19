@@ -81,7 +81,7 @@ $ mpirun <mpi arguments> unitrace [options] <application> <args>
 
 ### `unitrace` MPI and SYCL tracing for `amr-wind` application with 24 MPI ranks on two Aurora nodes
 
-```
+```console
 $ mpirun -n 24 --ppn 12 gpu_tile_compact.sh unitrace --chrome-mpi-logging --chrome-sycl-logging  ../amr_wind abl_godunov.inp  
 ==============================================================================
                 AMR-Wind (https://github.com/exawind/amr-wind)
