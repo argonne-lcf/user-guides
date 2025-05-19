@@ -3,7 +3,7 @@
 For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support - [support@alcf.anl.gov](mailto:support@alcf.anl.gov). Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays.
 
 ## Mailing lists
-System outages and preventative maintenace schedules are sent to appropriate system mailing lists. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. If you unsubscribed previously, you can re-subscribe by going to : https://lists.alcf.anl.gov/mailman/listinfo/<ALCF-system>-notify (replace <ALCF-system> with the appropriate compute system you have access to).
+System outages and preventative maintenace schedules are sent to appropriate system mailing lists. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. If you unsubscribed previously, you can re-subscribe by going to : https://lists.alcf.anl.gov/mailman/listinfo/{ALCF-system-nam}-notify (replace {ALCF-system-nam} with the appropriate compute system you have access to).
 
 
 ## Best practices
