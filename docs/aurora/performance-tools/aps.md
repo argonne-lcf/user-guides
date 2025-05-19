@@ -26,7 +26,7 @@ Copyright (C) 2009 Intel Corporation. All rights reserved.
 
 ```
 
-### Usage of `aps`
+### Usage of `aps` and `aps-report`
 ```
 $ aps -h
 Intel(R) VTune(TM) Profiler 2025.0.1 (build 629235) Command Line Tool
@@ -50,6 +50,133 @@ Usage: 1. aps [--result-dir=<dir> | -r=<dir>] [--start-paused] [--collection-mod
 4. Show additional product info. Where <option> can be:
      --help, -h show this help and exit
      --version show version information and exit
+
+
+
+
+$ aps-report -h
+Usage: aps-report [keys] [options] <file-name(s)>
+
+General KEYS:
+  -h [ --help ]                         Show this help and exit.
+  -a [ --all ]                          Show all available diagrams.
+
+Specific KEYS:
+  -s [ --summary ]                      Show Summary information. Default 
+                                        option.
+  -g [ --html-summary ]                 Generate Summary HTML report file. 
+                                        Default option. (See option '-H' to set
+                                        the file name.)
+  -o [ --counters ]                     Show Counters & Memory usage 
+                                        statistics.
+  -f [ --functions ]                    Show MPI Function Summary for all ranks
+                                        diagram. (Use Time filter. See '-T' 
+                                        option.)
+  -t [ --mpi-time-per-rank ]            Show MPI Function Time per Rank 
+                                        diagram. (Use Time filter. See '-T' 
+                                        option.)
+  -m [ --message-sizes ]                Show Message Size diagram. (Use Time 
+                                        filter. See '-T' option.)
+  -x [ --transfers-per-communication ]  Show Data Transfers per Communication 
+                                        diagram. (Use Time filter. See '-T' 
+                                        option.) Use -v option to generate Data
+                                        Transfers by volume, not by time (which
+                                        is the default value)
+  -e [ --transfers-per-rank ]           Show Data Transfers per Rank diagram. 
+                                        (Use Volume filter. See '-V' option.)
+  -n [ --node-to-node ]                 Show Node-to-Node Transfers(MB)
+  -u [ --transfers-per-function ]       Show Data Transfers per Function 
+                                        diagram. (Use Volume filter. See '-V' 
+                                        option.)
+  -l [ --communicators-list ]           Show list of communicators used.
+  --node-topology                       Show the association between ranks, 
+                                        nodes, and PCI devices in the collected
+                                        data.
+  --metrics arg                         Show the selected performance metrics 
+                                        per node/rank. The metric names should 
+                                        be separated using the comma. Use 
+                                        --metrics=? to see the list of metrics 
+                                        available for the selected result. The 
+                                        special value "all" enables the display
+                                        of all available metrics. Example: 
+                                        --metrics="Elapsed Time, Vectorization,
+                                        PCI"
+  -j [ --itac-config ] arg              Generate specified Intel(R) Trace 
+                                        Analyzer and Collector config. 
+                                        Available config types are "time", 
+                                        "imbalance", "volume". Use -N to 
+                                        specify number of MPI functions in 
+                                        config file.
+
+OPTIONS:
+  -R [ --rank ] arg                     Specify ranks to show in the report 
+                                        (the list of ranks should be defined 
+                                        using comma and dash separators, 
+                                        example: -R 0,1,4,4-10).
+  --node arg                            Specify nodes to show in the report 
+                                        (the list of nodes should be defined 
+                                        using commas as separators, example: 
+                                        --node=localhost,test1).
+  -X [ --comm-matrix-size ] arg         Show Communication matrix as a square 
+                                        with specific dimensions. Applied to 
+                                        '-x'.
+  -M [ --comm-id ] arg                  Show detailed info about collective 
+                                        operations for specified communicator 
+                                        ID. Applied to '-f'.
+  -D [ --details ]                      Show details for the ranks with 
+                                        minimum, average, and maximum time 
+                                        values from the selected diagram. For 
+                                        Message Size diagram shows detailed 
+                                        info about functions for each size. 
+                                        Applied to the options '-t', '-c', '-f'
+                                        and '-m'.
+  -C [ --communicators ]                Shows additional information about 
+                                        communicators for collective 
+                                        operations. Applied to the options '-f'
+                                        and '-m -D'.
+  -E [ --internal-communicators ]       Shows information about internal IDs of
+                                        communicators provided by Intel(R) MPI.
+                                        Applied to '-l', '-f -C', '-m -D -C'.
+  -P [ --func-group ]                   Group data by function name. Applied to
+                                        the options '-m -D'.
+  -V [ --volume-threshold ] arg         Threshold for data volume in % from 
+                                        total transferred volume. Lines with 
+                                        volume less than the threshold will be 
+                                        skipped. Set to 0 to disable the 
+                                        filter. By default - 1%.
+  -T [ --time-threshold ] arg           Threshold for time in % from total 
+                                        process lifetime. Lines with time less 
+                                        than the threshold will be skipped. Set
+                                        to 0 to disable the filter. By default 
+                                        - 1%.
+  --functions-filter arg                Gather statistics only for specified 
+                                        MPI functions
+  -v [ --by-volume ]                    Show Data Transfers per Communication 
+                                        diagram by volume
+  --format arg                          Generate file of specified format for 
+                                        the diagram. Supported values: txt, 
+                                        csv, html
+  -H [ --html-summary-file ] arg        Name of Summary HTML report file. By 
+                                        default - 'aps_report_<date>_<time>.htm
+                                        l' in current folder.
+
+
+The following environment variables are used:
+    APS_STAT_DIR_PREFIX    a string to define the base name for the results directory.
+                           By default, the results directory is "stat"
+
+    APS_STAT_DIR_POSTFIX   a string to define a postfix for the results directory name and _mpi postfix.
+                           The default value for the bundled version is _%D-%T, where:
+                           %D - current date in the format YYYYMMDD
+                           %T - current time in the format hhmmss
+                           These placeholders are supported by the Intel MPI Library only.
+    APS_STAT_FILE_PREFIX   a string to define the base name for statistics files.
+                           The default value is "stat-". Rank number and ".bin" are added automatically.
+
+FILE-NAMES:
+  Path to the results directory or any statistics file inside the results directory.
+  Examples: `aps-report -t -D stat_20160923-141516`  -  APS parses this directory.
+            `aps-report -t -D stat-0.bin`  -  APS tries to recognize all stat* files in the current directory.
 
 
 
