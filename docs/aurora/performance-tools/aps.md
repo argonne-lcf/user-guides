@@ -226,7 +226,7 @@ Graphical representation of this data is available in the HTML report: /lus/flar
 Download the HTML file and open it on a web browser.
 
 ![APS HTML report snapshot](images/aps-01.png "APS HTML report snapshot")  
-[APS HTML report for this example](results/aps_report_20250519_001450.html)
+[APS HTML report for this example](./results/aps_report_20250519_001450.html)
 
 
 ## References  
