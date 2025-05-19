@@ -229,6 +229,376 @@ Download the HTML file and open it on a web browser.
 [APS HTML report for this example](./results/aps_report_20250519_001450.html)
 
 
+#### `aps-report` CLI interface
+
+```
+$ aps-report --metrics=? aps_report_amr-wind_4N/
+| Available Metrics:
+|--------------------
+Elapsed Time
+MPI Time
+MPI Time
+MPI Imbalance
+MPI Hotspot 1 - MPI_Waitall
+MPI Hotspot 1 - MPI_Waitall
+MPI Hotspot 2 - MPI_Isend
+MPI Hotspot 2 - MPI_Isend
+MPI Hotspot 3 - MPI_Allreduce
+MPI Hotspot 3 - MPI_Allreduce
+MPI Hotspot 4 - MPI_Testall
+MPI Hotspot 4 - MPI_Testall
+MPI Hotspot 5 - MPI_Barrier
+MPI Hotspot 5 - MPI_Barrier
+Disk I/O Bound
+Disk I/O Bound
+Disk read
+Disk write
+Resident Memory Usage per Rank
+Resident Memory Usage per Node
+Virtual Memory Usage per Rank
+Virtual Memory Usage per Node
+Instructions Per Cycle Rate
+Average CPU Frequency
+Physical Core Utilization
+Average Physical Core Utilization
+Memory Stalls
+Cache Stalls
+DRAM Stalls
+Average DRAM Bandwidth
+DRAM Bandwidth Peak
+DRAM Bandwidth Average
+DRAM Bandwidth Bound
+SP GFLOPS
+DP GFLOPS
+Vectorization
+SP FLOPs
+DP FLOPs
+Non-FP
+FP Arith/Mem Rd Instr. Ratio
+FP Arith/Mem Wr Instr. Ratio
+GPU Accumulated Time
+GPU Stack Utilization
+XVE State: Active
+XVE State: Stalled
+XVE State: Idle
+GPU Occupancy
+GPU Inbound PCIe Read
+GPU Inbound PCIe Write
+GPU Outbound PCIe Read
+GPU Outbound PCIe Write
+Network Controller Inbound PCIe Read
+Network Controller Inbound PCIe Write
+Network Controller Outbound PCIe Read
+Network Controller Outbound PCIe Write
+Inbound PCIe Read Per Device
+Inbound PCIe Write Per Device
+Outbound PCIe Read Per Device
+Outbound PCIe Write Per Device
+GPU Accumulated Time Per Device
+GPU Stack Utilization Per Device
+XVE State: Active Per Device
+XVE State: Stalled Per Device
+XVE State: Idle Per Device
+GPU Occupancy Per Device
+
+
+$ aps-report --metrics="GPU Stack Utilization Per Device, OpenMP Offload Time, GPU Accumulated Time Per Device, MPI Time" aps_report_amr-wind_4N
+| Metric Table%
+|--------------------------------------------------------------------------------------------------------------------------------
+Metric Name                                Node Name           Rank    Device Type      Device Name   Metric Value   Outlier Type
+MPI Time, s                            x4013c2s1b0n0             17            N/A              N/A        230.487           None
+MPI Time, s                            x4013c2s6b0n0             14            N/A              N/A        228.453           None
+MPI Time, s                            x4013c2s1b0n0             33            N/A              N/A        226.592           None
+MPI Time, s                            x4013c2s7b0n0             15            N/A              N/A         226.49           None
+MPI Time, s                            x4013c2s0b0n0             40            N/A              N/A        226.197           None
+MPI Time, s                            x4013c2s1b0n0             41            N/A              N/A         226.18           None
+MPI Time, s                            x4013c2s4b0n0             28            N/A              N/A        225.857           None
+MPI Time, s                            x4013c2s4b0n0             20            N/A              N/A        225.454           None
+MPI Time, s                            x4013c2s6b0n0             46            N/A              N/A        225.207           None
+MPI Time, s                            x4013c2s4b0n0             12            N/A              N/A        225.057           None
+MPI Time, s                            x4013c2s0b0n0             32            N/A              N/A        225.031           None
+MPI Time, s                            x4013c2s3b0n0             19            N/A              N/A        225.017           None
+MPI Time, s                            x4013c2s2b0n0             34            N/A              N/A        224.819           None
+MPI Time, s                            x4013c2s4b0n0             36            N/A              N/A        224.488           None
+MPI Time, s                            x4013c2s3b0n0             43            N/A              N/A        224.431           None
+MPI Time, s                            x4013c2s4b0n0             44            N/A              N/A        223.787           None
+MPI Time, s                            x4013c2s6b0n0             30            N/A              N/A         223.77           None
+MPI Time, s                            x4013c2s7b0n0             23            N/A              N/A        223.284           None
+MPI Time, s                            x4013c2s6b0n0             38            N/A              N/A        222.985           None
+MPI Time, s                            x4013c2s3b0n0             35            N/A              N/A        222.908           None
+MPI Time, s                            x4013c2s5b0n0             29            N/A              N/A        222.797           None
+MPI Time, s                            x4013c2s7b0n0             31            N/A              N/A        222.197           None
+MPI Time, s                            x4013c2s7b0n0             39            N/A              N/A        222.187           None
+MPI Time, s                            x4013c2s5b0n0             21            N/A              N/A        222.004           None
+MPI Time, s                            x4013c2s0b0n0             24            N/A              N/A        221.966           None
+MPI Time, s                            x4013c2s5b0n0             13            N/A              N/A        221.496           None
+MPI Time, s                            x4013c2s0b0n0             16            N/A              N/A         221.42           None
+MPI Time, s                            x4013c2s6b0n0              6            N/A              N/A        221.271           None
+MPI Time, s                            x4013c2s5b0n0             45            N/A              N/A        221.088           None
+MPI Time, s                            x4013c2s5b0n0             37            N/A              N/A        219.799           None
+MPI Time, s                            x4013c2s7b0n0              7            N/A              N/A        219.199           None
+MPI Time, s                            x4013c2s2b0n0             18            N/A              N/A        218.941           None
+MPI Time, s                            x4013c2s0b0n0              8            N/A              N/A        218.837           None
+MPI Time, s                            x4013c2s1b0n0              9            N/A              N/A        217.493           None
+MPI Time, s                            x4013c2s2b0n0             26            N/A              N/A        217.038           None
+MPI Time, s                            x4013c2s2b0n0             10            N/A              N/A        216.905           None
+MPI Time, s                            x4013c2s3b0n0              3            N/A              N/A        216.463           None
+MPI Time, s                            x4013c2s3b0n0             11            N/A              N/A        214.698           None
+MPI Time, s                            x4013c2s1b0n0              1            N/A              N/A        211.921           None
+MPI Time, s                            x4013c2s2b0n0              2            N/A              N/A        210.556           None
+MPI Time, s                            x4013c2s1b0n0             25            N/A              N/A        207.048           None
+MPI Time, s                            x4013c2s2b0n0             42            N/A              N/A        203.637           None
+MPI Time, s                            x4013c2s3b0n0             27            N/A              N/A        202.455           None
+MPI Time, s                            x4013c2s7b0n0             47            N/A              N/A        201.554           None
+MPI Time, s                            x4013c2s6b0n0             22            N/A              N/A        198.629           None
+MPI Time, s                            x4013c2s4b0n0              4            N/A              N/A          195.9           None
+MPI Time, s                            x4013c2s5b0n0              5            N/A              N/A        189.878      Statistic
+MPI Time, s                            x4013c2s0b0n0              0            N/A              N/A        180.196      Statistic
+MPI Time, % of Elapsed Time            x4013c2s1b0n0             17            N/A              N/A        49.1639           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0             14            N/A              N/A        48.7335           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0             15            N/A              N/A        48.3632           None
+MPI Time, % of Elapsed Time            x4013c2s1b0n0             33            N/A              N/A        48.3331           None
+MPI Time, % of Elapsed Time            x4013c2s0b0n0             40            N/A              N/A        48.2486           None
+MPI Time, % of Elapsed Time            x4013c2s1b0n0             41            N/A              N/A        48.2453           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0             28            N/A              N/A        48.1787           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0             20            N/A              N/A        48.0928           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0             46            N/A              N/A         48.041           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0             19            N/A              N/A        48.0165           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0             12            N/A              N/A        48.0082           None
+MPI Time, % of Elapsed Time            x4013c2s0b0n0             32            N/A              N/A        47.9998           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0             34            N/A              N/A        47.9635           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0             43            N/A              N/A        47.8914           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0             36            N/A              N/A        47.8867           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0             44            N/A              N/A        47.7371           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0             30            N/A              N/A        47.7344           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0             23            N/A              N/A        47.6786           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0             38            N/A              N/A        47.5669           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0             35            N/A              N/A        47.5666           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0             29            N/A              N/A        47.5233           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0             31            N/A              N/A        47.4464           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0             39            N/A              N/A        47.4443           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0             21            N/A              N/A        47.3541           None
+MPI Time, % of Elapsed Time            x4013c2s0b0n0             24            N/A              N/A         47.346           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0             13            N/A              N/A        47.2459           None
+MPI Time, % of Elapsed Time            x4013c2s0b0n0             16            N/A              N/A        47.2297           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0              6            N/A              N/A        47.2014           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0             45            N/A              N/A        47.1587           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0             37            N/A              N/A        46.8839           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0              7            N/A              N/A        46.8063           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0             18            N/A              N/A        46.7096           None
+MPI Time, % of Elapsed Time            x4013c2s0b0n0              8            N/A              N/A        46.6787           None
+MPI Time, % of Elapsed Time            x4013c2s1b0n0              9            N/A              N/A        46.3922           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0             26            N/A              N/A        46.3036           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0             10            N/A              N/A        46.2752           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0              3            N/A              N/A        46.1912           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0             11            N/A              N/A        45.8147           None
+MPI Time, % of Elapsed Time            x4013c2s1b0n0              1            N/A              N/A        45.2039           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0              2            N/A              N/A        44.9206           None
+MPI Time, % of Elapsed Time            x4013c2s1b0n0             25            N/A              N/A        44.1644           None
+MPI Time, % of Elapsed Time            x4013c2s2b0n0             42            N/A              N/A        43.4445           None
+MPI Time, % of Elapsed Time            x4013c2s3b0n0             27            N/A              N/A        43.2021           None
+MPI Time, % of Elapsed Time            x4013c2s7b0n0             47            N/A              N/A        43.0384           None
+MPI Time, % of Elapsed Time            x4013c2s6b0n0             22            N/A              N/A        42.3713           None
+MPI Time, % of Elapsed Time            x4013c2s4b0n0              4            N/A              N/A        41.7886           None
+MPI Time, % of Elapsed Time            x4013c2s5b0n0              5            N/A              N/A        40.5016      Statistic
+MPI Time, % of Elapsed Time            x4013c2s0b0n0              0            N/A              N/A        38.4364      Statistic
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 0 Stack 0        303.694           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 0 Stack 0        300.652           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 0 Stack 0        299.451           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 0 Stack 0         294.79           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 0 Stack 1         293.95           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 0 Stack 1        293.677           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 0 Stack 0         290.41           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 0 Stack 1        290.318           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 0 Stack 1        289.743           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 0 Stack 0        289.463           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 0 Stack 0        284.887           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 0 Stack 0        284.826           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 1 Stack 1        276.046           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 1 Stack 0        273.294           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 0 Stack 1        272.365           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 1 Stack 1         271.89           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 2 Stack 0        271.825           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 2 Stack 0        271.599           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 1 Stack 0        271.522           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 1 Stack 0        271.499           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 2 Stack 1        271.448           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 1 Stack 1        271.348           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 0 Stack 1        271.318           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 1 Stack 1         271.11           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 2 Stack 0        270.924           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 2 Stack 1        270.449           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 1 Stack 1        270.418           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 1 Stack 1        270.406           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 2 Stack 0        270.349           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 0 Stack 1        270.251           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 2 Stack 0        270.194           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 2 Stack 1        270.167           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 1 Stack 0        269.773           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 0 Stack 1         269.59           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 1 Stack 0        269.505           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 2 Stack 0        269.164           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 1 Stack 0        269.037           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 2 Stack 1        268.696           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 2 Stack 0        268.338           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 2 Stack 1        268.169           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 2 Stack 0        268.071           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 1 Stack 0         268.01           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 1 Stack 1        267.924           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 2 Stack 1        267.462           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 2 Stack 1        267.385           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 1 Stack 1         267.25           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 2 Stack 1        266.918           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 1 Stack 0        266.015           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Accumulated Time Per Device, s     x4013c2s7b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s6b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s5b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s4b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s3b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s2b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s1b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Accumulated Time Per Device, s     x4013c2s0b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 0 Stack 0           64.8           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 0 Stack 0           64.1           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 0 Stack 0           63.9           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 0 Stack 0           62.9           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 0 Stack 1           62.7           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 0 Stack 1           62.7           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 0 Stack 1           61.9           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 0 Stack 0           61.9           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 0 Stack 1           61.8           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 0 Stack 0           61.7           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 0 Stack 0           60.8           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 0 Stack 0           60.8           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 1 Stack 1           58.9           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 1 Stack 0           58.3           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 0 Stack 1           58.1           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 2 Stack 0             58           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 1 Stack 1             58           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 2 Stack 1           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 2 Stack 0           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 1 Stack 1           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 1 Stack 1           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 1 Stack 0           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 1 Stack 0           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 0 Stack 1           57.9           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 2 Stack 0           57.8           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 2 Stack 1           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 2 Stack 0           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 2 Stack 0           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 1 Stack 1           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 1 Stack 1           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 0 Stack 1           57.7           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 2 Stack 1           57.6           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 1 Stack 0           57.6           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 1 Stack 0           57.5           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 0 Stack 1           57.5           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 2 Stack 0           57.4           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 1 Stack 0           57.4           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 2 Stack 1           57.3           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 2 Stack 1           57.2           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 2 Stack 0           57.2           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 2 Stack 0           57.2           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 1 Stack 0           57.2           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 2 Stack 1           57.1           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 1 Stack 1           57.1           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 2 Stack 1             57           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 1 Stack 1             57           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 2 Stack 1           56.9           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 1 Stack 0           56.7           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 5 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 5 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 4 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 4 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 3 Stack 1              0           None
+GPU Stack Utilization Per Device, %    x4013c2s7b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s6b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s5b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s4b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s2b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s1b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+GPU Stack Utilization Per Device, %    x4013c2s0b0n0            N/A            GPU    GPU 3 Stack 0              0           None
+
+```
+
+
+
 ## References  
 [Intel Application Performance Snapshot User's Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide-application-snapshot-linux/2025-0/overview.html)
 
