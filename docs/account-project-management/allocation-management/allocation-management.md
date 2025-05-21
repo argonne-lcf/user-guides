@@ -26,6 +26,13 @@ to determine active allocations.
 
 To request an extension of your existing discretionary allocation or to request additional hours, please complete an allocation renewal request [here](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
+To renew or extend storage allocations, email [support@alcf.anl.gov](support@alcf.anl.gov) with answers to the following information:
+- What have you accomplished with your original allocation?
+- Please include a brief description of any publications or major presentations that were (or will be) generated in full or in part because of this allocation.
+- What will you do with the extra time?
+- How much additional storage (in TB) do you need?
+- When should the allocation end?
+
 ## Sub-allocations
 
 !!! tip inline end
