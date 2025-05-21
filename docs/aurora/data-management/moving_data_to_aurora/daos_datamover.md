@@ -23,7 +23,7 @@ daos container query $DAOS_POOL_NAME $DAOS_CONT_NAME
 
 You can also use other mpifileutils binaries.
 
-```bash
+```console
 mpifileutils/bin> ls
 dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker1  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
 
