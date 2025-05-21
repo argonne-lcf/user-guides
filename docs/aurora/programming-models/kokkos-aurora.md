@@ -28,7 +28,7 @@ Add these lines to `CMakeLists.txt`:
 
 ```cmake
 find_package(Kokkos REQUIRED)
-target_link_libraries(myTarget Kokkos::kokkoscore)
+target_link_libraries(myTarget Kokkos::kokkos)
 ```
 
 Here is a simple example `CMakeLists.txt` to compile an example program:
@@ -46,7 +46,7 @@ set(top_SRCS
 set(SOURCE_FILES ${top_SRCS})
 
 add_executable(example1_sycl_aot ${SOURCE_FILES})
-target_link_libraries(example1_sycl_aot Kokkos::kokkoscore)
+target_link_libraries(example1_sycl_aot Kokkos::kokkos)
 target_include_directories(example1_sycl_aot PUBLIC ${buildExample_SOURCE_DIR})
 ```
 
@@ -55,7 +55,7 @@ Configure and build it like this:
 ```bash
 mkdir build
 cd build
-cmake -DCMAKE_CXX_COMPILER=CC -DCMAKE_C_COMPILER=cc ..
+cmake -DCMAKE_CXX_COMPILER=icpx ..
 make
 ```
 
@@ -122,24 +122,12 @@ mkdir build
 cd build
 
 cmake\
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo\
     -DCMAKE_CXX_COMPILER=icpx\
-    -DCMAKE_CXX_EXTENSIONS=OFF\
-    -DCMAKE_CXX_STANDARD=17\
-    -DKokkos_ENABLE_TESTS=OFF\
     -DKokkos_ENABLE_SERIAL=ON\
     -DKokkos_ENABLE_OPENMP=ON\
     -DKokkos_ENABLE_SYCL=ON\
-    -DKokkos_ARCH_INTEL_GEN=ON\
-    -DKokkos_ENABLE_SYCL_RELOCATABLE_DEVICE_CODE=OFF\
-    -DKokkos_ENABLE_IMPL_SYCL_DEVICE_GLOBAL_SUPPORTED=OFF\
-    -DBUILD_SHARED_LIBS=ON\
-    -DKokkos_ENABLE_DEPRECATED_CODE_3=ON\
-    -DKokkos_ENABLE_DEBUG=OFF\
-    -DKokkos_ENABLE_EXAMPLES=OFF\
-    -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations -Wno-tautological-constant-compare -ffp-model=precise -Xsycl-target-backend \"-device pvc\""\
-    -DCMAKE_EXE_LINKER_FLAGS="-ffp-model=precise -fsycl-max-parallel-link-jobs=20 -fno-sycl-rdc"\
-    -DCMAKE_VERBOSE_MAKEFILE=OFF\
+    -DKokkos_ARCH_INTEL_PVC=ON\
+    -DCMAKE_CXX_FLAGS="-fp-model=precise"\
     -DCMAKE_INSTALL_PREFIX=/path/to/your/install/directory\
     ..
 

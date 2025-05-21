@@ -4,7 +4,7 @@ Allocations require management – balance checks, resource allocation, requesti
 
 ## Checking for an Active Allocation
 
-To determine if there is an active allocation, check [Job Submission](../../running-jobs/job-and-queue-scheduling.md#qsub).
+To determine if there is an active allocation, check [Job Submission](../../running-jobs/index.md#qsub).
 
 For information on how to run the query, look at our documentation on our [sbank Allocations Accounting System](sbank-allocation-accounting-system.md) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
 
@@ -34,7 +34,11 @@ To request an extension of your existing discretionary allocation or to request 
 
 Suballocations let PIs control who in their team can run jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates).
 
-**Step 1: Create Suballocations (Project PI):**
+!!! note
+
+    Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID or the suballocationName. You can no longer submit jobs with just the project name.
+
+### Step 1: Create Suballocations (Project PI):
 
 PI creates suballocations 
 
@@ -42,15 +46,15 @@ PI creates suballocations
 sbank new sub <allocationid> --name <nameofsuballoc>
 ```
 
-**Step 2: Manage Suballocations (Project PI)**
+### Step 2: Manage Suballocations (Project PI):
 
-PI adds users to suballocations
+#### PI adds users to suballocations
 
 ```bash
 sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."
 ```
 
-PI can change the name of a suballocation 
+#### PI can change the name of a suballocation 
 
 ```bash
 sbank e sub <suballocationID> --name=<new_name_of_suballocation>
@@ -58,25 +62,25 @@ sbank e sub <suballocationID> --name=<new_name_of_suballocation>
 
 By default, the primary suballocation (which is the default suballocation created when the allocation is created by ALCF) is unrestricted, i.e., enabled for all project members. That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default, and users have to be added for each of them.
 
-To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation:
+#### To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation:
 
 ```bash
 sbank-edit-suballocation --restrict <primary suballocation id>
 ```
 
-Then add users with this command:
+#### Then add users with this command:
 
 ```bash
 sbank e sub <primary suballocation id> --add-user="<username1> <username2> ..."
 ```
 
-PI changes start and end dates for a suballocation:
+#### PI changes start and end dates for a suballocation:
 
 ```bash
 sbank e sub <suballocationID> -S <start_date> -E <end_date>
 ```
 
-PI adds hours to a suballocation:
+#### PI adds hours to a suballocation:
 
 ```bash
 sbank e sub <projectname>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameOfDestSuballoc>
@@ -90,19 +94,25 @@ sbank e sub <projectname>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-s
 
     See `sbank e suballocation -h` for all the options.
 
-**Step 3: Submit Jobs (Project team)**
+### Step 3: Submit Jobs (Project team):
 
-Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list.
+Submit jobs to a suballocation. Note that the user should be on the suballocation’s user list. **Once submanagement is enabled for a project allocation, all job submissions must specify the `suballocationID` or the `suballocationName`.**
 
 Example:
 
 ```bash
+#Specify suballocationID
 qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <suballocationID> -q demand test.sh
 ```
+or
 
-Note: Once submanagement is enabled for a project allocation, all job submissions must specify the `suballocationID`.
+```bash
+#Specify suballocation name
+qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<suballocationName> -q demand test.sh
+```
 
-**Useful commands:**
+
+### Useful commands:
 
 List all suballocations for a project that shows the number of jobs run, charges, allocation balance, suballocation name, and list of users:
 

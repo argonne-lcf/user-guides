@@ -10,11 +10,11 @@ Then, type in the password from your CRYPTOCard/MobilePASS+ token.
 
 ## Hardware Overview
 
-An overview of the Polaris system, including details on the compute node architecture, is available on the [Machine Overview](./machine-overview.md) page.
+An overview of the Polaris system, including details on the compute node architecture, is available on the [Machine Overview](./index.md) page.
 
 ## Compiling Applications
 
-Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/compiling-and-linking-overview.md) page and corresponding pages depending on the target compiler and programming model.
+Users are encouraged to read through the [Compiling and Linking Overview](./compiling-and-linking/index.md) page and corresponding pages depending on the target compiler and programming model.
 
 ## Accessing Additional Software
 
@@ -28,7 +28,7 @@ Additionally, a suite of software packages is provided via Spack deployments, de
 
 ## Submitting and Running Jobs
 
-Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/job-and-queue-scheduling.md) page for information on using the PBS scheduler and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](../running-jobs/example-job-scripts.md) page as well.
+Users are encouraged to read through the [Running Jobs with PBS at the ALCF](../running-jobs/index.md) page for information on using the PBS scheduler and preparing job submission scripts. Some example job submission scripts are available on the [Example Job Scripts](../running-jobs/example-job-scripts.md) page as well.
 
 ## Lustre File Striping
 
@@ -38,7 +38,7 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 ## Proxy
 
-If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
+If the node you are on doesn't have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
 
 ```bash
 # proxy settings
