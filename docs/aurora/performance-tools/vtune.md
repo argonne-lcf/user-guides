@@ -161,6 +161,10 @@ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mo
 ![GPU memory latency](images/mem-latency-01.png "GPU memory latency")
 
 
+## Known issues and workarounds
+
+* `gpu-offload` analysis may hang with some applications: [WA] add `-run-pass-thru=--perf-threads=none` to the Vtune command line
+
 ## References  
 [Intel VTune Profiler User Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/current/overview.html)
 
