@@ -293,7 +293,7 @@ nav:
       - SambaStudio: 
         - System Overview: ai-testbed/sambastudio/system-overview.md
         - Getting Started: ai-testbed/sambastudio/getting-started.md
-        - Running a Model/Program: ai-testbed/sambastudio/running-a-model-or-program.md        
+        - Using SambaStudio: ai-testbed/sambastudio/running-a-model-or-program.md        
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:

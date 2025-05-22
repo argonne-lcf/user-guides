@@ -1,4 +1,4 @@
-# Running a Model/Program
+# Using SambaStudio
 
 ## Getting Started
 
@@ -10,25 +10,21 @@ After logging in, change the tenant using the botton at the top of the screen, f
 You will need to change the current tenant to `metis` after every login. If resources are not showing as expected, check the tenant setting.
 
 ### SambaStudio Object Types
-The main resource abstractions in SambaStudio are models, datasets, and endpoints. Tenants and users control or share resources. Users own projects, which contain endpoints and jobs. Jobs have two types: training and batch inference. 
+The main resource abstractions in SambaStudio are models, datasets, and endpoints. Tenants and users control or share resources. Users [eventually: with greater than viewer privileges] own projects, which contain endpoints and jobs. Jobs have two types: training and batch inference.
+[Most users will have viewer-only rights, also allowing interactions with endpoints]
 
 ![SambaStudio left menu](files/SambaStudio_left_menu.png)
 
-#### Projects
-A project is logical grouping of workloads and artifacts within a tenant. It contains endpoints, and batch jobs for training and inference. Projects are created and owned by users, who are members of one or more tenants. (TODO: Will ALCF expose tenants to users?)
+#### Dashboard
+The Dashboard displays the endpoints available for use by the logged-in user, and jobs, including completed jobs.
 
-The SambaStudio documentation for projects is [Projects](https://docs.sambanova.ai/sambastudio/latest/projects.html)
+#### Playground
+The Playground supports interaction with endpoints. Multiple models can be queried with the same prompt, and the results can be easily compared. 
 
 #### Models
 Models are the ML models available in SambaStudio. Each model has a model card that may be viewed in the GUI.
 
 The SambaStudio documentation for models is [Models](https://docs.sambanova.ai/sambastudio/latest/model-hub.html)
-
-#### Datasets
-
-TODO what isa dataset? The SN documentation is not helpful.
-
-The SambaStudio documentation for datasets is [Datasets](https://docs.sambanova.ai/sambastudio/latest/add-datasets.html)
 
 #### Endpoints
 
@@ -36,6 +32,16 @@ Endpoints are how SambaStudio exposes models for inference.
 
 The SambaStudio documentation for endpoints is [Create and use endpoints](https://docs.sambanova.ai/sambastudio/latest/endpoints.html)
 
+#### Projects
+A project is logical grouping of workloads and artifacts within a tenant. It contains endpoints, and batch jobs for training and inference. Projects are created and owned by users, who are members of one or more tenants. (TODO: Will ALCF expose tenants to users?)
+
+The SambaStudio documentation for projects is [Projects](https://docs.sambanova.ai/sambastudio/latest/projects.html)
+
+#### Datasets
+
+The SambaStudio documentation for datasets is [Datasets](https://docs.sambanova.ai/sambastudio/latest/add-datasets.html)
+
+<!---  Commenting out this in anticipation of a viewer user privilege level
 ### Creating a project
 Projects are easily created (and deleted) with the web GUI.
 
@@ -52,9 +58,12 @@ For details:
 snapi project create --help
 ```
 
-If a project is deleted, endpoints and jobs within it will also be deleted. 
+If a project is deleted, endpoints and jobs within it will also be deleted.
+
+-->
 
 ### Using endpoints
+<!--- Commenting out this in anticipation of a viewer user privilege level
 #### Making an endpoint, and stopping/restarting/deleting it.
 
 Endpoints are easily created (and deleted) using the web GUI
@@ -111,11 +120,15 @@ snapi endpoint stop --project=<project name> --endpoint=<endpoint name>
 ```
 
 TODO currently restarting an endpoint with snapi is kludgy, and uses update and an instance count greater than zero. This may be correctly soon.
+--->
 
-#### GUI
+#### Playground
 
 Lots of screencaps.
+
 LLM example using a chat bot endpoint, e.g. LLama
+
+Example of comparing two models with a single prompt
 
 #### CLI
 
@@ -125,7 +138,8 @@ Install the SambaStudio CLI into a python virtual environment.
 See [SambaStudio CLI setup guide](https://docs.sambanova.ai/sambastudio/latest/cli-setup.html) for more details.
 You will need python 3.9 or 3.10 available. If needed, install in the usual way for your operating system. (e.g. `sudo apt install python3.9` in Debian Linuxes). (Note: simple install of a new python version will not override your default python command.)
 
-Note: the CLI can be also be installed in, and used from, your enviroment on a SambaNova login node, which has python 3.9 installed.
+
+Note: the CLI can be also be installed in, and used from, your enviroment on a SambaNova login node, which has python 3.9 installed. If you chose to use a login node, access it as follows:
 ```bash
 ssh ALCFUserID@sambanova.alcf.anl.gov
 Password: < MobilePASS+ code >
@@ -196,27 +210,19 @@ snapi version
 snapi model list
 ```
 
-Use CLI - example (llava, perhaps?) 
+TODO Use CLI - examples.
+- Do inference.
+- Get model descriptions.
+- A few other key tasks. 
 
-#### REST API
+#### REST API for inference tasks
 
-The three available SambaStudio APIs are described at
+The three available SambaStudio APIs for inference tasks are described at
 [API reference documents](https://docs.sambanova.ai/sambastudio/latest/api-ref-landing.html)
 
 SambaStudio suggests templating scripts that use curl to access the api.
-TODO: This example is not present in the ANL SN40L SambaNova Suite
-Here's an example, for conversion of a paper figure to a table using a DePlot endpoint.
 
-Either copy to a script, e.g. `post_deplot.sh` and executed with `bash post_deplot.sh`, or simply copy the commands to your command line.
-
-Get the sample image file, an image from the DePlot arxiv paper,
-[DePlot: One-shot visual language reasoning by plot-to-table translation](https://arxiv.org/abs/2212.10505).
-```
-wget http://localhost:8000/ai-testbed/sambastudio/files/deplot_vs_baselines_chartqa.png
-```
-Or download it with your browser, using this [link](files/deplot_vs_baselines_chartqa.png).
-
-You will need to edit the ENDPOINT_KEY and the PREDICT_URL to match the DePlot endpoint that you are using. 
+<!--
 ```bash
 #!/bin/bash
 
@@ -242,19 +248,26 @@ cat prediction.md
 
 Use `bash -x post_deplot.sh` to see details of the constructed curl command.
 
-For supported applications, the UI will give sample code for the snapi tool, for curl, and a sample python script.
+-->
 
+For supported models, the Playground will give sample code for the snapi tool, for curl, and a sample python script.
+
+<!---
 Example of curl command template. 
 
 This sample uses jq for parsing of the output JSON. (Install it if needed, e.g. on a laptop. Most ANL ai testbed hosts will have it.)
+--->
 
 ##### Python SDK
 
 SambaNova's documentation for the Pyton SDK is at
 [SambaStudio Python SDK](https://docs.sambanova.ai/snsdk-api/index.html)
 
-Package installs. (Not spotting docs for this?)
-Sample (crib from SN documentation, with link)
+The Playground gives sample python code for supported models for performing an inference query. You will need to set an environment variable for the api key.
+
+Package installs.
+
+Another sample here, crib from SN documentation, with link. 
 
 
 
