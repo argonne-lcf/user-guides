@@ -228,7 +228,11 @@ nav:
           - gdb4hpc: aurora/debugging/gdb4hpc.md
           - Codee: aurora/debugging/codee.md
         - Performance Tools:
-        #  - Overview: aurora/performance-tools/performance-overview.md
+          - aurora/performance-tools/index.md
+          - iprof: aurora/performance-tools/iprof.md
+          - unitrace: aurora/performance-tools/unitrace.md
+          - xpu-smi: aurora/performance-tools/xpu-smi.md
+          - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
         - Services:
