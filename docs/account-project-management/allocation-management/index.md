@@ -42,4 +42,4 @@ Depending on the allocation program, users can choose from some or all of the fo
 * [Other Facility Policies](../../policies/index.md)
 
 ## Requesting Additional Allocation Hours
-If you are a PI of a Director's Discretionary project that has an active allocation and you need additional hours, please see “Getting More Time” at [Managing Your Allocations](../../allocation-management/allocation-management.md#getting-more-time) for more details.
+If you are a PI of a Director's Discretionary project that has an active allocation and you need additional hours, please see “Getting More Time” at [Managing Your Allocations](../allocation-management/allocation-management.md#getting-more-time) for more details.
