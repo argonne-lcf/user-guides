@@ -108,7 +108,7 @@ The last parts of the output should resemble the following, with messages about 
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
-This PyTorch GPT-J 6B parameter pretraining sample uses 2 CS2s.
+This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS2.
 
 First, source a Cerebras PyTorch virtual environment and make sure that the requirements are installed:
 
@@ -124,7 +124,7 @@ cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=2 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 ```
 
 The last parts of the output should resemble the following:

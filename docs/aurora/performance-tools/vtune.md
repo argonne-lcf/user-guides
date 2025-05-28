@@ -1,10 +1,5 @@
 # VTune
 
-## References  
-[Intel VTune Profiler User Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/current/overview.html)
-
-[Downloadable documents for VTune Profiler](https://d1hdbi2t0py8f.cloudfront.net/vtune-docs/index.html)
-
 ## Introduction
 Intel VTune Profiler can be used to find and fix performance bottlenecks quickly. There are several options (i.e., GPU Hotspots analysis, GPU Offload analysis, and HPC Performance Characterization analysis) available for Intel CPUs and GPUs on Aurora.
 
@@ -164,3 +159,18 @@ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mo
 ```
 
 ![GPU memory latency](images/mem-latency-01.png "GPU memory latency")
+
+
+## Known issues and workarounds
+
+* `gpu-offload` analysis may hang with some applications. **Workaround**: add `-run-pass-thru=--perf-threads=none` to the VTune command line
+
+## References  
+[Intel VTune Profiler User Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/current/overview.html)
+
+[Downloadable documents for VTune Profiler](https://d1hdbi2t0py8f.cloudfront.net/vtune-docs/index.html)
+
+[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_2_Intel_Analyzers.pdf)
+
+
+

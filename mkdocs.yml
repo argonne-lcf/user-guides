@@ -69,6 +69,8 @@ extra_css:
 
 extra_javascript:
   - javascripts/alcf-extra.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
 
 markdown_extensions:
   - footnotes
@@ -139,23 +141,23 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
-  - redirects:
-      redirect_maps:
-        # broken links from header.html in this repo, main site, and my.alcf.anl.gov
-        # eventually, update those links, remove redirects, and freeze these paths via PR CI checks
-        'ai-testbed/getting-started.md': 'ai-testbed/index.md'
-        'policies/facility-policies.md': 'policies/index.md'
-        'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
-        'account-project-management/accounts-and-access/user-account-overview.md': 'account-project-management/accounts-and-access/index.md'
-        # top-level section empty placeholder pages; eventually add content and remove redirects for most (and/or reoganize):
-        'machines/index.md': 'index.md'
-        'contacting-support/index.md': 'contacting-support/technical-support.md'
-        'data-management/index.md': 'data-management/filesystem-and-storage/index.md'
-        'account-project-management/index.md': 'account-project-management/MyALCF.md'
+  # - redirects:
+  #     redirect_maps:
+        #'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
   # - ALCF User Guides:
   #   - index.md
+  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+
+  - User Support:
+    - support/index.md
+    - Contact:
+      - Submit a Ticket: support/technical-support.md
+      - Request Software: support/software-requests.md
+      - ALCF Users Slack: support/alcf-users-slack.md
+      - Contribute to User Guides: support/docs-issues.md
+      - Aurora Office Hours: support/office-hours.md
 
   - Machines:
     - machines/index.md
@@ -163,7 +165,8 @@ nav:
         - aurora/index.md
         - Node Performance Overview: aurora/node-performance-overview/node-performance-overview.md
         - Getting Started: aurora/getting-started-on-aurora.md
-        - Early User Notes & Known Issues: aurora/known-issues.md
+        - Known Issues: aurora/known-issues.md
+        - System Updates: aurora/system-updates.md
         - Aurora Programming Environment: aurora/aurora-pe.md
         # TODO: "&" vs. "and" in sidebar page titles?
         - Compiling and Linking:
@@ -225,7 +228,11 @@ nav:
           - gdb4hpc: aurora/debugging/gdb4hpc.md
           - Codee: aurora/debugging/codee.md
         - Performance Tools:
-        #  - Overview: aurora/performance-tools/performance-overview.md
+          - aurora/performance-tools/index.md
+          - iprof: aurora/performance-tools/iprof.md
+          - unitrace: aurora/performance-tools/unitrace.md
+          - xpu-smi: aurora/performance-tools/xpu-smi.md
+          - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
         - Services:
@@ -307,7 +314,7 @@ nav:
       - Known Issues: polaris/known-issues.md
       - System Updates: polaris/system-updates.md
       - Compiling and Linking:
-        - Compiling and Linking Overview: polaris/compiling-and-linking/compiling-and-linking-overview.md
+        - polaris/compiling-and-linking/index.md
         - Programming Models: polaris/compiling-and-linking/polaris-programming-models.md
         - Example Program and Makefile: polaris/compiling-and-linking/polaris-example-program-makefile.md
         - CCE Compilers: polaris/compiling-and-linking/cce-compilers-polaris.md
@@ -317,7 +324,9 @@ nav:
         - oneAPI Toolkit: polaris/compiling-and-linking/oneapi-compiler.md
       - Build Tools:
         - CMake: polaris/build-tools/cmake-polaris.md
-      - Running Jobs: polaris/running-jobs.md
+      - Running Jobs:
+        - polaris/running-jobs/index.md
+        - Using GPUs: polaris/running-jobs/using-gpus.md
       - Applications and Libraries:
         - Applications:
           - Amber: polaris/applications-and-libraries/applications/amber.md
@@ -368,7 +377,6 @@ nav:
         - ParaView Tutorial: polaris/visualization/paraview-tutorial.md
         - VNC: polaris/visualization/vnc.md
       - Workflows:
-        - Multi-Instance GPU (MIG) mode: polaris/workflows/mig-compute.md
         - Balsam: polaris/workflows/balsam.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
@@ -386,13 +394,6 @@ nav:
       - Visualization:
         - sophia/visualization/index.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
-
-  - User Support:
-    - contacting-support/index.md
-    - Submit a Ticket: contacting-support/technical-support.md
-    - Request Software: contacting-support/software-requests.md
-    - ALCF Users Slack: contacting-support/alcf-users-slack.md
-    - Contribute to User Guides: contacting-support/docs-issues.md
 
   - Running Jobs with PBS:
     - running-jobs/index.md

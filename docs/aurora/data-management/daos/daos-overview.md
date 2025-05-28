@@ -1,13 +1,8 @@
 # DAOS Architecture
 
-!!! warning
-
-    DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
-
-DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporitng POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
+DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
 ![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
-
 
 ## DAOS Overview
 
@@ -20,16 +15,18 @@ DAOS pool is a physically allocated dedicated storage space for your project.
 
 Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request a DAOS pool with the following information:
 
-* Project Name
-* ALCF User Names
-* Total Space requested (typically 100 TBs++)
-* Justification
-* Preferred pool name
+- Project Name
+- ALCF User Names
+- Total Space requested (typically 100 TBs++)
+- Justification
+- Preferred pool name
 
 ### Note
+
 This is an initial test DAOS configuration and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system. Warning will be given before the system is wiped to allow time for users to move any important data off.
 
 ## Modules
+
 Please load the `daos` module when using DAOS. This should be done on the login node (UAN) or in the compute node (jobscript):
 
 ```bash linenums="1"
@@ -38,9 +35,11 @@ module load daos/base
 ```
 
 ## Pool
+
 Pool is a dedicated space allocated to your project. Once your pool is allocated for your project space.
 
 Confirm you are able to query the pool via:
+
 ```bash linenums="1"
 daos pool query <pool_name>
 ```
@@ -59,31 +58,34 @@ Total size: 6.0 TB
 Rebuild done, 4 objs, 0 recs
 ```
 
-## DAOS Container
+## POSIX Containers
 
-The container is the basic unit of storage. A POSIX container can contain hundreds of millions of files, you can use it to store all of your data. You only need a small set of containers; perhaps just one per major unit of project work is sufficient.
+In DAOS general tems, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documention on DFS can be found [here](https://docs.daos.io/v2.6/user/filesystem).
 
-There are 3 modes with which we can operate with the DAOS containers:
+With more than 1024 servers at full deployment, the user-accessible cluster named `daos_user` has 16,384 solid state drives (SSDs) and 16,384 persistent memory modules, and without some amount of data redundancy a hardware failure on any one could result in the loss of your data.  DAOS has several data redundancy options available, and a tradeoff must be made between data resiliency, performance, and volume.  The recommended tradeoff is to specify a redundancy factor of 2 on the container for both files and directories via the `rd_fac:2` container property.  By default, this means files will utilize an erasure coding algorithm with a ratio of 16 data blocks to 2 parity blocks (in DAOS file object class terms `EC_16P2GX`), which in simplest terms, means 18 blocks of erasure coding stores 16 blocks of data. For directories, the default is to create 2 full duplicates of the directory, which is basically an emulation of an inode in traditional file system terms, by setting the directory object class to `RP_3G1`. For this default setting, there is little performance tradeoff for directories at this redundancy level, since it just contains metadata.
 
-1. POSIX container POSIX Mode
-2. POSIX Container MPI-IO Mode
-3. DFS container through DAOS APIs.
+In the scenario with the above settings, when a server failure occurs, be it a software or hardware failure (e.g. an SSD, persistent memory module, or a networking switch failure) on up to 2 servers, a process called a _rebuild_ occurs. During rebuild, the data on the failed servers is reconstructed to preserve data integrity, and the servers with the failures are excluded from the cluster. The servers or network can be repaired in the future so that the servers are eventually reintegrated to the cluster.  The rebuild process in this scenario does not disrupt service, and the cluster does not experience any outage.  If more than 2 servers are lost (say, due to a network issue) or more servers are lost during the rebuild, then the cluster will be taken offline to conduct repairs.
 
-### Create a POSIX container
-
-```shell-session
-$ DAOS_POOL=datascience
-$ DAOS_CONT=LLM-GPT-1T
-$ daos container create --type POSIX ${DAOS_POOL}  ${DAOS_CONT} --properties rd_fac:1
-  Container UUID : 59747044-016b-41be-bb2b-22693333a380
-  Container Label: LLM-GPT-1T
-  Container Type : POSIX
-
-Successfully created container 59747044-016b-41be-bb2b-22693333a380
+These parameters are set at container creation as follows along with others which will be described below for best practices:
+```bash 
+daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
 ```
 
-If you prefer a higher data protection and recovery you can `--properties rd_fac:2` and if you don't need data protection and recovery, you can remove `--properties rd_fac:1`.
-We recommend to have at least `--properties rd_fac:1`.
+The chunk-size of 2 MB and the `ec_cell_sz` (erasure coding cell size) of 128 KB work together to optimally stripe the data across the 16 data servers plus 2 parity servers (18 erasure coding servers) and set the amount of data written to an SSD on a server at one time by one client. The general rule of thumb is the number of data servers (excluding parity servers) multiplied by the `ec_cell_sz` should equal the chunk size, or at least be an even multiple of it.  DAOS containers have a property for both server and client checksum, whereby the client will retry the data transfer to or from the server in the case of corruption, however by default this is disabled, to enable it for best performance and acceptable accuracy usage of the CRC-32 algorithm is recommended with the above parameters `cksum:crc32,srv_cksum:on`.
+
+Now, the `GX` in `EC_16P2GX` tells the container to stripe the data across all servers in the pool, which is optimum if your application is writing a single shared file, but instead if your application is writing many files, say file per process, for best performance you should change the `GX` to `G32`, the 32 being the hard-coded number of servers the data in the file will be striped across.  You can do this in one of two ways:
+
+1. Use the `--file-oclass` parameter explicitly in the container creation. The call would look like:
+```bash
+daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P2G32  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
+```
+2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P2GX` and you wanted a subdirectory `<dir name>` to have `EC_16P2G32`, mount the container (this is described in the 'Mount a POSIX container' section below) with directory `<dir name>` at `/tmp/<pool name>/<container name>` and then:
+```bash
+daos fs set-attr --path=/tmp/<pool name>/<container name>/<dir name> --oclass=EC_16P2G32
+```
+By default any top-level directory created in a container will inherit the directory and file object class from the container, and any subdirectory inherits from its parent, so in this fashion you can change the default and have a mix of file object classes in the same container.
+
+There is maintenance overhead with containers, therefore it is advisable to create just one or a few containers and create multiple directories in the few containers to partition your work.
 
 ![data model](images/datamodel.png "DAOS data model")
 
@@ -104,8 +106,8 @@ daos cont list ${DAOS_POOL}
 daos container get-prop  $DAOS_POOL  $DAOS_CONT
 ```
 
-* Look for messages like `Rebuild busy and state degraded in the daos pool query.`
-* Look for messages like `Health (status) : UNCLEAN in the get prop`
+- Look for messages like `Rebuild busy and state degraded in the daos pool query.`
+- Look for messages like `Health (status) : UNCLEAN in the get prop`
 
 ```bash
 daos pool      autotest  $DAOS_POOL
@@ -120,7 +122,7 @@ In the future, we hope to automate some of this via additional `qsub` options.
 #### To mount a POSIX container on a login node
 
 ```bash linenums="1"
-mkdir –p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
 start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
 mount | grep dfuse # To confirm if its mounted
 
@@ -143,24 +145,28 @@ mount | grep dfuse # To confirm if its mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 
-clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes 
+clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes
 ```
+
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
 To optimize performance, you may need to copy the contents of `launch-dfuse.sh`, add `-o multi-user`, enable caching, and then use the updated file to mount the container.
 
 ## Job Submission
 
-The `-l filesystems=daos_user` and `-l daos=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:
+
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh  or - I
+# replace `./pbs_script1.sh` with `-I` for an interactive job
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh
 ```
 
 Job submission with DAOS:
+
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -l daos=daos_user -q debug ./pbs_script1.sh  or - I
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -q debug ./pbs_script1.sh
 ```
 
 ## NIC and Core Binding
@@ -168,11 +174,28 @@ qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=fla
 Each Aurora compute node has 8 NICs and each DAOS server node has 2 NICs. Each NIC is capable of driving 20-25 GB/s unidirection for data transfer. Every read and write goes over the NIC and hence NIC binding is the key to achieve good performance.
 
 For 12 PPN, the following binding is recommended:
+
 ```bash
 CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 ```
 
-![Sample NIC to Core binding](images/core-nic-binding.png "Sample NIC to Core binding")
+|               NIC 0               |               NIC 1               |               NIC 2               |               NIC 3               |               NIC 4               |               NIC 5               |               NIC 6               |               NIC 7               |
+| :-------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: | :-------------------------------: |
+|                 0                 |                 1                 |                 2                 |                 3                 |                52                 |                53                 |                54                 |                55                 |
+| <span style="color:red">4</span>  |                 5                 |                 6                 |                 7                 | <span style="color:red">56</span> |                57                 |                58                 |                59                 |
+|                 8                 | <span style="color:red">9</span>  |                10                 |                11                 |                60                 | <span style="color:red">61</span> |                62                 |                63                 |
+|                12                 |                13                 | <span style="color:red">14</span> |                15                 |                64                 |                65                 | <span style="color:red">66</span> |                67                 |
+|                16                 |                17                 |                18                 | <span style="color:red">19</span> |                68                 |                69                 |                70                 | <span style="color:red">71</span> |
+| <span style="color:red">20</span> |                21                 |                22                 |                23                 |                72                 |                73                 | <span style="color:red">74</span> |                75                 |
+|                24                 | <span style="color:red">25</span> |                26                 |                27                 |                76                 |                77                 |                78                 | <span style="color:red">79</span> |
+|                28                 |                29                 |                30                 |                31                 |                80                 |                81                 |                82                 |                83                 |
+|                32                 |                33                 |                34                 |                35                 |                84                 |                85                 |                86                 |                87                 |
+|                36                 |                37                 |                38                 |                39                 |                88                 |                89                 |                90                 |                91                 |
+|                40                 |                41                 |                42                 |                43                 |                92                 |                93                 |                94                 |                95                 |
+|                44                 |                45                 |                46                 |                47                 |                96                 |                97                 |                98                 |                99                 |
+|                48                 |                49                 |                50                 |                51                 |                100                |                101                |                102                |                103                |
+
+: Sample NIC to Core binding
 
 ## Interception library for POSIX containers
 
@@ -200,11 +223,10 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 #PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user
-#PBS -l daos=daos_user
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -l daos=daos_user -q prod ./pbs_script.sh or - I
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -q prod ./pbs_script.sh or - I
 
-# please do not miss -l filesystems=daos_user and -l daos=daos_user in your qsub :'(
+# please do not miss -l filesystems=daos_user and in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
@@ -228,7 +250,7 @@ launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT}           # To mount on a compute node
 # start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}     --pool ${DAOS_POOL} --cont ${DAOS_CONT}  # To mount on a login node
 
 mount|grep dfuse                                    #optional
-ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}	        #optional for login node
+ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}         #optional for login node
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}                   #optional for compute node
 
 # cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 /tmp/${DAOS_POOL}/${DAOS_CONT} #one time
@@ -263,28 +285,30 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
 
 ```
 
-## MPI-IO Mode (Mode 2)
+## MPI-IO Container Access
 
-The ROMIO MPI-IO layer provides multiple I/O backends including a custom DAOS backend.
-MPI-IO can be used with dFuse and the interception library when using the `ufs` backend but the `daos` backend will provide optimal performance. In order to use this, one can prefix the file names with `daos:` which will tell MPI-IO to use the DAOS backend.
-
-```bash linenums="1"
-export ROMIO_PRINT_HINTS=1
-
-echo "cb_nodes 128" >> ${PBS_O_WORKDIR}/romio_hints
-
-mpiexec  --env ROMIO_HINTS = romio_hints_file program daos:/mpi_io_file.data
-
-# or
-
-mpiexec  --env MPICH_MPIIO_HINTS = path_to_your_file*:cb_config_list=#*:2#
-       :romio_cb_read=enable
-       :romio_cb_write=enable
-       :cb_nodes=32
-       program daos:/mpi_io_file.data
+The MPICH MPI-IO layer on Aurora (ROMIO) provides multiple I/O backends including one for DAOS. ROMIO can be used with dFuse and the interception library utilizing the UFS backend, but the DAOS backend will provide optimal performance. By default ROMIO will auto-detect DFS and use the DAOS backend.   MPI-IO itself is a common backend for many I/O libraries, including HDF5 and PNetCDF.  Whether using collective I/O MPI-IO calls directly or indirectly via an I/O library, a  process called collective buffering can be done where data from small non-contiguous chunks across many compute nodes in the collective is aggregated into larger contiguous buffers on a few compute nodes, referred to as aggregators, from which DFS API calls are made to write to or read from DAOS.  Collective buffering can improve or degrade I/O performance depending on the I/O pattern, and in the case of DAOS, disabling it can lead to I/O failures in some cases, where the I/O traffic directly from all the compute nodes in the collective to DAOS is too stressful in the form of extreme numbers of small non-contiguous data reads and writes.  In ROMIO there are hints that should be set to either optimally enable or disable collective buffering.  At this time you should explicitly enable collective buffering in the most optimal fashion, as disabling it or allowing it to default to disabled could result in I/O failures.  To optimally enable collective buffering, create a file with the following contents:
+```bash 
+romio_cb_write enable
+romio_cb_read enable
+cb_buffer_size 16777216
+cb_config_list *:8
+striping_unit 2097152
 ```
 
-## DFS Mode (Mode 3)
+Then simply set the following environment variable at run time to point to it:
+```bash 
+export ROMIO_HINTS=<path to hints file>
+```
+
+If you want to verify the settings, additionally set:
+```bash 
+export ROMIO_PRINT_HINTS=1
+```
+
+Which will print out all the ROMIO hints at run time.
+
+## DFS Container Access
 
 DFS is the user level API for DAOS. This API is very similar to POSIX but still has many differences that would require code changes to utilize DFS directly. The DFS API can provide the best overall performance for any scenario other than workloads which benefit from caching.
 
@@ -310,6 +334,7 @@ int main(int argc, char **argv)
     ret = MPI_Finalize();
 }
 ```
+
 The full code is available on the Aurora filesystem within `/soft/daos/examples/src/`
 
 ## DAOS Hardware
@@ -326,84 +351,161 @@ Each DAOS server node is based on the Intel Coyote Pass platform:
 
 ## Darshan profiler for DAOS
 
-Currently, you need to install your own local `darshan-daos` profiler. You need to use DFS mode (3) or POSIX with interception library to profile.
+Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary log file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
 
-```bash linenums="1"
-module use /soft/modulefiles
-module load daos
-module list
-git clone https://github.com/darshan-hpc/darshan.git
-git checkout snyder/dev-daos-module-3.4
-./prepare.sh
-mkdir /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-install
-
-./configure --prefix=/home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-install  \
-            --with-log-path=/home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs \
-            --with-jobid-env=PBS_JOBID \
-            CC=mpicc --enable-daos-mod
-
-make && make install
-
-chmod 755 ~/soft/profilers/darshan-daos/darshan/darshan-install/darshan-mk-log-dirs.pl
-mkdir /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs
-cd /home/kaushikvelusamy/soft/profilers/darshan-daos/darshan-logs
-~/soft/profilers/darshan-daos/darshan/darshan-install/darshan-mk-log-dirs.pl
-~/soft/profilers/darshan-daos/darshan-install/bin/darshan-config  --log-path
+On Aurora, Darshan has been built in the programming environment in `/soft`, however it has not yet been fully modularized so the shared library must be manually preloaded at run time via `LD_PRELOAD`, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
+```bash 
+LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/hdf5-1.14.5-zrlo32i/lib/libhdf5.so:/opt/aurora/24.347.0/spack/unified/0.9.2/install/linux-sles15-x86_64/oneapi-2025.0.5/parallel-netcdf-1.12.3-cszcp66/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
 ```
 
-Preload darshan first then DAOS interception library:
-
-```
-mpiexec --env LD_PRELOAD=~/soft/profilers/darshan-daos/darshan-install/lib/libdarshan.so:/usr/lib64/libpil4dfs.so
-        -np 32 -ppn 16  --no-vni -genvall \
-        ior -a DFS  --dfs.pool=datascience_ops --dfs.cont=ior_test1   \
-            -i 5 -t 16M -b 2048M  -w  -r -C -e    -c  -v -o /ior_2.dat
+If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.  This generated binary log file now has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.  By default, the binary log file is stored here:
+```bash 
+/lus/flare/logs/darshan/aurora/YYYY/M/D
 ```
 
-Install `darshan-util` from laptop:
-
-
-```bash linenums="1"
-conda info –envs
-conda activate env-non-mac-darshan-temp
-/Users/kvelusamy/Desktop/tools/spack/share/spack/setup-env.sh
-
-spack install darshan darshan-util
-export DYLD_FALLBACK_LIBRARY_PATH=/Users/kvelusamy/Desktop/tools/spack/opt/spack/darwin-ventura-m1/apple-clang-14.0.3/darshan-util-3.4.4-od752jyfljrrey3d4gjeypdcppho42k2/lib/:$DYLD_FALLBACK_LIBRARY_PATH
-
-darshan-parser ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-632270104473632905_1.darshan
-python3 -m darshan summary ~/Downloads/kaushikv_ior_id917110-44437_10-23-55830-632270104473632905_1.darshan #coming soon
+where the last 3 directories are the date the file is generated, with your user ID, job ID and timestamp in the file name.  Alternatively, at run time you can specify the file name to be saved with a specified name in a different location with the following environment variable:
+```bash
+export DARSHAN_LOGFILE=<full path to binary file name>
 ```
+
+To get the Darshan utilities loaded into your programming environment, execute the following:
+```bash 
+module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
+module load darshan
+```
+
+Then for example you could run the Darshan parser on the binany log file to get a text output of all the metrics as follows:
+```bash 
+darshan-parser <binary log file>  >  <text analysis file>
+```
+
+For generating a graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
+```bash 
+module load python
+mkdir <pyton env dir>
+python -m venv <pyton env dir>
+cd <pyton env dir>
+source bin/activate
+pip install darshan
+python -m darshan summary <binary log file>
+```
+
+The summary report is an `.html` file generated by default in the directory from which you ran Python. For help with interpreting these reports and analyzing your I/O pattern, feel free to contact Paul Coffman on the ALCF Performance Engineering Team via email: [pcoffman@anl.gov](mailto:pcoffman@anl.gov).
 
 ## Cluster Size
 
 DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
 
-![expected Bandwidth](images/expectedBW.png "Expected number of daos servers and its approximate expected bandwidth")
+**Expected Bandwidth** Expected number of DAOS servers and its approximate expected bandwidth
 
+| Nodes | Percentage | Throughput |
+| :---: | :--------: | :--------: |
+|  20   |     2%     |   1 TB/s   |
+|  128  |   12.50%   |   5 TB/s   |
+|  600  |    60%     |  10 TB/s   |
+|  800  |    78%     |  20 TB/s   |
+| 1024  |    100%    |  30 TB/s   |
+
+## Libfabric endpoint creation error
+
+Occasionally at a high number of nodes and/or high PPN the following error that looks like this may show up in your stderr log:
+
+```output
+04/02-11:03:16.60 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.708457] mercury->ctx [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5400 na_ofi_eq_open() fi_cq_open failed, rc: -17 (File exists)
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722714] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5191 na_ofi_basic_ep_open() Could not open event queues
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722737] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5158 na_ofi_endpoint_open() na_ofi_basic_ep_open() failed
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722743] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:7712 na_ofi_initialize() Could not create endpoint
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722976] mercury->cls [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na.c:879 NA_Initialize_opt2() Could not initialize plugin
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.722988] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury_core.c:1347 hg_core_init() Could not initialize NA class (info_string=ofi+cxi://cxi4, listen=0)
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.723007] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury_core.c:6074 HG_Core_init_opt2() Cannot initialize core class
+04/02-11:03:16.61 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.723014] mercury->cls [error] /scratchbox/daos/mschaara/io500/daos/build/external/debug/mercury/src/mercury.c:1128 HG_Init_opt2() Could not create HG core class
+```
+
+You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
+
+## Issue with the `gpu_tile_compact.sh` bash script and the DAOS Interception Libraries
+
+There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script where you may get an error like this sporadically at scale:
+```bash 
+terminate called after throwing an instance of 'std::invalid_argument'
+  what():  stoul
+/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh: line 47: 38240 Aborted                 "$@"
+x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 134
+x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
+```
+
+This issue is still under investigation, in the mean time there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to do the `LD_PRELOAD` of the interception library within this script, so in the case of the `libpil4dfs.so` adding the line:
+```bash 
+export LD_PRELOAD=/usr/lib64/libpil4dfs.so
+```
+(just before the execution of the binary). For an example, see: 
+```bash 
+/lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
+```
 
 ## Best practices
 
-```bash
-Check that you requested DAOS
-    qsub –l filesystems=daos_user -l daos=daos_user
-Did you load DAOS module?
+1. Check that you **requested** DAOS:
+
+    ```bash
+    qsub –l filesystems=daos_user
+    ```
+
+1. Check that you **loaded** the DAOS module:
+
+    ```bash
     module load daos
-Do you have your DAOS pool allocated?
+    ```
+
+1. Check that you have your DAOS pool **allocated**:
+
+    ```bash
     daos pool query datascience
-Is DAOS client running on all your nodes?
-    ps –ef | grep daos
-Is your container mounted on all nodes?
+    ```
+
+1. Check that the DAOS client is **running** on all your nodes:
+
+    ```bash
+    ps -ef | grep daos
+    ```
+
+1. Check that your container is **mounted** on all nodes:
+
+    ```bash
     mount | grep dfuse
-Can you ls in your container?
+    ```
+
+1. Check that you **can `ls`** in your container:
+
+    ```bash
     ls /tmp/${DAOS_POOL}/${DAOS_CONT}
-Did your I/O actually fail?
-What is the health property in your container?
+    ```
+
+1. Check that your I/O **actually failed**.
+
+1. Check the **health property** in your container:
+
+    ```bash
     daos container get-prop $DAOS_POOL $CONT
-Is your space full? Min and max
+    ```
+
+1. Check if your space is **full** (min and max):
+
+    ```bash
     daos pool query datascience
-Does your query show failed targets or rebuild in process?
+    ```
+
+1. Check if your query shows **failed targets** or **rebuild in process**:
+
+    ```bash
     daos pool query datascience
-	daos pool autotest
-	daos container check
-```
+    ```
+
+1. Run the following commands to **check the health** of your DAOS pool and container:
+
+    ```bash
+    daos pool autotest
+    daos container check
+    ```
+
+1. If you are still having issues, please contact [help @ ALCF](mailto:support@alcf.anl.gov)

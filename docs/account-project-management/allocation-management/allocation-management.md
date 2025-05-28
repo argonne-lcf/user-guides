@@ -26,6 +26,13 @@ to determine active allocations.
 
 To request an extension of your existing discretionary allocation or to request additional hours, please complete an allocation renewal request [here](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
+To renew or extend storage allocations, email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with answers to the following information:
+- What have you accomplished with your original allocation?
+- Please include a brief description of any publications or major presentations that were (or will be) generated in full or in part because of this allocation.
+- What will you do with the extra time?
+- How much additional storage (in TB) do you need?
+- When should the allocation end?
+
 ## Sub-allocations
 
 !!! tip inline end
@@ -33,6 +40,10 @@ To request an extension of your existing discretionary allocation or to request 
     See `sbank new suballocation -h` for all the options.
 
 Suballocations let PIs control who in their team can run jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates).
+
+!!! note
+
+    Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID or the suballocationName. You can no longer submit jobs with just the project name.
 
 ### Step 1: Create Suballocations (Project PI):
 
