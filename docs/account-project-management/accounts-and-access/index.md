@@ -26,6 +26,6 @@ Accounts are classified in one of the following categories:
 
 ## More Information
 
-- [Account Policy](/docs/policies/accounts/index.md)
-- [User Authentication Policy](/docs/policies/accounts/user-authentication-policy.md)
-- [Account Sponsorship and Retention Policy](/docs/policies/accounts/account-sponsorship-retention-policy.md)
+- [Account Policy](../../policies/accounts/index.md)
+- [User Authentication Policy](../../policies/accounts/user-authentication-policy.md)
+- [Account Sponsorship and Retention Policy](../../policies/accounts/account-sponsorship-retention-policy.md)
