@@ -28,7 +28,10 @@ Additional information for using VisIt in client/server mode is available [here]
 
   ![Open File](images/Visit-options.png)
 
-  - **Note:** Don't change the contents of the "Machine file" field (it should be `$PBS_NODEFILE`).
+!!! warning
+
+    Don't change the contents of the "Machine file" field (it should be `$PBS_NODEFILE`).
+    
   - **Note:** The default Launch Profile is set to serial. We recommend leaving this setting in its default value, but using the parallel method to launch jobs on Aurora.
   - **Note:** Don't change the contents of "launchMethod". It must be `qsub/aprun` even though Aurora does not use `aprun`.
   - If you'd like to change other job parameters (like the number of processes, nodes, and walltime), you can do so. Please enter time in the format required by the PBS scheduler (i.e., 1:00:00 for one hour).
