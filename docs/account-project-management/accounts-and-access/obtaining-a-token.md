@@ -54,7 +54,8 @@ Please safeguard your token as you would your credit cards or house keys. Do not
 
 You will receive your physical token in the mail. Upon receipt of the physical token, contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to verify your identity and activate the token. If this step is not performed, you will not be able to use the passcode token to log on to the ALCF resource.
 
-**ALCF Accounts Service Desk Info Hours:** Monday-Friday 9 a.m. - 5 p.m. Central Time; **Email:** [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov)
+**ALCF Accounts Service Desk Info Hours:** Monday-Friday 9 a.m. - 5 p.m. Central Time
+**Email:** [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov)
 
 ### Returning a Physical Token
 
