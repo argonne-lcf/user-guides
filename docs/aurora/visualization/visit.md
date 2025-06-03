@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-The latest VisIt version installed on Aurora is 3.4.2
+As of June 2025, the latest VisIt version installed on Aurora is 3.4.2.
 
 Follow these steps to install VisIt on your local machine:
 
