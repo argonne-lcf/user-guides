@@ -7,7 +7,8 @@ ssh <ALCF username>@<system_name>.alcf.anl.gov. ex: johnsmith@aurora.alcf.gov
 2. When prompted for a password, click the SafeNet MobilePASS+ app on your phone. Click on the token name listed within the app and enter your PIN.
 3. The app will display your passcode immediately. Enter the passcode as the login password for the system within the SSH session. 
 
- !!! Note: 
+ !!! note: 
+
     You do NOT have to enter the PIN on the SSH screen when logging into a resource. This only needs to be done to access the passcode within the SafeNet MobilePASS+ app.
 
 4. Each generated passcode is valid on the SafeNet MobilePass+ app window until your mobile device screen times out.
