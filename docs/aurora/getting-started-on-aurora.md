@@ -67,7 +67,7 @@ Compute nodes don't have outbound network connectivity, add the following to you
 
 ```bash linenums="1"
 # proxy settings
-if [[ ! "${HOSTNAME}" =~ 'aurora-uan' ]]
+if [[ ! "${HOSTNAME}" =~ aurora-uan ]]; then
   export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"
   export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
   export http_proxy="http://proxy.alcf.anl.gov:3128"
@@ -79,11 +79,11 @@ fi
 
 For `ssh` connection to `github`, add the following to your `~/.ssh/config`
 
-```
+```console linenums="1"
 Match originalhost github.com exec "hostname -s | (grep -qv aurora-uan)"
-     Port 443
-     hostname ssh.github.com
-     ProxyCommand socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
+Port 443
+hostname ssh.github.com
+ProxyCommand socat - PROXY:proxy.alcf.anl.gov:%h:%p,proxyport=3128
 ```
 
 ## File Systems and DAOS
