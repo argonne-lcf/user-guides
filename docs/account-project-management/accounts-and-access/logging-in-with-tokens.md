@@ -3,7 +3,10 @@
 ## Logging in to an ALCF System using a Mobile Token
 
 1. Open the MobilePASS+ app on your device. Then initiate an SSH session and type the following:
-ssh <ALCF username>@<system_name>.alcf.anl.gov. ex: johnsmith@aurora.alcf.gov
+```
+ssh <ALCF username>@<system_name>.alcf.anl.gov.
+```
+For example, johnsmith@aurora.alcf.gov
 2. When prompted for a password, click the SafeNet MobilePASS+ app on your phone. Click on the token name listed within the app and enter your PIN.
 3. The app will display your passcode immediately. Enter the passcode as the login password for the system within the SSH session. 
 
