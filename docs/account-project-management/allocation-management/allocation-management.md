@@ -1,8 +1,18 @@
 # Managing Your Allocations
 
-Allocations require management – balance checks, resource allocation, requesting more time, etc.
+Allocations require management – balance checks, resource allocation, requesting more time, etc. Allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface. 
 
-## Checking for an Active Allocation
+## Active Allocations on MyACLF
+
+Select data for active allocations are shown on the dashboard of the MyALCF portal when signed into an ALCF user account. The dashboard section labeled "Active Project Allocations" provides an overview of activity with allocation start and end dates, allocation node hour usage, remaining node hours, usage trend data for future planning, and job sizes run. More detailed queries can be done using the sbank graphic interface in the [sbank section](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) of the MyALCF portal. Further information on how to use the sbank graphic interface is available in the [MyALCF documentation.](../../account-project-management/MyALCF.md)
+
+![Dashboard Screenshot](files/dash_allocation.png)
+
+/// caption
+An active project allocation on the dashboard provides an overview of allocation data.
+///
+
+## Active Allocations Through Command Line
 
 To determine if there is an active allocation, check [Job Submission](../../running-jobs/index.md#qsub).
 
