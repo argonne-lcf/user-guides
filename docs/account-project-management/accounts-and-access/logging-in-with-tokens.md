@@ -21,7 +21,9 @@ For example, johnsmith@aurora.alcf.gov
 When the physical token is activated, an initial PIN will be provided. Upon **INITIAL** login (to one of the ALCF machines), a prompt to change the PIN will appear. PINs must be at least four characters long and must only contain numbers.
 
 1. Initiate an SSH session using:
+```
 ssh <ALCF username>@<system_name>.alcf.anl.gov
+```
 2. A password prompt will be received. At this point, push the button on the physical token once.
 3. An eight-character, one-time password made up of letters and numbers will appear on the token’s display. This one-time password is case-sensitive.
 4. Type your PIN followed immediately by the one-time password at the SSH password prompt.
