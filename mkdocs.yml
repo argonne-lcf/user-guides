@@ -241,6 +241,7 @@ nav:
           - aurora/visualization/index.md
           - ParaView (Launch from Client): aurora/visualization/paraview.md
           - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
+          - VisIt: aurora/visualization/visit.md
 
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
