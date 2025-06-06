@@ -4,7 +4,7 @@
 To find MyALCF, either use the myALCF link at the [ALCF homepage](https://alcf.anl.gov) or visit the [MyALCF homepage](https://my.alcf.anl.gov)
 
 ## Logging In
-Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Passcode Tokens](./accounts-and-access/alcf-passcode-tokens.md)
+Log in using your ALCF username and CRYPTOcard passcode. For those who already have an ALCF account, this set of credentials isn’t changed. For those who do not have an ALCF account, you will need to request a new account in the section below the login. For more about accounts and passcodes, see [Obtaining a Token](./accounts-and-access/obtaining-a-token.md)
 
 ## Home Screen Dashboard
 Once logged in to MyALCF, a home screen is presented with useful information pertaining to an individual's projects and the facility. The navigation menu links to get to more in depth tools and information. Simple icons show the current status of ALCF systems. Up-to-date data about current compute project allocations are shown as a high-level view of current activity (if there are no current allocations, there will be a link to request a new allocation). Links for support help, training event information, and facility news updates complete the home screen dashboard.
