@@ -1,6 +1,6 @@
 # JupyterHub
 
-JupyterHub is an open-source service application that enables users to launch separate Jupyter instances on a remote server. [ALCF JupyterHub](https://jupyter.alcf.anl.gov) provides access to Polaris with the same [authentication protocol](../account-project-management/accounts-and-access/alcf-passcode-tokens.md) that is used to access these systems, but through a web interface rather than a terminal. On the [ALCF JupyterHub home page](https://jupyter.alcf.anl.gov), users can choose their desired system. Upon selection, they'll be directed to the sign-in page to enter their ALCF username and [passcode token](../account-project-management/accounts-and-access/alcf-passcode-tokens.md).
+JupyterHub is an open-source service application that enables users to launch separate Jupyter instances on a remote server. [ALCF JupyterHub](https://jupyter.alcf.anl.gov) provides access to Polaris with the same [authentication protocol](../account-project-management/accounts-and-access/obtaining-a-token.md) that is used to access these systems, but through a web interface rather than a terminal. On the [ALCF JupyterHub home page](https://jupyter.alcf.anl.gov), users can choose their desired system. Upon selection, they'll be directed to the sign-in page to enter their ALCF username and [passcode token](../account-project-management/accounts-and-access/logging-in-with-tokens.md).
 
 ![JupyterHub](files/Jupyter-0-login.png)
 
