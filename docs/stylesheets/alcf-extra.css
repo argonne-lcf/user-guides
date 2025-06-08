@@ -105,12 +105,6 @@
   max-width: 1440px;
 }
 
-/* .md-header { */
-/*   background-color: var(--md-header-bg-color); */
-/*   color: var(--md-header-fg-color); */
-/*   position: inherit; */
-/* } */
-
 .md-header {
   background-color: var(--md-header-bg-color);
   box-shadow:
@@ -125,7 +119,6 @@
   position: revert;
   display: block;
   left: 0;
-  /* position: sticky; */
   right: 0;
   top: 0;
 }
