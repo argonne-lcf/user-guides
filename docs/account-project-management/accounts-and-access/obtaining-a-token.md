@@ -31,14 +31,15 @@ A mobile token can be associated with a single device only.
 
 ### Step 1: Download the SafeNet MobilePass+ app for your device
 
-The SafeNet MobilePASS+ app turns your device into a two-factor authentication device, removing the need to carry an additional hardware token.
+The SafeNet MobilePASS+ app turns your device into a two-factor authentication
+device, removing the need to carry an additional hardware token.
 
 As a SafeNet MobilePASS+ user, you can generate passcodes on your mobile device
 and use those passcodes to authenticate on ALCF computing resources.
 For more details, please see the
 [SafeNet MobilePASS app information here](https://cpl.thalesgroup.com/access-management/authenticators/software-authentication/mobilepass-plus-push-authentication).
 
-### Step 3: Enroll your MobilePass+ mobile token
+### Step 2: Enroll your MobilePass+ mobile token
 
 After you've been provisioned a mobile token, you will receive a notification
 email with the subject line "ALCF Mobile Token Self-Enrollment".

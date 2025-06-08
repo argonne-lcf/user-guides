@@ -6,7 +6,7 @@
     Then initiate an SSH session and type the following:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov.
+    ssh <ALCF username>@<system_name>.alcf.anl.gov
     ```
 
     For example, <johnsmith@aurora.alcf.gov>
