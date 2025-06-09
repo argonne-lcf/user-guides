@@ -9,6 +9,37 @@
 /* #b8e2de #e7f6fd #F2F2F2 */
 /* #D1D1D1 #666666 */
 
+/* Set a variable for footer height that can be used in calculations */
+:root {
+  --md-footer-height: 160px;
+  --md-header-height: 72px;
+  --anl-red-000: #a12b2f;
+  --anl-red-100: #cd202c;
+  --anl-orange-000: #ff7900;
+  --anl-orange-100: #f8b200;
+  --anl-green-000: #00a19c;
+  --anl-green-100: #03a669;
+  --anl-green-200: #007836;
+  --anl-blue-000: #00609c;
+  --anl-blue-100: #0261af;
+  --anl-blue-200: #0061af;
+  --anl-blue-300: #4582ec;
+  --anl-blue-400: #118acb;
+  --anl-blue-500: #0082ca;
+  --anl-purple-000: #5b0091;
+  --anl-purple-100: #0b1f8f;
+  --anl-purple-200: #1d1651;
+  --anl-gray-000: #d1d1d1;
+  --anl-gray-100: #666666;
+  --anl-azure-000-saturated: hsla(174, 75%, 80%, 1);
+  --anl-azure-000: #b8e2de;
+  --anl-azure-100: #e7f6fd;
+  --anl-azure-200: #f2f2f2;
+  --anl-grey-000: #f2f2f2;
+  --anl-grey-100: #d1d1d1;
+  --anl-grey-200: #666666;
+}
+
 [data-md-color-scheme="alcf"] {
   /* Colors */
   --md-primary-fg-color: #0261af;
@@ -58,7 +89,7 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --md-typeset-a-color: rgb(100, 226, 255);
+  --md-typeset-a-color: var(--anl-azure-000-saturated);
   --md-default-heading-color: #f5f5f5;
   --md-primary-fg-color: #222222;
   --md-default-bg-color: #1c1c1c;
@@ -1243,10 +1274,4 @@ table {
 
 .md-main__inner {
   min-height: calc(100vh - var(--md-header-height, 0px) - var(--md-footer-height, 0px));
-}
-
-/* Set a variable for footer height that can be used in calculations */
-:root {
-  --md-footer-height: 160px;
-  --md-header-height: 72px;
 }
