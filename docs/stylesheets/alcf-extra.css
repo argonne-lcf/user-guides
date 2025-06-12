@@ -102,7 +102,8 @@
 
 /* Content Area Width */
 .md-grid {
-  max-width: 1440px;
+    max-width: 2880px;
+    /* max-width: 1440px; */
 }
 
 /* .md-header { */
