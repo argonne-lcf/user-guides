@@ -61,7 +61,6 @@ Note, users are encouraged to use `PrgEnv-nvhpc` instead of `PrgEnv-nvidia` as t
 | C/C++ | OpenMP | PrgEnv-nvhpc, llvm |  |
 | C/C++ | RAJA | See CUDA | HIP, OpenMP, and SYCL/DPC++ also candidates |
 | C/C++ | SYCL/DPC++ | llvm-sycl |  |
-| | | |  |
 | Fortran | CUDA | PrgEnv-nvhpc | NVIDIA compiler (nvfortran) does GPU code generation; `gfortran` can be loaded via `gcc-mixed` |
 | Fortran | HIP | N/A | need to install with support for A100 |
 | Fortran | OpenACC | PrgEnv-nvhpc |  |
