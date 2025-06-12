@@ -462,6 +462,7 @@ not_in_nav: |
   not_in_nav/
   index.md
   inbound-links.md
+  aurora/bugs-table.md
   #account-project-management/allocation-management/not_in_nav/
 
 # Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)
