@@ -70,6 +70,10 @@ extra_css:
 extra_javascript:
   - javascripts/alcf-extra.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.date.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.number.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.filesize.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.dotsep.js
   - javascripts/tablesort.js
 
 markdown_extensions:
