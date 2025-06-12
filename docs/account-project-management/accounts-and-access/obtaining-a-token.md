@@ -6,12 +6,12 @@ Users can choose between a Mobile or a Physical token.
 Note: Please contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to
 change your token preference.
 
-- Mobile Token: Mobile tokens utilize an app that is keyed to your user account
+- [Mobile Token](#mobile-token): Mobile tokens utilize an app that is keyed to your user account
   and for which you are responsible on your Android, iPhone, or Windows mobile
   device.
   Mobile tokens are a fast and easy way to get started quickly.
 
-- Physical Token: A physical token is a device that will be mailed to you.
+- [Physical Token](#physical-token): A physical token is a device that will be mailed to you.
   Once received, you will need to work with the ALCF support team to enable it.
 
 ## Mobile Token

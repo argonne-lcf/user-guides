@@ -1,5 +1,11 @@
 # Logging In with a Token
 
+Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
+
+You can log in with a [Mobile Token](#logging-in-to-an-alcf-system-using-a-mobile-token) using your mobile device. 
+
+You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-physical-token) if you have received one in the mail.
+
 ## Logging in to an ALCF System using a Mobile Token
 
 1. Open the MobilePASS+ app on your device.  
