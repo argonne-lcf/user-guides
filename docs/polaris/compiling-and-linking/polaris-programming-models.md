@@ -8,8 +8,8 @@ The Cray compiler wrappers `cc`, `CC`, and `ftn` are recommended for MPI applica
 
 | Programming Model | GNU | NVHPC | LLVM |
 | --- | --- | --- | --- |
-| OpenMP | -fopenmp | -mp | -fopenmp |
-| OpenACC | -- | -acc=multicore | -- |
+| OpenMP | `-fopenmp` | `-mp` | `-fopenmp` |
+| OpenACC | -- | `-acc=multicore` | -- |
 
 Higher-level programming models such as [Kokkos](../programming-models/kokkos-polaris.md) and Raja may also be used for CPU programming.
 
@@ -23,12 +23,12 @@ A summary of available GPU programming models and relevant compiler flags is sho
 
 | Programming Model | GNU | NVHPC | LLVM | ONEAPI |
 | --- | --- | --- | --- | --- |
-| CUDA | -- | -cuda [-gpu=cuda8.0,cc11.0] | -- | -- |
+| CUDA | -- | `-cuda [-gpu=cuda8.0,cc11.0]` | -- | -- |
 | HIP* | -- | -- | -- | -- |
-| OpenACC | -- | -acc | -- | -- |
+| OpenACC | -- | `-acc` | -- | -- |
 | OpenCL* | -- | -- | -- | -- |
-| OpenMP | -- | -mp=gpu | --offload-arch=sm_80 | -- |
-| SYCL | -- | -- | -- | -fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80 |
+| OpenMP | -- | `-mp=gpu` | `--offload-arch=sm_80` | -- |
+| SYCL | -- | -- | -- | `-fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend --cuda-gpu-arch=sm_80` |
 
 Note, the `llvm` and `oneapi` modules are provided by ALCF to complement the compilers provided by the Cray PE on Polaris.
 
