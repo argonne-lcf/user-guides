@@ -291,7 +291,7 @@ inner train loop time : 374.6789753437042 for 10 epochs, number of global steps:
 ## GPT 1.5B
 
 The GPT 1.5B application example is provided in the the path : `/opt/sambaflow/apps/nlp/transformers_on_rdu/`.
-The scripts containing the `compile` and `run` commands for the GPT 1.5B model can be accessed at the path `/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_run.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. The scripts are provided for reference. 
+The scripts containing the `compile` and `run` commands for the GPT 1.5B model can be accessed at the path `/data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_base_single_run.sh` on any SN30 compute node. This script is compiled and run for only 1 instance and the model fits on 4 tiles or half of a RDU. The scripts are provided for reference. 
 
 Change directory and copy files.
 
@@ -307,8 +307,12 @@ to a file with the same names into the current directory using your favorite edi
 or copy the contents from `/data/ANL/scripts/Gpt1.5B_base_single_compile.sh` and `/data/ANL/scripts/Gpt1.5B_base_single_run.sh`.
 
 ```bash
-cp /data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_compile.sh ~/apps/nlp/Gpt1.5B_single/
-cp /data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_base_single_run.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_base_single_compile.sh ~/apps/nlp/Gpt1.5B_single/
+cp /data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_base_single_run.sh ~/apps/nlp/Gpt1.5B_single/
+```
+If you have already compiled for a previous version of the sambaflow stack, delete existing pef file, if it exists.
+```bash
+rm /data/scratch/$(whoami)/GPT1.5B_base_single_32/GPT1.5B_base_single_32/GPT1.5B_base_single_32.pef
 ```
 
 Run the script with batch size as an argument(shown below with an example of 32).
