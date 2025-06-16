@@ -70,6 +70,10 @@ extra_css:
 extra_javascript:
   - javascripts/alcf-extra.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.date.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.number.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.filesize.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.dotsep.js
   - javascripts/tablesort.js
 
 markdown_extensions:
@@ -462,6 +466,7 @@ not_in_nav: |
   not_in_nav/
   index.md
   inbound-links.md
+  aurora/bugs-table.md
   #account-project-management/allocation-management/not_in_nav/
 
 # Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)

@@ -217,4 +217,6 @@ The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/Au
 
 For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
 
+### [Wider View of Tables](./bugs-table.md)
+
 ---8<--- "AuroraBugTracking/bugs.md:3"
