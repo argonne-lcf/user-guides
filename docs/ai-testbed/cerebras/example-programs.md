@@ -428,7 +428,7 @@ cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
 export MODEL_DIR=model_dir_dit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cp  /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
-python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --model_dir ${MODEL_DIR} |& tee mytest.log
+python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
 ```
 
 ???+ example "Example output:"
