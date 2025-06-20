@@ -2,7 +2,7 @@
 
 ## 2025-06-13 (Lowering the memory limit on Aurora compute nodes on June 23, 2025)
 
-ALCF is going to reduce user-accessible memory on Aurora compute nodes, by the equivalent of a node's HBM capacity (128GB), on June 23, 2025, to approximately 960GB between DDR5 + HBM, regardless of how applications utilize each memory tier.
+ALCF is going to reduce user-accessible memory on Aurora compute nodes, by the equivalent of a node's HBM capacity (128GB), on June 23, 2025, to approximately 960GB between DDR5 + HBM, regardless of how applications utilize each memory tier. The 768GB of GPU memory is unaffected and is not being restricted in any way.
 
 Note that, currently on Aurora, ALCF enforces a memory limit on compute nodes such that users are allowed between MemTotal - 64GB (soft limit) and MemTotal - 32GB (hard limit), effectively reserving between 32GB and 64GB for system use. MemTotal refers to approximately 1TB of DDR5 plus 128GB of HBM.
 
