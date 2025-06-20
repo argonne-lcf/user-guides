@@ -1,3 +1,4 @@
+
 # Running a Model/Program
 
 ## Getting Started
@@ -31,6 +32,8 @@ source ~/R_2.4.0/venv_cerebras_pt/bin/activate
 ```
 
 ### Clone the Cerebras modelzoo
+
+If you have not already cloned the Cerebras modelzoo repo and checked out the Release_2.4.0 tag, do so.
 
 ```console
 mkdir ~/R_2.4.0
