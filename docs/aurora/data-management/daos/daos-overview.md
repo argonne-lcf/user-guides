@@ -36,9 +36,7 @@ module load daos/base
 
 ## Pool
 
-Pool is a dedicated space allocated to your project. Once your pool is allocated for your project space.
-
-Confirm you are able to query the pool via:
+A pool is a dedicated space allocated to your project. Once your pool has been allocated for your project space, confirm that you are able to query the pool:
 
 ```bash linenums="1"
 daos pool query <pool_name>
