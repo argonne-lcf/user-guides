@@ -1,6 +1,6 @@
 # DAOS Architecture
 
-DAOS is a major file system in Aurora with 230 PB delivering upto >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
+DAOS is a major file system in Aurora with 230 PB delivering up to >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
 ![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
 
@@ -60,7 +60,7 @@ Rebuild done, 4 objs, 0 recs
 
 ## POSIX Containers
 
-In DAOS general tems, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documention on DFS can be found [here](https://docs.daos.io/v2.6/user/filesystem).
+In DAOS general terms, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documentation on DFS can be found [here](https://docs.daos.io/v2.6/user/filesystem).
 
 With more than 1024 servers at full deployment, the user-accessible cluster named `daos_user` has 16,384 solid state drives (SSDs) and 16,384 persistent memory modules, and without some amount of data redundancy a hardware failure on any one could result in the loss of your data.  DAOS has several data redundancy options available, and a tradeoff must be made between data resiliency, performance, and volume.  The recommended tradeoff is to specify a redundancy factor of 2 on the container for both files and directories via the `rd_fac:2` container property.  By default, this means files will utilize an erasure coding algorithm with a ratio of 16 data blocks to 2 parity blocks (in DAOS file object class terms `EC_16P2GX`), which in simplest terms, means 18 blocks of erasure coding stores 16 blocks of data. For directories, the default is to create 2 full duplicates of the directory, which is basically an emulation of an inode in traditional file system terms, by setting the directory object class to `RP_3G1`. For this default setting, there is little performance tradeoff for directories at this redundancy level, since it just contains metadata.
 
@@ -171,7 +171,7 @@ qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=fla
 
 ## NIC and Core Binding
 
-Each Aurora compute node has 8 NICs and each DAOS server node has 2 NICs. Each NIC is capable of driving 20-25 GB/s unidirection for data transfer. Every read and write goes over the NIC and hence NIC binding is the key to achieve good performance.
+Each Aurora compute node has 8 NICs and each DAOS server node has 2 NICs. Each NIC is capable of driving 20-25 GB/s unidirectional for data transfer. Every read and write goes over the NIC and hence NIC binding is the key to achieve good performance.
 
 For 12 PPN, the following binding is recommended:
 
@@ -374,7 +374,7 @@ module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
 module load darshan
 ```
 
-Then for example you could run the Darshan parser on the binany log file to get a text output of all the metrics as follows:
+Then for example you could run the Darshan parser on the binary log file to get a text output of all the metrics as follows:
 ```bash
 darshan-parser <binary log file>  >  <text analysis file>
 ```
