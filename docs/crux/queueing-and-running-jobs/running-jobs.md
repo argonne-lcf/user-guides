@@ -4,22 +4,29 @@
 
 *******
 
-There are five production queues you can target in your qsub (`-q <queue name>`):
+There are four production queues you can target in your qsub (`-q <queue name>`):
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
-| debug         | 1        | 4        | 5 min    | 2 hr     | max 8 nodes in use by this queue at any given time; Only 8 nodes are exclusive (see **Note** below) |
-| workq-route   | 1        | 512      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below                                                                             |
+| debug         | 1        | 8        | 5 min    | 2 hr     | 8 nodes are exclusive 
+| workq-route   | 1        | 184      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below for its execution queue
+| *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
+| *demand*        | 1        | 64       | 5 min    | 1 hr     | ***By request only (email support@alcf.anl.gov) to submit a request***              |
 
 ******
+**Note:** Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.
+Jobs in the demand queue take priority over jobs in the preemptable queue.
+This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
+Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
+Please use the following command to view details of a queue: `qstat -Qf <queuename>`
 
-**Note:** The debug queue has 8 exclusively dedicated nodes.
+To make your job rerunnable, add the following PBS directive: `#PBS -r y`. This will ensure your job will restart once the demand job is complete. 
 
-`workq-route` is a routing queue and routes your job to one of the following execution queues (currently just one):
+`workq-route` is a routing queue and routes your job to the following execution queue:
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
 |-----------------|----------|----------|----------|----------|----------------------------------------|
-| workq           | 1        | 512      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project |
+| workq           | 1        | 184      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project |
 
 ## Running MPI+OpenMP Applications
 
