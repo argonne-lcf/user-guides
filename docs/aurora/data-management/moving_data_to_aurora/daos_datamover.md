@@ -9,25 +9,23 @@ cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_
 ## Using DAOS filesystem copy
 
 ```bash
-daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 --dst daos://tmp/${DAOS_POOL}/${DAOS_CONT}
+daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 --dst daos://${DAOS_POOL}/${DAOS_CONT}/path_starting_from_within_container/
 ```
 
-You may have to replace the `DAOS_POOL` and `DAOS_CONT` labels with their UUIDs. UUIDs can be copied from:
+Note `/**tmp**/pool_name/container_name` path is not used above. 
 
-```bash
-daos pool query ${DAOS_POOL}
-daos container query $DAOS_POOL_NAME $DAOS_CONT_NAME
-```
+You may have to replace the `DAOS_POOL` and `DAOS_CONT` labels with their UUIDs. UUIDs can be copied from `daos pool query ${DAOS_POOL}` and `daos container query $DAOS_POOL_NAME $DAOS_CONT_NAME`
+
 
 ## Using mpifileutils distributed `cp` (DCP)
 
-You can also use other mpifileutils binaries.
+You can also use other mpi fileutils binaries designed for scalability and performance even when not using DAOS.
 
 ```console
-mpifileutils/bin> ls
+kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> ls
 dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker1  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
 
-kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  -np 8 -ppn 8 --cpu-bind list:4:56:9:61:14:66:19:71  /lus/flare/projects/datascience/kaushik/softwares/mpifileutils/install/bin/dcp source/ /tmp/datascience/1_fSX_dS1_rd_fac_0/
+kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  -np 8 -ppn 8 --cpu-bind list:4:56:9:61:14:66:19:71  /soft/daos/mpifileutils/bin/dcp source/ /tmp/datascience/1_fSX_dS1_rd_fac_0/
 [2025-05-17T04:08:18] Walking /tmp/source
 [2025-05-17T04:08:18] Walked 11 items in 0.001 secs (7992.078 items/sec) ...
 [2025-05-17T04:08:18] Walked 11 items in 0.002 seconds (6707.939 items/sec)
@@ -59,7 +57,7 @@ kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec --env LD_PRELOAD=/usr/lib64/libpil4d
 [2025-05-17T04:08:28] Data: 200.000 GiB (214748364800 bytes)
 [2025-05-17T04:08:28] Rate: 19.513 GiB/s (214748364800 bytes in 10.250 seconds)
 
-kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  -np 16 -ppn 16 --cpu-bind list:4:5:6:7:8:9:10:11:56:57:58:59:60:61:62:63 /lus/flare/projects/datascience/kaushik/softwares/mpifileutils/install/bin/dcp source/ /tmp/datascience/1_fSX_dS1_rd_fac_0/
+kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  -np 16 -ppn 16 --cpu-bind list:4:5:6:7:8:9:10:11:56:57:58:59:60:61:62:63 /soft/daos/mpifileutils/bin/dcp source/ /tmp/datascience/1_fSX_dS1_rd_fac_0/
 [2025-05-17T04:08:39] Walking /tmp/source
 [2025-05-17T04:08:39] Walked 11 items in 0.002 secs (5838.681 items/sec) ...
 [2025-05-17T04:08:39] Walked 11 items in 0.002 seconds (4502.556 items/sec)
