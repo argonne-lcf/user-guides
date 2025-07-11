@@ -28,6 +28,15 @@ Write a python script that
 - calls the chat.completions.create method
 - extracts what is wanted from the response
 
+Source one of the SN40L endpoint information files to set some environment variables, then copy them to the environment variables expected by the openai python package and the sample scripts below:
+```
+source ~/metis_endpoint_rpowelltest4.txt
+export OPENAI_BASE_URL=$BASE_URL
+export OPENAI_API_KEY=$SAMBANOVA_API_KEY
+echo $MODEL
+export MODEL_NAME=<a name from above> # e.g. Mistral-7B-Instruct-V0.2
+```
+
 Simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:
 ```python
 import os
@@ -52,22 +61,24 @@ print(response.choices[0].message.content)
 ```
 
 ### curl example
-Sample curl command.
+Sample curl command. Change the `PROMPT` environment variable as desired.
 
 ```bash
-export PROMPT="What are \"telescoping generations\" in biology?"
+# Sample prompt that shows quoting of quote marks
+export PROMPT="What are \\\"telescoping generations\\\" in biology?"
+export D='{
+    "stream": true,
+    "model": "'${MODEL_NAME}'",
+    "messages": [
+        {
+            "role": "user",
+            "content": '\"${PROMPT}\"'
+        }
+    ]
+    }'
 curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
      -H "Content-Type: application/json" \
-     -d '{
-	"stream": true,
-	"model": "'${MODEL_NAME}'",
-	"messages": [
-		{
-			"role": "user",
-			"content": "'${PROMPT}'"
-		}
-	]
-	}' \
+     -d "${D}" \
      -X POST ${OPENAI_BASE_URL}/chat/completions
 
 ```
