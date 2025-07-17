@@ -8,11 +8,9 @@ This guide will walk you through the fastest ways to start using the ALCF Infere
 
 ### Web UI
 
-The easiest way to get started is through the web interface, accessible at:
+The easiest way to get started is through the web interface, accessible at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/)
 
-[https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/)
-
-The UI is based on the popular Open WebUI platform. After logging in with your ANL orALCF credentials, you can:
+The UI is based on the popular Open WebUI platform. After logging in with your ANL or ALCF credentials, you can:
 
 1.  Select a model from the dropdown menu at the top of the screen.
 2.  Start a conversation directly in the chat interface.
@@ -135,7 +133,6 @@ Once authenticated, you can make a test call using cURL or Python.
 
         # Get your access token
         access_token=$(python inference_auth_token.py get_access_token)
-
 
         curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}"
@@ -340,7 +337,7 @@ For large-scale inference, the batch processing service allows you to submit a f
 !!! warning "Batch Processing Requirements"
     - You must have an active ALCF allocation.
     - Input files and output folders must be located within the `/eagle/argonne_tpc` project space or a world-readable directory.
-    - Each line in the input file must be a complete JSON request object (JSON Lines format).
+    - Each line in the input file must be a complete [JSON request object (JSON Lines format)](https://platform.openai.com/docs/guides/batch#1-prepare-your-batch-file).
     - Only models marked with **B** support batch processing.
 
 ### Batch API Endpoints
@@ -599,7 +596,7 @@ The primary API endpoints follow the OpenAI standard:
 - **Queueing:** During high demand, your request may be queued until resources are available.
 - **Payload Limits:** Payloads are limited to 10MB. Use batch mode for larger inputs.
 
-On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to serving popular models "hot" for immediate access. These models may be terminated if idle for more than 2 hours. The remaining 3 nodes rotate through other models based on user requests. These dynamically loaded models will remain active for up to 24 hours.
+On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to serving popular models "hot" for immediate access. The remaining 3 nodes rotate through other models based on user requests. These dynamically loaded models will remain active for up to 24 hours.
 
 ## Important Notes
 
@@ -611,7 +608,7 @@ On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to ser
 ## Troubleshooting
 
 - **Connection Timeout:** Verify you are on the Argonne network. The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
-- **Permission Denied:** Your token may have expired. Logout from Globus and re-authenticate using the `--force` flag.
+- **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`.
 
 ## Contact Us
