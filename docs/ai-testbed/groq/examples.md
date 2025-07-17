@@ -12,7 +12,7 @@ qstat -wa
 ```
 If `qstat -wa` shows any jobs active, do not attempt to start Llama2.
 
-Also check to see if anyone is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; not an actual conflict. 
+Also check to see if anyone else is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; not an actual conflict. 
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
@@ -43,35 +43,43 @@ Copy some example files (about 25k), so that you have write access to them.
 ```console
 mkdir ~/groq_llama2-7b-kludge/
 cp /software/groq/examples/llama2-7b-kludge/*.sh ~/groq_llama2-7b-kludge/
-cp /software/groq/examples/llama2-7b-kludge/*.pbs ~/groq_llama2-7b-kludge/
+cp /software/groq/examples/llama2-7b-kludge/README.md ~/groq_llama2-7b-kludge/
 cd ~/groq_llama2-7b-kludge/
+```
+
+!!! note
+     Packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. If you have a `~/.local/lib/python3.10/site-packages/` directory, please remove it or rename it before continuing.
+
+Create and activate a `groqflow_for_llama2`conda environment.
+```console
+conda env remove -n groqflow_for_llama2
+export PYTHON_VERSION=3.10.12
+conda create -n groqflow_for_llama2 python=$PYTHON_VERSION -y
+conda activate groqflow_for_llama2
+```
+
+Install these packages into the conda environment:
+```
+pip install --upgrade pip
+pip install tqdm torch==2.1.2
+```
+
+Set the `PYTHONPATH` to include the conda environment:
+```console
+export PYTHONPATH=/home/$(whoami)/miniconda3/envs/groqflow_for_llama2/lib/python3.10/site-packages
 ```
 
 Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It simply runs `sleep 24h` on a node. The following example script reserves the cluster via PBS for 2hrs. Adjust the values as needed.
 ```console
-./stage1_reserve_cluster_via.pbs
-```
-
-Install some packages into `~/.local/lib/python3.10/site-packages`. The multi-node Llama2 cannot be run using a conda env.
-
-Set the `PYTHONPATH` to include the `~/.local/lib/python3.10/site-packages`
-
-!!! warning
-
-    The packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. Consider removing them by deleting the `~/.local/lib/python3.10` directory (or renaming it) when done running Llama2-7b. 
-
-```console
-# only needed if conda is already deactivated; twice, in case there are two levels
-conda deactivate
-conda deactivate
-pip install tqdm
-pip install torch
-export PYTHONPATH=/home/$(whoami)/.local/lib/python3.10/site-packages:/opt/groq/runtime/site-packages:/usr/local/lib/python3.10/dist-packages:/usr/lib/python3/dist-packages
+./stage1_reserve_cluster_via_pbs.sh
 ```
 
 Then run Llama2-7b. 
 ```console
-./stage2_run_llamma-7b.sh
+cd ~/groq_llama2-7b-kludge/
+./stage2_build_topology.sh
+export CONDA_PREFIX=/home/$(whoami)/miniconda3/envs/groqflow_for_llama2
+./stage3_run_llamma-7b.sh
 ```
 The script can be modified, or pieces run manually:
 ```console
@@ -82,16 +90,16 @@ cd /software/groq/examples/GROQ_TESTS/llama2-7b
 
 The basic command is 
 ```console
-groq-python groq_llama2_7b.py -b -p 'what are the most popular ice cream flavors'
+groq-python anl_llama2_7b_launch_helper.py -b -p 'what are the most popular ice cream flavors'
 ```
 You only need to run -b ('--bringup') once, e.g.
 ```console
-groq-python groq_llama2_7b.py -b
+groq-python anl_llama2_7b_launch_helper.py -b'
 ```
 then can run multiple queries
 ```console
-groq-python groq_llama2_7b.py -p 'what are the most popular ice cream flavors'
-groq-python groq_llama2_7b.py -p 'what are some unique ice cream flavors'
+groq-python anl_llama2_7b_launch_helper.py -p 'what are the most popular ice cream flavors in Egypt'
+groq-python anl_llama2_7b_launch_helper.py -p 'what are the most popular ice cream flavors in Japan'
 ```
 
 !!! note
@@ -102,6 +110,6 @@ When done, clean up. This deletes the all-rack PBS reservation.
 ```console
 # if running manually, go back to the script dir
 popd
-bash stage3_cleanup.sh
+./stage4_cleanup.sh
 ```
 
