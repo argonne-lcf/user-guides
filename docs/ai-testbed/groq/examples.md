@@ -106,7 +106,7 @@ groq-python anl_llama2_7b_launch_helper.py -p 'what are the most popular ice cre
 
     The `-b` (`--bringup`) flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a abnormal state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
 
-When done, clean up. This deletes the all-rack PBS reservation. 
+When done, clean up. This resets the card topology, resets card memory, and deletes the all-rack PBS reservation.
 ```console
 # if running manually, go back to the script dir
 popd
