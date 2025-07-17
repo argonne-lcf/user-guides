@@ -30,7 +30,7 @@ We have identified a set of environment settings that typically provide better p
 ```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix  
 export CCL_ATL_TRANSPORT=mpi
-export CCL_ALLREDUCE_SCALEOUT=direct:0-1048576;rabenseifner:1048577-max  # currently best allreduce algorithm at large scale
+export CCL_ALLREDUCE_SCALEOUT="direct:0-1048576;rabenseifner:1048577-max"  # currently best allreduce algorithm at large scale
 export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
 
 export CCL_KVS_MODE=mpi

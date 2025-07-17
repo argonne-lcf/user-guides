@@ -70,6 +70,10 @@ extra_css:
 extra_javascript:
   - javascripts/alcf-extra.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.date.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.number.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.filesize.js
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.dotsep.js
   - javascripts/tablesort.js
 
 markdown_extensions:
@@ -228,7 +232,11 @@ nav:
           - gdb4hpc: aurora/debugging/gdb4hpc.md
           - Codee: aurora/debugging/codee.md
         - Performance Tools:
-        #  - Overview: aurora/performance-tools/performance-overview.md
+          - aurora/performance-tools/index.md
+          - iprof: aurora/performance-tools/iprof.md
+          - unitrace: aurora/performance-tools/unitrace.md
+          - xpu-smi: aurora/performance-tools/xpu-smi.md
+          - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
         - Services:
@@ -237,6 +245,7 @@ nav:
           - aurora/visualization/index.md
           - ParaView (Launch from Client): aurora/visualization/paraview.md
           - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
+          - VisIt: aurora/visualization/visit.md
 
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
@@ -422,7 +431,9 @@ nav:
     - MyALCF: account-project-management/MyALCF.md
     - Accounts and Access:
       - account-project-management/accounts-and-access/index.md
-      - Passcode Tokens: account-project-management/accounts-and-access/alcf-passcode-tokens.md
+      - Obtaining a Token: account-project-management/accounts-and-access/obtaining-a-token.md
+      - Logging in with a Token: account-project-management/accounts-and-access/logging-in-with-tokens.md
+      - Troubleshooting Tokens: account-project-management/accounts-and-access/troubleshooting-tokens.md
       - Accounts and Access FAQs: account-project-management/accounts-and-access/accounts-and-access-faqs.md
     - Project Management:
       - Starting Your ALCF Award: account-project-management/project-management/starting-alcf-award.md
@@ -456,6 +467,7 @@ not_in_nav: |
   not_in_nav/
   index.md
   inbound-links.md
+  aurora/bugs-table.md
   #account-project-management/allocation-management/not_in_nav/
 
 # Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)

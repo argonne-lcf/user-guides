@@ -106,3 +106,12 @@ When you are satisfied with the details, click the Run button. This should pop u
 ![Example DDT debugging GUI](images/ddt_debugging_gui.png "Example DDT debugging GUI")
 
 From here, you should be able to control starting and stopping processes, ranks, and threads (CPU and GPU threads). If you set a breakpoint or otherwise stop in the source code for a GPU-offloaded kernel, you should be able to click the Thread radio button and see threads with a "GPU" badge on them. As mentioned above, this is not meant to be full documentation on how to use DDT. A good place to start with that is to open the User Guide from the Help menu in the client application.
+
+
+## Running a local version on Aurora
+
+You may want to install and run a local version of Forge from the [Linaro website](https://www.linaroforge.com/download-documentation/) on Aurora. Once you install it, you can use the following license file to run the local version with the Forge license on Aurora:
+
+```bash 
+FORGE_LICENSE_FILE=/pe/licenses/arm_forge/Licence <path_to_the_local_version>/ddt --connect <other DDT parameters> 
+```

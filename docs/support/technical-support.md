@@ -1,22 +1,28 @@
-# Technical Support
+# Submitting a Ticket
 
-For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support - [support@alcf.anl.gov](mailto:support@alcf.anl.gov). Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays.
+ALCF manages user support issues through an email support ticketing system. To submit a trouble ticket, please email ALCF Support at [support@alcf.anl.gov](mailto:support@alcf.anl.gov). You can also send questions, requests, and feedback to ALCF Support as well. 
 
-## Best practices
-When contacting support, please follow these recommended guidelines:
+!!! note
+    Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday-Friday, except on holidays.
 
-* Review the ["Known Issues Pages"](./technical-support.md#known-issues-pages) listed below, before contacting ALCF Support.
-* Include your ALCF Username, your project shortname, and the system(s) you're having issues on (Polaris, Sophia, Aurora, etc.)
-* Do not respond to closed tickets as your response will **NOT** re-open the ticket
-* Do not use an existing ticket to ask for assistance on new topics, submit a new ticket by emailing Support.
-* See ["Job Failures"](./technical-support.md#job-failures), ["Python Issues"](./technical-support.md#python-issues), ["Installation/compilation issues"](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
+## Best Practices for Submitting Tickets
 
-## Known Issues Pages
+Before contacting ALCF Support, be sure to check the **Known Issues** pages for the following systems:
+- [Polaris](../polaris/known-issues.md)
+- [Aurora](../aurora/known-issues.md)
+  
+When emailing support, include:
+- Your ALCF Username
+- Your project shortname
+- The system(s) you're having issues with (Polaris, Sophia, Aurora, etc.)
 
-Please be aware of existing **Known Issues** pages for the following systems:
-
-* [Polaris](../polaris/known-issues.md)
-* [Aurora](../aurora/known-issues.md)
+Please note:
+- Do not respond to closed tickets. Your response will **NOT** re-open the ticket.
+- Do not use an existing ticket to ask for assistance on new topics. Instead, submit a new ticket by emailing Support.
+- See ["Job Failures"](./technical-support.md#job-failures), ["Python Issues"](./technical-support.md#python-issues), ["Installation/compilation issues"](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
+ 
+## Mailing lists
+System outages and preventative maintenace schedules are sent to appropriate system mailing lists. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. If you unsubscribed previously, you can re-subscribe by going to : https://lists.alcf.anl.gov/mailman/listinfo/{ALCF-system-nam}-notify (replace {ALCF-system-nam} with the appropriate compute system you have access to).
 
 ## Job Failures
 
