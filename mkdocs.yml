@@ -420,6 +420,7 @@ nav:
 
   - Services:
     - services/index.md
+    - Inference Endpoints: services/inference-endpoints.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
