@@ -26,9 +26,7 @@ Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additi
 ### Load Modules on Compute Node
 ```bash linenums="1"
 # load apptainer
-module load spack-pe-gcc
 module load apptainer
-module load fuse-overlayfs
 ```
 
 ### Building from Docker or Argonne GitHub Container Registry
@@ -38,12 +36,12 @@ Since Docker requires root privileges, which users do not have on Aurora, existi
 
 ```bash linenums="1"
 ## Build an image
-apptainer build intel-optimized-pytorch.sing docker://intel/intel-optimized-pytorch
+apptainer build --fakeroot intel-optimized-pytorch.sing docker://intel/intel-optimized-pytorch
 ```
 
 ### Example to run Hello World using Apptainer
 ```bash linenums="1"
-apptainer exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
+apptainer exec --fakeroot docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
 ```
 
 ### Example to run Postgres Database using Apptainer
@@ -62,12 +60,10 @@ export ftp_proxy="http://proxy.alcf.anl.gov:3128"
 export no_proxy="admin,*.hostmgmt.cm.aurora.alcf.anl.gov,*.alcf.anl.gov,localhost"
 
 # Load apptainer
-module load spack-pe-gcc
 module load apptainer
-module load fuse-overlayfs
 
 # Build postgres image
-apptainer build postgres.sing docker://postgres # do this once
+apptainer build --fakeroot postgres.sing docker://postgres # do this once
 
 # Create an environment file
 cat >> pg.env <<EOF
@@ -81,7 +77,7 @@ EOF
 mkdir -p pgdata pgrun
 
 # Start an instance of the container using nohup
-nohup apptainer run -B pgrun:/var/run/postgresql -B pgdata:/var/lib/postgresql/data --env-file pg.env postgres.sing postgres &
+nohup apptainer run --fakeroot -B pgrun:/var/run/postgresql -B pgdata:/var/lib/postgresql/data --env-file pg.env postgres.sing postgres &
 
 # Save PID
 echo $! > pg_pid.txt
@@ -89,6 +85,7 @@ echo "Postgres started with PID $(cat pg_pid.txt)"
 
 # Interact with running container using psql client
 apptainer exec \
+  --fakeroot \
   -B pgrun:/var/run/postgresql \
   -B pgdata:/var/lib/postgresql/data \
   --env-file pg.env \

@@ -44,6 +44,11 @@ The script uses the arguments `pcompile` and `prun` for the data parallel compil
 ./Unet2d.sh prun <image size> <batch_size> <num of instances> <RunID>
 ```
 
+If you have already compiled for a previous version of the sambaflow stack, delete existing pef file, if it exists.
+```bash
+rm /data/scratch/$(whoami)/GPT_RUN/gpt15/gpt15.pef
+```
+
 For a image size of 256x256 and local batch size of 256 when running 8 instance, the commands are provided as follows.
 
 ```bash
@@ -96,7 +101,7 @@ cd ~/nlp-multiNodetest
 ### Create and run Gpt1.5B_compile.sh and Gpt1.5B_run.sh
 
 Create the files **Gpt1.5B_compile.sh** and **Gpt1.5B_run.sh** in the current directory.
-Copy the contents of [Gpt1.5B_compile.sh](./files/Gpt1.5B_compile.sh) and [Gpt1.5B_run.sh](./files/Gpt1.5B_run.sh). Alternatively, the files can be accessed at `/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_compile.sh` and `/data/ANL/scripts/1.23.5-46/legacy_models/Gpt1.5B_run.sh` on any of the compute node and can be copied over to the working directory.
+Copy the contents of [Gpt1.5B_compile.sh](./files/Gpt1.5B_compile.sh) and [Gpt1.5B_run.sh](./files/Gpt1.5B_run.sh). Alternatively, the files can be accessed at `/data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_compile.sh` and `/data/ANL/scripts/1.24.1/legacy_models/Gpt1.5B_run.sh` on any of the compute node and can be copied over to the working directory.
 
 ### Compile and Run
 
