@@ -12,7 +12,7 @@ qstat -wa
 ```
 If `qstat -wa` shows any jobs active, do not attempt to start Llama2.
 
-Also check to see if anyone else is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; not an actual conflict. 
+Also, be sure to check if anyone else is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; this would only be an actual conflict if the user starts a job during the attempt to run the full-rack llama job.
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
