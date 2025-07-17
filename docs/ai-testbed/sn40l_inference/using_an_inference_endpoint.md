@@ -30,7 +30,7 @@ export OPENAI_API_KEY=$SAMBANOVA_API_KEY
 ### Python example
 Make a virtual env and activate it, or use an existing virtualenv or conda env.
 ```console
-virtualenv create openai_venv
+virtualenv openai_venv
 source openai_venv/bin/activate
 ```
 Then install the openai package needed for chat completions
@@ -99,3 +99,34 @@ curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
 
 ```
 
+Multiple completions can be requested in a single call by passing an array of requests e.g.
+```
+export PROMPT1="Why is red red?"
+export PROMPT2="Why is green green?"
+export D='[
+    {
+      "stream": true,
+      "model": "'${MODEL_NAME}'",
+      "messages": [
+          {
+              "role": "user",
+               "content": '\"${PROMPT1}\"'
+           }
+       ]
+    },
+    {
+      "stream": true,
+      "model": "'${MODEL_NAME}'",
+      "messages": [
+          {
+              "role": "user",
+              "content": '\"${PROMPT2}\"'           
+          }
+      ]
+    }
+  ]'
+curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
+     -H "Content-Type: application/json" \
+     -d "${D}" \
+     -X POST ${OPENAI_BASE_URL}/chat/completions
+```
