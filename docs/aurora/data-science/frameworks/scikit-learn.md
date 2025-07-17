@@ -6,7 +6,17 @@ scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extens
 
 ## Environment Setup
 
-Intel Extension for Scikit-learn is already pre-installed on Aurora, available in the `frameworks` module. You can load the frameworks module as described [here](../python.md), which will activate a conda environment.
+Intel Extension for Scikit-learn is not currently in the `frameworks` module. Below is an example of building Intel Extension for Scikit-learn in a venv on top of the conda environment in the `frameworks` module. For more information about virtual environments, see the [Python page](../python.md). Please note the warning about importing Python packages at large scale. When you build Intel Extension for Scikit-learn, it should find the [oneDAL library](../../applications-and-libraries/libraries/onedal.md) that is part of the oneAPI installation on Aurora. 
+```bash
+git clone https://github.com/intel/scikit-learn-intelex.git
+module load frameworks
+python -m venv sklearnex_build --system-site-packages
+source sklearnex_build/bin/activate
+pip install pybind11==3.0.0 cmake==4.0.3 clang-format
+
+cd scikit-learn-intelex
+bash conda-recipe/build.sh
+```
 
 ## Usage
 
@@ -62,11 +72,12 @@ import dpctl
 import dpctl.tensor as dpt
 from mpi4py import MPI
 from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
 import sklearnex
 from sklearnex.spmd.neighbors import KNeighborsClassifier
 
 # Temporary solution until Intel implements array checks on GPU
-sklearnex.set_config(use_raw_inputs=True)
+sklearnex.set_config(use_raw_input=True)
 
 # Create a GPU SYCL queue to store data on device.
 q = dpctl.SyclQueue("gpu")
@@ -76,24 +87,31 @@ q = dpctl.SyclQueue("gpu")
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 X, y = make_classification(n_samples=100000, n_features=8, random_state=rank)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
 
 # Move the data to the GPU devices.
-dpt_X = dpt.asarray(X, usm_type="device", sycl_queue=q)
-dpt_y = dpt.asarray(y, usm_type="device", sycl_queue=q)
+dpt_X_train = dpt.asarray(X_train, usm_type="device", sycl_queue=q)
+dpt_X_val = dpt.asarray(X_val, usm_type="device", sycl_queue=q)
+dpt_y_train = dpt.asarray(y_train, usm_type="device", sycl_queue=q)
 
 # Run the algorithm.
 model_spmd = KNeighborsClassifier(
     algorithm="brute", n_neighbors=20, weights="uniform", p=2, metric="minkowski"
 )
-model_spmd.fit(dpt_X, dpt_y)
+model_spmd.fit(dpt_X_train, dpt_y_train)
+
+# for this algorithm, predict is more expensive than fit
+y_val_predict = model_spmd.predict(dpt_X_val)
 ```
 
 ### An Example Job Script
 
 Below we give an example job script. Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
 
-```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="12"
+```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="14"
 module load frameworks
+# Activate venv where you installed Intel Extension to scikit-learn
+source sklearnex_build/bin/activate
 
 # This is to resolve an issue due to a package called "numexpr".
 # It sets the variable
