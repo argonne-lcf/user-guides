@@ -161,8 +161,8 @@ module load craype-accel-nvidia90
 module load cray-hdf5-parallel
 
 # Point to your Julia installation and depot
-export PATH=/path/to/your/project/juliaup/bin:${PATH}
-export JULIA_DEPOT_PATH=/path/to/your/project/julia_depot
+export PATH=${PROJECT}/juliaup/bin:${PATH}
+export JULIA_DEPOT_PATH=${PROJECT}/julia_depot
 
 # Set path for CUPTI library (if needed)
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CRAY_NVIDIA_PREFIX/cuda/12.2/extras/CUPTI/lib64/
