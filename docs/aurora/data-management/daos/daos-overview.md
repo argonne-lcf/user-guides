@@ -164,8 +164,8 @@ To optimize performance, you may need to copy the contents of `launch-dfuse.sh`,
 
 If you get an error trying to access your container (such as on the dfuse container mount) your container may have a status of 'UNCLEAN'.  You can check this with the following command:
 
-```bash linenums="1"
-DAOS cont get-prop <pool name> <container name>
+```bash
+daos cont get-prop <pool name> <container name>
 ```
 
 You should see output with the 'Health' property set to 'UNCLEAN':
@@ -177,23 +177,23 @@ Name                                             Value
 ...
 Health (status)                                  UNCLEAN
 ...
-``
+```
 
 This 'UNCLEAN' status indicates that the DAOS system has had a temporary loss of redundancy which may or may not have resulted in corruption of the metadata (including directory structures) or the data itself.  In order to investigate to determine if there is actual metadata or data corruption, you will first need to be able to access the container by explicitly setting the status of the container to HEALTHY:
 
-```bash linenums="1"
-DAOS cont set-prop <pool name> <container name> status:HEALTHY
+```bash
+daos cont set-prop <pool name> <container name> status:HEALTHY
 ```
 
 To check on metadata corruption run this DAOS filesystem command to have DAOS check for metadata corruption.:
 
-```bash linenums="1"
-DAOS fs check --flags=evict <pool name> <container name>
+```bash
+daos fs check --flags=evict <pool name> <container name>
 ```
 
 If the metadata is ok you should see something like this:
 
-```bash
+```bash linenums="1"
 DFS checker: Start (2025-07-17-19:23:14)
 DFS checker: Create OIT table
 DFS checker: Iterating namespace and marking objects
