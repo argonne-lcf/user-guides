@@ -62,6 +62,7 @@ This will generate and store access and refresh tokens in your home directory.
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
     - An internal policy requires re-authentication every 7 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
+    - Currently, endpoints are restricted. You must be on Argonne's network (Use VPN, Dash, or SSH to ANL machine). You will need to authenticate with Argonne or ALCF SSO (Single Sign On) using your credentials.
 
 #### 3. Make a Test Call
 
@@ -602,7 +603,6 @@ On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to ser
 
 - The default response format for the API is `text/plain`.
 - The Globus backend does not support streaming. Please ensure `stream: False` is set when integrating with RAG applications.
-- Endpoints are currently restricted to the Argonne network (VPN, Dash, or SSH to an ANL machine). You will need to authenticate with Argonne or ALCF SSO (Single Sign On) using your credentials. This restriction will soon be lifted to allow access from anywhere.
 - If you’re interested in extended model runtimes, reservations, or private model deployments, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint).
 
 ## Troubleshooting
