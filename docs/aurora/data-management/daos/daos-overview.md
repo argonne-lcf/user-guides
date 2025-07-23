@@ -187,7 +187,7 @@ daos cont set-prop <pool name> <container name> status:HEALTHY
 
 To check on metadata corruption run this DAOS filesystem command to have DAOS check for metadata corruption.:
 
-```bash
+```bash linenums="1"
 daos fs check --flags=evict <pool name> <container name>
 ```
 
