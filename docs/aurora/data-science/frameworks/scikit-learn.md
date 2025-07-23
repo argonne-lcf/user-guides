@@ -6,8 +6,8 @@ scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extens
 
 ## Environment Setup
 
-Intel Extension for Scikit-learn is not currently in the `frameworks` module. Below is an example of building Intel Extension for Scikit-learn in a venv on top of the conda environment in the `frameworks` module. For more information about virtual environments, see the [Python page](../python.md). Please note the warning about importing Python packages at large scale. When you build Intel Extension for Scikit-learn, it should find the [oneDAL library](../../applications-and-libraries/libraries/onedal.md) that is part of the oneAPI installation on Aurora. 
-```bash
+Intel Extension for Scikit-learn is not currently in the `frameworks` module. Below is an example of building Intel Extension for Scikit-learn in a `venv` on top of the `conda` environment in the `frameworks` module. For more information about virtual environments, see the [Python page](../python.md). Please note the warning about importing Python packages at large scale. When you build Intel Extension for Scikit-learn, it should find the [oneDAL library](../../applications-and-libraries/libraries/onedal.md) that is part of the oneAPI installation on Aurora. 
+```bash linenums="1"
 git clone https://github.com/intel/scikit-learn-intelex.git
 module load frameworks
 python -m venv sklearnex_build --system-site-packages
@@ -28,20 +28,20 @@ Note that patching only affects supported algorithms and parameters. To see the 
 
 There are multiple ways to patch scikit-learn with the Intel Extension, as Intel documents [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/quick-start.html#patching). For example, you can patch within the script, like this:
 
-```python
+```python linenums="1"
 from sklearnex import patch_sklearn
 patch_sklearn()
 ```
 
 It is important to note that this needs to happen before importing scikit-learn. To explicitly only patch certain estimators, you can import particular functions from `sklearnex` instead of `sklearn`, like this:
 
-```python
+```python linenums="1"
 from sklearnex.neighbors import NearestNeighbors
 ```
 
 ### GPU Acceleration
 
-Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. (If not, see the [Python page](../python.md).) dpctl implements oneAPI concepts like queues and devices.
+Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. If not, refer to [Aurora's Python page > dpctl section](../python.md#dpctl). dpctl implements oneAPI concepts like queues and devices.
 
 As described in more detail in Intel's documentation [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU.
 
