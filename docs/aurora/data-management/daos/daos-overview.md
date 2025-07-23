@@ -111,7 +111,6 @@ daos container get-prop  $DAOS_POOL  $DAOS_CONTAINER
 ```
 
 - Look for messages like `Rebuild busy and state degraded in the daos pool query.`
-- Look for messages like `Health (status) : UNCLEAN in the get prop` . If found use this command `daos container set-prop <DAOS_POOL> <DAOS_CONTAINER> status:HEALTHY` to set it back to healthy.
 - 'Out of group or member list' error is an exception and can be safely ignored. This error message will be fixed in the next DAOS release.
 
 You can also use the following commands for further diagnosis.
@@ -160,6 +159,51 @@ clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
 
 To optimize performance, you may need to copy the contents of `launch-dfuse.sh`, add `-o multi-user`, enable caching, and then use the updated file to mount the container.
+
+## 'UNCLEAN' Container Status
+
+If you get an error trying to access your container (such as on the dfuse container mount) your container may have a status of 'UNCLEAN'.  You can check this with the following command:
+
+```bash linenums="1"
+DAOS cont get-prop <pool name> <container name>
+```
+
+You should see output with the 'Health' property set to 'UNCLEAN':
+
+```bash
+Properties for container posix-ec16p2gx-crc32
+Name                                             Value                          
+----                                             -----                          
+...
+Health (status)                                  UNCLEAN
+...
+``
+
+This 'UNCLEAN' status indicates that the DAOS system has had a temporary loss of redundancy which may or may not have resulted in corruption of the metadata (including directory structures) or the data itself.  In order to investigate to determine if there is actual metadata or data corruption, you will first need to be able to access the container by explicitly setting the status of the container to HEALTHY:
+
+```bash linenums="1"
+DAOS cont set-prop <pool name> <container name> status:HEALTHY
+```
+
+To check on metadata corruption run this DAOS filesystem command to have DAOS check for metadata corruption.:
+
+```bash linenums="1"
+DAOS fs check --flags=evict <pool name> <container name>
+```
+
+If the metadata is ok you should see something like this:
+
+```bash
+DFS checker: Start (2025-07-17-19:23:14)
+DFS checker: Create OIT table
+DFS checker: Iterating namespace and marking objects
+DFS checker: marked 836 files/directories (runtime: 3 sec))
+DFS checker: Checking unmarked OIDs (Pass 1)
+DFS checker: Done! (runtime: 4 sec)
+DFS checker: Number of leaked OIDs in namespace = 0
+```
+
+However if you see failure messages or the 'Number of leaked OIDs in namespace' is greater than 0 then you have metadata corruption.  Otherwise, the next step is to manually manually verify the data correctness yourself, by whatever means is appropriate (i.e. loading data into your simulator, loading the data into analysis programs, utilizing your own checksums, or just visually inspecting the files).  So if your metadata or data has been corrupted, you should report this data corruption to ALCF Support [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and someone from the DAOS team will follow up wtih you to investigate.
 
 ## Job Submission
 
