@@ -164,7 +164,7 @@ To optimize performance, you may need to copy the contents of `launch-dfuse.sh`,
 
 If you get an error trying to access your container (such as on the dfuse container mount) your container may have a status of 'UNCLEAN'.  You can check this with the following command:
 
-```bash
+```bash linenums="1"
 daos cont get-prop <pool name> <container name>
 ```
 
