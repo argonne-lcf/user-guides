@@ -181,7 +181,7 @@ Health (status)                                  UNCLEAN
 
 This 'UNCLEAN' status indicates that the DAOS system has had a temporary loss of redundancy which may or may not have resulted in corruption of the metadata (including directory structures) or the data itself.  In order to investigate to determine if there is actual metadata or data corruption, you will first need to be able to access the container by explicitly setting the status of the container to HEALTHY:
 
-```bash
+```bash linenums="1"
 daos cont set-prop <pool name> <container name> status:HEALTHY
 ```
 
