@@ -328,7 +328,7 @@ For more examples, please see the [inference-endpoints GitHub repository](https:
     - nvidia/NV-Embed-v2
 
     !!! note "Want to add a model?"
-        To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request). You can expedite the process by adding the HF-compatible, framework-supported model weights to `/eagle/argonne_tpc/model_weights/`.
+        To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).
 
 
 ## Batch Processing
@@ -573,12 +573,12 @@ For large-scale inference, the batch processing service allows you to submit a f
 
 ### Available Clusters
 
-| Cluster                   | Status       | Endpoint                                                    | Notes                               |
-|---------------------------|--------------|-------------------------------------------------------------|-------------------------------------|
-| Sophia                    | **Active**   | https://data-portal-dev.cels.anl.gov/resource_server/sophia | 8 nodes reserved for Inference      |
-| Sambanova/Metis           | Coming Soon  | https://data-portal-dev.cels.anl.gov/resource_server/metis  |                                     |
-| Cerebras Inference Cluster| Coming Soon  |                                                             |                                     |
-| GH200 Nvidia Cluster      | Coming Soon  |                                                             |                                     |
+| Cluster                         | Status       | Endpoint                                                    | Notes                               |
+|---------------------------------|--------------|-------------------------------------------------------------|-------------------------------------|
+| Sophia                          | **Active**   | https://data-portal-dev.cels.anl.gov/resource_server/sophia | 8 nodes reserved for Inference      |
+| SambaNova SN40L (Metis)         | Coming Soon  | https://data-portal-dev.cels.anl.gov/resource_server/metis  |                                     |
+| Cerebras CS-3 Inference cluster | Coming Soon  |                                                             |                                     |
+| GH200 Nvidia Cluster            | Coming Soon  |                                                             |                                     |
 
 ### Endpoints and Frameworks
 
