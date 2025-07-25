@@ -397,6 +397,7 @@ nav:
       - Data Science:
         - Python: sophia/data-science/python.md
         - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
+        - Dask: sophia/data-science/dask.md
       - Visualization:
         - sophia/visualization/index.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
