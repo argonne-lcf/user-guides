@@ -37,6 +37,7 @@ to determine active allocations.
 To request an extension of your existing discretionary allocation or to request additional hours, please complete an allocation renewal request [here](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
 To renew or extend storage allocations, email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with answers to the following information:
+
 - What have you accomplished with your original allocation?
 - Please include a brief description of any publications or major presentations that were (or will be) generated in full or in part because of this allocation.
 - What will you do with the extra time?
@@ -59,7 +60,7 @@ Suballocations let PIs control who in their team can run jobs, how much they are
 
 PI creates suballocations 
 
-```bash
+```bash linenums="1"
 sbank new sub <allocationid> --name <nameofsuballoc>
 ```
 
@@ -67,13 +68,13 @@ sbank new sub <allocationid> --name <nameofsuballoc>
 
 #### PI adds users to suballocations
 
-```bash
+```bash linenums="1"
 sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."
 ```
 
 #### PI can change the name of a suballocation 
 
-```bash
+```bash linenums="1"
 sbank e sub <suballocationID> --name=<new_name_of_suballocation>
 ```
 
@@ -81,25 +82,25 @@ By default, the primary suballocation (which is the default suballocation create
 
 #### To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation:
 
-```bash
+```bash linenums="1"
 sbank-edit-suballocation --restrict <primary suballocation id>
 ```
 
 #### Then add users with this command:
 
-```bash
+```bash linenums="1"
 sbank e sub <primary suballocation id> --add-user="<username1> <username2> ..."
 ```
 
 #### PI changes start and end dates for a suballocation:
 
-```bash
+```bash linenums="1"
 sbank e sub <suballocationID> -S <start_date> -E <end_date>
 ```
 
 #### PI adds hours to a suballocation:
 
-```bash
+```bash linenums="1"
 sbank e sub <projectname>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameOfDestSuballoc>
 ```
 
@@ -117,14 +118,14 @@ Submit jobs to a suballocation. Note that the user should be on the suballocatio
 
 Example:
 
-```bash
-#Specify suballocationID
+```bash linenums="1"
+# Specify suballocationID
 qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <suballocationID> -q demand test.sh
 ```
 or
 
-```bash
-#Specify suballocation name
+```bash linenums="1"
+# Specify suballocation name
 qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<suballocationName> -q demand test.sh
 ```
 
@@ -133,7 +134,7 @@ qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<subal
 
 List all suballocations for a project that shows the number of jobs run, charges, allocation balance, suballocation name, and list of users:
 
-```bash
+```bash linenums="1"
 sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 ```
 
