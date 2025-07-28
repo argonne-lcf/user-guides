@@ -284,6 +284,7 @@ nav:
         - Virtual Environments: ai-testbed/groq/virtual-environments.md
         - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
+        - Examples: ai-testbed/groq/examples.md
       - SambaNova:
         - ai-testbed/sambanova/index.md
         - Getting Started: ai-testbed/sambanova/getting-started.md
@@ -424,6 +425,7 @@ nav:
 
   - Services:
     - services/index.md
+    - Inference Endpoints: services/inference-endpoints.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md

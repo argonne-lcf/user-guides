@@ -2,41 +2,51 @@
 
 [scikit-learn](https://scikit-learn.org/stable/) is a popular open-source Python library for machine learning. It has wide coverage of machine learning algorithms (other than neural networks), such as k-means clustering and random forests.
 
-scikit-learn (abbreviated "sklearn") is built for CPUs. However, Intel(R) Extension for Scikit-learn (abbreviated "sklearnex") is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs and adds support for additional functionality, such as incremental and distributed algorithms. For more information, see the [scikit-learn-intelex GitHub page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw).
+scikit-learn (abbreviated "sklearn") is built for CPUs. However, the "Extension to Scikit-learn" (formerly the "Intel(R) Extension for Scikit-learn"), abbreviated "sklearnex", is a free Python package that speeds up scikit-learn on Intel CPUs & GPUs and adds support for additional functionality, such as incremental and distributed algorithms. For more information, see the [scikit-learn-intelex GitHub page](https://github.com/uxlfoundation/scikit-learn-intelex), [the documentation](https://uxlfoundation.github.io/scikit-learn-intelex/latest/index.html), or [Intel's website](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html#gs.b2f4sw).
 
 ## Environment Setup
 
-Intel Extension for Scikit-learn is already pre-installed on Aurora, available in the `frameworks` module. You can load the frameworks module as described [here](../python.md), which will activate a conda environment.
+Extension for Scikit-learn is not currently in the `frameworks` module. Below is an example of building Extension for Scikit-learn in a `venv` on top of the `conda` environment in the `frameworks` module. For more information about virtual environments, see the [Python page](../python.md). Please note the warning about importing Python packages at large scale. When you build Extension for Scikit-learn, it should find the [oneDAL library](../../applications-and-libraries/libraries/onedal.md) that is part of the oneAPI installation on Aurora. 
+```bash linenums="1"
+git clone https://github.com/intel/scikit-learn-intelex.git
+module load frameworks
+python -m venv sklearnex_build --system-site-packages
+source sklearnex_build/bin/activate
+pip install pybind11==3.0.0 cmake==4.0.3 clang-format
+
+cd scikit-learn-intelex
+bash conda-recipe/build.sh
+```
 
 ## Usage
 
 ### Patching
 
-To accelerate existing scikit-learn code with minimal code changes, Intel Extension for Scikit-learn uses patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL).
+To accelerate existing scikit-learn code with minimal code changes, Extension for Scikit-learn uses patching: replacing stock scikit-learn algorithms with versions that utilize Intel(R) oneAPI Data Analytics Library (oneDAL).
 
-Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, the Intel Extension will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example, with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
+Note that patching only affects supported algorithms and parameters. To see the current support, check Intel's page [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/algorithms.html). Otherwise, the Extension will fall back on stock scikit-learn, which has to run on the CPU. To know which version is being used, enable [Verbose Mode](https://uxlfoundation.github.io/scikit-learn-intelex/latest/verbose.html), for example, with the environment variable `SKLEARNEX_VERBOSE=INFO`. However, verbose mode is only available for supported algorithms.
 
-There are multiple ways to patch scikit-learn with the Intel Extension, as Intel documents [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/what-is-patching.html). For example, you can patch within the script, like this:
+There are multiple ways to patch scikit-learn with the Extension, as Intel documents [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/quick-start.html#patching). For example, you can patch within the script, like this:
 
-```python
+```python linenums="1"
 from sklearnex import patch_sklearn
 patch_sklearn()
 ```
 
 It is important to note that this needs to happen before importing scikit-learn. To explicitly only patch certain estimators, you can import particular functions from `sklearnex` instead of `sklearn`, like this:
 
-```python
+```python linenums="1"
 from sklearnex.neighbors import NearestNeighbors
 ```
 
 ### GPU Acceleration
 
-Intel Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. (If not, see the [Python page](../python.md).) dpctl implements oneAPI concepts like queues and devices.
+Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. If not, refer to [Aurora's Python page > dpctl section](../python.md#dpctl). dpctl implements oneAPI concepts like queues and devices.
 
 As described in more detail in Intel's documentation [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU.
 
 1. Pass the input data to the algorithm as `dpctl.tensor.usm_ndarray`. Then the algorithm will run on the same device as the data and return the result as a usm_array on the same device.
-2. Configure Intel Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`.
+2. Configure Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`.
 
 Patching (described above) can be helpful in the case of functionality that already exists in scikit-learn because you can import the functions from `sklearn` instead of `sklearnex`.
 
@@ -45,7 +55,7 @@ Patching (described above) can be helpful in the case of functionality that alre
 To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is tested more thoroughly on Aurora.
 
 !!! warning "Multi-GPU scaling performance"
-    The current version of Intel Extension to scikit-learn does not scale well to multiple GPUs. The cause has been identified, and we're waiting on a fix. However, if you use the oneDAL C++ API, the scaling is much better.
+    The current version of Extension to scikit-learn does not scale well to multiple GPUs. The cause is that scikit-learn includes some array checks before starting an algorithm, and Intel has not implemented performing those checks on the GPU. For now, the data gets copied to the host to perform these checks, which can be a significant bottleneck. However, you can use a parameter to bypass those checks. Either run a function within a `with sklearnex.config_context(use_raw_input=True)` block or run `sklearnex.set_config(use_raw_input=True).` Alternatively, you could use [the oneDAL C++ API](../../applications-and-libraries/libraries/onedal.md) directly.
 
 1. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
 2. Using dpctl and your queue, move your data to the GPU devices.
@@ -62,7 +72,12 @@ import dpctl
 import dpctl.tensor as dpt
 from mpi4py import MPI
 from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+import sklearnex
 from sklearnex.spmd.neighbors import KNeighborsClassifier
+
+# Temporary solution until Intel implements array checks on GPU
+sklearnex.set_config(use_raw_input=True)
 
 # Create a GPU SYCL queue to store data on device.
 q = dpctl.SyclQueue("gpu")
@@ -72,25 +87,31 @@ q = dpctl.SyclQueue("gpu")
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 X, y = make_classification(n_samples=100000, n_features=8, random_state=rank)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
 
 # Move the data to the GPU devices.
-dpt_X = dpt.asarray(X, usm_type="device", sycl_queue=q)
-dpt_y = dpt.asarray(y, usm_type="device", sycl_queue=q)
+dpt_X_train = dpt.asarray(X_train, usm_type="device", sycl_queue=q)
+dpt_X_val = dpt.asarray(X_val, usm_type="device", sycl_queue=q)
+dpt_y_train = dpt.asarray(y_train, usm_type="device", sycl_queue=q)
 
 # Run the algorithm.
 model_spmd = KNeighborsClassifier(
     algorithm="brute", n_neighbors=20, weights="uniform", p=2, metric="minkowski"
 )
-model_spmd.fit(dpt_X, dpt_y)
+model_spmd.fit(dpt_X_train, dpt_y_train)
+
+# for this algorithm, predict is more expensive than fit
+y_val_predict = model_spmd.predict(dpt_X_val)
 ```
 
 ### An Example Job Script
 
 Below we give an example job script. Note that we are using Aurora MPICH (the default MPI library on Aurora) and not using oneCCL, so we don't need special oneCCL settings. For more about pinning ranks to CPU cores and GPUs, see the [Running Jobs page](../../running-jobs-aurora.md).
 
-```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="13"
-module use /soft/modulefiles
+```bash linenums="1" title="example_scikit-learn_distributed.sh" hl_lines="14"
 module load frameworks
+# Activate venv where you installed Extension to scikit-learn
+source sklearnex_build/bin/activate
 
 # This is to resolve an issue due to a package called "numexpr".
 # It sets the variable
