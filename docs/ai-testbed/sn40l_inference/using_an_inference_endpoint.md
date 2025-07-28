@@ -46,11 +46,13 @@ Write a python script that
 
 Source one of the SN40L endpoint information files to set some environment variables, then copy them to the environment variables expected by the openai python package and the sample scripts below:
 ```
-source ~/metis_endpoint_rpowelltest4.txt
+# source ~/metis_endpoint_<endpoint name>.txt
+# e.g. 
+source ~/metis_endpoint_deepseek-r1-32768.txt
 export OPENAI_BASE_URL=$BASE_URL
 export OPENAI_API_KEY=$SAMBANOVA_API_KEY
-echo $MODEL
-export MODEL_NAME=<a name from above> # e.g. Mistral-7B-Instruct-V0.2
+echo $MODELS
+export MODEL_NAME=<a name from above> # e.g. DeepSeek-R1
 ```
 
 Simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:
@@ -83,7 +85,7 @@ Sample curl command. Change the `PROMPT` environment variable as desired.
 # Sample prompt that shows quoting of quote marks
 export PROMPT="What are \\\"telescoping generations\\\" in biology?"
 export D='{
-    "stream": true,
+    "stream": false,
     "model": "'${MODEL_NAME}'",
     "messages": [
         {
@@ -96,35 +98,43 @@ curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
      -H "Content-Type: application/json" \
      -d "${D}" \
      -X POST ${OPENAI_BASE_URL}/chat/completions
-
 ```
+
+If `jq` is installed, it can be used to parse the json output; e.g. add `-s | jq '{response: .choices[0].message.content}` to the command line:
+```console
+curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -X POST ${OPENAI_BASE_URL}/chat/completions \
+  -d "${D}" \
+  -s | jq '{response: .choices[0].message.content}'
+```  
 
 Multiple completions can be requested in a single call by passing an array of requests e.g.
-```
+```console
 export PROMPT1="Why is red red?"
 export PROMPT2="Why is green green?"
 export D='[
-    {
-      "stream": true,
-      "model": "'${MODEL_NAME}'",
-      "messages": [
-          {
-              "role": "user",
-               "content": '\"${PROMPT1}\"'
-           }
-       ]
-    },
-    {
-      "stream": true,
-      "model": "'${MODEL_NAME}'",
-      "messages": [
-          {
-              "role": "user",
-              "content": '\"${PROMPT2}\"'           
-          }
-      ]
-    }
-  ]'
+{
+    "stream": false,
+    "model": "'${MODEL_NAME}'",
+    "messages": [
+        {
+            "role": "user",
+            "content": '\"${PROMPT1}\"'
+        }
+    ]
+},
+{
+    "stream": true,
+    "model": "'${MODEL_NAME}'",
+    "messages": [
+        {
+            "role": "user",
+            "content": '\"${PROMPT2}\"'           
+        }
+    ]
+}
+]'
 curl -H "Authorization: Bearer ${OPENAI_API_KEY}" \
      -H "Content-Type: application/json" \
      -d "${D}" \
