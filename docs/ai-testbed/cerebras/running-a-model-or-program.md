@@ -45,11 +45,10 @@ git checkout Release_2.4.0
 ```
 ## Running a Pytorch sample
 
-### Activate your PyTorch virtual environment, install modelzoo requirements, and change to the working directory
+### Activate your PyTorch virtual environment, and change to the working directory
 
 ```console
 source ~/R_2.4.0/venv_cerebras_pt/bin/activate
-pip install -r ~/R_2.4.0/modelzoo/requirements.txt
 cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3
 ```
 

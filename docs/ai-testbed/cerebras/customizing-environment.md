@@ -25,9 +25,7 @@ rm -r venv_cerebras_pt
 /software/cerebras/python3.8/bin/python3.8 -m venv venv_cerebras_pt
 source venv_cerebras_pt/bin/activate
 pip install --upgrade pip
-pip install cerebras_pytorch==2.4.0
-pip install -r modelzoo/requirements.txt
-pip install 'murmurhash==1.0.10' 'thinc==8.2.2' 'cymem<2.0.10'
+pip install -e modelzoo/
 ```
 
 <!--- No longer any TensorFlow wheel
