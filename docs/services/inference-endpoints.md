@@ -1,6 +1,6 @@
 # ALCF Inference Endpoints
 
-Unlock Powerful Large Language Model Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware.
+Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware.
 
 ## Quick Start
 
