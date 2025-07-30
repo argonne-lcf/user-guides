@@ -356,7 +356,6 @@ nav:
           - XALT: polaris/applications-and-libraries/libraries/xalt.md
       - Containers: polaris/containers/containers.md
       - Data Science:
-        - Julia: polaris/data-science/julia.md
         - Python: polaris/data-science/python.md
         - Profiling: polaris/data-science/profiling_dl.md
         - Frameworks:
@@ -373,6 +372,7 @@ nav:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
         - Kokkos: polaris/programming-models/kokkos-polaris.md
+        - Julia: polaris/programming-models/julia.md
       - Debugging Tools:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
       - Performance Tools:

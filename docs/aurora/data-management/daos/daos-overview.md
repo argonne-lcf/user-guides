@@ -89,18 +89,53 @@ There is maintenance overhead with containers, therefore it is advisable to crea
 
 ![data model](images/datamodel.png "DAOS data model")
 
-## DAOS sanity checks (is daos_user cluster up or down?)
-
-If any of the following command results in an error, then you can confirm DAOS is currently down
+## DAOS Agent Check
+Whether you are accessing DAOS when running a job from a compute node or managing data from a login node, the DAOS agent daemon is needed to connect the DAOS client to the DAOS server cluster, in your case `daos_user`.  The DAOS agent facilitates all authentication and communication between the DAOS clients and servers.  The DAOS agent daemon should always be running for the `daos_user` cluster on the UANs, however on the compute nodes the `daos_user` agent is only started in the PBS prologue specified via the `-l filesystems=daos_user_fs` resource requirement, and is terminated in the PBS epilogue.  To verify that it is running, first load the `daos` module:
 
 ```bash linenums="1"
-Note qsub ... -l filesystems=flare:daos_user 
+module use /soft/modulefiles
+module load daos
+```
+
+Then to verify the DAOS daemon process for `daos_user` is running, run this command:
+
+```bash linenums="1"
+ps -ef | grep daos
+```
+
+Additionally on the compute nodes, you can run this `clush` command to check if the agent is running on all nodes in the job:
+
+```bash linenums="1"
+clush --hostfile ${PBS_NODEFILE} ps –ef | grep agent | grep -v grep'  | dshbak -c
+```
+
+On the UANs there may be several agents running for different clusters so you may get several lines of output (on the compute node you will get only one), but the one for daos_user is named `daos_agent_oneScratch` and looks like this:
+
+```bash linenums="1"
+daos_ag+   6431      1  0 Jul21 ?        00:00:12 /usr/bin/daos_agent --config-path=/etc/daos/daos_agent_oneScratch.yml --runtime_dir=/run/daos_agent_oneScratch --logfile=/var/log/daos_agent/daos_agent_oneScratch.log
+```
+
+Then verify the daos_user agent will be the one used by the DAOS client:
+
+```bash linenums="1"
+echo $DAOS_AGENT_DRPC_DIR
+```
+
+You should then see this:
+
+```bash linenums="1"
+/run/daos_agent_oneScratch
+```
+
+## DAOS pool and container sanity checks (is the daos_user cluster up or down?)
+
+If any of the following command results in an error, then you can confirm the daos_user cluster is currently down
+
+```bash linenums="1"
+Note qsub ... -l filesystems=flare:daos_user_fs 
 
 module use /soft/modulefiles
-module load daos/base
-env | grep DRPC
-ps –ef | grep daos
-clush --hostfile ${PBS_NODEFILE} ps –ef | grep agent | grep -v grep'  | dshbak -c
+module load daos
 export DAOS_POOL=Your_allocated_pool_name
 export DAOS_CONTAINER=any_label_name
 daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on ${DAOS_POOL} ${DAOS_CONTAINER}
@@ -122,12 +157,11 @@ daos container check --pool=$DAOS_POOL --cont=$DAOS_CONTAINER
 
 There are example programs and job scripts provided under `/soft/daos/examples/`.
 
-## Mount a POSIX container
+## POSIX Container Access via DFUSE
 
-Currently, you must manually mount your container prior to use on any node you are working on.
-In the future, we hope to automate some of this via additional `qsub` options.
+DAOS POSIX container access can be accomplished with no application code modifications needed through DAOS filesystem (DFS) dfuse mount points for both the compute and UANs.  Once mounted, you can access files in the container as you normally would via POSIX file system commands.  Currently, this must be done manually prior to use on any node on which you are working.  In the future, we hope to automate some of this via additional `qsub` options.
 
-#### 1. To mount a POSIX container on a login node
+#### 1. To mount a POSIX container on a UAN
 
 ```bash linenums="1"
 mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
@@ -140,20 +174,20 @@ cd /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
 cp ~/temp.txt ~ /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/
 cat /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/temp.txt
 
-fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount
+fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount - very important to clean up afterward on the UAN
 ```
 
 #### 2. To mount a POSIX container on Compute Nodes
 
-You need to mount the container on all compute nodes.
+You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script which does a `clush` command of `start-dfuse.sh`:
 
 ```bash linenums="1"
-launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using pdsh on all compute nodes mounted at: /tmp/<pool>/<container>
+launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes mounted at: /tmp/<pool>/<container>
 mount | grep dfuse # To confirm if its mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 
-clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes
+clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes - optional on compute nodes as PBS epilogue script does this for you
 ```
 
 DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
@@ -207,7 +241,7 @@ However if you see failure messages or the 'Number of leaked OIDs in namespace' 
 
 ## Job Submission
 
-The `-l filesystems=daos_user` switch will ensure that DAOS is accessible on the compute nodes.
+The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
 
 Job submission without requesting DAOS:
 
@@ -219,7 +253,7 @@ qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=fla
 Job submission with DAOS:
 
 ```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user -q debug ./pbs_script1.sh
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh
 ```
 
 ## NIC and Core Binding
@@ -275,17 +309,17 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 #PBS -A <ProjectName>
 #PBS -q prod
 #PBS -k doe
-#PBS -l filesystems=flare:daos_user
+#PBS -l filesystems=flare:daos_user_fs
 
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user -q prod ./pbs_script.sh or - I
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh or - I
 
-# please do not miss -l filesystems=daos_user and in your qsub :'(
+# please do not miss -l filesystems=daos_user_fs and in your qsub :'(
 
 export TZ='/usr/share/zoneinfo/US/Central'
 date
 module use /soft/modulefiles
 module load daos
-env | grep DRPC                                     #optional
+echo $DAOS_AGENT_DRPC_DIR                           #optional
 ps -ef|grep daos                                    #optional
 clush --hostfile ${PBS_NODEFILE}  'ps -ef|grep agent|grep -v grep'  | dshbak -c  #optional
 DAOS_POOL=datascience
@@ -613,7 +647,7 @@ export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 
    ```bash linenums="1"
 
-   qsub –l filesystems=daos_user
+   qsub –l filesystems=daos_user_fs
    ```
 2. Check that you **loaded** the DAOS module:
 
