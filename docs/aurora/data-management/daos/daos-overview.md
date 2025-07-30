@@ -90,20 +90,20 @@ There is maintenance overhead with containers, therefore it is advisable to crea
 ![data model](images/datamodel.png "DAOS data model")
 
 ## DAOS Agent Check
-Whether you are accessing DAOS when running a job from a compute node or managing data from a login node, the DAOS agent daemon is needed to connect the DAOS client to the DAOS server cluster, in your case daos_user.  The DAOS agent facilitates all authentication and communication between the DAOS clients and servers.  The DAOS agent daemon should always be running for the daos_user cluster on the UANs, however on the compute nodes the daos_user agent is only started in the PBS prologue specified via the `-l filesystems=daos_user_fs` resource requirement, and is terminated in the PBS epilogue.  To verify that it is running, first load the `daos` module:
+Whether you are accessing DAOS when running a job from a compute node or managing data from a login node, the DAOS agent daemon is needed to connect the DAOS client to the DAOS server cluster, in your case `daos_user`.  The DAOS agent facilitates all authentication and communication between the DAOS clients and servers.  The DAOS agent daemon should always be running for the `daos_user` cluster on the UANs, however on the compute nodes the `daos_user` agent is only started in the PBS prologue specified via the `-l filesystems=daos_user_fs` resource requirement, and is terminated in the PBS epilogue.  To verify that it is running, first load the `daos` module:
 
 ```bash linenums="1"
 module use /soft/modulefiles
 module load daos
 ```
 
-Then to verify the DAOS daemon process for daos_user is running run this command:
+Then to verify the DAOS daemon process for `daos_user` is running, run this command:
 
 ```bash linenums="1"
 ps -ef | grep daos
 ```
 
-Additionally on the compute nodes, you can run this clush command to check if the agent is running on all nodes in the job:
+Additionally on the compute nodes, you can run this `clush` command to check if the agent is running on all nodes in the job:
 
 ```bash linenums="1"
 clush --hostfile ${PBS_NODEFILE} ps –ef | grep agent | grep -v grep'  | dshbak -c
@@ -179,7 +179,7 @@ fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount - very import
 
 #### 2. To mount a POSIX container on Compute Nodes
 
-You need to mount the container on all compute nodes - this is done via the launch-dfuse.sh script which does a clush command of start-dfuse.sh:
+You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script which does a `clush` command of `start-dfuse.sh`:
 
 ```bash linenums="1"
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes mounted at: /tmp/<pool>/<container>
