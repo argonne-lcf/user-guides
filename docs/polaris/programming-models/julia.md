@@ -1,7 +1,8 @@
 # Julia
-> **Note: Experimental Support**
->
-> Support for the Julia programming language on Polaris is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+!!! example "Experimental support"
+
+    Support for the Julia programming language on Polaris is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+    
 ## Introduction
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
@@ -10,7 +11,7 @@ This guide details how to install, configure, and run Julia on the Polaris super
 
 This guide is a first draft of the Julia documentation for Polaris. If you have
 suggestions or find errors, please open a pull request or contact us by
-opening a ticket at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+[opening a ticket](../../support/technical-support.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
 ## 1. Julia Installation
 We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](https://docs.alcf.anl.gov/compute/eagle-flare/) for faster file access and to avoid your home directory.
@@ -44,7 +45,7 @@ module load craype-accel-nvidia90
 curl -fsSL https://install.julialang.org | sh
 ```
 ### 3. Manage Julia Versions
-You can manage multiple Julia installations with [juliaup](https://github.com/JuliaLang/juliaup). The lts (long-term support) and release channels should both work on Polaris.
+You can manage multiple Julia installations with [`juliaup`](https://github.com/JuliaLang/juliaup). The `lts` (long-term support) and `release` channels should both work on Polaris.
 
 ```bash
 # Add the long-term support and latest release channels
@@ -59,13 +60,13 @@ juliaup default lts
 ```
 
 ## 2. Configuring the Programming Environment
-To leverage Polaris's architecture, you must configure Julia to use the system's optimized libraries for [MPI](https://github.com/JuliaParallel/MPI.jl), [CUDA](https://github.com/JuliaGPU/CUDA.jl), and [HDF5.jl](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
+To leverage Polaris's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`CUDA.jl`](https://github.com/JuliaGPU/CUDA.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
 
-### MPI Support with MPI.jl
+### MPI Support with `MPI.jl`
 For multi-node computations, you must configure the [MPI.jl](https://github.com/JuliaParallel/MPI.jl) package to use Polaris's system-installed Cray MPICH library, which is optimized for the hardware and supports GPU-aware communication.
 
 #### 1. Install Packages:
-Add MPI.jl and MPIPreferences.jl to your Julia project.
+Add `MPI.jl` and `MPIPreferences.jl` to your Julia project.
 
 ```bash
 julia --project -e 'using Pkg; Pkg.add(["MPI", "MPIPreferences"])'
@@ -78,8 +79,8 @@ julia --project -e 'using MPIPreferences; MPIPreferences.use_system_binary(vendo
 ```
 
 #### 3. Verify Configuration:
-Check that Julia is targeting the correct MPI library. The output should point to libmpi_nvidia.so provided by Cray.
-```bash
+Check that Julia is targeting the correct MPI library. The output should point to `libmpi_nvidia.so` provided by Cray.
+```bash linenums="1"
 # Command to verify
 julia --project -e 'using MPI; MPI.versioninfo()'
 
@@ -94,12 +95,16 @@ julia --project -e 'using MPI; MPI.versioninfo()'
 #   libmpi:  libmpi_nvidia.so
 #   libmpi dlpath:  /opt/cray/pe/lib64/libmpi_nvidia.so
 ```
-**Note on Login Nodes:** The system MPI is not intended for use on login nodes. For on-node debugging, you can temporarily revert to Julia's default MPI by removing the LocalPreferences.toml file.
+!!! note "Usage on Login Nodes"
 
-### GPU Support with CUDA.jl
-For GPU acceleration, the CUDA.jl package must be configured to use the system-provided CUDA toolkit. This ensures compatibility with the system drivers and is essential for GPU-aware MPI.
+    The system MPI is not intended for use on login nodes. For on-node debugging, you can temporarily revert to Julia's default MPI by removing the `LocalPreferences.toml` file.
+    
+
+### GPU Support with `CUDA.jl`
+For GPU acceleration, the `CUDA.jl` package must be configured to use the system-provided CUDA toolkit. This ensures compatibility with the system drivers and is essential for GPU-aware MPI.
+
 #### 1. Correct CUPTI Library Path:
-If you are using the default PrgEnv-nvhpc environment, you must first correct the path to the CUPTI library.
+If you are using the default `PrgEnv-nvhpc` environment, you must first correct the path to the CUPTI library.
 ```bash
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CRAY_NVIDIA_PREFIX/cuda/12.2/extras/CUPTI/lib64/
 ```
@@ -179,9 +184,8 @@ export TMPDIR=/local/scratch
 # Temporary workaround for libmpi_gtl_cuda
 export LD_PRELOAD=libmpi_gtl_cuda.so
 ```
-#### Example Julia Code (`pi.jl`)
-```julia
-# pi.jl
+#### Example Julia code for approximating pi
+```julia linenums="1" title="pi.jl"
 using CUDA
 using HDF5
 using MPI
@@ -246,10 +250,10 @@ if !isinteractive()
     MPI.Finalize()
 end
 ```
-#### Job Submission Script (`submit.sh`)
+#### Job Submission Script
 This PBS script requests resources and launches the Julia application using `mpiexec`.
 If using the default `PrgEnv-nvhpc` module on Polaris, then it will be necessary to correct a path to the CUPTI library to successfully install `CUDA.jl`.
-```bash
+```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
