@@ -14,7 +14,7 @@ suggestions or find errors, please open a pull request or contact us by
 [opening a ticket](../../support/technical-support.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
 ## 1. Julia Installation
-We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](https://docs.alcf.anl.gov/compute/eagle-flare/) for faster file access and to avoid your home directory.
+We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
 ### 1. Set Environment Variables
 Export the following variables in your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`). This ensures that Julia packages and binaries are installed in your project space.
 ```bash
