@@ -603,17 +603,18 @@ So the DAOS cluster size is:
 
 ## Sharing containers with multiple users
 
-If you'd like to create a container that includes a dataset and allows multiple users from your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), you can follow the procedure below.
+If you'd like to create a container that includes a dataset and allows multiple users from your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), you can follow the below procedure below. Before proceeding, ensure that all intended users have the necessary access to your project, pool, and user group.
 
-Before proceeding, ensure that all intended users have the necessary access to your project, pool, and user group.
-
-```bash
+```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                 # provides the details on the current ACLs
 daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                 # verify the updated ACLs
 groups                                                      # to check if the users are in the same group name 
 chmod -R 775 /tmp/$DAOS_POOL/$DAOS_CONT/shared-dir       # provide the right chmod settings on the directory where they can read or write
+```
+
+```console linenums=1
 kaushikvelusamy@x4405c0s0b0n0:/tmp/perftesting/delete_EC_16P2GX_rd2_eccellsz_524288_chunksize_16777216/ior_dataset> daos container get-prop d9cbdfc4-628b-4ec1-ad01-0b506e4fb3c0 
 ba1d5b48-4a88-4052-b764-729328a0dac3
 Properties for container ba1d5b48-4a88-4052-b764-729328a0dac3
@@ -623,9 +624,7 @@ Group (group)                                    users@
 Access Control List (acl)                        A::OWNER@:rwdtTaAo, A::pkcoff@:r, A:G:GROUP@:rwtT   
 kaushikvelusamy@x4405c0s0b0n0:/tmp/perftesting/delete_EC_16P2GX_rd2_eccellsz_524288_chunksize_16777216/ior_dataset> groups
 users 
-
 ```
-
 
 ## Known issues and workarounds
 
