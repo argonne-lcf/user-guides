@@ -56,8 +56,6 @@ Total size: 6.0 TB
 Rebuild done, 4 objs, 0 recs
 ```
 
-The size of your current daos cluster can be found using ntarget=4096/ 32 targets per node = daos cluster size or daos server size = 128 daos servers
-
 ## POSIX Containers
 
 In DAOS general terms, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documentation on DFS can be found [here](https://docs.daos.io/v2.6/user/filesystem).
@@ -132,7 +130,7 @@ You should then see this:
 If any of the following command results in an error, then you can confirm the daos_user cluster is currently down
 
 ```bash linenums="1"
-Note qsub ... -l filesystems=flare:daos_user_fs 
+Note qsub ... -l filesystems=flare:daos_user_fs
 
 module use /soft/modulefiles
 module load daos
@@ -206,8 +204,8 @@ You should see output with the 'Health' property set to 'UNCLEAN':
 
 ```bash
 Properties for container posix-ec16p2gx-crc32
-Name                                             Value                          
-----                                             -----                          
+Name                                             Value
+----                                             -----
 ...
 Health (status)                                  UNCLEAN
 ...
@@ -369,7 +367,6 @@ date
 
 clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
 # fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} #to unmount on login node
-
 ```
 
 ## MPI-IO Container Access
@@ -424,10 +421,11 @@ int main(int argc, char **argv)
 
 The full code is available on the Aurora filesystem within `/soft/daos/examples/src/`
 
-## Pydaos.daos_torch Example
+## Example of PyTorch integration: `pydaos.daos_torch` module
 
+First, setup an interactive job on a compute node and initialize the environment as follows:
 ```bash linenums="1"
-qsub ... -l filesystem:flare,daos_perf 
+qsub ... -l filesystem:flare,daos_perf
 
 module use /soft/modulefiles
 module load daos_perf
@@ -436,9 +434,11 @@ launch-dfuse_perf.sh ${DAOS_POOL}:${DAOS_CONT}
 
 export LD_LIBRARY_PATH=/lus/flare/projects/datasets/softwares/py_daos/daos_client_master_build_may2/lib64:$LD_LIBRARY_PATH
 export PYTHONPATH     =/lus/flare/projects/datasets/softwares/py_daos/just_pydaos_new/:$PYTHONPATH
+mpiexec -n ... python pydaos_torch_example.py
+```
 
-## Python program
-
+Where the example Python script is:>
+```python linenums="1" title="pydaos_torch_example.py"
 import torch as sys_torch
 from pydaos.daos_torch import Dataset as DaosDataset
 from pydaos.daos_torch import Checkpoint as DaosCheckpoint
@@ -464,15 +464,15 @@ print(f"Torch save completed")
 
 # PyDAOS Torch checkpoint load example
 stream = pydaos_torch_ckpt.reader(name)
-loaded_data = sys_torch.load(stream, weights_only=True)  
+loaded_data = sys_torch.load(stream, weights_only=True)
 print(f"Torch load completed")
 ```
 
-* Pydaos uses dfs_write/read which is faster than posix dfuse_write/read.
-* Pydaos uses dfs containers and python daos containers.
-* The path to the dataset folders inside these containers does not include /tmp and just starts from /dataset_dir1 which assumes a folder inside the DAOS_POOL and DAOS_CONT
-* The above build path might be upgraded with newer builds
-* More examples can be found at : https://github.com/daos-stack/daos/tree/master/src/client/pydaos/torch
+* PyDAOS uses `dfs_write()` and read functions, which are faster than POSIX `dfuse_write()` and read functions.
+* PyDAOS uses DFS containers and Python DAOS containers.
+* The path to the dataset folders inside these containers does not include `/tmp` and just starts from `/dataset_dir1` which assumes a folder inside the `DAOS_POOL` and `DAOS_CONT`
+* The above build path might be upgraded with newer builds without warning
+* More examples can be found at [DAOS GitHub repo > `pydaos.torch`](https://github.com/daos-stack/daos/tree/master/src/client/pydaos/torch)
 
 ## DAOS Hardware
 
@@ -509,7 +509,7 @@ LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/2
 
 If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.
 
-Run your application normally as you would do with mpiexec/ mpirun.
+Run your application normally as you would do with `mpiexec` or `mpirun`.
 
 This generates a binary log file which has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.
 
@@ -525,26 +525,24 @@ where the last 3 directories are the date the file is generated, with your user 
 export DARSHAN_LOGFILE=<full path to binary file name>
 ```
 
-### 2. Darshan-util
+### 2. `darshan-util` environment module
 
-`module load darshan-util` is needed for darshan-parser and pydarshan
+`module load darshan-util` is needed for `darshan-parser` and `pydarshan`
 
 `LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan-util.so:$LD_PRELOAD`
 
-### 3. Darshan-Parser
+### 3. `darshan-parser` utility
 
-Darshan parser can be used on the binany log file to get a text output of all the metrics as follows:
-
+`darshan-parser` can be used on the binany log file to get a text output of all the metrics as follows:
 ```bash linenums="1"
-/soft/perftools/darshan/darshan-3.4.7/bin/darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt. 
+/soft/perftools/darshan/darshan-3.4.7/bin/darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt.
 ```
 
-### 4. PyDarshan
+### 4. PyDarshan library and Python module
 
 For generating a graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
 
-For custom build
-
+For custom build:
 ```bash linenums="1"
 module load python
 mkdir <pyton env dir>
@@ -555,22 +553,19 @@ pip install darshan
 python -m darshan summary <binary log file>
 ```
 
-For system build
-
+For system build:
 ```bash linenums="1"
 module load python
-. /soft/daos/pydarshan_plots_venv/bin/activate 
+. /soft/daos/pydarshan_plots_venv/bin/activate
 pip show darshan
-
-#The above 3 lines should be replaced by module load pydarshan soon
 ```
+The above 3 lines should be replaced by a simpler `module load pydarshan` in the future. 
 
 ```bash linenums="1"
 python -m darshan summary /lus/flare/logs/darshan/aurora/2025/5/21/my.darshan
-
 ```
 
-should generate the .html darshan report
+should generate the `.html` Darshan report
 
 ## Cluster Size
 
@@ -586,23 +581,43 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 |  800  |    78%    |  20 TB/s  |
 | 1024 |    100%    |  30 TB/s  |
 
-The size of your current daos cluster can be found using ntarget=4096/ 32 targets per node = daos cluster size or daos server size = 128 daos servers from
-
+The size of your current DAOS cluster can be found using the following formula:
+```text
+daos_cluster_size = ntarget / targets_per_node
+```
+The value of `ntarget` comes from the output of:
 ```bash linenums="1"
 daos pool query <pool_name>
+```
+and the value of `targets_per_node=32` is fixed given the node hardware configuration of our filesystem.
+
+An example:
+```console
+> daos pool query hacc
+Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
+```
+So the DAOS cluster size is:
+```text
+4096 targets / 32 targets per node 
+ = 128 daos servers
 ```
 
 ## Known issues and workarounds
 
 ### 1. Large bulk I/O write issue
 
-There is a known issue python with pil4dfs- Fix provided in DAOS-17499 - Current workaround set D_IL_COMPATIBLE=1. You can skip pil4dfs for now if that happens.
+There is a known issue Python with `pil4dfs`
+- Fix provided in DAOS-17499 
+- Current workaround is to set `D_IL_COMPATIBLE=1` environment variable. Y
+- You can skip `pil4dfs` for now if that happens.
 
-``python: can't open file '/home/jlo/dfuse/./app.py': [Errno 95] Operation not supported``
+```output
+python: can't open file '/home/jlo/dfuse/./app.py': [Errno 95] Operation not supported
+```
 
-### 2. Pydaos.daos_torch disconnect and clean up
+### 2. `pydaos.daos_torch` disconnect and clean up
 
-There is a dfs disconnect clean up issue. This should be fixed in the next release.
+There is a DFS disconnect clean up issue. This should be fixed in the next release.
 
 ### 3. Libfabric endpoint creation error
 
@@ -632,11 +647,11 @@ x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 13
 x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
 ```
 
-This issue is still under investigation, in the mean time there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to do the `LD_PRELOAD` of the interception library within this script, so in the case of the `libpil4dfs.so` adding the line:
+This issue is still under investigation. In the meantime, there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to perform the `LD_PRELOAD` of the interception library within this script. In the case of the `libpil4dfs.so`, you would add the following line just before the execution of the binary:
 ```bash linenums="1"
 export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ```
-(just before the execution of the binary). For an example, see: 
+For an example, see:
 ```bash linenums="1"
 /lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
 ```
@@ -644,61 +659,45 @@ export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ## Best practices
 
 1. Check that you **requested** DAOS:
-
    ```bash linenums="1"
-
    qsub –l filesystems=daos_user_fs
    ```
 2. Check that you **loaded** the DAOS module:
-
    ```bash linenums="1"
    module load daos
    ```
 3. Check that you have your DAOS pool **allocated**:
-
    ```bash linenums="1"
    daos pool query datascience
    ```
 4. Check that the DAOS client is **running** on all your nodes:
    ```bash linenums="1"
-
    ps -ef | grep daos
    ```
 5. Check that your container is **mounted** on all nodes:
-
    ```bash linenums="1"
    mount | grep dfuse
    ```
 6. Check that you **can `ls`** in your container:
-
    ```bash linenums="1"
-
    ls /tmp/${DAOS_POOL}/${DAOS_CONT}
    ```
 7. Check that your I/O **actually failed**.
 8. Check the **health property** in your container:
-
    ```bash linenums="1"
-
    daos container get-prop $DAOS_POOL $CONT
    ```
 9. Check if your space is **full** (min and max):
-
    ```bash linenums="1"
-
    daos pool query datascience
    ```
 10. Check if your query shows **failed targets** or **rebuild in process**:
-
     ```bash linenums="1"
-
     daos pool query datascience
     ```
 11. Run the following commands to **check the health** of your DAOS pool and container:
-
     ```bash linenums="1"
-
     daos pool autotest
     daos container check
     ```
-12. If you are still having issues, please contact [help @ ALCF](mailto:support@alcf.anl.gov)
+12. If you are still having issues, please submit a ticket at [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
