@@ -603,7 +603,7 @@ So the DAOS cluster size is:
 
 ## Sharing containers with multiple users
 
-If you'd like to create a container that includes a dataset and allows multiple users from your project team to reuse it concurrently—with simultaneous mounting and safe read/write operations (i.e., without race conditions)—you can follow the procedure below.
+If you'd like to create a container that includes a dataset and allows multiple users from your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), you can follow the procedure below.
 
 Before proceeding, ensure that all intended users have the necessary access to your project, pool, and user group.
 
@@ -614,7 +614,6 @@ daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively yo
 daos container get-prop DAOS_POOL DAOS_CONT                 # verify the updated ACLs
 groups                                                      # to check if the users are in the same group name 
 chmod -R 775 /tmp/$DAOS_POOL/$DAOS_CONT/shared-dir       # provide the right chmod settings on the directory where they can read or write
-
 kaushikvelusamy@x4405c0s0b0n0:/tmp/perftesting/delete_EC_16P2GX_rd2_eccellsz_524288_chunksize_16777216/ior_dataset> daos container get-prop d9cbdfc4-628b-4ec1-ad01-0b506e4fb3c0 
 ba1d5b48-4a88-4052-b764-729328a0dac3
 Properties for container ba1d5b48-4a88-4052-b764-729328a0dac3
@@ -682,7 +681,7 @@ For an example, see:
 /lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
 ```
 
-### 5. NA_HOSTUNREACH errors.
+### 5. `NA_HOSTUNREACH` errors
 
 ```bash
 hg_core_send_input_cb() NA callback returned error (NA_HOSTUNREACH)
