@@ -125,7 +125,7 @@ export D='[
     ]
 },
 {
-    "stream": true,
+    "stream": false,
     "model": "'${MODEL_NAME}'",
     "messages": [
         {
