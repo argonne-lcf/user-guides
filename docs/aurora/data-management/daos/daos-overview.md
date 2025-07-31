@@ -425,7 +425,7 @@ The full code is available on the Aurora filesystem within `/soft/daos/examples/
 
 First, setup an interactive job on a compute node and initialize the environment as follows:
 ```bash linenums="1"
-qsub ... -l filesystem:flare,daos_perf
+qsub ... -l filesystem:flare,daos_perf_fs
 
 module use /soft/modulefiles
 module load daos_perf
