@@ -79,7 +79,7 @@ Now, the `GX` in `EC_16P2GX` tells the container to stripe the data across all s
 ```bash
 daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P2G32  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
 ```
-2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P2GX` and you wanted a subdirectory `<dir name>` to have `EC_16P2G32`, mount the container (this is described in the 'POSIX Container Access via DFUSE' section below) with directory `<dir name>` at `/tmp/<pool name>/<container name>` and then:
+2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P2GX` and you wanted a subdirectory `<dir name>` to have `EC_16P2G32`, mount the container (this is described in the [POSIX Container Access via DFUSE](#posix-container-access-via-dfuse) section below) with directory `<dir name>` at `/tmp/<pool name>/<container name>` and then:
 ```bash
 daos fs set-attr --path=/tmp/<pool name>/<container name>/<dir name> --oclass=EC_16P2G32
 ```
