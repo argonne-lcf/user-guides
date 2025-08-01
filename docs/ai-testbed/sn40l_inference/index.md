@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The SambaStack SN40L system is architected around Reconfigurable Dataflow Unit (RDU) processors. The AI Testbed's SambaNova SN40L cluster consists of two SambaRacks, each rack featuring 16 SL40L RDUs. ML models running on ANL's SambaStack cluster are exposed as openai-api-compatible endpoints; an endpoint can contain multiple independently usable models.
+SambaStack is a purpose-built hardware and software platform optimized for AI inference, powered by SambaNova’s advanced Reconfigurable Dataflow Unit (RDU) processors. At the core of this infrastructure is a SambaNova SN40L cluster, composed of two SambaRacks—each housing 16 SL40L RDU systems. This dedicated setup delivers high-throughput, low-latency performance for machine learning workloads. Models running on the cluster are exposed through OpenAI-compatible API endpoints, with each endpoint capable of hosting multiple independently accessible models.
 
 Below are some of the links to SambaNova documentation.
 
