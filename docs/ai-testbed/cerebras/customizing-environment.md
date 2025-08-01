@@ -4,7 +4,7 @@
 
 #### To make a PyTorch virtual environment for Cerebras
 
-Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.4.0 release. 
+Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.4.0 release.
 
 ```console
 mkdir ~/R_2.4.0
