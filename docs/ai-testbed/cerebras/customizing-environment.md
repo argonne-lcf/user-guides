@@ -14,7 +14,7 @@ cd modelzoo
 git tag
 git checkout Release_2.4.0
 ```
-Note: a `git pull` will not update the tags; if modelzoo/setup.py does not exist after tag checkout, please re-clone modelzoo.
+Note: a `git pull` will not update the tags; if `modelzoo/setup.py` does not exist after tag checkout, please re-clone `modelzoo`.
 
 
 Then build the virtual environment
