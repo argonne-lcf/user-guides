@@ -62,7 +62,6 @@ This will generate and store access and refresh tokens in your home directory.
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
     - An internal policy requires re-authentication every 7 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
-    - Currently, endpoints are restricted. You must be on Argonne's network (Use VPN, Dash, or SSH to ANL machine). You will need to authenticate with Argonne or ALCF SSO (Single Sign On) using your credentials.
 
 #### 3. Make a Test Call
 
@@ -607,7 +606,7 @@ On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to ser
 
 ## Troubleshooting
 
-- **Connection Timeout:** Verify you are on the Argonne network. The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
+- **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`.
 
