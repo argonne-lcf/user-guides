@@ -2,7 +2,7 @@
 
 See SambaNova's documentation for additional information: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
 
-## getting api information files from your home directory
+## Getting api information files from your home directory
 The endpoint description files are placed into your ai-testbed home directory, and are of form `metis_endpoint_<endpoint name>.txt`
 They include the following lines:
 

@@ -25,7 +25,7 @@ Password: < MobilePASS+ code >
 > **Note**: Use the ssh "-v" option in order to debug any ssh problems.
 
 The API information is written into files in your home directory.
-[TODO details from Ray]. To access an openai-compatible inference endpoint, you will need
+To access an openai-compatible inference endpoint, you will need
 
 - The inference endpoint url
 - The inference endpoint API key
