@@ -6,7 +6,7 @@ The SambaStack SN40L system is architected around Reconfigurable Dataflow Unit (
 
 Below are some of the links to SambaNova documentation.
 
-SambaRack information (sambanova): [SambaRack](https://sambanova.ai/products/sambarack)
+SambaRack information: [SambaRack](https://sambanova.ai/products/sambarack)
 
 RDUs: [Reconfigurable Dataflow Units (RDUs) — purpose-built for AI](https://sambanova.ai/products/sn40l-rdu-ai-chip)
 
