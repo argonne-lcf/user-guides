@@ -62,7 +62,6 @@ This will generate and store access and refresh tokens in your home directory.
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
     - An internal policy requires re-authentication every 7 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
-    - Currently, endpoints are restricted. You must be on Argonne's network (Use VPN, Dash, or SSH to ANL machine). You will need to authenticate with Argonne or ALCF SSO (Single Sign On) using your credentials.
 
 #### 3. Make a Test Call
 
@@ -76,7 +75,7 @@ Once authenticated, you can make a test call using cURL or Python.
     # Get your access token
     access_token=$(python inference_auth_token.py get_access_token)
 
-    curl -X POST "https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
+    curl -X POST "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
@@ -96,7 +95,7 @@ Once authenticated, you can make a test call using cURL or Python.
 
     client = OpenAI(
         api_key=access_token,
-        base_url="https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1"
+        base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
     )
 
     response = client.chat.completions.create(
@@ -123,7 +122,7 @@ Once authenticated, you can make a test call using cURL or Python.
         # Get your access token
         access_token=$(python inference_auth_token.py get_access_token)
 
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/sophia/jobs" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/jobs" \
          -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -135,7 +134,7 @@ Once authenticated, you can make a test call using cURL or Python.
         # Get your access token
         access_token=$(python inference_auth_token.py get_access_token)
 
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/list-endpoints" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -150,7 +149,7 @@ Once authenticated, you can make a test call using cURL or Python.
         ```bash
         #!/bin/bash
         access_token=$(python inference_auth_token.py get_access_token)
-        curl -X POST "https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
+        curl -X POST "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
@@ -170,7 +169,7 @@ Once authenticated, you can make a test call using cURL or Python.
         access_token = get_access_token()
         client = OpenAI(
             api_key=access_token,
-            base_url="https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1"
+            base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
         )
 
         response = client.chat.completions.create(
@@ -196,7 +195,7 @@ Once authenticated, you can make a test call using cURL or Python.
         access_token = get_access_token()
         client = OpenAI(
             api_key=access_token,
-            base_url="https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1"
+            base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
         )
 
         def encode_image(image_path):
@@ -237,7 +236,7 @@ Once authenticated, you can make a test call using cURL or Python.
         access_token = get_access_token()
         client = OpenAI(
             api_key=access_token,
-            base_url="https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1"
+            base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
         )
 
         response = client.embeddings.create(
@@ -355,7 +354,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         access_token=$(python inference_auth_token.py get_access_token)
 
         # Define the base URL
-        base_url="https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1/batches"
+        base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/batches"
 
         # Submit batch request
         curl -X POST "$base_url" \
@@ -391,7 +390,7 @@ For large-scale inference, the batch processing service allows you to submit a f
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json'
         }
-        url = "https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm/v1/batches"
+        url = "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/batches"
 
         # Submit batch request
         data = {
@@ -417,7 +416,7 @@ For large-scale inference, the batch processing service allows you to submit a f
 
         # Get results of specific batch
         batch_id="your-batch-id"
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/v1/batches/${batch_id}/result" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches/${batch_id}/result" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -434,7 +433,7 @@ For large-scale inference, the batch processing service allows you to submit a f
             'Authorization': f'Bearer {access_token}'
         }
         batch_id = "your-batch-id"
-        url = f"https://data-portal-dev.cels.anl.gov/resource_server/v1/batches/{batch_id}/result"
+        url = f"https://inference-api.alcf.anl.gov/resource_server/v1/batches/{batch_id}/result"
 
         # Get batch results
         response = requests.get(url, headers=headers)
@@ -468,11 +467,11 @@ For large-scale inference, the batch processing service allows you to submit a f
         access_token=$(python inference_auth_token.py get_access_token)
 
         # List all batches
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/v1/batches" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches" \
              -H "Authorization: Bearer ${access_token}"
 
         # Optionally filter by status (pending, running, completed, or failed)
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/v1/batches?status=completed" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches?status=completed" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -488,7 +487,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         headers = {
             'Authorization': f'Bearer {access_token}'
         }
-        url = "https://data-portal-dev.cels.anl.gov/resource_server/v1/batches"
+        url = "https://inference-api.alcf.anl.gov/resource_server/v1/batches"
 
         # List all batches
         response = requests.get(url, headers=headers)
@@ -534,7 +533,7 @@ For large-scale inference, the batch processing service allows you to submit a f
 
         # Get status of specific batch
         batch_id="your-batch-id"
-        curl -X GET "https://data-portal-dev.cels.anl.gov/resource_server/v1/batches/${batch_id}" \
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches/${batch_id}" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -551,7 +550,7 @@ For large-scale inference, the batch processing service allows you to submit a f
             'Authorization': f'Bearer {access_token}'
         }
         batch_id = "your-batch-id"
-        url = f"https://data-portal-dev.cels.anl.gov/resource_server/v1/batches/{batch_id}"
+        url = f"https://inference-api.alcf.anl.gov/resource_server/v1/batches/{batch_id}"
 
         # Get batch status
         response = requests.get(url, headers=headers)
@@ -575,15 +574,15 @@ For large-scale inference, the batch processing service allows you to submit a f
 
 | Cluster                         | Status       | Endpoint                                                    | Notes                               |
 |---------------------------------|--------------|-------------------------------------------------------------|-------------------------------------|
-| Sophia                          | **Active**   | https://data-portal-dev.cels.anl.gov/resource_server/sophia | 8 nodes reserved for Inference      |
-| SambaNova SN40L (Metis)         | Coming Soon  | https://data-portal-dev.cels.anl.gov/resource_server/metis  |                                     |
+| Sophia                          | **Active**   | https://inference-api.alcf.anl.gov/resource_server/sophia | 8 nodes reserved for Inference      |
+| SambaNova SN40L (Metis)         | Coming Soon  | https://inference-api.alcf.anl.gov/resource_server/metis  |                                     |
 | Cerebras CS-3 Inference cluster | Coming Soon  |                                                             |                                     |
 | GH200 Nvidia Cluster            | Coming Soon  |                                                             |                                     |
 
 ### Endpoints and Frameworks
 
-- **vLLM:** `https://data-portal-dev.cels.anl.gov/resource_server/sophia/vllm`
-- **Infinity:** `https://data-portal-dev.cels.anl.gov/resource_server/sophia/infinity`
+- **vLLM:** `https://inference-api.alcf.anl.gov/resource_server/sophia/vllm`
+- **Infinity:** `https://inference-api.alcf.anl.gov/resource_server/sophia/infinity`
 
 The primary API endpoints follow the OpenAI standard:
 - `/v1/chat/completions`
@@ -607,7 +606,7 @@ On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to ser
 
 ## Troubleshooting
 
-- **Connection Timeout:** Verify you are on the Argonne network. The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
+- **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`.
 
