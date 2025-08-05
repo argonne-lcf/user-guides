@@ -1,9 +1,8 @@
 # Getting Started
 
-## On-Boarding
+## Onboarding
 
-The endpoints running on the SambaStack SN40L cluster can be acessed from any internet-connected machine. The API endpoint information, including user-unique API keys, are stored in the ai-testbed home directory for your ALCF account. They may be accessed from the login nodes for ALCF's SambaNova SN30 cluster; access to the SN30 cluster and the inference endpoints running on the SN40L SambaRacks is linked. 
-AI testbed machines, including ALCF's SambaNova login nodes, can be accessed using your ALCF account. See [Get Started](https://www.alcf.anl.gov/support-center/get-started) to request an account and for additional information.
+The endpoints running on the SambaStack SN40L cluster can be accessed from any internet-connected machine. The API endpoint information, including user-unique API keys, are stored in the AI-testbed home directory for your ALCF account. They may be accessed from the login nodes for ALCF's SambaNova SN30 cluster; access to the SN30 cluster and the inference endpoints running on the SN40L SambaRacks is linked. AI testbed machines, including ALCF's SambaNova login nodes, can be accessed using your ALCF account. See [ALCF Get Started](https://www.alcf.anl.gov/support-center/get-started) to request an account and for additional information.
 
 ## Setup
 
@@ -15,18 +14,20 @@ Connection to a SambaNova login node is a one-step process. It requires an MFA p
 
 Log in to the SambaNova **login node** from your local machine using the below command. This uses the **MobilePASS+** token generated every time you log in to the system. This is the same passcode used to authenticate into other ALCF systems, such as **Polaris**.
 
-*In the examples below, replace* ***ALCFUserID*** *with your ALCF user id.*
+In the examples below, replace `ALCFUserID` with your personal ALCF user ID.
 
 ```bash
 ssh ALCFUserID@sambanova.alcf.anl.gov
 Password: < MobilePASS+ code >
 ```
 
-> **Note**: Use the ssh "-v" option in order to debug any ssh problems.
+!!! note 
+
+    Use the `ssh -v` option in order to debug any SSH problems.
 
 The API information is written into files in your home directory.
-To access an openai-compatible inference endpoint, you will need
+To access an OpenAI-compatible inference endpoint, you will need:
 
-- The inference endpoint url
+- The inference endpoint URL
 - The inference endpoint API key
-- The model name (there are or more model names per endpoint)
+- The model name (there are one or more possible model names per endpoint)
