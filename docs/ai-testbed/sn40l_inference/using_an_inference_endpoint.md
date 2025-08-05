@@ -55,7 +55,7 @@ echo $MODELS
 export MODEL_NAME=<a name from above> # e.g. DeepSeek-R1
 ```
 
-Simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:
+Here is a simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:
 ```python
 import os
 import openai
@@ -76,6 +76,11 @@ response = client.chat.completions.create(
 )
 
 print(response.choices[0].message.content)
+```
+
+Pass the script a query as a command line parameter, e.g.
+```console
+python chat_completion.py "What is an \"extinction vortex\"?"
 ```
 
 ### curl example
