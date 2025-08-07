@@ -166,7 +166,7 @@ print(f"Max:\n{result.max_}")
 print(f"Sum:\n{result.sum_}")
 print(f"Sum Squares:\n{result.sum_squares_}")
 ```
-To execute on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, one should add the following lines:
+To execute on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, one should add the following highlighted modifications:
 ```python linenums="1" title="incremental_basic_statistics_dpctl.py" hl_lines="1-2" "11"
 import dpctl
 import dpctl.tensor as dpt
