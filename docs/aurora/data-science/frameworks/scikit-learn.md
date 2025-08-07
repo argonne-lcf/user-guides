@@ -131,7 +131,7 @@ The highlighted line, which pins each of the 12 MPI ranks to specific CPU physic
 
 ### An incremental statistics calculation example
 
-Below, we give an example of a basic incremental calculation. This example is adapted from [an example](examples/sklearnex/incremental_basic_statistics.py) in Intel's scikit-learn-intelex GitHub repo. The incremental interface is accessible via the methods of the `sklearnex.basic_statistics.IncrementalBasicStatistics` class. There are two options: use the `partial_fit`method for each chunk of available data, or, if you have access to the whole data, call the `fit` method.
+Below, we give an example of a basic incremental calculation. This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_basic_statistics.py) in Intel's scikit-learn-intelex GitHub repo. The incremental interface is accessible via the methods of the `sklearnex.basic_statistics.IncrementalBasicStatistics` class. There are two options: use the `partial_fit`method for each chunk of available data, or, if you have access to the whole data, call the `fit` method.
 
 ```python linenums="1" title="incremental_basic_statistics.py"
 import numpy as np
@@ -208,4 +208,4 @@ print(f"Max:\n{result.max_}")
 print(f"Sum:\n{result.sum_}")
 print(f"Sum Squares:\n{result.sum_squares_}")
 ```
-More examples about how to compute [covariance](examples/sklearnex/incremental_covariance.py) and perform [linear regression](examples/sklearnex/incremental_linear_regression.py) incrementally can be found in Intel's scikit-learn-intelex GitHub repo.
+More examples about how to compute [covariance](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_covariance.py) and perform [linear regression](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_linear_regression.py) incrementally can be found in Intel's scikit-learn-intelex GitHub repo.
