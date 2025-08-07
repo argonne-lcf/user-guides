@@ -183,13 +183,13 @@ queue = dpctl.SyclQueue("gpu")
 incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"])
 
 # We do partial_fit for each batch and then print final result.
-X_1 = np.array([[0, 1], [0, 1]], **sycl_queue=queue**))
+X_1 = np.array([[0, 1], [0, 1]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
 result = incbs.partial_fit(X_1)
 
-X_2 = np.array([[1, 2]], sycl_queue=queue))
+X_2 = np.array([[1, 2]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
 result = incbs.partial_fit(X_2)
 
-X_3 = np.array([[1, 1], [1, 2], [2, 3]], **sycl_queue=queue**))
+X_3 = np.array([[1, 1], [1, 2], [2, 3]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
 result = incbs.partial_fit(X_3)
 
 print(f"Mean:\n{result.mean_}")
@@ -200,7 +200,7 @@ print(f"Sum Squares:\n{result.sum_squares_}")
 # We put the whole data to fit method, it is split automatically and then
 # partial_fit is called for each batch.
 incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"], batch_size=3)
-X = np.array([[0, 1], [0, 1], [1, 2], [1, 1], [1, 2], [2, 3]], **sycl_queue=queue**))
+X = np.array([[0, 1], [0, 1], [1, 2], [1, 1], [1, 2], [2, 3]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
 result = incbs.fit(X)
 
 print(f"Mean:\n{result.mean_}")
