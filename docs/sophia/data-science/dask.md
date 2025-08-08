@@ -11,7 +11,7 @@
 
 ## Load modules and install Dask:
 
-```
+```bash linenums="1"
 module use /soft/modulefiles
 module load conda
 conda activate
@@ -51,10 +51,10 @@ This script will spawn 8 threads one for each GPU on a node.
 
 ## Dask services:
 
-The file scheduler.json contains information about services that lists additional endpoints 
+The file `scheduler.json` contains information about services that lists additional endpoints 
 For e.g., the Bokeh dashboard port would be listed as follows:
 
-```
+```json
 "services": {
     "dashboard": 8787
   }
@@ -62,7 +62,7 @@ For e.g., the Bokeh dashboard port would be listed as follows:
 
 ## Connect your client in Python with:
 
-```
+```python linenums="1"
 from dask.distributed import Client
 client = Client(scheduler_file='/full/path/to/scheduler.json')
 print("Total number of worker threads =", len(client.nthreads()))
