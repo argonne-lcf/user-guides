@@ -28,9 +28,11 @@ export OPENAI_API_KEY=$SAMBANOVA_API_KEY
 ```
 
 ### Python example
-Make a virtual env and activate it, or use an existing virtualenv or conda env.
+Make a virtual env and activate it, or use an existing virtualenv or conda env. You will need python 3.8 or newer. 
 ```console
 virtualenv openai_venv
+# Or specify the python version, e.g.
+# virtualenv --system-site-packages -p python3.8 venv_p3.8
 source openai_venv/bin/activate
 ```
 Then install the openai package needed for chat completions
