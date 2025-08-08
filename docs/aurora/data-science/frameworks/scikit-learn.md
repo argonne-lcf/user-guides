@@ -128,3 +128,84 @@ export CPU_BIND="verbose,list:2-4:10-12:18-20:26-28:34-36:42-44:54-56:62-64:70-7
 mpiexec -np 12 -ppn 12 --cpu-bind ${CPU_BIND} gpu_tile_compact.sh python knn_mpi4py_spmd.py
 ```
 The highlighted line, which pins each of the 12 MPI ranks to specific CPU physical cores, is essential to achieving good performance across all 12 GPU Tiles on an Aurora node.
+
+### An incremental statistics calculation example
+
+Below, we give an example of a basic incremental calculation. This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_basic_statistics.py) in Intel's scikit-learn-intelex GitHub repo. The incremental interface is accessible via the methods of the `sklearnex.basic_statistics.IncrementalBasicStatistics` class. There are two options: use the `partial_fit`method for each chunk of available data, or, if you have access to the whole data, call the `fit` method.
+
+```python linenums="1" title="incremental_basic_statistics.py"
+import numpy as np
+
+from sklearnex.basic_statistics import IncrementalBasicStatistics
+
+incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"])
+
+# We do partial_fit for each batch and then print final result.
+X_1 = np.array([[0, 1], [0, 1]])
+result = incbs.partial_fit(X_1)
+
+X_2 = np.array([[1, 2]])
+result = incbs.partial_fit(X_2)
+
+X_3 = np.array([[1, 1], [1, 2], [2, 3]])
+result = incbs.partial_fit(X_3)
+
+print(f"Mean:\n{result.mean_}")
+print(f"Max:\n{result.max_}")
+print(f"Sum:\n{result.sum_}")
+print(f"Sum Squares:\n{result.sum_squares_}")
+
+# We put the whole data to fit method, it is split automatically and then
+# partial_fit is called for each batch.
+incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"], batch_size=3)
+X = np.array([[0, 1], [0, 1], [1, 2], [1, 1], [1, 2], [2, 3]])
+result = incbs.fit(X)
+
+print(f"Mean:\n{result.mean_}")
+print(f"Max:\n{result.max_}")
+print(f"Sum:\n{result.sum_}")
+print(f"Sum Squares:\n{result.sum_squares_}")
+```
+To execute on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, one should add the following highlighted modifications:
+```python linenums="1" title="incremental_basic_statistics_dpctl.py" hl_lines="1-2" "11"
+import dpctl
+import dpctl.tensor as dpt
+
+import numpy as np
+
+from sklearnex.basic_statistics import IncrementalBasicStatistics
+
+# We create GPU SyclQueue and then put data to dpctl tensor using
+# the queue. It allows us to do computation on GPU.
+
+queue = dpctl.SyclQueue("gpu")
+
+incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"])
+
+# We do partial_fit for each batch and then print final result.
+X_1 = np.array([[0, 1], [0, 1]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
+result = incbs.partial_fit(X_1)
+
+X_2 = np.array([[1, 2]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
+result = incbs.partial_fit(X_2)
+
+X_3 = np.array([[1, 1], [1, 2], [2, 3]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
+result = incbs.partial_fit(X_3)
+
+print(f"Mean:\n{result.mean_}")
+print(f"Max:\n{result.max_}")
+print(f"Sum:\n{result.sum_}")
+print(f"Sum Squares:\n{result.sum_squares_}")
+
+# We put the whole data to fit method, it is split automatically and then
+# partial_fit is called for each batch.
+incbs = IncrementalBasicStatistics(result_options=["mean", "max", "sum"], batch_size=3)
+X = np.array([[0, 1], [0, 1], [1, 2], [1, 1], [1, 2], [2, 3]], sycl_queue=queue)) # <-- Highlighted: sycl_queue=queue
+result = incbs.fit(X)
+
+print(f"Mean:\n{result.mean_}")
+print(f"Max:\n{result.max_}")
+print(f"Sum:\n{result.sum_}")
+print(f"Sum Squares:\n{result.sum_squares_}")
+```
+More examples about how to compute [covariance](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_covariance.py) and perform [linear regression](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/incremental_linear_regression.py) incrementally can be found in Intel's scikit-learn-intelex GitHub repo.
