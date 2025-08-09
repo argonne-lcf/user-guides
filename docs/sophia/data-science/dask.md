@@ -1,70 +1,127 @@
 # Dask
 
-[Dask](https://www.dask.org/) is a Python library for parallel and distributed computing. A Dask cluster is composed of one scheduler that coordinates the job of many workers, which can have access to CPU or GPU resources. Here we show how to install Dask in a conda environment on Sophia and how to start a cluster with GPU workers.
+[Dask](https://www.dask.org/) is a Python library for parallel and distributed computing. A Dask cluster is composed of one scheduler that coordinates the job of many workers, which can have access to CPU or GPU resources. 
 
-## Login to Sophia:
+[RAPIDS](https://rapids.ai/) is a suite of software libraries by NVIDIA for "building end-to-end data science and analytics pipelines on GPUs". 
+For example, RAPIDS' [`cuDF`](https://github.com/rapidsai/cudf), [`cuPY`](https://github.com/cupy/cupy), [`cuML`](https://github.com/rapidsai/cuml) libraries implement common Pandas, Numpy and Scikit-learn APIs, respectively, allowing to run them at scale on a GPU cluster, using Dask.
 
-`ssh username@sophia.alcf.anl.gov`
+Here we show how to install RAPIDS and Dask in a conda environment on Sophia and how to start a cluster with GPU workers.
 
-## Follow the instructions specified [here](https://docs.alcf.anl.gov/sophia/compiling-and-linking/compiling-and-linking-overview/) to start an interactive job on Sophia:
-`qsub -I -l select=1 -l walltime=HH:MM:SS -q by-gpu -A <myProjectName> -l filesystems=home:eagle`
 
-## Load modules and install Dask:
+## Install RAPIDS and Dask
 
-```
-module use /soft/modulefiles
-module load conda
-conda activate
-cd /path/to/work/directory/
-```
+1. Login to Sophia
+   ```bash
+   ssh <username>@sophia.alcf.anl.gov
+   ```
 
-### Make sure Dask is installed:
+1. Start an interactive session. Follow the instructions specified [here](https://docs.alcf.anl.gov/sophia/queueing-and-running-jobs/running-jobs/) to start an interactive job on Sophia. 
+In the example command below we request 2 GPUs:
+   ```bash
+   qsub -I -l select=2 -l walltime=HH:MM:SS -q by-gpu -A <myProjectName> -l filesystems=home:eagle
+   ```
 
-`pip install dask`
+1. Load modules
+   ```bash
+   module load compilers/openmpi
+   module load conda  
+   ```
 
-## Start Dask Scheduler:
+1. Follow the [installation instructions on the RAPIDS Docs](https://docs.rapids.ai/install), select the appropriate CUDA Version (you can find it in the output of `nvidia-smi`), and copy the installation command, which should be similar to the one below (replace `/path/to/env/rapids-25.06_sophia` with your preferred path and name for the environment):
+   ```bash
+   conda create -y -p /path/to/env/rapids-25.06_sophia -c rapidsai -c conda-forge -c nvidia rapids=25.06 python=3.11 'cuda-version>=12.0,<=12.8'
+   # activate the environment
+   conda activate /path/to/env/rapids-25.06_sophia
+   ```
 
-`dask scheduler --scheduler-file ~/scheduler.json`
+1. *Optional*: Install jupyterlab and create a ipykernel
+   ```bash
+   conda install -y ipykernel jupyterlab-nvdashboard dask-labextension
+   env=$(basename `echo $CONDA_PREFIX`) && \
+   python -m ipykernel install --prefix=${CONDA_PREFIX} --name "$env" --display-name "Python ["$env"]"
+   ```
 
-## Start Dask Workers:
 
-```bash linenums="1" title="dask_worker.sh"
+## Start a Dask cluster
+
+The following script, `dask_start.sh`, starts a Dask cluster:
+
+```bash linenums="1" title="dask_start.sh"
 #!/bin/bash
-echo $1 #this is the name of gpu must be unique - my-gpu-node1
-for i in {0..7}; do
-  CUDA_VISIBLE_DEVICES=$i \
-    dask cuda worker --scheduler-file ~/scheduler.json \
-      --protocol tcp \
-      --nthreads 1 \
-      --device-memory-limit 40GB \
-      --name $1-$i &
-done
+# $1 : number of ranks per node (dafault: 8)
+
+TMP_EXE=dask_start_worker.sh
+cat > ${TMP_EXE} << EOF
+#!/bin/bash
+CUDA_VISIBLE_DEVICES=\${OMPI_COMM_WORLD_LOCAL_RANK} dask cuda worker \
+  --device-memory-limit 40GB \
+  --scheduler-file ~/scheduler.json \
+  --protocol tcp \
+  >/tmp/dask_worker_\${OMPI_COMM_WORLD_RANK}_\${OMPI_COMM_WORLD_LOCAL_RANK}_\${HOSTNAME}.log 2>&1
+EOF
+chmod 755 ${TMP_EXE}
+
+# start the scheduler
+rm -f ~/scheduler.json
+echo "starting the scheduler"
+nohup dask scheduler --scheduler-file ~/scheduler.json  >/tmp/dask_scheduler.log 2>&1 &
+sleep 10
+
+# start the workers
+NUM_NODES=$(cat $PBS_NODEFILE | wc -l)
+NRANKS_PER_NODE=${1:-8}
+echo "starting" ${NRANKS_PER_NODE} "workers per node on" ${NUM_NODES} "nodes"
+mpiexec  -np $((NRANKS_PER_NODE*NUM_NODES)) ./${TMP_EXE}
+
+rm ./${TMP_EXE}
 ```
 
-`chmod a+x ./dask_worker.sh`
+1. Copy the script to Sophia and make it executable: `chmod a+x ./dask_start.sh`
 
-Start the dask workers on each node 
-`./dask_worker.sh workers_node1`
+1. On a compute node, load modules and activate the Dask conda environment created in [Install RAPIDS and Dask](#install-rapids-and-dask)
+   ```bash
+   module load compilers/openmpi
+   module load conda  
+   conda activate /path/to/env/rapids-25.06_sophia
+   ```
 
-`workers_node1` is the unique name of the worker on one node.
-This script will spawn 8 threads one for each GPU on a node.
+1. Start the Dask cluster
+   ```bash
+   ./dask_start.sh <num_gpus> &
+   ```
+   where `<num_gpus>` is the number of GPUs per node requested (the default is 8).
 
-## Dask services:
 
-The file scheduler.json contains information about services that lists additional endpoints 
-For e.g., the Bokeh dashboard port would be listed as follows:
+## Connect to the Dask cluster from python
 
-```
-"services": {
-    "dashboard": 8787
-  }
-```
+The following python script, `dask_example.py`, shows how to connect to a running Dask cluster, print the GPU uuid of each worker, and shut down the cluster:
 
-## Connect your client in Python with:
-
-```
+```python linenums="1" title="dask_example.py"
 from dask.distributed import Client
-client = Client(scheduler_file='/full/path/to/scheduler.json')
-print("Total number of worker threads =", len(client.nthreads()))
+from pathlib import Path
+client = Client(scheduler_file=f'{Path.home()}/scheduler.json')
+
+def get_gpu_uuid():
+    import cupy as cp
+    gpu_id = cp.cuda.runtime.getDeviceProperties(0)['uuid'].hex()
+    return gpu_id
+
+workers = list(client.scheduler_info()['workers'].values())
+num_workers = len(workers)
+print(f"{num_workers} workers")
+
+futures = client.map(lambda x: get_gpu_uuid(), range(num_workers))
+results = client.gather(futures)
+for i, result in enumerate(results):
+    print(f"Worker {workers[i]['name']} - GPU uuid: {result}")
+
+client.shutdown()
 ```
- and Dask away!
+
+Example output:
+```
+2 workers
+Worker sophia-gpu-11-1 - GPU uuid: 7aa25d84eb04a33caccb57993b5945ad
+Worker sophia-gpu-11-0 - GPU uuid: 4cc42dc4974265766c6d26ae48c05f85
+```
+
