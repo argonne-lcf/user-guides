@@ -34,7 +34,7 @@ In the example command below we request 2 GPUs:
    conda activate /path/to/env/rapids-25.06_sophia
    ```
 
-1. *Optional*: Install jupyterlab and create a ipykernel
+1. *Optional*: Install `jupyterlab` and create a `ipykernel`
    ```bash
    conda install -y ipykernel jupyterlab-nvdashboard dask-labextension
    env=$(basename `echo $CONDA_PREFIX`) && \
