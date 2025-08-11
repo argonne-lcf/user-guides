@@ -4,15 +4,16 @@ Copper is a co-operative caching layer for scalable parallel data movement in Ex
 
 ## Introduction
 
-Copper is a lightweight library designed to address the I/O bottleneck caused by all compute nodes loading the same files simultaneously. To reduce file system contention and improve efficiency, copper enables a single designated process to load data from the file system and transfer to other ranks through high-speed interconnects. This approach significantly reduces redundant file access and improves scalability in distributed training and simulation workloads.
+* Copper is a lightweight library designed to address the I/O bottleneck caused by all compute nodes loading the same files simultaneously.
+* To reduce file system contention and improve efficiency, copper enables a single designated process to load data from the file system and transfer to other ranks through high-speed interconnects.
+* This approach significantly reduces redundant file access and improves scalability in distributed training and simulation workloads.
+* Copper is a **read-only** cooperative caching layer designed to enable scalable data loading across massive numbers of compute nodes.
+* It aims to avoid I/O bottlenecks, network contention, and interference with the storage network, file system, and compute network, thereby allowing more effective use of the compute network for data movement—both for your job and for other jobs running on the system.
+* The current intended use of Copper is to improve the performance of Python imports - dynamic shared library loading on Aurora.
+* However, Copper can be used to improve the performance of any type of redundant data loading (Note: this is for the case where all the processes are loading the same files) on a supercomputer.
+* It is recommended to use Copper for any applications [preferably Python and I/O <500 MB] in order to scale beyond 2k nodes.
 
-Copper is a **read-only** cooperative caching layer designed to enable scalable data loading across massive numbers of compute nodes. It aims to avoid I/O bottlenecks, network contention, and interference with the storage network, file system, and compute network, thereby allowing more effective use of the compute network for data movement—both for your job and for other jobs running on the system.
-
-The current intended use of Copper is to improve the performance of Python imports - dynamic shared library loading on Aurora. However, Copper can be used to improve the performance of any type of redundant data loading (Note: this is for the case where all the processes are loading the same files) on a supercomputer.
-
-It is recommended to use Copper for any applications [preferably Python and I/O <500 MB] in order to scale beyond 2k nodes.
-
-![Copper Workflow](copper.gif "Copper Workflow Architecture")
+      ![Copper Workflow](copper.gif "Copper Workflow Architecture")
 
 ## How to use Copper on Aurora
 
@@ -21,12 +22,13 @@ In your job script or from an interactive session:
 ```bash
 module load copper
 launch_copper.sh
-
+PYTHONPATH=/tmp/${USER}/copper/lus/flare/projects/datascience/kaushik/copper-test/lus_custom_pip_env/:$PYTHONPATH
 ```
 
 Then run your `mpiexec` as you would normally run.
 
-If you want your I/O to go through Copper, add `/tmp/${USER}/copper/` to the beginning of your `PYTHONPATH`. Here, only the root compute node will do the I/O directly with the Lustre file system. If `/tmp/${USER}/copper/` is not added to the beginning of your paths, then all compute nodes would do I/O directly to the Lustre file system.
+* If you want your I/O to go through Copper, add `/tmp/${USER}/copper/` to the beginning of your `PYTHONPATH`. Here, only the root compute node will do the I/O directly with the Lustre file system.
+* If `/tmp/${USER}/copper/` is not added to the beginning of your paths, then all compute nodes would do I/O directly to the Lustre file system.
 
 ## Copper Options
 
@@ -68,7 +70,69 @@ time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} --cpu-bind=list:4:56:9:61:14:
 stop_copper.sh # optional - enabled by default on the PBS epilog during cleanup.
 ```
 
-### Example 3: Python virtual environments
+### Example 3: Conda environemnts
+
+```bash
+
+0. Make sure your miniconda is not installed in home. 
+mkdir /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src/miniconda.sh
+bash miniconda-src/miniconda.sh -b -u -p /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src
+
+1. use conda create --prefix  /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env python=3.9 instead of conda create --name dharma-s-env python=3.9
+2. rm -rf ~/.conda/* and ~/.local/*
+
+3. update .condarc file to have the right cache-package dirs and env dirs 
+channels:
+  - conda-forge
+envs_dirs:
+  - /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env
+pkgs_dirs:
+  - /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/conda-cache1
+  - /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/conda-cache2
+
+4. verify your source ~/.bashrc does not contain any ~/home paths 
+5. remove anyother hidden or unknown site-packages under ~/home
+6. verify all these below items are not in ~/home after conda activate - including which python
+
+ls -lah ~/.local
+ls -lah ~/.conda
+du -sh ~/.local
+du -sh ~/.conda
+echo $PYTHONUSERBASE $PYTHONPATH $VIRTUAL_ENV $CONDA_PREFIX $CONDA_ROOT $CONDARC
+which python
+which conda
+
+7. Set target direcroty as python -m pip install  --target=/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages   before any installs 
+
+In the job script
+
+module restore
+module load copper # Do not load python or frameworks module unless needed
+launch_copper.sh 
+sleep 30s
+/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src/bin/conda init  
+conda activate /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env  
+export PYTHONPATH=/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages
+
+ls -lah ~/.local
+ls -lah ~/.conda
+du -sh ~/.local
+du -sh ~/.conda
+echo $PYTHONUSERBASE $PYTHONPATH $VIRTUAL_ENV $CONDA_PREFIX $CONDA_ROOT $CONDARC
+which python
+which conda
+cat ~/.condarc 
+cat ~/.bashrc 
+
+
+time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} --cpu-bind=list:4:56:9:61:14:66:19:71:20:74:25:79 --genvall \
+            --genv=PYTHONPATH=/tmp/${USER}/copper//lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages/:$PYTHONPATH \
+             python3 -c "import torch; import intel_extension_for_pytorch; import oneccl_bindings_for_pytorch;"
+
+```
+
+### Example 4: Python virtual environments
 
 ```bash
 # The below lines are required only for the first time setup to install a package on a python virtual environments. This can be done in login node. 
@@ -91,7 +155,7 @@ time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} --cpu-bind=list:4:56:9:61:14:
 stop_copper.sh # optional - enabled by default on the PBS epilog during cleanup.
 ```
 
-### Example 4: Non-Python Example where input files for the application are moved through copper
+### Example 5: Non-Python Example where input files for the application are moved through copper
 
 ```bash
 # Note thundersvm-train is the app and input_file_M100000_K25000_S0.836 is the input file passed as an argument to the app
@@ -108,7 +172,7 @@ time mpiexec -np $ranks -ppn 12 --cpu-bind list:4:9:14:19:20:25:56:61:66:71:74:7
 stop_copper.sh # optional - enabled by default on the PBS epilog during cleanup.
 ```
 
-### Example 5: Pytorch datasets and data loaders
+### Example 6: Pytorch datasets and data loaders
 
 ```bash
 import torch
@@ -122,22 +186,41 @@ train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_worker
 
 ```
 
+### Verifying with Strace 
+
+You can use the [strace](https://github.com/strace/strace) tool in aurora to verify all the paths used in your python program
+
+```bash
+# strace -o trace_output.log python import-test.py 
+# which strace
+# /usr/bin/strace
+# strace -- version 5.14 
+
+> cat import-test.py
+
+import torch
+import intel_extension_for_pytorch
+import oneccl_bindings_for_pytorch
+
+```
+
 ### Best practices
 
-1. Prepending `/tmp/${USER}/copper`/ to different environment variables should be done in a careful and need basis manner.
-2. You should not prepend copper path to all known variables like `PYTHON_PATH, VIRTUAL_ENV, CONDA_PREFIX, CONDA_ROOT, LD_LIBRARY_PATH and PATH`.
-3. When using python virutal environment, prepending `/tmp/${USER}/copper/` only to `PYTHONPATH` variable is sufficient.
-4. When using a personal conda environment, prepending `/tmp/${USER}/copper/` only to `PYTHONPATH` variable is sufficient.
-5. If you prefer the python and pip binary or any other binary under the virtual_env or conda_prefix to be in copper path, only then you should prepend `/tmp/${USER}/copper/..path_to_venv or path_to_conda ..bin/`  to $`PATH` variable.
-6. If your application is taking input files as argument, which you prefer to go through copper, you can prepend `/tmp/${USER}/copper/` to the input file path argument only.
-7. If there is a specific library say `/lus/flare/projects/agpt/custom_lib/libcustom.so` file that you want to move through copper, you can set `LD_LIBRARY_PATH=/tmp/${USER}/copper/lus/flare/projects/agpt/custom_lib/libcustom.so:$LD_LIBRARY_PATH`. Again prepending copper path to all paths in `LD_LIBRARY_PATH` is not recommended.
-8. Copper is read only and cannot be used to write any files. So, you should not use copper path for any output files or temporary files.
-9. Copper runs by default on cores `physcpubind="48-51"` which should not be used in your application cpu bind list. You can also change the copper cores by `launch_copper.sh -b "core_range"` .
-10. You should be aware and cautious of any other hardcoded paths in your package or your application.
-11. The current copper supported filesystem operations are  init, open, read, readdir, readlink, getattr, ioctl, destroy.
-12. Note, write, unlink, rename, mkdir, rmdir, symlink, statfs, fsync, flush, mmap and other operations are not supported.
-13. System default modules like frameworks, python, intel, mpich whose metadata are baked into the os image do not require copper.
-14. Copper works only from the compute nodes, and you need a minimum of 2 nodes up to a max of any number of nodes (Aurora max 10624 nodes).
-15. Recommended size for max cacheable byte size is 10MB to 100MB.
-16. Recommended trees are 1 or 2.
-17. [GitHub Copper Examples](https://github.com/argonne-lcf/copper/tree/main/example)
+1. The basic principle is to have a clean environment and the entire environment files and binaries under `/lus/project` directory and not under any hidden directories in home.
+2. Prepending `/tmp/${USER}/copper`/ to different environment variables should be done in a careful and need basis manner.
+3. You should not prepend copper path to all known variables like `PYTHON_PATH, VIRTUAL_ENV, CONDA_PREFIX, CONDA_ROOT, LD_LIBRARY_PATH and PATH`.
+4. When using python virutal environment, prepending `/tmp/${USER}/copper/` only to `PYTHONPATH` variable is sufficient.
+5. When using a personal conda environment, prepending `/tmp/${USER}/copper/` only to `PYTHONPATH` variable is sufficient.
+6. If you prefer the python and pip binary or any other binary under the virtual_env or conda_prefix to be in copper path, only then you should prepend `/tmp/${USER}/copper/..path_to_venv or path_to_conda ..bin/`  to $`PATH` variable.
+7. If your application is taking input files as argument, which you prefer to go through copper, you can prepend `/tmp/${USER}/copper/` to the input file path argument only.
+8. If there is a specific library say `/lus/flare/projects/agpt/custom_lib/libcustom.so` file that you want to move through copper, you can set `LD_LIBRARY_PATH=/tmp/${USER}/copper/lus/flare/projects/agpt/custom_lib/libcustom.so:$LD_LIBRARY_PATH`. Again prepending copper path to all paths in `LD_LIBRARY_PATH` is not recommended.
+9. Copper is read only and cannot be used to write any files. So, you should not use copper path for any output files or temporary files.
+10. Copper runs by default on cores `physcpubind="48-51"` which should not be used in your application cpu bind list. You can also change the copper cores by `launch_copper.sh -b "core_range"` .
+11. You should be aware and cautious of any other hardcoded paths in your package or your application.
+12. The current copper supported filesystem operations are  init, open, read, readdir, readlink, getattr, ioctl, destroy.
+13. Note, write, unlink, rename, mkdir, rmdir, symlink, statfs, fsync, flush, mmap and other operations are not supported.
+14. System default modules like frameworks, python, intel, mpich whose metadata are baked into the os image do not require copper.
+15. Copper works only from the compute nodes, and you need a minimum of 2 nodes up to a max of any number of nodes (Aurora max 10624 nodes).
+16. Recommended size for max cacheable byte size is 10MB to 100MB.
+17. Recommended trees are 1 or 2.
+18. [GitHub Copper Examples](https://github.com/argonne-lcf/copper/tree/main/example)
