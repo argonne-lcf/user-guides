@@ -15,9 +15,9 @@ Login to the Graphcore login node from your local machine using the below comman
 > **Note**:  In the examples below, replace ALCFUserID with your ALCF user id.
 
 ```bash
-ssh ALCFUserID@gc-login-01.ai.alcf.anl.gov
+ssh ALCFUserID@gc-login-03.ai.alcf.anl.gov
 # or
-ssh ALCFUserID@gc-login-02.ai.alcf.anl.gov
+ssh ALCFUserID@gc-login-04.ai.alcf.anl.gov
 ```
 
 > **Note**: Use the ssh "-v" option in order to debug any ssh problems.
