@@ -10,6 +10,10 @@ You will need to re-subscribe if you either:
 
 ### Manual subscription/unsubscription
 
-To manually subscribe or unsubscribe, go to https://lists.alcf.anl.gov/mailman/listinfo/{replae-ALCF-system-name}-notify and follow the instructions. **Note** : you must replace {replace-ALCF-system-name} with the appropriate compute system you have access to (such as polaris, crux, aurora, sophia, etc.).
+To manually subscribe or unsubscribe, go to https://lists.alcf.anl.gov/mailman/listinfo/{replae-ALCF-system-name}-notify and follow the instructions. 
+
+!!! note
+
+    You must replace {replace-ALCF-system-name} with the appropriate compute system you have access to (such as polaris, crux, aurora, sophia, etc.).
 
 
