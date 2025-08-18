@@ -158,7 +158,7 @@ nav:
     - support/index.md
     - Contact:
       - Submit a Ticket: support/technical-support.md
-      - Mailing Lists: suport/mailing-lists.md
+      - Mailing Lists: support/mailing-lists.md
       - Request Software: support/software-requests.md
       - ALCF Users Slack: support/alcf-users-slack.md
       - Contribute to User Guides: support/docs-issues.md
