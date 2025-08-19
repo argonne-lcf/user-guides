@@ -5,7 +5,7 @@ Copper is a co-operative caching layer for scalable parallel data movement in Ex
 ## Introduction
 
 * Copper is a lightweight library designed to address the I/O bottleneck caused by all compute nodes loading the same files simultaneously.
-* To reduce file system contention and improve efficiency, copper enables a single designated process to load data from the file system and transfer to other ranks through high-speed interconnects.
+* To reduce file system contention and improve efficiency, Copper enables a single designated process to load data from the file system and transfer to other ranks through high-speed interconnects.
 * This approach significantly reduces redundant file access and improves scalability in distributed training and simulation workloads.
 * Copper is a **read-only** cooperative caching layer designed to enable scalable data loading across massive numbers of compute nodes.
 * It aims to avoid I/O bottlenecks, network contention, and interference with the storage network, file system, and compute network, thereby allowing more effective use of the compute network for data movement—both for your job and for other jobs running on the system.
@@ -72,17 +72,34 @@ stop_copper.sh # optional - enabled by default on the PBS epilog during cleanup.
 
 ### Example 3: Conda environemnts
 
-```bash
+This example is divided into 2 sections: 1) How to install and create a clean conda environment without any dependency on the `~/home` directory and 2) A sample job script with Copper and conda. 
 
-0. Make sure your miniconda is not installed in home. 
+#### Creating a conda environment
+
+Step 0. Make sure your miniconda is not installed in `~/home`
+
+```bash
 mkdir /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src/miniconda.sh
 bash miniconda-src/miniconda.sh -b -u -p /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src
+```
 
-1. use conda create --prefix  /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env python=3.9 instead of conda create --name dharma-s-env python=3.9
-2. rm -rf ~/.conda/* and ~/.local/*
+Step 1. Create conda environment with `--prefix` option instead of `conda create --name`
 
-3. update .condarc file to have the right cache-package dirs and env dirs 
+```bash
+conda create --prefix  /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env python=3.9 
+```
+
+Step 2. Delete contents of .conda and .local directories under ~/home
+
+```bash
+rm -rf ~/.conda/* and ~/.local/*
+```
+
+Step 3. update .condarc file to have the right cache-package dirs and env dirs 
+
+```bash
+vi ~/.condarc 
 channels:
   - conda-forge
 envs_dirs:
@@ -90,11 +107,15 @@ envs_dirs:
 pkgs_dirs:
   - /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/conda-cache1
   - /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/conda-cache2
+```
 
-4. verify your source ~/.bashrc does not contain any ~/home paths 
-5. remove anyother hidden or unknown site-packages under ~/home
-6. verify all these below items are not in ~/home after conda activate - including which python
+Step 4. verify your source `~/.bashrc` does not contain any `~/home` paths 
 
+Step 5. remove anyother hidden or unknown site-packages under `~/home`
+
+Step 6. verify all these below outputs are not pointing to `~/home` after `conda activate`, including the output of the `which python` command
+
+```bash
 ls -lah ~/.local
 ls -lah ~/.conda
 du -sh ~/.local
@@ -102,18 +123,23 @@ du -sh ~/.conda
 echo $PYTHONUSERBASE $PYTHONPATH $VIRTUAL_ENV $CONDA_PREFIX $CONDA_ROOT $CONDARC
 which python
 which conda
+```
 
-7. Set target direcroty as python -m pip install  --target=/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages   before any installs 
+Step 7. Set --target lustre directory on pip install
 
-In the job script
+```bash
+python -m pip install  --target=/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages torch
+```
 
+#### Example job script with copper and conda. 
+
+```bash
 module restore
 module load copper # Do not load python or frameworks module unless needed
 launch_copper.sh 
-sleep 30s
 /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/miniconda-src/bin/conda init  
 conda activate /lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/dharma-s-env  
-export PYTHONPATH=/lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages
+export PYTHONPATH=/tmp/${USER}/copper//lus/flare/projects/datascience/kaushik/copper-tests/dharma-test/main-packages/:$PYTHONPATH
 
 ls -lah ~/.local
 ls -lah ~/.conda
@@ -188,7 +214,7 @@ train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_worker
 
 ### Verifying with Strace 
 
-You can use the [strace](https://github.com/strace/strace) tool in aurora to verify all the paths used in your python program
+You can use the [strace](https://github.com/strace/strace) tool on Aurora to verify all the paths used in your Python program
 
 ```bash
 # strace -o trace_output.log python import-test.py 
