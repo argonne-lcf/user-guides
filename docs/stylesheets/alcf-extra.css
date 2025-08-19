@@ -461,6 +461,12 @@
   padding-left: 28px; 
 } 
 
+.header--primary .header__nav-primary .dropdown li:last-child { 
+  padding-bottom: 0;
+  border-left: none;
+  padding-left: 0; 
+} 
+
 .header--primary .header__site-title h1 {
   color: #b8e2de;
   font-weight: 600;
@@ -587,6 +593,7 @@
 .header--primary .header__nav-secondary li,
 .header--primary .header__nav-primary li {
   display: inline;
+  padding-bottom: 9px;
 }
 
 .header--primary .header__nav-secondary .md-search {
