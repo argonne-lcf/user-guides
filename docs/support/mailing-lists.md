@@ -5,8 +5,9 @@ All notifications regarding system outages and preventative maintenace schedules
 Users are auto-subscribed to the relevant system mailing list(s) when they **first** gain access to that system. The user's primary email is subscribed to the list(s).
 
 You will need to re-subscribe if you either:
-* Unsubscribed from the mailing list(s) and wish to rejoin, or
-* Would like to subscribe a different email address instead
+
+- Unsubscribed from the mailing list(s) and wish to rejoin, or
+- Would like to subscribe a different email address instead
 
 ### Manual subscription/unsubscription
 
