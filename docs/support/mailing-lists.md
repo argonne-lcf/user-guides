@@ -1,6 +1,6 @@
 # Mailing Lists
 
-All notifications regarding system outages and preventative maintenace schedules are sent to appropriate system mailing lists. 
+All notifications regarding system outages and preventative maintenance schedules are sent to appropriate system mailing lists. 
 
 Users are auto-subscribed to the relevant system mailing list(s) when they **first** gain access to that system. The user's primary email is subscribed to the list(s).
 
