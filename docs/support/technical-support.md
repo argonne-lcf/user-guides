@@ -16,7 +16,7 @@ When emailing support, include:
 - Your ALCF Username
 - Your project shortname
 - The system(s) you're having issues with (Polaris, Sophia, Aurora, etc.)
-- Additional information to help us debug your issue. See ["Job Failures"](./technical-support.md#job-failures), ["Python Issues"](./technical-support.md#python-issues), ["Installation/compilation issues"](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
+- Additional information to help us debug your issue. See [Job Failures](./technical-support.md#job-failures), [Python Issues](./technical-support.md#python-issues), [Installation/compilation issues](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
 
 Please note:
 
