@@ -25,7 +25,7 @@ Please note:
 
  
 ## Mailing lists
-System outages and preventative maintenace schedules are sent to appropriate system mailing lists. See [this page](./mailing-lists.md) for more information.
+System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./mailing-lists.md).
 
 ## Job Failures
 
