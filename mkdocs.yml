@@ -153,15 +153,15 @@ nav:
   # - ALCF User Guides:
   #   - index.md
   - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+  - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
     - support/index.md
-    - Contact:
-      - Submit a Ticket: support/technical-support.md
-      - Request Software: support/software-requests.md
-      - ALCF Users Slack: support/alcf-users-slack.md
-      - Contribute to User Guides: support/docs-issues.md
-      - Aurora Office Hours: support/office-hours.md
+    - Submit a Ticket: support/technical-support.md
+    - Request Software: support/software-requests.md
+    - ALCF Users Slack: support/alcf-users-slack.md
+    - Aurora Office Hours: support/office-hours.md
+    - Communications to Users: support/user-communications.md
 
   - Machines:
     - machines/index.md
