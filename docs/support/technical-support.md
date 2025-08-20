@@ -12,17 +12,20 @@ Before contacting ALCF Support, be sure to check the **Known Issues** pages for 
 - [Aurora](../aurora/known-issues.md)
   
 When emailing support, include:
+
 - Your ALCF Username
 - Your project shortname
 - The system(s) you're having issues with (Polaris, Sophia, Aurora, etc.)
+- Additional information to help us debug your issue. See [Job Failures](./technical-support.md#job-failures), [Python Issues](./technical-support.md#python-issues), [Installation/compilation issues](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
 
 Please note:
-- Do not respond to closed tickets. Your response will **NOT** re-open the ticket.
-- Do not use an existing ticket to ask for assistance on new topics. Instead, submit a new ticket by emailing Support.
-- See ["Job Failures"](./technical-support.md#job-failures), ["Python Issues"](./technical-support.md#python-issues), ["Installation/compilation issues"](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
+
+- Do NOT respond to closed tickets. Your response will **NOT** re-open the ticket.
+- Do NOT use an existing ticket to ask for assistance on new topics. Instead, submit a new ticket by emailing Support.
+
  
 ## Mailing lists
-System outages and preventative maintenace schedules are sent to appropriate system mailing lists. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. If you unsubscribed previously, you can re-subscribe by going to : https://lists.alcf.anl.gov/mailman/listinfo/{ALCF-system-nam}-notify (replace {ALCF-system-nam} with the appropriate compute system you have access to).
+System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./mailing-lists.md).
 
 ## Job Failures
 
