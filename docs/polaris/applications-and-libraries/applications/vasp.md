@@ -9,12 +9,14 @@ VASP is commercial software. Access to binaries compiled by ALCF can only be gra
 To access the VASP binary at ALCF, please email the details listed directly below to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). It can take up to 5–10 business days to verify a VASP license.
 
 Information to provide:
+
 - User’s full name:
 - User’s ALCF username:
 - Name of the organization that purchased the VASP license:
+- VASP license purchased from (University of Vienna or MaterialsDesign):
 - Principal investigator who is the POC for the VASP license:
 - VASP license number:
-- Version of VASP requested (VASP5, VASP6):
+- Version of VASP requested (VASP 5, VASP 6.4, VASP 6.5):
 
 ## VASP support policy
 ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
