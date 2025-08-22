@@ -158,6 +158,7 @@ nav:
     - support/index.md
     - Contact:
       - Submit a Ticket: support/technical-support.md
+      - Mailing Lists: support/mailing-lists.md
       - Request Software: support/software-requests.md
       - ALCF Users Slack: support/alcf-users-slack.md
       - Contribute to User Guides: support/docs-issues.md
@@ -299,6 +300,10 @@ nav:
         - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
         - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
         - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+      - SN40L Inference:
+        - ai-testbed/sn40l_inference/index.md
+        - Getting Started: ai-testbed/sn40l_inference/getting-started.md
+        - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
         # - Performance Tools: ai-testbed/sambanova/performance-tools.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
@@ -397,6 +402,7 @@ nav:
       - Data Science:
         - Python: sophia/data-science/python.md
         - Fine-tuning with Autotrain: sophia/data-science/fine-tune-LLM-with-Autotrain.md
+        - Dask: sophia/data-science/dask.md
       - Visualization:
         - sophia/visualization/index.md
         - ParaView (Launch from Client): sophia/visualization/paraview.md
