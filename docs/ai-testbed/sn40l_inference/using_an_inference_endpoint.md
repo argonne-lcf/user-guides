@@ -16,7 +16,9 @@ The files can be sourced to set environment variables, e.g. if the endpoint were
 ```
 source ~/metis_endpoint_endpoint_1.txt
 ```
-The two endpoints, "metis_endpoint_1" serves "Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-8B-Instruct, Meta-Llama-3.3-70B-Instruct" models and the "metis_endpoint_2" serves "Llama-4-Maverick-17B-128E-Instruct" model. If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov
+
+Endpoint "metis_endpoint_1" serves the "Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-8B-Instruct, Meta-Llama-3.3-70B-Instruct" models. Endpoint "metis_endpoint_2" serves the "Llama-4-Maverick-17B-128E-Instruct" model.
+If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov.
 
 
 ## Generic Code examples 
