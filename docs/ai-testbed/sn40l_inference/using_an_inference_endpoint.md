@@ -1,6 +1,21 @@
 # Using an inference endpoint
 
-See SambaNova's documentation for additional information: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
+## Accessing your endpoint API keys
+
+The endpoints running on the SambaStack SN40L cluster can be accessed from any internet-connected machine.
+
+The API endpoint information, including user-unique API keys, is stored in the AI-testbed home directory for your ALCF ai-testbed account. These files may be accessed from the login nodes for ALCF's SambaNova SN30 cluster; access to the SN30 cluster and the inference endpoints running on the SN40L SambaRacks is linked. See [ALCF Get Started](https://www.alcf.anl.gov/support-center/get-started) to request an account and for additional information.
+
+### Log into the sambanova login node to access endpoint API keys
+
+Log in to the SambaNova **login node** from your local machine using the below command. This uses the **MobilePASS+** token generated every time you log in to the system. This is the same passcode used to authenticate into other ALCF systems, such as **Polaris**.
+
+In the examples below, replace `ALCFUserID` with your personal ALCF user ID.
+
+```bash
+ssh ALCFUserID@sambanova.alcf.anl.gov
+Password: < MobilePASS+ code >
+```
 
 ## Getting api information files from your home directory
 Currently, there are two endpoints provisioned to users on the Metis SambaNova SN40L cluster. 
@@ -12,6 +27,8 @@ They include the following lines:
 - `SAMBANOVA_API_KEY=...`
 - `MODELS=ModenName1,ModelName2,...`
 
+These endpoint description files may be copied to your working machine of choice, with e.g. `scp`, or text copy/paste. 
+
 The files can be sourced to set environment variables, e.g. if the endpoint were named "metis_endpoint_1.txt",
 ```
 source ~/metis_endpoint_endpoint_1.txt
@@ -20,6 +37,7 @@ source ~/metis_endpoint_endpoint_1.txt
 Endpoint "metis_endpoint_1" serves the "Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-8B-Instruct, Meta-Llama-3.3-70B-Instruct" models. Endpoint "metis_endpoint_2" serves the "Llama-4-Maverick-17B-128E-Instruct" model.
 If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov.
 
+See SambaNova's documentation for additional information to supplement the instructions below: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
 
 ## Generic Code examples 
 ### Using environment variables for endpoint url, api key, model name
