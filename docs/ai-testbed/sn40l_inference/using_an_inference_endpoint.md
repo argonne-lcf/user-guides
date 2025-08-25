@@ -3,6 +3,7 @@
 See SambaNova's documentation for additional information: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
 
 ## Getting api information files from your home directory
+Currently, there are two endpoints provisioned to users on the Metis SambaNova SN40L cluster. 
 The endpoint description files are placed into your ai-testbed home directory, and are of form `metis_endpoint_N.txt`
 They include the following lines:
 
@@ -15,6 +16,10 @@ The files can be sourced to set environment variables, e.g. if the endpoint were
 ```
 source ~/metis_endpoint_endpoint_1.txt
 ```
+
+Endpoint "metis_endpoint_1" serves the "Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-8B-Instruct, Meta-Llama-3.3-70B-Instruct" models. Endpoint "metis_endpoint_2" serves the "Llama-4-Maverick-17B-128E-Instruct" model.
+If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov.
+
 
 ## Generic Code examples 
 ### Using environment variables for endpoint url, api key, model name
