@@ -300,9 +300,8 @@ nav:
         - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
         - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
         - SambaNova Documentation: ai-testbed/sambanova/documentation.md
-      - SN40L Inference:
+      - Metis - Sambanova Inference:
         - ai-testbed/sn40l_inference/index.md
-        - Getting Started: ai-testbed/sn40l_inference/getting-started.md
         - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
         # - Performance Tools: ai-testbed/sambanova/performance-tools.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
