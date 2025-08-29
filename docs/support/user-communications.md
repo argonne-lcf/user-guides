@@ -4,7 +4,7 @@ ALCF uses several channels to share updates our facility and systems with users.
 
 ## Mailing List Notifications
 
-As a facility user, you will be added to our system notification mailing list. The mailing list will keep you up-to-date on machine maintenance, outages, and opportunities. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. You can unsubscribe from these notifications, although we recommend against doing so. 
+As a facility user, you will be added to our system notification mailing list. The mailing list will keep you up-to-date on machine maintenance, outages, and opportunities. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. You can unsubscribe from these notifications, although we recommend against doing so. You can learn more about your subscriptions at [Mailing Lists](argonne-lcf/user-guides/docs/support/mailing-lists.md).
 
 We send users a weekly newsletter on Fridays at 10 a.m. CT and a monthly facility newsletter. 
 
@@ -28,7 +28,7 @@ ALCF offers workshops and webinars on various tools, systems, and frameworks. Th
 
 ALCF also collaborates with peer institutions and vendor partners to offer training that strengthens community competencies and promotes best practices.
 
-Please check our website for upcoming events: https://www.alcf.anl.gov/events
+Please check our [website for upcoming events](https://www.alcf.anl.gov/events).
 
 Please tune into our YouTube channel for onDemand content: https://www.youtube.com/channel/UCFJAl2p722-FJ-ojxxYyrrw
 

@@ -66,4 +66,4 @@ If you are having issues installing and/or compiling your app, please include th
 - Any other necessary steps Support will need to recreate the issue
 
 ### Mailing lists
-System outages and preventative maintenace schedules are sent to appropriate system mailing lists. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. If you unsubscribed previously, you can re-subscribe by going to : https://lists.alcf.anl.gov/mailman/listinfo/{ALCF-system-nam}-notify (replace {ALCF-system-nam} with the appropriate compute system you have access to).
+System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](argonne-lcf/user-guides/docs/support/mailing-lists.md).

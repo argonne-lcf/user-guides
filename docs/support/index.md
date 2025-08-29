@@ -4,7 +4,8 @@ The ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - 
 
 Click on the links below for more information:
 
-- [Communications to Users](docs/support/user-communications.md)
+- [Staying in Touch](https://docs.alcf.anl.gov/support/user-communications.md)
+- [Mailing Lists](https://docs.alcf.anl.gov/support/mailing-lists)
 - [Submit a Ticket](https://docs.alcf.anl.gov/support/technical-support/)
 - [Request Software](https://docs.alcf.anl.gov/support/software-requests/)
 - [ALCF Users Slack Workspace](https://docs.alcf.anl.gov/support/alcf-users-slack/)
