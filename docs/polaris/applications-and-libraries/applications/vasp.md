@@ -24,7 +24,7 @@ ALCF compiles the latest release of VASP on a per-request basis. We do not offer
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
-## VASP 6.x.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
+## VASP 6.5.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
@@ -34,7 +34,8 @@ The following `makefile.include` was tailored for Polaris, originally taken from
 ```makefile
 # Precompiler options
 CPP_OPTIONS = -DHOST=\"LinuxNV\" \
-              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
+              -DMPI \
+              -DMPI_BLOCK=8000 -Duse_collective \
               -DscaLAPACK \
               -DCACHE_SIZE=4000 \
               -Davoidalloc \
@@ -45,7 +46,9 @@ CPP_OPTIONS = -DHOST=\"LinuxNV\" \
               -Dfock_dblbuf \
               -D_OPENMP \
               -D_OPENACC \
-              -DUSENCCL -DUSENCCLP2P\
+              -DACC_OFFLOAD \
+              -DNVCUDA \
+              -DUSENCCL
 
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
 
@@ -65,6 +68,7 @@ NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $
 # ...or set NVROOT manually
 NVHPC      ?= /opt/nvidia/hpc_sdk
 NVVERSION  = 23.9
+#/opt/nvidia/hpc_sdk/Linux_x86_64/24.11/
 NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
 
 # Use NV HPC-SDK provided BLAS and LAPACK libraries
@@ -74,8 +78,6 @@ LAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame
 
 BLACS      =
 SCALAPACK  =
-#SCALAPACK  = -Mscalapack
-#SCALAPACK  = ${LIBAOCL}/lib/libscalapack.a
 
 CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
 
@@ -86,19 +88,13 @@ QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
 
-#INCS       += -I/usr/include/linux
-#INCS       += -I/usr/include/c++/7/tr1
-#INCS       += -I/usr/include/c++/7
-#INCS       += -I/usr/include/x86_64-linux-gnu/c++/7
-#INCS       += -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/
 
 # Use the FFTs from fftw
 FFTW       = /soft/applications/vasp/aol-libs/3.2/amd-fftw
 LLIBS      += -L$(FFTW)/lib -lfftw3 -lfftw3_omp -lomp
-#INCS       += -I/soft/libraries/aocl/3.2.0/include_LP64/
 INCS       += -I$(FFTW)/include
 
-OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
+#OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
 
 # Redefine the standard list of O1 and O2 objects
 SOURCE_O1  := pade_fit.o
@@ -190,41 +186,4 @@ Submission scripts should have executable attributes to be used with `qsub` scri
 ```
 chmod +x script.sh
 qsub script.sh
-```
-
-### Known issues versions: >= 6.4.x in Polaris (OLD)
----
-
-* Undefined `MPIX_Query_cuda_support` function at linking binary: This function is called in `src/openacc.F`. The `MPIX_Query_cuda_support` is not included in `cray-mpich`. One workaround to this issue is to comment this function call. See the following suggested changes marked by `!!!!!CHANGE HERE` in the `file:src/openacc.F`
-
-```fortran
-+!!!!!CHANGE HERE 
--      INTERFACE
--        INTEGER(c_int) FUNCTION MPIX_Query_cuda_support() BIND(C, name="MPIX_Query_cuda_support")
--        END FUNCTION
--      END INTERFACE
-
-       CHARACTER(LEN=1) :: ENVVAR_VALUE
-       INTEGER :: ENVVAR_STAT
-
-       ! This should tell us if MPI is CUDA-aware
-+!!!!!CHANGE HERE 
--       CUDA_AWARE_SUPPORT = MPIX_Query_cuda_support() == 1
-+       CUDA_AWARE_SUPPORT = .TRUE.
-       ! However, for OpenMPI some env variables can still deactivate it even though the previous
-       ! check was positive
-       CALL GET_ENVIRONMENT_VARIABLE("OMPI_MCA_mpi_cuda_support", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0 .AND. ENVVAR_VALUE=='0') CUDA_AWARE_SUPPORT = .FALSE.
-       CALL GET_ENVIRONMENT_VARIABLE("OMPI_MCA_opal_cuda_support", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0 .AND. ENVVAR_VALUE=='0') CUDA_AWARE_SUPPORT = .FALSE.
-       ! Just in case we might be non-OpenMPI, and their MPIX_Query_cuda_support behaves similarly
-       CALL GET_ENVIRONMENT_VARIABLE("MV2_USE_CUDA", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0 .AND. ENVVAR_VALUE=='0') CUDA_AWARE_SUPPORT = .FALSE.
-       CALL GET_ENVIRONMENT_VARIABLE("MPICH_RDMA_ENABLED_CUDA", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0 .AND. ENVVAR_VALUE=='0') CUDA_AWARE_SUPPORT = .FALSE.
-       CALL GET_ENVIRONMENT_VARIABLE("PMPI_GPU_AWARE", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-       IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
-+!!!!!CHANGE HERE 
-+       CALL GET_ENVIRONMENT_VARIABLE("MPICH_GPU_SUPPORT_ENABLED", ENVVAR_VALUE, STATUS=ENVVAR_STAT)
-+       IF (ENVVAR_STAT==0) CUDA_AWARE_SUPPORT =(ENVVAR_VALUE == '1')
 ```
