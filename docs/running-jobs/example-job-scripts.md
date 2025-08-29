@@ -58,7 +58,7 @@ GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
 ```
 
 <!--- example of alternative pymdownx.snippets syntax. "; temporarily disables it -->
----8<--- "; docs/running-jobs/pbs-qsub-options-table.md"
+---8<--- "; docs/running-jobs/not_in_nav/pbs-qsub-options-table.md"
 
 !!! warning inline end "Zsh users"
 
