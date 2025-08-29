@@ -83,7 +83,7 @@ CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
 
 LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
 
-# Software emulation of quadruple precsion
+# Software emulation of quadruple precision
 QD         ?= $(NVROOT)/compilers/extras/qd
 LLIBS      += -L$(QD)/lib -lqdmod -lqd
 INCS       += -I$(QD)/include/qd
