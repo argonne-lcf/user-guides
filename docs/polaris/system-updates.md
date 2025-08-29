@@ -1,5 +1,21 @@
 # Polaris System Updates
 
+## 2025-08-29
+
+Polaris HPCM upgrade involves the following key version software changes:
+
+- Suse 15 SP6 (a major kernel change)
+- Slingshot host stack 12.0.0, with improvements to handling nvidia/nccl/etc and updates to libfabric
+- Update NVIDIA driver version (565.57.01) (CUDA 12.9)
+- Default base nvidia-hpc_sdk is now at 24.11 (CUDA 12.9)
+- Updated Cray Programming Environment (PE) release 25.03, includes support for older releases of 23.12, 24.03, 24.07, 24.11
+- Lustre updated to B21
+- USS 1.3.1 / PALS updates to 1.6.1
+- PBS update to 2025.2.0
+
+***IMPORTANT NOTE: The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.***
+
+
 ## 2024-09-09
 
 ### XALT
