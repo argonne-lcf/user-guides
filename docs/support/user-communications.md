@@ -4,21 +4,21 @@ ALCF uses several channels to share updates our facility and systems with users.
 
 ## Mailing List Notifications
 
-As a facility user, you will be added to our system notification mailing list. The mailing list will keep you up-to-date on machine maintenance, outages, and opportunities. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. You can unsubscribe from these notifications, although we recommend against doing so. You can learn more about your subscriptions at [Mailing Lists](argonne-lcf/user-guides/docs/support/mailing-lists.md).
+As a facility user, you will be added to our system notification mailing list. The mailing list will keep you up-to-date on machine maintenance, outages, and opportunities. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. You can unsubscribe from these notifications, although we recommend against doing so. You can learn more about your subscriptions at [Mailing Lists](./mailing-lists.md).
 
 We send users a weekly newsletter on Fridays at 10 a.m. CT and a monthly facility newsletter. 
 
 ## System Statuses
 
-You can check the current status of ALCF systems by logging in to MyALCF and checking the home screen dashboard.  You can learn more about [MyALCF here](docs/account-project-management/MyALCF.md).
+You can check the current status of ALCF systems by logging in to MyALCF and checking the home screen dashboard. You can learn more about [MyALCF here](./MyALCF.md).
 
-All system-specific announcements will also be published on the `#announcements` channel in the [ALCF Users Slack](docs/support/alcf-users-slack.md). 
+All system-specific announcements will also be published on the `#announcements` channel in the [ALCF Users Slack](./alcf-users-slack.md). 
 
 ## ALCF Support 
 
 Our ALCF support team is available from 9 a.m. to 5 p.m. Monday - Friday, except on holidays. For technical assistance, you can reach the support team by submitting an email ticket to support@alcf.anl.gov. For account and access-related queries, you should submit a ticket to [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov). 
 
-If you have a question or need help on your project, please see [How to Submit a Ticket](docs/support/technical-support.md) before emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
+If you have a question or need help on your project, please see [How to Submit a Ticket](./technical-support.md) before emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
 
 If you have an INCITE or ALCC allocation award, you can contact your Catalyst directly for project support.
 
