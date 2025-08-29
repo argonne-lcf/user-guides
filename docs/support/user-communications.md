@@ -10,7 +10,7 @@ We send users a weekly newsletter on Fridays at 10 a.m. CT and a monthly facilit
 
 ## System Statuses
 
-You can check the current status of ALCF systems by logging in to MyALCF and checking the home screen dashboard. You can learn more about [MyALCF here](./MyALCF.md).
+You can check the current status of ALCF systems by logging in to MyALCF and checking the home screen dashboard. You can learn more about [MyALCF here](../account-project-management/MyALCF.md).
 
 All system-specific announcements will also be published on the `#announcements` channel in the [ALCF Users Slack](./alcf-users-slack.md). 
 
