@@ -30,6 +30,6 @@ ALCF also collaborates with peer institutions and vendor partners to offer train
 
 Please check our [website for upcoming events](https://www.alcf.anl.gov/events).
 
-Please tune into our YouTube channel for onDemand content: https://www.youtube.com/channel/UCFJAl2p722-FJ-ojxxYyrrw
+Please tune into our [YouTube channel](https://www.youtube.com/channel/UCFJAl2p722-FJ-ojxxYyrrw) for on-demand video content. 
 
 
