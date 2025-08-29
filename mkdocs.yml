@@ -161,6 +161,7 @@ nav:
       - Mailing Lists: support/mailing-lists.md
       - Request Software: support/software-requests.md
       - ALCF Users Slack: support/alcf-users-slack.md
+      - AskALCF ChatBot: support/askalcf.md
       - Contribute to User Guides: support/docs-issues.md
       - Aurora Office Hours: support/office-hours.md
 
@@ -410,7 +411,6 @@ nav:
     - running-jobs/index.md
     - Example Job Scripts: running-jobs/example-job-scripts.md
     - Machine Reservations: running-jobs/machine-reservations.md
-    - Cobalt to PBS: running-jobs/pbs-qsub-options-table.md
 
   - Data Management:
     - data-management/index.md
