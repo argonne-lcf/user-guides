@@ -288,24 +288,23 @@ nav:
         - Profiling with GroqView: ai-testbed/groq/groqview.md
         - Examples: ai-testbed/groq/examples.md
       - SambaNova:
-        - ai-testbed/sambanova/index.md
-        - Getting Started: ai-testbed/sambanova/getting-started.md
-        - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
-        - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
-        - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
-        - Example Programs: ai-testbed/sambanova/example-programs.md
-        - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
-        # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
-        - ModelZoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
-        - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
-        - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
-        - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
-        - SambaNova Documentation: ai-testbed/sambanova/documentation.md
-      - SN40L Inference:
-        - ai-testbed/sn40l_inference/index.md
-        - Getting Started: ai-testbed/sn40l_inference/getting-started.md
-        - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
-        # - Performance Tools: ai-testbed/sambanova/performance-tools.md
+        - SN30:
+          - ai-testbed/sambanova/index.md
+          - Getting Started: ai-testbed/sambanova/getting-started.md
+          - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
+          - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
+          - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
+          - Example Programs: ai-testbed/sambanova/example-programs.md
+          - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
+          # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
+          - ModelZoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
+          - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
+          - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
+          - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
+          - SambaNova Documentation: ai-testbed/sambanova/documentation.md
+        - Metis Inference:
+          - ai-testbed/sn40l_inference/index.md
+          - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
