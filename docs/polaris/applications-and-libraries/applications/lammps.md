@@ -8,7 +8,7 @@ For details about the code and its usage, see the [LAMMPS](http://lammps.sandia.
 
 ## Using LAMMPS at ALCF
 
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles and submission scripts are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For questions, contact us at <support@alcf.anl.gov>.
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles and submission scripts are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to Obtain the Code
 
@@ -36,7 +36,7 @@ module load cray-fftw
 
 ## Building with KOKKOS package on Polaris 
 
-Users are encouraged to use cmake to build LAMMPS using the GNU host compilers. An example helper script is provided where `cmake` is used to build LAMMPS using the KOKKOS package for GPU acceleration.
+Users are encouraged to use CMake to build LAMMPS using the GNU host compilers. An example helper script is provided where CMake is used to build LAMMPS using the KOKKOS package for GPU acceleration.
 
 ```
 BASE=/path_to_lammps/
@@ -72,11 +72,11 @@ cmake \
 make -j 4
 ```
 
-If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
+Compilation on the Polaris login nodes should be restricted to 4 processes so as to not exhaust per-user resource [limits](../../system-updates.md#changes-to-memory-limits-on-login-nodes). If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
 
 ## Building with GPU package on Polaris 
 
-Users are encouraged to use cmake to build LAMMPS using the GNU host compilers. An example helper script is provided where `cmake` is used to build LAMMPS using the KOKKOS package for GPU acceleration.
+Users are encouraged to use CMake to build LAMMPS using the GNU host compilers. An example helper script is provided where CMake is used to build LAMMPS using the KOKKOS package for GPU acceleration.
 
 ```
 BASE=/path_to_lammps/
@@ -109,7 +109,7 @@ cmake \
 make -j 4
 ```
 
-If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
+Compilation on the Polaris login nodes should be restricted to 4 processes so as to not exhaust per-user resource [limits](../../system-updates.md#changes-to-memory-limits-on-login-nodes). If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
 
 ## Running Jobs on Polaris
 
@@ -158,7 +158,7 @@ ${COMMAND}
 
 ## Building LAMMPS with Makefiles
 
-Support for building LAMMPS via Makefiles will be deprecated soon in favor of cmake. Recent Makefiles are available, if needed, for building LAMMPS in the following directory.
+Support for building LAMMPS via Makefiles will be deprecated soon in favor of CMake. Recent Makefiles are available, if needed, for building LAMMPS in the following directory.
 
 ```
 knight@x3004c0s7b1n0:~/public/lammps/polaris> pwd
@@ -168,7 +168,7 @@ knight@x3004c0s7b1n0:~/public/lammps/polaris> ls Makefile.polaris_gnu*
 Makefile.polaris_gnu  Makefile.polaris_gnu_kokkos
 ```
 
-Please contact us at <support@alcf.anl.gov> for assistance if you require building LAMMPS with Makefiles.
+Please contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov) for assistance if you require building LAMMPS with Makefiles.
 
 ## Performance Notes
 
