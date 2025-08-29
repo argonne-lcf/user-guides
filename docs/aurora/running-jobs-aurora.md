@@ -28,7 +28,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 1919     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
-| backfill-large  | 1920     | 10624    | 5 min    | 24 hrs   | Low priority, negative project balance (jobs need to be submitted to prod-large)                                                             |
+| backfill-large  | 1920     | 10624    | 5 min    | 24 hrs   | Low priority, negative project balance                                                           |
 
 !!! warning
 
