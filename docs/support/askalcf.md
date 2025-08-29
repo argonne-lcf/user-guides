@@ -59,6 +59,6 @@ Please make your question as specific as possible. This helps the ChatBot retrie
 
   We only track queries, responses, and ratings. No personal information is collected. 
 
-* For high-level comments or feedbacks, please contact: 📧 support@alcf.anl.gov
+* For high-level comments or feedback, please contact: [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
 
-* All feedbacks are annoymouse, if you would like  to receive follow up to your feedbacks, please provide your contact info. 
+* All feedback is anonymous, by default. If you would like to receive follow-up communication, please provide your contact info. 
