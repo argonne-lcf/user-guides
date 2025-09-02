@@ -16,6 +16,10 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
    ```bash
    ssh <your-username>@aurora.alcf.anl.gov
    ```
+   Make a note of the specific login node ID that you landed on. Run `hostname -f`, which may return something like:
+   ```output
+   aurora-uan-0011.hostmgmt.cm.aurora.alcf.anl.gov
+   ```
 
 2. **Create a Virtual Environment**:
    If you already have a Python environment, you can skip this step.
@@ -63,8 +67,9 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
 3. **Set Up SSH Tunneling**:
    Open a new terminal tab or window on your local machine and run the following command:
    ```bash
-   ssh -L 9999:127.0.0.1:9999 <your-username>@aurora.alcf.anl.gov
+   ssh -L 9999:127.0.0.1:9999 <your-username>@<login_node_hostname>
    ```
+   where `<login_node_hostname>` is the specific login node address noted in step 1.1.
    - Replace `9999` with another port if it is unavailable.
 
 4. **Access JupyterLab**:
