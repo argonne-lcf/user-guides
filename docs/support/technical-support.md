@@ -68,4 +68,4 @@ If you are having issues installing and/or compiling your app, please include th
 
 ### Mailing lists
 
-System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./mailing-lists.md).
+System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./get-help/mailing-lists.md).
