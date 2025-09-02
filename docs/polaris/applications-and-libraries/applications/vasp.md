@@ -21,6 +21,8 @@ Information to provide:
 ## VASP support policy
 ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
 
+Once the user licence is validated, they will be added to the UNIX groups: `vasp65`, `vasp6` or `vasp641`, and get access to the subdirectories in `/soft/applications/vasp`.
+
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
@@ -33,51 +35,44 @@ The following `makefile.include` was tailored for Polaris, originally taken from
 
 ```makefile
 # Precompiler options
-CPP_OPTIONS = -DHOST=\"LinuxNV\" \
-              -DMPI \
-              -DMPI_BLOCK=8000 -Duse_collective \
-              -DscaLAPACK \
-              -DCACHE_SIZE=4000 \
-              -Davoidalloc \
-              -Dvasp6 \
-              -Duse_bse_te \
-              -Dtbdyn \
-              -Dqd_emulate \
-              -Dfock_dblbuf \
-              -D_OPENMP \
-              -D_OPENACC \
-              -DACC_OFFLOAD \
-              -DNVCUDA \
-              -DUSENCCL
+CPP_OPTIONS= -DHOST=\"LinuxNV_CrayMPICH\" \
+             -DMPI -DMPI_BLOCK=8000 -Duse_collective \
+             -DscaLAPACK \
+             -DCACHE_SIZE=4000 \
+             -Davoidalloc \
+             -Dvasp6 \
+             -Dtbdyn \
+             -Dqd_emulate \
+             -Dfock_dblbuf \
+             -DACC_OFFLOAD \
+             -D_OPENMP \
+             -D_OPENACC \
+             -DNVCUDA \
+             -DUSENCCL
 
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
-
 FC         = ftn -acc -gpu=cc80 -mp -target-accel=nvidia80
 FCL        = ftn -acc -gpu=cc80 -c++libs -target-accel=nvidia80
-
 FREE       = -Mfree
 
 FFLAGS     = -Mbackslash -Mlarge_arrays
-
 OFLAG      = -fast
-
 DEBUG      = -Mfree -O0 -traceback
 
 # Specify your NV HPC-SDK installation, try to set NVROOT automatically
-NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $$1 }')
 # ...or set NVROOT manually
-NVHPC      ?= /opt/nvidia/hpc_sdk
-NVVERSION  = 23.9
-#/opt/nvidia/hpc_sdk/Linux_x86_64/24.11/
-NVROOT     = $(NVHPC)/Linux_x86_64/$(NVVERSION)
+NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $$1 }')
 
 # Use NV HPC-SDK provided BLAS and LAPACK libraries
 LIBAOCL=/soft/libraries/aocl/3.2.0
-BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.a
-LAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
+#BLAS       = -L/soft/applications/vasp/aol-libs/amd-blis/lib/ILP64 -lblis-mt
+#LAPACK     = -L/soft/applications/vasp/aol-libs/amd-libflame/lib/ILP64 -lflame
+BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.aLAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
 
 BLACS      =
 SCALAPACK  =
+#SCALAPACK  = -Mscalapack
+#SCALAPACK  = ${LIBAOCL}/lib/libscalapack.a
 
 CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
 
@@ -85,13 +80,20 @@ LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
 
 # Software emulation of quadruple precision
 QD         ?= $(NVROOT)/compilers/extras/qd
-LLIBS      += -L$(QD)/lib -lqdmod -lqd
+LLIBS      += -L$(QD)/lib -lqdmod -lqd -Wl,-rpath=$(QD)/lib
 INCS       += -I$(QD)/include/qd
+LLIBS      += -L$(NVROOT)/math_libs/lib64 -Wl,-rpath=$(NVROOT)/math_libs/lib64
 
+#INCS       += -I/usr/include/linux
+#INCS       += -I/usr/include/c++/7/tr1
+#INCS       += -I/usr/include/c++/7
+#INCS       += -I/usr/include/x86_64-linux-gnu/c++/7
+#INCS       += -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include/
 
 # Use the FFTs from fftw
 FFTW       = /soft/applications/vasp/aol-libs/3.2/amd-fftw
 LLIBS      += -L$(FFTW)/lib -lfftw3 -lfftw3_omp -lomp
+#INCS       += -I/soft/libraries/aocl/3.2.0/include_LP64/
 INCS       += -I$(FFTW)/include
 
 #OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o
@@ -103,14 +105,15 @@ SOURCE_O2  := pead.o
 # For what used to be vasp.5.lib
 CPP_LIB    = $(CPP)
 FC_LIB     = nvfortran
-CC_LIB     = cc
-CFLAGS_LIB = -O $(INCS) -c++libs -cuda
+CC_LIB     = nvc -w
+CFLAGS_LIB = -O
 FFLAGS_LIB = -O1 -Mfixed
 FREE_LIB   = $(FREE)
 
-OBJECTS_LIB= linpack_double.o getshmem.o
+OBJECTS_LIB= linpack_double.o
 
 # For the parser library
+es15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
 CXX_PARS   = nvc++ --no_warnings
 
 # Normally no need to change this
@@ -124,9 +127,8 @@ The following modules will update the include and library paths used by the Cray
 
 ```
 module restore
-module load PrgEnv-nvhpc
 module load cray-libsci
-module load craype-accel-nvidia80
+
 export NVROOT=${NVIDIA_PATH}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
@@ -155,9 +157,9 @@ An example of a submission script can be found here `/soft/applications/vasp/scr
 #PBS -q debug
 #PBS -A MYPROJECT
 
-module load PrgEnv-nvhpc
+module restore
 module load cray-libsci
-module load craype-accel-nvidia80
+
 
 NVROOT=${NVIDIA_PATH}
 
@@ -168,13 +170,16 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=2
+# One GPU per rank
+NRANKS=4
 NDEPTH=4
-NTHREADS=4
-NGPUS=2
+NTHREADS=16
+
 NTOTRANKS=$(( NNODES * NRANKS ))
 # Provide full path to VASP binary
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
+# For users with license for vasp 6.5.x and access to UNIX group vasp65
+#bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
 
 cd $PBS_O_WORKDIR
 
