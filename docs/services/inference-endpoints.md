@@ -301,6 +301,11 @@ For more examples, please see the [inference-endpoints GitHub repository](https:
 
     - allenai/Llama-3.1-Tulu-3-405B
 
+    **OpenAI Family**
+
+    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup>
+    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup>
+
     **Google Family**
 
     - google/gemma-3-27b-it<sup>B</sup><sup>T</sup>
