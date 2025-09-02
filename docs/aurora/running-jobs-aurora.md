@@ -9,8 +9,8 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
-| prod          | 1        | 2048     | 5 min    | 18 hrs   | Routing queue for tiny, small, and medium queues; <br/> **See table below for min/max limits**       |
-| prod-large    | 2048     | 10624    | 5 min    | 24 hrs   | ***By request only*** <br/> Routing queue for large jobs; See table below                            |
+| prod          | 1        | 10624    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
+| prod-large    | 1920     | 10624    | 5 min    | 24 hrs   | Legacy routing queue for large jobs; See table below                                                 |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
 
 !!! note
@@ -23,12 +23,12 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |-----------------|----------|----------|----------|----------|----------------------------------------------------------------------------------------------------|
 | tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
-| medium          | 1025     | 2048     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 2048     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue***                                              |
+| medium          | 1025     | 1919     | 5 min    | 18 hrs   |                                                                                                    |
+| large           | 1920     | 10624    | 5 min    | 24 hrs   |                                                                                                    |
 | backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
-| backfill-medium | 1025     | 2048     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
-| backfill-large  | 2049     | 10624    | 5 min    | 24 hrs   | ***Only accessible with access to prod-large queue*** <br/> Low priority, negative project balance |
+| backfill-medium | 1025     | 1919     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
+| backfill-large  | 1920     | 10624    | 5 min    | 24 hrs   | Low priority, negative project balance                                                           |
 
 !!! warning
 

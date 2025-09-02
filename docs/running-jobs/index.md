@@ -4,7 +4,7 @@
 * [The PBS "BigBook"](https://help.altair.com/2022.1.0/PBS%20Professional/PBS2022.1.pdf): This is really excellent. We highly suggest you download it and search through it when you have questions. However, it is big at about 2000 pages / 40MB and contains a bunch of stuff you don't really need, so you can also download the guides separately here:
     * [The PBS Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf): This is the user's guide.
     * [The PBS Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf): This is the Reference Guide. It shows every option and gives you details on how to format various elements on the command line.
-* [Cobalt qsub options to PBS qsub options](./pbs-qsub-options-table.md): Shows how to map Cobalt command line options to PBS command line options. Can be found at the link above.
+* [Cobalt qsub options to PBS qsub options](./not_in_nav/pbs-qsub-options-table.md): Shows how to map Cobalt command line options to PBS command line options. Can be found at the link above.
 
 ## Introduction
 At a high level, getting computational tasks run on an HPC system is a two-step process:
