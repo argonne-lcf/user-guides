@@ -11,7 +11,7 @@ This guide details how to install, configure, and run Julia on the Polaris super
 
 This guide is a first draft of the Julia documentation for Polaris. If you have
 suggestions or find errors, please open a pull request or contact us by
-[opening a ticket](../../support/technical-support.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+[opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
 ## 1. Julia Installation
 We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
