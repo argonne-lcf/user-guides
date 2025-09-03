@@ -4,9 +4,12 @@ The ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - 
 
 Click on the links below for more information:
 
-- [Submit a Ticket](https://docs.alcf.anl.gov/support/technical-support/)
-- [Request Software](https://docs.alcf.anl.gov/support/software-requests/)
-- [ALCF Users Slack Workspace](https://docs.alcf.anl.gov/support/alcf-users-slack/)
-- [AskALCF AI ChatBot](https://docs.alcf.anl.gov/support/askalcf/)
-- [Contribute to User Guides](https://docs.alcf.anl.gov/support/docs-issues/)
-- [Aurora Office Hours](https://docs.alcf.anl.gov/support/office-hours/)
+- [Staying in Touch](./get-help/index.md)
+- [Mailing Lists](./get-help/mailing-lists.md)
+- [Submit a Ticket](./ticket.md)
+- [Request Software](./get-help/software-requests.md)
+- [ALCF Users Slack Workspace](./get-help/alcf-users-slack.md)
+- [AskALCF AI Chatbot](./get-help/askalcf.md)
+- [Contribute to User Guides](./docs-issues.md)
+- [Aurora Office Hours](./get-help/office-hours.md)
+

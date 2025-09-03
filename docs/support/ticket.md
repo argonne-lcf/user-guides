@@ -8,6 +8,7 @@ ALCF manages user support issues through an email support ticketing system. To s
 ## Best Practices for Submitting Tickets
 
 Before contacting ALCF Support, be sure to check the **Known Issues** pages for the following systems:
+
 - [Polaris](../polaris/known-issues.md)
 - [Aurora](../aurora/known-issues.md)
   
@@ -16,18 +17,15 @@ When emailing support, include:
 - Your ALCF Username
 - Your project shortname
 - The system(s) you're having issues with (Polaris, Sophia, Aurora, etc.)
-- Additional information to help us debug your issue. See [Job Failures](./technical-support.md#job-failures), [Python Issues](./technical-support.md#python-issues), [Installation/compilation issues](./technical-support.md#installation-compiling-issues) sections below for additional details to be included in your ticket
+- Additional information to help us debug your issue. See [Job Failures](./ticket.md#job-failures), [Python Issues](./ticket.md#python-issues), [Installation/compilation issues](./ticket.md#installation-compiling-issues) sections below for additional details to be included in your ticket
 
 Please note:
 
-- Do NOT respond to closed tickets. Your response will **NOT** re-open the ticket.
-- Do NOT use an existing ticket to ask for assistance on new topics. Instead, submit a new ticket by emailing Support.
+- Do not respond to closed tickets. Your response will **NOT** re-open the ticket.
+- Do not use an existing ticket to ask for assistance on new topics. Instead, submit a new ticket by emailing Support.
+- See ["Job Failures"](./ticket.md#job-failures), ["Python Issues"](./ticket.md#python-issues), ["Installation/compilation issues"](./ticket.md#installation-compiling-issues) sections below for additional details to be included in your ticket
 
- 
-## Mailing lists
-System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./mailing-lists.md).
-
-## Job Failures
+### Job Failures
 
 If you are having issues running your job, or your job is failing, please include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
@@ -41,7 +39,7 @@ If you are having issues running your job, or your job is failing, please includ
 
     Support does not have access to your home directory or your project directory. Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
 
-## Python Issues
+### Python Issues
 
 If you need to open a ticket related to Python, please be sure to include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
@@ -58,7 +56,7 @@ By including the above information, this will help ALCF Support staff quickly ro
 
     We encourage the use of the pre-installed `conda` environment. Any custom environments are supported on a best-effort basis only.
 
-## Installation & Compiling Issues
+### Installation & Compiling Issues
 
 If you are having issues installing and/or compiling your app, please include the following in your email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov):
 
@@ -67,3 +65,7 @@ If you are having issues installing and/or compiling your app, please include th
 - A link to the app you are attempting to install (if possible)
 - The full command you're using to compile
 - Any other necessary steps Support will need to recreate the issue
+
+### Mailing lists
+
+System outages and preventative maintenance schedules are sent to appropriate system [Mailing Lists](./get-help/mailing-lists.md).
