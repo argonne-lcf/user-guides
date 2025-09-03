@@ -148,20 +148,20 @@ make -j1
 
 An example of a submission script can be found here `/soft/applications/vasp/script.sh`, which would look something similar to:
 
-``` example-script.sh
-#!/bin/sh
+``` example-script.sh#!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
-#PBS -l filesystems=home:eagle
+#PBS -l filesystems=home:grand:eagle
 #PBS -q debug
-#PBS -A MYPROJECT
+#PBS -A myproject
 
-module restore
+unset LD_PRELOAD
+module rm xalt
+
 module load cray-libsci
 
-
-NVROOT=${NVIDIA_PATH}
+NVROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/24.11
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
@@ -169,21 +169,28 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
 
 export MPICH_GPU_SUPPORT_ENABLED=1
+
+# uncomment for more than one node
+#export NCCL_NET_GDR_LEVEL=PHB
+#export NCCL_CROSS_NIC=1
+#export NCCL_COLLNET_ENABLE=1
+#export NCCL_NET="AWS Libfabric"
+#export LD_LIBRARY_PATH=/soft/libraries/hwloc/lib/:$LD_LIBRARY_PATH
+#export LD_LIBRARY_PATH=/lus/eagle/projects/catalyst/world-shared/avazquez/aws-ofi-install/lib:$LD_LIBRARY_PATH
+#export NCCL_SOCKET_IFNAME=hsn
+
 NNODES=`wc -l < $PBS_NODEFILE`
-# One GPU per rank
-NRANKS=4
-NDEPTH=4
-NTHREADS=16
+NRANKS=$(nvidia-smi -L | wc -l)
+NDEPTH=8
+NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS ))
-# Provide full path to VASP binary
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
-# For users with license for vasp 6.5.x and access to UNIX group vasp65
-#bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
+#IF you hold a license for 6.5
+bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
 
-cd $PBS_O_WORKDIR
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} $bin
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /lus/eagle/projects/catalyst/world-shared/avazquez/affinity.sh  $bin
 ```
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
