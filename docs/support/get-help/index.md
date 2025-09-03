@@ -18,7 +18,7 @@ All system-specific announcements will also be published on the `#announcements`
 
 Our ALCF support team is available from 9 a.m. to 5 p.m. Monday - Friday, except on holidays. For technical assistance, you can reach the support team by submitting an email ticket to support@alcf.anl.gov. For account and access-related queries, you should submit a ticket to [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov). 
 
-If you have a question or need help on your project, please see [How to Submit a Ticket](../technical-support.md) before emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
+If you have a question or need help on your project, please see [How to Submit a Ticket](../ticket.md) before emailing [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
 
 If you have an INCITE or ALCC allocation award, you can contact your Catalyst directly for project support.
 

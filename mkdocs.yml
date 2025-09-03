@@ -157,11 +157,11 @@ nav:
 
   - User Support:
     - support/index.md
-    - Submit a Ticket: support/technical-support.md
-    - Request Software: support/software-requests.md
+    - Submit a Ticket: support/ticket.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
+        - Request Software: support/get-help/software-requests.md
         - ALCF Users Slack: support/get-help/alcf-users-slack.md
         - Aurora Office Hours: support/get-help/office-hours.md
         - AskALCF Chatbot: support/get-help/askalcf.md

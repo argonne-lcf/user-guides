@@ -131,4 +131,4 @@ The ALCF Users Slack workspace is a platform intended for current, active ALCF u
 
 ## Getting Assistance
 
-For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support. See our [Support](../support/technical-support.md) page for more information.
+For technical user support issues or questions, please direct all questions, requests, and feedback to ALCF Support. See our [Support](../support/ticket.md) page for more information.
