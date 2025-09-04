@@ -78,7 +78,7 @@ pip install -e .
 
 This model is also avaiable in `/software/models/Llama-2-7b-hf/`
 First, create a Hugging Face account at https://huggingface.co/join if you do not already have one.  
-Go to [meta-llama/Llama-2-7b-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf[meta-llama/Llama-2-7b-hf) and accept the terms of use for Llama2 7B.  
+Go to [meta-llama/Llama-2-7b-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf) and accept the terms of use for Llama2 7B.  
 You will need to wait (minutes at least) until the request is proccessed.  
 In your [Hugging Face account settings](https://huggingface.co/settings/tokens), generate a [user access token](link:https://huggingface.co/docs/hub/en/security-tokens). A read-only token works. Record the token such that it can easily be copy-pasted in the future.
 ```
