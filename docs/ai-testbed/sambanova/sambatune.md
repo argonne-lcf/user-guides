@@ -58,7 +58,7 @@ You should now see the SambaTune UI. <br>
 If the browser does not show a login prompt, or if any previous step complains about a port conflict, try another value for ST_PORT on both the target node and for the ssh tunnel command, e.g. 8577.
 
 See SambaNova's SambaTune documentation for more information about using SambaTune and the SambaTune UI.<br>
-This section is a good starting point: [Workflow overview](https://docs.sambanova.ai/sambatune/latest/workflow.html)
+This section is a good starting point: [Workflow overview](https://docs-legacy.sambanova.ai/sambatune/latest/workflow.html)
 
 When finished:<br>
 - Break the ssh tunnel with ++ctrl+c++ (SIGINT) or equivalent.<br>
