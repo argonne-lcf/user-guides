@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-05-05_
+_Last Updated: 2025-09-05_
 
 ## Early User Notes
 
@@ -15,8 +15,7 @@ Users should expect weekly preventative maintenance (PM) on the system, although
 The current queue policy for Aurora is set up based on experiences to date to help maximize productive use of the machine by projects.
 
 - The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
-- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results. Initially, the `prod` routing queue will only allow 2048 nodes max. 
-- Project teams are required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
+- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results.
 
 ### Storage
 
