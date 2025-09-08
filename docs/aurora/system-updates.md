@@ -1,5 +1,61 @@
 # Aurora System Updates
 
+## 2025-09-08
+We have a **temporary** testing queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **The Aurora UANs do not have this new image**.
+
+The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and OneAPI 2025.2.0.
+
+Details of the full change log are below:
+
+### OS Image - compute_aurora_test_20250905T165210_95b26e6
+ - Intel KMD/UMD 1146.12 / Rolling Release 2523.12
+ - Intel SEPDK KMDs from OneAPI 2025.2.0
+ - Cray PALS 1.8.0 - (Built from source on SLES 15 SP4 against PMIX 4.2.9)
+ - Cray PE 25.03, drop old Cray PE 23.03
+ - Geompm 3.2.0
+ - DAOS Agent 2.6.4 RC1
+ - Lustre cray-2.15.B21
+ - vastnfs 4.0.34 (replaces inbox NFS client so used on OS boot, PE, /soft.)
+ - Pin sssd to CPU cores 0,52,104,156
+ - Set kernel.hung_task_check_interval_secs = 120
+ - Set kernel.softlockup-all-cpu-backtrace = 1
+ - Add HWLOC_COMPONENTS="-levelzero" to palsd systemd unit, disabling the level-zero plugin in hwloc for the palsd process itself, as palsd uses level-zero directly for GPU discovery.
+
+### ECB Firmware
+ - pciesw[0-1] - 4.16.0.0
+ - PVC IFWI - 25WW204PSIFWI_14MHzQuadDAMen_CSC201051902_FSP10000735_HBMIO21c0_HSPHY10462011_OOBMSM23WW26A_PCODE18b_ITDa2p75ITDb1p5_IFRv1332PSCv0811
+ - BMC - bdk-0.0.2916b-71bfb1c-8bfb67d-51d61d7-eng
+
+### PE 25.190.0
+ - OneAPI 2025.2.0
+ - Spack
+   - Spack configurations are now available in /opt/aurora/25.190.0/spack/unified/0.10.0/config
+     - Compatible with Spack v0.23.1
+   - Package additions: subversion, zip, py-parsl, py-mpi4py, py-h5py
+   - ML Components added in Spack
+     - py-torch: 2.7.1.a0, 2.8.0.a0, 2.9.0.dev20250804
+     - py-torchaudio: 2.7.1.a0, 2.8.0.a0, 2.8.0.dev20250807
+     - py-torchvision: 0.22.1a0, 0.23.0a0, 0.24.0.dev20250807
+     - py-triton-xpu: 3.4.x, git.83367a9
+     - py-oneccl-bind-pt: 2.7.0xpu, 2.8.0xpu, master
+     - py-deepspeed: 0.17.4, master
+     - py-ipex: 2.7.10xpu, 2.8.10xpu, xpu-main
+   - GEOPM 3.2.0
+   - reframe: include fast polling variant (reframe-compute; please only use this if running directly from a compute node)
+   - darshan-runtime: 3.4.7, set MPICH profiles. Applications built with darshan-runtime loaded will be built with automatic instrumentation at runtime.
+   - MPICH@aurora
+     - Uses aurora branch of upstream mpich - https://github.com/pmodels/mpich/tree/aurora
+     - Manually set MPIR_CVAR_CH4_OFI_EAGER_THRESHOLD=1000000 so large message above 1MB will use the new auto rndv mode which includes the pipeline algorithm.
+     - Default tuning files
+   - petsc: use 64-bit indices
+   - numpy: build with GCC to workaround compiler segfault
+   - hdf5 +map
+   - apptainer: 1.4.1
+   - kokkos, kokkos-kernels: 4.7.00
+   - hypre@435e042
+   - stat@6c83af9
+   - minor version updates to several other packages
+
 ## 2025-06-13 (Lowering the memory limit on Aurora compute nodes on June 23, 2025)
 
 ALCF is going to reduce user-accessible memory on Aurora compute nodes, by the equivalent of a node's HBM capacity (128GB), on June 23, 2025, to approximately 960GB between DDR5 + HBM, regardless of how applications utilize each memory tier. The 768GB of GPU memory is unaffected and is not being restricted in any way.
