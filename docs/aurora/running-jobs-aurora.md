@@ -7,15 +7,13 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
-| debug         | 1        | 2        | 5 min    | 1 hr     | 32 exclusive nodes with growth up to 64 nodes;  <br/> Max 1 job running/accruing/queued **per-user** |
-| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
-| prod          | 1        | 10624    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
-| prod-large    | 1920     | 10624    | 5 min    | 24 hrs   | Legacy routing queue for large jobs; See table below                                                 |
-| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only***                                                                                |
+| debug         | 1        | 2        | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user** |
+| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**         
+| next-eval     | 1        | 2688     | 5 min    | 24 hrs   | **Temporary queue to test new compute image. See [this page](./system-updates.md/#2025-09-08) for details.** 
+| prod          | 1        | 7300-7500*    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
+| prod-large    | 1920     | 7300-7500*    | 5 min    | 24 hrs   | Legacy routing queue for large jobs; See table below                                                 |
+| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                                                |
 
-!!! note
-
-  	The debug queue has 32 exclusively dedicated nodes. If there are free nodes in production, then debug jobs can take another 32 nodes for a total of 64.
 
 `prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
 
@@ -24,11 +22,11 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 1919     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 1920     | 10624    | 5 min    | 24 hrs   |                                                                                                    |
+| large           | 1920     | 7300-7500*    | 5 min    | 24 hrs   | range for stable max nodecount until new image is deployed across all the nodes                             |
 | backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 1919     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
-| backfill-large  | 1920     | 10624    | 5 min    | 24 hrs   | Low priority, negative project balance                                                           |
+| backfill-large  | 1920     | 7300-7500*   | 5 min    | 24 hrs   | Low priority, negative project balance; range for stable max nodecount until new image is deployed across all the nodes |
 
 !!! warning
 
