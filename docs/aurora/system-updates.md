@@ -1,11 +1,11 @@
 # Aurora System Updates
 
 ## 2025-09-08
-We have a **temporary** testing queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **The Aurora UANs do not have this new image**.
+We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **The Aurora UANs do not have this new image**.
 
 The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and OneAPI 2025.2.0.
 
-Details of the full change log are below:
+Details of the full change log are below (**next-eval test queue only**):
 
 ### OS Image - compute_aurora_test_20250905T165210_95b26e6
  - Intel KMD/UMD 1146.12 / Rolling Release 2523.12
@@ -82,18 +82,19 @@ Details of the full change log are below:
    - Removed `oneccl-bindings-for-pytorch` in favor of the `xccl` backend of the PyTorch-DDP. This is a **breaking change**:
      - PyTorch-DDP must be initialized with **`backend='xccl'`** instead of **`backend='ccl'`**
      - `import oneccl_bindings_for_pytorch` must be removed, otherwise `ModuleNotFoundError`
-   - Introducing **`numpy==2.0.2` **
-	All of the PyTorch eco-system has been compiled with numpy==2.0.2
-	Workloads using numpy==1.x.x should work seamlessly, as compilations with numpy>2.0.0 promises backward compatibility. Please report issues.
-o	Framework-Preview - Known Issues
-	conda list throws a warning about setuptools and freeing file handles.
-	DeepSpeed JIT compilation failure 
-	oneccl collectives requiring explicit synchronization step
-	Workaround: export CCL_OP_SYNC = 1 set in frameworks module
-	oneccl Rabenseifner algorithm for Allreduce failure (potential bug). Recommending direct 
-	vLLM failure to start EngineCore on multiple ranks
-	Workaround unset CCL_PROCESS_LAUNCHER && export CCL_PROCESS_LAUNCHER=None && unset ONEAPI_DEVICE_SELECTOR 
-	Potential issues with mlflow -- a torchtune dependency -- used for tracing and hyper-parameter tracking, very similar to wandb. mlflow will be removed in future updates.
+   - Introducing **`numpy==2.0.2`**
+     - All of the PyTorch eco-system has been compiled with `numpy==2.0.2`
+       - Workloads using `numpy==1.x.x` should work seamlessly, as compilations with numpy>2.0.0 promises backward compatibility. Please report issues to ALCF Support.
+- Framework-Preview - Known Issues
+  - `conda list` throws a warning about `setuptools` and freeing file handles.
+  - `DeepSpeed` `JIT` compilation failure
+  - `oneccl` collectives requiring explicit synchronization step
+    - Workaround: `export CCL_OP_SYNC = 1` set in frameworks module
+  - `oneccl` Rabenseifner algorithm for `Allreduce` failure (potential bug). Recommending `direct`
+  - `vLLM` failure to start EngineCore on multiple ranks
+    - Workaround `unset CCL_PROCESS_LAUNCHER && export CCL_PROCESS_LAUNCHER=None && unset ONEAPI_DEVICE_SELECTOR`
+  - Potential issues with `mlflow` -- a `torchtune` dependency -- used for tracing and hyper-parameter tracking, very similar to `wandb`. `mlflow` will be removed in future updates.
+
 
 
 
