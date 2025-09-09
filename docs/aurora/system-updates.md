@@ -55,6 +55,47 @@ Details of the full change log are below:
    - hypre@435e042
    - stat@6c83af9
    - minor version updates to several other packages
+  
+### Frameworks-Preview
+ - `miniforge` based `conda` environment with source builds of
+   - torch 2.8.0a0+gitba56102
+   - torchao 0.12.0+git442232fbf
+   - torchdata 0.11.0+377e64c
+   - torchtune 0.6.1 -- but the `conda/pip` list version appears as `0.0.0`
+   - torchvision 0.23.0a0+824e8c8
+   - intel-extension-for-pytorch 2.8.10+git09505bb
+   - pytorch-triton-xpu 3.4.0+gitae324eea
+   - deepspeed 0.17.5+047a7599
+   - deepspeed-kernels 0.0.1.dev1698255861
+   - scikit-learn-intelex 20250822.140259
+   - numba_dpex 0.23.0+31.g63ac57378
+   - dpnp 0.18.1
+   - dpctl 0.20.2
+   - vllm 0.10.1rc2.dev189+ge2db1164a.xpu
+   - mpi4py 4.1.0
+   - h5py 3.14.0
+ - Associated 302 dependency packages coming exclusively from `pip`
+ - `torchtitan==0.1.0` dependencies included
+ - Major changes:
+   - Dropped `JAX` for this iteration. Expected to be added back in future updates.
+   - Separated `TensorFlow` and `Horovod` in favor of a separate ecosystem
+   - Removed `oneccl-bindings-for-pytorch` in favor of the `xccl` backend of the PyTorch-DDP. This is a **breaking change**:
+     - PyTorch-DDP must be initialized with **`backend='xccl'`** instead of **`backend='ccl'`**
+     - `import oneccl_bindings_for_pytorch` must be removed, otherwise `ModuleNotFoundError`
+   - Introducing **`numpy==2.0.2` **
+	All of the PyTorch eco-system has been compiled with numpy==2.0.2
+	Workloads using numpy==1.x.x should work seamlessly, as compilations with numpy>2.0.0 promises backward compatibility. Please report issues.
+o	Framework-Preview - Known Issues
+	conda list throws a warning about setuptools and freeing file handles.
+	DeepSpeed JIT compilation failure 
+	oneccl collectives requiring explicit synchronization step
+	Workaround: export CCL_OP_SYNC = 1 set in frameworks module
+	oneccl Rabenseifner algorithm for Allreduce failure (potential bug). Recommending direct 
+	vLLM failure to start EngineCore on multiple ranks
+	Workaround unset CCL_PROCESS_LAUNCHER && export CCL_PROCESS_LAUNCHER=None && unset ONEAPI_DEVICE_SELECTOR 
+	Potential issues with mlflow -- a torchtune dependency -- used for tracing and hyper-parameter tracking, very similar to wandb. mlflow will be removed in future updates.
+
+
 
 ## 2025-06-13 (Lowering the memory limit on Aurora compute nodes on June 23, 2025)
 
