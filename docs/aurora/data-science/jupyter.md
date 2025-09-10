@@ -24,7 +24,8 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
 2. **Create a Virtual Environment**:
    If you already have a Python environment, you can skip this step.
    ```bash
-   python3 -m venv myenv
+   module load frameworks
+   python3 -m venv myenv --system-site-packages
    ```
    Note that this command will create a directory called `myenv` in the current working directory, and `myenv` will also be the name of the virtual environment. You can change the name as you see fit.
    You can find more information about creating a virtual environment on Aurora [here](./python.md).
@@ -137,6 +138,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
    ```
    Please note that the `-J` option is used to specify the jump host, which is the Aurora login node.
    Replace `9999` with another port if it is unavailable.
+   Additionally, make sure to follow the [recommended steps](https://docs.alcf.anl.gov/polaris/known-issues/#sshing-between-polaris-compute-nodes) to enable ssh'ing from the login to the compute nodes and ensure that the public key from your local machine is added to `~/.ssh/authorized_keys` on Aurora.
 
 2. **Access JupyterLab**:
    Open your browser and navigate to:
