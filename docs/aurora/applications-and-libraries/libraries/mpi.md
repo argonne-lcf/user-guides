@@ -4,7 +4,7 @@
 
 When running into an unexpected MPI_Abort() it may be useful to produce a core file to debug futher. Setting the environment variable `MPIR_CVAR_COREDUMP_ON_ABORT=1` causes mpich to call abort(): https://github.com/pmodels/mpich/blob/aurora/src/mpid/ch3/src/mpid_abort.c#L63C9-L63C36.
 
-Thus to produce a core file, set the soft core ulimit to unlimited (defaults to 0 or disabled), set the environment variable `MPIR_CVAR_COREDUMP_ON_ABORT=1`, and share the environment variables (`--genvall` or simlar `--genv` arguments) and ulimit (`--rlimit`) to the MPI ranks like so:
+Thus to produce a core file, set the soft core ulimit to unlimited (defaults to 0 or disabled), set the environment variable `MPIR_CVAR_COREDUMP_ON_ABORT=1`, and share the environment variables (`--genvall` or similar `--genv` arguments) and ulimit (`--rlimit`) to the MPI ranks like so:
 
 ```
 jdoe@x4117c3s3b0n0:~> ulimit -S -c unlimited
