@@ -42,10 +42,11 @@ qsub: waiting for job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 qsub: job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
 
 Currently Loaded Modules:
-  1) craype-x86-rome          4) perftools-base/22.05.0   7) cray-dsmml/0.2.2   10) cray-pmi-lib/6.0.17  13) PrgEnv-nvhpc/8.3.3
-  2) libfabric/1.11.0.4.125   5) nvhpc/21.9               8) cray-mpich/8.1.16  11) cray-pals/1.1.7      14) craype-accel-nvidia80
-  3) craype-network-ofi       6) craype/2.7.15            9) cray-pmi/6.1.2     12) cray-libpals/1.1.7
-
+  1) nvidia/24.11        5) cray-pmi/6.1.15      9) darshan/3.4.4            13) craype-network-ofi
+  2) craype/2.7.34       6) cray-pals/1.6.1     10) xalt/3.1.4-202508192222  14) perftools-base/25.03.0
+  3) cray-dsmml/0.3.1    7) cray-libpals/1.6.1  11) PrgEnv-nvidia/8.6.0
+  4) cray-mpich/8.1.32   8) craype-x86-milan    12) libfabric/1.22.0
+  
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -g -G -c ../src/cuda/CUDAStream.cu  -I ../src/
 
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -g -G -c ../src/main.cpp -DCUDA -I ../src/cuda/ -I ../src/

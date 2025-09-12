@@ -37,20 +37,18 @@ A summary of available GPU programming models and relevant compiler flags is sho
 
 The table below offers some suggestions for how to get started setting up your environment on Polaris depending on the programming language and model. Note, mixed C/C++ and Fortran applications should choose the programming environment for the Fortran compiler because of `mpi.mod` and similar incompatibilities between Fortran-generated files from different compilers. Several simple examples for testing the software environment on Polaris for different programming models are available in the [ALCF GettingStarted repo](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris).
 
-Note, users are encouraged to use `PrgEnv-nvhpc` instead of `PrgEnv-nvidia` as the latter will soon be deprecated in Cray's PE. They are otherwise identical, pointing to compilers from the same NVIDIA SDK version.
-
 | Programming Language | GPU Programming Model | Likely used Modules/Compilers | Notes |
 | --- | --- | --- | --- |
-| C/C++ | CUDA | PrgEnv-nvhpc, PrgEnv-gnu, llvm | NVIDIA (nvcc, nvc, nvc++) and clang compilers do GPU code generation |
+| C/C++ | CUDA | PrgEnv-nvidia, PrgEnv-gnu, llvm | NVIDIA (nvcc, nvc, nvc++) and clang compilers do GPU code generation |
 | C/C++ | HIP | N/A | need to install with support for A100 |
 | C/C++ | Kokkos | See CUDA | HIP, OpenMP, and SYCL/DPC++ also candidates |
-| C/C++ | OpenACC | PrgEnv-nvhpc |  |
-| C/C++ | OpenCL | PrgEnv-nvhpc, PrgEnv-gnu, llvm | JIT GPU code generation |
-| C/C++ | OpenMP | PrgEnv-nvhpc, llvm |  |
+| C/C++ | OpenACC | PrgEnv-nvidia |  |
+| C/C++ | OpenCL | PrgEnv-nvidia, PrgEnv-gnu, llvm | JIT GPU code generation |
+| C/C++ | OpenMP | PrgEnv-nvidia, llvm |  |
 | C/C++ | RAJA | See CUDA | HIP, OpenMP, and SYCL/DPC++ also candidates |
 | C/C++ | SYCL/DPC++ | llvm-sycl |  |
-| Fortran | CUDA | PrgEnv-nvhpc | NVIDIA compiler (nvfortran) does GPU code generation; `gfortran` can be loaded via `gcc-mixed` |
+| Fortran | CUDA | PrgEnv-nvidia | NVIDIA compiler (nvfortran) does GPU code generation; `gfortran` can be loaded via `gcc-mixed` |
 | Fortran | HIP | N/A | need to install with support for A100 |
-| Fortran | OpenACC | PrgEnv-nvhpc |  |
-| Fortran | OpenCL | PrgEnv-nvhpc, PrgEnv-gnu | JIT GPU code generation |
-| Fortran | OpenMP | PrgEnv-nvhpc |  |
+| Fortran | OpenACC | PrgEnv-nvidia |  |
+| Fortran | OpenCL | PrgEnv-nvidia, PrgEnv-gnu | JIT GPU code generation |
+| Fortran | OpenMP | PrgEnv-nvidia |  |
