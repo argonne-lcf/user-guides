@@ -112,7 +112,7 @@ We recommend using the provided NAMD binaries.
 
 The following instructions are for building the GPU-offload version on top of a Slingshot-11-optimized Charm++ library:
 
-1. `module swap PrgEnv-nvhpc PrgEnv-gnu`
+1. `module swap PrgEnv-nvidia PrgEnv-gnu`
 2. Download NAMD source [code](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD)
 ```bash title="build_namd.sh"
 tar -xzf NAMD_3.0_Source.tar.gz

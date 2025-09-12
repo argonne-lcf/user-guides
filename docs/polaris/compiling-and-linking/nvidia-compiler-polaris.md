@@ -1,6 +1,6 @@
 # NVIDIA Compilers on Polaris
 
-The NVIDIA compilers (`nvc`, `nvc++`, `nvcc`, and `nvfortran`) are available on Polaris via the `PrgEnv-nvhpc` and `nvhpc` modules. There is currently a `PrgEnv-nvidia` module available, but that will soon be deprecated in Cray's PE, thus it is not recommended for use.
+The NVIDIA compilers (`nvc`, `nvc++`, `nvcc`, and `nvfortran`) are available on Polaris via the `PrgEnv-nvidia` module.
 
 The Cray compiler wrappers map to NVIDIA compilers as follows:
 
@@ -28,7 +28,7 @@ While `nvcc` is the traditional CUDA C and CUDA C++ compiler for NVIDIA GPUs, th
 
 ### NVHPC SDK Directory Structure
 
-Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the `hpc-sdk` directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvhpc` module loaded, the `NVIDIA_PATH` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
+Users migrating from CUDA toolkits to the NVHPC SDK may find it beneficial to review the directory structure of the `hpc-sdk` directory to find the location of commonly used libraries (including math libraries for the CPU). With the `PrgEnv-nvidia` module loaded, the `NVIDIA_PATH` environment variable can be used to locate the path to various NVIDIA tools, libraries, and examples.
 
 - `compiler/bin` - cuda-gdb, ncu, nsys, ...
 - `examples` - CUDA-Fortran, OpenMP, ...
@@ -60,7 +60,7 @@ nvcc warning : The -std=c++17 flag is not supported with the configured host com
 polaris-login-01(~)>
 ```
 
-you will need to work around it by loading the latest cudatoolkit module atop PrgEnv-nvhpc:
+you will need to work around it by loading the latest `cudatoolkit` module atop `PrgEnv-nvidia`:
 
 ```
 module load cudatoolkit-standalone/11.6.2

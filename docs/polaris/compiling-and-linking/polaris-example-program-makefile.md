@@ -7,7 +7,7 @@ Several simple examples of building CPU and GPU-enabled codes on Polaris are ava
 One of the first useful tasks with any new machine, scheduler, and job launcher is to ensure one is binding MPI ranks and OpenMP threads to the host CPU as intended. A simple HelloWorld MPI+OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp) to get started with.
 
 The application can be straightforwardly compiled using the Cray compiler wrappers.
-```
+```bash
 CC -fopenmp main.cpp -o hello_affinity
 ```
 
@@ -15,7 +15,7 @@ The executable `hello_affinity` can then be launched in a job script (or directl
 
 [//]: # (ToDo: Add link to running jobs page)
 
-```
+```bash linenums="1"
 #!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
@@ -40,13 +40,13 @@ Several variants of C/C++ and Fortran CUDA examples are available [here](https:/
 
 One can use the Cray compiler wrappers to compile GPU-enabled applications as well. This [example](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/CUDA/vecadd) of simple vector addition uses the NVIDIA compilers.
 
-```
+```bash
 CC -g -O3 -std=c++0x -cuda main.cpp -o vecadd
 ```
 
 The `craype-accel-nvidia80` module in the default environment will add the `-gpu` compiler flag for `nvhpc` compilers along with appropriate include directories and libraries. It is left to the user to provide an additional flag to the `nvhpc` compilers to select the target GPU programming model. In this case, `-cuda` is used to indicate compilation of CUDA code. The application can then be launched within a batch job submission script or as follows on one of the compute nodes.
 
-```
+```console
 $ ./vecadd 
 # of devices= 4
   [0] Platform[ Nvidia ] Type[ GPU ] Device[ NVIDIA A100-SXM4-40GB ]
@@ -72,12 +72,12 @@ Result is CORRECT!! :)
 ## GPU OpenACC
 
 A simple MPI-parallel OpenACC example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenACC/vecadd_mpi). Compilation proceeds similar to the above CUDA example except for the use of the `-acc=gpu` compiler flag to indicate compilation of OpenACC code for GPUs.
-```
+```bash
 CC -g -O3 -std=c++0x -acc=gpu -gpu=cc80,cuda11.0 main.cpp -o vecadd
 ```
 In this example, each MPI rank sees all four GPUs on a Polaris node and GPUs are bound to MPI ranks round-robin within the application.
 
-```
+```console
 $ mpiexec -n 4 ./vecadd
 # of devices= 4
 Using single-precision
@@ -95,13 +95,13 @@ If the application instead relies on the job launcher to bind MPI ranks to avail
 
 ## GPU OpenCL
 
-A simple OpenCL example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenCL/vecadd). The OpenCL headers and library are available in the NVHPC SDK and CUDA toolkits. The environment variable `NVIDIA_PATH` is defined for the `PrgEnv-nvhpc` programming environment. 
-```
+A simple OpenCL example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenCL/vecadd). The OpenCL headers and library are available in the NVHPC SDK and CUDA toolkits. The environment variable `NVIDIA_PATH` is defined for the `PrgEnv-nvidia` programming environment. 
+```bash
 CC -o vecadd -g -O3 -std=c++0x  -I${NVIDIA_PATH}/cuda/include main.o -L${NVIDIA_PATH}/cuda/lib64 -lOpenCL
 ```
 
 This simple example can be run on a Polaris compute node as follows.
-```
+```console
 $ ./vecadd
 Running on GPU!
 Using single-precision
@@ -120,7 +120,7 @@ Result is CORRECT!! :)
 
 A simple MPI-parallel OpenMP example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/ProgrammingModels/Polaris/OpenMP/vecadd_mpi). Compilation proceeds similar to the above examples except for the use of the `-mp=gpu` compiler flag to indicate compilation of OpenMP code for GPUs.
 
-```
+```bash
 CC -g -O3 -std=c++0x -mp=gpu -gpu=cc80,cuda11.0 -c main.cpp -o vecadd
 ```
 

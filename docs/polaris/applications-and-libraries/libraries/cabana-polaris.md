@@ -18,7 +18,7 @@ Built against the [prebuilt Kokkos on Polaris](../../programming-models/kokkos-p
 ```
 module load craype-x86-milan
 module load craype-accel-nvidia80
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap PrgEnv-nvidia PrgEnv-gnu
 module use /soft/modulefiles
 module load cuda-PrgEnv-nvidia/12.2.91
 module load kokkos cabana
