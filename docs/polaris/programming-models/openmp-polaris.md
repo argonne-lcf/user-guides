@@ -10,18 +10,18 @@ Many of the programming environments available on Polaris have OpenMP support.
 
 | Module | OpenMP CPU Support? | OpenMP GPU Support? |
 | --- | --- | --- |
-| PrgEnv-nvhpc | Yes | Yes | 
+| PrgEnv-nvidia | Yes | Yes | 
 | llvm | Yes | Yes |
 | PrgEnv-gnu | Yes | No |
 | PrgEnv-cray | Yes | Yes* |
 
-*Currently, PrgEnv-cray is not recommended for OpenMP offload.
+*Currently, `PrgEnv-cray` is not recommended for OpenMP offload.
 
-By default, the PrgEnv-nvhpc module is loaded. To switch to other modules, you can use `module switch`.
+By default, the `PrgEnv-nvidia` module is loaded. To switch to other modules, you can use `module switch`.
 
-### Using PrgEnv-nvhpc
+### Using `PrgEnv-nvidia`
 
-This is loaded by default, so there's no need to load additional modules. You can confirm that it is loaded by running `module list` to check that PrgEnv-nvhpc is in the list.
+This is loaded by default, so there's no need to load additional modules. You can confirm that it is loaded by running `module list` to check that `PrgEnv-nvidia` is in the list.
 
 ### Using LLVM
 
@@ -37,20 +37,20 @@ See the LLVM compiling page [here](../compiling-and-linking/llvm-compilers-polar
 
 ### Using PrgEnv-gnu
 
-To switch from PrgEnv-nvhpc to PrgEnv-gnu, you can run:
+To switch from `PrgEnv-nvidia` to `PrgEnv-gnu`, you can run:
 
 ```
-module switch PrgEnv-nvhpc PrgEnv-gnu
+module switch PrgEnv-nvidia PrgEnv-gnu
 ```
 
 The gcc/gfortran on Polaris was not built with GPU support.
 
-### Using PrgEnv-cray
+### Using `PrgEnv-cray`
 
-To switch from PrgEnv-nvhpc to PrgEnv-cray, you can run:
+To switch from `PrgEnv-nvidia` to `PrgEnv-cray`, you can run:
 
 ```
-module switch PrgEnv-nvhpc PrgEnv-cray
+module switch PrgEnv-nvidia PrgEnv-cray
 ```
 
 To use OpenMP on the GPU, load `cudatoolkit-standalone`, although this is not recommended at the moment.
@@ -65,14 +65,14 @@ The following table shows what compiler and flags to use with which PrgEnv:
 
 | Module | Compiler | Flags |
 | --- | --- | --- |
-| PrgEnv-nvhpc | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
+| PrgEnv-nvidia | cc/CC/ftn (nvc/nvc++/nvfortran) | -mp=gpu -gpu=cc80 | 
 | llvm | mpicc/mpicxx (clang/clang++) | -fopenmp --offload-arch=sm_80 | 
 | PrgEnv-gnu | cc/CC/ftn (gcc/g++/gfortran) | -fopenmp |
 | PrgEnv-cray | cc/CC/ftn | -fopenmp |
 
 For example, to compile a simple code hello.cpp:
 
-### For PrgEnv-nvhpc, after loading the modules as discussed above, we would use:
+### For `PrgEnv-nvidia`, after loading the modules as discussed above, we would use:
 
 ```
 CC -mp=gpu -gpu=cc80 hello.cpp

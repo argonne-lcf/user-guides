@@ -10,7 +10,7 @@ ALCF offers assistance with building binaries and compiling instructions for GRO
 
 1. Download the latest source code: [GROMACS Download](http://manual.gromacs.org/documentation/2022.1/download.html)
 2. Extract the tarball: `tar -xzf gromacs-2022.1.tar.gz`
-3. Swap programming environments: `module swap PrgEnv-nvhpc PrgEnv-gnu`
+3. Swap programming environments: `module swap PrgEnv-nvidia PrgEnv-gnu`
 4. Load the CUDA toolkit: `module load cudatoolkit-standalone/11.2.2`
 5. Load GCC: `module load gcc/10.3.0`
 6. Load CMake: `module load cmake`
@@ -44,7 +44,7 @@ A sample PBS script follows that will run GROMACS on two nodes, using 4 MPI rank
 
 cd ${PBS_O_WORKDIR}
 
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap PrgEnv-nvidia PrgEnv-gnu
 module load cudatoolkit-standalone/11.2.2
 
 export OMP_NUM_THREADS=4

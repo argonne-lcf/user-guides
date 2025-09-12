@@ -10,6 +10,14 @@ It is helpful to realize that there is a single `HOME` filesystem for users that
 
 ## Cray Programming Environment
 
+!!! info
+
+    Beginning in CPE 24.11, the NVHPC modules (`PrgEnv-nvhpc`, `nvhpc`, `nvhpc-mixed`) are no longer offered. The NVIDIA modules (`PrgEnv-nvidia`, `nvidia`, `nvidia-mixed`) are now the sole option for modules regarding the NVIDIA programing environment. The move to the NVIDIA modules is to complete the alignment of CPE module flows. The module flow for all environments is as follows:
+    - Load an environment meta module (e.g. `PrgEnv-nvidia`)
+    - Environment meta module loads a compiler (e.g. `nvidia`)
+    - User can choose to load a toolkit (`cuda`, `cudatoolkit`)
+
+
 The Cray Programming Environment (PE) uses three compiler wrappers for building software. These compiler wrappers should be used when building MPI-enabled applications.
 
 - `cc` - C compiler
@@ -33,11 +41,11 @@ Further documentation and options are available via `man cc` and similar.
 
 ## Compilers Provided by Cray Programming Environments
 
-The default programming environment on Polaris is currently `NVHPC`. The `GNU` compilers are available via another programming environment. The following sequence of `module` commands can be used to switch to the `GNU` programming environment (gcc, g++, gfortran) and also have `NVIDIA` compilers available in your path.
+The default programming environment on Polaris is currently `NVIDIA`. The `GNU` compilers are available via another programming environment. The following sequence of `module` commands can be used to switch to the `GNU` programming environment (`gcc`, `g++`, `gfortran`) and also have `NVIDIA` compilers available in your path.
 
 ```bash linenums="1"
-module swap PrgEnv-nvhpc PrgEnv-gnu
-module load nvhpc-mixed
+module swap PrgEnv-nvidia PrgEnv-gnu
+module load nvidia-mixed
 ```
 
 The compilers invoked by the Cray MPI wrappers are listed for each programming environment in the following table.
@@ -45,7 +53,7 @@ The compilers invoked by the Cray MPI wrappers are listed for each programming e
 | Module | C   | C++   | Fortran   |
 |--------|-----|-------|-----------|
 | MPI Compiler Wrapper | cc  | CC    | ftn       |
-| PrgEnv-nvhpc         | nvc | nvc++ | nvfortran |
+| PrgEnv-nvidia         | nvc | nvc++ | nvfortran |
 | PrgEnv-gnu           | gcc | g++   | gfortran  |
 
 Note, while gcc and g++ may be available in the default environment, the `PrgEnv-gnu` module is needed to provide gfortran.
@@ -62,7 +70,7 @@ Dynamic linking of libraries is currently the default on Polaris. The Cray MPI w
 
 ## Notes on Default Modules
 
-* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVHPC` compilers along with GPU-aware MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
+* `craype-accel-nvidia80`: This module adds compiler flags to enable GPU acceleration for `NVIDIA` compilers along with GPU-aware MPI libraries, as it is assumed that the majority of applications to be compiled on Polaris will target the GPUs for acceleration. Users building CPU-only applications may find it useful to unload this module to silence "GPU code generation" warnings.
 
 * `xalt`: This module enables library tracking; it helps ALCF identify software important to our users. More information can be found on the [XALT](../applications-and-libraries/libraries/xalt.md) page.
 

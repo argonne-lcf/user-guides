@@ -1,7 +1,7 @@
 # CUDA-GDB
 
-## References  
-[NVIDIA CUDA-GDB Documentation](https://docs.nvidia.com/cuda/cuda-gdb/index.html)  
+## References
+[NVIDIA CUDA-GDB Documentation](https://docs.nvidia.com/cuda/cuda-gdb/index.html)
 
 ## Introduction
 CUDA-GDB is the NVIDIA tool for debugging CUDA applications running on Polaris. CUDA-GDB is an extension to GDB, the GNU Project debugger. The tool provides developers with a mechanism for debugging CUDA applications running on actual hardware. This enables developers to debug applications without the potential variations introduced by simulation and emulation environments.
@@ -17,8 +17,8 @@ Using this line to compile the CUDA application `foo.cu`:
 * Makes the compiler include debug information in the executable.
 
 ### Running CUDA-GDB on Polaris compute nodes
-Start an interactive job mode on Polaris as follows:  
-```
+Start an interactive job mode on Polaris as follows:
+```console
 $ qsub -I -l select=1 -l walltime=1:00:00
 
 $ cuda-gdb --version
@@ -42,17 +42,18 @@ qsub: waiting for job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 qsub: job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
 
 Currently Loaded Modules:
-  1) craype-x86-rome          4) perftools-base/22.05.0   7) cray-dsmml/0.2.2   10) cray-pmi-lib/6.0.17  13) PrgEnv-nvhpc/8.3.3
-  2) libfabric/1.11.0.4.125   5) nvhpc/21.9               8) cray-mpich/8.1.16  11) cray-pals/1.1.7      14) craype-accel-nvidia80
-  3) craype-network-ofi       6) craype/2.7.15            9) cray-pmi/6.1.2     12) cray-libpals/1.1.7
-
+  1) nvidia/24.11        5) cray-pmi/6.1.15      9) darshan/3.4.4            13) craype-network-ofi
+  2) craype/2.7.34       6) cray-pals/1.6.1     10) xalt/3.1.4-202508192222  14) perftools-base/25.03.0
+  3) cray-dsmml/0.3.1    7) cray-libpals/1.6.1  11) PrgEnv-nvidia/8.6.0
+  4) cray-mpich/8.1.32   8) craype-x86-milan    12) libfabric/1.22.0
+  
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -g -G -c ../src/cuda/CUDAStream.cu  -I ../src/
 
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -g -G -c ../src/main.cpp -DCUDA -I ../src/cuda/ -I ../src/
 
 jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -g -G main.o CUDAStream.o -o cuda-stream-debug
 
-jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> ./cuda-stream-debug 
+jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> ./cuda-stream-debug
 BabelStream
 Version: 4.0
 Implementation: CUDA
@@ -62,14 +63,14 @@ Array size: 268.4 MB (=0.3 GB)
 Total size: 805.3 MB (=0.8 GB)
 Using CUDA device NVIDIA A100-SXM4-40GB
 Driver: 11040
-Function    MBytes/sec  Min (sec)   Max         Average     
-Copy        1313940.694 0.00041     0.00047     0.00047     
-Mul         1302000.791 0.00041     0.00048     0.00047     
-Add         1296217.720 0.00062     0.00070     0.00069     
-Triad       1296027.887 0.00062     0.00070     0.00069     
-Dot         823405.227  0.00065     0.00076     0.00075     
+Function    MBytes/sec  Min (sec)   Max         Average
+Copy        1313940.694 0.00041     0.00047     0.00047
+Mul         1302000.791 0.00041     0.00048     0.00047
+Add         1296217.720 0.00062     0.00070     0.00069
+Triad       1296027.887 0.00062     0.00070     0.00069
+Dot         823405.227  0.00065     0.00076     0.00075
 
-jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> cuda-gdb ./cuda-stream-debug 
+jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> cuda-gdb ./cuda-stream-debug
 NVIDIA (R) CUDA Debugger
 11.4 release
 Portions Copyright (C) 2007-2021 NVIDIA Corporation
@@ -91,8 +92,8 @@ Type "apropos word" to search for commands related to "word"...
 Reading symbols from ./cuda-stream-debug...
 (cuda-gdb) b CUDAStream.cu:203
 Breakpoint 1 at 0x412598: CUDAStream.cu:203. (2 locations)
-(cuda-gdb) r      
-Starting program: /home/jkwack/BabelStream/build_polaris_debug/cuda-stream-debug 
+(cuda-gdb) r
+Starting program: /home/jkwack/BabelStream/build_polaris_debug/cuda-stream-debug
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib64/libthread_db.so.1".
 BabelStream
@@ -130,16 +131,16 @@ $3 = 0.14000000000000001
 (cuda-gdb) d 1
 (cuda-gdb) c
 Continuing.
-Function    MBytes/sec  Min (sec)   Max         Average     
-Copy        1314941.553 0.00041     0.00041     0.00041     
-Mul         1301022.680 0.00041     0.00042     0.00041     
-Add         1293858.147 0.00062     0.00063     0.00063     
-Triad       1297681.929 0.00062     0.00063     0.00062     
-Dot         828446.963  0.00065     0.00066     0.00065     
+Function    MBytes/sec  Min (sec)   Max         Average
+Copy        1314941.553 0.00041     0.00041     0.00041
+Mul         1301022.680 0.00041     0.00042     0.00041
+Add         1293858.147 0.00062     0.00063     0.00063
+Triad       1297681.929 0.00062     0.00063     0.00062
+Dot         828446.963  0.00065     0.00066     0.00065
 [Thread 0x15554c4ba000 (LWP 58476) exited]
 [Thread 0x15554c6bb000 (LWP 58475) exited]
 [Inferior 1 (process 58454) exited normally]
 (cuda-gdb) q
 
-jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> 
+jkwack@x3008c0s13b1n0:~/BabelStream/build_polaris_debug>
 ```
