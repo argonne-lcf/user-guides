@@ -1,8 +1,8 @@
 # NVIDIA Nsight tools
 
 ## References
-[NVIDIA Nsight Systems Documentation](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
-[NVIDIA Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html)
+- [NVIDIA Nsight Systems Documentation](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)
+- [NVIDIA Nsight Compute Documentation](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html)
 
 ## Introduction
 NVIDIA® Nsight™ Systems provides developers a system-wide visualization of an applications performance. Developers can optimize bottlenecks to scale efficiently across any number or size of CPUs and GPUs on Polaris. For further optimizations to compute kernels developers should use Nsight Compute.
@@ -20,21 +20,19 @@ $ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:eagle -q debug -A 
 $ module li
 
 Currently Loaded Modules:
-  1) nvhpc/23.9          5) cray-pmi/6.1.13      9) PrgEnv-nvhpc/8.5.0      13) darshan/3.4.4
-  2) craype/2.7.30       6) cray-pals/1.3.4     10) libfabric/1.15.2.0
-  3) cray-dsmml/0.2.2    7) cray-libpals/1.3.4  11) craype-network-ofi
-  4) cray-mpich/8.1.28   8) craype-x86-milan    12) perftools-base/23.12.0
-
+  1) nvidia/24.11        5) cray-pmi/6.1.15      9) darshan/3.4.4            13) craype-network-ofi
+  2) craype/2.7.34       6) cray-pals/1.6.1     10) xalt/3.1.4-202508192222  14) perftools-base/25.03.0
+  3) cray-dsmml/0.3.1    7) cray-libpals/1.6.1  11) PrgEnv-nvidia/8.6.0
+  4) cray-mpich/8.1.32   8) craype-x86-milan    12) libfabric/1.22.0
+  
 $ nsys --version
-NVIDIA Nsight Systems version 2023.3.1.92-233133147223v0
+NVIDIA Nsight Systems version 2024.6.1.90-246134905481v0
 
 $ ncu --version
 NVIDIA (R) Nsight Compute Command Line Profiler
-Copyright (c) 2018-2023 NVIDIA Corporation
-Version 2023.2.1.0 (build 33050884) (public-release)
-NVIDIA Nsight Systems version 2022.4.2.1-df9881f
+Copyright (c) 2018-2024 NVIDIA Corporation
+Version 2024.3.2.0 (build 34861637) (public-release)
 ```
-
 
 ### Nsight Systems
 Run your application with Nsight Systems as follows:
@@ -46,7 +44,6 @@ Run your application on multiple nodes (e.g., 2 nodes) with Nsight Systems as fo
 ```
 $ mpirun -n 8 --ppn 4 --env TMPDIR=/home/{user ID}/ nsys profile -o {output_filename}_%q{PMI_RANK} --stats=true ./{your_application}
 ```
-
 
 ### Nsight Compute
 Run your application with Nsight Compute.
