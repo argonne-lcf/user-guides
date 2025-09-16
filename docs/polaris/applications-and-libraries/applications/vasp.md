@@ -16,17 +16,17 @@ Information to provide:
 - VASP license purchased from (University of Vienna or MaterialsDesign):
 - Principal investigator who is the POC for the VASP license:
 - VASP license number:
-- Version of VASP requested (VASP 5, VASP 6.4, VASP 6.5):
+- Version of VASP requested (VASP 6.4.x, VASP 6.5.x):
 
 ## VASP support policy
 ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
 
-Once the user licence is validated, they will be added to the UNIX groups: `vasp65`, `vasp6` or `vasp641`, and get access to the subdirectories in `/soft/applications/vasp`.
+Once the user licence is validated, they will be added to the UNIX groups: `vasp65` or `vasp6` , and get access to the subdirectories in `/soft/applications/vasp`.
 
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
-## VASP 6.5.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
+## VASP 6.4.x or 6.5.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).

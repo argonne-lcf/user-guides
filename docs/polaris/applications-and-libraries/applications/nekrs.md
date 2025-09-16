@@ -31,7 +31,7 @@ The following modules are to be loaded for this particular build.
 ```bash linenums="1"
 module restore
 module load craype-accel-nvidia80
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap PrgEnv-nvidia PrgEnv-gnu
 
 module use /soft/modulefiles
 module load cudatoolkit-standalone/12.4.0
@@ -53,7 +53,7 @@ export PATH=$NEKRS_HOME/bin:$PATH
 
 Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `source $HOME/.bashrc` in the current terminal window.
 
-### Building using NVHPC compilers
+### Building using NVIDIA compilers
 
 The following modules are to be loaded for this particular build. The initial `module restore` is just setting the default environment as the starting point.
 ```bash linenums="1"
@@ -161,7 +161,7 @@ echo "module use /opt/cray/pe/lmod/modulefiles/mix_compilers" >> $SFILE
 echo "module load libfabric" >> $SFILE
 echo "module load cpe-cuda" >> $SFILE
 echo "module load PrgEnv-gnu" >> $SFILE
-echo "module load nvhpc-mixed" >> $SFILE
+echo "module load nvidia-mixed" >> $SFILE
 echo "module load cmake" >> $SFILE
 echo "module list" >> $SFILE
 

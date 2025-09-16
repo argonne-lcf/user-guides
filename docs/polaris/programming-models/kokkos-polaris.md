@@ -18,7 +18,7 @@ The prebuilt Kokkos on Polaris includes three backends: Serial and OpenMP for CP
 ```
 module load craype-x86-milan
 module load craype-accel-nvidia80
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap PrgEnv-nvidia PrgEnv-gnu
 module use /soft/modulefiles
 module load cuda-PrgEnv-nvidia/12.2.91
 module load kokkos
@@ -78,7 +78,7 @@ Here's an example `Makefile`:
 
 # You can look at the first lines of $KOKKOS_HOME/KokkosConfigCommon.cmake to
 # see the flags used in cmake configuration of the kokkos library build. The
-# default Kokkos module on Polaris was built with PrgEnv-nvhpc and includes
+# default Kokkos module on Polaris was built with PrgEnv-nvidia and includes
 # Serial, OpenMP (threads), and CUDA backends. So you should have that
 # environment module loaded and include compiler flags for CUDA and OpenMP:
 
@@ -121,7 +121,7 @@ To match what was done in the centrally-built Kokkos associated with the modules
 module restore
 module load craype-x86-milan
 module load craype-accel-nvidia80
-module swap PrgEnv-nvhpc PrgEnv-gnu
+module swap PrgEnv-nvidia PrgEnv-gnu
 module use /soft/modulefiles
 module load cuda-PrgEnv-nvidia/12.2.91
 module load spack-pe-base cmake
