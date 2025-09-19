@@ -57,7 +57,11 @@ wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/head
 python inference_auth_token.py authenticate
 ```
 
-This will generate and store access and refresh tokens in your home directory.
+This will generate and store access and refresh tokens in your home directory. To see how much time you have left before your access token expires, type the following command (`units` can be seconds, minutes, or hours):
+
+```bash
+python inference_auth_token.py get_time_until_token_expiration --units seconds
+```
 
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
