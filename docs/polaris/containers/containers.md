@@ -14,10 +14,8 @@ After connecting to the compute node, load Apptainer and necessary modules:
 
 ```bash
 ml use /soft/modulefiles
-ml spack-pe-base/0.8.1
-ml use /soft/spack/testing/0.8.1/modulefiles
-ml apptainer/main
-ml load e2fsprogs
+ml spack-pe-base
+ml apptainer
 
 export BASE_SCRATCH_DIR=/local/scratch/ # For Polaris
 export APPTAINER_TMPDIR=$BASE_SCRATCH_DIR/apptainer-tmpdir
@@ -32,7 +30,7 @@ export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128
 export https_proxy=http://proxy.alcf.anl.gov:3128
 
-apptainer version # should return 1.4.0-rc.1+24-g6ae1a25f2
+apptainer version # should return 1.4.1
 ```
 
 Detailed Apptainer documentation is available [here](https://apptainer.org/docs/user/latest/).
@@ -68,10 +66,8 @@ Use the submission script detailed [here](https://github.com/argonne-lcf/contain
 cd ${PBS_O_WORKDIR}
 
 ml use /soft/modulefiles
-ml spack-pe-base/0.8.1
-ml use /soft/spack/testing/0.8.1/modulefiles
-ml apptainer/main
-ml load e2fsprogs
+ml spack-pe-base
+ml apptainer
 
 export BASE_SCRATCH_DIR=/local/scratch/
 export APPTAINER_TMPDIR=$BASE_SCRATCH_DIR/apptainer-tmpdir
