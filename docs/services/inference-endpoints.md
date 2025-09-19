@@ -57,7 +57,11 @@ wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/head
 python inference_auth_token.py authenticate
 ```
 
-This will generate and store access and refresh tokens in your home directory.
+This will generate and store access and refresh tokens in your home directory. To see how much time you have left before your access token expires, type the following command (`units` can be seconds, minutes, or hours):
+
+```bash
+python inference_auth_token.py get_time_until_token_expiration --units seconds
+```
 
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
@@ -614,6 +618,7 @@ On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to ser
 - **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`.
+- **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`), delete it, and restart the authentication process.
 
 ## Contact Us
 
