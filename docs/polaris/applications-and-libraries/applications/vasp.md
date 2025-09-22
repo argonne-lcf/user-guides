@@ -148,7 +148,7 @@ make -j1
 
 An example of a submission script can be found here `/soft/applications/vasp/script.sh`, which would look something similar to:
 
-```bash
+```bash linenums="1" title="script.sh"
 #!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
