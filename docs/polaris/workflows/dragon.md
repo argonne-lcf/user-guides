@@ -49,6 +49,12 @@ Or when getting an interactive session:
 qsub -V -I -A alcf_training -l select=1 -l walltime=0:30:0 -l filesystems=home:eagle:grand -q alcf_training
 ```
 
+Currently, we also recommend unloading the `xalt` module on Polaris when running Dragon:
+
+```shell
+module unload xalt
+```
+
 ## Policies for Polaris Nodes
 
 The `dragon` object that sets CPU, GPU and node affinities for processes is the Dragon `Policy`.
