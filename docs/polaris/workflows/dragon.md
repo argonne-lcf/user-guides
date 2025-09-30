@@ -2,14 +2,14 @@
 
 [DragonHPC](https://dragonhpc.org/portal/index.html) is a composable distributed runtime for managing processes, memory, and data at scale through high-performance communication.  Dragon is an open source project developed by HPE.
 
-Dragon has a python API and a C API.  The python API is an extension of python's `multiprocessing` API, and therefore DragonHPC can be used to scale python `multiprocessing` code across multi-node jobs.  It can be installed with pip in conda or python virtual environments.
+Dragon has a Python API and a C/c++ API.  The Python API is an extension of Python's `multiprocessing` API, and therefore DragonHPC can be used to scale Python `multiprocessing` code across multi-node jobs.  It can be installed with pip in conda or Python virtual environments.
 
 DragonHPC allows parallel process launching, including PMI enabled processes for MPI
 applications, with fine-grained control of CPU/GPU affinity.  DragonHPC also has a distributed data layer or distributed dictionary that allows for in-memory data sharing between processes on different nodes.
 
 ## Installation
 
-To install in a python virtual environment on Polaris:
+To install in a Python virtual environment on Polaris:
 
 ```shell
 module use /soft/modulefiles
@@ -25,13 +25,13 @@ The last installation step that calls `dragon-config` is necessary to enable `dr
 
 ## Execution of Dragon Driver Scripts
 
-Dragon driver scripts written with the python API should be executed with the `dragon` application:
+Dragon driver scripts written with the Python API should be executed with the `dragon` application:
 
 ```shell
 dragon my_dragon_script.py
 ```
 
-Alternatively, it can be launched with python but the `-m` flag should be set to `dragon`:
+Alternatively, it can be launched with the python binary but the `-m` flag should be set to `dragon`:
 
 ```shell
 python -m dragon my_dragon_script.py
@@ -168,17 +168,18 @@ from dragon.data.ddict import DDict
 
 alloc = System()
 num_nodes = int(alloc.nnodes)
-dict_mem_per_node = 1 #GB
+dict_mem_per_node = 1 * 1024**3 # ask for 1 GB per node, expressed in units of bytes
 # Note that the total_mem is the total memory across all the nodes
-dist_dict = DDict(managers_per_node=1, n_nodes=num_nodes, total_mem=num_nodes*dict_mem_per_node*1024**3)
+dist_dict = DDict(managers_per_node=1, n_nodes=num_nodes, total_mem=num_nodes*dict_mem_per_node)
 ```
 For more details on how to use Dragon Dictionaries, see the DragonHPC [documentation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html#data).
 
 ## Running MPI applications
 
-MPI applications can be run with the Dragon `ProcessGroup`.  To enable message passing between processes in a Dragon ProcessGroup on polais set the `pmi` flag when creating the process group like this:
+MPI applications can be run with the Dragon `ProcessGroup`.  To enable message passing between processes in a Dragon ProcessGroup on Polais set the `pmi` flag when creating the process group like this:
 
 ```python
+from dragon.native.process_group import ProcessGroup
 from dragon.infrastructure.facts import PMIBackend
 
 pg = ProcessGroup(pmi=PMIBackend.CRAY) 
