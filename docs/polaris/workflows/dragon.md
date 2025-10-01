@@ -37,16 +37,10 @@ Alternatively, it can be launched with the python binary but the `-m` flag shoul
 python -m dragon my_dragon_script.py
 ```
 
-When running dragon on Polaris compute nodes, it is currently recommended to include the `-V` option when procuring nodes from PBS.
+Dragon needs access to the PBS `qstat` command in order to run (this is used to determine the nodes have been allocated by PBS as opposed to SLURM or LSF and determines how dragon will discover nodes and launch the runtime).  In some interactive jobs on Polaris, you may need to modify the `PATH` to ensure `qstat` is visible to `dragon`:
 
-For example in your PBS submit script include:
-```bash
-#PBS -V
-```
-
-Or when getting an interactive session:
 ```shell
-qsub -V -I -A alcf_training -l select=1 -l walltime=0:30:0 -l filesystems=home:eagle:grand -q alcf_training
+export PATH=/opt/pbs/bin:$PATH
 ```
 
 Currently, we also recommend unloading the `xalt` module on Polaris when running Dragon:
