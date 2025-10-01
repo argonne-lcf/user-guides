@@ -166,7 +166,7 @@ In the default MPICH module on Aurora, it is possible to get incorrect results i
 #### 7. File too large for Clang to processs
 
 If you see a compile error similar to:
-```
+```console
 error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
 1 error generated.
 ```
