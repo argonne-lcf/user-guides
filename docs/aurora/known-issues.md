@@ -163,6 +163,15 @@ These errors can be safely ignored.
 
 In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
 
+#### 7. File too large for Clang to processs
+
+If you see a compile error similar to:
+```
+error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
+1 error generated.
+```
+when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`.
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
