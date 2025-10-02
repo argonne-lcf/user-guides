@@ -170,7 +170,7 @@ If you see a compile error similar to:
 error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
 1 error generated.
 ```
-when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`.
+when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details.
 
 ### Submitting Jobs
 
