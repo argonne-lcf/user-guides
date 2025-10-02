@@ -148,7 +148,8 @@ make -j1
 
 An example of a submission script can be found here `/soft/applications/vasp/script.sh`, which would look something similar to:
 
-``` example-script.sh#!/bin/sh
+```bash linenums="1" title="script.sh"
+#!/bin/sh
 #PBS -l select=1:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
@@ -195,7 +196,7 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
 
-```
+```bash
 chmod +x script.sh
 qsub script.sh
 ```
