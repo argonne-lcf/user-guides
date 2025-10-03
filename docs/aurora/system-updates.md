@@ -1,7 +1,7 @@
 # Aurora System Updates
 
 ## 2025-09-08
-We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **The Aurora UANs do not have this new image**.
+We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **UAN-0014 has the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
 The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and OneAPI 2025.2.0.
 
