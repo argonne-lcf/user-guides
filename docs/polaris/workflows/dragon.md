@@ -4,8 +4,9 @@
 
 Dragon has a Python API and a C/c++ API.  The Python API is an extension of Python's `multiprocessing` API, and therefore DragonHPC can be used to scale Python `multiprocessing` code across multi-node jobs.  It can be installed with pip in conda or Python virtual environments.
 
-DragonHPC allows parallel process launching, including PMI enabled processes for MPI
-applications, with fine-grained control of CPU/GPU affinity.  DragonHPC also has a distributed data layer or distributed dictionary that allows for in-memory data sharing between processes on different nodes.
+DragonHPC allows parallel process launching, including PMI enabled processes for MPI applications, with fine-grained control of CPU/GPU affinity.  DragonHPC also has a distributed data layer or distributed dictionary that allows for in-memory data sharing between processes on different nodes.
+
+Please see DragonHPC's [Introduction in their documenation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html) for examples of how to use `dragon`.
 
 ## Installation
 
@@ -55,7 +56,7 @@ The `dragon` object that sets CPU, GPU and node affinities for processes is the 
 
 A common `Policy` setting on Polaris is to run one process per GPU (four per node).  
 
-The `multiprocessing` Pool with `dragon` selected as the start method cannot set GPU and CPU affinities, however, the Native Dragon Pool can.  Here is an example of how to run a pool across nodes biding 1 pool process to a GPU with the Native Dragon Pool:
+Dragon's Native Pool can use policies to run a pool of processes that bind each process to specific GPUs and CPUs on specific nodes. (Note that the `multiprocessing` Pool with `dragon` selected as the start method can only distribute processes across multiple nodes; it cannot set explicit GPU and CPU binding affinities).  Here is an example of how to run a pool across nodes on Polaris binding 1 pool process per GPU with the Native Dragon Pool:
 
 ```python
 import dragon
@@ -153,7 +154,7 @@ if __name__ == '__main__':
 
 ## Distributed Dictionaries
 
-Dragon offers a distributed data layer called a Dragon Dictionary.  The Dragon Dictionary or `DDict` can span all nodes or a subset of nodes in your runtime and can also use Policies for optimal node placement.
+Dragon offers a distributed data layer called a Dragon Dictionary.  The Dragon Dictionary or `DDict` can span all nodes or a subset of nodes in your runtime and can also use Policies for optimal node placement.  Regardless of whether a `DDict` spans all nodes or a subset, any process in the runtime on any node can access the dictionary.
 
 To create a `DDict` that spans all nodes in the runtime:
 ```python
