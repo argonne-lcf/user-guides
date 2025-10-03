@@ -389,6 +389,7 @@ nav:
         - VNC: polaris/visualization/vnc.md
       - Workflows:
         - Balsam: polaris/workflows/balsam.md
+        - Dragon: polaris/workflows/dragon.md
         - Parsl: polaris/workflows/parsl.md
         - libEnsemble: polaris/workflows/libensemble.md
         - SmartSim: polaris/workflows/smartsim.md
