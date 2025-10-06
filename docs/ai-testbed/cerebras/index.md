@@ -2,14 +2,14 @@
 
 The Cerebras CS-3 is a wafer-scale deep learning accelerator comprising 850,000 processing cores, each providing 48KB of dedicated SRAM memory for an on-chip total of 40GB and interconnected to optimize bandwidth and latency. Its software platform integrates the popular machine learning framework PyTorch.
 
-The ALCF CS-3 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to and well beyond 1 billion parameters) and large-scale inputs. The cluster contains four CS-3 systems.
+The ALCF CS-3 systems are configured as a Cerebras Wafer-Scale Cluster, designed to support large-scale models (up to approximatly 200 billion parameters) and large-scale inputs. The cluster contains four CS-3 systems.
 
-The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch. This installation supports both Pipelined execution for models up to 1 billion parameters and Weight Streaming execution for models up to and above 1 billion parameters.
+The supporting CPU cluster consists of MemoryX, SwarmX, management, and input worker nodes. The Cerebras Wafer-Scale cluster is run as an appliance: a user submits a job to the appliance, and the appliance manages preprocessing and streaming of the data, IO, and device orchestration within the appliance. It provides programming via PyTorch. This installation supports Weight Streaming execution for models being pre-trained or fine-tuned.
 
 The public Cerebras documentation is available [here](https://training-docs.cerebras.ai/getting-started/overview).
 
-A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users connect via SSH to one of the three login nodes. Either ssh to `cerebras.ai.alcf.anl.gov`, which randomly resolves to one of cer-login-0[4-5].ai.alcf.anl.gov, or ssh to a specific node, `cer-login-04.ai.alcf.anl.gov` or `cer-login-05.ai.alcf.anl.gov`.
-Then ssh to a user node, one of `cer-anl-net001-us-sr01` or `cer-anl-net001-us-sr01`. 
+A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users connect via SSH to one of the two login nodes, `cer-login-04.ai.alcf.anl.gov` or `cer-login-05.ai.alcf.anl.gov`.
+Then they ssh to a user node, one of `cer-anl-net001-us-sr01` or `cer-anl-net001-us-sr02`. 
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
 The trees `/home`, `/projects`, and `/software` are shared across all three login nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 
