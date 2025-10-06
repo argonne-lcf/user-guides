@@ -26,5 +26,5 @@ ssh cer-anl-net001-us-sr01
 ```
 or
 ```bash
-ssh cer-anl-net001-us-sr01
+ssh cer-anl-net001-us-sr02
 ```
