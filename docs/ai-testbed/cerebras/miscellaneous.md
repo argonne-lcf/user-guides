@@ -1,13 +1,13 @@
 # Miscellaneous
 
-## Porting applications to the CS-2
+## Porting applications to the CS-3
 
-Cerebras documentation for porting code to run on a Cerebras CS-2 system:<br>
+Cerebras documentation for porting code to run on a Cerebras CS-3 system:<br>
 [Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
 
 <!--- Disabled for now
 ## Grafana WsJob Dashboard for Cerebras jobs
-A Grafana dashboard provides support for visualizing, querying, and exploring the CS2 system’s metrics and enables to access system logs and traces.
+A Grafana dashboard provides support for visualizing, querying, and exploring the CS3 system’s metrics and enables to access system logs and traces.
 See the Cerebras documentation for the [ML User Dashboard](https://training-docs.cerebras.ai/cluster-monitoring/cerebras-job-scheduling-and-monitoring/cluster-monitoring-with-grafana#ml-user-dashboard)
 
 Here is a summary (tested to work on Ubuntu and MacOS)<br>
@@ -36,7 +36,7 @@ Download the Grafana certificate present on the Cerebras node at /opt/cerebras/c
 On your work machine with a web browser, e.g. your laptop,<br>
 tunnel the grafana https port on the cerebras grafana host through to localhost
 ```
-ssh -L 8443:grafana.cerebras1.lab.alcf.anl.gov:443 arnoldw@cer-login-03.ai.alcf.anl.gov
+ssh -L 8443:grafana.cerebras1.lab.alcf.anl.gov:443 arnoldw@cer-login-04.ai.alcf.anl.gov
 ```
 
 Point a browser at grafana. (Tested with Firefox and Chrome/Brave)<br>
@@ -48,7 +48,7 @@ https://grafana.cerebras1.lab.alcf.anl.gov:8443/d/WebHNShVz/wsjob-dashboard?orgI
 <!---
 NO LONGER NEEDED - python environments are available, and singularity not available
 
-## Downloading a Kaggle competition dataset to a CS-2 node using the command line
+## Downloading a Kaggle competition dataset to a CS-3 node using the command line
 
 These notes may be helpful for downloading some Kaggle datasets
 
@@ -81,7 +81,7 @@ kaggle datasets download -d mhskjelvareid/dagm-2007-competition-dataset-optical-
 It will download as a zip file.
 
 Exit the singularity container (with `exit`), then unzip the dataset zip file.<br>
-`unzip` is available on the CS-2 worker nodes.
+`unzip` is available on the CS-3 worker nodes.
 
 Note: the kaggle download shown above included two identical copies of the dataset; one copy was in a subdirectory.
 --->

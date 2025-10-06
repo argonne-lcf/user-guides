@@ -1,6 +1,6 @@
 # Job Queuing and Submission
 
-The CS-2 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
+The CS-3 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
 
 Jobs are started automatically through the **Python** framework in modelzoo.common.pytorch.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.

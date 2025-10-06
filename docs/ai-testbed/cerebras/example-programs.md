@@ -106,7 +106,7 @@ The last parts of the output should resemble the following, with messages about 
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
-This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS2.
+This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS3.
 
 First, source a Cerebras PyTorch virtual environment.
 
