@@ -33,11 +33,17 @@ To verify that the SDK is installed correctly, execute the command: `cslc --help
 We will use examples from the `csl-examples` repository provided by Cerebras. To get these examples, clone the repository into your desired directory:
 
 ```bash linenums="1"
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
 git checkout rel-sdk-1.2.0
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
 bash commands.sh
+```
+
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+```bash
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 ```
 
 ??? note "Sample Output"
@@ -109,6 +115,7 @@ pip install cerebras_sdk==2.5.0
 We will use examples from the `csl-examples` repository provided by Cerebras. To access these examples, clone the repository into your desired directory:
 
 ```bash linenums="1"
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
 git checkout rel-sdk-1.3.0

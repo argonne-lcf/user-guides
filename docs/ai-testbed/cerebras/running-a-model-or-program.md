@@ -31,6 +31,11 @@ If an environment is made in ```~/R_2.5.0/```, it would be activated as follows:
 source ~/R_2.5.0/venv_cerebras_pt/bin/activate
 ```
 
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+```bash
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+```
+
 ### Clone the Cerebras modelzoo
 
 If you have not already cloned the Cerebras modelzoo repo and checked out the Release_2.5.0 tag, do so.
@@ -38,6 +43,7 @@ If you have not already cloned the Cerebras modelzoo repo and checked out the Re
 ```console
 mkdir ~/R_2.5.0
 cd ~/R_2.5.0
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag

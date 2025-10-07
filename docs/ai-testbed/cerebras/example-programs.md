@@ -6,11 +6,18 @@ Make a working directory and a local copy of the Cerebras **modelzoo** and **anl
 ```bash
 mkdir ~/R_2.5.0
 cd ~/R_2.5.0
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
 git checkout Release_2.5.0
 ```
+
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+```bash
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+```
+
 <!---
 cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.5.0/anl_shared
 --->

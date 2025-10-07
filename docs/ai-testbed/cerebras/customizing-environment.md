@@ -9,6 +9,7 @@ Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.5.0 
 ```console
 mkdir ~/R_2.5.0
 cd ~/R_2.5.0
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
@@ -16,6 +17,10 @@ git checkout Release_2.5.0
 ```
 Note: a `git pull` will not update the tags; if `modelzoo/setup.py` does not exist after tag checkout, please re-clone `modelzoo`.
 
+Note: to access any external resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+```bash
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+```
 
 Then build the virtual environment
 
