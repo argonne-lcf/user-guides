@@ -1,5 +1,18 @@
 # Aurora System Updates
 
+## 2025-10-07
+The image in `next-eval` queue, and uan-0014, has been updated to AuroraSDK version 25.190.0 RC4, with the following changes:
+
+#### MPICH
+- Roll back default MPICH to mpich/opt/develop-git.6037a7a (5.0.0.aurora_test.06f012a is still available)
+- use internal yaksa build for versions develop-git.6037a7a and 5.0.0.aurora_test.06f012a
+- use yaksa v0.4 for versions 4.2.3 and 4.3.1
+
+#### oneAPI
+- Fix module environment to match oneAPI install's setvars.sh
+
+See section ["2025-09-08" ](system-updates.md/#2025-09-08) below for the original change log.
+
 ## 2025-09-08
 We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **UAN-0014 has the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
