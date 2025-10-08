@@ -648,13 +648,11 @@
     background-color: var(--neutral_med-light);
   }
 
-  /* .md-typeset code { */
-  /*   background-color: var(--neutral_med-light); */
-  /*   color: var(--neutral_dark); */
-  /* } */
-  & .md-typeset code {
+  .md-typeset code {
       background-color: var(--neutral_med-dark);
+      /* background-color: var(--neutral_med-light); */
       color: var(--neutral_med-light);
+      /* color: var(--neutral_dark); */
   }
 
   .md-typeset a code {
