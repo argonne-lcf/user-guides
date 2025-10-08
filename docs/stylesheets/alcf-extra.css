@@ -453,7 +453,6 @@
   --md-code-hl-keyword-color:     var(--blue_med); 
   --md-code-hl-string-color:      var(--green_med);
 
-
   body {
     color: var(--neutral-med-light);
     transition: color .25s, background-color .25s;
@@ -649,9 +648,13 @@
     background-color: var(--neutral_med-light);
   }
 
-  .md-typeset code {
-    background-color: var(--neutral_med-light);
-    color: var(--neutral_dark);
+  /* .md-typeset code { */
+  /*   background-color: var(--neutral_med-light); */
+  /*   color: var(--neutral_dark); */
+  /* } */
+  & .md-typeset code {
+      background-color: var(--neutral_med-dark);
+      color: var(--neutral_med-light);
   }
 
   .md-typeset a code {
@@ -1193,7 +1196,7 @@
 
 .header--primary .header__nav-secondary li,
 .header--primary .header__nav-primary li {
-  padding-bottom: 9px;
+  padding-bottom: 8px;
   display: inline;
 }
 
