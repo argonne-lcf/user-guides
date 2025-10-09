@@ -64,7 +64,7 @@ Next, copy a sample config file. This is for a small GPT3 model, modified to use
 cp /software/cerebras/dataset/OWT/Pytorch/111m_modified.yaml configs/Cerebras_GPT/111m_modified.yaml
 ```
 
-### Running a sample PyTorch training job
+### Running a sample PyTorch training/validation job
 
 To run the sample:
 
@@ -80,16 +80,21 @@ Previously,
 python run.py CSX --job_labels name=gpt3_111m --params configs/Cerebras_GPT/111m_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.5.0/modelzoo/src --compile_dir $(whoami) --disable_version_check |& tee mytest.log
 --->
 
-A successful GPT3 (111m parameters) PyTorch training run should finish with output resembling the following:
+A successful GPT3 (111m parameters) PyTorch training/validation run should finish with output resembling the following:
 
 ```text
-2023-11-29 18:13:13,048 INFO:   | Train Device=CSX, Step=1950, Loss=2.28834, Rate=397.31 samples/sec, GlobalRate=433.98 samples/sec
-2023-11-29 18:13:13,555 INFO:   | Train Device=CSX, Step=2000, Loss=2.34778, Rate=395.69 samples/sec, GlobalRate=431.83 samples/sec
-2023-11-29 18:13:13,555 INFO:   Saving checkpoint at step 2000
-2023-11-29 18:13:17,242 INFO:   Saved checkpoint model_dir/checkpoint_2000.mdl
-2023-11-29 18:13:55,517 INFO:   Heartbeat thread stopped for wsjob-fpwqt7maq8a5mxvblwwzbu.
-2023-11-29 18:13:55,523 INFO:   Training completed successfully!
-2023-11-29 18:13:55,523 INFO:   Processed 4000 sample(s) in 51.230697212 seconds.
+2025-10-09 18:19:52,310 INFO:   Beginning appliance run
+2025-10-09 18:19:54,361 INFO:   | Eval Device=CSX, GlobalStep=400, Batch=20, Loss=5.94325, Rate=1163.27 samples/sec, GlobalRate=1173.27 samples/sec, LoopTimeRemaining=0:00:08, TimeRemaining=0:00:08
+2025-10-09 18:19:56,408 INFO:   | Eval Device=CSX, GlobalStep=400, Batch=40, Loss=5.92024, Rate=1174.18 samples/sec, GlobalRate=1172.88 samples/sec, LoopTimeRemaining=0:00:06, TimeRemaining=0:00:06
+2025-10-09 18:19:58,463 INFO:   | Eval Device=CSX, GlobalStep=400, Batch=60, Loss=5.89623, Rate=1171.13 samples/sec, GlobalRate=1171.33 samples/sec, LoopTimeRemaining=0:00:04, TimeRemaining=0:00:04
+2025-10-09 18:20:00,514 INFO:   | Eval Device=CSX, GlobalStep=400, Batch=80, Loss=5.92834, Rate=1164.75 samples/sec, GlobalRate=1170.97 samples/sec, LoopTimeRemaining=0:00:02, TimeRemaining=0:00:02
+2025-10-09 18:20:02,564 INFO:   | Eval Device=CSX, GlobalStep=400, Batch=100, Loss=5.92817, Rate=1172.36 samples/sec, GlobalRate=1170.91 samples/sec, LoopTimeRemaining=0:00:00, TimeRemaining=0:00:00
+2025-10-09 18:20:23,263 INFO:   Avg Eval Loss: 5.928174624443054
+2025-10-09 18:20:23,278 INFO:   Evaluation metrics:
+2025-10-09 18:20:23,278 INFO:     - eval/lm_perplexity = 375.4686584472656
+2025-10-09 18:20:23,278 INFO:     - eval/accuracy = 0.16977091133594513
+2025-10-09 18:20:23,279 INFO:   Evaluation completed successfully!
+2025-10-09 18:20:23,281 INFO:   Processed 48000 training sample(s) in 820.575766695 seconds.
 ```
 
 

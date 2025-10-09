@@ -96,22 +96,17 @@ Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/b
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
 ```console
-2023-11-29 20:07:49,284 INFO:   Beginning appliance run
-2023-11-29 20:08:14,365 INFO:   | Train Device=CSX, Step=100, Loss=9.50000, Rate=4088.28 samples/sec, GlobalRate=4088.26 samples/sec
-2023-11-29 20:08:39,820 INFO:   | Train Device=CSX, Step=200, Loss=8.37500, Rate=4048.91 samples/sec, GlobalRate=4055.21 samples/sec
-2023-11-29 20:09:05,356 INFO:   | Train Device=CSX, Step=300, Loss=7.96875, Rate=4025.61 samples/sec, GlobalRate=4040.05 samples/sec
-2023-11-29 20:09:30,626 INFO:   | Train Device=CSX, Step=400, Loss=7.56250, Rate=4041.61 samples/sec, GlobalRate=4043.10 samples/sec
-2023-11-29 20:09:56,022 INFO:   | Train Device=CSX, Step=500, Loss=7.50000, Rate=4035.92 samples/sec, GlobalRate=4040.90 samples/sec
-2023-11-29 20:10:21,410 INFO:   | Train Device=CSX, Step=600, Loss=7.37500, Rate=4034.41 samples/sec, GlobalRate=4039.65 samples/sec
-2023-11-29 20:10:46,690 INFO:   | Train Device=CSX, Step=700, Loss=7.37500, Rate=4044.10 samples/sec, GlobalRate=4041.20 samples/sec
-2023-11-29 20:11:12,004 INFO:   | Train Device=CSX, Step=800, Loss=7.25000, Rate=4044.75 samples/sec, GlobalRate=4041.70 samples/sec
-2023-11-29 20:11:37,196 INFO:   | Train Device=CSX, Step=900, Loss=7.21875, Rate=4056.77 samples/sec, GlobalRate=4044.25 samples/sec
-2023-11-29 20:12:02,285 INFO:   | Train Device=CSX, Step=1000, Loss=7.12500, Rate=4071.60 samples/sec, GlobalRate=4047.95 samples/sec
-2023-11-29 20:12:02,286 INFO:   Saving checkpoint at step 1000
-2023-11-29 20:12:37,079 INFO:   Saved checkpoint model_dir_bert_large_pytorch/checkpoint_1000.mdl
-2023-11-29 20:13:25,683 INFO:   Heartbeat thread stopped for wsjob-gfi2baioyfduozkmgsc6a7.
-2023-11-29 20:13:25,691 INFO:   Training completed successfully!
-2023-11-29 20:13:25,691 INFO:   Processed 1024000 sample(s) in 336.373620536 seconds.
+2025-10-09 18:43:37,688 INFO:   Beginning appliance run
+2025-10-09 18:43:41,110 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=100, Loss=7.08926, Rate=7796.80 samples/sec, GlobalRate=7499.90 samples/sec, LoopTimeRemaining=0:00:04, TimeRemaining=0:00:04
+2025-10-09 18:43:45,277 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=200, Loss=7.13253, Rate=5099.83 samples/sec, GlobalRate=6754.66 samples/sec, LoopTimeRemaining=0:00:01, TimeRemaining=0:00:01
+2025-10-09 18:43:46,146 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=220, Loss=6.98112, Rate=6014.04 samples/sec, GlobalRate=6665.64 samples/sec, LoopTimeRemaining=0:00:00, TimeRemaining=0:00:00
+2025-10-09 18:44:08,969 INFO:   Avg Eval Loss: 6.981118208711798
+2025-10-09 18:44:08,986 INFO:   Evaluation metrics:
+2025-10-09 18:44:08,986 INFO:     - eval/accuracy_cls = 0.7051668763160706
+2025-10-09 18:44:08,986 INFO:     - eval/accuracy_masked_lm = 0.13364547491073608
+2025-10-09 18:44:08,986 INFO:     - eval/mlm_perplexity = 701.6852416992188
+2025-10-09 18:44:08,986 INFO:   Evaluation completed successfully!
+2025-10-09 18:44:08,992 INFO:   Processed 3720000 training sample(s) in 1017.47348681 seconds.
 ```
 
 ## GPT-J PyTorch
@@ -132,8 +127,12 @@ cd ~/R_2.5.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.5.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+cszoo fit configs/params_gptj_6B_sampleds.yaml --job_labels name=gptj --disable_version_check --model_dir $MODEL_DIR |& tee mytest.log
 ```
+<!---
+Previously,
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.5.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+--->
 
 The last parts of the output should resemble the following:
 
