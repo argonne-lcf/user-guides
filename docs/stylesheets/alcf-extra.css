@@ -450,7 +450,7 @@
   --md-code-hl-function-color:    var(--warm_orange);
   --md-code-hl-keyword-color:     var(--blue_med); 
   --md-code-hl-string-color:      var(--green_med);
-  /* --md-code-hl-name-color:        var(_); */
+  /* Placeholder: --md-code-hl-name-color not yet defined */
   /* --md-code-hl-constant-color:    var(--blue_dark);  */
 
   body {
