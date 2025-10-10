@@ -9,7 +9,6 @@
 	We value your input to improve AskALCF. If you encounter incorrect or unclear information, please share your feedback to help us enhance the service.
 
 AskALCF is an intelligent, Retrieval-Augmented Generation (RAG) powered chatbot system designed to enhance user support at the Argonne Leadership Computing Facility (ALCF). It provides fast, accurate, and context-aware responses to user queries by leveraging a curated HPC-specific knowledge base and state-of-the-art language models.
-
 ![Figure 1: Retrieval Augmented Generation pipeline](./figures/rag.png){ width="500 }
 /// caption
 Retrieval Augmented Generation (RAG) pipeline: LLM retrieves relevant external documents before generating an answer, grounding its output in factual, up-to-date information.

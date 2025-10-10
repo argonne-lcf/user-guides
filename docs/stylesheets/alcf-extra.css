@@ -465,7 +465,8 @@
 
   .md-typeset a {
     color: var(--green_pale);
-    text-decoration: underline solid var(--green_med);
+    text-decoration: underline;
+    text-decoration-color: var(--green_med);
   }
 
   .md-typeset a:focus,
