@@ -266,7 +266,7 @@
     .md-nav__title a.md-nav__link:hover,
     .md-nav__title a.md-nav__link.md-nav__link--active,
     .md-nav__title a.md-nav__link.md-nav__link--active:hover {
-      color: var(--green_pale);
+      color: var(--blue_med);
     }
   }
 
@@ -437,21 +437,21 @@
 /* Dark theme color rules */
 [data-md-color-scheme="slate"] {
   /* Using makedoc var names for code coloring */
-  --md-code-hl-operator-color:    rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-punctuation-color: rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-variable-color:    var(--neutral_dark);
-  --md-code-bg-color:             rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
   --md-code-hl-color:             var(--green_pale);
-  --md-code-hl-generic-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-comment-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-name-color:        var(--neutral_dark);
+  --md-code-hl-variable-color:    var(--blue_pale);
+  --md-code-bg-color:             rgba(  7,   7,  18, 0.5);
+  --md-code-hl-operator-color:    rgba(226, 228, 233, 0.5);
+  --md-code-hl-punctuation-color: rgba(226, 228, 233, 0.5);
+  /* --md-code-hl-generic-color:     rgba(226, 228, 233, 0.5);
+  /* --md-code-hl-comment-color:     rgba(226, 228, 233, 0.5);
   --md-code-hl-color--light:      var(--blue_pale);
   --md-code-hl-number-color:      var(--warm_red); 
   --md-code-hl-special-color:     var(--warm_red);
   --md-code-hl-function-color:    var(--warm_orange);
-  --md-code-hl-constant-color:    var(--blue_dark); 
   --md-code-hl-keyword-color:     var(--blue_med); 
   --md-code-hl-string-color:      var(--green_med);
+  /* --md-code-hl-name-color:        var(_); */
+  /* --md-code-hl-constant-color:    var(--blue_dark);  */
 
   body {
     color: var(--neutral-med-light);
@@ -650,10 +650,8 @@
   }
 
   .md-typeset code {
-      background-color: var(--neutral_med-dark);
-      /* background-color: var(--neutral_med-light); */
-      color: var(--neutral_med-light);
-      /* color: var(--neutral_dark); */
+    color: var(--neutral_med-light);
+    background-color: var(--neutral_med-dark);
   }
 
   .md-typeset a code {
