@@ -11,6 +11,15 @@ The image in `next-eval` queue, and uan-0014, has been updated to AuroraSDK vers
 #### oneAPI
 - Fix module environment to match oneAPI install's setvars.sh
 
+#### Notable Fixes
+We had 32 fixes in the new SDK based on the bug reproducer test set. Notable fixes include:
+- SYCL In-order queue fixed (affecting any application using in-order SYCL queues)
+- Bug in SYCL peer_access fixed
+- Runtime error in pytorch with CCL_BCAST fixed
+- Compile fail in Lattice App fixed
+- Fails in fortran if compiled with MKL and -fpe0 fixed
+- Issues with “-fopenmp-target-simd” usage fixed
+
 See section ["2025-09-08" ](system-updates.md/#2025-09-08) below for the original change log.
 
 ## 2025-09-08
