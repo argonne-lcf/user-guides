@@ -9,10 +9,9 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2        | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user** |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**         
-| next-eval     | 1        | 2688     | 5 min    | 24 hrs   | **Temporary queue to test new compute image. See [this page](./system-updates.md/#2025-09-08) for details.** 
-| prod          | 1        | 7300-7500*    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; Nodecount will be updated on 10/13/25 once legacy queue becomes available. <br/> **See table below for min/max limits**|
-| prod-large    | 1920     | 7300-7500*    | 5 min    | 24 hrs   | Legacy routing queue for large jobs; Nodecount will be updated on 10/13/25 once legacy queue becomes available. See table below    
-| legacy        | 1        | 2048-2413     | 5 min    | 24 hrs | **Goes into effect on 10/13/25.** Legacy routing queue with old AuroraSDK. Some projects have higher priority.
+| prod          | 1        | 8211-8576*    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
+| prod-large    | 1920     | 8211-8576*    | 5 min    | 24 hrs   | Routing queue for large jobs; 
+| legacy        | 1        | 2048-2413     | 5 min    | 24 hrs | Legacy routing queue with old (prior to 10/13/25) AuroraSDK. Some projects have higher priority.
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                                                |
 
 
@@ -23,7 +22,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 1919     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 1920     | 7300-7500*    | 5 min    | 24 hrs   | range for stable max nodecount until new image is deployed across all the nodes. Nodecount will be updated on 10/13/25 once legacy queue becomes available.                             |
+| large           | 1920     | 8211-8576*    | 5 min    | 24 hrs   | range for stable max nodecount until new image is deployed across all the nodes
 | backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 1919     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
