@@ -31,7 +31,7 @@ Please load the `daos` module when using DAOS. This should be done on the login 
 
 ```bash linenums="1"
 module use /soft/modulefiles
-module load daos/base
+module load daos
 ```
 
 ## Pool
@@ -136,7 +136,7 @@ module use /soft/modulefiles
 module load daos
 export DAOS_POOL=Your_allocated_pool_name
 export DAOS_CONTAINER=any_label_name
-daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:2,ec_cell_sz:131072,cksum:crc32,srv_cksum:on ${DAOS_POOL} ${DAOS_CONTAINER}
+daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3GX --dir-oclass=RP_4G1  ${DAOS_POOL} ${DAOS_CONTAINER}
 daos pool query ${DAOS_POOL}
 daos cont list ${DAOS_POOL}
 daos container get-prop  $DAOS_POOL  $DAOS_CONTAINER
@@ -324,7 +324,7 @@ DAOS_CONT=thundersvm_exp1
 daos pool query ${DAOS_POOL}                        #optional
 daos cont list ${DAOS_POOL}                         #optional
 daos container destroy   ${DAOS_POOL}  ${DAOS_CONT} #optional
-daos container create --type POSIX ${DAOS_POOL}  ${DAOS_CONT} --properties rd_fac:1
+daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3GX --dir-oclass=RP_4G1 ${DAOS_POOL}  ${DAOS_CONT}
 daos container query     ${DAOS_POOL}  ${DAOS_CONT} #optional
 daos container get-prop  ${DAOS_POOL}  ${DAOS_CONT} #optional
 daos container list      ${DAOS_POOL}               #optional
