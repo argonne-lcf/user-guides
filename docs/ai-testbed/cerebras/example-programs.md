@@ -18,6 +18,20 @@ Note: to access any external web resources from a Cerebras user node, you will n
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 ```
 
+For all of these samples, if you want the training to use more than one CS3, either
+
+* add `--num_csx=2` (or 3 or 4) to the `cszoo fit` command line, or
+* add "trainer.init.backend.cluster_config.num_csx: 2" (or 3 or 4) to the config yaml, e.g.
+```console
+trainer:
+  init:
+    backend:
+      backend_type: CSX
+      cluster_config:
+        num_csx: 2
+```
+Switching to this mode (data parallel) will force a one-time recompile (with compile artifacts cached). 
+
 <!---
 cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.5.0/anl_shared
 --->
@@ -273,9 +287,9 @@ source ~/R_2.5.0/venv_cerebras_pt/bin/activate
 Instructions for training (for 400 steps):
 ```bash
 cd ~/R_2.5.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
-export MODEL_DIR=model_dir_vt
+cp /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
+export MODEL_DIR=model_dir_vit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-cp  /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
 cszoo fit configs/params_vit_base_patch_16_imagenet_1k.yaml --job_labels name=vision_transformer --disable_version_check --model_dir $MODEL_DIR |& tee mytest.log
 ```
 <!--
@@ -338,9 +352,9 @@ source ~/R_2.5.0/venv_cerebras_pt/bin/activate
 Instructions for training (for 400 steps):
 ```bash
 cd ~/R_2.5.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+cp /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
 export MODEL_DIR=model_dir_dit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-cp  /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
 cszoo fit configs/params_dit_2B_patchsize_2x2_modified.yaml --job_labels name=DiT --disable_version_check --model_dir $MODEL_DIR |& tee mytest.log
 ```
 <!---
