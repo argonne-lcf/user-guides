@@ -24,7 +24,7 @@ To use it from a compute node, please load the following modules:
 ```bash
 module load frameworks
 ```
-Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
+Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2025.2.0`  module):
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
