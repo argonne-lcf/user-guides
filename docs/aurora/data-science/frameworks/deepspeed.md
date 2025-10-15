@@ -1,6 +1,6 @@
 # DeepSpeed
 
-The base `frameworks` environment on Aurora does not come with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed, and it needs to be installed by the user. Further instructions for working with the base environment can be found [here](../python.md).
+The base `frameworks` environment on Aurora now come with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed, and can be used by directly importing it. Further instructions for working with the base environment can be found [here](../python.md).
 
 <!---
 !Below copied from Polaris guide but needs changes for Aurora!
@@ -8,7 +8,7 @@ A batch submission script for the following example is available
 [here](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/DeepSpeed).
 -->
 
-We describe below the steps needed to get started with DeepSpeed on Aurora.
+We describe below the steps needed to get started with DeepSpeed on Aurora in case a new version needs to be installed.
 
 We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
 
