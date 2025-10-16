@@ -3,19 +3,23 @@
 TensorFlow is a popular, open-source deep learning framework developed and 
 released by Google. The 
 [TensorFlow home page](https://www.tensorflow.org/) has more information about 
-TensorFlow, which you can refer to. For troubleshooting on Polaris, please 
+TensorFlow, which you can refer to. For troubleshooting on Aurora, please 
 contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+
+## Major Changes:
+`TensorFlow` has a separate module now, as opposed to being part of the 
+`frameworks` module. 
 
 ## Provided Installation
 
-TensorFlow is already preinstalled on Aurora, available in the `frameworks` 
+TensorFlow is already preinstalled on Aurora, available in the `tensorflow` 
 module. To use it from a compute node, load the module:
 ```bash linenums="1"
-module load frameworks
+module load tensorflow
 ```
 
 Then you can `import` TensorFlow as usual, the following is an output from the 
-`frameworks` module:
+`tensorflow/2025.2.0` module:
 
 ```python linenums="1"
 import tensorflow as tf
@@ -134,7 +138,7 @@ This feature is experimental, and actively under development.
 #### `TF32` Math Mode
 
 The Intel Xe Matrix Extensions (Intel XMX) engines in Intel Max 1550 Xe-HPC 
-GPUs natively support `TF32` math mode. Through intel extension for tensorflow
+GPUs, natively support `TF32` math mode. Through intel extension for tensorflow
 you can enable it by setting the following environmental variable:
 
 ```bash
@@ -165,6 +169,7 @@ A simple example on how to use Intel GPU with TensorFlow is the following:
 
 ```python linenums="1" title="intel-xpu-tf-example.py"
 import tensorflow as tf   # TensorFlow registers PluggableDevices here.
+import intel_extension_for_tensorflow as itex # Intel extensions for GPU usage
 tf.config.list_physical_devices()  # XPU device is visible to TensorFlow.
 
 #Section 1 Run implicitly
