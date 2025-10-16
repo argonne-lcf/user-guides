@@ -1,6 +1,20 @@
 # DeepSpeed
 
-The base `frameworks` environment on Aurora does not come with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed, and it needs to be installed by the user. Further instructions for working with the base environment can be found [here](../python.md).
+The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. 
+If an user needs an updated version, it should be installed by the user. 
+Further instructions for working with the base environment can be found [here](../python.md).
+
+```bash
+module load frameworks
+```
+The following output is from the `frameworks/2025.2.0` module
+
+```python
+import deepspeed
+
+deepspeed.__version__
+'0.17.5'
+```
 
 <!---
 !Below copied from Polaris guide but needs changes for Aurora!

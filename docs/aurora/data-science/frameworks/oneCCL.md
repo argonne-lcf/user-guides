@@ -12,14 +12,17 @@ oneCCL can be used through:
 
 ```bash linenums="1"
 hossainm@aurora-uan-0011:~> module load frameworks
-(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> echo $CCL_ROOT
-/opt/aurora/24.347.0/oneapi/ccl/latest
-(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:~> cd /opt/aurora/24.347.0/oneapi/ccl/
-(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl> ls
-2021.14  latest
-(/opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0) hossainm@aurora-uan-0011:/opt/aurora/24.347.0/oneapi/ccl>
+(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:~> echo $CCL_ROOT
+/opt/aurora/25.190.0/oneapi/ccl/latest
+(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:~> cd /opt/aurora/25.190.0/oneapi/ccl/
+(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:/opt/aurora/25.190.0/oneapi/ccl> ls -lah
+total 0
+drwxr-xr-x  3 root root  44 Oct  3 17:35 .
+drwxr-xr-x 30 root root 734 Oct  3 17:39 ..
+drwxr-xr-x  8 root root 117 Oct  3 17:35 2021.16
+lrwxrwxrwx  1 root root   7 Oct  3 17:35 latest -> 2021.16
 ```
-`2021.14` is the current version of oneCCL that is available to users 
+`2021.16` is the current version of oneCCL that is available to users 
 through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
