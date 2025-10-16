@@ -3,7 +3,22 @@
 ## Porting applications to the CS-3
 
 Cerebras documentation for porting code to run on a Cerebras CS-3 system:<br>
-[Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
+[Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/rel-2.5.0/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
+
+## Finetuning a model using CS-3s
+
+The Cerebras tutorial for finetuning a model:<br>
+[Fine-Tune Your First Model](https://training-docs.cerebras.ai/rel-2.5.0/getting-started/fine-tune-your-first-model)
+
+The tutorial covers how to: 
+
+* Setup your environment
+* Pre-process a small dataset (documents and their summaries)
+* Port a trained model from Hugging Face (Llama3-8B)
+* Fine-tune and evaluate a model
+* Test your model on downstream tasks
+* Port your model to Hugging Face format
+
 
 <!--- Disabled for now
 ## Grafana WsJob Dashboard for Cerebras jobs
