@@ -165,6 +165,14 @@ mpiexec -n 12 gpu_tile_compact.sh vtune -collect gpu-hotspots -knob profiling-mo
 
 * `gpu-offload` analysis may hang with some applications. **Workaround**: add `-run-pass-thru=--perf-threads=none` to the VTune command line
 
+* source analysis or memory latency analysis may return `Assertion failed: tool_gtpin_support:126: (buffer) `. If so, try a newer version of VTune with the following module:
+```bash
+module use /soft/preview/components/vtune/2025.6.0.31/modulefiles
+module add vtune/2025.6
+```
+
+
+
 ## References  
 [Intel VTune Profiler User Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide/current/overview.html)
 
