@@ -151,9 +151,17 @@ Two clusters are currently active, with additional systems coming soon:
         # Get your access token
         access_token=$(python inference_auth_token.py get_access_token)
 
+        # Check Sophia cluster status
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/jobs" \
          -H "Authorization: Bearer ${access_token}"
+
+        # Check Metis cluster status (replace 'sophia' with 'metis')
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/jobs" \
+         -H "Authorization: Bearer ${access_token}"
         ```
+
+        !!! tip "Switching Between Clusters"
+            Replace `/sophia/` with `/metis/` in the URL to query the Metis cluster instead.
 
     === "List All Available Endpoints"
         This provides a list of all available endpoints.
@@ -178,11 +186,24 @@ Two clusters are currently active, with additional systems coming soon:
         ```bash
         #!/bin/bash
         access_token=$(python inference_auth_token.py get_access_token)
+        
+        # Sophia cluster example
         curl -X POST "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
                     "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+                    "temperature": 0.2,
+                    "max_tokens": 150,
+                    "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+                 }'
+
+        # Metis cluster example (replace '/sophia/vllm' with '/metis/api')
+        curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
+             -H "Authorization: Bearer ${access_token}" \
+             -H "Content-Type: application/json" \
+             -d '{
+                    "model": "Meta-Llama-3.1-8B-Instruct",
                     "temperature": 0.2,
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -196,6 +217,8 @@ Two clusters are currently active, with additional systems coming soon:
         from inference_auth_token import get_access_token
 
         access_token = get_access_token()
+        
+        # Sophia cluster
         client = OpenAI(
             api_key=access_token,
             base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
@@ -206,7 +229,25 @@ Two clusters are currently active, with additional systems coming soon:
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
+
+        # Metis cluster (replace '/sophia/vllm' with '/metis/api')
+        client_metis = OpenAI(
+            api_key=access_token,
+            base_url="https://inference-api.alcf.anl.gov/resource_server/metis/api/v1"
+        )
+
+        response = client_metis.chat.completions.create(
+            model="Meta-Llama-3.1-8B-Instruct",
+            messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+        )
+        print(response.choices[0].message.content)
         ```
+
+    !!! tip "Switching Between Clusters"
+        To target a different cluster, simply replace the cluster/framework portion of the URL:
+        
+        - **Sophia**: `/resource_server/sophia/vllm/v1`
+        - **Metis**: `/resource_server/metis/api/v1`
 
 ### Vision Language Models
 
@@ -349,13 +390,13 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    - DeepSeek-R1
+    - DeepSeek-R1<sup>R</sup>
     - Meta-Llama-3.1-8B-Instruct
     - Meta-Llama-3.3-70B-Instruct
     - Qwen2.5-Coder-0.5B-Instruct
 
     !!! note "Metis Limitations"
-        - Batch processing is not currently supported on the Metis cluster
+        - Batch processing and Tool Calling is not currently supported on the Metis cluster
         - Only chat completions endpoint is available
 
 !!! note "Want to add a model?"
