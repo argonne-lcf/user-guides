@@ -326,6 +326,7 @@ Models are organized by cluster and marked with the following capabilities:
 - **B** - Batch Processing Enabled
 - **T** - Tool Calling Enabled
 - **R** - Reasoning Enabled
+- **H** - Always Hot Model
 
 ### Sophia Cluster (vLLM)
 
@@ -336,18 +337,18 @@ Models are organized by cluster and marked with the following capabilities:
     - Qwen/Qwen2.5-7B-Instruct<sup>B</sup><sup>T</sup>
     - Qwen/Qwen2.5-14B-Instruct<sup>B</sup><sup>T</sup>
     - Qwen/QwQ-32B<sup>B</sup><sup>R</sup><sup>T</sup>
-    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup><sup>T</sup>
+    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
     - Qwen/Qwen3-235B-A22B<sup>T</sup>
     - Qwen/Qwen3-Next-80B-A3B-Instruct<sup>T</sup>
     - Qwen/Qwen3-Next-80B-A3B-Thinking<sup>R</sup><sup>T</sup>
 
     **Meta Llama Family**
 
-    - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup>
+    - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
+    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
     - meta-llama/Meta-Llama-3.1-405B-Instruct<sup>B</sup><sup>T</sup>
     - meta-llama/Llama-3.3-70B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Llama-4-Scout-17B-16E-Instruct<sup>B</sup><sup>T</sup>
+    - meta-llama/Llama-4-Scout-17B-16E-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
     - meta-llama/Llama-4-Maverick-17B-128E-Instruct<sup>T</sup>
 
     **Mistral Family**
@@ -357,8 +358,8 @@ Models are organized by cluster and marked with the following capabilities:
 
     **OpenAI Family**
 
-    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup><sup>T</sup>
-    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup><sup>T</sup>
+    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
+    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
 
     **Aurora GPT Family**
 
@@ -370,7 +371,7 @@ Models are organized by cluster and marked with the following capabilities:
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it<sup>B</sup><sup>T</sup>
+    - google/gemma-3-27b-it<sup>B</sup><sup>T</sup><sup>H</sup>
     - mgoin/Nemotron-4-340B-Instruct-hf
     - zai-org/GLM-4.5-Air<sup>T</sup>
 
@@ -390,10 +391,10 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    - DeepSeek-R1<sup>R</sup>
-    - Meta-Llama-3.1-8B-Instruct
-    - Meta-Llama-3.3-70B-Instruct
-    - Qwen2.5-Coder-0.5B-Instruct
+    - DeepSeek-R1<sup>R</sup><sup>H</sup>
+    - Meta-Llama-3.1-8B-Instruct<sup>H</sup>
+    - Meta-Llama-3.3-70B-Instruct<sup>H</sup>
+    - Qwen2.5-Coder-0.5B-Instruct<sup>H</sup>
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
@@ -643,15 +644,14 @@ For large-scale inference, the batch processing service allows you to submit a f
 
 ### Performance and Wait Times
 
-- **Cold Starts:** The first query to an inactive model may take 10-15 minutes to load.
+- **Cold Starts:** The first query to an inactive model on Sophia may take 10-15 minutes to load.
 - **Queueing:** During high demand, your request may be queued until resources are available.
-- **Payload Limits:** Payloads are limited to 10MB. Use batch mode for larger inputs.
+- **Payload Limits:** Payloads are limited to 10MB per request and is further limited by the model's context window.
 
 On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to serving popular models "hot" for immediate access. The remaining 5 nodes rotate through other models based on user requests. These dynamically loaded models will remain active for up to 24 hours and will be unloaded if not used for 2 hours.
 
 ## Important Notes
 
-- The default response format for the API is `text/plain`.
 - If you’re interested in extended model runtimes, reservations, or private model deployments, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint).
 
 ## Troubleshooting
