@@ -77,7 +77,7 @@ source ~/metis_endpoint_1.txt
 export OPENAI_BASE_URL=$BASE_URL
 export OPENAI_API_KEY=$SAMBANOVA_API_KEY
 echo $MODELS
-export MODEL_NAME=<a name from above> # e.g. Llama-4-Maverick-17B-128E-Instruct
+export MODEL_NAME=<a name from above> # e.g. DeepSeek-R1
 ```
 
 Here is a simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:

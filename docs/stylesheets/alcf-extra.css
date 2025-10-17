@@ -57,7 +57,8 @@
 
   .md-typeset a {
     color: var(--blue_dark);
-    text-decoration: underline solid var(--blue_med);
+    text-decoration: underline;
+    text-decoration-color: var(--blue_med);
   }
 
   .md-typeset a:focus,
