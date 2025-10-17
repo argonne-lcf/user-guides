@@ -79,11 +79,11 @@ Once authenticated, you can make a test call using cURL or Python.
     # Get your access token
     access_token=$(python inference_auth_token.py get_access_token)
 
-    curl -X POST "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
+    curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+                "model": "Meta-Llama-3.1-8B-Instruct",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -99,15 +99,40 @@ Once authenticated, you can make a test call using cURL or Python.
 
     client = OpenAI(
         api_key=access_token,
-        base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
+        base_url="https://inference-api.alcf.anl.gov/resource_server/metis/api/v1"
     )
 
     response = client.chat.completions.create(
-        model="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model="Meta-Llama-3.1-8B-Instruct",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
     print(response.choices[0].message.content)
+    ```
+
+## System Details
+
+### Available Clusters
+
+Two clusters are currently active, with additional systems coming soon:
+
+| Cluster | Status | Framework | Base URL | Supported Endpoints |
+|---------|--------|-----------|----------|---------------------|
+| **[Sophia](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/completions`<br>`/embeddings`<br>`/batches` |
+| **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | SambaNova API | `/resource_server/metis/api/v1` | `/chat/completions` |
+| Cerebras CS-3 | Coming Soon | - | - | - |
+| GH200 Nvidia | Coming Soon | - | - | - |
+
+!!! info "Cluster Differences"
+    - **Sophia** uses [vLLM](https://docs.vllm.ai/) and supports the full range of OpenAI-compatible endpoints including chat, completions, embeddings, and batch processing.
+    - **Metis** uses SambaNova's inference API and currently supports only chat completions.
+
+!!! tip "Discovering Available Models"
+    You can programmatically query all available models and endpoints:
+    ```bash
+    access_token=$(python inference_auth_token.py get_access_token)
+    curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
+         -H "Authorization: Bearer ${access_token}"
     ```
 
 ## API Usage Examples
@@ -255,30 +280,30 @@ For more examples, please see the [inference-endpoints GitHub repository](https:
 
 ## Available Models
 
-??? "Click to see the list of available models"
+Models are organized by cluster and marked with the following capabilities:
 
-    Models are marked with the following capabilities:
+- **B** - Batch Processing Enabled
+- **T** - Tool Calling Enabled
+- **R** - Reasoning Enabled
 
-    - **B** - Batch Enabled
-    - **T** - Tool Calling Enabled
-    - **R** - Reasoning Enabled
+### Sophia Cluster (vLLM)
 
-    ### Chat Language Models
+??? "Chat Language Models"
 
     **Qwen Family**
 
-    - Qwen/Qwen2.5-14B-Instruct<sup>B</sup><sup>T</sup>
     - Qwen/Qwen2.5-7B-Instruct<sup>B</sup><sup>T</sup>
+    - Qwen/Qwen2.5-14B-Instruct<sup>B</sup><sup>T</sup>
     - Qwen/QwQ-32B<sup>B</sup><sup>R</sup><sup>T</sup>
-    - Qwen/Qwen3-235B-A22B<sup>R</sup><sup>T</sup>
-    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup>
+    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup><sup>T</sup>
+    - Qwen/Qwen3-235B-A22B<sup>T</sup>
+    - Qwen/Qwen3-Next-80B-A3B-Instruct<sup>T</sup>
+    - Qwen/Qwen3-Next-80B-A3B-Thinking<sup>R</sup><sup>T</sup>
 
     **Meta Llama Family**
 
-    - meta-llama/Meta-Llama-3-70B-Instruct<sup>B</sup>
-    - meta-llama/Meta-Llama-3-8B-Instruct<sup>B</sup>
-    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup>
     - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup>
+    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup>
     - meta-llama/Meta-Llama-3.1-405B-Instruct<sup>B</sup><sup>T</sup>
     - meta-llama/Llama-3.3-70B-Instruct<sup>B</sup><sup>T</sup>
     - meta-llama/Llama-4-Scout-17B-16E-Instruct<sup>B</sup><sup>T</sup>
@@ -286,58 +311,55 @@ For more examples, please see the [inference-endpoints GitHub repository](https:
 
     **Mistral Family**
 
-    - mistralai/Mistral-7B-Instruct-v0.3<sup>B</sup>
-    - mistralai/Mistral-Large-Instruct-2407<sup>B</sup>
-    - mistralai/Mixtral-8x22B-Instruct-v0.1<sup>B</sup>
-
-    **Nvidia Nemotron Family**
-
-    - mgoin/Nemotron-4-340B-Instruct-hf
-
-    **Aurora GPT Family**
-
-    - argonne-private/AuroraGPT-IT-v4-0125<sup>B</sup>
-    - argonne-private/AuroraGPT-Tulu3-SFT-0125<sup>B</sup>
-    - argonne-private/AuroraGPT-DPO-UFB-0225<sup>B</sup>
-    - argonne-private/AuroraGPT-7B-OI<sup>B</sup>
-
-    **Allenai Family**
-
-    - allenai/Llama-3.1-Tulu-3-405B
+    - mistralai/Mistral-Large-Instruct-2407
+    - mistralai/Mixtral-8x22B-Instruct-v0.1
 
     **OpenAI Family**
 
-    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup>
-    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup>
+    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup><sup>T</sup>
+    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup><sup>T</sup>
 
-    **Google Family**
+    **Aurora GPT Family**
 
+    - argonne/AuroraGPT-IT-v4-0125<sup>B</sup>
+    - argonne/AuroraGPT-Tulu3-SFT-0125<sup>B</sup>
+    - argonne/AuroraGPT-DPO-UFB-0225<sup>B</sup>
+    - argonne/AuroraGPT-KTO-UFB-0325<sup>B</sup>
+
+    **Other Models**
+
+    - allenai/Llama-3.1-Tulu-3-405B
     - google/gemma-3-27b-it<sup>B</sup><sup>T</sup>
+    - mgoin/Nemotron-4-340B-Instruct-hf
+    - zai-org/GLM-4.5-Air<sup>T</sup>
 
-    ### Vision Language Models
+??? "Vision Language Models"
 
-    **Qwen Family**
-
-    - Qwen/Qwen2-VL-72B-Instruct<sup>B</sup>
-
-    **Meta Llama Family**
-
+    - Qwen/Qwen2-VL-72B-Instruct<sup>T</sup>
+    - Qwen/Qwen2.5-VL-72B-Instruct<sup>T</sup>
     - meta-llama/Llama-3.2-90B-Vision-Instruct
 
-    ### Embedding Models
+??? "Embedding Models"
 
-    **Mistral Family**
+    - mistralai/Mistral-7B-Instruct-v0.3-embed
+    - Qwen/Qwen3-Embedding-8B
+    - Salesforce/SFR-Embedding-Mistral
 
-    - mistralai/Mistral-7B-Instruct-v0.3-embed<sup>B</sup>
-    - Salesforce/SFR-Embedding-Mistral<sup>B</sup>
+### Metis Cluster (SambaNova)
 
-    **Nvidia Family**
+??? "Chat Language Models"
 
-    - nvidia/NV-Embed-v2
+    - DeepSeek-R1
+    - Meta-Llama-3.1-8B-Instruct
+    - Meta-Llama-3.3-70B-Instruct
+    - Qwen2.5-Coder-0.5B-Instruct
 
-    !!! note "Want to add a model?"
-        To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).
+    !!! note "Metis Limitations"
+        - Batch processing is not currently supported on the Metis cluster
+        - Only chat completions endpoint is available
 
+!!! note "Want to add a model?"
+    To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).
 
 ## Batch Processing
 
@@ -577,27 +599,6 @@ For large-scale inference, the batch processing service allows you to submit a f
 
     The inference team is currently developing a mechanism for users to cancel submitted batches. In the meantime, please contact us with your `batch_id` if you have a batch to cancel.
 
-## System Details
-
-### Available Clusters
-
-| Cluster                         | Status       | Endpoint                                                    | Notes                               |
-|---------------------------------|--------------|-------------------------------------------------------------|-------------------------------------|
-| Sophia                          | **Active**   | https://inference-api.alcf.anl.gov/resource_server/sophia | 8 nodes reserved for Inference      |
-| SambaNova SN40L (Metis)         | Coming Soon  | https://inference-api.alcf.anl.gov/resource_server/metis  |                                     |
-| Cerebras CS-3 Inference cluster | Coming Soon  |                                                             |                                     |
-| GH200 Nvidia Cluster            | Coming Soon  |                                                             |                                     |
-
-### Endpoints and Frameworks
-
-- **vLLM:** `https://inference-api.alcf.anl.gov/resource_server/sophia/vllm`
-- **Infinity:** `https://inference-api.alcf.anl.gov/resource_server/sophia/infinity`
-
-The primary API endpoints follow the OpenAI standard:
-- `/v1/chat/completions`
-- `/v1/completions`
-- `/v1/embeddings`
-- `/v1/batches`
 
 ### Performance and Wait Times
 
@@ -605,21 +606,20 @@ The primary API endpoints follow the OpenAI standard:
 - **Queueing:** During high demand, your request may be queued until resources are available.
 - **Payload Limits:** Payloads are limited to 10MB. Use batch mode for larger inputs.
 
-On Sophia, from the 8 nodes reserved for inference, 5 nodes are dedicated to serving popular models "hot" for immediate access. The remaining 3 nodes rotate through other models based on user requests. These dynamically loaded models will remain active for up to 24 hours.
+On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to serving popular models "hot" for immediate access. The remaining 5 nodes rotate through other models based on user requests. These dynamically loaded models will remain active for up to 24 hours and will be unloaded if not used for 2 hours.
 
 ## Important Notes
 
 - The default response format for the API is `text/plain`.
-- The Globus backend does not support streaming. Please ensure `stream: False` is set when integrating with RAG applications.
 - If you’re interested in extended model runtimes, reservations, or private model deployments, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint).
 
 ## Troubleshooting
 
 - **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
-- **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`.
+- **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`. It is currently internal only to ALCF and will be made public in the future.
 - **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`), delete it, and restart the authentication process.
 
 ## Contact Us
 
-For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint). 
+For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint).
