@@ -34,7 +34,7 @@ The files can be sourced to set environment variables, e.g. if the endpoint were
 source ~/metis_endpoint_endpoint_1.txt
 ```
 
-Endpoint "metis_endpoint_1" serves the "DeepSeek-R1" model. Endpoint "metis_endpoint_2" serves the "Llama-4-Maverick-17B-128E-Instruct" model.
+Endpoint "metis_endpoint_1" serves the "DeepSeek-R1" model. Endpoint "metis_endpoint_2" serves the "Meta-Llama-3.3-70B-Instruct", "Meta-Llama-3.1-8B-Instruct", and "Qwen2.5-Coder-0.5B-Instruct" models.
 If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov.
 
 See SambaNova's documentation for additional information to supplement the instructions below: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
@@ -77,7 +77,7 @@ source ~/metis_endpoint_1.txt
 export OPENAI_BASE_URL=$BASE_URL
 export OPENAI_API_KEY=$SAMBANOVA_API_KEY
 echo $MODELS
-export MODEL_NAME=<a name from above> # e.g. Llama-4-Maverick-17B-128E-Instruct
+export MODEL_NAME=<a name from above> # e.g. DeepSeek-R1
 ```
 
 Here is a simple sample python script, that uses environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `MODEL_NAME`, and accepts a (quoted) prompt as a command line parameter:

@@ -1,7 +1,37 @@
 # Aurora System Updates
 
+## 2025-10-13
+The compute image with Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0, which was previously available in next-eval queue, is rolled out to the majority of nodes across Aurora. 2,126 nodes have the old production image and are available in a queue called `legacy`, which will be available to all teams that are unable to run against the new image. Some teams will have higher priority to run in the legacy queue. Use aurora-uan-000[7-8] nodes for the `legacy` queue as they will have the same  user environment. Users will not be able log in directly to aurora-uan-000[7-8] and will need to ssh to them after logging in to aurora.alcf.anl.gov. 
+
+See https://docs.alcf.anl.gov/aurora/running-jobs-aurora/
+
+See sections ["2025-10-07"](system-updates.md/#2025-10-07) and ["2025-09-08"](system-updates.md/#2025-09-08)  below for all the change log details.
+
+
+## 2025-10-07
+The image in `next-eval` queue, and uan-0014, has been updated to AuroraSDK version 25.190.0 RC4, with the following changes:
+
+#### MPICH
+- Roll back default MPICH to mpich/opt/develop-git.6037a7a (5.0.0.aurora_test.06f012a is still available)
+- use internal yaksa build for versions develop-git.6037a7a and 5.0.0.aurora_test.06f012a
+- use yaksa v0.4 for versions 4.2.3 and 4.3.1
+
+#### oneAPI
+- Fix module environment to match oneAPI install's setvars.sh
+
+#### Notable Fixes
+We had 32 fixes in the new SDK based on the bug reproducer test set. Notable fixes include:
+- SYCL In-order queue fixed (affecting any application using in-order SYCL queues)
+- Bug in SYCL peer_access fixed
+- Runtime error in pytorch with CCL_BCAST fixed
+- Compile fail in Lattice App fixed
+- Fails in fortran if compiled with MKL and -fpe0 fixed
+- Issues with “-fopenmp-target-simd” usage fixed
+
+See section ["2025-09-08" ](system-updates.md/#2025-09-08) below for the original change log.
+
 ## 2025-09-08
-We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **The Aurora UANs do not have this new image**.
+We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **UAN-0014 has the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
 The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and OneAPI 2025.2.0.
 

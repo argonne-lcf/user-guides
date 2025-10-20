@@ -5,6 +5,16 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
+# Major Changes in the frameworks module
+
+- No more `torch_ccl`. `import oneccl_bindings_for_pytorch as torch_ccl` is not
+needed anymore.
+- Must change `backend` to `xccl` from `ccl` when initializing `torch.distributed`
+- `import intel_extension_for_pytorch as ipex` is optional. This is a work in 
+progress from the vendors side. If you experience performance variations, 
+switch back to importing it.
+- No `horovod` support for PyTorch
+
 
 ## Provided Installation
 
@@ -14,11 +24,11 @@ To use it from a compute node, please load the following modules:
 ```bash
 module load frameworks
 ```
-Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2024.2.1_u1`  module):
+Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2025.2.0`  module):
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
-'2.3.1+cxx11.abi'
+'2.8.0a0+gitba56102'
 ```
 A simple but useful check could be to use PyTorch to get device information on a compute node. You can do this the following way:
 
@@ -48,15 +58,6 @@ print(f'Device properties = {torch.xpu.get_device_properties()}')
 	```
 
 Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node in the above output. 
-
-!!! note "`import intel_extension_for_pytorch as ipex`"
-    
-    Along with importing the `torch` module, you need to import the `intel_extension_for_pytorch` module in order to detect Intel GPUs as `xpu` devices. 
-
-    !!! warning
-    
-        It is highly recommended to import `intel_extension_for_pytorch` right after `#!python import torch`, prior to importing other packages, (from [Intel's "Getting Started" doc](https://github.com/intel/intel-extension-for-pytorch/blob/main/docs/tutorials/getting_started.md)).
-
 
 ??? info "Using GPU Devices as PyTorch devices"
 
@@ -100,6 +101,8 @@ Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is c
 
 Here we list some common changes that you may need to do to your PyTorch code in order to use Intel GPUs.  
 Please consult [Intel's IPEX Documentation](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/examples.html) for additional details and useful tutorials.
+
+__Note__: Steps related to `IPEX` are optional.
 
 1. Import the `intel_extension_for_pytorch` **right after** importing `torch`:
    ```python hl_lines="2"
@@ -169,6 +172,8 @@ for epoch in range(10):
 ```
 
 And here is the code to train the same model on a single GPU tile on Aurora, with new or modified lines highlighted:
+
+__Note__: Steps related to `IPEX` are optional.
 
 ```python linenums="1" title="pytorch_xpu.py" hl_lines="2 3 16-18 22 23"
 import torch
@@ -255,15 +260,11 @@ We recommend using native PyTorch DDP to perform Data Parallel training on Auror
 
 ### Distributed Data Parallel (DDP)
 
-DDP training is accelerated using oneAPI Collective Communications Library Bindings for Pytorch (`oneccl_bindings_for_pytorch`). The extension supports FP32 and BF16 data types. 
-More detailed information and examples are available at the [Intel oneCCL repo](https://github.com/intel/torch-ccl), formerly known as `torch-ccl`.
-
 #### Code changes to train on multiple GPUs using DDP
 
 The key steps in performing distributed training are:
 
-1. Load the `oneccl_bindings_for_pytorch` module, which enables efficient distributed deep learning training in PyTorch using Intel's oneCCL library, implementing collectives like `allreduce`, `allgather`, `alltoall`.
-1. Initialize PyTorch's `DistributedDataParallel`
+1. Initialize PyTorch's `DistributedDataParallel` with `backend='xccl'`
 1. Use `DistributedSampler` to partition the training data among the ranks
 1. Pin each rank to a GPU
 1. Wrap the model in DDP to keep it in sync across the ranks 
@@ -272,13 +273,14 @@ The key steps in performing distributed training are:
 
 Here is the code to train the [same dummy PyTorch model](#example-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
 
+__Note__: Steps related to `IPEX` are optional.
+
 ```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6 8-24 31-33 36 37 43 44 47 48 61 62"
 from mpi4py import MPI
 import os, socket
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 import intel_extension_for_pytorch as ipex
-import oneccl_bindings_for_pytorch as torch_ccl
 
 # DDP: Set environmental variables used by PyTorch
 SIZE = MPI.COMM_WORLD.Get_size()
@@ -292,8 +294,8 @@ os.environ['MASTER_ADDR'] = f"{MASTER_ADDR}.hsn.cm.aurora.alcf.anl.gov"
 os.environ['MASTER_PORT'] = str(2345)
 print(f"DDP: Hi from rank {RANK} of {SIZE} with local rank {LOCAL_RANK}. {MASTER_ADDR}")
 
-# DDP: initialize distributed communication with nccl backend
-torch.distributed.init_process_group(backend='ccl', init_method='env://', rank=int(RANK), world_size=int(SIZE))
+# DDP: initialize distributed communication with xccl backend
+torch.distributed.init_process_group(backend='xccl', init_method='env://', rank=int(RANK), world_size=int(SIZE))
 
 # DDP: pin GPU to local rank.
 torch.xpu.set_device(int(LOCAL_RANK))
@@ -358,19 +360,6 @@ Here are the steps to run the above code on Aurora:
    ```
 
 !!! warning "Settings for training beyond 16 nodes"
-
-    When training at medium and large scales, we recommend using the module `frameworks_optimized`, which provides an [optimized setup](./oneCCL.md) based on observed performance.
-    To use this optimized setup, the last two steps of the above instructions should be replaced with the following ones:
-    
-    1. Load the `frameworks_optimized` module:
-       ```bash
-       module use /soft/datascience/frameworks_optimized/
-       module load frameworks_optimized
-       ```
-    1. Run the script on 24 tiles, 12 per node:
-       ```bash
-       mpiexec -n 24 -ppn 12 --cpu-bind=${CPU_BIND} python pytorch_ddp.py
-       ```
 
     ??? tip "Setting the CPU Affinity"
     
@@ -437,14 +426,13 @@ This feature on PVC is similar to MPS on NVIDIA GPUs
 and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile.
 For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
 
-For both DDP and Horovod, distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
+For DDP distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
 
 ```python linenums="1"
 import os
 from argparse import ArgumentParser
 import torch
 import intel_extension_for_pytorch
-import oneccl_bindings_for_pytorch
 
 parser = ArgumentParser(description='CCS Test')
 parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], 
