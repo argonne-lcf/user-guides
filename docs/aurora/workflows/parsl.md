@@ -332,3 +332,10 @@ python my_workflow_script.py
 ```
 
 Note that if the workflow does not complete before the end of the PBS job, outstanding tasks will not complete.
+
+## Known Issues
+
+!!! warning
+
+	Starting in October 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` when using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+	
