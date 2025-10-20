@@ -145,9 +145,10 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
-  # - redirects:
-  #     redirect_maps:
-        #'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
+  - redirects:
+      redirect_maps:
+        'support/technical-support.md': 'support/ticket.md'
+        # 'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
   # - ALCF User Guides:
