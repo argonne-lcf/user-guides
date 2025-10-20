@@ -12,7 +12,7 @@ Please see DragonHPC's [Introduction in their documenation](https://dragonhpc.gi
 
 To install in a Python virtual environment on Polaris:
 
-```shell
+```bash linenums="1"
 module use /soft/modulefiles
 module load conda
 conda activate base
@@ -22,7 +22,7 @@ pip install dragonhpc
 dragon-config add --ofi-runtime-lib=/opt/cray/libfabric/1.22.0/lib64
 ```
 
-The last installation step that calls `dragon-config` is necessary to enable `dragon` to use high-speed RDMA transfers across Polaris' Slingshot network.  Skipping this step will result in `dragon` using slower TCP transfers for cross node communication and data transfer.
+The last installation step that calls `dragon-config` is necessary to enable `dragon` to use high-speed RDMA transfers across Polaris's Slingshot network.  Skipping this step will result in `dragon` using slower TCP transfers for cross node communication and data transfer.
 
 ## Execution of Dragon Driver Scripts
 
@@ -58,7 +58,7 @@ A common `Policy` setting on Polaris is to run one process per GPU (four per nod
 
 Dragon's Native Pool can use policies to run a pool of processes that bind each process to specific GPUs and CPUs on specific nodes. (Note that the `multiprocessing` Pool with `dragon` selected as the start method can only distribute processes across multiple nodes; it cannot set explicit GPU and CPU binding affinities).  Here is an example of how to run a pool across nodes on Polaris binding 1 pool process per GPU with the Native Dragon Pool:
 
-```python
+```python linenums="1"
 import dragon
 from dragon.infrastructure.policy import Policy
 from dragon.native.machine import System, Node
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
 Here is an example of how to do a similar thing with a `ProcessGroup`:
 
-```python
+```python linenum="1"
 import os
 import dragon
 from dragon.infrastructure.policy import Policy
@@ -157,7 +157,7 @@ if __name__ == '__main__':
 Dragon offers a distributed data layer called a Dragon Dictionary.  The Dragon Dictionary or `DDict` can span all nodes or a subset of nodes in your runtime and can also use Policies for optimal node placement.  Regardless of whether a `DDict` spans all nodes or a subset, any process in the runtime on any node can access the dictionary.
 
 To create a `DDict` that spans all nodes in the runtime:
-```python
+```python linenums="1"
 from dragon.native.machine import System
 from dragon.data.ddict import DDict
 
@@ -173,7 +173,7 @@ For more details on how to use Dragon Dictionaries, see the DragonHPC [documenta
 
 MPI applications can be run with the Dragon `ProcessGroup`.  To enable message passing between processes in a Dragon ProcessGroup on Polais set the `pmi` flag when creating the process group like this:
 
-```python
+```python linenums="1"
 from dragon.native.process_group import ProcessGroup
 from dragon.infrastructure.facts import PMIBackend
 
