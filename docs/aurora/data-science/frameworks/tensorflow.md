@@ -3,19 +3,23 @@
 TensorFlow is a popular, open-source deep learning framework developed and 
 released by Google. The 
 [TensorFlow home page](https://www.tensorflow.org/) has more information about 
-TensorFlow, which you can refer to. For troubleshooting on Polaris, please 
+TensorFlow, which you can refer to. For troubleshooting on Aurora, please 
 contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+
+## Major Changes:
+`TensorFlow` has a separate module now, as opposed to being part of the 
+`frameworks` module. 
 
 ## Provided Installation
 
-TensorFlow is already preinstalled on Aurora, available in the `frameworks` 
+TensorFlow is already preinstalled on Aurora, available in the `tensorflow` 
 module. To use it from a compute node, load the module:
 ```bash linenums="1"
-module load frameworks
+module load tensorflow
 ```
 
 Then you can `import` TensorFlow as usual, the following is an output from the 
-`frameworks` module:
+`tensorflow/2025.2.0` module:
 
 ```python linenums="1"
 import tensorflow as tf
@@ -56,7 +60,7 @@ appropriate values to achieve desired behavior, as described in the
 This environment variable is equivalent to the `ITEX_TILE_AS_DEVICE`, which is
 to be deprecated soon.
 
-Intel extension for TensorFLow has been made publicly available as an 
+Intel Extension for TensorFlow has been made publicly available as an 
 open-source project at 
 [GitHub](https://github.com/intel/intel-extension-for-tensorflow).
 
@@ -134,7 +138,7 @@ This feature is experimental, and actively under development.
 #### `TF32` Math Mode
 
 The Intel Xe Matrix Extensions (Intel XMX) engines in Intel Max 1550 Xe-HPC 
-GPUs natively support `TF32` math mode. Through intel extension for tensorflow
+GPUs natively support `TF32` math mode. Through the Intel Extension for TensorFlow,
 you can enable it by setting the following environmental variable:
 
 ```bash
@@ -154,7 +158,7 @@ compiling functions can be large enough to mitigate performance improvements.
 XLA is particularly powerful when combined with reduced precision, 
 yielding speedups > 100% in some models. 
 
-Intel provides initial intel GPU support for TensorFlow models with XLA 
+Intel provides initial Intel GPU support for TensorFlow models with XLA 
 acceleration through 
 [Intel Extension for OpenXLA](https://github.com/intel/intel-extension-for-openxla).
 Full TensorFlow and PyTorch support is planned for development.
@@ -165,6 +169,7 @@ A simple example on how to use Intel GPU with TensorFlow is the following:
 
 ```python linenums="1" title="intel-xpu-tf-example.py"
 import tensorflow as tf   # TensorFlow registers PluggableDevices here.
+import intel_extension_for_tensorflow as itex # Intel extensions for GPU usage
 tf.config.list_physical_devices()  # XPU device is visible to TensorFlow.
 
 #Section 1 Run implicitly
@@ -265,7 +270,7 @@ using [Intel Optimization for Horovod](https://github.com/intel/intel-optimizati
 
 The key steps in performing distributed training are laid out in the following example:
 
-- [Tensorflow examples with Intel Optimization for Horovod](https://github.com/intel/intel-optimization-for-horovod/blob/main/xpu_docs/tensorflow_example.md)
+- [TensorFlow examples with Intel Optimization for Horovod](https://github.com/intel/intel-optimization-for-horovod/blob/main/xpu_docs/tensorflow_example.md)
 
 Detailed implementation of the same example is here:
 
