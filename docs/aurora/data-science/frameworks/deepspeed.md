@@ -1,13 +1,11 @@
 # DeepSpeed
 
-The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. 
-If an user needs an updated version, it should be installed by the user. 
-Further instructions for working with the base environment can be found [here](../python.md).
+The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. If a user needs an updated version, it should be installed outside the `frameworks` module, e.g. in a virtual environment. Further instructions for working with the base environment can be found [here](../python.md).
 
 ```bash
 module load frameworks
 ```
-The following output is from the `frameworks/2025.2.0` module
+The following output is from the `frameworks/2025.2.0` module:
 
 ```python
 import deepspeed
@@ -66,7 +64,7 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
     ```
 
 !!! example "Launching DeepSpeed"
-    In both examples, the 'train_batch_size' variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
+    In both examples, the `train_batch_size` variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
 
     === "Launching with MPICH"
 
