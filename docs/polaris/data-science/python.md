@@ -16,7 +16,7 @@ This will load and activate the base environment.
 
     We encourage users to use the pre-installed conda environment. Any custom environments are supported on a best-effort basis only.
 
-For Python issues or questions, please see the [Technical Support](../../support/technical-support.md) page.
+For Python issues or questions, please see the [Technical Support](../../support/ticket.md) page.
 
 ## Virtual environments via `venv`
 

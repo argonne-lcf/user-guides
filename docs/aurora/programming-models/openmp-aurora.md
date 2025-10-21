@@ -39,9 +39,9 @@ The following table shows the compiler and flags:
 
 | Language | MPI Wrapper Compiler (Underlying Compiler) | Flag to Turn on OpenMP Support and Target CPU Threads | Additional Flags to Target GPU Devices |
 | --- | --- | --- | --- |
-| Fortran | mpifort (ifx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"` |
-| C | mpicc (icx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"` |
-| C++ | mpicxx (icpx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc"` |
+| Fortran | mpifort (ifx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xs "-device pvc"` |
+| C | mpicc (icx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xs "-device pvc"` |
+| C++ | mpicxx (icpx) | `-fiopenmp` | `-fopenmp-targets=spir64_gen -Xs "-device pvc"` |
 
 ## Running on Aurora
 
@@ -115,8 +115,8 @@ end program main
 ### To compile
 
 ```bash
-$ mpicxx -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.cpp -o c_test
-$ mpifort -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend "-device pvc" hello.F90 -o f_test
+$ mpicxx -fiopenmp -fopenmp-targets=spir64_gen -Xs "-device pvc" hello.cpp -o c_test
+$ mpifort -fiopenmp -fopenmp-targets=spir64_gen -Xs "-device pvc" hello.F90 -o f_test
 ```
 
 ### To run 

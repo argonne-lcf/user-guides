@@ -1,6 +1,6 @@
 # GNU Compilers on Polaris
 
-The GNU compilers are available on Polaris via the `PrgEnv-gnu` and `gcc-mixed` modules. The `gcc-mixed` module can be useful when, for example, the `PrgEnv-nvhpc` compilers are used to compile C/C++ MPI-enabled code and gfortran is needed.
+The GNU compilers are available on Polaris via the `PrgEnv-gnu` and `gcc-mixed` modules. The `gcc-mixed` module can be useful when, for example, the `PrgEnv-nvidia` compilers are used to compile C/C++ MPI-enabled code and the `gfortran` compiler is needed.
 
 The GNU compilers currently on Polaris do not support GPU code generation and thus can only be used for compiling CPU codes.
 

@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-05-05_
+_Last Updated: 2025-09-05_
 
 ## Early User Notes
 
@@ -15,8 +15,7 @@ Users should expect weekly preventative maintenance (PM) on the system, although
 The current queue policy for Aurora is set up based on experiences to date to help maximize productive use of the machine by projects.
 
 - The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
-- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results. Initially, the `prod` routing queue will only allow 2048 nodes max. 
-- Project teams are required to email support to request running on more than 2048 nodes (with evidence that they are likely to succeed at larger scales). Once a project has permission for larger jobs, any >2048-node job must be submitted to a separate routing queue, `prod-large`. See [Aurora Queues](./running-jobs-aurora.md#Aurora-Queues) for more details. 
+- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results.
 
 ### Storage
 
@@ -164,6 +163,15 @@ These errors can be safely ignored.
 
 In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
 
+#### 7. File too large for Clang to processs
+
+If you see a compile error similar to:
+```console
+error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
+1 error generated.
+```
+when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details.
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
@@ -213,7 +221,7 @@ To increase the chances that a large job does not terminate due to a node failur
 
 ## Aurora Bug Tracking repository and table
 
-The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To report an issue, please reach out to [ALCF Support](../support/technical-support.md).
+The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To report an issue, please reach out to [ALCF Support](../support/ticket.md).
 
 For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
 

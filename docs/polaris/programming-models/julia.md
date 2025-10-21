@@ -11,7 +11,7 @@ This guide details how to install, configure, and run Julia on the Polaris super
 
 This guide is a first draft of the Julia documentation for Polaris. If you have
 suggestions or find errors, please open a pull request or contact us by
-[opening a ticket](../../support/technical-support.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+[opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
 ## 1. Julia Installation
 We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
@@ -104,7 +104,7 @@ julia --project -e 'using MPI; MPI.versioninfo()'
 For GPU acceleration, the `CUDA.jl` package must be configured to use the system-provided CUDA toolkit. This ensures compatibility with the system drivers and is essential for GPU-aware MPI.
 
 #### 1. Correct CUPTI Library Path:
-If you are using the default `PrgEnv-nvhpc` environment, you must first correct the path to the CUPTI library.
+If you are using the default `PrgEnv-nvidia` environment, you must first correct the path to the CUPTI library.
 ```bash
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CRAY_NVIDIA_PREFIX/cuda/12.2/extras/CUPTI/lib64/
 ```
@@ -252,7 +252,7 @@ end
 ```
 #### Job Submission Script
 This PBS script requests resources and launches the Julia application using `mpiexec`.
-If using the default `PrgEnv-nvhpc` module on Polaris, then it will be necessary to correct a path to the CUPTI library to successfully install `CUDA.jl`.
+If using the default `PrgEnv-nvidia` module on Polaris, then it will be necessary to correct a path to the CUPTI library to successfully install `CUDA.jl`.
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris

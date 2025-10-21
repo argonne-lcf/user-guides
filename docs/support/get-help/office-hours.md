@@ -5,7 +5,7 @@ Aurora Office Hours is a weekly discussion of questions, issues, and other topic
 Aurora users are invited to join our Office Hours with the Intel Center of Excellence (COE) @ ALCF.
 
 - When  : Tuesdays, 12 p.m. - 1 p.m. Central time
-- Where : Online. 
+- Where : Online
 
 Aurora users are invited to our Office Hours with the Intel COE @ ALCF, The Intel COE @ ALCF is a small team of engineers and scientists from the Intel® Corporation focused on Scientific Computing and AI-in-Science.
 

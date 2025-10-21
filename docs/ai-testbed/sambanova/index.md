@@ -6,6 +6,6 @@ The SambaNova DataScale SN30 system is architected around the next-generation Re
 
 Below are some of the links to SambaNova documentation.
 
-SambaNova white paper: [Accelerated Computing with a Reconfigurable Dataflow Architecture](https://sambanova.ai/wp-content/uploads/2021/06/SambaNova_RDA_Whitepaper_English.pdf)
+SambaNova white paper: [Accelerated Computing with a Reconfigurable Dataflow Architecture](https://sambanova.ai/hubfs/23945802/SambaNova_Accelerated-Computing-with-a-Reconfigurable-Dataflow-Architecture_Whitepaper_English-1.pdf)
 
-SN30 documentation: [SambaNova Documentation](https://docs.sambanova.ai/home/latest/index.html)
+SN30 documentation: [SambaNova Documentation](https://docs-legacy.sambanova.ai/home/latest/index.html)
