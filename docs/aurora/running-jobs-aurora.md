@@ -10,7 +10,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | debug         | 1        | 2        | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                      |
 | debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
 | prod          | 1        | 9536[^1]    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
-| prod-large    | 1920     | 9538[^1]    | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                     |
+| prod-large    | 1920     | 9536[^1]    | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                     |
 | legacy        | 1        | 1088     | 5 min    | 24 hrs | Legacy routing queue with old (prior to 10/13/25) AuroraSDK. Some projects have higher priority.       |
 | visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                           |
 
