@@ -14,6 +14,8 @@ This page aims to give you a high-level overview of key performance numbers for 
 - To improve reproducibility, only the “best” numbers are reported (e.g., we take the minimum time of repetition step). When doing "real" science, please perform better statistical analysis.
 - The code will use a mixture of OpenMP and SYCL in C++ (sorry, Fortran, Python, and Level Zero lovers).
 
+Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise for these benchmarks.
+
 ## Micro-benchmarks
 
 |                                     |   One Tile |   Full Node | Scaling |
@@ -24,22 +26,24 @@ This page aims to give you a high-level overview of key performance numbers for 
 | PCIe Unidirectional Bandwidth (H2D) |    54 GB/s |    329 GB/s |     6.1 |
 | PCIe Unidirectional Bandwidth (D2H) |    55 GB/s |    263 GB/s |     4.8 |
 |        PCIe Bidirectional Bandwidth |    76 GB/s |    357 GB/s |     4.7 |
+|   Tile2Tile Bidirectional Bandwidth |   287 GB/s |      2 TB/s |     5.9 |
 |    GPU2GPU Unidirectional Bandwidth |    15 GB/s |     95 GB/s |     6.3 |
 |     GPU2GPU Bidirectional Bandwidth |    23 GB/s |    142 GB/s |     6.2 |
 
 ### Benchmark description
 
-- Double Precision Peak Flops: Chain of FMA.
-- Memory Bandwidth (triad): Triad, 2 loads, 1 store.
-- PCIe Unidirectional Bandwidth (H2D): Host to Device data transfer.
+- Double Precision Peak Flops: Chain of FMA.  ([`flops.cpp`](./src/flops.cpp))
+- Memory Bandwidth (triad): Triad, 2 loads, 1 store ([`triad.cpp`](./src/triad.cpp))
+- PCIe Unidirectional Bandwidth (H2D): Host to Device data transfer. ([`pci.cpp`](./src/pci.cpp))
 - PCIe Unidirectional Bandwidth (D2H): Device to Host data transfer.
 - PCIe Bidirectional Bandwidth: Concurrent Host to Device and Device to Host data transfer.
-- GPU2GPU Unidirectional Bandwidth: MPI Rank 0 (GPU 0, Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0).
-- GPU2GPU Bidirectional Bandwidth: MPI Rank 0 (GPU 0, Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0). Concurrently, Rank 1 will also send a buffer to Rank 0.
+- Tile2Tile Bidirectional Bandwidth: MPI Rank 0 (GPU N, Tile 0) will send a GPU buffer to Rank 1 (GPU N, Tile 1). Concurrently, Rank 1 will also send a buffer to Rank 0. ([`peer2peer.cpp`](./src/peer2peer.cpp))
+- GPU2GPU Unidirectional Bandwidth: MPI Rank 0 (GPU 0, Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0). ([`peer2peer.cpp`](./src/peer2peer.cpp))
+- GPU2GPU Bidirectional Bandwidth: MPI Rank 0 (GPU 0, Tile 0) will send a GPU buffer to Rank 1 (GPU 1, Tile 0). Concurrently, Rank 1 will also send a buffer to Rank 0. ([`peer2peer.cpp`](./src/peer2peer.cpp))
 
-## Tile2Tile bandwidth
+## Tile2Tile unidirectional bandwidth
 
-For this Tile2Tile Bidirectional Bandwidth test, MPI Rank 0 (GPU N, Tile 0) will send a GPU buffer to Rank 1 (GPU N, Tile 1). The bandwidth is higher for writes vs. reads, but the performance is roughly uniform among all possible combinations of tiles (excluding the case of two tiles on the same physical GPU, which has much higher overall bandwidth, with Read bandwidth > Write bandwidth):
+For this Tile2Tile Unidirectional Bandwidth test, MPI Rank 0 (GPU N, Tile 0) will send a GPU buffer to Rank 1 (GPU N, Tile 1). The bandwidth is higher for writes vs. reads, but the performance is roughly uniform among all possible combinations of tiles (excluding the case of two tiles on the same physical GPU, which has much higher overall bandwidth, with Read bandwidth > Write bandwidth):
 
 ```output
 Detected 12 GPUs
@@ -69,6 +73,7 @@ GPU 10 -> GPU 0: Bandwidth = 15.7795 GB/s
 GPU 11 -> GPU 0: Bandwidth = 15.7961 GB/s
 ```
 
+See the source code for this test: [`mpi_sycl_intranode_bw.cpp`](./src/mpi_sycl_intranode_bw.cpp]
 
 ## GEMM
 
@@ -81,6 +86,8 @@ GPU 11 -> GPU 0: Bandwidth = 15.7961 GB/s
 | TF32GEMM | 110 TFlop/s | 1311 TFlop/s |    11.9 |
 |   I8GEMM | 577 TFlop/s | 5394 TFlop/s |     9.4 |
 
+See the source code for this test: [`gemm.cpp`](./src/gemm.cpp]
+
 ## FFT
 
 |                             |   One Tile |  Full Node | Scaling |
@@ -88,4 +95,4 @@ GPU 11 -> GPU 0: Bandwidth = 15.7961 GB/s
 | Single-precision FFT C2C 1D |  3 TFlop/s | 34 TFlop/s |    10.8 |
 | Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.4 |
 
-Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise.
+See the source code for this test: [`fft2c.cpp`](./src/fft2c.cpp]
