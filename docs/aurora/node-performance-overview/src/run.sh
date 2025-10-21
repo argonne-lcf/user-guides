@@ -19,15 +19,15 @@ mpirun -n 2 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- ./gpu_tile_compact.
 mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- ./gpu_tile_compact.sh ./pci
 
 export MPIR_CVAR_CH4_IPC_GPU_ENGINE_TYPE=copy_high_bandwidth
-mpicxx -fsycl peer2pear.cpp -o peer2pear
-# Tile 2 Tile 
-mpirun -n 2 -- ./gpu_tile_compact.sh ./peer2pear "Tile2Tile"
-mpirun -n 12 -- ./gpu_tile_compact.sh ./peer2pear "Tile2Tile"
+mpicxx -fsycl peer2peer.cpp -o peer2peer
+# Tile 2 Tile
+mpirun -n 2 -- ./gpu_tile_compact.sh ./peer2peer "Tile2Tile"
+mpirun -n 12 -- ./gpu_tile_compact.sh ./peer2peer "Tile2Tile"
 
 # Gpu 2 Gpu (same plan)
 icpx -lze_loader topology.cpp -o topology
-mpirun -n 2 -- ./gpu_tile_plan_compact.sh ./peer2pear "GPU2GPU"
-mpirun -n 12 -- ./gpu_tile_plan_compact.sh ./peer2pear "GPU2GPU"
+mpirun -n 2 -- ./gpu_tile_plan_compact.sh ./peer2peer "GPU2GPU"
+mpirun -n 12 -- ./gpu_tile_plan_compact.sh ./peer2peer "GPU2GPU"
 
 # GEMM
 mpicxx -fsycl gemm.cpp -qmkl -o gemm
