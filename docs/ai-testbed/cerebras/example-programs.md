@@ -1,7 +1,7 @@
 # Example Programs
 
 ## Use a local copy of the model zoo
-Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
+Make a working directory and a local copy of the Cerebras **modelzoo** repository, if not previously done, as follows.
 
 ```bash
 mkdir ~/R_2.6.0
@@ -31,10 +31,6 @@ trainer:
         num_csx: 2
 ```
 Switching to this mode (data parallel) will force a one-time recompile (with compile artifacts cached). 
-
-<!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.6.0/anl_shared
---->
 
 <!---
 ## UNet
