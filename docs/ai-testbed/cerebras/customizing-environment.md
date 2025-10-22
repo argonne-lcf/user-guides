@@ -42,7 +42,7 @@ pip install -e modelzoo
 
 #### Activation and deactivation
 
-To activate a virtual environments
+To activate a virtual environment
 
 ```console
 source ~/R_2.6.0/venv_cerebras_pt/bin/activate
