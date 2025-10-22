@@ -13,9 +13,10 @@ git tag
 git checkout Release_2.6.0
 ```
 
-Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
 ```bash
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+export https_proxy=http://proxy.alcf.anl.gov:3128
 ```
 
 For all of these samples, if you want the training to use more than one CS3, either

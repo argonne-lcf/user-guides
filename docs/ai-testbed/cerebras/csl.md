@@ -41,9 +41,10 @@ cd ~/csl-examples/benchmarks/gemm-collectives_2d
 bash commands.sh
 ```
 
-Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
 ```bash
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+export https_proxy=http://proxy.alcf.anl.gov:3128
 ```
 
 ??? note "Sample Output"

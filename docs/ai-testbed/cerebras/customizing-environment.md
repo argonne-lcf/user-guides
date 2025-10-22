@@ -17,9 +17,10 @@ git checkout Release_2.6.0
 ```
 Note: a `git pull` will not update the tags; if `modelzoo/setup.py` does not exist after tag checkout, please re-clone `modelzoo`.
 
-Note: to access any external resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent):
+Note: to access any external resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
 ```bash
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+export https_proxy=http://proxy.alcf.anl.gov:3128
 ```
 
 Then build the virtual environment
