@@ -31,7 +31,9 @@ trainer:
       cluster_config:
         num_csx: 2
 ```
-Switching to this mode (data parallel) will force a one-time recompile (with compile artifacts cached). 
+Switching to the data parallel mode will force a one-time recompile (with compile artifacts cached). 
+
+Note : The Cerebras CS3 cluster has 2 sets of MemX. One the larger memory group inteded for larger models (12 nodes of 1128Gi memory) and another smaller memX group ((12 nodes of 183Gi memory). Each memX node group can only be associated to a given job, hence we can have a maximum of 2 training jobs. So we encourage users to use distributed training for better utilization of resources and faster training. 
 
 <!---
 ## UNet
