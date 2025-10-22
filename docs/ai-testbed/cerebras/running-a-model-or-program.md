@@ -9,8 +9,8 @@ Cerebras jobs are initiated and tracked automatically within the Python framewor
 
 #### Login nodes
 
-Jobs are launched from **login** nodes.
-If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific login node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:2
+Jobs are launched from **user** nodes.
+If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific user node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:2
 
 ```bash
 man screen
