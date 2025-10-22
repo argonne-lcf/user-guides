@@ -41,6 +41,18 @@ wsjob-ez6dyfronnsg2rz7f7fqw4  19m SUCCEEDED  cer-cs2-02 username testlabel=test,
 (venv_cerebras_pt) $
 ```
 
+All jobs run in the past week can be listed as shown
+```console
+csctl get jobs -a
+# or
+csctl get jobs --all-states
+```
+
+Some state details for each node in the cluster can be listed as shown:
+```console
+csctl get cluster
+```
+
 See `csctl -h` for more options.<br>
 Add `-h` to a command for help for that command, e.g. `csctl get -h` or `csctl cancel -h`. 
 
