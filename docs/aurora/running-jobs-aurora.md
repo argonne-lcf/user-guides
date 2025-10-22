@@ -7,13 +7,12 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
-| debug         | 1        | 2        | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user** |
-| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**         
-| prod          | 1        | 8498*    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
-| prod-large    | 1920     | 8498*    | 5 min    | 24 hrs   | Routing queue for large jobs; 
-| legacy        | 1        | 2126     | 5 min    | 24 hrs | Legacy routing queue with old (prior to 10/13/25) AuroraSDK. Some projects have higher priority.
-| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                                                |
-
+| debug         | 1        | 2        | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                      |
+| debug-scaling | 2        | 31       | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                       |
+| prod          | 1        | 9536[^1]    | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits**|
+| prod-large    | 1920     | 9536[^1]    | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                     |
+| legacy        | 1        | 1088     | 5 min    | 24 hrs | Legacy routing queue with old (prior to 10/13/25) AuroraSDK. Some projects have higher priority.       |
+| visualization | 1        | 32       | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                           |
 
 `prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
 
@@ -22,11 +21,13 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | tiny            | 1        | 512      | 5 min    | 6 hrs    |                                                                                                    |
 | small           | 513      | 1024     | 5 min    | 12 hrs   |                                                                                                    |
 | medium          | 1025     | 1919     | 5 min    | 18 hrs   |                                                                                                    |
-| large           | 1920     | 8498*    | 5 min    | 24 hrs   | theoretical max; stable max nodecount may vary
+| large           | 1920     | 9536[^1] | 5 min    | 24 hrs   |                                                                                                    |
 | backfill-tiny   | 1        | 512      | 5 min    | 6 hrs    | Low priority, negative project balance                                                             |
 | backfill-small  | 513      | 1024     | 5 min    | 12 hrs   | Low priority, negative project balance                                                             |
 | backfill-medium | 1025     | 1919     | 5 min    | 18 hrs   | Low priority, negative project balance                                                             |
-| backfill-large  | 1920     | 8498*   | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary |
+| backfill-large  | 1920     | 9536[^1]   | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
+
+[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
 
 !!! warning
 

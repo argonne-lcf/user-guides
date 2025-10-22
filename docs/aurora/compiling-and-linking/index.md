@@ -21,10 +21,6 @@ Additional modules loading `GNU` CPU compilers and parallel application launch s
 - `mpicxx` - C++ Compiler (a.k.a `mpic++`)
 - `mpifort` - Fortran Compiler (a.k.a `mpif70` & `mpif90`)
 
-## Compilers provided by Cray Programming Environments
-
-The `PrgEnv-gnu` and `PrgEnv-cray` Cray programming environments are currently available as modules for users that need them. The compilers provided by these environments do not currently support Intel GPUs and should only be used, if at all, for CPU-only code.
-
 ## Mixed C/C++ & Fortran Applications
 
 For applications consisting of a mix of programming languages that use MPI, it is important to use the same Fortran compiler for building the application as was used to build MPI because of mpi.mod (and similar) incompatibilities.
