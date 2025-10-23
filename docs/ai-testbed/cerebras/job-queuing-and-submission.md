@@ -5,12 +5,12 @@ The CS-3 cluster has its own **Kubernetes-based** system for job submission and 
 Jobs are started automatically through the **Python** framework in modelzoo.common.pytorch.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
 
-Jobs that have not yet completed can be listed as shown. Note: this command can take over a minute to complete.
+Jobs that have not yet completed can be listed as shown.
 
 ```console
 (venv_cerebras_pt) $ csctl get jobs
-NAME                          AGE  DURATION  PHASE    SYSTEMS     USER     LABELS        DASHBOARD
-wsjob-thjj8zticwsylhppkbmjqe  13s  1s        RUNNING  cer-cs2-02  username name=unet_pt  https://grafana.cerebras1.lab.alcf.anl.gov/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-thjj8zticwsylhppkbmjqe&from=1691705374000&to=now
+SESSION       NAME                          TYPE     PRIORITY  AGE  DURATION  PHASE    SYSTEMS  USER     LABELS          WORKFLOW                      DASHBOARD
+job-operator  wsjob-ewhzngfg6rdjhw3s3k2wbh  compile  P2 (299)  12m  12m       RUNNING           username name=llama2_7b  wflow-wuetecva5mb8riup5swrff  https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-ewhzngfg6rdjhw3s3k2wbh&from=1761235733000&to=now
 (venv_cerebras_pt) $
 ```
 
@@ -65,18 +65,25 @@ Usage:
 
 Available Commands:
   cancel             Cancel job
+  check-volumes      Check volume validity on this usernode
   clear-worker-cache Clear the worker cache
+  cluster            Manage cluster resources and information
   config             View csctl config files
+  debug-artifact     Manage debug artifacts.
   get                Get resources
+  job                Job management commands
   label              Label resources
   log-export         Gather and download logs.
+  session            Session management commands
+  system-maintenance System maintenance commands
   types              Display resource types
 
 Flags:
+      --csconfig string    config file /opt/cerebras/config_v2 (default "/opt/cerebras/config_v2")
   -d, --debug int          higher debug values will display more fields in output objects
   -h, --help               help for csctl
-      --namespace string   configure csctl to talk to different user namespaces
-  -v, --version            version for csctl
+  -n, --namespace string   configure csctl to talk to different user namespaces
+      --version            version for csctl
 
 Use "csctl [command] --help" for more information about a command.
 ```
