@@ -234,8 +234,7 @@ INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readin
 INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
 INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
 SUCCESS!
-
-	```
+```
 
 <!--- KGF: no way to disable a tooltip abbreviation from the include/abbreviations.md glossary used by
 https://squidfunk.github.io/mkdocs-material/reference/tooltips/#adding-a-glossary , unlike more basic extension https://python-markdown.github.io/extensions/abbreviations/ -->
