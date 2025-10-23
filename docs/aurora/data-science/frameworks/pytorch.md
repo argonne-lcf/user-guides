@@ -5,7 +5,7 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-# Major Changes in the frameworks module
+## Major Changes in the frameworks module
 
 - No more `torch_ccl`. `import oneccl_bindings_for_pytorch as torch_ccl` is not
 needed anymore.
