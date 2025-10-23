@@ -18,7 +18,7 @@ For a comprehensive overview of the Cerebras SDK, refer to the  [Cerebras SDK Do
 
 The Cerebras SDK relies on a Singularity container and associated scripts to execute CSL code on a simulator.
 
-On the login node, the Cerebras SDK is available at `/software/cerebras/cs_sdk` for your convenience. You can copy it to your `$HOME` directory, add it to your `$PATH`, and you’re ready to get started.
+On a user node, the Cerebras SDK is available at `/software/cerebras/cs_sdk` for your convenience. You can copy it to your `$HOME` directory, add it to your `$PATH`, and you’re ready to get started.
 
 ```bash linenums="1"
 cp -r /software/cerebras/cs_sdk-1.2.0 ~
@@ -81,7 +81,7 @@ sdk_debug_shell visualize
     Press Ctrl-C to exit
 	```
 
-To access the GUI from your local computer, forward port 8000 from the login node to your local machine and open the following URL in your web browser:  `http://localhost:8000/sdk-gui/`
+To access the GUI from your local computer, forward port 8000 from the user node through a login node to your local machine, and open the following URL in your web browser:  `http://localhost:8000/sdk-gui/`
 
 ![CS-3 connection diagram](./files/cs_sdk_gui.png)
 
