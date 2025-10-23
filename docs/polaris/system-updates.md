@@ -1,5 +1,9 @@
 # Polaris System Updates
 
+## 2025-10-24
+
+`conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
+
 ## 2025-10-10
 Following the system HPCM upgrade in August, the new `conda/2025-09-25` module is now available to users on Polaris; it is recommended that all users of the previous `conda/2024-04-29` module switch as soon as possible. While the old module remains the default if `module load conda` is used, the default will change in two weeks. The old module may be removed entirely in the future (advanced notice will be given).
 
