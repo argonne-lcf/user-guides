@@ -1,6 +1,6 @@
 # ALCF Inference Endpoints
 
-Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware.
+Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify) to receive updates and maintenance notifications.
 
 ## Quick Start
 
@@ -660,6 +660,10 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`. It is currently internal only to ALCF and will be made public in the future.
 - **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`), delete it, and restart the authentication process.
+
+## Notifications
+
+To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify).
 
 ## Contact Us
 
