@@ -88,11 +88,7 @@ To access the GUI from your local computer, forward port 8000 from the user node
 
 ## SDK with Appliance Mode
 
-!!! bug "Examples dont exit gracefully"
-
-	With the release of the Cerebras SDK version 2.6.0, the examples in the below tutorial don't exit gracefully after successful execution. Use ++ctrl+c++ to exit. A fix and updates are forthcoming.
-
-Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode.
+Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode. Please note that the compilation is performed on the worker/management node, hence there might not be enough resourses while compiling a model along with other jobs running. 
 
 ### Setup
 
@@ -100,7 +96,7 @@ Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster
 ```bash linenums="1"
 rm -r cs_appliance_sdk
 deactivate
-/software/cerebras/python3.8/bin/python3.8 -m venv cs_appliance_sdk
+/usr/bin/python3.11 -m venv cs_appliance_sdk
 source cs_appliance_sdk/bin/activate
 pip install --upgrade pip
 ```
@@ -119,7 +115,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.3.0
+git checkout rel-sdk-1.4.0
 cd ~/csl-examples/tutorials/gemv-01-complete-program/
 ```
 
@@ -130,17 +126,21 @@ Use the following `appliance_compile.py` script to compile the code in the respe
 ```python title="compile.py" linenums="1"
 import json
 from cerebras.sdk.client import SdkCompiler
+import logging
+from cerebras.appliance import logger
+logging.basicConfig(level=logging.INFO)
 
-# Instantiate copmiler
-compiler = SdkCompiler()
+# Instantiate copmiler using a context manager
+# Disable version check to ignore appliance client and server version differences.
+with SdkCompiler(disable_version_check=True) as compiler:
 
-# Launch compile job
-artifact_path = compiler.compile(
-    ".",
-    "layout.csl",
-    "--fabric-dims=757,996 --fabric-offsets=4,1 --memcpy --channels=1 -o out",
-    "."
-)
+    # Launch compile job
+    artifact_path = compiler.compile(
+        ".",
+        "layout.csl",
+        "--fabric-dims=8,3 --fabric-offsets=4,1 --memcpy --channels=1 -o out",
+        "."
+    )
 
 # Write the artifact_path to a JSON file
 with open("artifact_path.json", "w", encoding="utf8") as f:
@@ -149,21 +149,22 @@ with open("artifact_path.json", "w", encoding="utf8") as f:
 
 ??? note "Sample Output"
 
-	``` { .bash .nocopy }
-    $ python appliance_compile.py
-    2023-10-11 00:55:33,107 DEBUG    ClusterClient: server=10.140.65.35:443, authority=cluster-server.cerebras1.lab.alcf.anl.gov, cert=/opt/cerebras/certs/tls.crt, client-lease-strategy=0, heartbeat_options=HeartBeatOptions(cycle_seconds=10, cycle_threshold=12, lease_duration_seconds_override=0), options=[('grpc.service_config', '{"methodConfig": [{"name": [{"service": "cluster.cluster_mgmt_pb.ClusterManagement"}], "retryPolicy": {"maxAttempts": 3, "initialBackoff": "3s", "maxBackoff": "10s", "backoffMultiplier": 2, "retryableStatusCodes": ["UNAVAILABLE"]}}]}'), ('grpc.enable_retries', 1), ('grpc.default_authority', 'cluster-server.cerebras1.lab.alcf.anl.gov')]
-    2023-10-11 00:55:33,128 INFO     Initiating a new SDK compile job against the cluster server
-    2023-10-11 00:55:33,142 DEBUG    Run meta is available at /srv/projects/datascience/sraskar/cs2/cs_sdk/gemv/run_meta.json.
-    2023-10-11 00:55:33,142 INFO     sdk_compile job id: wsjob-cgvksf7bv8mnfszfmftozv, log path: /n1/wsjob/workdir/wsjob-cgvksf7bv8mnfszfmftozv
-    2023-10-11 00:55:33,142 DEBUG    Starting heartbeat thread for wsjob-cgvksf7bv8mnfszfmftozv. Heartbeat requests will be sent every 10 seconds.
-    2023-10-11 00:55:43,153 INFO     Poll ingress status: Waiting for coordinator to be ready.
-    2023-10-11 00:56:13,186 INFO     Ingress is ready.
-    2023-10-11 00:56:13,231 WARNING  There is no existing compile job record.
-    2023-10-11 00:56:13,231 WARNING  There is no existing compile job record.
-    2023-10-11 00:56:13,231 DEBUG    Cluster mgmt job handle: {'job_id': 'wsjob-cgvksf7bv8mnfszfmftozv', 'service_authority': 'wsjob-cgvksf7bv8mnfszfmftozv-coordinator-0.cluster-server.cerebras1.lab.alcf.anl.gov', 'service_url': '10.140.65.35:443', 'credentials_path': '/opt/cerebras/certs/tls.crt'}
-    2023-10-11 00:56:13,255 INFO     Application was found in the compile cache.
-    2023-10-11 00:56:13,266 DEBUG    Signaling heartbeat thread to stop for wsjob-cgvksf7bv8mnfszfmftozv
-	```
+``` { .bash .nocopy }
+$ python appliance_compile.py
+INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
+INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
+INFO:cerebras.cluster.client:Job id: wsjob-4mhdefdzswskmakfcp9hfe, workflow id: wflow-2ullyamqmrdi7nxodyl6f77xbi, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-4mhdefdzswskmakfcp9hfe
+INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
+INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
+WARNING:cerebras.cluster.client:Event 2025-10-23 19:49:54 +0000 UTC reason=InconsistentVersion wsjob=wsjob-4mhdefdzswskmakfcp9hfe message='Warning: client semantic version 1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
+INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
+INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
+INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
+2025-10-23 19:50:44,583 INFO     CSL compiler output:
+	CSL compiler produced no messages. Compilation successful.
+INFO:cerebras.sdk.client.sdk_appliance_client:CSL compiler output:
+	CSL compiler produced no messages. Compilation successful. 
+```
 
 The only difference between CS-3 and simuator run is the `fabric_dims`. It should be set to minimum required for simulatored runs.
 Above script generates `artifact.json` which is used by the `appliance_run.py` script.
@@ -176,17 +177,15 @@ Use the following `appliance_run.py` script to run the code in the respective ex
 #!/usr/bin/env cs_python
 
 import argparse
-import json
 import numpy as np
+import json
+#from cerebras.sdk.runtime.sdkruntimepybind import SdkRuntime, MemcpyDataType, MemcpyOrder # pylint: disable=no-name-in-module
+import logging
+from cerebras.appliance import logger
+logging.basicConfig(level=logging.INFO)
 
 from cerebras.appliance.pb.sdk.sdk_common_pb2 import MemcpyDataType, MemcpyOrder
 from cerebras.sdk.client import SdkRuntime
-
-
-# Read the artifact_path from the JSON file
-with open("artifact_path.json", "r", encoding="utf8") as f:
-        data = json.load(f)
-        artifact_path = data["artifact_path"]
 
 # Matrix dimensions
 M = 4
@@ -200,9 +199,12 @@ b = np.full(shape=M, fill_value=2.0, dtype=np.float32)
 # Calculate expected y
 y_expected = A@x + b
 
-# Instantiate a runner object using a context manager.
-# Set simulator=False if running on CS system within appliance.
-with SdkRuntime(artifact_path, simulator=False) as runner:
+# Read the artifact_path from the JSON file
+with open("artifact_path.json", "r", encoding="utf8") as f:
+    data = json.load(f)
+    artifact_path = data["artifact_path"]
+
+with SdkRuntime(artifact_path, simulator=True, disable_version_check=True) as runner:
     # Launch the init_and_compute function on device
     runner.launch('init_and_compute', nonblock=False)
 
@@ -212,6 +214,7 @@ with SdkRuntime(artifact_path, simulator=False) as runner:
     runner.memcpy_d2h(y_result, y_symbol, 0, 0, 1, 1, M, streaming=False,
     order=MemcpyOrder.ROW_MAJOR, data_type=MemcpyDataType.MEMCPY_32BIT, nonblock=False)
 
+
 # Ensure that the result matches our expectation
 np.testing.assert_allclose(y_result, y_expected, atol=0.01, rtol=0)
 print("SUCCESS!")
@@ -219,20 +222,19 @@ print("SUCCESS!")
 
 ??? note "Sample Output"
 
-	``` { .bash .nocopy }
-    $ python appliance_run.py
-    2023-10-11 00:56:21,281 DEBUG    ClusterClient: server=10.140.65.35:443, authority=cluster-server.cerebras1.lab.alcf.anl.gov, cert=/opt/cerebras/certs/tls.crt, client-lease-strategy=0, heartbeat_options=HeartBeatOptions(cycle_seconds=10, cycle_threshold=12, lease_duration_seconds_override=0), options=[('grpc.service_config', '{"methodConfig": [{"name": [{"service": "cluster.cluster_mgmt_pb.ClusterManagement"}], "retryPolicy": {"maxAttempts": 3, "initialBackoff": "3s", "maxBackoff": "10s", "backoffMultiplier": 2, "retryableStatusCodes": ["UNAVAILABLE"]}}]}'), ('grpc.enable_retries', 1), ('grpc.default_authority', 'cluster-server.cerebras1.lab.alcf.anl.gov')]
-    2023-10-11 00:56:21,304 INFO     Initiating a new SDK execute job against the cluster server
-    2023-10-11 00:56:21,316 DEBUG    Run meta is available at /srv/projects/datascience/sraskar/cs2/cs_sdk/gemv/run_meta.json.
-    2023-10-11 00:56:21,316 INFO     sdk_execute job id: wsjob-nm4gmz7jtq3khck2ltadbv, log path: /n1/wsjob/workdir/wsjob-nm4gmz7jtq3khck2ltadbv
-    2023-10-11 00:56:21,316 DEBUG    Starting heartbeat thread for wsjob-nm4gmz7jtq3khck2ltadbv. Heartbeat requests will be sent every 10 seconds.
-    2023-10-11 00:56:31,327 INFO     Poll ingress status: Waiting for coordinator to be ready.
-    2023-10-11 00:57:01,360 INFO     Ingress is ready.
-    2023-10-11 00:57:01,410 WARNING  There is no existing execute job record.
-    2023-10-11 00:57:01,410 WARNING  There is no existing execute job record.
-    2023-10-11 00:57:01,410 DEBUG    Cluster mgmt job handle: {'job_id': 'wsjob-nm4gmz7jtq3khck2ltadbv', 'service_authority': 'wsjob-nm4gmz7jtq3khck2ltadbv-coordinator-0.cluster-server.cerebras1.lab.alcf.anl.gov', 'service_url': '10.140.65.35:443', 'credentials_path': '/opt/cerebras/certs/tls.crt'}
-    SUCCESS!
-    2023-10-11 00:57:44,184 DEBUG    Signaling heartbeat thread to stop for wsjob-nm4gmz7jtq3khck2ltadbv
+``` { .bash .nocopy }
+$ python appliance_run.py
+INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
+INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
+INFO:cerebras.cluster.client:Job id: wsjob-qqcsg8g5z66nknmk4d48gp, workflow id: wflow-kcrf2anv7zconl7xq2idceztdq, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-qqcsg8g5z66nknmk4d48gp
+INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
+INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
+WARNING:cerebras.cluster.client:Event 2025-10-23 19:54:55 +0000 UTC reason=InconsistentVersion wsjob=wsjob-qqcsg8g5z66nknmk4d48gp message='Warning: client semantic version 1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
+INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
+INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
+INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
+SUCCESS!
+
 	```
 
 <!--- KGF: no way to disable a tooltip abbreviation from the include/abbreviations.md glossary used by
