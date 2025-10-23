@@ -80,7 +80,19 @@ sdk_debug_shell visualize
     Press Ctrl-C to exit
     ```
 
-To access the GUI from your local computer, forward port 8000 from the user node through a login node to your local machine, and open the following URL in your web browser:  `http://localhost:8000/sdk-gui/`
+To access the GUI from your local computer, forward port 8000 from the user node through a login node to a local machine port 8008.
+
+Adjust one or both port numbers if they are already in use.
+
+Example script to forward port 8000 to localhost 8008:
+```bash
+export SDK_PORT=8000
+export LOCAL_PORT=8008
+export ALCFUserID=<your alcf username>
+ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cer-login-04.ai.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:SDK_PORT -N cer-anl-net001-us-sr01
+```
+
+Then open the following URL in your web browser:  `http://localhost:8008/sdk-gui/`
 
 ![CS-3 connection diagram](./files/cs_sdk_gui.png)
 
