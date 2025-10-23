@@ -150,19 +150,22 @@ with open("artifact_path.json", "w", encoding="utf8") as f:
 ??? note "Sample Output"
 
 ``` { .bash .nocopy }
-$ python appliance_compile.py
-INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
-INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
-INFO:cerebras.cluster.client:Job id: wsjob-4mhdefdzswskmakfcp9hfe, workflow id: wflow-2ullyamqmrdi7nxodyl6f77xbi, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-4mhdefdzswskmakfcp9hfe
-INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
-INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
-WARNING:cerebras.cluster.client:Event 2025-10-23 19:49:54 +0000 UTC reason=InconsistentVersion wsjob=wsjob-4mhdefdzswskmakfcp9hfe message='Warning: client semantic version 1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
-INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
-INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
-INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
-2025-10-23 19:50:44,583 INFO     CSL compiler output:
+	$ python appliance_compile.py
+	INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
+	INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
+	INFO:cerebras.cluster.client:Job id: wsjob-4mhdefdzswskmakfcp9hfe, workflow id: wflow-2ullyamqmrdi7nxodyl6f77xbi, namespace: job-operator, remote log path:
+	/n1/wsjob/workdir/job-operator/wsjob-4mhdefdzswskmakfcp9hfe
+	INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
+	INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
+	WARNING:cerebras.cluster.client:Event 2025-10-23 19:49:54 +0000 UTC reason=InconsistentVersion wsjob=wsjob-4mhdefdzswskmakfcp9hfe message='Warning: client semantic 		version 1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
+	INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
+	INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-
+	4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
+	INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-
+	wsjob=wsjob-4mhdefdzswskmakfcp9hfe&from=1761248404000&to=now
+	2025-10-23 19:50:44,583 INFO     CSL compiler output:
 	CSL compiler produced no messages. Compilation successful.
-INFO:cerebras.sdk.client.sdk_appliance_client:CSL compiler output:
+	INFO:cerebras.sdk.client.sdk_appliance_client:CSL compiler output:
 	CSL compiler produced no messages. Compilation successful. 
 ```
 
@@ -213,27 +216,26 @@ with SdkRuntime(artifact_path, simulator=True, disable_version_check=True) as ru
     y_result = np.zeros([1*1*M], dtype=np.float32)
     runner.memcpy_d2h(y_result, y_symbol, 0, 0, 1, 1, M, streaming=False,
     order=MemcpyOrder.ROW_MAJOR, data_type=MemcpyDataType.MEMCPY_32BIT, nonblock=False)
-
-
 # Ensure that the result matches our expectation
 np.testing.assert_allclose(y_result, y_expected, atol=0.01, rtol=0)
 print("SUCCESS!")
 ```
 
-???note "Sample Output"
-
-``` { .bash .nocopy }
-$ python appliance_run.py
-INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
-INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
-INFO:cerebras.cluster.client:Job id: wsjob-qqcsg8g5z66nknmk4d48gp, workflow id: wflow-kcrf2anv7zconl7xq2idceztdq, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-qqcsg8g5z66nknmk4d48gp
-INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
-INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
-WARNING:cerebras.cluster.client:Event 2025-10-23 19:54:55 +0000 UTC reason=InconsistentVersion wsjob=wsjob-qqcsg8g5z66nknmk4d48gp message='Warning: client semantic version 1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
-INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
-INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
-INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
-SUCCESS!
+??? note "Sample Output"
+```{ .bash .nocopy }
+   $ python appliance_run.py
+   INFO:cerebras.cluster.client:Appliance client semantic version: 1.1.0, cluster server semantic version: 1.1.2, job operator semantic version: 1.1.2
+   INFO:cerebras.cluster.client:Initiating a new SDK compile job against the cluster server
+   INFO:cerebras.cluster.client:Job id: wsjob-qqcsg8g5z66nknmk4d48gp, workflow id: wflow-kcrf2anv7zconl7xq2idceztdq, namespace: job-operator, remote log path:
+	/n1/wsjob/workdir/job-operator/wsjob-qqcsg8g5z66nknmk4d48gp
+   INFO:cerebras.cluster.client:Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1.
+   INFO:cerebras.cluster.client:Recording the timestamp when jobs is scheduled.
+   WARNING:cerebras.cluster.client:Event 2025-10-23 19:54:55 +0000 UTC reason=InconsistentVersion wsjob=wsjob-qqcsg8g5z66nknmk4d48gp message='Warning: client semantic version    1.1.0 is inconsistent with cluster server semantic version 1.1.2, there's a risk job could fail due to inconsistent setup.'
+   INFO:cerebras.cluster.client:Poll ingress status: Waiting for job ingress readiness.
+   INFO:cerebras.cluster.client:Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-    qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
+   INFO:cerebras.cluster.client:Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-
+	wsjob=wsjob-   qqcsg8g5z66nknmk4d48gp&from=1761248705000&to=now
+   SUCCESS!
 ```
 
 <!--- KGF: no way to disable a tooltip abbreviation from the include/abbreviations.md glossary used by
