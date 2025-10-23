@@ -220,7 +220,7 @@ np.testing.assert_allclose(y_result, y_expected, atol=0.01, rtol=0)
 print("SUCCESS!")
 ```
 
-??? note "Sample Output"
+???note "Sample Output"
 
 ``` { .bash .nocopy }
 $ python appliance_run.py
