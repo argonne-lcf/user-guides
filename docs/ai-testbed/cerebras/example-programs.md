@@ -166,7 +166,7 @@ The last parts of the output should resemble the following:
 ```
 
 ## Llama2-7B 
-The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
+The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
 
 
 First, source a Cerebras PyTorch virtual environment.
@@ -226,7 +226,7 @@ Please find a sample output
 
 ## ESM-2
 Evolutionary Scale Modeling ([ESM-2](https://www.science.org/doi/abs/10.1126/science.ade2574)) is a transformer protein language models from the Meta Fundamental AI Research Protein Team (FAIR). 
-The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/nlp/esm2`. Configs available are listed at [https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model). This example will use the Uniref 50 dataset, preprocessed at path /software/datasets/ESM-2/, to train a small 35M parameter model.
+The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/nlp/esm2`. Configs available are listed at [https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2](https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2). This example will use the Uniref 50 dataset, preprocessed at path /software/datasets/ESM-2/, to train a small 35M parameter model.
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
@@ -341,7 +341,7 @@ Sample output
 
 
 ## Diffusion Transformer
-The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
+The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/cerebras/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/dataset/dit/`, and the config for the largest model.
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash

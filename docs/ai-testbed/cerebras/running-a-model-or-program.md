@@ -5,12 +5,12 @@
 
 #### Job submission and queuing
 
-Cerebras jobs are initiated and tracked automatically within the Python framework in **modelzoo.common.pytorch.run_utils**. This framework interacts with the Cerebras cluster management node.
+Cerebras jobs are initiated and tracked automatically within the Python framework in **cerebras.modelzoo.common.run_utils**. This framework interacts with the Cerebras cluster management node.
 
 #### Login nodes
 
 Jobs are launched from **user** nodes.
-If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific user node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:2
+If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific user node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
 
 ```bash
 man screen
