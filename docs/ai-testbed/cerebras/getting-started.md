@@ -11,20 +11,16 @@ Connection to one of the **CS-3** cluster login nodes requires an MFA passcode f
 *In the examples below, <strong>replace ALCFUserID with your ALCF user id.</strong>*<br>
 To connect to a CS-3 login:<br>
 
-ssh to a desired login node:
+ssh to the login node:
 ```bash
-ssh ALCFUserID@cer-login-04.ai.alcf.anl.gov
-```
-or
-```bash
-ssh ALCFUserID@cer-login-05.ai.alcf.anl.gov
+ssh ALCFUserID@cerebras.alcf.anl.gov
 ```
 
 Then ssh to a cerebras user node:
 ```bash
-ssh cer-anl-net001-us-sr01
+ssh cer-usn-01
 ```
 or
 ```bash
-ssh cer-anl-net001-us-sr02
+ssh cer-usn-02
 ```
