@@ -99,7 +99,7 @@ Then open the following URL in your web browser:  `http://localhost:8008/sdk-gui
 
 ## SDK with Appliance Mode
 
-Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode. Please note that the compilation is performed on the worker/management node, hence there might not be enough resourses while compiling a model along with other jobs running. For more information on differences between the simulator code and changes needed to run on appliance, refer to ![Appliance Mode](https://sdk.cerebras.net/appliance-mode).
+Appliance Mode enables running code directly on the Cerebras Wafer-Scale Cluster. In addition to the containerized Singularity build of the Cerebras SDK, the SDK also supports operations on Cerebras Wafer-Scale Clusters running in appliance mode. Please note that the compilation is performed on the worker/management node, hence there might not be enough resourses while compiling a model along with other jobs running. For more information on differences between the simulator code and changes needed to run on appliance, refer to [Appliance Mode](https://sdk.cerebras.net/appliance-mode).
 
 ### Setup
 
