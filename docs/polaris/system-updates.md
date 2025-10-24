@@ -1,10 +1,39 @@
 # Polaris System Updates
 
+## 2025-10-24
+
+`conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
+
+## 2025-10-10
+Following the system HPCM upgrade in August, the new `conda/2025-09-25` module is now available to users on Polaris; it is recommended that all users of the previous `conda/2024-04-29` module switch as soon as possible. While the old module remains the default if `module load conda` is used, the default will change in two weeks. The old module may be removed entirely in the future (advanced notice will be given).
+
+The new module restores functionality broken by the system upgrade and updates the following major libraries and package versions:
+
+- PyTorch 2.8
+- TensorFlow pre-release 2.21.0
+- DeepSpeed 0.17.6
+- CUDA 12.9.1
+- cuDNN 9.13.0
+- NCCL 2.28.3
+- cuSPARSELt 0.8.1.1
+- NVSHMEM 3.3.9
+
+Some highlights of changes relative to previous versions of this module:
+
+- Miniforge (conda-forge, libmamba/mamba) replaces Miniconda
+- Horovod is no longer included in the base environment
+- vLLM, verl, mamba-ssm, megatron-core, SGLang, uv, FlashInfer, and other packages added
+- Improved PyTorch compatibility with mpi4py and Cray MPICH
+
+!!! note
+
+	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model. 
+
 ## 2025-08-29
 
 Polaris HPCM upgrade involves the following key version software changes:
 
-- Suse 15 SP6 (a major kernel change)
+- SUSE 15 SP6 (a major kernel change)
 - Slingshot host stack 12.0.0, with improvements to handling nvidia/nccl/etc and updates to libfabric
 - Update NVIDIA driver version (565.57.01) (CUDA driver API 12.7)
 - Default base nvidia-hpc_sdk is now at 24.11 (CUDA toolkit 12.6)
