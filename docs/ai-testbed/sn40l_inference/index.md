@@ -2,7 +2,7 @@
 
 ## Introduction
 
-SambaStack is a purpose-built hardware and software platform optimized for AI inference, powered by SambaNova’s advanced Reconfigurable Dataflow Unit (RDU) processors. At the core of this infrastructure is a SambaNova SN40L cluster, composed of two SambaRacks—each housing 16 SL40L RDU systems. This dedicated setup delivers high-throughput, low-latency performance for machine learning workloads. Models running on the cluster are exposed through OpenAI-compatible API endpoints, with each endpoint capable of hosting multiple independently accessible models.
+SambaStack is a purpose-built hardware and software platform optimized for AI inference, powered by SambaNova’s advanced Reconfigurable Dataflow Unit (RDU) processors. At the core of this infrastructure is a SambaNova SN40L cluster, composed of two SambaRacks—each housing 16 SN40L RDU systems. This dedicated setup delivers high-throughput, low-latency performance for machine learning workloads. Models running on the cluster are exposed through OpenAI-compatible API endpoints, with each endpoint capable of hosting multiple independently accessible models.
 
 Below are some of the links to SambaNova documentation.
 
