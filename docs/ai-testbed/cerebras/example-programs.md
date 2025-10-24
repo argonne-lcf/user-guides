@@ -1,19 +1,39 @@
 # Example Programs
 
 ## Use a local copy of the model zoo
-Make a working directory and a local copy of the Cerebras **modelzoo** and **anl_shared** repository, if not previously done, as follows.
+Make a working directory and a local copy of the Cerebras **modelzoo** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_2.4.0
-cd ~/R_2.4.0
+mkdir ~/R_2.6.0
+cd ~/R_2.6.0
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.4.0
+git checkout Release_2.6.0
 ```
-<!---
-cp -r /software/cerebras/model_zoo/anl_shared/ ~/R_2.4.0/anl_shared
---->
+
+Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
+```bash
+export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
+export https_proxy=http://proxy.alcf.anl.gov:3128
+```
+
+For all of these samples, if you want the training to use more than one CS3, either
+
+* add `--num_csx=2` (or 3 or 4) to the `cszoo fit` command line, or
+* add "trainer.init.backend.cluster_config.num_csx: 2" (or 3 or 4) to the config yaml, e.g.
+```console
+trainer:
+  init:
+    backend:
+      backend_type: CSX
+      cluster_config:
+        num_csx: 2
+```
+Switching to the data parallel mode will force a one-time recompile (with compile artifacts cached). 
+
+Note : The Cerebras CS3 cluster has 2 sets of MemX. One the larger memory group inteded for larger models (12 nodes of 1128Gi memory) and another smaller memX group ((12 nodes of 183Gi memory). Each memX node group can only be associated to a given job, hence we can have a maximum of 2 training jobs. So we encourage users to use distributed training for better utilization of resources and faster training. 
 
 <!---
 ## UNet
@@ -23,17 +43,17 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 --->
 
@@ -48,7 +68,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_2.4.0/anl_shared/braggnn/tf
+cd ~/R_2.6.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -68,280 +88,192 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+cszoo fit configs/bert_large_MSL128_sampleds.yaml --job_labels name=bert_pt --model_dir $MODEL_DIR |& tee mytest.log
 ```
-Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.4.0/modelzoo/modelzoo/transformers/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
+<!---
+previously,
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+--->
+Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
 ```console
-2023-11-29 20:07:49,284 INFO:   Beginning appliance run
-2023-11-29 20:08:14,365 INFO:   | Train Device=CSX, Step=100, Loss=9.50000, Rate=4088.28 samples/sec, GlobalRate=4088.26 samples/sec
-2023-11-29 20:08:39,820 INFO:   | Train Device=CSX, Step=200, Loss=8.37500, Rate=4048.91 samples/sec, GlobalRate=4055.21 samples/sec
-2023-11-29 20:09:05,356 INFO:   | Train Device=CSX, Step=300, Loss=7.96875, Rate=4025.61 samples/sec, GlobalRate=4040.05 samples/sec
-2023-11-29 20:09:30,626 INFO:   | Train Device=CSX, Step=400, Loss=7.56250, Rate=4041.61 samples/sec, GlobalRate=4043.10 samples/sec
-2023-11-29 20:09:56,022 INFO:   | Train Device=CSX, Step=500, Loss=7.50000, Rate=4035.92 samples/sec, GlobalRate=4040.90 samples/sec
-2023-11-29 20:10:21,410 INFO:   | Train Device=CSX, Step=600, Loss=7.37500, Rate=4034.41 samples/sec, GlobalRate=4039.65 samples/sec
-2023-11-29 20:10:46,690 INFO:   | Train Device=CSX, Step=700, Loss=7.37500, Rate=4044.10 samples/sec, GlobalRate=4041.20 samples/sec
-2023-11-29 20:11:12,004 INFO:   | Train Device=CSX, Step=800, Loss=7.25000, Rate=4044.75 samples/sec, GlobalRate=4041.70 samples/sec
-2023-11-29 20:11:37,196 INFO:   | Train Device=CSX, Step=900, Loss=7.21875, Rate=4056.77 samples/sec, GlobalRate=4044.25 samples/sec
-2023-11-29 20:12:02,285 INFO:   | Train Device=CSX, Step=1000, Loss=7.12500, Rate=4071.60 samples/sec, GlobalRate=4047.95 samples/sec
-2023-11-29 20:12:02,286 INFO:   Saving checkpoint at step 1000
-2023-11-29 20:12:37,079 INFO:   Saved checkpoint model_dir_bert_large_pytorch/checkpoint_1000.mdl
-2023-11-29 20:13:25,683 INFO:   Heartbeat thread stopped for wsjob-gfi2baioyfduozkmgsc6a7.
-2023-11-29 20:13:25,691 INFO:   Training completed successfully!
-2023-11-29 20:13:25,691 INFO:   Processed 1024000 sample(s) in 336.373620536 seconds.
+2025-10-09 18:43:37,688 INFO:   Beginning appliance run
+2025-10-09 18:43:41,110 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=100, Loss=7.08926, Rate=7796.80 samples/sec, GlobalRate=7499.90 samples/sec, LoopTimeRemaining=0:00:04, TimeRemaining=0:00:04
+2025-10-09 18:43:45,277 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=200, Loss=7.13253, Rate=5099.83 samples/sec, GlobalRate=6754.66 samples/sec, LoopTimeRemaining=0:00:01, TimeRemaining=0:00:01
+2025-10-09 18:43:46,146 INFO:   | Eval Device=CSX, GlobalStep=1000, Batch=220, Loss=6.98112, Rate=6014.04 samples/sec, GlobalRate=6665.64 samples/sec, LoopTimeRemaining=0:00:00, TimeRemaining=0:00:00
+2025-10-09 18:44:08,969 INFO:   Avg Eval Loss: 6.981118208711798
+2025-10-09 18:44:08,986 INFO:   Evaluation metrics:
+2025-10-09 18:44:08,986 INFO:     - eval/accuracy_cls = 0.7051668763160706
+2025-10-09 18:44:08,986 INFO:     - eval/accuracy_masked_lm = 0.13364547491073608
+2025-10-09 18:44:08,986 INFO:     - eval/mlm_perplexity = 701.6852416992188
+2025-10-09 18:44:08,986 INFO:   Evaluation completed successfully!
+2025-10-09 18:44:08,992 INFO:   Processed 3720000 training sample(s) in 1017.47348681 seconds.
 ```
 
 ## GPT-J PyTorch
 
 GPT-J [[github]](https://github.com/kingoflolz/mesh-transformer-jax) is an auto-regressive language model created by [EleutherAI](https://www.eleuther.ai/).
-This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS2.
+This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS3.
 
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+cszoo fit configs/params_gptj_6B_sampleds.yaml --job_labels name=gptj --model_dir $MODEL_DIR |& tee mytest.log
 ```
+
+Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_gptj_6B_sampleds.yaml`. 
+
+<!---
+Previously,
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+--->
 
 The last parts of the output should resemble the following:
 
 ```console
-2023-11-29 20:59:19,223 INFO:   Beginning appliance run
-2023-11-29 21:03:53,875 INFO:   | Train Device=CSX, Step=100, Loss=8.43750, Rate=43.70 samples/sec, GlobalRate=43.70 samples/sec
-2023-11-29 21:08:28,779 INFO:   | Train Device=CSX, Step=200, Loss=8.12500, Rate=43.67 samples/sec, GlobalRate=43.67 samples/sec
-2023-11-29 21:08:28,781 INFO:   Saving checkpoint at step 200
-2023-11-29 21:13:56,695 INFO:   Saved checkpoint model_dir_gptj/checkpoint_200.mdl
-2023-11-29 21:14:30,135 INFO:   Heartbeat thread stopped for wsjob-kd4olqkhu6ya8qqzt88utd.
-2023-11-29 21:14:30,142 INFO:   Training completed successfully!
-2023-11-29 21:14:30,142 INFO:   Processed 24000 sample(s) in 910.883781998 seconds.
+2025-10-10 20:03:38,180 INFO:   Beginning appliance run
+2025-10-10 20:05:52,476 INFO:   | Train Device=CSX, Step=50, Loss=9.44598, Rate=44.84 samples/sec, GlobalRate=44.70 samples/sec, LoopTimeRemaining=0:06:42, TimeRemaining>0:06:42
+2025-10-10 20:08:06,526 INFO:   | Train Device=CSX, Step=100, Loss=8.34360, Rate=45.03 samples/sec, GlobalRate=44.73 samples/sec, LoopTimeRemaining=0:04:28, TimeRemaining>0:04:28
+2025-10-10 20:10:20,442 INFO:   | Train Device=CSX, Step=150, Loss=8.21114, Rate=45.11 samples/sec, GlobalRate=44.75 samples/sec, LoopTimeRemaining=0:02:14, TimeRemaining>0:02:14
+2025-10-10 20:12:34,522 INFO:   | Train Device=CSX, Step=200, Loss=8.01509, Rate=44.77 samples/sec, GlobalRate=44.75 samples/sec, LoopTimeRemaining=0:00:00, TimeRemaining>0:00:00
+2025-10-10 20:12:34,527 INFO:   Saving checkpoint at step 200
+2025-10-10 20:20:51,668 INFO:   Saved checkpoint model_dir_gptj/checkpoint_200.mdl
+2025-10-10 20:21:14,280 INFO:   Training completed successfully!
+2025-10-10 20:21:14,286 INFO:   Processed 24000 training sample(s) in 1443.67300221 seconds.
+/home/arnoldw/R_2.6.0/venv_cerebras_pt/lib/python3.8/site-packages/pydantic/_internal/_gener
 ```
 
 ## Llama2-7B 
-The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md#configs-included-for-this-model). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
+The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/transformers/pytorch/llama and its overview at [https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md](https://github.com/Cerebras/modelzoo/blob/main/src/cerebras/modelzoo/models/nlp/llama/README.md). This set up will use a subset of pile data (preprocessed at path /software/datasets/llama_data_32K/) to train with a 32K vocab size. 
 
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training:
 ```bash
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
 cp /software/cerebras/dataset/params_llama2_7b.yaml configs/params_llama2_7b.yaml
 export MODEL_DIR=model_dir_llama2_7b
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+cszoo fit configs/params_llama2_7b.yaml --job_labels name=llama2_7b --model_dir model_dir_llama2_7b |& tee mytest.log
 ```
+
+Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_llama2_7b.yaml`. 
+<!--
+Formerly,
+python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+-->
 
 Please find a sample output
 ```bash
-2024-03-21 14:40:57,949 INFO:   Effective batch size is 99.
-2024-03-21 14:40:57,970 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "/srv/projects/datascience/vsastry/model_dir_llama/" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
-2024-03-21 14:40:57,971 INFO:   No checkpoints were found in "/srv/projects/datascience/vsastry/model_dir_llama/".
-2024-03-21 14:40:57,971 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
-2024-03-21 14:40:59,419 INFO:   Saving checkpoint at step 0
-2024-03-21 14:48:46,988 INFO:   Saved checkpoint /srv/projects/datascience/vsastry/model_dir_llama/checkpoint_0.mdl
-2024-03-21 14:49:05,547 INFO:   Compiling the model. This may take a few minutes.
-2024-03-21 14:49:05,550 INFO:   Defaulted to use the job-operator namespace as the usernode config /opt/cerebras/config_v2 only has access to that namespace.
-2024-03-21 14:49:06,819 INFO:   Initiating a new image build job against the cluster server.
-2024-03-21 14:49:06,898 INFO:   Custom worker image build is disabled from server.
-2024-03-21 14:49:06,911 INFO:   Defaulted to use the job-operator namespace as the usernode config /opt/cerebras/config_v2 only has access to that namespace.
-2024-03-21 14:49:07,143 INFO:   Initiating a new compile wsjob against the cluster server.
-2024-03-21 14:49:07,226 INFO:   compile job id: wsjob-pg4gslxvgsalvh6ppdvydb, remote log path: /n1/wsjob/workdir/job-operator/wsjob-pg4gslxvgsalvh6ppdvydb
-2024-03-21 14:49:17,259 INFO:   Poll ingress status: Waiting for job running, current job status: Queueing, msg: job is queueing. Job queue status: current job is top of queue but likely blocked by running jobs, 1 compile job(s) running using 67Gi memory. For more information, please run 'csctl get jobs'.
-2024-03-21 15:02:07,673 INFO:   Poll ingress status: Waiting for job running, current job status: Queueing, msg: job is queueing. Job queue status: current job is top of queue but likely blocked by running jobs, 1 execute job(s) running using 1 system(s), 1 compile job(s) running using 67Gi memory. For more information, please run 'csctl get jobs'.
-2024-03-21 15:02:17,683 INFO:   Poll ingress status: Waiting for job service readiness.
-2024-03-21 15:02:47,717 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
-2024-03-21 15:02:58,509 INFO:   Pre-optimization transforms...
-2024-03-21 15:03:14,815 INFO:   Optimizing layouts and memory usage...
-2024-03-21 15:03:14,839 INFO:   Gradient accumulation enabled
-2024-03-21 15:03:14,840 WARNING:   Gradient accumulation will search for an optimal micro batch size based on internal performance models, which can lead to an increased compile time. Specify `micro_batch_size` option in the 'train_input/eval_input' section of your .yaml parameter file to set the gradient accumulation microbatch size, if an optimal microbatch size is known.
-
-2024-03-21 15:03:14,842 INFO:   Gradient accumulation trying sub-batch size 3...
-2024-03-21 15:03:21,632 INFO:   Exploring floorplans
-2024-03-21 15:03:30,198 INFO:   Exploring data layouts
-2024-03-21 15:03:50,589 INFO:   Optimizing memory usage
-2024-03-21 15:05:23,008 INFO:   Gradient accumulation trying sub-batch size 33...
-2024-03-21 15:05:30,532 INFO:   Exploring floorplans
-2024-03-21 15:05:37,304 INFO:   Exploring data layouts
-2024-03-21 15:06:11,327 INFO:   Optimizing memory usage
-2024-03-21 15:11:37,204 INFO:   Gradient accumulation trying sub-batch size 9...
-2024-03-21 15:11:44,383 INFO:   Exploring floorplans
-2024-03-21 15:11:50,639 INFO:   Exploring data layouts
-2024-03-21 15:12:16,120 INFO:   Optimizing memory usage
-2024-03-21 15:15:59,788 INFO:   Gradient accumulation trying sub-batch size 11...
-2024-03-21 15:16:06,314 INFO:   Exploring floorplans
-2024-03-21 15:16:12,563 INFO:   Exploring data layouts
-2024-03-21 15:16:40,965 INFO:   Optimizing memory usage
-2024-03-21 15:21:03,938 INFO:   Exploring floorplans
-2024-03-21 15:21:10,918 INFO:   Exploring data layouts
-2024-03-21 15:22:03,953 INFO:   Optimizing memory usage
-2024-03-21 15:30:35,456 INFO:   No benefit from gradient accumulation expected. Compile will proceed at original per-box batch size 99 with 9 lanes
-
-2024-03-21 15:30:35,540 INFO:   Post-layout optimizations...
-2024-03-21 15:32:11,639 INFO:   Allocating buffers...
-2024-03-21 15:32:18,023 INFO:   Code generation...
-2024-03-21 15:32:53,573 INFO:   Compiling image...
-2024-03-21 15:32:53,578 INFO:   Compiling kernels
-2024-03-21 15:34:39,222 INFO:   Compiling final image
-2024-03-21 15:36:54,995 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_2599085507768189065
-2024-03-21 15:36:55,146 INFO:   Heartbeat thread stopped for wsjob-pg4gslxvgsalvh6ppdvydb.
-2024-03-21 15:36:55,160 INFO:   Compile was successful!
-2024-03-21 15:36:55,171 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
-2024-03-21 15:36:56,403 INFO:   Defaulted to use the job-operator namespace as the usernode config /opt/cerebras/config_v2 only has access to that namespace.
-2024-03-21 15:36:56,659 INFO:   Initiating a new execute wsjob against the cluster server.
-2024-03-21 15:36:56,758 INFO:   execute job id: wsjob-bdcvvsrwely3kbfwduefqx, remote log path: /n1/wsjob/workdir/job-operator/wsjob-bdcvvsrwely3kbfwduefqx
-2024-03-21 15:37:06,789 INFO:   Poll ingress status: Waiting for job running, current job status: Scheduled, msg: job is scheduled. 
-2024-03-21 15:37:16,793 INFO:   Poll ingress status: Waiting for job service readiness.
-2024-03-21 15:37:36,838 INFO:   Poll ingress status: Waiting for job ingress readiness.
-2024-03-21 15:37:46,861 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
-2024-03-21 15:37:47,052 INFO:   Preparing to execute using 1 CSX
-2024-03-21 15:38:33,999 INFO:   About to send initial weights
-2024-03-21 15:40:01,150 INFO:   Finished sending initial weights
-2024-03-21 15:40:01,154 INFO:   Finalizing appliance staging for the run
-2024-03-21 15:40:01,203 INFO:   Waiting for device programming to complete
-2024-03-21 15:41:26,576 INFO:   Device programming is complete
-2024-03-21 15:41:27,888 INFO:   Using network type: ROCE
-2024-03-21 15:41:27,890 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
-2024-03-21 15:41:27,942 INFO:   Input workers have begun streaming input data
-2024-03-21 15:41:45,009 INFO:   Appliance staging is complete
-2024-03-21 15:41:45,021 INFO:   Beginning appliance run
-2024-03-21 15:49:45,474 INFO:   | Train Device=CSX, Step=100, Loss=9.84375, Rate=20.61 samples/sec, GlobalRate=20.61 samples/sec
-2024-03-21 15:57:49,616 INFO:   | Train Device=CSX, Step=200, Loss=8.35938, Rate=20.51 samples/sec, GlobalRate=20.53 samples/sec
-2024-03-21 16:05:53,769 INFO:   | Train Device=CSX, Step=300, Loss=8.26562, Rate=20.47 samples/sec, GlobalRate=20.50 samples/sec
-2024-03-21 16:13:58,078 INFO:   | Train Device=CSX, Step=400, Loss=7.02344, Rate=20.45 samples/sec, GlobalRate=20.49 samples/sec
-2024-03-21 16:22:02,644 INFO:   | Train Device=CSX, Step=500, Loss=7.07812, Rate=20.44 samples/sec, GlobalRate=20.48 samples/sec
-2024-03-21 16:30:06,513 INFO:   | Train Device=CSX, Step=600, Loss=7.34375, Rate=20.45 samples/sec, GlobalRate=20.47 samples/sec
-2024-03-21 16:38:10,737 INFO:   | Train Device=CSX, Step=700, Loss=7.19531, Rate=20.45 samples/sec, GlobalRate=20.47 samples/sec
-2024-03-21 16:46:15,052 INFO:   | Train Device=CSX, Step=800, Loss=6.52344, Rate=20.44 samples/sec, GlobalRate=20.47 samples/sec
-2024-03-21 16:54:19,448 INFO:   | Train Device=CSX, Step=900, Loss=6.46875, Rate=20.44 samples/sec, GlobalRate=20.46 samples/sec
-2024-03-21 17:02:24,111 INFO:   | Train Device=CSX, Step=1000, Loss=5.98438, Rate=20.43 samples/sec, GlobalRate=20.46 samples/sec
-2024-03-21 17:10:28,632 INFO:   | Train Device=CSX, Step=1100, Loss=6.17188, Rate=20.43 samples/sec, GlobalRate=20.46 samples/sec
-2024-03-21 17:18:32,943 INFO:   | Train Device=CSX, Step=1200, Loss=6.04688, Rate=20.44 samples/sec, GlobalRate=20.46 samples/sec
-2024-03-21 17:26:37,241 INFO:   | Train Device=CSX, Step=1300, Loss=5.54688, Rate=20.44 samples/sec, GlobalRate=20.45 samples/sec
-2024-03-21 17:34:41,491 INFO:   | Train Device=CSX, Step=1400, Loss=5.92188, Rate=20.44 samples/sec, GlobalRate=20.45 samples/sec
-2024-03-21 17:42:45,646 INFO:   | Train Device=CSX, Step=1500, Loss=5.68750, Rate=20.45 samples/sec, GlobalRate=20.45 samples/sec
-2024-03-21 17:50:50,110 INFO:   | Train Device=CSX, Step=1600, Loss=5.85938, Rate=20.44 samples/sec, GlobalRate=20.45 samples/sec
+2025-10-13 14:47:37,651 INFO:   Found existing cached compile with hash: "cs_16053036657376785725"
+2025-10-13 14:47:41,091 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_16053036657376785725
+2025-10-13 14:47:46,918 INFO:   Compile was successful!
+2025-10-13 14:47:46,918 INFO:   Waiting for weight initialization to complete
+2025-10-13 14:47:46,918 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
+2025-10-13 14:47:49,008 INFO:   Initiating a new execute wsjob against the cluster server.
+2025-10-13 14:47:49,037 INFO:   Job id: wsjob-kgqvqqxnp9zvpmwulcbxuj, workflow id: wflow-cxj2gwf7idcfanryokatnn, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-kgqvqqxnp9zvpmwulcbxuj
+2025-10-13 14:48:09,058 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 0/24.
+2025-10-13 14:48:09,078 WARNING:   Event 2025-10-13 14:47:50 +0000 UTC reason=InconsistentVersion wsjob=wsjob-kgqvqqxnp9zvpmwulcbxuj message='Warning: job image version 2.5.1-202507111115-6-48e76807 is inconsistent with cluster server version 3.0.1-202508200300-150-bba1322a+bba1322aed, there's a risk job could fail due to inconsistent setup.'
+2025-10-13 14:48:19,088 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 17/18.
+2025-10-13 14:48:29,112 INFO:   Poll ingress status: Waiting for job ingress readiness.
+2025-10-13 14:48:39,135 INFO:   Poll ingress status: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-kgqvqqxnp9zvpmwulcbxuj&from=1760366287000&to=now
+2025-10-13 14:48:39,149 INFO:   Poll ingress success: Job ingress ready, dashboard: https://grafana.anl0.cerebras.internal/d/WebHNShVz/wsjob-dashboard?orgId=1&var-wsjob=wsjob-kgqvqqxnp9zvpmwulcbxuj&from=1760366287000&to=now
+2025-10-13 14:48:39,240 INFO:   Preparing to execute using 1 CSX
+2025-10-13 14:49:14,926 INFO:   About to send initial weights
+2025-10-13 14:49:28,149 INFO:   Finished sending initial weights
+2025-10-13 14:49:28,150 INFO:   Finalizing appliance staging for the run
+2025-10-13 14:49:28,158 INFO:   Waiting for device programming to complete
+2025-10-13 14:53:20,585 INFO:   Device programming is complete
+2025-10-13 14:53:21,628 INFO:   Using network type: ROCE
+2025-10-13 14:53:21,629 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2025-10-13 14:53:21,637 INFO:   Input workers have begun streaming input data
+2025-10-13 14:53:22,791 INFO:   Appliance staging is complete
+2025-10-13 14:53:22,791 INFO:   Beginning appliance run
+2025-10-13 15:20:04,385 INFO:   | Train Device=CSX, Step=50, Loss=7.67126, Rate=31.97 samples/sec, GlobalRate=31.97 samples/sec, LoopTimeRemaining=1:20:41, TimeRemaining=1:20:41
+2025-10-13 15:46:44,894 INFO:   | Train Device=CSX, Step=100, Loss=7.05889, Rate=31.98 samples/sec, GlobalRate=31.98 samples/sec, LoopTimeRemaining=0:54:01, TimeRemaining=0:54:01
+2025-10-13 16:13:25,156 INFO:   | Train Device=CSX, Step=150, Loss=6.53423, Rate=31.99 samples/sec, GlobalRate=31.98 samples/sec, LoopTimeRemaining=0:27:20, TimeRemaining=0:27:20
+2025-10-13 16:40:05,444 INFO:   | Train Device=CSX, Step=200, Loss=6.09834, Rate=31.97 samples/sec, GlobalRate=31.99 samples/sec, LoopTimeRemaining=0:00:40, TimeRemaining=0:00:40
+2025-10-13 16:40:05,450 INFO:   Saving checkpoint at step 200
+2025-10-13 16:47:49,916 INFO:   Saved checkpoint model_dir_llama2_7b/checkpoint_200.mdl
+2025-10-13 16:48:01,419 INFO:   Training completed successfully!
+2025-10-13 16:48:01,425 INFO:   Processed 204800 training sample(s) in 7303.586917439 seconds.
 ```
 
 ## ESM-2
 Evolutionary Scale Modeling ([ESM-2](https://www.science.org/doi/abs/10.1126/science.ade2574)) is a transformer protein language models from the Meta Fundamental AI Research Protein Team (FAIR). 
-The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/nlp/esm2`. Configs available are listed at [https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model](https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2#configs-included-for-this-model). This example will use the Uniref 50 dataset, preprocessed at path /software/datasets/ESM-2/, to train a small 35M parameter model.
+The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/nlp/esm2`. Configs available are listed at [https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2](https://github.com/Cerebras/modelzoo/tree/main/src/cerebras/modelzoo/models/nlp/esm2). This example will use the Uniref 50 dataset, preprocessed at path /software/datasets/ESM-2/, to train a small 35M parameter model.
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
 export MODEL_DIR=model_dir_esm2
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+cszoo fit configs/params_esm2_t12_35M_UR50D_modified.yaml --job_labels name=esm2_t12_35m --model_dir $MODEL_DIR |& tee mytest.log
 ```
 
-Sample output
+<!--
+Formerly,
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+-->
+
+Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_esm2_t12_35M_UR50D_modified.yaml`. 
+
+Sample output for the end of a training run:
 ```bash
-2024-08-02 20:53:25,927 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "model_dir_esm2" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
-2024-08-02 20:53:25,928 INFO:   No checkpoints were found in "model_dir_esm2".
-2024-08-02 20:53:25,928 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
-2024-08-02 20:53:25,930 INFO:   Starting training loop 1, from global step 0 to 400
-2024-08-02 20:53:26,257 WARNING:   Passing an absolute path as the compile directory may lead to undesirably long paths as the directory is used on the server side, not on the client side. Please consider passing in a relative directory instead.
-2024-08-02 20:53:26,488 INFO:   Saving checkpoint at step 0
-2024-08-02 20:53:35,010 INFO:   Saved checkpoint model_dir_esm2/checkpoint_0.mdl
-2024-08-02 20:53:45,962 INFO:   Compiling the model. This may take a few minutes.
-2024-08-02 20:53:47,482 INFO:   Initiating a new image build job against the cluster server.
-2024-08-02 20:53:47,488 INFO:   Custom worker image build is disabled from server.
-2024-08-02 20:53:47,492 WARNING:   Passing an absolute path as the compile directory may lead to undesirably long paths as the directory is used on the server side, not on the client side. Please consider passing in a relative directory instead.
-2024-08-02 20:53:47,658 INFO:   Initiating a new compile wsjob against the cluster server.
-2024-08-02 20:53:47,672 INFO:   Compile job id: wsjob-4jm7wrbl6lfnjf9hc2qukx, remote log path: /n1/wsjob/workdir/job-operator/wsjob-4jm7wrbl6lfnjf9hc2qukx
-2024-08-02 20:53:57,709 INFO:   Poll ingress status: Waiting for job running, current job status: Initializing, msg: job initializing with config generation. 
-2024-08-02 20:54:07,710 INFO:   Poll ingress status: Waiting for all Coordinator pods to be running, current running: 0/1. 
-2024-08-02 20:54:17,724 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
-2024-08-02 20:54:20,821 INFO:   Pre-optimization transforms...
-2024-08-02 20:54:24,168 INFO:   Optimizing layouts and memory usage...
-2024-08-02 20:54:24,181 INFO:   Gradient accumulation enabled
-2024-08-02 20:54:24,188 INFO:   Gradient accumulation trying micro batch size 64...
-2024-08-02 21:06:59,403 INFO:   Exploring floorplans
-2024-08-02 21:07:13,655 INFO:   Exploring data layouts
-2024-08-02 21:08:06,235 INFO:   Optimizing memory usage
-2024-08-02 21:09:37,526 INFO:   Gradient accumulation showed a benefit
-2024-08-02 21:09:37,658 INFO:   Post-layout optimizations for <microbatch=64, lanes=7>...
-2024-08-02 21:09:37,679 INFO:   Post-layout optimizations for <microbatch=64, lanes=10>...
-2024-08-02 21:09:37,680 INFO:   Post-layout optimizations for <microbatch=64, lanes=8>...
-2024-08-02 21:09:37,681 INFO:   Post-layout optimizations for <microbatch=64, lanes=11>...
-2024-08-02 21:09:37,682 INFO:   Post-layout optimizations for <microbatch=64, lanes=5>...
-2024-08-02 21:09:40,830 INFO:   Allocating buffers for <microbatch=64, lanes=7>...
-2024-08-02 21:09:41,943 INFO:   Allocating buffers for <microbatch=64, lanes=8>...
-2024-08-02 21:09:41,977 INFO:   Allocating buffers for <microbatch=64, lanes=11>...
-2024-08-02 21:09:42,011 INFO:   Allocating buffers for <microbatch=64, lanes=10>...
-2024-08-02 21:09:42,014 INFO:   Allocating buffers for <microbatch=64, lanes=5>...
-2024-08-02 21:09:42,657 INFO:   Code generation for <microbatch=64, lanes=7>...
-2024-08-02 21:09:43,821 INFO:   Code generation for <microbatch=64, lanes=8>...
-2024-08-02 21:09:43,986 INFO:   Code generation for <microbatch=64, lanes=5>...
-2024-08-02 21:09:44,039 INFO:   Code generation for <microbatch=64, lanes=11>...
-2024-08-02 21:09:44,059 INFO:   Code generation for <microbatch=64, lanes=10>...
-2024-08-02 21:09:52,882 INFO:   Gradient accumulation picked micro batch size 64
-2024-08-02 21:10:08,744 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_3997308062121820062
-2024-08-02 21:10:08,780 INFO:   Compile was successful!
-2024-08-02 21:10:08,780 INFO:   Waiting for weight initialization to complete
-2024-08-02 21:10:08,781 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
-2024-08-02 21:10:08,946 INFO:   Initiating a new execute wsjob against the cluster server.
-2024-08-02 21:10:08,968 INFO:   Execute job id: wsjob-bzlmwdcyywzfu7bttr9gz9, remote log path: /n1/wsjob/workdir/job-operator/wsjob-bzlmwdcyywzfu7bttr9gz9
-2024-08-02 21:10:18,994 INFO:   Poll ingress status: Waiting for job running, current job status: Initializing, msg: job initializing with config generation. 
-2024-08-02 21:10:29,016 INFO:   Poll ingress status: Waiting for all Worker pods to be running, current running: 0/1. 
-2024-08-02 21:10:39,024 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 48/59. 
-2024-08-02 21:10:49,036 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 17/20. 
-2024-08-02 21:10:59,048 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
-2024-08-02 21:11:09,060 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
-2024-08-02 21:11:19,067 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
-2024-08-02 21:11:49,095 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
-2024-08-02 21:11:59,105 INFO:   Poll ingress status: Waiting for all Activation pods to be running, current running: 54/59. 
-2024-08-02 21:12:09,117 INFO:   Poll ingress status: Waiting for all Weight pods to be running, current running: 18/20. 
-2024-08-02 21:12:19,138 INFO:   Ingress is ready: Job ingress ready, poll ingress success.
-2024-08-02 21:12:19,380 INFO:   Preparing to execute using 1 CSX
-2024-08-02 21:12:52,993 INFO:   About to send initial weights
-2024-08-02 21:12:59,491 INFO:   Finished sending initial weights
-2024-08-02 21:12:59,492 INFO:   Finalizing appliance staging for the run
-2024-08-02 21:13:20,532 INFO:   Waiting for device programming to complete
-2024-08-02 21:14:35,817 INFO:   Device programming is complete
-2024-08-02 21:14:36,774 INFO:   Using network type: ROCE
-2024-08-02 21:14:36,775 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
-2024-08-02 21:14:36,792 INFO:   Input workers have begun streaming input data
-2024-08-02 21:14:38,044 INFO:   Appliance staging is complete
-2024-08-02 21:14:38,044 INFO:   Beginning appliance run
-2024-08-02 21:20:22,200 INFO:   | Train Device=CSX, Step=100, Loss=4.71332, Rate=595.23 samples/sec, GlobalRate=595.23 samples/sec
-2024-08-02 21:26:13,253 INFO:   | Train Device=CSX, Step=200, Loss=10.34700, Rate=588.13 samples/sec, GlobalRate=589.25 samples/sec
-2024-08-02 21:26:13,260 INFO:   Saving checkpoint at step 200
-2024-08-02 21:26:29,525 INFO:   Saved checkpoint model_dir_esm2/checkpoint_200.mdl
-2024-08-02 21:32:04,197 INFO:   | Train Device=CSX, Step=300, Loss=4.17420, Rate=585.39 samples/sec, GlobalRate=587.34 samples/sec
-2024-08-02 21:37:56,370 INFO:   | Train Device=CSX, Step=400, Loss=4.12672, Rate=583.08 samples/sec, GlobalRate=585.88 samples/sec
-2024-08-02 21:37:56,377 INFO:   Saving checkpoint at step 400
-2024-08-02 21:38:13,224 INFO:   Saved checkpoint model_dir_esm2/checkpoint_400.mdl
-2024-08-02 21:38:42,917 INFO:   Training completed successfully!
-2024-08-02 21:38:42,923 INFO:   Processed 819200 training sample(s) in 2716.994790088 seconds.
+2025-10-10 23:27:10,382 INFO:   Preparing to execute using 1 CSX
+2025-10-10 23:27:38,459 INFO:   About to send initial weights
+Sending initial weights: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1007/1007 [00:02<00:00, 372.15 tensors/s]
+2025-10-10 23:27:41,174 INFO:   Finished sending initial weights
+2025-10-10 23:27:41,174 INFO:   Finalizing appliance staging for the run
+2025-10-10 23:27:51,718 INFO:   Waiting for device programming to complete
+2025-10-10 23:31:56,190 INFO:   Device programming is complete
+2025-10-10 23:31:56,990 INFO:   Using network type: ROCE
+2025-10-10 23:31:56,991 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2025-10-10 23:31:56,998 INFO:   Input workers have begun streaming input data
+2025-10-10 23:31:58,155 INFO:   Appliance staging is complete
+2025-10-10 23:31:58,155 INFO:   Beginning appliance run
+2025-10-10 23:35:19,797 INFO:   | Train Device=CSX, Step=100, Loss=14.50902, Rate=982.39 samples/sec, GlobalRate=1015.86 samples/sec, LoopTimeRemaining=0:10:25, TimeRemaining=0:10:25
+2025-10-10 23:38:48,278 INFO:   | Train Device=CSX, Step=200, Loss=26.60854, Rate=976.56 samples/sec, GlobalRate=998.82 samples/sec, LoopTimeRemaining=0:07:01, TimeRemaining=0:07:01
+2025-10-10 23:38:48,282 INFO:   Saving checkpoint at step 200
+Saving checkpoint: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1321/1321 [00:09<00:00, 146.24 tensors/s]
+2025-10-10 23:38:57,339 INFO:   Saved checkpoint model_dir_esm2/checkpoint_200.mdl
+2025-10-10 23:42:17,143 INFO:   | Train Device=CSX, Step=300, Loss=7.57249, Rate=999.04 samples/sec, GlobalRate=992.65 samples/sec, LoopTimeRemaining=0:03:36, TimeRemaining=0:03:36
+2025-10-10 23:45:46,409 INFO:   | Train Device=CSX, Step=400, Loss=5.03271, Rate=974.58 samples/sec, GlobalRate=989.11 samples/sec, LoopTimeRemaining=0:00:08, TimeRemaining=0:00:08
+2025-10-10 23:45:46,412 INFO:   Saving checkpoint at step 400
+Saving checkpoint: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1321/1321 [00:08<00:00, 154.35 tensors/s]
+2025-10-10 23:45:54,994 INFO:   Saved checkpoint model_dir_esm2/checkpoint_400.mdl
+2025-10-10 23:46:01,812 INFO:   Training completed successfully!
+2025-10-10 23:46:01,861 INFO:   Processed 819200 training sample(s) in 4049.286902367 seconds.
 ```
 
 ## Vision Transformer
@@ -349,94 +281,123 @@ The cerebras transformer based vision classifier model implementation can be fou
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
-export MODEL_DIR=model_dir_vt
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
+cp /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
+export MODEL_DIR=model_dir_vit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-cp  /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
-python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+cszoo fit configs/params_vit_base_patch_16_imagenet_1k.yaml --job_labels name=vision_transformer --model_dir $MODEL_DIR |& tee mytest.log
 ```
+<!--
+Formerly,
+python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+-->
+
+Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_vit_base_patch_16_imagenet_1k.yaml`. 
 
 Sample output
 ```bash
-2024-12-21 00:40:15,426 INFO:   No need to use DLS for loss when half dtype is bfloat16. Disabling gradient scaling.
-2024-12-21 00:40:15,600 INFO:   Checkpoint autoloading is enabled. Looking for latest checkpoint in "model_dir_vt" directory with the following naming convention: `checkpoint_(step)(_timestamp)?.mdl`.
-2024-12-21 00:40:15,601 INFO:   No checkpoints were found in "model_dir_vt".
-2024-12-21 00:40:15,601 INFO:   No checkpoint was provided. Using randomly initialized model parameters.
-2024-12-21 00:40:15,602 INFO:   Effective batch size is 2850.
-2024-12-21 00:40:15,605 INFO:   The following sequence is used to transform data:
-Compose(
-    Resize(size=[256, 256], interpolation=bilinear, max_size=None, antialias=None)
-    RandomResizedCrop(size=[224, 224], scale=(0.08, 1.0), ratio=(0.75, 1.33), interpolation=bilinear, antialias=True)
-    RandomHorizontalFlip(p=0.5)
-    ToTensor()
-    Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
-    LambdaWithParam(args=(torch.bfloat16,), kwargs={})
-)
-2024-12-21 00:40:55,243 INFO:   Starting training loop 1, from global step 0 to 132225
-...
-2024-12-21 00:41:25,467 INFO:   Compiling the model. This may take a few minutes.
-...
-2024-12-21 00:45:49,911 INFO:   Compiling at original per-box batch size 2850
-2024-12-21 00:46:00,124 INFO:   Compiling image...
-2024-12-21 00:46:00,273 INFO:   Compiling kernels
-2024-12-21 00:48:10,561 INFO:   Compiling final image
-2024-12-21 00:51:53,676 INFO:   Compile artifacts successfully written to remote compile directory. Compile hash is: cs_9892963798577744835
-2024-12-21 00:51:59,530 INFO:   Compile was successful!
-2024-12-21 00:51:59,531 INFO:   Waiting for weight initialization to complete
-2024-12-21 00:51:59,531 INFO:   Programming Cerebras Wafer Scale Cluster for execution. This may take a few minutes.
-2024-12-21 00:51:59,919 INFO:   Initiating a new execute wsjob against the cluster server.
-...
-2024-12-21 00:53:37,788 INFO:   Finished sending initial weights
-2024-12-21 00:53:37,789 INFO:   Finalizing appliance staging for the run
-2024-12-21 00:53:58,206 INFO:   Waiting for device programming to complete
-2024-12-21 00:55:57,939 INFO:   Device programming is complete
-2024-12-21 00:55:58,865 INFO:   Using network type: ROCE
-2024-12-21 00:55:58,866 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
-2024-12-21 00:55:58,883 INFO:   Input workers have begun streaming input data
-2024-12-21 00:56:00,346 INFO:   Appliance staging is complete
-2024-12-21 00:56:00,346 INFO:   Beginning appliance run
-2024-12-21 00:56:01,022 INFO:   | Train Device=CSX, Step=1, Loss=7.00964, Rate=4626.81 samples/sec, GlobalRate=4626.69 samples/sec
-2024-12-21 00:56:01,773 INFO:   | Train Device=CSX, Step=2, Loss=7.02971, Rate=4128.64 samples/sec, GlobalRate=4170.71 samples/sec
-2024-12-21 00:56:04,670 INFO:   | Train Device=CSX, Step=3, Loss=7.03938, Rate=2241.66 samples/sec, GlobalRate=2005.18 samples/sec
-2024-12-21 00:56:05,276 INFO:   | Train Device=CSX, Step=4, Loss=7.02248, Rate=3718.21 samples/sec, GlobalRate=2340.86 samples/sec
-2024-12-21 00:56:08,100 INFO:   | Train Device=CSX, Step=5, Loss=7.02704, Rate=2092.96 samples/sec, GlobalRate=1852.26 samples/sec
+2025-10-13 15:06:45,407 INFO:   Preparing to execute using 1 CSX
+2025-10-13 15:07:20,175 INFO:   About to send initial weights
+2025-10-13 15:07:22,937 INFO:   Finished sending initial weights
+2025-10-13 15:07:22,937 INFO:   Finalizing appliance staging for the run
+2025-10-13 15:07:33,129 INFO:   Waiting for device programming to complete
+2025-10-13 15:10:54,091 INFO:   Device programming is complete
+2025-10-13 15:10:54,879 INFO:   Using network type: ROCE
+2025-10-13 15:10:54,880 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+2025-10-13 16:12:33,699 INFO:   Input workers have begun streaming input data
+2025-10-13 16:12:34,880 INFO:   Appliance staging is complete
+2025-10-13 16:12:34,880 INFO:   Beginning appliance run
+2025-10-13 16:13:05,769 INFO:   | Train Device=CSX, Step=10, Loss=7.01967, Rate=3323.47 samples/sec, GlobalRate=923.35 samples/sec, LoopTimeRemaining=0:02:50, TimeRemaining>0:02:50
+2025-10-13 16:13:37,520 INFO:   | Train Device=CSX, Step=20, Loss=7.03421, Rate=4452.76 samples/sec, GlobalRate=910.30 samples/sec, LoopTimeRemaining=0:02:40, TimeRemaining>0:02:40
+2025-10-13 16:14:20,867 INFO:   | Train Device=CSX, Step=30, Loss=6.99693, Rate=3553.07 samples/sec, GlobalRate=806.87 samples/sec, LoopTimeRemaining=0:02:31, TimeRemaining>0:02:31
+2025-10-13 16:14:53,830 INFO:   | Train Device=CSX, Step=40, Loss=6.99418, Rate=3840.05 samples/sec, GlobalRate=820.58 samples/sec, LoopTimeRemaining=0:02:22, TimeRemaining>0:02:22
+2025-10-13 16:15:35,551 INFO:   | Train Device=CSX, Step=50, Loss=6.97215, Rate=3422.33 samples/sec, GlobalRate=788.82 samples/sec, LoopTimeRemaining=0:02:13, TimeRemaining>0:02:13
+2025-10-13 16:16:11,445 INFO:   | Train Device=CSX, Step=60, Loss=6.94876, Rate=3656.17 samples/sec, GlobalRate=789.69 samples/sec, LoopTimeRemaining=0:02:04, TimeRemaining>0:02:04
+2025-10-13 16:16:49,841 INFO:   | Train Device=CSX, Step=70, Loss=6.93128, Rate=3559.48 samples/sec, GlobalRate=782.54 samples/sec, LoopTimeRemaining=0:01:55, TimeRemaining>0:01:55
+2025-10-13 16:17:26,243 INFO:   | Train Device=CSX, Step=80, Loss=6.90232, Rate=3577.28 samples/sec, GlobalRate=782.59 samples/sec, LoopTimeRemaining=0:01:47, TimeRemaining>0:01:47
+2025-10-13 16:18:04,947 INFO:   | Train Device=CSX, Step=90, Loss=6.87604, Rate=3509.24 samples/sec, GlobalRate=777.17 samples/sec, LoopTimeRemaining=0:01:38, TimeRemaining>0:01:38
+2025-10-13 16:18:40,674 INFO:   | Train Device=CSX, Step=100, Loss=6.88127, Rate=3464.33 samples/sec, GlobalRate=779.18 samples/sec, LoopTimeRemaining=0:02:27, TimeRemaining>0:02:27
+2025-10-13 16:18:40,675 INFO:   Saving checkpoint at step 100
+2025-10-13 16:18:50,127 INFO:   Saved checkpoint model_dir_vt/checkpoint_100.mdl
+2025-10-13 16:19:18,509 INFO:   | Train Device=CSX, Step=110, Loss=6.83729, Rate=3563.66 samples/sec, GlobalRate=776.75 samples/sec, LoopTimeRemaining=0:02:24, TimeRemaining=0:02:24
+2025-10-13 16:19:54,432 INFO:   | Train Device=CSX, Step=120, Loss=6.83568, Rate=3391.11 samples/sec, GlobalRate=778.10 samples/sec, LoopTimeRemaining=0:02:11, TimeRemaining=0:02:11
+2025-10-13 16:20:33,376 INFO:   | Train Device=CSX, Step=130, Loss=6.82097, Rate=3353.04 samples/sec, GlobalRate=774.34 samples/sec, LoopTimeRemaining=0:02:31, TimeRemaining=0:02:31
+2025-10-13 16:21:08,460 INFO:   | Train Device=CSX, Step=140, Loss=6.79739, Rate=3460.46 samples/sec, GlobalRate=776.93 samples/sec, LoopTimeRemaining=0:03:17, TimeRemaining=0:03:17
+2025-10-13 16:21:47,396 INFO:   | Train Device=CSX, Step=150, Loss=6.81461, Rate=3506.94 samples/sec, GlobalRate=773.76 samples/sec, LoopTimeRemaining=0:04:04, TimeRemaining=0:04:04
+2025-10-13 16:22:22,052 INFO:   | Train Device=CSX, Step=160, Loss=6.79879, Rate=3682.37 samples/sec, GlobalRate=776.63 samples/sec, LoopTimeRemaining=0:03:18, TimeRemaining=0:03:18
+2025-10-13 16:23:01,143 INFO:   | Train Device=CSX, Step=170, Loss=6.78811, Rate=3508.37 samples/sec, GlobalRate=773.67 samples/sec, LoopTimeRemaining=0:02:32, TimeRemaining=0:02:32
+2025-10-13 16:23:35,510 INFO:   | Train Device=CSX, Step=180, Loss=6.76097, Rate=3724.78 samples/sec, GlobalRate=776.56 samples/sec, LoopTimeRemaining=0:01:44, TimeRemaining=0:01:44
+2025-10-13 16:24:15,017 INFO:   | Train Device=CSX, Step=190, Loss=6.75542, Rate=3495.95 samples/sec, GlobalRate=773.45 samples/sec, LoopTimeRemaining=0:00:58, TimeRemaining=0:00:58
+2025-10-13 16:24:49,239 INFO:   | Train Device=CSX, Step=200, Loss=6.72418, Rate=3690.48 samples/sec, GlobalRate=776.21 samples/sec, LoopTimeRemaining=0:00:14, TimeRemaining=0:00:14
+2025-10-13 16:24:49,240 INFO:   Saving checkpoint at step 200
+2025-10-13 16:24:58,829 INFO:   Saved checkpoint model_dir_vt/checkpoint_200.mdl
+2025-10-13 16:25:08,411 INFO:   Training completed successfully!
+2025-10-13 16:25:08,416 INFO:   Processed 570000 training sample(s) in 5447.945427605 seconds.
 ```
 
 
 ## Diffusion Transformer
-The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/datasets/dit/`, and the config for the largest model.
+The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] model implementation can be found at `modelzoo/src/cerebras/modelzoo/models/vision/dit`. Three configs, for the large and xlarge models in the paper, and for a larger model, can be found in `modelzoo/src/cerebras/modelzoo/models/vision/dit/configs`. This example uses the ImageNet dataset, preprocessed at path `/software/cerebras/dataset/dit/`, and the config for the largest model.
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.4.0/venv_cerebras_pt/bin/activate
+source ~/R_2.6.0/venv_cerebras_pt/bin/activate
 ```
 
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.4.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+cp /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
 export MODEL_DIR=model_dir_dit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-cp  /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
-python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.4.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
+cszoo fit configs/params_dit_2B_patchsize_2x2_modified.yaml --job_labels name=DiT --model_dir $MODEL_DIR |& tee mytest.log
 ```
+<!---
+Formerly:
+python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
+--->
 
 ???+ example "Example output:"
     ``` { .output .no-copy }
-    2025-01-24 21:53:05,710 INFO:   | Train Device=CSX, Step=397, Loss=0.18575, Rate=405.81 samples/sec, 
-    GlobalRate=405.41 samples/sec
-    2025-01-24 21:53:08,405 INFO:   | Train Device=CSX, Step=398, Loss=0.18720, Rate=407.14 samples/sec, 
-    GlobalRate=405.42 samples/sec
-    2025-01-24 21:53:11,080 INFO:   | Train Device=CSX, Step=399, Loss=0.18482, Rate=409.63 samples/sec, 
-    GlobalRate=405.44 samples/sec 
-    2025-01-24 21:53:13,749 INFO:   | Train Device=CSX, Step=400, Loss=0.18625, Rate=411.09 samples/sec, 
-    GlobalRate=405.45 samples/sec
-    2025-01-24 21:53:13,761 INFO:   Saving checkpoint at step 400
-    Transferring weights from server: 4556 tensors [02:34, 29.52 tensors/s]                                                                                                                         
-    2025-01-24 21:56:05,648 INFO:   Saved checkpoint dit_model_dir/checkpoint_400.mdl
-    2025-01-24 21:56:28,429 INFO:   Training completed successfully!
-    2025-01-24 21:56:28,435 INFO:   Processed 440000 training sample(s) in 1888.733046122 seconds.
+    2025-10-13 20:54:50,747 INFO:   Preparing to execute using 1 CSX
+    2025-10-13 20:55:27,795 INFO:   About to send initial weights
+    2025-10-13 20:55:33,946 INFO:   Finished sending initial weights
+    2025-10-13 20:55:33,946 INFO:   Finalizing appliance staging for the run
+    2025-10-13 20:55:41,002 INFO:   Waiting for device programming to complete
+    2025-10-13 20:59:42,391 INFO:   Device programming is complete
+    2025-10-13 20:59:43,763 INFO:   Using network type: ROCE
+    2025-10-13 20:59:43,763 INFO:   Waiting for input workers to prime the data pipeline and begin streaming ...
+    2025-10-13 21:43:07,489 INFO:   Input workers have begun streaming input data
+    2025-10-13 21:43:08,633 INFO:   Appliance staging is complete
+    2025-10-13 21:43:08,633 INFO:   Beginning appliance run
+    2025-10-13 21:43:35,288 INFO:   | Train Device=CSX, Step=20, Loss=0.42919, Rate=869.57 samples/sec, GlobalRate=879.99 samples/sec, LoopTimeRemaining=0:08:41, TimeRemaining=0:08:41
+    2025-10-13 21:44:02,004 INFO:   | Train Device=CSX, Step=40, Loss=0.28088, Rate=864.86 samples/sec, GlobalRate=877.18 samples/sec, LoopTimeRemaining=0:08:14, TimeRemaining=0:08:14
+    2025-10-13 21:44:28,712 INFO:   | Train Device=CSX, Step=60, Loss=0.22520, Rate=874.51 samples/sec, GlobalRate=876.33 samples/sec, LoopTimeRemaining=0:07:49, TimeRemaining=0:07:49
+    2025-10-13 21:44:55,371 INFO:   | Train Device=CSX, Step=80, Loss=0.20647, Rate=867.69 samples/sec, GlobalRate=876.31 samples/sec, LoopTimeRemaining=0:07:22, TimeRemaining=0:07:22
+    2025-10-13 21:45:21,917 INFO:   | Train Device=CSX, Step=100, Loss=0.21275, Rate=877.39 samples/sec, GlobalRate=877.04 samples/sec, LoopTimeRemaining=0:06:54, TimeRemaining=0:06:54
+    2025-10-13 21:45:48,642 INFO:   | Train Device=CSX, Step=120, Loss=0.19596, Rate=873.47 samples/sec, GlobalRate=876.55 samples/sec, LoopTimeRemaining=0:06:28, TimeRemaining=0:06:28
+    2025-10-13 21:46:15,303 INFO:   | Train Device=CSX, Step=140, Loss=0.19837, Rate=871.60 samples/sec, GlobalRate=876.50 samples/sec, LoopTimeRemaining=0:06:01, TimeRemaining=0:06:01
+    2025-10-13 21:46:42,043 INFO:   | Train Device=CSX, Step=160, Loss=0.20213, Rate=867.43 samples/sec, GlobalRate=876.13 samples/sec, LoopTimeRemaining=0:05:34, TimeRemaining=0:05:34
+    2025-10-13 21:47:08,596 INFO:   | Train Device=CSX, Step=180, Loss=0.20233, Rate=869.68 samples/sec, GlobalRate=876.53 samples/sec, LoopTimeRemaining=0:05:08, TimeRemaining=0:05:08
+    2025-10-13 21:47:35,271 INFO:   | Train Device=CSX, Step=200, Loss=0.18922, Rate=865.66 samples/sec, GlobalRate=876.45 samples/sec, LoopTimeRemaining=0:04:41, TimeRemaining=0:04:41
+    2025-10-13 21:47:35,276 INFO:   Saving checkpoint at step 200
+    2025-10-13 21:50:36,478 INFO:   Saved checkpoint model_dir_dit/checkpoint_200.mdl
+    2025-10-13 21:50:40,262 INFO:   | Train Device=CSX, Step=220, Loss=0.19112, Rate=5970.06 samples/sec, GlobalRate=569.10 samples/sec, LoopTimeRemaining=0:04:26, TimeRemaining=0:04:26
+    2025-10-13 21:50:44,011 INFO:   | Train Device=CSX, Step=240, Loss=0.18163, Rate=6114.62 samples/sec, GlobalRate=615.72 samples/sec, LoopTimeRemaining=0:04:26, TimeRemaining=0:04:26
+    2025-10-13 21:50:47,714 INFO:   | Train Device=CSX, Step=260, Loss=0.18644, Rate=5957.36 samples/sec, GlobalRate=661.65 samples/sec, LoopTimeRemaining=0:04:26, TimeRemaining=0:04:26
+    2025-10-13 21:50:51,424 INFO:   | Train Device=CSX, Step=280, Loss=0.17691, Rate=6048.57 samples/sec, GlobalRate=706.83 samples/sec, LoopTimeRemaining=0:04:18, TimeRemaining=0:04:18
+    2025-10-13 21:50:55,165 INFO:   | Train Device=CSX, Step=300, Loss=0.18429, Rate=6167.70 samples/sec, GlobalRate=751.25 samples/sec, LoopTimeRemaining=0:03:51, TimeRemaining=0:03:51
+    2025-10-13 21:50:58,951 INFO:   | Train Device=CSX, Step=320, Loss=0.18575, Rate=6109.52 samples/sec, GlobalRate=794.88 samples/sec, LoopTimeRemaining=0:03:23, TimeRemaining=0:03:23
+    2025-10-13 21:51:02,716 INFO:   | Train Device=CSX, Step=340, Loss=0.17604, Rate=6088.11 samples/sec, GlobalRate=837.85 samples/sec, LoopTimeRemaining=0:01:37, TimeRemaining=0:01:37
+    2025-10-13 21:51:09,072 INFO:   | Train Device=CSX, Step=360, Loss=0.19354, Rate=1369.79 samples/sec, GlobalRate=875.40 samples/sec, LoopTimeRemaining=0:01:37, TimeRemaining=0:01:37
+    2025-10-13 21:51:35,842 INFO:   | Train Device=CSX, Step=380, Loss=0.16738, Rate=870.69 samples/sec, GlobalRate=875.25 samples/sec, LoopTimeRemaining=0:01:37, TimeRemaining=0:01:37
+    2025-10-13 21:52:02,497 INFO:   | Train Device=CSX, Step=400, Loss=0.18182, Rate=896.97 samples/sec, GlobalRate=875.31 samples/sec, LoopTimeRemaining=0:01:37, TimeRemaining=0:01:37
+    2025-10-13 21:52:02,502 INFO:   Saving checkpoint at step 400
+    2025-10-13 21:55:01,077 INFO:   Saved checkpoint model_dir_dit/checkpoint_400.mdl
+    2025-10-13 21:55:18,877 INFO:   Training completed successfully!
+    2025-10-13 21:55:18,883 INFO:   Processed 467200 training sample(s) in 4754.503176912 seconds.
     ```
