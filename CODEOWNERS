@@ -1,0 +1,141 @@
+# CODEOWNERS file for ALCF User Guides
+
+# Directory format #1: /path/dir_name/ @username1 @username2
+# ---> path is relative to the repository root
+# ---> any file in the /path/dir_name/ directory in the root of your repository and any of its subdirectories.
+
+# Directory format #2: path/dir_name/ @username1 @username2
+# ---> any file in a directory/ anywhere in your repository (and any of their subdirs?)
+
+# Directory format #3: **/path/dir_name/ @username1 @username2
+# ---> any file in a `/path/dir_name` directory such as `/build/path/dir_name`, `/scripts/path/dir_name`,
+# and `/deeply/nested/path/dir_name` (same as #2?)
+
+###############
+
+# Default owners for everything in the repo
+# These owners will be the default owners for everything in the repository,
+# unless a later match takes precedence
+#### *                                   @???
+
+
+# Machine-specific documentation
+ai-testbed/                        @vksastry @wcarnold1010
+ai-testbed/cerebras/               @sraskar
+# aurora/
+# polaris/
+# sophia/
+# crux/
+
+# Aurora compilers, PE documentation
+aurora/compiling-and-linking/**         @TApplencourt @colleeneb
+aurora/aurora-pe.md                @koysean
+
+# Programming models
+**/programming-models/kokkos-*.md   @zippylab  # @masterleinad
+**/programming-models/sycl-*.md     @TApplencourt @colleeneb
+
+# Computational chemistry and molecular dynamics
+**/applications/namd.md             @cjknight
+**/applications/gromacs.md          @cjknight
+**/applications/lammps.md           @cjknight
+**/applications/amber.md            @cjknight
+**/applications/openmm.md           @cjknight
+**/applications/QMCPACK.md          @ye-luo
+**/applications/QuantumESPRESSO.md  @ye-luo
+**/applications/vasp.md             @alvarovm
+
+# Example programs and makefiles
+**/example-program-makefile.md      @cjknight
+**/example-program*.md              @cjknight
+
+# Data Science frameworks across all machines
+**/frameworks/pytorch.md            @khossain4337 @FilippoSimini @saforem2
+**/frameworks/tensorflow.md         @zhenghh04 @khossain4337
+**/frameworks/deepspeed.md          @saforem2 @hatanp
+**/frameworks/megatron-deepspeed.md @saforem2 @hatanp
+**/frameworks/jax.md                @khossain4337
+**/frameworks/scikit-learn.md       @BethanyL
+**onedal.md                         @BethanyL
+**/frameworks/dask.md               @okaforn @FilippoSimini
+**/frameworks/pyg.md                @FilippoSimini
+**/frameworks/gpytorch.md           @mngom2
+**/frameworks/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
+**/frameworks/libtorch.md           @rickybalin
+
+# Applications across all machines
+**/applications/gpt-neox.md         @saforem2 @hatanp
+**/applications/megatron-deepspeed.md @saforem2 @hatanp
+
+# Python documentation across all machines
+**/python.md                        @felker @khossain4337
+**/jupyter*			    @keceli
+
+# Julia documentation
+#**/julia.md                         @michel2323
+
+# Inference documentation
+**/inference/                       @rickybalin
+**/inference/vllm.md                @sraskar
+
+# Profiling documentation
+**/profiling_dl.md                  @zhenghh04 @khossain4337
+**/performance-tools/vtune.md       @jkwack
+
+# Libraries documentation
+**/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
+**/libraries/cabana-*.md            @zippylab
+**/libraries/spack-pe.md            @koysean
+
+# Visualization documentation
+**/visualization/**                 @srizzi88
+
+# Data management across all machines
+**/data-management/daos/            @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/lustre/          @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/copper/          @kaushikvelusamy @kevin-harms
+**/filesystem-and-storage/          @kevin-harms
+
+# All container documentation
+**/containers/                      @atanikan
+
+# Account & Project Management documentation
+#####/account-project-management/	    @mantrala-ops @???
+
+# Running Jobs documentation
+#/running-jobs*                      @????
+**/queueing-and-running-jobs/       @pmrich @cjknight
+**/pbs-*.md                         @pmrich
+
+# Policies documentation
+**/policies/                          @bethcerny @alcf-haritha
+
+# Services documentation
+###**/services/                          @???
+**/services/gitlab-ci.md            @peterupton @thilinarmtb
+
+# Workflows
+####**/workflows/                       @???
+**/smartsim.md                      @rickybalin
+###**/adios.md                      @rickybalin
+*adios*                      @rickybalin   # TOOD: how fleixlbe is single-glob pattern matching?
+**/workflows/parsl.md               @cms21
+#**/workflows/libensemble.md        @shuds13
+
+# User Support documentation
+###**/support/                @alcf-haritha @jfrancis-anl
+*support*                @alcf-haritha @jfrancis-anl
+
+# Core configuration files
+/mkdocs.yml                         @felker @saforem2
+/requirements.txt                   @felker
+/Makefile                           @felker
+/.github/                           @felker
+
+# Metadata and developer tools
+/includes/                          @felker
+
+# HTML, CSS, and theme-related files
+/overrides/                         @saforem2 @felker
+*.html                              @saforem2 @felker
+*.css                               @saforem2 @felker
