@@ -8,8 +8,7 @@ The supporting CPU cluster consists of MemoryX, SwarmX, management, and input wo
 
 The public Cerebras documentation is available [here](https://training-docs.cerebras.ai/rel-2.6.0/getting-started/overview).
 
-A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users connect via SSH to one of the two login nodes, `cer-login-04.ai.alcf.anl.gov` or `cer-login-05.ai.alcf.anl.gov`.
-Then they ssh to a user node, one of `cer-anl-net001-us-sr01` or `cer-anl-net001-us-sr02`. 
+A typical Cerebras Wafer-Scale Cluster is shown in the figure below. Users connect via SSH to the login node, `cerebras.alcf.anl.gov` and then ssh to a user node, using either  `cer-usn-01` or `cer-usn-02`. 
 The rest of the nodes in the cluster infrastructure are not directly accessible, except by admins.
 The trees `/home`, `/projects`, and `/software` are shared across the login nodes and user nodes, the relevant cluster infrastructure nodes, and all ALCF AI testbed platforms.
 
