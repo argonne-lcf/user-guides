@@ -40,7 +40,7 @@ conda activate globus_env
 # Install necessary packages
 pip install openai globus_sdk
 ```
-Note: A python virtual environment may be used as well, and some other versions python will work, e.g.
+Note: A python virtual environment may be used as well.
 ```base
 virtualenv -p python3.10 globus_env
 source globus_env/bin/activate
