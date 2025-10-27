@@ -110,11 +110,15 @@ Once authenticated, you can make a test call using cURL or Python.
 !!! tip "Discovering Available Models"
 The endpoint information can be accessed using the [Metis status page](https://metis.alcf.anl.gov/status). It provides the status of the endpoints and the models and the associated configurations.
 
-The list of currently supported chat-completion models on Metis are :       
-        "Meta-Llama-3.3-70B-Instruct", 
-        "Meta-Llama-3.1-8B-Instruct",  
-        "Qwen2.5-Coder-0.5B-Instruct",
-        "DeepSeek-R1".
+The list of currently supported chat-completion models on Metis are : 
+
+        * Meta-Llama-3.3-70B-Instruct
+        
+        * Meta-Llama-3.1-8B-Instruct
+        
+        * Qwen2.5-Coder-0.5B-Instruct
+        
+        * DeepSeek-R1
 
 You can programmatically query all available models and endpoints:
 
