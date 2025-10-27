@@ -1,5 +1,5 @@
 # Accessing the Metis inference endpoint
-The Sambanova SN40L cluster (Metis) is itegrated as part of the ALCF inference service provided through inference API access to the models running on the Metis cluster.
+The Sambanova SN40L cluster (Metis) is itegrated as part of the ALCF inference service provided through API access to the models running on the Metis cluster.
 The models running on Metis can be accessed in two ways. 
 
     1. Web UI
