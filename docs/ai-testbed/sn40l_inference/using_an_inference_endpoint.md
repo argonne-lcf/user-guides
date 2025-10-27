@@ -39,6 +39,9 @@ If you need any other models to be provisioned via these endpoints, please reach
 
 See SambaNova's documentation for additional information to supplement the instructions below: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
 
+## Quering the endpoint status 
+The endpoint information can be accessed using the [Metis status page](https://metis.alcf.anl.gov/status). It provides the status of the endpoints and the models and the associated configurations. 
+
 ## Generic Code examples 
 ### Using environment variables for endpoint url, api key, model name
 The information files may be sourced to put the necessary values into environment variables. For example:
