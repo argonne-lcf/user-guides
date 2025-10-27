@@ -30,7 +30,7 @@ For programmatic access, you can use the API endpoints directly.
 
 #### 1. Setup Your Environment
 
-You can run the following setup from any iternet connected machine (your local machine, or an ALCF machine).
+You can run the following setup from any internet connected machine (your local machine, or an ALCF machine).
 
 ```bash
 # Create a new Conda environment
@@ -38,6 +38,12 @@ conda create -n globus_env python==3.11.9 --y
 conda activate globus_env
 
 # Install necessary packages
+pip install openai globus_sdk
+```
+Note: A python virtual environment may be used as well, and some other versions python will work, e.g.
+```console
+virtualenv -p python3.10 globus_env
+source globus_env/bin/activate
 pip install openai globus_sdk
 ```
 
