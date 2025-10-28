@@ -27,10 +27,10 @@ We recommend installing Julia in a project directory `$PROJECT` on [Eagle or Fla
 2. Run setup script
     ```bash
     cd julia_alcf/polaris
-    ./setup_julia.sh
+    ./setup.sh
     ```
     This script contains steps that eventually will be executed by an admin
-    + Install Julia in `$JULIA_DEPOT_PATH`
+    + Install Julia in `$JULIA_DEPOT_PATH` (e.g., `/eagle/$PROJECT/path/to/julia_depot`)
     + Configure Julia options through a global `LocalPreferences.toml` file
     + Set up module files
 3. Add `$JULIA_DEPOT_PATH` that you entered during setup to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`) and load the module path.
@@ -54,9 +54,12 @@ Installing all required packages can be done in a Julia REPL with the following 
 using Pkg
 Pkg.add(["MPI", "MPIPreferences", "CUDA", "HDF5"])
 ```
-The packages will be loaded with the options specified in the `LocalPreferences.toml` file created during the setup process in `$(JULIA_DEPOT_PATH)/environment/1.12`.
+The packages will be loaded with the options specified in the `LocalPreferences.toml` file created during the setup process in `$JULIA_DEPOT_PATH/environments/v1.12`.
 
-## Verify Configuration on a Compute Node:
+```
+
+## Verify Configuration on a Compute Node
+
 The Polaris login nodes do not have GPU access. You must request an interactive job to test your GPU configuration.
 
 ```bash
@@ -75,7 +78,9 @@ julia --project -e "using CUDA; CUDA.versioninfo()"
 # 4 devices:
 #   0: NVIDIA A100-SXM4-40GB ...
 ```
-## Example Julia code for approximating pi
+
+## Example Julia Code for Approximating Pi
+
 ```julia linenums="1" title="pi.jl"
 using CUDA
 using HDF5
@@ -141,7 +146,9 @@ if !isinteractive()
     MPI.Finalize()
 end
 ```
-#### Job Submission Script
+
+### Job Submission Script
+
 This PBS script requests resources and launches the Julia application using `mpiexec`.
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
