@@ -172,6 +172,22 @@ error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang 
 ```
 when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details.
 
+#### 8. Set `TMPDIR` to avoid `AF_UNIX path too long` error
+
+Software that relies on the setting of `TMPDIR` to create socket files may encouter the linux error `AF_UNIX path too long` when running in processes launched with `mpiexec` on a single node.  This issue has arisen in software using the `python` `multiprocessing` library for this purpose, including some use cases of `pytorch` and `parsl`.
+
+The solution for this error is to manually set `TMPDIR` before launching the application, e.g.
+
+```bash
+export TMPDIR=/tmp
+```
+
+Alternatively, it can be set with the `mpiexec` command, e.g.
+
+```bash
+mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
+```
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
