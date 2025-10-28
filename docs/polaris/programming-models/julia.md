@@ -20,7 +20,7 @@ All the source files used in this documentation are located at [https://github.c
 
 We recommend installing Julia in a project directory `$PROJECT` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
 
-1. Checkout the configuration files
+1. Clone the configuration files
     ```bash
     git clone https://github.com/anlsys/julia_alcf
     ```
