@@ -7,40 +7,38 @@
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
 This guide details how to install, configure, and run Julia on the Polaris supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
+
 **Contributing**
 
 This guide is a first draft of the Julia documentation for Polaris. If you have
 suggestions or find errors, please open a pull request or contact us by
 [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
+All the source files used in this documentation are located at [https://github.com/anlsys/julia_alcf](https://github.com/anlsys/julia_alcf). Feel free to open PRs!
+
 ## Julia Installation
 
-We recommend installing Julia in a project directory `$(PROJECT)` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
+We recommend installing Julia in a project directory `$PROJECT` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
 
 1. Checkout the configuration files
-
-```bash
-git clone  https://github.com/anlsys/julia_alcf
-```
-
+    ```bash
+    git clone  https://github.com/anlsys/julia_alcf
+    ```
 2. Run setup script
+    ```bash
+    cd julia_alcf/polaris
+    ./setup_julia.sh
+    ```
+    This script contains steps that eventually will be executed by an admin
+    + Install Julia in `$JULIA_DEPOT_PATH`
+    + Configure Julia options through a global `LocalPreferences.toml` file
+    + Set up module files
+3. Add `$JULIA_DEPOT_PATH` that you entered during setup to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`) and load the module path.
 
-```bash
-cd julia_alcf/polaris
-./setup_julia.sh
-```
-
-This script contains steps that eventually will be executed by an admin
-* Install Julia in `JULIA_DEPOT_PATH`
-* Configure Julia options through a global `LocalPreferences.toml` file
-* Set up module files
-
-3. Add `JULIA_DEPOT_PATH` that you entered during setup to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`) and load the module path.
-
-```bash
-export JULIA_DEPOT_PATH=[/eagle/PROJECT/...]
-module use $JULIA_DEPOT_PATH/modulefiles
-```
+    ```bash
+    export JULIA_DEPOT_PATH=/eagle/$PROJECT/.../julia_depot
+    module use $JULIA_DEPOT_PATH/modulefiles
+    ```
 
 ## Loading Julia
 Load the Julia module:
@@ -145,7 +143,6 @@ end
 ```
 #### Job Submission Script
 This PBS script requests resources and launches the Julia application using `mpiexec`.
-If using the default `PrgEnv-nvidia` module on Polaris, then it will be necessary to correct a path to the CUPTI library to successfully install `CUDA.jl`.
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
