@@ -22,7 +22,7 @@ We recommend installing Julia in a project directory `$PROJECT` on [Eagle or Fla
 
 1. Checkout the configuration files
     ```bash
-    git clone  https://github.com/anlsys/julia_alcf
+    git clone https://github.com/anlsys/julia_alcf
     ```
 2. Run setup script
     ```bash
