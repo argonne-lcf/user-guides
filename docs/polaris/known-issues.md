@@ -32,3 +32,19 @@ This is a collection of known issues that have been encountered on Polaris. Docu
    3. If you do not have the files mentioned above, you will need to create them.
       1. You can generate an `id_rsa` file with the following command: `ssh-keygen -t rsa`
    4. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
+
+## Set `TMPDIR` to avoid `AF_UNIX path too long` error
+
+Software that relies on the setting of `TMPDIR` to create socket files may encouter the linux error `AF_UNIX path too long` when running in processes launched with `mpiexec` on a single node.  This issue has arisen in software using the `python` `multiprocessing` library for this purpose, including some use cases of `pytorch` and `parsl`.
+
+The solution for this error is to manually set `TMPDIR` before launching the application, e.g.
+
+```bash
+export TMPDIR=/tmp
+```
+
+Alternatively, it can be set with the `mpiexec` command, e.g.
+
+```bash
+mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
+```
