@@ -49,7 +49,7 @@ module load forge
 If you are using a wrapper script to map MPI ranks to PVC GPU tiles, you must set this environment variable to the full path to that wrapper script:
 
 ```bash
-export FORGE_DEBUGGER_WRAPPER=/opt/aurora/24.180.3/support/tools/mpi_wrapper_utils/gpu_tile_compact.sh
+export FORGE_DEBUGGER_WRAPPER=/opt/aurora/default/support/tools/mpi_wrapper_utils/gpu_tile_compact.sh
 ```
 
 (The path to the default `gpu_tile_compact.sh` script changes when there's a new default software module update. You may find the up-to-date path using the command `which gpu_tile_compact.sh`.)
@@ -84,7 +84,7 @@ From the interactive prompt on your lead Aurora compute node, issue the followin
 ```bash linenums="1"
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
-ZET_ENABLE_PROGRAM_DEBUGGING=1
+export ZET_ENABLE_PROGRAM_DEBUGGING=1
 ```
 
 To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to Aurora you created as shown above. On the Aurora compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 16 nodes, with 12 MPI ranks per node:
