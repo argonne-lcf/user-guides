@@ -38,7 +38,7 @@ git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
 git checkout rel-sdk-1.4.0
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
-bash commands.sh
+bash commands_wse3.sh
 ```
 
 Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
@@ -49,7 +49,7 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 
 ???+ example "Sample output:"
     ``` { .output .no-copy }
-    $ bash commands.sh
+    $ bash commands_wse3.sh
     [INFO] === Beginning compilation ===
     [INFO] Using SIF: ~/cs_sdk-1.4.0/sdk-cbcore-202505010205-2-ef181f81.sif
     [INFO] CSL_IMPORT_PATH is not set
@@ -89,7 +89,7 @@ Example script to forward port 8000 to localhost 8008:
 export SDK_PORT=8000
 export LOCAL_PORT=8008
 export ALCFUserID=<your alcf username>
-ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cer-login-04.ai.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:SDK_PORT -N cer-anl-net001-us-sr01
+ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cer-login-04.ai.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
 ```
 
 Then open the following URL in your web browser:  `http://localhost:8008/sdk-gui/`

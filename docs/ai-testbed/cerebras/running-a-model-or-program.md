@@ -98,6 +98,24 @@ A successful GPT3 (111m parameters) PyTorch training/validation run should finis
 2025-10-09 18:20:23,281 INFO:   Processed 48000 training sample(s) in 820.575766695 seconds.
 ```
 
+As the console output shows, for this sample, the run framework starts three jobs (two compiles and one execute) as part of a single workflow:
+```text
+(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ grep -B1 "Job id:" mytest.log 
+2025-10-30 18:10:39,460 INFO:   Initiating a new compile wsjob against the cluster server.
+2025-10-30 18:10:39,479 INFO:   Job id: wsjob-acxb4mqan53ppiffvdaafq, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-acxb4mqan53ppiffvdaafq
+--
+2025-10-30 18:11:51,527 INFO:   Initiating a new execute wsjob against the cluster server.
+2025-10-30 18:11:51,558 INFO:   Job id: wsjob-uttzzftdpppygmvqspykpr, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-uttzzftdpppygmvqspykpr
+--
+2025-10-30 18:21:33,099 INFO:   Initiating a new compile wsjob against the cluster server.
+2025-10-30 18:21:33,118 INFO:   Job id: wsjob-6mvjwjqovjprbibbpi3w43, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-6mvjwjqovjprbibbpi3w43
+(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ 
+```
+
+The jobs can be seen with `csctl get jobs`, from another console session on a user node.
+See [Job Queuing and Submission](./job-queuing-and-submission.md) for more details.
+
+
 
 
 
