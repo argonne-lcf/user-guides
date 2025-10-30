@@ -109,7 +109,7 @@ As the console output shows, for this sample, the run framework starts three job
 --
 2025-10-30 18:21:33,099 INFO:   Initiating a new compile wsjob against the cluster server.
 2025-10-30 18:21:33,118 INFO:   Job id: wsjob-6mvjwjqovjprbibbpi3w43, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-6mvjwjqovjprbibbpi3w43
-(venv_cerebras_pt) arnoldw@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ 
+(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ 
 ```
 
 The jobs can be seen with `csctl get jobs`, from another console session on a user node.
