@@ -38,7 +38,7 @@ git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
 git checkout rel-sdk-1.4.0
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
-bash commands.sh
+bash commands_wse3.sh
 ```
 
 Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
@@ -49,7 +49,7 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 
 ???+ example "Sample output:"
     ``` { .output .no-copy }
-    $ bash commands.sh
+    $ bash commands_wse3.sh
     [INFO] === Beginning compilation ===
     [INFO] Using SIF: ~/cs_sdk-1.4.0/sdk-cbcore-202505010205-2-ef181f81.sif
     [INFO] CSL_IMPORT_PATH is not set
