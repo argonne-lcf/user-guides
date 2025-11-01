@@ -2,9 +2,7 @@
 
 ## Introduction
 
-Intel Sanitizer is a correctness tools to detect addressability issues, memory leaks, data races and deadlocks, and use of uninitialized memory.
-* The compilation builds sanitized device images based on compiler driver flags.
-* The runtime checks for the existence of sanitized images. If they exist, the runtime enables a specific sanitizer layer in the unified runtime module to support sanitizer functionality.
+Intel Sanitizer is a correctness tool to detect addressability issues, memory leaks, data races and deadlocks, and use of uninitialized memory. With the addition of the sanitizer compiler flags, a sanitizer device image is created. At runtime, the sanitized images are checked. If they exist, the runtime enables a specific sanitizer layer in the unified runtime module to support sanitizer functionality.
 
 ![Sanitizer framework](images/Sanitizer_framework.png "Sanitizer_framework")
 
@@ -32,7 +30,7 @@ Address, Memory, and Thread Sanitizers are provided with the oneAPI compiler for
 * Enabling device-side ASAN on a SYCL kernel
 ```bash
 icpx –fsycl –Xarch_device –fsanitize=address -g demo.cpp
-ONEAPI_DEVICE_SELECTOR=level_zero:gpu ./demo 
+./demo 
 ```
 
 * Enabling device-side ASAN on OpenMP code (with `icx`, `icpx` or `ifx`)
@@ -56,7 +54,7 @@ WRITE of size 8 at kernel <__omp_offloading_10301_140c146_gpu_rhf_j01_ssss__l85>
 * Enabling device-side MSAN on a SYCL kernel
 ```bash
 icpx –fsycl –Xarch_device –fsanitize=memory -g demo.cpp
-ONEAPI_DEVICE_SELECTOR=level_zero:gpu ./demo 
+./demo 
 ```
 
 * Enabling device-side MSAN on OpenMP code (with `icx`, `icpx` or `ifx`)
@@ -80,7 +78,7 @@ use of size 1 at kernel <__omp_offloading_10301_12070fb__ZN6openmc19process_init
 * Enabling device-side TSAN on a SYCL kernel
 ```bash
 icpx –fsycl –Xarch_device –fsanitize=thread -g demo.cpp
-ONEAPI_DEVICE_SELECTOR=level_zero:gpu ./demo 
+./demo 
 ```
 
 * Enabling device-side TSAN on OpenMP code (with `icx`, `icpx` or `ifx`)
