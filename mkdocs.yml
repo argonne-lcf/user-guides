@@ -234,6 +234,7 @@ nav:
           - DDT: aurora/debugging/ddt-aurora.md
           - gdb4hpc: aurora/debugging/gdb4hpc.md
           - Codee: aurora/debugging/codee.md
+          - Intel_Sanitizer: aurora/debugging/Intel_sanitizer.md
         - Performance Tools:
           - aurora/performance-tools/index.md
           - iprof: aurora/performance-tools/iprof.md
