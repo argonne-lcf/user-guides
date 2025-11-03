@@ -120,7 +120,7 @@ export DisableDeepBind=1
 
 
 ## References  
-[Intel Sanitizer documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/find-bugs-quickly-using-sanitizers-with-oneapi-compiler.html)
+[Intel Sanitizer documentation](https://www.alcf.anl.gov/sites/default/files/2025-11/2025_Oct_ALCF_DevSession_Debugging_tools_v02.pdf)
 
 [2025 ALCF Developer Session](./Presentations/2025_Oct_ALCF_DevSession_Debugging_tools.pdf)
 
