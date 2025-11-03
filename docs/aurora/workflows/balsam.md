@@ -39,10 +39,6 @@ In the Balsam configuration for Aurora, a Balsam `gpu` refers to an Aurora node 
 
 Here is an example that runs an application `hello_affinity` from our getting started guide in `mpi-mode`, which will execute the application with `mpiexec`. We also show an example of executing an echo command that takes an argument and runs on a single GPU tile.
 
-!!! warning
-
-    Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job. This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris. This is due to a known issue with Slingshot and will be fixed in the future. Users running MPI application ensembles on Aurora with Balsam should take this into account when configuring their workflows.
-
 ```python linenums="1" title="balsam_job_ensemble.py"
 from balsam.api import ApplicationDefinition, Job
 
