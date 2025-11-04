@@ -85,7 +85,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "Meta-Llama-3.1-8B-Instruct",
+                "model": "gpt-oss-120b-131072",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -105,7 +105,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="Meta-Llama-3.1-8B-Instruct",
+        model="gpt-oss-120b-131072",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
