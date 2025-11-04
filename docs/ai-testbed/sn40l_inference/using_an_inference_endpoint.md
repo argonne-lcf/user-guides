@@ -117,8 +117,8 @@ Once authenticated, you can make a test call using cURL or Python.
 The endpoint information can be accessed using the [Metis status page](https://metis.alcf.anl.gov/status). It provides the status of the endpoints and the models and the associated configurations.
 
 The list of currently supported chat-completion models on Metis are : 
-- gpt-oss-131K
-- Deepseek-r1-32K
+- gpt-oss-120b-131072
+- DeepSeek-R1-0528
   
 <!---
 - Meta-Llama-3.3-70B-Instruct
