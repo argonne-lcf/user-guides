@@ -83,7 +83,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "Meta-Llama-3.1-8B-Instruct",
+                "model": "gpt-oss-120b-131072",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -103,7 +103,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="Meta-Llama-3.1-8B-Instruct",
+        model="gpt-oss-120b-131072",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
@@ -203,7 +203,7 @@ Two clusters are currently active, with additional systems coming soon:
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
-                    "model": "Meta-Llama-3.1-8B-Instruct",
+                    "model": "gpt-oss-120b-131072",
                     "temperature": 0.2,
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -237,7 +237,7 @@ Two clusters are currently active, with additional systems coming soon:
         )
 
         response = client_metis.chat.completions.create(
-            model="Meta-Llama-3.1-8B-Instruct",
+            model="gpt-oss-120b-131072",
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
@@ -391,10 +391,8 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    - DeepSeek-R1<sup>R</sup><sup>H</sup>
-    - Meta-Llama-3.1-8B-Instruct<sup>H</sup>
-    - Meta-Llama-3.3-70B-Instruct<sup>H</sup>
-    - Qwen2.5-Coder-0.5B-Instruct<sup>H</sup>
+    - DeepSeek-R1-0528<sup>R</sup><sup>H</sup>
+    - gpt-oss-120b-131072<sup>H</sup>
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
