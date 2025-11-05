@@ -629,5 +629,7 @@ GPU Stack Utilization Per Device, %    x4013c2s3b0n0            N/A            G
 ## References  
 [Intel Application Performance Snapshot User's Guide](https://www.intel.com/content/www/us/en/docs/vtune-profiler/user-guide-application-snapshot-linux/2025-0/overview.html)
 
-[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_2_Intel_Analyzers.pdf)
+[2025 ALCF INCITE Hackathon virtual week](https://www.alcf.anl.gov/sites/default/files/2025-05/Part_2_Intel_Analyzers.pdf)
+
+[2025 ALCF Hands-on HPC workshop virtual week](https://www.alcf.anl.gov/sites/default/files/2025-10/Intel_Tools_2025_ALCF_HPC_Hands-on_workshop.pdf)
 
