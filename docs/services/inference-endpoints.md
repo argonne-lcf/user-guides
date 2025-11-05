@@ -363,7 +363,6 @@ Models are organized by cluster and marked with the following capabilities:
     - allenai/Llama-3.1-Tulu-3-405B
     - google/gemma-3-27b-it<sup>B</sup><sup>T</sup><sup>H</sup>
     - mgoin/Nemotron-4-340B-Instruct-hf
-    - zai-org/GLM-4.5-Air<sup>T</sup>
 
 ??? "Vision Language Models"
 
