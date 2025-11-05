@@ -276,7 +276,7 @@ Two clusters are currently active, with additional systems coming soon:
         base64_image = encode_image(image_path)
 
         response = client.chat.completions.create(
-            model="Qwen/Qwen2-VL-72B-Instruct",
+            model="meta-llama/Llama-3.2-90B-Vision-Instruct",
             messages=[
                 {
                     "role": "user",
@@ -332,16 +332,6 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    **Qwen Family**
-
-    - Qwen/Qwen2.5-7B-Instruct<sup>B</sup><sup>T</sup>
-    - Qwen/Qwen2.5-14B-Instruct<sup>B</sup><sup>T</sup>
-    - Qwen/QwQ-32B<sup>B</sup><sup>R</sup><sup>T</sup>
-    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
-    - Qwen/Qwen3-235B-A22B<sup>T</sup>
-    - Qwen/Qwen3-Next-80B-A3B-Instruct<sup>T</sup>
-    - Qwen/Qwen3-Next-80B-A3B-Thinking<sup>R</sup><sup>T</sup>
-
     **Meta Llama Family**
 
     - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
@@ -377,21 +367,17 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Vision Language Models"
 
-    - Qwen/Qwen2-VL-72B-Instruct<sup>T</sup>
-    - Qwen/Qwen2.5-VL-72B-Instruct<sup>T</sup>
     - meta-llama/Llama-3.2-90B-Vision-Instruct
 
 ??? "Embedding Models"
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
-    - Qwen/Qwen3-Embedding-8B
     - Salesforce/SFR-Embedding-Mistral
 
 ### Metis Cluster (SambaNova)
 
 ??? "Chat Language Models"
 
-    - DeepSeek-R1-0528<sup>R</sup><sup>H</sup>
     - gpt-oss-120b-131072<sup>H</sup>
 
     !!! note "Metis Limitations"
