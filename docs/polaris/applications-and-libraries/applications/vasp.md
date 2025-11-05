@@ -28,13 +28,15 @@ The VASP source can only be obtained from an official license reseller of VASP. 
 
 ## VASP 6.4.x or 6.5.x in Polaris (NVHPC+OpenACC+OpenMP+CUDA math+CrayMPI)
 
-### General compiling/installing instructions provided by VASP support 
+### General compiling/installing instructions provided by VASP support
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
 
 The following `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
 ```makefile
 # Precompiler options
+# -DUSENCCL can lead to problems on VASP 6.4 and 6.5: https://www.vasp.at/forum/viewtopic.php?t=19822
+# deactivating makes it work properly on Polaris
 CPP_OPTIONS= -DHOST=\"LinuxNV_CrayMPICH\" \
              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
              -DscaLAPACK \
@@ -47,8 +49,8 @@ CPP_OPTIONS= -DHOST=\"LinuxNV_CrayMPICH\" \
              -DACC_OFFLOAD \
              -D_OPENMP \
              -D_OPENACC \
-             -DNVCUDA \
-             -DUSENCCL
+             -DNVCUDA
+#             -DUSENCCL
 
 CPP        = nvfortran -Mpreprocess -Mfree -Mextend -E $(CPP_OPTIONS) $*$(FUFFIX)  > $*$(SUFFIX)
 FC         = ftn -acc -gpu=cc80 -mp -target-accel=nvidia80
@@ -67,16 +69,19 @@ NVROOT     =$(shell which nvfortran | awk -F /compilers/bin/nvfortran '{ print $
 LIBAOCL=/soft/libraries/aocl/3.2.0
 #BLAS       = -L/soft/applications/vasp/aol-libs/amd-blis/lib/ILP64 -lblis-mt
 #LAPACK     = -L/soft/applications/vasp/aol-libs/amd-libflame/lib/ILP64 -lflame
-BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.aLAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
+BLAS       = /soft/applications/vasp/aol-libs/3.2/amd-blis/lib/LP64/libblis-mt.a
+LAPACK     = /soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/LP64/libflame.a
 
 BLACS      =
 SCALAPACK  =
 #SCALAPACK  = -Mscalapack
 #SCALAPACK  = ${LIBAOCL}/lib/libscalapack.a
 
-CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
+#CUDA       = -cudalib=cublas,cusolver,cufft,nccl -cuda
+CUDA       = -cudalib=cublas,cusolver,cufft -cuda
 
 LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS) $(CUDA)
+LLIBS      += -L$(NVROOT)/cuda/lib64 -Wl,-rpath,$(NVROOT)/cuda/lib64 -Wl,-rpath-link,$(NVROOT)/cuda/lib64
 
 # Software emulation of quadruple precision
 QD         ?= $(NVROOT)/compilers/extras/qd
@@ -113,7 +118,7 @@ FREE_LIB   = $(FREE)
 OBJECTS_LIB= linpack_double.o
 
 # For the parser library
-es15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
+#CXX_PARS   = nvc++ --no_warnings -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/ -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/lus/theta-fs0/software/spack/spack-dev/opt/spack/linux-sles15-x86_64/gcc-9.3.0/gcc-10.2.0-r7v3naxd5xgzzaqxoe73jj2ytwuddamr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed/
 CXX_PARS   = nvc++ --no_warnings
 
 # Normally no need to change this
@@ -128,9 +133,11 @@ The following modules will update the include and library paths used by the Cray
 ```
 module restore
 module load cray-libsci
+module rm xalt
 
 export NVROOT=${NVIDIA_PATH}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/cuda/lib64
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
@@ -140,7 +147,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd
 ### Compiling VASP
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
-``` 
+```
 make -j1
 ```
 
@@ -165,6 +172,7 @@ module load cray-libsci
 NVROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/24.11
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/cuda/lib64
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
@@ -187,11 +195,13 @@ NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS ))
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
-#IF you hold a license for 6.5
+# If you hold a license for 6.5
 bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
+# or add the path to your own compilation
+#bin=/your/vasp_std
 
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /lus/eagle/projects/catalyst/world-shared/avazquez/affinity.sh  $bin
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /lus/eagle/projects/catalyst/world-shared/avazquez/affinity.sh $bin
 ```
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
