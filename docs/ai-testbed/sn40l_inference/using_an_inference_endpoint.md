@@ -118,13 +118,7 @@ The endpoint information can be accessed using the [Metis status page](https://m
 
 The list of currently supported chat-completion models on Metis are : 
 - gpt-oss-120b-131072
-- DeepSeek-R1-0528
-  
-<!---
-- Meta-Llama-3.3-70B-Instruct
-- Meta-Llama-3.1-8B-Instruct
--  Qwen2.5-Coder-0.5B-Instruct
--  DeepSeek-R1 --->
+- Llama-4-Maverick-17B-128E-Instruct
 
 You can programmatically query all available models and endpoints:
 
