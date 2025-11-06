@@ -1,6 +1,6 @@
 # Inference with vLLM
 
-vLLM is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.
+[vLLM](https://docs.vllm.ai/) is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.
 
 ## Install vLLM 
 
@@ -19,21 +19,18 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
     ```
 
     Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+## Provided Installation
+vLLM (version 0.10.1rc2) is available as part of the frameworks module. Please use the following command:
 
-```bash linenums="1" title="Install vLLM using pre-built wheels"
-export http_proxy="proxy.alcf.anl.gov:3128"
-export https_proxy="proxy.alcf.anl.gov:3128"
+```bash
 module load frameworks
-conda create --name vllm python=3.10 -y
-conda activate vllm
-
-module unload oneapi/eng-compiler/2024.07.30.002
-module use /opt/aurora/24.180.3/spack/unified/0.8.0/install/modulefiles/oneapi/2024.07.30.002
-module use /soft/preview/pe/24.347.0-RC2/modulefiles
-module add oneapi/release
-
-pip install /flare/datasets/softwares/vllm-install/wheels/*
-pip install /flare/datasets/softwares/vllm-install/vllm-0.6.6.post2.dev28+g5dbf8545.d20250129.xpu-py3-none-any.whl
+export CCL_PROCESS_LAUNCHER=hydra
+```
+Then, you can use this framework in your code 
+``` { .python .no-copy }
+>>> import vllm
+>>> print(vllm.__version__)
+0.10.1rc2.dev189+ge2db1164a
 ```
 
 ## Access Model Weights
@@ -71,7 +68,7 @@ export no_proxy="localhost,127.0.0.1" #Set no_proxy for the client to interact w
 
 The following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
 ```bash linenums="1"
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --device xpu --dtype float16
+vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype float16 
 ```
 
 #### Using Multiple Tiles
@@ -80,7 +77,7 @@ Refer to [Common Configuration Recommendations](#common-configuration-recommenda
 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code
+vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --dtype float16 --trust-remote-code
 ```
 
 ## Serve Medium Models 
@@ -91,7 +88,7 @@ Refer to [Common Configuration Recommendations](#common-configuration-recommenda
 
 ```bash linenums="1"
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --device xpu --dtype float16 --trust-remote-code --max-model-len 32768
+vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype float16 --trust-remote-code --max-model-len 32768
 ```
 
 ## Serve Large Models 
@@ -103,14 +100,14 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 ??? example "Setup script"
 
 	```bash linenums="1" title="setup_ray_cluster.sh"
-	--8<-- "./GettingStarted/DataScience/vLLM/setup_ray_cluster.sh"
+    --8<-- "./GettingStarted/DataScience/vLLM/setup_ray_cluster.sh"
 	```
 
 From a login node, initiate the Ray cluster and execute vLLM serve:
 ```bash linenums="1"
 source /path/to/setup_ray_cluster.sh
 main 
-vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --device xpu --dtype float16 --trust-remote-code --max-model-len 1024
+vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2  --dtype float16 --trust-remote-code --max-model-len 1024
 ```
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
 In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in your environment. 
