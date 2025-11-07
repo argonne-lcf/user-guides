@@ -6,15 +6,15 @@ PIs of INCITE, ALCC, and ADSP projects must complete quarterly reports and a fin
 
 ## Due dates
 
-### 2025 INCITE quarterly, EOY, and EOP reports:
+### 2026 INCITE quarterly, EOY, and EOP reports:
 
-- April 1, 2025 (CY2025 - Q1)
-- July 1, 2025 (CY2025 - Q2)
-- October 1, 2025 (CY2025 - Q3)
-- January 1, 2026 (CY2025 - EOY) or February 15, 2026 (entire allocation period - EOP)
+- April 1, 2026 (CY2026 - Q1)
+- July 1, 2026 (CY2026 - Q2)
+- October 1, 2026 (CY2026 - Q3)
+- January 1, 2027 (CY2026 - EOY) or February 15, 2027 (entire allocation period - EOP)
 
-### 2024-2025 / 2025-2026 ALCC EOP report:
-- August 15, 2025 (CY2025)
+### 2025-2026 ALCC EOP report:
+- August 15, 2026 (CY2026)
 
 ### 2025-2026 ALCC quarterly and EOP reports:
 - October 1, 2025 (CY2025 - Q3)
@@ -55,7 +55,7 @@ Please modify the filename to reflect your project's details:
 - Replace ALLOCATION with INCITE or ALCC 
 - Replace YEAR to the corresponding calendar year
 
-For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in the 2023-2024 cycle for ALCC, the filename will be Smith_ALCC_Q1.docx.
+For example, for a project with PI 'Joe Smith' that is submitting the quarterly report for the first quarter in the 2025-2026 cycle for ALCC, the filename will be Smith_ALCC_Q1.docx.
 
 - For an EOY report, replace YEARS with the years associated with your allocation.
 
