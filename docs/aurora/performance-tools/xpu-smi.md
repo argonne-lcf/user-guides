@@ -253,6 +253,9 @@ Timestamp, DeviceId, GPU Utilization (%), GPU Power (W), GPU Frequency (MHz), GP
 
 ## References
 [XPU manager github repository](https://github.com/intel/xpumanager)  
-[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
+
+[2025 ALCF INCITE Hackathon virtual week](https://www.alcf.anl.gov/sites/default/files/2025-05/Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
+
+[2025 ALCF Hands-on HPC workshop virtual week](https://www.alcf.anl.gov/sites/default/files/2025-10/Intel_Tools_2025_ALCF_HPC_Hands-on_workshop.pdf)
 
 
