@@ -54,13 +54,11 @@ Pkg.add(["MPI", "MPIPreferences", "CUDA", "HDF5"])
 ```
 The packages will be loaded with the options specified in the `LocalPreferences.toml` file created during the setup process in `$JULIA_DEPOT_PATH/environments/v1.12`.
 
-```
-
 ## Verify Configuration on a Compute Node
 
 The Polaris login nodes do not have GPU access. You must request an interactive job to test your GPU configuration.
 
-```bash
+```bash linenums="1"
 # Request an interactive node
 qsub -I -l select=1,walltime=1:00:00,filesystems=home:eagle -A [PROJECT] -q debug
 
@@ -147,7 +145,7 @@ end
 
 ### Job Submission Script
 
-This PBS script requests resources and launches the Julia application using `mpiexec`.
+This PBS script requests resources and launches the Julia application using `mpiexec`:
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -l select=1:system=polaris
