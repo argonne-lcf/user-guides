@@ -168,10 +168,6 @@ When executing this script, the script will block until all tasks are completed.
 
 In the previous example, `mpiexec` was used as a launcher, rather than an executor.  In order to run applications that have MPI communication, `mpiexec` has to be used a different way by Parsl.  To run MPI applications, use the `SimpleLauncher` and the `MPIExecutor`.  Note that the configuration has to set `max_workers_per_block` to align with the resource needs of the application.  The `MPIExecutor` can only run tasks that use more than one node.
 
-!!! warning
-
-    Ensembles of tasks launched with `mpiexec` on multiple nodes are currently limited to 1000 total tasks run per batch job.  This means when `mpiexec` calls return, the nodes they used can refill only a limited number of times, rather than an arbitrary number of times like on Polaris.  This is due to a known issue with Slingshot and will be fixed in the future.  Users running MPI application ensembles on Aurora with Parsl should take this into account when configuring their workflows.
-
 This example `Config` object can be used to execute MPI tasks that use two nodes each:
 
 ``` python linenums="1" title="config.py"
