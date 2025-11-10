@@ -83,7 +83,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "Meta-Llama-3.1-8B-Instruct",
+                "model": "gpt-oss-120b-131072",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -103,7 +103,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="Meta-Llama-3.1-8B-Instruct",
+        model="gpt-oss-120b-131072",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
@@ -203,7 +203,7 @@ Two clusters are currently active, with additional systems coming soon:
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
-                    "model": "Meta-Llama-3.1-8B-Instruct",
+                    "model": "gpt-oss-120b-131072",
                     "temperature": 0.2,
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -237,7 +237,7 @@ Two clusters are currently active, with additional systems coming soon:
         )
 
         response = client_metis.chat.completions.create(
-            model="Meta-Llama-3.1-8B-Instruct",
+            model="gpt-oss-120b-131072",
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
@@ -276,7 +276,7 @@ Two clusters are currently active, with additional systems coming soon:
         base64_image = encode_image(image_path)
 
         response = client.chat.completions.create(
-            model="Qwen/Qwen2-VL-72B-Instruct",
+            model="meta-llama/Llama-3.2-90B-Vision-Instruct",
             messages=[
                 {
                     "role": "user",
@@ -332,16 +332,6 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    **Qwen Family**
-
-    - Qwen/Qwen2.5-7B-Instruct<sup>B</sup><sup>T</sup>
-    - Qwen/Qwen2.5-14B-Instruct<sup>B</sup><sup>T</sup>
-    - Qwen/QwQ-32B<sup>B</sup><sup>R</sup><sup>T</sup>
-    - Qwen/Qwen3-32B<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
-    - Qwen/Qwen3-235B-A22B<sup>T</sup>
-    - Qwen/Qwen3-Next-80B-A3B-Instruct<sup>T</sup>
-    - Qwen/Qwen3-Next-80B-A3B-Thinking<sup>R</sup><sup>T</sup>
-
     **Meta Llama Family**
 
     - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
@@ -373,28 +363,21 @@ Models are organized by cluster and marked with the following capabilities:
     - allenai/Llama-3.1-Tulu-3-405B
     - google/gemma-3-27b-it<sup>B</sup><sup>T</sup><sup>H</sup>
     - mgoin/Nemotron-4-340B-Instruct-hf
-    - zai-org/GLM-4.5-Air<sup>T</sup>
 
 ??? "Vision Language Models"
 
-    - Qwen/Qwen2-VL-72B-Instruct<sup>T</sup>
-    - Qwen/Qwen2.5-VL-72B-Instruct<sup>T</sup>
     - meta-llama/Llama-3.2-90B-Vision-Instruct
 
 ??? "Embedding Models"
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
-    - Qwen/Qwen3-Embedding-8B
     - Salesforce/SFR-Embedding-Mistral
 
 ### Metis Cluster (SambaNova)
 
 ??? "Chat Language Models"
 
-    - DeepSeek-R1<sup>R</sup><sup>H</sup>
-    - Meta-Llama-3.1-8B-Instruct<sup>H</sup>
-    - Meta-Llama-3.3-70B-Instruct<sup>H</sup>
-    - Qwen2.5-Coder-0.5B-Instruct<sup>H</sup>
+    - gpt-oss-120b-131072<sup>H</sup>
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster

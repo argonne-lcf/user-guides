@@ -372,6 +372,8 @@ Download `out.pftrace` and open it with [Perfetto ](https://ui.perfetto.dev/#!/v
 
 ## References
 [THAPI github repository](https://github.com/argonne-lcf/THAPI)  
-[2025 ALCF INCITE Hackathon virtual week](./Presentations/2025_INCITE_Hackathon_Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
+
+[2025 ALCF INCITE Hackathon virtual week](https://www.alcf.anl.gov/sites/default/files/2025-05/Part_1_light-weight-tools-iprof_unitrace_xpu-smi.pdf)
+
 
 
