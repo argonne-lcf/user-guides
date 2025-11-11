@@ -378,6 +378,7 @@ Models are organized by cluster and marked with the following capabilities:
 ??? "Chat Language Models"
 
     - gpt-oss-120b-131072<sup>H</sup>
+    - Llama-4-Maverick-17B-128E-Instruct^H
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
