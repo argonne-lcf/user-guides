@@ -15,17 +15,11 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 
 ## Reservations and Scheduling Policy
 
-Some work will require use of Polaris that necessitates deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular form no fewer than five (5) business days in advance.
-
-## Big Run Mondays
-
-As part of our regular maintenance procedures on Mondays, we will promote to the highest priority any jobs in the queued state requesting 802 nodes or more. Promotion is subject to operational discretion.
-
-We may also, at our discretion, take the opportunity to promote the priority of capability jobs (20% of the machine) if the system has been drained of jobs for any other reason.
+Some work will require use of the systems that necessitates deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular form no fewer than five (5) business days in advance.
 
 ## Monday Maintenance
 
-On Mondays when the ALCF is on a regular business schedule, the system may be expected to undergo maintenance from 9:00 am until 5:00 pm US Central Time. The `showres` command may be used to view pending and active maintenance reservations.
+On select Mondays when the ALCF is on a regular business schedule, ALCF systems may undergo maintenance. The `pbs_rstat` command can be used to view pending and active maintenance reservations.
 
 ## INCITE/ALCC Overburn Policy
 
