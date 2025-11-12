@@ -1,0 +1,5 @@
+## QMCPACK on Polaris
+
+[QMCPACK](https://qmcpack.org/) is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code. Its main applications are electronic structure calculations of molecular, quasi-2D, and solid-state systems. Variational Monte Carlo (VMC), diffusion Monte Carlo (DMC), and a number of other advanced QMC algorithms are implemented. Orbital space auxiliary field QMC (AFQMC) has recently been added. By directly solving the Schrödinger equation, QMC methods offer greater accuracy than methods such as density functional theory, but at the trade-off of much greater computational expense.
+
+Prebuilt executables are provided at `/soft/applications/qmcpack`. The directory of each installation also includes a job submission script example `qmcpack-polaris.job`. An updated build recipe is provided on [GitHub](https://github.com/QMCPACK/qmcpack/blob/develop/config/build_alcf_polaris_Clang.sh).

@@ -1,0 +1,18 @@
+# This file contains URLs that are expected to link to pages within this documentation site.
+# These URLs are checked during the build process to ensure that the target pages still exist.
+# Each line should contain a single URL that points to a page within the ALCF User Guides.
+# Lines starting with # are comments and will be ignored.
+
+https://docs.alcf.anl.gov/account-project-management/
+https://docs.alcf.anl.gov/data-management/
+https://docs.alcf.anl.gov/ai-testbed/
+https://docs.alcf.anl.gov/support/
+https://docs.alcf.anl.gov/running-jobs/
+https://docs.alcf.anl.gov/policies/
+https://docs.alcf.anl.gov/crux/
+https://docs.alcf.anl.gov/crux/index
+https://docs.alcf.anl.gov/crux/index.html
+https://docs.alcf.anl.gov/aurora
+https://docs.alcf.anl.gov/polaris
+https://docs.alcf.anl.gov/services
+https://docs.alcf.anl.gov/sophia

@@ -13,7 +13,7 @@
   --green_med-dark:    rgb(  0,  58,  65);
 
   --blue_pale:         rgb(186, 222, 245);
-  --blue_med:          rgb( 17, 138, 203); 
+  --blue_med:          rgb( 0, 97, 175); 
   --blue_dark:         rgb( 29,  22,  81);
 
   --warm_red:          rgb(209,  59,  80);
@@ -52,7 +52,7 @@
   }
 
   .md-header {
-    background-color: var(--blue_dark);
+    background-color: var(--blue_med);
   }
 
   .md-typeset a {
@@ -68,8 +68,8 @@
   } 
 
   .md-header {
-    color: var(--green_pale);
-    border-bottom: 1px solid var(--blue_med);
+    color: var(--neutral_light);
+    border-bottom: 1px solid var(--blue_dark);
   }
 
   .md-typeset h1,
@@ -86,12 +86,12 @@
   }
 
   .header--primary .header__site-title h1 {
-    color: var(--blue_med);
+    color: var(--green_pale);
   }
 
   .header--secondary .header__nav-secondary a,
   .header--primary .header__nav-primary a {
-    color: var(--green_pale);
+    color: var(--neutral_light);
   }
 
   .header--primary .header__nav-primary a:hover,
@@ -102,7 +102,7 @@
 
   .header--primary .header__nav-secondary a,
   .md-header__button {
-    color: var(--blue_med);
+    color: var(--green_pale);
   }
 
   @media screen and (min-width: 60em) {
@@ -118,7 +118,7 @@
   }
 
   .md-search__input {
-    background: var(--blue_pale); 
+    background: var(--green_pale); 
   }
 
   @media screen and (min-width: 60em) {
@@ -399,7 +399,7 @@
   }
 
   .header--primary .header__nav-primary li:last-child { 
-    border-left: 1px solid var(--blue_med);
+    border-left: 1px solid var(--blue_dark);
   } 
 
   .md-search__input::placeholder,
@@ -1073,6 +1073,7 @@
 
 .header--primary {
   font-size: initial;
+  height: 152px;
 }
 
 .header--primary .grid {
@@ -1089,7 +1090,7 @@
 }
 
 .header--primary .grid { 
-  min-height: 128px; 
+  min-height: 158px; 
 } 
 
 .header--primary .header__site-title { 
@@ -1106,7 +1107,7 @@
   font-weight: 600;
   padding-block: 5pt;
   margin-block: auto;
-  font-size: 1.5625em;
+  font-size: 1.8rem; /* prev 1.5625em */
 }
 
 .header--primary .header__nav-primary {
@@ -1130,6 +1131,7 @@
   font-weight: 600;
   display: inline-block;
   margin-block-end: 0pt;
+  font-size: .9375rem;
 }
 
 .header--primary .header__nav-primary .dropdown a {

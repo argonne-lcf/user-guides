@@ -1,0 +1,37 @@
+<!-- Table of Contents -->
+<!-- --------------------------------------------------------------------- -->
+
+
+
+<nav class="md-nav md-nav--secondary" aria-label="{{ title }}">
+
+  <label class="md-nav__title" for="__toc">
+    Table of contents
+  </label>
+
+  {% set toc = page.toc %}
+  {% set first = toc | first %}
+  {% if first and first.level == 1 %}
+    {% set toc = first.children %}
+  {% endif %}
+  {% if toc %}
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      {{ title }}
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      {% for toc_item in toc %}
+        {% include "partials/toc-item.html" %}
+      {% endfor %}
+      <br>
+      <li class="md-nav__item">
+        <hr>
+        <a href="https://github.com/argonne-lcf/user-guides/issues/new/choose" class="md-nav__link">
+          <span class="md-ellipsis">
+            <strong>Does this doc need an update?<br>Open an Issue on GitHub</strong>
+          </span>
+        </a>   
+      </li>
+    </ul>
+  {% endif %}
+</nav>
