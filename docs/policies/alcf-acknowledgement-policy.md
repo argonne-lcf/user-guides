@@ -2,7 +2,7 @@
 
 As a U.S. Department of Energy user facility dedicated to the advancement of scientific discoveries, the Argonne Leadership Computing Facility (ALCF) provides unique computing resources and expertise to a user community that is bound by certain policies designed to acknowledge and promote the work of others as well as the resources used to accomplish this work.
 
-The ALCF requests your continued compliance with the terms of your program or discretionary award, specifically with regard to acknowledgments in publications and presentations based on work done with ALCF resources. Also, please forward your accepted publication citations to pubs@alcf.anl.gov.
+The ALCF requests your continued compliance with the terms of your program or discretionary award, specifically with regard to acknowledgments in publications and presentations based on work done with ALCF resources. Also, please forward your accepted publication citations to [pubs@alcf.anl.gov](mailto:pubs@alcf.anl.gov).
 
 ## AI Testbeds Publication Guidance
 
