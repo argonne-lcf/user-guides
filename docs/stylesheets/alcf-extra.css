@@ -1,7 +1,7 @@
 
 /* Define select brand colors */
 :root {
-  --neutral_light:     rgb(255, 255, 255);
+  --neutral_light:     rgb(255, 255, 255); 
   --neutral_dark:      rgb(  7,   7,  18);
   --neutral_med:       rgb(120, 120, 130);
   --neutral_med-light: rgb(225, 225, 235);
