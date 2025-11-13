@@ -398,7 +398,7 @@
   }
 
   .md-typeset blockquote {
-    color: var(--neutral_med-light);
+    color: var(--neutral_med);
   }
 
   .header--primary .header__nav-primary li:last-child { 
