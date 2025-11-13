@@ -79,6 +79,9 @@
 
   .md-typeset h3 {
     color: var(--neutral_med-dark);
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: .75em;
   }
 
   .md-typeset ul>li:before {
@@ -97,7 +100,7 @@
   .header--primary .header__nav-primary a:hover,
   .header--primary .header__nav-secondary a:hover,
   .header--primary a:hover {
-    color: var(--blue_med);
+    opacity: .5;
   }
 
   .header--primary .header__nav-secondary a,
@@ -395,7 +398,7 @@
   }
 
   .md-typeset blockquote {
-    color: var(--neutral_med-light);
+    color: var(--neutral_med);
   }
 
   .header--primary .header__nav-primary li:last-child { 
