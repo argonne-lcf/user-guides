@@ -2,6 +2,8 @@
 ## 2025-10-27
 Slingshot Fabric Manager Update to 2.3.1
 
+System daos_user has been upgraded to daos-2.6.4 GA, enabled in PBS.
+
 ## 2025-10-13
 The compute image with Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0, which was previously available in next-eval queue, is rolled out to the majority of nodes across Aurora. 2,126 nodes have the old production image and are available in a queue called `legacy`, which will be available to all teams that are unable to run against the new image. Some teams will have higher priority to run in the legacy queue. Use aurora-uan-000[7-8] nodes for the `legacy` queue as they will have the same  user environment. Users will not be able log in directly to aurora-uan-000[7-8] and will need to ssh to them after logging in to aurora.alcf.anl.gov. 
 
