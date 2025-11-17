@@ -8,7 +8,7 @@ By the NIST guidelines for identification and authentication ([NIST 800-53, Revi
 
 ## Mobile and physical tokens
 
-ALCF provides every user of the production resources a physical or mobile token. An account can only be associated with a single token (physical or mobile). See [Using Passcode Tokens](https://www.alcf.anl.gov/support-center/account-and-project-management/alcf-passcode-tokens) for more information.
+ALCF provides every user of the production resources a physical or mobile token. An account can only be associated with a single token (physical or mobile). See [Obtaining a Token](../../account-project-management/accounts-and-access/obtaining-a-token.md) for more information.
 
 At the end of your account or project lifecycle, the physical token must be returned to ALCF Support:
 
