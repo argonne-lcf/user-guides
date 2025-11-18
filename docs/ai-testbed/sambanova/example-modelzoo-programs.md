@@ -38,10 +38,10 @@ echo $TARGET_SAMBAFLOW_VERSION
 Container startup output should look like:
 ```
 APP_ROOT: /home/arnoldw/sambanova/modelzoo
-Using singularity with image /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+Using singularity with image /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_0.2.0.sif
 
 Running singularity instance with name: devbox_arnoldw_1724873417
-Singularity start command: singularity instance start --writable-tmpfs --bind /home/arnoldw/github.com/sambanova/modelzoo:/opt/modelzoo --bind /tmp:/tmp --bind /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ --bind /software/models/:/opt/ckpts/ --bind /dev/hugepages:/dev/hugepages --bind /opt/sambaflow/pef/:/opt/sambaflow/pef/ --bind /opt/sambaflow/runtime/:/opt/sambaflow/runtime/ --bind /var/lib/sambaflow/ccl/ccl_config.db:/var/lib/sambaflow/ccl/ccl_config.db --bind /var/snml.sock:/var/snml.sock --bind /opt/sambanova/lib/python3.8/site-packages/pysnml:/opt/sambanova/lib/python3.8/site-packages/pysnml --bind /opt/sambanova/lib/python3.8/site-packages/pysnrdureset:/opt/sambanova/lib/python3.8/site-packages/pysnrdureset --bind /opt/sambanova/lib/python3.8/site-packages/pysnrdutools:/opt/sambanova/lib/python3.8/site-packages/pysnrdutools --bind /opt/sambanova/lib/python3.8/site-packages/sambaruntime:/opt/sambanova/lib/python3.8/site-packages/sambaruntime /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif devbox_arnoldw_1724873417
+Singularity start command: singularity instance start --writable-tmpfs --bind /home/arnoldw/github.com/sambanova/modelzoo:/opt/modelzoo --bind /tmp:/tmp --bind /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ --bind /software/models/:/opt/ckpts/ --bind /dev/hugepages:/dev/hugepages --bind /opt/sambaflow/pef/:/opt/sambaflow/pef/ --bind /opt/sambaflow/runtime/:/opt/sambaflow/runtime/ --bind /var/lib/sambaflow/ccl/ccl_config.db:/var/lib/sambaflow/ccl/ccl_config.db --bind /var/snml.sock:/var/snml.sock --bind /opt/sambanova/lib/python3.8/site-packages/pysnml:/opt/sambanova/lib/python3.8/site-packages/pysnml --bind /opt/sambanova/lib/python3.8/site-packages/pysnrdureset:/opt/sambanova/lib/python3.8/site-packages/pysnrdureset --bind /opt/sambanova/lib/python3.8/site-packages/pysnrdutools:/opt/sambanova/lib/python3.8/site-packages/pysnrdutools --bind /opt/sambanova/lib/python3.8/site-packages/sambaruntime:/opt/sambanova/lib/python3.8/site-packages/sambaruntime /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_0.2.0.sif devbox_arnoldw_1724873417
 INFO:    instance started successfully
 Singularity instance devbox_arnoldw_1724873417 started
 Run command: singularity exec instance://devbox_arnoldw_1724873417 /bin/bash
@@ -52,7 +52,7 @@ To list all running containers (while outside a container, e.g. a different SSH 
 ```
 $ singularity instance list
 INSTANCE NAME                PID        IP    IMAGE
-devbox_arnoldw_1724873417    1649294          /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+devbox_arnoldw_1724873417    1649294          /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_0.2.0.sif
 ```
 To re-enter an exited but still-running container (while outside a container):
 ```
@@ -200,7 +200,7 @@ cd ~/sambanova/modelzoo
 export TARGET_SAMBAFLOW_VERSION=$((rpm -q sambanova-runtime 2>/dev/null || dpkg -s sambanova-runtime 2>/dev/null) | egrep -m 1 -o "[0-9]+\.[0-9]+\.[0-9]+")
 echo $TARGET_SAMBAFLOW_VERSION
 # should be of the form 1.19.1
-./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software:/software /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_1.sif
+./start_container.sh -b /data/ANL/openwebtext/hdf5/hdf5:/opt/datasets/openweb_hdf54096/ -b  /software:/software /software/sambanova/singularity/images/llm-modelzoo/Modelzoo/ModelzooDevbox_0.2.0.sif
 ```
 or use an existing container with instructions at [starting a container](#starting-a-container)
 
