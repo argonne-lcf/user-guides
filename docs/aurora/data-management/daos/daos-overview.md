@@ -500,7 +500,7 @@ module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
 module load darshan
 ```
 
-To instrument your application to generate a darshan binary log file the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to mpiexec, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
+In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
 
 ```bash linenums="1"
 LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
@@ -683,13 +683,13 @@ is almost always the no-vni issue or network issue and not a DAOS issue
 
 ### 5. `na_ofi_mem_register` errors
 
-There is a network limitation where if your application does alot of IO from a memory buffer that is severly segmented you may see an error like this:
+There is a network limitation where if your application does a lot of IO from a memory buffer that is severely segmented you may see an error like this:
 
 ```bash linenums="1"
 11/25-21:17:21.87 x4305c3s5b0n0 DAOS[75672/75672/0] external ERR  # [7284.159605] mercury->mem [error] /home/daos/pre/build/external/release/mercury/src/na/na_ofi.c:8870 na_ofi_mem_register() fi_mr_enable() failed, rc: -28 (No space left on device), mr_reg_count: 15677
 ```
 
-This error may be gotten around by the following environment variable setting at run time:
+A workaround for this error by setting the following environment variable at runtime:
 
 ```bash linenums="1"
 export DAOS_IOV_FRAG_SIZE=65536
