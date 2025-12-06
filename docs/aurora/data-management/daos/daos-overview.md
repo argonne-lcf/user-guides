@@ -552,7 +552,7 @@ source bin/activate
 
 ### 3. `darshan-parser` utility
 
-`darshan-parser` can be used on the binany log file to get a text output of all the raw counters which is much more accurate and detailed than the python summary `.html` as follows:
+`darshan-parser` can be used on the binary log file to get a text output of all the raw counters which is much more accurate and detailed than the python summary `.html` as follows:
 
 ```bash linenums="1"
 module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
