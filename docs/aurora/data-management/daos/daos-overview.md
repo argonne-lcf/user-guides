@@ -359,7 +359,7 @@ export PLATFORM_NUM_GPU_TILES=2
 
 
 date
-LD_PRELOAD=/usr/lib64/libpil4dfs.so mpiexec -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
+ mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
                                             --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
                                             -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
 date
@@ -493,20 +493,24 @@ Darshan is a lightweight I/O profiling tool consisting of a shared library your 
 
 On Aurora, Darshan has been built in the programming environment in `/soft`.
 
-To get the Darshan utilities loaded into your programming environment, execute the following:
+To get the Darshan parser utilities loaded into your programming environment, execute the following:
 
 ```bash linenums="1"
 module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
 module load darshan
 ```
 
-However it has not yet been fully modularized so the shared library must be manually preloaded at run time via `LD_PRELOAD`, along with PNetCDF and HDF5 shared libraries since support for those I/O libraries is included, and all 3 must precede any DAOS interception library, so the specification would be:
+In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
 
 ```bash linenums="1"
 LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
 ```
 
-If your application is using `gpu_tile_compact.sh` then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.
+If your application uses `gpu_tile_compact.sh` and you experience a hang or error as described in the 'Known issues and workarounds' section below, you should add the entire `LD_PRELOAD` definition to your personal copy of the Bash script. Do this by using the `export` builtin command. See here for an example:
+
+```bash linenums="1"
+/lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
+```
 
 Run your application normally as you would do with `mpiexec` or `mpirun`.
 
@@ -524,47 +528,37 @@ where the last 3 directories are the date the file is generated, with your user 
 export DARSHAN_LOGFILE=<full path to binary file name>
 ```
 
-### 2. `darshan-util` environment module
+### 2. Python PyDarshan Summary Report .html
 
-`module load darshan-util` is needed for `darshan-parser` and `pydarshan`
-
-`LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan-util.so:$LD_PRELOAD`
-
-### 3. `darshan-parser` utility
-
-`darshan-parser` can be used on the binany log file to get a text output of all the metrics as follows:
-```bash linenums="1"
-/soft/perftools/darshan/darshan-3.4.7/bin/darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt.
-```
-
-### 4. PyDarshan library and Python module
-
-For generating a graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
+The first step in your analysis should be to generate a graphical summary report to get a rough estimate of overall IO performance.  For generating this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
 
 For custom build:
 ```bash linenums="1"
 module load python
-mkdir <pyton env dir>
-python -m venv <pyton env dir>
-cd <pyton env dir>
+mkdir <python env dir>
+python -m venv <python env dir>
+cd <python env dir>
 source bin/activate
 pip install darshan
 python -m darshan summary <binary log file>
 ```
 
-For system build:
-```bash linenums="1"
-module load python
-. /soft/daos/pydarshan_plots_venv/bin/activate
-pip show darshan
-```
-The above 3 lines should be replaced by a simpler `module load pydarshan` in the future. 
+should generate the `.html` Darshan report.  Once the environment is created, to reuse it on subsequent analysis just activate it again:
 
 ```bash linenums="1"
-python -m darshan summary /lus/flare/logs/darshan/aurora/2025/5/21/my.darshan
+cd <python env dir>
+source bin/activate
 ```
 
-should generate the `.html` Darshan report
+### 3. `darshan-parser` utility
+
+`darshan-parser` can be used on the binary log file to get a text output of all the raw counters which is much more accurate and detailed than the python summary `.html` as follows:
+
+```bash linenums="1"
+module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
+module load darshan
+darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt.
+```
 
 ## Cluster Size
 
@@ -661,7 +655,7 @@ You can disregard this, as the DAOS client will simply retry the operation until
 
 ### 4. Issue with the `gpu_tile_compact.sh` bash script and the DAOS Interception Libraries
 
-There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script where you may get an error like this sporadically at scale:
+There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script (specifically the `/usr/bin/udevadm` call) where you may get a hang or an error like this sporadically:
 ```bash linenums="1"
 terminate called after throwing an instance of 'std::invalid_argument'
   what():  stoul
@@ -670,7 +664,7 @@ x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 13
 x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
 ```
 
-This issue is still under investigation. In the meantime, there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to perform the `LD_PRELOAD` of the interception library within this script. In the case of the `libpil4dfs.so`, you would add the following line just before the execution of the binary:
+This issue is still under investigation. In the meantime, there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to perform the `LD_PRELOAD` of the interception library within this script. In the case of the `libpil4dfs.so`, you would add the following line after the `/usr/bin/udevadm` call and just before the execution of the binary:
 ```bash linenums="1"
 export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ```
@@ -686,6 +680,20 @@ hg_core_send_input_cb() NA callback returned error (NA_HOSTUNREACH)
 ```
 
 is almost always the no-vni issue or network issue and not a DAOS issue
+
+### 5. `na_ofi_mem_register` errors
+
+There is a network limitation where if your application does a lot of IO from a memory buffer that is severely segmented you may see an error like this:
+
+```bash linenums="1"
+11/25-21:17:21.87 x4305c3s5b0n0 DAOS[75672/75672/0] external ERR  # [7284.159605] mercury->mem [error] /home/daos/pre/build/external/release/mercury/src/na/na_ofi.c:8870 na_ofi_mem_register() fi_mr_enable() failed, rc: -28 (No space left on device), mr_reg_count: 15677
+```
+
+A workaround for this error is to set the following environment variable at runtime:
+
+```bash linenums="1"
+export DAOS_IOV_FRAG_SIZE=65536
+```
 
 ## Best practices
 
