@@ -509,7 +509,7 @@ LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/2
 If your application uses `gpu_tile_compact.sh` and you experience a hang or error as described in the 'Known issues and workarounds' section below, you should add the entire `LD_PRELOAD` definition to your personal copy of the Bash script. Do this by using the `export` builtin command. See here for an example:
 
 ```bash linenums="1"
-/lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
+/home/pkcoff/public/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
 ```
 
 Run your application normally as you would do with `mpiexec` or `mpirun`.
@@ -670,7 +670,7 @@ export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ```
 For an example, see:
 ```bash linenums="1"
-/lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD.sh
+/home/pkcoff/public/gpu_tile_compact_LD_PRELOAD.sh
 ```
 
 ### 5. `NA_HOSTUNREACH` errors
