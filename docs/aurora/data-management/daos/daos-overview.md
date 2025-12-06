@@ -506,7 +506,7 @@ In order to instrument your application and generate a Darshan binary log file, 
 LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
 ```
 
-If your application is using `gpu_tile_compact.sh` and you had a hang or error with it as described in the following 'Known issues and workarounds' section then this whole `LD_PRELOAD` will go in your personal copy of the Bash script via the `export` builtin command.  See here for an example:
+If your application uses `gpu_tile_compact.sh` and you experience a hang or error as described in the 'Known issues and workarounds' section below, you should add the entire `LD_PRELOAD` definition to your personal copy of the Bash script. Do this by using the `export` builtin command. See here for an example:
 
 ```bash linenums="1"
 /lus/flare/projects/Aurora_deployment/pkcoff/scripts/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
