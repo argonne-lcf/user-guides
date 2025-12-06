@@ -689,7 +689,7 @@ There is a network limitation where if your application does a lot of IO from a 
 11/25-21:17:21.87 x4305c3s5b0n0 DAOS[75672/75672/0] external ERR  # [7284.159605] mercury->mem [error] /home/daos/pre/build/external/release/mercury/src/na/na_ofi.c:8870 na_ofi_mem_register() fi_mr_enable() failed, rc: -28 (No space left on device), mr_reg_count: 15677
 ```
 
-A workaround for this error by setting the following environment variable at runtime:
+A workaround for this error is to set the following environment variable at runtime:
 
 ```bash linenums="1"
 export DAOS_IOV_FRAG_SIZE=65536
