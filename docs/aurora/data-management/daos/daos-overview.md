@@ -530,7 +530,7 @@ export DARSHAN_LOGFILE=<full path to binary file name>
 
 ### 2. Python PyDarshan Summary Report .html
 
-The first step in you analysis should be to generate a graphical summary report to get a rough estimate of overall IO performance.  For generating this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
+The first step in your analysis should be to generate a graphical summary report to get a rough estimate of overall IO performance.  For generating this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
 
 For custom build:
 ```bash linenums="1"
