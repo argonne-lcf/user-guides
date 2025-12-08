@@ -5,16 +5,12 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Major Changes in the frameworks module
+## Major changes in the frameworks module in Fall 2025
 
-- No more `torch_ccl`. `import oneccl_bindings_for_pytorch as torch_ccl` is not
-needed anymore.
-- Must change `backend` to `xccl` from `ccl` when initializing `torch.distributed`
-- `import intel_extension_for_pytorch as ipex` is optional. This is a work in 
-progress from the vendors side. If you experience performance variations, 
-switch back to importing it.
-- No `horovod` support for PyTorch
-
+- The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
+- When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
+- `import intel_extension_for_pytorch as ipex` is now an optional import. The vendor is currently working on upstreaming all of the functionality from IPEX to the mainline PyTorch distribution. If you experience performance variations after removing the import, please switch back to importing it.
+- `horovod` support for PyTorch has been removed.
 
 ## Provided Installation
 
