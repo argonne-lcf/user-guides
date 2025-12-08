@@ -48,3 +48,7 @@ Alternatively, it can be set with the `mpiexec` command, e.g.
 ```bash
 mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 ```
+
+## Inter-node MPI RMA operations 
+
+There is a known bug in Cray MPICH concerning inter-node MPI RMA operations (e.g. `MPI_Get()`, `MPI_Put()`, `MPI_Win_flush()`), whereby the application can hang trying to read a counter from the Cassini NIC. It was noticed sometime after the August 2025 system upgrade. HPE is aware and working on a fix. The only known workaround is to use a fresh OpenMPI build, but that approach will likely face large performance costs.
