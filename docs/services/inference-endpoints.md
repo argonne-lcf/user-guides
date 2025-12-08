@@ -372,6 +372,18 @@ Models are organized by cluster and marked with the following capabilities:
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
     - Salesforce/SFR-Embedding-Mistral
+    - genslm-test/genslm-esmc-300M-aminoacid
+    - genslm-test/genslm-esmc-300M-codon
+    - genslm-test/genslm-esmc-300M-contrastive-aminoacid
+    - genslm-test/genslm-esmc-300M-contrastive-codon
+    - genslm-test/genslm-esmc-300M-joint-aminoacid
+    - genslm-test/genslm-esmc-300M-joint-codon
+    - genslm-test/genslm-esmc-600M-aminoacid
+    - genslm-test/genslm-esmc-600M-codon
+    - genslm-test/genslm-esmc-600M-contrastive-aminoacid
+    - genslm-test/genslm-esmc-600M-contrastive-codon
+    - genslm-test/genslm-esmc-600M-joint-aminoacid
+    - genslm-test/genslm-esmc-600M-joint-codon
 
 ### Metis Cluster (SambaNova)
 
