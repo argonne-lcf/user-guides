@@ -101,7 +101,7 @@ This is a collection of known issues that have been encountered during Aurora's 
 
 A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/softare resource account for access.
 
-### Runtime Errors
+### Runtime and Compiler Issues
 
 #### 1. `Cassini Event Queue overflow detected`
 
@@ -170,7 +170,7 @@ If you see a compile error similar to:
 error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
 1 error generated.
 ```
-when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details.
+when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details. If `-fno-system-debug -g` does not help, adding additionally `--offload-compress` may help as well.
 
 #### 8. Set `TMPDIR` to avoid `AF_UNIX path too long` error
 
