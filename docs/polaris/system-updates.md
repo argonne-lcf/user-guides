@@ -1,5 +1,31 @@
 # Polaris System Updates
 
+## 2026-01-05
+Polaris and Eagle are scheduled to be upgraded Jan 5 - Jan 8, 2026.
+
+The main components to be updated in the upgrade include:
+
+#### POLARIS:
+- Updates to nvidia stack: 
+  - Driver Version: 570.124.06
+    - CUDA API version 12.8
+  - HPC_SDK 25.5 / 12.9
+- Move to SHS 13.0.0 (this may be updated to 13.0.2, pending HPE bugfixs in 13.0.x)
+- Upgraded PALS, USS (user services stack)
+- Change to how add in kernel modules are handled
+  - Migrate from kmod/static kernel modules to DKMS, impacting:
+    - Lustre
+    - nvidia (Driver, gdrcopy)
+    - SHS (kfabric, kdrge2, cxi driver, sl-driver)
+- Minor OS Security patch updates
+- Fail2Ban On login/esn (formerly known as AMN nodes)
+- Support for EdgeServices Nodes (ESN) - replaces AMN
+- Support for Service Nodes (SN) - replaces AMN
+
+#### EAGLE:
+- NEO 7.2-021 software updates and hardware firmware updates.
+
+
 ## 2025-10-24
 
 `conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
