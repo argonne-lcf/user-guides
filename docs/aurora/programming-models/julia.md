@@ -50,7 +50,7 @@ Aurora maintains three Julia versions:
 - **Previous version** (currently 1.11): The previous stable release for compatibility with recent projects
 - **LTS (Long Term Support)** (currently 1.10): Provides long-term stability with bug fixes but no new features, ideal for production workloads requiring consistency
 
-When new versions are released, the oldest non-LTS version is retired, and the LTS version is updated according to the [Julia LTS release schedule](https://julialang.org/downloads/#long_term_support_release).
+When new versions are released, the oldest non-LTS version is retired (removed from the system and no longer available), and the LTS version is updated according to the [Julia LTS release schedule](https://julialang.org/downloads/#long_term_support_release).
 
 ## Configuring the Programming Environment
 To leverage Aurora's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`oneAPI.jl`](https://github.com/JuliaGPU/oneAPI.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
@@ -60,7 +60,7 @@ The Julia module on Aurora is pre-configured with system-specific preferences (v
 Install the required packages in your Julia environment with the following commands:
 ```julia
 using Pkg
-Pkg.add(["MPI", "oneAPI", "HDF5"])
+Pkg.add(["MPI", "oneAPI", "HDF5", "KernelAbstractions"])
 ```
 
 Note: `MPIPreferences` does not need to be explicitly added as it's a dependency of `MPI.jl`.
