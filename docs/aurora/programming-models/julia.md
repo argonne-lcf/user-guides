@@ -1,29 +1,29 @@
 # Julia
 !!! example "Experimental support"
 
-    Support for the Julia programming language on Polaris is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+    Support for the Julia programming language on Aurora is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
 
 ## Introduction
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
-This guide details how to configure and run Julia on the Polaris supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
+This guide details how to configure and run Julia on the Aurora supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
 
 !!! example "Contributing"
 
-    This guide is a first draft of the Julia documentation for Polaris. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+    This guide is a first draft of the Julia documentation for Aurora. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
 
 All the source files used in this documentation are located at [https://github.com/anlsys/julia_alcf](https://github.com/anlsys/julia_alcf). Feel free to open PRs!
 
 ## Julia Setup
 
-Julia is available on Polaris as a module.
+Julia is available on Aurora as a module.
 
-We recommend setting your `$JULIA_DEPOT_PATH` to a project directory `PROJECT` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid filling up your home directory.
+We recommend setting your environment variable `$JULIA_DEPOT_PATH` to a project directory `PROJECT` on [Flare or Gila](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid filling up your home directory.
 
 Add the following to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`):
 
 ```bash
-export JULIA_DEPOT_PATH="/eagle/PROJECT/$USER/julia_depot"
+export JULIA_DEPOT_PATH="/flare/PROJECT/$USER/julia_depot"
 ```
 
 If `$JULIA_DEPOT_PATH` is not set, it defaults to `~/.julia` with a warning when you load the module.
@@ -44,7 +44,7 @@ module load julia/1.10  # LTS (Long Term Support)
 
 ### Version Policy
 
-Polaris maintains three Julia versions:
+Aurora maintains three Julia versions:
 
 - **Latest stable release** (currently 1.12): The most recent stable version with the newest features and performance improvements
 - **Previous version** (currently 1.11): The previous stable release for compatibility with recent projects
@@ -53,80 +53,78 @@ Polaris maintains three Julia versions:
 When new versions are released, the oldest non-LTS version is retired, and the LTS version is updated according to the [Julia LTS release schedule](https://julialang.org/downloads/#long_term_support_release).
 
 ## Configuring the Programming Environment
-To leverage Polaris's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`CUDA.jl`](https://github.com/JuliaGPU/CUDA.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
+To leverage Aurora's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`oneAPI.jl`](https://github.com/JuliaGPU/oneAPI.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
 
-The Julia module on Polaris is pre-configured with system-specific preferences (via `LocalPreferences.toml` in the system load path) to ensure these packages use the correct system libraries (MPICH, CUDA 12.6, HDF5).
+The Julia module on Aurora is pre-configured with system-specific preferences (via `LocalPreferences.toml` in the system load path) to ensure these packages use the correct system libraries (MPICH, Intel Level Zero, HDF5).
 
 Install the required packages in your Julia environment with the following commands:
 ```julia
 using Pkg
-Pkg.add(["MPI", "CUDA", "HDF5"])
+Pkg.add(["MPI", "oneAPI", "HDF5"])
 ```
 
 Note: `MPIPreferences` does not need to be explicitly added as it's a dependency of `MPI.jl`.
 
-### CUDA-Aware MPI
+### oneAPI-Aware MPI
 
-CUDA-aware MPI is enabled by default on Polaris. You can pass `CuArray` objects directly to `MPI.jl` functions without explicit host-device transfers, enabling efficient GPU-to-GPU communication across nodes:
+oneAPI-aware MPI is enabled by default on Aurora. You can pass `oneArray` objects directly to `MPI.jl` functions without explicit host-device transfers, enabling efficient GPU-to-GPU communication across nodes:
 
 ```julia
-using CUDA, MPI
+using oneAPI, MPI
 MPI.Init()
 
-# Create a CuArray and pass it directly to MPI operations
-data = CUDA.rand(Float64, 100)
+# Create a oneArray and pass it directly to MPI operations
+data = oneAPI.rand(Float64, 100)
 MPI.Allreduce!(data, +, MPI.COMM_WORLD)  # GPU-to-GPU communication
 ```
 
 ## Verify Configuration on a Compute Node
 
-The Polaris login nodes do not have GPU access. You must request an interactive job to test your GPU configuration.
+The Aurora login nodes do not have GPU access. You must request an interactive job to test your GPU configuration.
 
 ```bash linenums="1"
 # Request an interactive node
-qsub -I -l select=1,walltime=1:00:00,filesystems=home:eagle -A [PROJECT] -q debug
+qsub -I -l select=1,walltime=1:00:00,filesystems=home:flare -A [PROJECT] -q debug
 
 # Once on the node, load Julia and run the verification
 module use /soft/modulefiles
 module load julia
-julia -e "using CUDA; CUDA.versioninfo()"
+julia -e "using oneAPI; oneAPI.versioninfo()"
 
 # Expected Output Snippet
-# CUDA runtime 12.6, local installation
+# oneAPI.jl version: ...
+# Intel Level Zero version: ...
 # ...
-# Preferences:
-# - CUDA_Runtime_jll.local: true
-# ...
-# 4 devices:
-#   0: NVIDIA A100-SXM4-40GB ...
+# 12 devices:
+#   0: Intel(R) Data Center GPU Max 1550 ...
 ```
 
 ## Example Julia Code for Approximating Pi
 
 ```julia linenums="1" title="pi.jl"
-using CUDA
+using oneAPI
 using HDF5
 using MPI
 using Printf
 using Random
+using KernelAbstractions
 
 # GPU kernel to check if points fall within a circle
-function pi_kernel(x, y, d, n)
-    idx = (blockIdx().x - 1) * blockDim().x + threadIdx().x
-    if idx <= n
-        d[idx] = (x[idx] - 0.5)^2 + (y[idx] - 0.5)^2 <= 0.25 ? 1 : 0
-    end
-    return nothing
+@kernel function pi_kernel!(x, y, d)
+    idx = @index(Global)
+    @inbounds d[idx] = (x[idx] - 0.5)^2 + (y[idx] - 0.5)^2 <= 0.25 ? 1 : 0
 end
 
 # Function to run the computation on a single GPU
 function approximate_pi_gpu(n::Integer)
-    x = CUDA.rand(Float64, n)
-    y = CUDA.rand(Float64, n)
-    d = CUDA.zeros(Float64, n)
+    x = oneAPI.rand(Float64, n)
+    y = oneAPI.rand(Float64, n)
+    d = oneArray{Float64}(undef, n)
 
-    nblocks = ceil(Int64, n / 32)
-    @cuda threads=32 blocks=nblocks pi_kernel(x, y, d, n)
+    backend = get_backend(d)
+    kernel! = pi_kernel!(backend)
+    kernel!(x, y, d, ndrange=n)
+    KernelAbstractions.synchronize(backend)
 
     return sum(d)
 end
@@ -155,7 +153,6 @@ end
 # --- Main Execution ---
 MPI.Init()
 
-# Ensure the script doesn't run in an interactive Julia session without MPI
 if !isinteractive()
     pi_approx = main()
 
@@ -174,10 +171,10 @@ end
 This PBS script requests resources and launches the Julia application using `mpiexec`:
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
-#PBS -l select=1:system=polaris
+#PBS -l select=1:system=aurora
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
-#PBS -l filesystems=home:eagle
+#PBS -l filesystems=home:flare
 #PBS -q debug
 #PBS -A YOUR_PROJECT_ID
 
@@ -187,7 +184,7 @@ module load julia
 
 # --- Job Settings ---
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS_PER_NODE=4
+NRANKS_PER_NODE=12
 NDEPTH=8 # For CPU binding
 NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 

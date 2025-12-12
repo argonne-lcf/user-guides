@@ -228,6 +228,7 @@ nav:
           - OpenMP: aurora/programming-models/openmp-aurora.md
           - SYCL: aurora/programming-models/sycl-aurora.md
           - HIP: aurora/programming-models/hip-aurora.md
+          - Julia: aurora/programming-models/julia.md
         - Debugging Tools:
           - aurora/debugging/index.md
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
