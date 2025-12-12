@@ -17,6 +17,9 @@ As with all Argonne Leadership Computing Facility production systems, job priori
 
 Some work will require use of the systems that necessitates deviation from regular policy. On such occasions, normal reservation policy applies. Please send the regular form no fewer than five (5) business days in advance.
 
+## Big Run Day (Aurora)
+If you're running capability jobs and want to reduce turnaround time on Aurora, please submit your jobs to the prod queue by 6 p.m. (CT) each Sunday. ALCF will promote large, capability, non-overburn jobs as part of Big Run Day at the start of each week, giving all jobs in that queue a priority boost. While we expect this to occur weekly, there may be occasions when ALCF decides not to proceed, at our discretion.
+
 ## Monday Maintenance
 
 On select Mondays when the ALCF is on a regular business schedule, ALCF systems may undergo maintenance. The `pbs_rstat` command can be used to view pending and active maintenance reservations.
