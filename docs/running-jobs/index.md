@@ -29,13 +29,15 @@ compute resources for all systems at ALCF.
         * [qmsg](#qmsg): Write a message into a job's output file
         * [qsig](#qsig): Send a signal to a job
         * [pbsnodes](#pbsnodes): Get information about the current state of nodes
-        * [pbs-tui](https://github.com/saforem2/pbs-tui)
+        * [pbs-tui](https://github.com/saforem2/pbs-tui)[^uv]
 
             ```bash
-            uv run --with pbs-tui pbs-tui
+            uvx pbs-tui
             ```
 
 
+
+[^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 ## Introduction
 
 At a high level, getting computational tasks run on an HPC system is a two-step process:
