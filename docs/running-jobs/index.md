@@ -35,9 +35,9 @@ compute resources for all systems at ALCF.
             uvx pbs-tui
             ```
 
-          [^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 
+[^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 ## Introduction
 
 At a high level, getting computational tasks run on an HPC system is a two-step process:
