@@ -159,11 +159,7 @@ PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 
 These errors can be safely ignored.
 
-#### 6. Incorrect results in receive buffer in GPU memory 
-
-In the default MPICH module on Aurora, it is possible to get incorrect results in GPU buffers passed through MPI calls. More detail are: [Issue#7302](https://github.com/pmodels/mpich/issues/7302). This will be fixed in the next MPICH module upgrade. For now, be careful of using GPU buffers in MPI communications as you may get incorrect results. 
-
-#### 7. File too large for Clang to processs
+#### 6. File too large for Clang to processs
 
 If you see a compile error similar to:
 ```console
@@ -172,7 +168,7 @@ error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang 
 ```
 when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details. If `-fno-system-debug -g` does not help, adding additionally `--offload-compress` may help as well.
 
-#### 8. Set `TMPDIR` to avoid `AF_UNIX path too long` error
+#### 7. Set `TMPDIR` to avoid `AF_UNIX path too long` error
 
 Software that relies on the setting of `TMPDIR` to create socket files may encouter the linux error `AF_UNIX path too long` when running in processes launched with `mpiexec` on a single node.  This issue has arisen in software using the `python` `multiprocessing` library for this purpose, including some use cases of `pytorch` and `parsl`.
 
