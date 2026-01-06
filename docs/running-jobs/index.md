@@ -29,13 +29,11 @@ compute resources for all systems at ALCF.
         * [qmsg](#qmsg): Write a message into a job's output file
         * [qsig](#qsig): Send a signal to a job
         * [pbsnodes](#pbsnodes): Get information about the current state of nodes
-        * [pbs-tui](https://github.com/saforem2/pbs-tui)[^uv]
-
+        * [pbs-tui](https://github.com/saforem2/pbs-tui)[^uv]: A terminal user interface built with Textual for monitoring the scheduler
             ```bash
             uvx pbs-tui
             ```
-
-
+      * [PBS Helper Utilities](https://github.com/argonne-lcf/pbs_utils): You may find some of the shell scripts, Python scripts, and Python module in this repository useful for querying and managing PBS jobs
 
 [^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 ## Introduction
