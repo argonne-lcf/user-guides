@@ -33,7 +33,7 @@ compute resources for all systems at ALCF.
             ```bash
             uvx pbs-tui
             ```
-      * [PBS Helper Utilities](https://github.com/argonne-lcf/pbs_utils): You may find some of the shell scripts, Python scripts, and Python module in this repository useful for querying and managing PBS jobs
+        * [PBS Helper Utilities](https://github.com/argonne-lcf/pbs_utils): You may find some of the shell scripts, Python scripts, and Python modules in this repository useful for querying and managing PBS jobs (see `pu_nodeStat` and `pu_qstat`, in particular)
 
 [^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 ## Introduction
