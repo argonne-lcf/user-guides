@@ -8,17 +8,17 @@ For details about the code and its usage, see the [LAMMPS](http://lammps.sandia.
 
 ## Using LAMMPS at ALCF
 
-ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles, CMake build scripts, and submission scripts are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Aurora/LAMMPS). For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles, CMake build scripts, and submission scripts are available in the [ALCF GettingStarted repository](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Aurora/LAMMPS). For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## How to Obtain the Code
 
-LAMMPS is an open-source code, which can be downloaded from the LAMMPS [website](http://lammps.sandia.gov/download.html).
+LAMMPS is an open-source code, which can be downloaded from the [LAMMPS website](http://lammps.sandia.gov/download.html).
 
 ## Building with KOKKOS package on Aurora
 
 Users are encouraged to use CMake to build LAMMPS using the default compilers and the `kokkos-sycl-intel.cmake` configuration file included in the LAMMPS repo. An example helper script is provided where CMake is used to build LAMMPS using the KOKKOS package for GPU acceleration.
 
-```
+```bash linenums="1"
 BASE=/path_to_lammps/
 
 module load cmake
@@ -42,13 +42,13 @@ make -j 8
 
 Compilation on the Aurora login nodes will work, but should be done with few processes as they are a shared resource. If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
 
-## Running Jobs on Aurora with Kokkos package
+## Running jobs on Aurora with Kokkos package
 
 An example submission script for a KOKKOS-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
 A GPU affinity script, such as `gpu_tile_compact.sh` must be used to properly bind MPI ranks to GPU resources. As these affinity scripts only make a single device visible to each MPI rank, the LAMMPS command-line option requesting a number of GPUs should always be set to 1. In this example, each MPI rank is bound to a single tile of an Aurora GPU (12 per node). This is likely the optimal configuration when running with the Kokkos package on Aurora.
 
-```
+```bash linenums="1"
 #!/bin/sh
 #PBS -l select=1
 #PBS -l place=scatter
@@ -94,8 +94,7 @@ ${COMMAND}
 
 Users are encouraged to use CMake to build LAMMPS using the default compilers. An example CMake config script is provided below and available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Aurora/LAMMPS/cmake/presets). This file can be copied to your `/path_to_lammps/cmake/presets/` directory.
 
-```
-$ cat aurora.cmake
+```cmake linenums="1" title="aurora.cmake"
 # preset that enables GPU package and selects OpenCL compilation with OpenMP
 # enabled as well. Also sets some performance related compiler flags.
 
@@ -125,7 +124,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -xSAPPHIRERAPIDS -O2 -ffp-
 
 An example helper script is provided where CMake is used to build LAMMPS using the GPU package for GPU acceleration.
 
-```
+```bash linenums="1"
 BASE=/path_to_lammps/
 
 module load cmake
@@ -145,9 +144,9 @@ cmake \
 make -j 4
 ```
 
-Compilation on the Aurora login nodes will work, but should be done with few processes as they are a shared resource. If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
+Compilation on the Aurora login nodes will work, but should be done with few processes as they are a shared resource. If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
 
-## Running Jobs on Aurora with GPU package
+## Running jobs on Aurora with GPU package
 
 An example submission script for a GPU-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
@@ -155,7 +154,7 @@ A GPU affinity script, such as `gpu_tile_compact.sh` must be used to properly bi
 
 When running with the GPU package, it will likely be beneficial to run with multiple MPI ranks bound to an individual GPU tile (i.e. 24 or 48 MPI ranks per node). Binding MPI ranks to individual compute-command-streamers can help to improve performance. This is likely the optimal configuration when running with the GPU package on Aurora. Example affinity scripts are available at the paths in example below and the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/HelperScripts/Aurora). Additionally, 2 or 4 OpenMP threads per MPI rank (and appropriately updating the `cpu-bind` list) might further improve performance but this very much depends on specific workload.
 
-```
+```bash linenums="1"
 #!/bin/sh
 #PBS -l select=1
 #PBS -l place=scatter
@@ -208,7 +207,7 @@ ${COMMAND}
 
 Support for building LAMMPS via Makefiles will be deprecated soon in favor of CMake. Recent Makefiles are available, if needed, for building LAMMPS in the following directory. Recent versions of Kokkos are required to run on Aurora, so older versions of LAMMPS will likely need updating to work correctly.
 
-```
+```console
 knight@aurora-uan-0009:~/public/lammps/old> ls *
 Makefile.aurora  Makefile.aurora_kokkos
 
