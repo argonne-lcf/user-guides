@@ -10,7 +10,7 @@ For details about the code and its usage, see the [LAMMPS](http://lammps.sandia.
 
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles, CMake build scripts, and submission scripts are available in the [ALCF GettingStarted repository](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Aurora/LAMMPS). For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## How to Obtain the Code
+## Obtaining the source code
 
 LAMMPS is an open-source code, which can be downloaded from the [LAMMPS website](http://lammps.sandia.gov/download.html).
 
