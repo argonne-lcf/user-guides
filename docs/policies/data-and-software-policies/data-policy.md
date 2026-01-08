@@ -31,7 +31,7 @@ All software used on ALCF computers must be appropriately acquired and used acco
 
 The ALCF computer systems are operated as research systems and contain only data related to scientific research. Use of ALCF resources to store, manipulate, or remotely access any sensitive or national security information is prohibited unless documented and approved by the PI and ALCF leadership.
 
-This includes, but is not limited to, personally identifiable information (data that falls under the Privacy Act of 1974, 5 U.S.C. 552a), controlled unclassified information (CUI) to include unclassified controlled nuclear information (UCNI), naval nuclear propulsion information (NNPI), International Traffic in Arms Relations (ITAR), the design or development of nuclear, biological, or chemical weapons, or any weapons of mass destruction. The use of ALCF resources for personal or non-work-related activities is also prohibited.
+This includes, but is not limited to, personally identifiable information (data that falls under the Privacy Act of 1974, 5 U.S.C. 552a), controlled unclassified information (CUI) to include health data, unclassified controlled nuclear information (UCNI), naval nuclear propulsion information (NNPI), International Traffic in Arms Relations (ITAR), the design or development of nuclear, biological, or chemical weapons, or any weapons of mass destruction. The use of ALCF resources for personal or non-work-related activities is also prohibited.
 
 ## Export Control
 
