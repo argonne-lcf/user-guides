@@ -194,6 +194,8 @@ nav:
             - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
             - Globus: aurora/data-management/moving_data_to_aurora/globus.md
         - Applications and Libraries:
+          - Applications:
+            - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
             #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
