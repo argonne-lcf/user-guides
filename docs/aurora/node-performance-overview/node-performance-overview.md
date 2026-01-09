@@ -73,7 +73,7 @@ GPU 10 -> GPU 0: Bandwidth = 15.7795 GB/s
 GPU 11 -> GPU 0: Bandwidth = 15.7961 GB/s
 ```
 
-See the source code for this test: [`mpi_sycl_intranode_bw.cpp`](./src/mpi_sycl_intranode_bw.cpp]
+See the source code for this test: [`mpi_sycl_intranode_bw.cpp`](./src/mpi_sycl_intranode_bw.cpp)
 
 ## GEMM
 
@@ -86,7 +86,7 @@ See the source code for this test: [`mpi_sycl_intranode_bw.cpp`](./src/mpi_sycl_
 | TF32GEMM | 110 TFlop/s | 1311 TFlop/s |    11.9 |
 |   I8GEMM | 577 TFlop/s | 5394 TFlop/s |     9.4 |
 
-See the source code for this test: [`gemm.cpp`](./src/gemm.cpp]
+See the source code for this test: [`gemm.cpp`](./src/gemm.cpp)
 
 ## FFT
 
@@ -95,4 +95,4 @@ See the source code for this test: [`gemm.cpp`](./src/gemm.cpp]
 | Single-precision FFT C2C 1D |  3 TFlop/s | 34 TFlop/s |    10.8 |
 | Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.4 |
 
-See the source code for this test: [`fft2c.cpp`](./src/fft2c.cpp]
+See the source code for this test: [`fft2c.cpp`](./src/fft2c.cpp)
