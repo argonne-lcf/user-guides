@@ -95,4 +95,4 @@ See the source code for this test: [`gemm.cpp`](./src/gemm.cpp)
 | Single-precision FFT C2C 1D |  3 TFlop/s | 34 TFlop/s |    10.8 |
 | Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.4 |
 
-See the source code for this test: [`fft2c.cpp`](./src/fft2c.cpp)
+See the source code for this test: [`fftc2c.cpp`](./src/fftc2c.cpp)
