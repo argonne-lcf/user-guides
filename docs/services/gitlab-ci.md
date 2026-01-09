@@ -406,7 +406,7 @@ Inactivity is defined as, but not limited to:
 * Prolonged period of continuously failing CI/CD jobs (In the case of re-occurring scheduled jobs)
 
 ## GitLab Repository Mirroring
-Some users prefer to host the canonical copy of their project on another git hosting service, such as GitHub. 
+Some users prefer to host the canonical copy of their project on another Git hosting service, such as GitHub. 
 It is possible to still use ALCF's GitLab-CI service to provide CI/CD for such projects via GitLab's [Repository Mirroring](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) feature.
 Limited support is available for this workflow due to the additional complexity. Review the [related GitLab documentation](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) carefully.
 
