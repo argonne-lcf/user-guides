@@ -17,7 +17,7 @@ This page aims to give you a high-level overview of key performance numbers for 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise for these benchmarks.
 
 !!! note
-     These values were measured on Jan. 12th, 2026. The default GPU frequency on Aurora was 1.5 Ghz.
+     These values were measured on Jan. 12th, 2026. The default GPU frequency on Aurora was 1.5 GHz.
 
 ## Micro-benchmarks
 
