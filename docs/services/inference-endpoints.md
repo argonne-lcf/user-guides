@@ -83,7 +83,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "gpt-oss-120b-131072",
+                "model": "gpt-oss-120b",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -103,7 +103,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="gpt-oss-120b-131072",
+        model="gpt-oss-120b",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
@@ -203,7 +203,7 @@ Two clusters are currently active, with additional systems coming soon:
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
-                    "model": "gpt-oss-120b-131072",
+                    "model": "gpt-oss-120b",
                     "temperature": 0.2,
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -237,7 +237,7 @@ Two clusters are currently active, with additional systems coming soon:
         )
 
         response = client_metis.chat.completions.create(
-            model="gpt-oss-120b-131072",
+            model="gpt-oss-120b",
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
@@ -389,8 +389,8 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    - gpt-oss-120b-131072<sup>H</sup>
-    - Llama-4-Maverick-17B-128E-Instruct^H
+    - gpt-oss-120b<sup>H</sup>
+    - Llama-4-Maverick-17B-128E-Instruct<sup>H</sup>
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
