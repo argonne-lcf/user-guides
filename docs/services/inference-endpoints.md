@@ -334,11 +334,11 @@ Models are organized by cluster and marked with the following capabilities:
 
     **Meta Llama Family**
 
-    - meta-llama/Meta-Llama-3.1-8B-Instruct^B^^T^^H^
-    - meta-llama/Meta-Llama-3.1-70B-Instruct^B^^T^^H^
-    - meta-llama/Meta-Llama-3.1-405B-Instruct^B^^T^
-    - meta-llama/Llama-3.3-70B-Instruct^B^^T^
-    - meta-llama/Llama-4-Scout-17B-16E-Instruct^B^^T^^H^
+    - meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^
+    - meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^
+    - meta-llama/Meta-Llama-3.1-405B-Instruct^BT^
+    - meta-llama/Llama-3.3-70B-Instruct^BT^
+    - meta-llama/Llama-4-Scout-17B-16E-Instruct^BTH^
     - meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^
 
     **Mistral Family**
@@ -348,8 +348,8 @@ Models are organized by cluster and marked with the following capabilities:
 
     **OpenAI Family**
 
-    - openai/gpt-oss-20b^B^^R^^T^^H^
-    - openai/gpt-oss-120b^B^^R^^T^^H^
+    - openai/gpt-oss-20b^BRTH^
+    - openai/gpt-oss-120b^BRTH^
 
     **Aurora GPT Family**
 
@@ -361,7 +361,7 @@ Models are organized by cluster and marked with the following capabilities:
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it^B^^T^^H^
+    - google/gemma-3-27b-it^BTH^
     - mgoin/Nemotron-4-340B-Instruct-hf
 
 ??? "Vision Language Models"
