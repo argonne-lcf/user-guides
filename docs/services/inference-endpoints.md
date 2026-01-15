@@ -334,12 +334,12 @@ Models are organized by cluster and marked with the following capabilities:
 
     **Meta Llama Family**
 
-    - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Meta-Llama-3.1-405B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Llama-3.3-70B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Llama-4-Scout-17B-16E-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Llama-4-Maverick-17B-128E-Instruct<sup>T</sup>
+    - meta-llama/Meta-Llama-3.1-8B-Instruct^B^^T^^H^
+    - meta-llama/Meta-Llama-3.1-70B-Instruct^B^^T^^H^
+    - meta-llama/Meta-Llama-3.1-405B-Instruct^B^^T^
+    - meta-llama/Llama-3.3-70B-Instruct^B^^T^
+    - meta-llama/Llama-4-Scout-17B-16E-Instruct^B^^T^^H^
+    - meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^
 
     **Mistral Family**
 
@@ -348,20 +348,20 @@ Models are organized by cluster and marked with the following capabilities:
 
     **OpenAI Family**
 
-    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
-    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
+    - openai/gpt-oss-20b^B^^R^^T^^H^
+    - openai/gpt-oss-120b^B^^R^^T^^H^
 
     **Aurora GPT Family**
 
-    - argonne/AuroraGPT-IT-v4-0125<sup>B</sup>
-    - argonne/AuroraGPT-Tulu3-SFT-0125<sup>B</sup>
-    - argonne/AuroraGPT-DPO-UFB-0225<sup>B</sup>
-    - argonne/AuroraGPT-KTO-UFB-0325<sup>B</sup>
+    - argonne/AuroraGPT-IT-v4-0125^B^
+    - argonne/AuroraGPT-Tulu3-SFT-0125^B^
+    - argonne/AuroraGPT-DPO-UFB-0225^B^
+    - argonne/AuroraGPT-KTO-UFB-0325^B^
 
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it<sup>B</sup><sup>T</sup><sup>H</sup>
+    - google/gemma-3-27b-it^B^^T^^H^
     - mgoin/Nemotron-4-340B-Instruct-hf
 
 ??? "Vision Language Models"
@@ -389,8 +389,8 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Chat Language Models"
 
-    - gpt-oss-120b<sup>H</sup>
-    - Llama-4-Maverick-17B-128E-Instruct<sup>H</sup>
+    - gpt-oss-120b^H^
+    - Llama-4-Maverick-17B-128E-Instruct^H^
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
