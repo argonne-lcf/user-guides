@@ -43,9 +43,15 @@ from sklearnex.neighbors import NearestNeighbors
 
 Extension for Scikit-learn can execute algorithms on the GPU via the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package, which should be included in the frameworks module. If not, refer to [Aurora's Python page > dpctl section](../python.md#dpctl). dpctl implements oneAPI concepts like queues and devices.
 
+!!! warning "dpctl tensor deprecation"
+    `dpctl.tensor` arrays are deprecated as of dpctl 0.21.1, and scikit-learn-intelex support for dpctl tensors was deprecated as of the 2025.10.0 release. Both will be removed in the 2026.0 oneAPI release. The recommended alternative is [dpnp arrays](https://intelpython.github.io/dpnp/), which can be used as a 1-for-1 replacement with identical performance. As seen in the examples below, usage is almost the exact same.
+
+!!! note "EmpiricalCovariance limitation"
+    As of scikit-learn-intelex 2025.9.0, `EmpiricalCovariance` does not support dpctl tensor usage. However, it does work with dpnp arrays.
+
 As described in more detail in Intel's documentation [here](https://uxlfoundation.github.io/scikit-learn-intelex/latest/oneapi-gpu.html), there are two ways to run on the GPU.
 
-1. Pass the input data to the algorithm as `dpctl.tensor.usm_ndarray`. Then the algorithm will run on the same device as the data and return the result as a usm_array on the same device.
+1. Pass the input data to the algorithm as `dpctl.tensor.usm_ndarray` (deprecated) or `dpnp.ndarray`. Then the algorithm will run on the same device as the data and return the result as an array on the same device.
 2. Configure Extension for Scikit-learn, for example, by setting a context: `sklearnex.config_context`.
 
 Patching (described above) can be helpful in the case of functionality that already exists in scikit-learn because you can import the functions from `sklearn` instead of `sklearnex`.
@@ -58,12 +64,12 @@ To distribute an `sklearnex` algorithm across multiple GPUs, we need several ing
     The current version of Extension to scikit-learn does not scale well to multiple GPUs. The cause is that scikit-learn includes some array checks before starting an algorithm, and Intel has not implemented performing those checks on the GPU. For now, the data gets copied to the host to perform these checks, which can be a significant bottleneck. However, you can use a parameter to bypass those checks. Either run a function within a `with sklearnex.config_context(use_raw_input=True)` block or run `sklearnex.set_config(use_raw_input=True).` Alternatively, you could use [the oneDAL C++ API](../../applications-and-libraries/libraries/onedal.md) directly.
 
 1. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
-2. Using dpctl and your queue, move your data to the GPU devices.
+2. Using dpctl/dpnp and your queue, move your data to the GPU devices.
 3. Run the algorithm on that data. The compute will happen where the data is. The algorithm should be from `sklearnex.spmd`.
 
 Since you are importing the algorithm from `sklearnex` instead of `sklearn`, patching is not necessary here.
 
-### An Example Python Script
+### An Example Python Script (dpctl tensors - deprecated)
 
 This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex GitHub repo.
 
@@ -102,6 +108,47 @@ model_spmd.fit(dpt_X_train, dpt_y_train)
 
 # for this algorithm, predict is more expensive than fit
 y_val_predict = model_spmd.predict(dpt_X_val)
+```
+
+### An Example Python Script (dpnp arrays)
+
+This example is adapted from [an example](https://github.com/uxlfoundation/scikit-learn-intelex/blob/main/examples/sklearnex/knn_bf_classification_spmd.py) in Intel's scikit-learn-intelex GitHub repo.
+
+```python linenums="1" title="knn_mpi4py_spmd.py"
+import dpctl
+import dpnp
+from mpi4py import MPI
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+import sklearnex
+from sklearnex.spmd.neighbors import KNeighborsClassifier
+
+# Temporary solution until Intel implements array checks on GPU
+sklearnex.set_config(use_raw_input=True)
+
+# Create a GPU SYCL queue to store data on device.
+q = dpctl.SyclQueue("gpu")
+
+# mpi4py is one way to handle arranging data across ranks.
+# For the sake of a concise demo, each rank is generating different random training data.
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+X, y = make_classification(n_samples=100000, n_features=8, random_state=rank)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
+
+# Move the data to the GPU devices.
+dpnp_X_train = dpnp.asarray(X_train, usm_type="device", sycl_queue=q)
+dpnp_X_val = dpnp.asarray(X_val, usm_type="device", sycl_queue=q)
+dpnp_y_train = dpnp.asarray(y_train, usm_type="device", sycl_queue=q)
+
+# Run the algorithm.
+model_spmd = KNeighborsClassifier(
+    algorithm="brute", n_neighbors=20, weights="uniform", p=2, metric="minkowski"
+)
+model_spmd.fit(dpnp_X_train, dpnp_y_train)
+
+# for this algorithm, predict is more expensive than fit
+y_val_predict = model_spmd.predict(dpnp_X_val)
 ```
 
 ### An Example Job Script
