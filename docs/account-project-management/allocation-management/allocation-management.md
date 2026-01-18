@@ -1,10 +1,10 @@
 # Managing Your Allocations
 
-Allocations require management – balance checks, resource allocation, requesting more time, etc. Allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface. 
+Allocations require management. This can include balance checks, resource allocation, requesting more time, or other actions. Your allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface.
 
-## Active Allocations on MyACLF
+## Active Allocations on MyALCF
 
-Select data for active allocations are shown on the dashboard of the MyALCF portal when signed into an ALCF user account. The dashboard section labeled "Active Project Allocations" provides an overview of activity with allocation start and end dates, allocation node hour usage, remaining node hours, usage trend data for future planning, and job sizes run. More detailed queries can be done using the sbank graphic interface in the [sbank section](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) of the MyALCF portal. Further information on how to use the sbank graphic interface is available in the [MyALCF documentation.](../../account-project-management/MyALCF.md)
+Select data for active allocations are shown on the dashboard of the MyALCF portal when you sign into an ALCF user account. The dashboard section labeled "Active Project Allocations" provides an overview of activity with allocation start and end dates, allocation node hour usage, remaining node hours, usage trend data for future planning, and job sizes run. You can make more detailed queries using the sbank graphical interface in the [sbank section](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) of the MyALCF portal. Further information on how to use the sbank graphic interface is available in the [MyALCF documentation.](../../account-project-management/MyALCF.md)
 
 ![Dashboard Screenshot](files/dash_allocation.png)
 
@@ -28,9 +28,7 @@ To determine which platforms have an active balance, check our allocation accoun
 
 ## Allocation Expiration
 
-Projects and allocations at the ALCF are different. A particular project might have multiple allocations of time. For example, a discretionary project that has been approved more than three times will have three allocations
-(two are probably expired) but just one project. Projects will not expire -- allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Consult the two above sections
-to determine active allocations.
+Projects and allocations at the ALCF are different. A particular project might have multiple allocations of time. For example, a discretionary project that has been approved more than three times will have three allocations (two are probably expired) but just one project. Projects will not expire -- allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Consult the two above sections to determine active allocations.
 
 ## Getting More Time
 
@@ -58,7 +56,7 @@ Suballocations let PIs control who in their team can run jobs, how much they are
 
 ### Step 1: Create Suballocations (Project PI):
 
-PI creates suballocations 
+PI creates suballocations
 
 ```bash linenums="1"
 sbank new sub <allocationid> --name <nameofsuballoc>
@@ -72,7 +70,7 @@ sbank new sub <allocationid> --name <nameofsuballoc>
 sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."
 ```
 
-#### PI can change the name of a suballocation 
+#### PI can change the name of a suballocation
 
 ```bash linenums="1"
 sbank e sub <suballocationID> --name=<new_name_of_suballocation>
@@ -129,7 +127,6 @@ or
 qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<suballocationName> -q demand test.sh
 ```
 
-
 ### Useful commands:
 
 List all suballocations for a project that shows the number of jobs run, charges, allocation balance, suballocation name, and list of users:
@@ -138,6 +135,6 @@ List all suballocations for a project that shows the number of jobs run, charges
 sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 ```
 
-!!! tip 
+!!! tip
 
     See `sbank l a -h` for all the options and `sbank –f\?` for a list of fields that can be displayed.
