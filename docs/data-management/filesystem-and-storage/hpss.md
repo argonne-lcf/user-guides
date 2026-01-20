@@ -5,10 +5,13 @@ HPSS is a data archive and retrieval system that manages large amounts of data o
 
 HPSS is currently configured with a disk and tape tier. The disk tier has a capacity of 1.2PB on a DataDirect Networks SFA12K-40 storage array. By default, all archived data is initially written to the disk tier. The tape tier consists of 3 SpectraLogic T950 robotic tape libraries containing a total of 72 LTO6 tape drives with a total uncompressed capacity of 64 PB. Archived data is migrated to the tape tier at regular intervals, then deleted from the disk tier to create space for future archives.
 
-Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients: HSI and HTAR. These are installed on the login nodes of Polaris and other machines. In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<userid>`.
+Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients: HSI and HTAR. These are installed on the login nodes of Polaris and other machines. 
+
+!!! warning
+
+    In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<userid>`.
 
 ## HSI General Usage
-
 HSI can be invoked by simply entering `hsi` at your normal shell prompt. Once authenticated, you will enter the HSI command shell environment:
 ```console linenums="1"
 > hsi
@@ -17,21 +20,19 @@ HSI can be invoked by simply entering `hsi` at your normal shell prompt. Once au
 
 You may enter `help` to display a brief description of available commands.
 
-Example archive:
+Example archival command:
 ```console linenums="1"
 [HSI]/home/username-> put mydatafile                # same name on HPSS
 [HSI]/home/username-> put local.file : hpss.file    # different name on HPSS
 ```
 
-Example retrieval:
+Example retrieval command:
 ```console linenums="1"
 [HSI]/home/username-> get mydatafile
 [HSI]/home/username-> get local.file : hpss.file
 ```
 
-Most of the usual shell commands will work as expected in the HSI command environment.
-
-For example, checking what files are archived:
+Most of the usual shell commands will work as expected in the HSI command environment. For example, checking what files are archived:
 ```console linenums="1"
 [HSI]/home/username-> ls -l
 ```
@@ -53,13 +54,15 @@ In contrast, the following quoted command will work:
 ```console linenums="1"
 [HSI]/home/username-> get "*.c"
 ```
+
 It will retrieve all files ending in `.c`.
 
-Following normal shell conventions, other special characters in filenames such as whitespace and semicolon also need to be escaped with `\\` (backslash). For example:
+Following normal shell conventions, other special characters in filenames such as whitespace and semicolon also need to be escaped with `\` (backslash). For example:
 ```console linenums="1"
 [HSI]/home/username-> get "data\ file\ \;\ version\ 1"
 ```
-retrieves the file named `data file ; version 1`.
+
+This retrieves the file named `data file ; version 1`.
 
 HSI can also be run as a command line or embedded in a script as follows:
 ```bash linenums="1"
@@ -94,4 +97,5 @@ If you see an error like this:
  home/username/.hpss/.ktb_username
  Error - authentication/initialization failed
 ```
-it means that your account is not enabled to use the HPSS yet. [Please contact support](mailto:support@alcf.anl.gov) to have it set up.
+
+It means that your account is not enabled to use the HPSS yet. [Please contact support](mailto:support@alcf.anl.gov) to have it set up.
