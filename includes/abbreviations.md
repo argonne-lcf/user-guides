@@ -30,6 +30,7 @@
 <!-- *[HPE]: Hewlett Packard Enterprise -->
 <!-- *[HSI]: High-Speed Interface -->
 *[HSI]: Hierarchical Storage Interface
+*[HTAR]: HPSS Tape Archiver
 <!-- *[I/O]: Input/Output -->
 *[INCITE]: Innovative and Novel Computational Impact on Theory and Experiment
 *[IPEX]: Intel Extension for PyTorch
