@@ -15,7 +15,7 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
     ssh <ALCF username>@<system_name>.alcf.anl.gov
     ```
 
-    For example, <johnsmith@aurora.alcf.gov>
+    For example, <johnsmith@aurora.alcf.anl.gov>
 
 1. When prompted for a password, click the SafeNet MobilePASS+ app on your
    phone.
@@ -64,3 +64,4 @@ numbers.
 
    For example, if your PIN is 1234 and you received the one-time password
    string ABCD9876, you would type 1234ABCD9876 at the password prompt.
+
