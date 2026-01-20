@@ -28,7 +28,8 @@
 <!-- *[HPC]: High Performance Computing -->
 *[HPCM]: HPE Performance Cluster Manager
 <!-- *[HPE]: Hewlett Packard Enterprise -->
-*[HSI]: High-Speed Interface
+<!-- *[HSI]: High-Speed Interface -->
+*[HSI]: Hierarchical Storage Interface
 <!-- *[I/O]: Input/Output -->
 *[INCITE]: Innovative and Novel Computational Impact on Theory and Experiment
 *[IPEX]: Intel Extension for PyTorch
