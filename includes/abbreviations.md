@@ -10,6 +10,7 @@
 <!-- *[CUDA]: Compute Unified Device Architecture -->
 *[DFT]: Density Functional Theory
 *[DGX]: Data Center Graphics Accelerator (NVIDIA)
+*[DKMS]: Dynamic Kernel Module Support
 *[DOE]: Department of Energy
 *[DPC]: Data Parallel C++
 <!-- *[DRAM]: Dynamic Random-Access Memory -->
