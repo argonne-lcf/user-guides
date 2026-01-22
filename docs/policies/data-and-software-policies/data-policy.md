@@ -14,7 +14,7 @@ The basic level of protection provided is UNIX file level permissions; it is the
 
 ## ALCF Staff with Root Privileges
 
-ALCF resource administrators with root privileges are not constrained by the file permissions, and they have the capability to open and/or copy all files on the system. They can also assume a user’s identity on the system. There is no audit trail for access, touching, or moving data; however, ALCF staff does not view or modify project data unless directed by a PI or project member to help debug a problem. Data may be touched or accessed by the filesystem itself if data needs to be repaired or verified for integrity after a filesystem event (e.g., a fsck).
+ALCF resource administrators with root privileges are not constrained by the file permissions, and they have the capability to open and/or copy all files on the system. They can also assume a user’s identity on the system. There is no audit trail for access, touching, or moving data; however, ALCF staff does not view or modify project data unless directed by a PI or project member to help debug a problem. Data may be touched or accessed by the filesystem itself if data needs to be repaired or verified for integrity after a filesystem event (e.g., a `fsck` file system check).
 
 The ALCF resources are Federal resources and are the property of the United States Government. Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized site, Department of Energy, and law enforcement personnel, as well as authorized officials of other agencies, both domestic and foreign.
 
@@ -51,32 +51,36 @@ The home file system (`/home`) is intended to hold your executable files, config
 
 ### Team Project or Campaign File System (Eagle, Flare)
 
-The team project/campaign file system is intended primarily for results output from your computational runs on the ALCF computing systems. This space is accessible to the team members of your project that have an ALCF account. Default storage quota is 1 TB and the default period is 1 year. Consider this space intermediate-term storage. Once any active production and/or analysis is complete and you no longer need regular access to the data, archive it within the ALCF (explained below) or transfer it to your home institution or move it to Eagle to share it with the broader community (explained below).
+The team project file system is intended primarily for results output from your computational runs on the ALCF computing systems. This space is accessible to the team members of your project that have an ALCF account. Default storage quota is 1 TB and the default period is 1 year. Consider this space intermediate-term storage. Once any active production and/or analysis is complete and you no longer need regular access to the data, archive it within the ALCF or transfer it to your home institution or move it to Eagle to share it with the broader community. Both options are explained below.
 
 This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Eagle is a Lustre global parallel file system. All new projects will be given storage allocations on Eagle. More information on Lustre File Striping Basics: Lustre File Striping Basics.
 
-**Pullback Policy:** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+!!! warning "Pullback Policy"
+
+   Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
 #### AI Testbed projects file system
 
-The team project/campaign file system `/projects` mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
+The team project file system `/projects` mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
 
 ### Shared Community Project or Campaign File System (Eagle, Flare)
 
 These Lustre global parallel file systems have community sharing abilities and are useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota is 1 TB and the default period is 2 years. More information on Lustre file striping can be found in this [presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf).
 
-**Data Pullback Policy:**
-Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+!!! warning "Data Pullback Policy"
 
-**Access Termination Policy:**
-Project endpoints that have exhibited no activity* for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+    Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-Activity is defined as, but not limited to:
+!!! warning "Access Termination Policy"
 
-- Creation of the Globus endpoint
-- Globus transfers to and from the endpoint
-- atime audits of data files indicating access
-- Other factors may include DOIs and citations referring to the project
+    Project endpoints that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+
+    Activity is defined as, but not limited to:
+
+    - Creation of the Globus endpoint
+    - Globus transfers to and from the endpoint
+    - `atime` (access timestamp) audits of data files
+    - Other factors may include DOIs and citations referring to the project
 
 ### Archive Space
 
