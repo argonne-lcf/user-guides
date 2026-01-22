@@ -45,9 +45,9 @@ Data stored for any length of time on ALCF resources should only be data directl
 
 The home file system (`/home`) is intended to hold your executable files, configuration files, etc. It is NOT meant to hold the output from your application runs (use the data/parallel file system for that purpose). The home file system space is generally moderate in size and is the best protected. Because of its size, backups are practical to accomplish. The system performs tape backups, enabling the recovery of files more than seven days old or recovery from a catastrophic disk failure. Users should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if they need assistance. The table below indicates the capabilities and characteristics of each file system.
 
-#### AI Testbed home
+#### AI Testbed Home File System
 
-`/home/` shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes, is different from the agile-home file system. The default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is automatically backed up.
+A single `/home/` file system (distinct from agile-home, gecko-home) is shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes. The default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is automatically backed up.
 
 ### Team Project or Campaign File System (Eagle, Flare)
 
@@ -65,7 +65,7 @@ All options are explained below.
 
     Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-#### AI Testbed projects file system
+#### AI Testbed Projects File System
 
 The team project file system `/projects` mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
 
