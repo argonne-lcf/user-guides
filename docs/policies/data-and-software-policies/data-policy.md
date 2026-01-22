@@ -65,10 +65,10 @@ The team project/campaign file system /projects mounted on AI Testbed's login an
 
 These Lustre global parallel file systems have community sharing abilities and are useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota is 1 TB and the default period is 2 years. More information on Lustre file striping can be found in this [presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf).
 
-**Data Pullback Policy:** 
+**Data Pullback Policy:**
 Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-**Access Termination Policy:** 
+**Access Termination Policy:**
 Project endpoints that have exhibited no activity* for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
 Activity is defined as, but not limited to:
@@ -109,6 +109,6 @@ The archive space is intended for offline storage of results you wish to retain 
 3. Hard drives are in redundancy groups of 10 disks (8 data + 2 parity). In other words, three out of 10 drives would have to fail before data loss occurred.
 4. Metadata (i.e., information listing which blocks are part of which files) is written twice to two different storage arrays. Thus, even if an entire array were lost, the metadata would be preserved.
 5. Refers to the fact that data (user output) is written twice with each block on two different storage arrays, so that even if an entire array were lost, the data would be preserved.
-6. “Yes” denotes that ALCF does regular backups without intervention from the user. Currently gecko-home is unable to be backed up.  
-7. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following project end date. Access to the directory will be removed after 180 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis. 
-8. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information. The user is responsible for archiving the data to HPSS or copying it to another facility as desired. Data will be retained on tape for 2 years, at which time it is eligible for removal (subject to change). 
+6. “Yes” denotes that ALCF does regular backups without intervention from the user. Currently gecko-home is unable to be backed up.
+7. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following project end date. Access to the directory will be removed after 180 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis.
+8. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information. The user is responsible for archiving the data to HPSS or copying it to another facility as desired. Data will be retained on tape for 2 years, at which time it is eligible for removal (subject to change).
