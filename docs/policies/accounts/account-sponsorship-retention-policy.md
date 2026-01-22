@@ -26,4 +26,4 @@ Accounts can exist in one of three states:
 - **Inactive:** The inactive state occurs when an account expires, and the ability to use ALCF resources is removed by changing the active status of the account to inactive. All files continue to exist in the user's home directory, but the user will not be able to login to any machine via SSH. An account will remain in the inactive state for at least 90 days before moving to the next state.
 - **Deleted:** After 90 days, an inactive account will be deleted. This removes all references to the account from the system (except the accounts database), ***including any files and home directories***.
 
-Users with inactive or deleted accounts can request a reactivation by visiting [https://my.alcf.anl.gov/accounts/#/accountReactivate](https://my.alcf.anl.gov/accounts/#/accountReactivate) and proceeding with the form.
+Users with inactive or deleted accounts can request a reactivation by visiting [myALCF > Reactivate an ALCF Account](https://my.alcf.anl.gov/accounts/#/accountReactivate) and proceeding with the form.
