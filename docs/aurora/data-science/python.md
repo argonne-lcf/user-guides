@@ -78,7 +78,7 @@ On Aurora, users can access Intel's Python stack comprising of compilers and lib
 DPEP is composed of three main packages for programming on CPUs and GPUs:
 
 - [dpnp](https://github.com/IntelPython/dpnp) - Data Parallel Extensions for Numpy is a library that implements a subset of Numpy that can be executed on any data parallel device. The subset is a drop-in replacement of core Numpy functions and numerical data types, similar to CuPy for CUDA devices.
-- [dpctl](https://github.com/IntelPython/dpctl) - Data Parallel Control library provides utilities for device selection, allocation of data on devices, tensor data structure along with Python Array API Standard implementation, and support for creation of user-defined data-parallel extensions.
+- [dpctl](https://github.com/IntelPython/dpctl) - Data Parallel Control library provides utilities for device selection, allocation of data on devices, tensor data structure along with Python Array API Standard implementation (deprecated - see details below), and support for creation of user-defined data-parallel extensions.
 - [numba_dpex](https://github.com/IntelPython/numba-dpex) - Data Parallel Extensions for Numba is an extension to Numba compiler for programming data-parallel devices similar to developing programs with Numba for CPU or CUDA devices.
 
 The DPEP packages follow the compute-follows-data programming model, 
@@ -89,14 +89,14 @@ With this programming model, the user only needs to specify the offload target w
 For example,
 
 ```python linenums="1"
-import dpctl.tensor as dpt
+import dpnp
 
-x_gpu = dpt.arange(100, device=”gpu”)
-sqx_gpu = dpt.square(x_gpu) # (1)!
+x_gpu = dpnp.arange(100, device="gpu")
+sqx_gpu = dpnp.square(x_gpu) # (1)!
 print(sqx_gpu.device) # (2)!
 ```
 
-1. `dpct.square()` offloads to the "gpu" device
+1. `dpnp.square()` offloads to the "gpu" device
 2. `sqx_gpu` is created on the "gpu" device
 
 ???+ example "Output"
@@ -109,7 +109,7 @@ However, note that operating on arrays created on different devices will raise a
 
 ### Accessing the DPEP Packages
 
-Users can access the `dpnp` (v0.16.3) and `dpctl` (v0.18.3) packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
+Users can access the `dpnp` and `dpctl` packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
 
 !!! warning "Accessing numba-dpex on Aurora"
 	The current `frameworks` module does not come with the numba-dpex package installed, thus users need to install it separately. 
@@ -232,8 +232,8 @@ print("\nFound CPU devices: ", dpctl.has_cpu_devices()) # (3)!
 	With `ZE_FLAT_DEVICE_HIERARCHY=FLAT` 12 devices are visible (tile as device mode), 
 	whereas with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` 6 devices are visible (GPU as device).
 
-The dpctl library contains `dpctl.tensor`, which is a tensor library implemented using DPC++ that follows the Python Array API standard.
-We refer the user to the [dpctl.tensor documentation](https://intelpython.github.io/dpctl/latest/api_reference/dpctl/tensor.html) for details on all the array creation, manipulation, and linear algebra functions.  
+!!! warning "dpctl.tensor deprecation"
+	The `dpctl.tensor` module (a tensor library implemented using DPC++ that follows the Python Array API standard) is deprecated as of dpctl 0.21.1 and will be removed in an upcoming dpctl release alongside oneAPI 2026.0. Users should use `dpnp` arrays as a 1-for-1 replacement of dpctl tensor operations on Intel GPUs.
 
 !!! info "Changes after version 0.17.0"
 	Similarly to dpnp, dpctl version > 0.17.0 runs all kernels asynchronously, therefore `.sycl_queue.wait()` must be used to measure execution time on GPU. 
