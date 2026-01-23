@@ -2,8 +2,8 @@
 
 All holders of user accounts must abide by all appropriate Argonne Leadership Computing Facility and Argonne National Laboratory computing usage policies. The policy details are outlined in the following documents:
 
-* [ANL's Information Technology Access Agreement](./files/IT_Access_Agreement_for_ALCF.pdf)
-* [Addendum to ANL's Information Technology Access Agreement](./files/IT_Access_Agreement_for_ALCF_Addendum.pdf)
+* [ANL's Information Technology Access Agreement](./files/ANL-714_IT_Access_Agreement-2024_07.pdf)
+* [Addendum to ANL's Information Technology Access Agreement](./files/IT_Access_Agreement_for_ALCF_Addendum-2026_01.pdf)
 
 These are described at the time of the account request and include requirements such as using a sufficiently strong password, appropriate use of the system, and so on. Any user not following these requirements will have their account disabled.
 

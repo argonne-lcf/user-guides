@@ -14,7 +14,7 @@ The basic level of protection provided is UNIX file level permissions; it is the
 
 ## ALCF Staff with Root Privileges
 
-ALCF resource administrators with root privileges are not constrained by the file permissions, and they have the capability to open and/or copy all files on the system. They can also assume a user’s identity on the system. There is no audit trail for access, touching, or moving data; however, ALCF staff does not view or modify project data unless directed by a PI or project member to help debug a problem. Data may be touched or accessed by the filesystem itself if data needs to be repaired or verified for integrity after a filesystem event (e.g., a fsck).
+ALCF resource administrators with root privileges are not constrained by the file permissions, and they have the capability to open and/or copy all files on the system. They can also assume a user’s identity on the system. There is no audit trail for access, touching, or moving data; however, ALCF staff does not view or modify project data unless directed by a PI or project member to help debug a problem. Data may be touched or accessed by the filesystem itself if data needs to be repaired or verified for integrity after a filesystem event (e.g., a `fsck` file system check).
 
 The ALCF resources are Federal resources and are the property of the United States Government. Any or all uses of this system and all files on this system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to authorized site, Department of Energy, and law enforcement personnel, as well as authorized officials of other agencies, both domestic and foreign.
 
@@ -43,40 +43,51 @@ Data stored for any length of time on ALCF resources should only be data directl
 
 ### Home File System Space (agile-home, gecko-home)
 
-The home file system (/home) is intended to hold your executable files, configuration files, etc. It is NOT meant to hold the output from your application runs (use the data/parallel file system for that purpose). The home file system space is generally moderate in size and is the best protected. Because of its size, backups are practical to accomplish. The system performs tape backups, enabling the recovery of files more than seven days old or recovery from a catastrophic disk failure. Users should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if they need assistance. The table below indicates the capabilities and characteristics of each file system.
+The home file system (`/home`) is intended to hold your executable files, configuration files, etc. It is NOT meant to hold the output from your application runs (use the data/parallel file system for that purpose). The home file system space is generally moderate in size and is the best protected. Because of its size, backups are practical to accomplish. The system performs tape backups, enabling the recovery of files more than seven days old or recovery from a catastrophic disk failure. Users should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if they need assistance. The table below indicates the capabilities and characteristics of each file system.
 
-**AI Testbed home**
+#### AI Testbed Home File System
 
-`/home/` shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes, is different from mira-home. Default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is backed up.
+A single `/home/` file system (distinct from agile-home, gecko-home) is shared across the ALCF AI testbed systems, including the AI testbed's login and compute nodes. The default user quota on the AI testbed's home is 1 TB storage and 1,000,000 files. This space is automatically backed up.
 
 ### Team Project or Campaign File System (Eagle, Flare)
 
-The team project/campaign file system is intended primarily for results output from your computational runs on the ALCF computing systems. This space is accessible to the team members of your project that have an ALCF account. Default storage quota is 1 TB and the default period is 1 year. Consider this space intermediate-term storage. Once any active production and/or analysis is complete and you no longer need regular access to the data, archive it within the ALCF (explained below) or transfer it to your home institution or move it to Eagle to share it with the broader community (explained below).
+All new projects will be given storage allocations on Eagle and/or Flare; they are Lustre-based global parallel file systems. Information on Lustre file striping can be found in this [2021 presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf). This space has built-in redundancy in the servers and storage, but collectively, it is so large that replication, snapshots, and backups are not practical. 
 
-This space has redundancy in the servers and storage but is so large that replication, snapshots, and backups are not practical. Eagle is a Lustre global parallel file system. All new projects will be given storage allocations on Eagle. More information on Lustre File Striping Basics: Lustre File Striping Basics.
+The team project file system is intended primarily for results output from your computational runs on the ALCF computing systems. This space is accessible to the team members of your project that have an ALCF account. Default storage quota is 1 TB and the default period is 1 year. Consider this space intermediate-term storage. Once any active production and data analysis is complete and you no longer need regular access to the data, you have several options that are explained below:
 
-**Pullback Policy:** Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+1. Archive it within the ALCF via [HPSS](../../data-management/filesystem-and-storage/hpss.md)
+2. Transfer it to your home institution
+3. Move it to a "Shared Community Project" on Eagle to make it available to the broader community
 
-**AI Testbed projects file system**
+All options are explained below.
 
-The team project/campaign file system /projects mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
+!!! warning "Pullback Policy"
+
+    Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+
+#### AI Testbed Projects File System
+
+The team project file system `/projects` mounted on AI Testbed's login and compute nodes is intended to facilitate project collaboration and is accessible to the team members of your project that have an ALCF account. Default group storage quota is 2 TB and 2,000,000 files. Please note that this space isn't backed up. Our policy is that data will be purged from disk 6 months after project completion.
 
 ### Shared Community Project or Campaign File System (Eagle, Flare)
 
-These Lustre global parallel file systems have community sharing abilities and are useful for sharing the project/campaign data with the broader research community via Globus. This space does not have redundancy in the servers or storage and is so large that replication, snapshots, and backups are not practical. The table below indicates the capabilities and characteristics of each file system. Default storage quota is 1 TB and the default period is 2 years. More information on Lustre file striping can be found in this [presentation](https://www.alcf.anl.gov/sites/default/files/2021-05/IO-optimization_mcpheeters.pdf).
+These Lustre global parallel file systems have community sharing abilities and are useful for providing access to the project data with the broader research community via Globus. Unlike Team Project storage, this space does **not** have built-in redundancy in the servers or storage, and is so large that replication, snapshots, and backups are not practical.
+Default storage quota is 1 TB and the default period is 2 years. <!-- unlike 1 year default for Team Project -->
 
-**Data Pullback Policy:** 
-Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+!!! warning "Data Pullback Policy"
 
-**Access Termination Policy:** 
-Project endpoints that have exhibited no activity* for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+    Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
 
-Activity is defined as, but not limited to:
+!!! warning "Access Termination Policy"
 
-- Creation of the Globus endpoint
-- Globus transfers to and from the endpoint
-- atime audits of data files indicating access
-- Other factors may include DOIs and citations referring to the project
+    Project endpoints that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+
+    Activity is defined as, but not limited to:
+
+    - Creation of the Globus endpoint
+    - Globus transfers to and from the endpoint
+    - `atime` (access timestamp) audits of data files
+    - Other factors may include DOIs and citations referring to the project
 
 ### Archive Space
 
@@ -86,29 +97,29 @@ The archive space is intended for offline storage of results you wish to retain 
 
 ### Disk Capacity and Retention Policies
 
-| ----                                           | /home       | lus/eagle/projects, /eagle, /grand, lus/flare/projects or /flare                                                                            |
+| ----                                           | `/home` | `/lus/eagle/projects`, `/eagle`, `/grand`, `/lus/flare/projects` or `/flare`  |
 |------------------------------------------------|-------------|----------------------------------------------------------------------------------------------------------|
-| Default Quota ^1^                              | 50 GB       | 1 TB / 1 million files                                                                                   |
-| Quota Enforcement ^2^                          | hard/soft   | hard/soft                                                                                                |
-| Disk Redundancy ^3^                            | dual parity | dual parity                                                                                              |
-| File Server Snapshots ^6^ (frequency/retained) | none        | none                                                                                                     |
+| Default Quota [^1]                              | 50 GB       | 1 TB / 1 million files                                                                                   |
+| Quota Enforcement [^2]                          | hard/soft   | hard/soft                                                                                                |
+| Disk Redundancy [^3]                            | dual parity | dual parity                                                                                              |
+| File Server Snapshots [^6] (frequency/retained) | none        | none                                                                                                     |
 | File Server Metadata Redundancy                | yes         | yes                                                                                                      |
-| File Server Metadata Replication ^4^           | yes         | yes                                                                                                      |
-| File Server Data Replication ^5^               | yes         | no                                                                                                       |
-| Data Purged from Disk                          | n/a         | After 6 months of inactivity once project ends (see Access termination policy listed in the section above) ^8^             |
+| File Server Metadata Replication [^4]           | yes         | yes                                                                                                      |
+| File Server Data Replication [^5]               | yes         | no                                                                                                       |
+| Data Purged from Disk                          | n/a         | After 6 months of inactivity once project ends (see "Access termination policy" in the section above)[^7] [^8]             | 
 
 ### Tape Capacity and Retention Policies
 
-| ----                                           | /home | lus/eagle/projects, /eagle, /grand, lus/flare/projects or /flare  |
+| ----                                           | `/home` | `/lus/eagle/projects`, `/eagle`, `/grand`, `/lus/flare/projects` or `/flare`  |
 |------------------------------------------------|-------|-------------------------------------------------------------------|
-| Automatic Backup to Tape? ^6^                  | yes   | no                                                                |
-| Archived to Tape Before Deleted from Disk? ^8^ | yes   | no                                                                |
+| Automatic Backup to Tape? [^6]                  | yes   | no                                                                |
+| Archived to Tape Before Deleted from Disk? [^8] | yes   | no                                                                |
 
-1. While quotas are subject to negotiation on a case-by-case basis, disk space is a finite resource and projects must exercise good data management practices for their own sake and the sake of other users of the facility. With Lustre, it has become necessary to enforce file quotas as well, which are also negotiable.
-2. “Hard quota enforcement” means a job will fail when writing output if you exceed the hard quota limit. "Soft quota enforcement" means you may exceed the soft quota limit (but never the higher hard quota value) for up to seven days. If you do not drop back below the soft quota limit within seven days, writes will begin to fail.
-3. Hard drives are in redundancy groups of 10 disks (8 data + 2 parity). In other words, three out of 10 drives would have to fail before data loss occurred.
-4. Metadata (i.e., information listing which blocks are part of which files) is written twice to two different storage arrays. Thus, even if an entire array were lost, the metadata would be preserved.
-5. Refers to the fact that data (user output) is written twice with each block on two different storage arrays, so that even if an entire array were lost, the data would be preserved.
-6. “Yes” denotes that ALCF does regular backups without intervention from the user. Currently gecko-home is unable to be backed up.  
-7. The project directory is available on disk for the stipulated period but project quotas are reduced immediately following project end date. Access to the directory will be removed after 180 days. Requests to restore/extend access or reset the quota are reviewed on a case-by-case basis. 
-8. Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See Account Retention Policy for more information. The user is responsible for archiving the data to HPSS or copying it to another facility as desired. Data will be retained on tape for 2 years, at which time it is eligible for removal (subject to change). 
+[^1]: While quotas are subject to negotiation on a case-by-case basis, disk space is a finite resource and projects must exercise good data management practices for their own sake and the sake of other users of the facility. With Lustre, it has become necessary to enforce file quotas as well, which are also negotiable.
+[^2]: “Hard quota enforcement” means a job will fail when writing output if you exceed the hard quota limit. "Soft quota enforcement" means you may exceed the soft quota limit (but never the higher hard quota value) for up to seven days. If you do not drop back below the soft quota limit within seven days, writes will begin to fail.
+[^3]: Hard drives are in redundancy groups of 10 disks (8 data + 2 parity). In other words, three out of 10 drives would have to fail before data loss occurred.
+[^4]: Metadata (i.e., information listing which blocks are part of which files) is written twice to two different storage arrays. Thus, even if an entire array were lost, the metadata would be preserved.
+[^5]: Refers to the fact that data (user output) is written twice with each block on two different storage arrays, so that even if an entire array were lost, the data would be preserved.
+[^6]: “Yes” denotes that ALCF does regular backups without intervention from the user. Currently, we are unable to backup Aurora's gecko-home file system.
+[^7]: The project directory is available on disk for the stipulated period but project quotas are reduced to `0k` immediately following project end date; this prevents any additional writes in the project directory. Access to the directory will be removed after 180 days. Requests to restore and extend access or reset the quota are reviewed on a case-by-case basis.
+[^8]: Users who wish to retain data must archive or transfer their data elsewhere at the end of the project. Users need an active ALCF account to access archived data on HPSS. See [Account Retention Policy](../accounts/account-sponsorship-retention-policy.md#account-retention-policy) for more information. The user is responsible for archiving the data to HPSS or copying it to another facility as desired. Data will be retained on tape for 2 years, at which time it is eligible for removal (subject to change).
