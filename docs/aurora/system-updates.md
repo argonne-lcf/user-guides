@@ -1,4 +1,9 @@
 # Aurora System Updates
+## 2026-02-02
+Flare is scheduled to be upgraded Feb 2 - Feb 5, 2026 resulting in Aurora being unavailable during this time. 
+- NEO 7.2-021 software updates and hardware firmware updates.
+
+
 ## 2025-10-27
 Slingshot Fabric Manager Update to 2.3.1
 
