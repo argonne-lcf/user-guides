@@ -3,7 +3,7 @@
 
 HPSS is a data archive and retrieval system that manages large amounts of data on disk and robotic tape libraries. It provides hierarchical storage management services that allow it to migrate data between those storage platforms.
 
-HPSS is currently configured with a disk and tape tier. The disk tier has a capacity of 1.2PB on a DataDirect Networks SFA12K-40 storage array. By default, all archived data is initially written to the disk tier. The tape tier consists of 3 SpectraLogic T950 robotic tape libraries containing a total of 72 LTO6 tape drives with a total uncompressed capacity of 64 PB. Archived data is migrated to the tape tier at regular intervals, then deleted from the disk tier to create space for future archives.
+HPSS is currently configured with a disk and tape tier. The disk tier has a capacity of 9 PB on a DataDirect Networks SFA18K storage array. By default, all archived data is initially written to the disk tier. The tape tier consists of 3 SpectraLogic T950 robotic tape libraries containing a total of 72 LTO8 tape drives with a total uncompressed capacity of 148 PB. Archived data is migrated to the tape tier at regular intervals, then deleted from the disk tier to create space for future archives.
 
 Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients: HSI and HTAR. These are installed on the login nodes of Polaris and other machines. 
 
