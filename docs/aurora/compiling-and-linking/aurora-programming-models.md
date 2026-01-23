@@ -24,7 +24,7 @@ A summary of available GPU programming models and relevant compiler flags is sho
 | OpenMP | -fiopenmp -fopenmp-targets=spir64 | -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend=spir64_gen "-device pvc" |
 | SYCL | --intel -fsycl -fsycl-targets=spir64 | --intel -fsycl -fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc" |
 
-!!! note
+!!! tip
      `--intel` is only needed if the base compiler isn't `icpx` or `icx`
 
 For some build systems (e.g., `cmake`), it may be necessary to use the backslash character to escape the double quotes when specifying the device in AoT builds.
