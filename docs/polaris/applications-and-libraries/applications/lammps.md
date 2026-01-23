@@ -10,7 +10,7 @@ For details about the code and its usage, see the [LAMMPS](http://lammps.sandia.
 
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). A collection of Makefiles and submission scripts are available in the ALCF GettingStarted repo [here](https://github.com/argonne-lcf/GettingStarted/tree/master/Applications/Polaris/LAMMPS). For questions, contact us at [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## How to Obtain the Code
+## Obtaining the source code
 
 LAMMPS is an open-source code, which can be downloaded from the LAMMPS [website](http://lammps.sandia.gov/download.html).
 
@@ -18,17 +18,13 @@ LAMMPS is an open-source code, which can be downloaded from the LAMMPS [website]
 
 The following modules are useful for building LAMMPS. The initial `module restore` is just setting the default environment as the starting point. Users may find it useful to copy these module commands into a small helper script to assist with compiling and running LAMMPS (e.g., `setup_lammps_gnu.sh`). 
 
-```
+```bash linenums="1"
 module restore
 
-# use -target-accel=nvidia90 in compiler/link flags
-#module load craype-accel-nvidia90
-
 module swap PrgEnv-nvidia PrgEnv-gnu
-module swap gcc-native/14.2 gcc-native/12.3
 
 module use /soft/modulefiles
-module load cudatoolkit-standalone
+module load cudatoolkit-standalone/12.9.1
 
 module load spack-pe-base cmake
 module load cray-fftw
@@ -38,7 +34,7 @@ module load cray-fftw
 
 Users are encouraged to use CMake to build LAMMPS using the GNU host compilers. An example helper script is provided where CMake is used to build LAMMPS using the KOKKOS package for GPU acceleration.
 
-```
+```bash linenums="1"
 BASE=/path_to_lammps/
 
 cd ${BASE}
@@ -78,7 +74,7 @@ Compilation on the Polaris login nodes should be restricted to 4 processes so as
 
 Users are encouraged to use CMake to build LAMMPS using the GNU host compilers. An example helper script is provided where CMake is used to build LAMMPS using the KOKKOS package for GPU acceleration.
 
-```
+```bash linenums="1"
 BASE=/path_to_lammps/
 
 cd ${BASE}
@@ -111,12 +107,12 @@ make -j 4
 
 Compilation on the Polaris login nodes should be restricted to 4 processes so as to not exhaust per-user resource [limits](../../system-updates.md#changes-to-memory-limits-on-login-nodes). If building LAMMPS in an interactive job on a compute node, then `make -j 32` could be used to speedup up compilation. The `${BASE}/build/lmp` executable should be present when compilation succeeds.
 
-## Running Jobs on Polaris
+## Running jobs on Polaris
 
 An example submission script for running a 64-node KOKKOS-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
-```
-#!/bin/sh
+```bash linenums="1"
+#!/bin/bash -l
 #PBS -l select=64:system=polaris
 #PBS -l place=scatter
 #PBS -l walltime=0:15:00
@@ -160,7 +156,7 @@ ${COMMAND}
 
 Support for building LAMMPS via Makefiles will be deprecated soon in favor of CMake. Recent Makefiles are available, if needed, for building LAMMPS in the following directory.
 
-```
+```console
 knight@x3004c0s7b1n0:~/public/lammps/polaris> pwd
 /home/knight/public/lammps/polaris
 
