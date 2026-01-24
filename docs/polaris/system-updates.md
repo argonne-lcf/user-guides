@@ -10,11 +10,13 @@ Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
 - Upgraded PALS and the user services stack (USS)
 - Minor OS security patch updates
 - Support Edge Services Nodes (ESN) and Service Nodes (SN), which replace the Access and Management Nodes (AMN)
-- Eagle: Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 - Change to how add-in kernel modules are handled. Migrated from kmod/static kernel modules to Dynamic Kernel Module Support (DKMS), impacting:
   - Lustre
   - NVIDIA (Driver, gdrcopy)
   - SHS (kfabric, kdrge2, cxi driver, sl-driver)
+  
+Eagle: 
+- Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
 ## 2025-10-24
 
