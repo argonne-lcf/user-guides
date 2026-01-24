@@ -14,8 +14,9 @@ Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
   - Lustre
   - NVIDIA (Driver, gdrcopy)
   - SHS (kfabric, kdrge2, cxi driver, sl-driver)
-  
-Eagle: 
+
+Eagle:
+
 - Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
 ## 2025-10-24
@@ -45,7 +46,7 @@ Some highlights of changes relative to previous versions of this module:
 
 !!! note
 
-	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model. 
+	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
 
 ## 2025-08-29
 
@@ -105,7 +106,7 @@ We have updated the datascience Anaconda module and built various packages and l
 
 To use the new environment, type:
 ```bash linenums="1"
-module use /soft/modulefiles 
+module use /soft/modulefiles
 module load conda; conda activate
 ```
 
