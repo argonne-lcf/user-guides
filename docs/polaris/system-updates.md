@@ -6,7 +6,7 @@ Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
 
 - Update NVIDIA driver version (570.124.06) (CUDA driver API 12.8)
 - Default base nvidia-hpc_sdk is now at 25.5 (CUDA toolkit 12.9)
-- Upgrade Slingshot Host Software (SHS) to 13.0.0. Pending HPE bugfixes prevented move to >=13.0.2
+- Upgrade Slingshot Host Software (SHS) to 13.0.0
 - Upgraded PALS and the user services stack (USS)
 - Minor OS security patch updates
 - Support Edge Services Nodes (ESN) and Service Nodes (SN), which replace the Access and Management Nodes (AMN)
