@@ -345,6 +345,7 @@ Models are organized by cluster and marked with the following capabilities:
 
     - mistralai/Mistral-Large-Instruct-2407
     - mistralai/Mixtral-8x22B-Instruct-v0.1
+    - mistralai/Devstral-2-123B-Instruct-2512
 
     **OpenAI Family**
 
