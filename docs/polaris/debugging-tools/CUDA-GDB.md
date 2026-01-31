@@ -31,10 +31,11 @@ There is NO WARRANTY, to the extent permitted by law.
 
 $ cuda-gdb foo
 ```
-## Example
-https://github.com/UoB-HPC/BabelStream/tree/main/src/cuda
-```console "CUDA STREAM benchmark"
 
+## Example
+This example uses the CUDA STREAM benchmark in the [BabelStream](https://github.com/UoB-HPC/BabelStream/tree/main/src/cuda) repository [v5 release](https://uob-hpc.github.io/2023/10/12/babelstream-v5.html) from the University of Bristol.
+
+```console "Clone repository and start interactive job"
 user@polaris-login-02:~> git clone https://github.com/UoB-HPC/BabelStream.git
 
 user@polaris-login-02:~> qsub -A <account> -q debug -I -l select=1,walltime=0:60:00,filesystems=swift
@@ -51,11 +52,15 @@ Currently Loaded Modules:
   3) cray-dsmml/0.3.1   8) craype-x86-milan                     13) craype-network-ofi
   4) cray-mpich/9.0.1   9) darshan/3.4.4                        14) perftools-base/25.09.0
   5) cray-pmi/6.1.16   10) xalt/3.2.1-1-g67d304d4-202511121555
-  
+```
+
+```console "Compile on a compute node"
 user@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -arch=sm_80 -g -G -c ../src/cuda/CUDAStream.cu  -I ../src/
 user@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -arch=sm_80 -g -G -c ../src/main.cpp -DCUDA -I ../src/cuda/ -I ../src/
 user@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> nvcc -arch=sm_80 -g -G main.o CUDAStream.o -o cuda-stream-debug
+```
 
+```console "Run without debugger"
 user@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> ./cuda-stream-debug
 BabelStream
 Version: 5.0
@@ -76,7 +81,9 @@ Mul         1309894.920 0.00041     0.00047     0.00046
 Add         1289647.777 0.00062     0.00068     0.00068
 Triad       1304742.056 0.00062     0.00068     0.00068
 Dot         1117596.303 0.00048     0.00055     0.00053
+```
 
+```console "Run with debugger"
 user@x3008c0s13b1n0:~/BabelStream/build_polaris_debug> cuda-gdb ./cuda-stream-debug
 
 NVIDIA (R) cuda-gdb 12.9
