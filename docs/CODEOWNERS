@@ -99,6 +99,9 @@ aurora/aurora-pe.md                @koysean
 # All container documentation
 **/containers/                      @atanikan
 
+# All debugger documentation
+**/debugging*/*                     @jkwack
+
 # Account & Project Management documentation
 #####/account-project-management/	    @mantrala-ops @???
 
