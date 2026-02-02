@@ -8,7 +8,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | Queue Name    | Node Min | Node Max   | Time Min | Time Max | Notes                                                                                                 |
 |---------------|----------|------------|----------|----------|-------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 2          | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                       |
-| debug-scaling | 2        | 31         | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**. Effective 2/9/26, max nodecount will be 256                                                      |
+| debug-scaling | 2        | 31         | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**. Effective 2/9/26, max node count will be 256                                                      |
 | prod          | 1        | 10,624[^1] | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits** |
 | prod-large    | 1920     | 10,624[^1] | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                         |
 | visualization | 1        | 32         | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                            |
