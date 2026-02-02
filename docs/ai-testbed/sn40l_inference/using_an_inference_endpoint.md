@@ -85,7 +85,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "gpt-oss-120b-131072",
+                "model": "gpt-oss-120b",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -105,7 +105,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="gpt-oss-120b-131072",
+        model="gpt-oss-120b",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
@@ -117,7 +117,7 @@ Once authenticated, you can make a test call using cURL or Python.
 The endpoint information can be accessed using the [Metis status page](https://metis.alcf.anl.gov/status). It provides the status of the endpoints and the models and the associated configurations.
 
 The list of currently supported chat-completion models on Metis are : 
-- gpt-oss-120b-131072
+- gpt-oss-120b
 - Llama-4-Maverick-17B-128E-Instruct
 
 You can programmatically query all available models and endpoints:
