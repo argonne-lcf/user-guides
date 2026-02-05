@@ -364,6 +364,7 @@ Models are organized by cluster and marked with the following capabilities:
     - allenai/Llama-3.1-Tulu-3-405B
     - google/gemma-3-27b-it^BTH^
     - mgoin/Nemotron-4-340B-Instruct-hf
+    - AstroMLab/AstroSage-70B-20251009
 
 ??? "Vision Language Models"
 
