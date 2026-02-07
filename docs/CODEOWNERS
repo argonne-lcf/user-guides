@@ -20,8 +20,8 @@
 
 
 # Machine-specific documentation
-ai-testbed/                        @vksastry @wcarnold1010
-ai-testbed/cerebras/               @sraskar
+**/ai-testbed/                     @vksastry @wcarnold1010
+#**/ai-testbed/cerebras/           @sraskar
 # aurora/
 # polaris/
 # sophia/
@@ -49,37 +49,35 @@ aurora/aurora-pe.md                @koysean
 **/example-program-makefile.md      @cjknight
 **/example-program*.md              @cjknight
 
-# Data Science frameworks across all machines
-**/frameworks/pytorch.md            @khossain4337 @FilippoSimini @saforem2
-**/frameworks/tensorflow.md         @zhenghh04 @khossain4337
-**/frameworks/deepspeed.md          @saforem2 @hatanp
-**/frameworks/megatron-deepspeed.md @saforem2 @hatanp
-**/frameworks/jax.md                @khossain4337
-**/frameworks/scikit-learn.md       @BethanyL
-**onedal.md                         @BethanyL
-**/frameworks/dask.md               @okaforn @FilippoSimini
-**/frameworks/pyg.md                @FilippoSimini
-**/frameworks/gpytorch.md           @mngom2
-**/frameworks/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
-**/frameworks/libtorch.md           @rickybalin
-
-# Applications across all machines
-**/applications/gpt-neox.md         @saforem2 @hatanp
-**/applications/megatron-deepspeed.md @saforem2 @hatanp
+# Data Science frameworks and applications across all machines
+**/data-science/**/pytorch.md            @khossain4337 @FilippoSimini @saforem2
+**/data-science/**/tensorflow.md         @zhenghh04 @khossain4337
+**/data-science/**/deepspeed.md          @saforem2 @hatanp
+**/data-science/**/megatron-deepspeed.md @saforem2 @hatanp
+**/data-science/**/gpt-neox.md           @saforem2 @hatanp
+**/data-science/**/jax.md                @khossain4337
+**/data-science/**/scikit-learn.md       @BethanyL
+**onedal.md                              @BethanyL
+**/data-science/**/dask.md               @okaforn @FilippoSimini
+**/data-science/**/pyg.md                @FilippoSimini
+**/data-science/**/gpytorch.md           @FilippoSimini
+**/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
+**/data-science/**/libtorch.md           @rickybalin
+**/data-science/**/fine-tune-LLM-with-Autotrain.md  @btrungvo
 
 # Python documentation across all machines
-**/python.md                        @felker @khossain4337
-**/jupyter*			    @keceli
+**/data-science/**/python.md             @felker @khossain4337
+**/data-science/**/jupyter*			         @keceli
 
 # Julia documentation
 #**/julia.md                         @michel2323
 
 # Inference documentation
-**/inference/                       @rickybalin
-**/inference/vllm.md                @sraskar
+**/data-science/**/inference/            @rickybalin
+**/data-science/**/inference/vllm.md     @FilippoSimini @khossain4337
 
 # Profiling documentation
-**/profiling_dl.md                  @zhenghh04 @khossain4337
+**/data-science/**/profiling_dl.md  @zhenghh04 @khossain4337
 **/performance-tools/vtune.md       @jkwack
 
 # Libraries documentation
@@ -91,13 +89,13 @@ aurora/aurora-pe.md                @koysean
 **/visualization/**                 @srizzi88
 
 # Data management across all machines
-**/data-management/daos/            @kaushikvelusamy @zhenghh04 @kevin-harms
-**/data-management/lustre/          @kaushikvelusamy @zhenghh04 @kevin-harms
-**/data-management/copper/          @kaushikvelusamy @kevin-harms
+**/daos*.md                         @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/**/lustre/       @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/**/copper/       @kaushikvelusamy @kevin-harms
 **/filesystem-and-storage/          @kevin-harms
 
 # All container documentation
-**/containers/                      @atanikan
+**/containers/                      @bcote-anl  # ?
 
 # All debugger documentation
 **/debugging*/*                     @jkwack
@@ -116,14 +114,16 @@ aurora/aurora-pe.md                @koysean
 # Services documentation
 ###**/services/                          @???
 **/services/gitlab-ci.md            @peterupton @thilinarmtb
+**/services/inference-endpoints.md  @bcote-anl @vksastry
 
 # Workflows
 ####**/workflows/                       @???
-**/smartsim.md                      @rickybalin
-###**/adios.md                      @rickybalin
-*adios*                      @rickybalin   # TOOD: how fleixlbe is single-glob pattern matching?
-**/workflows/parsl.md               @cms21
-#**/workflows/libensemble.md        @shuds13
+**/workflows/**/smartsim.md         @rickybalin
+**/workflows/**/adios.md            @rickybalin
+**/workflows/**/parsl.md            @cms21
+**/workflows/**/balsam.md           @cms21
+**/workflows/**/dragon.md           @cms21
+**/workflows/**/libensemble.md      @shuds13
 
 # User Support documentation
 ###**/support/                @alcf-haritha @jfrancis-anl
