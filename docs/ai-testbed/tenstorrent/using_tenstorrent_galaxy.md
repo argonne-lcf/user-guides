@@ -46,6 +46,7 @@ export JW_SECRET=test-secret-456
 export HF_TOKEN=<your read-only HF token>
 ```
 Check if any container is running
+```console
 docker ps  
 # if needed: docker stop <container id>
 ```
@@ -68,6 +69,7 @@ console
 
 When the server startup is complete, you should see
 ```console
+TODO copy server logs output tail to here
 ```
 
 Try with a larger model. Again, request permissions from huggingface if you don't already have them for this model. If any other inference server is running on the node, stop it first. 
