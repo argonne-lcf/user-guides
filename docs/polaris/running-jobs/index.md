@@ -31,7 +31,6 @@ If there are free nodes in production, then debug jobs can take another 16 nodes
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
 |-----------------|----------|----------|----------|----------|----------------------------------------|
-| capacity        | 1        | 4        | 5 min    | 24 hrs   | **Expected to take effect within the next few months. Max 32 nodes in total across all jobs** |
 | small           | 10       | 24       | 5 min    | 3 hrs    ||
 | medium          | 25       | 99       | 5 min    | 6 hrs    ||
 | large           | 100      | 496      | 5 min    | 24 hrs   ||
