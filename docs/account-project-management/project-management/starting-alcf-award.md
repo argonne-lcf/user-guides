@@ -10,7 +10,7 @@ We also encourage you to take full advantage of ALCF's training programs and use
 - [Running on Polaris](../../polaris/running-jobs/index.md)
 - [Running on Aurora](../../aurora/running-jobs-aurora.md)
 - [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance)
-- [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/index.md)
+- [Community Data Sharing with ACDC (using Eagle)](../../data-management/acdc/acdc.md)
 
 ## Project Terminology
 Before your project begins, you will receive an email with the following project information:
