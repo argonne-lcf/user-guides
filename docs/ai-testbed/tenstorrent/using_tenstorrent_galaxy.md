@@ -65,11 +65,13 @@ docker ps
 Check the status by using:
 ```console
 docker logs -f <container-id>
-console
+```
 
-When the server startup is complete, you should see
+When the server startup is completes, you should see the following three lines:
 ```console
-TODO copy server logs output tail to here
+2026-02-09 20:58:41,623 - utils.prompt_client - INFO - ✅ Background trace capture completed successfully
+2026-02-09 20:58:41,624 - utils.prompt_client - INFO - Creating readiness signal file at /tmp/ready...
+2026-02-09 20:58:41,629 - utils.prompt_client - INFO - ✅ Readiness file created. Pod will now become ready.
 ```
 
 Try with a larger model. Again, request permissions from huggingface if you don't already have them for this model. If any other inference server is running on the node, stop it first. 
