@@ -89,7 +89,7 @@ Example script to forward port 8000 to localhost 8008:
 export SDK_PORT=8000
 export LOCAL_PORT=8008
 export ALCFUserID=<your alcf username>
-ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cer-login-04.ai.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
+ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cerebras.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
 ```
 
 Then open the following URL in your web browser:  `http://localhost:8008/sdk-gui/`
