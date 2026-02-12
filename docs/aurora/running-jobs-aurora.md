@@ -13,7 +13,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | prod-large    | 1920     | 10,624[^1] | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                         |
 | visualization | 1        | 32         | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                            |
 
-`prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
+`prod` is the routing queue and routes your job to one of the following execution queues:
 
 | Queue Name      | Node Min | Node Max   | Time Min | Time Max | Notes                                                                                                                                                                                                                                                                 |
 |-----------------|----------|------------|----------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
