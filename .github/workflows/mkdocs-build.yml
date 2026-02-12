@@ -5,6 +5,7 @@ on:
   #     - main
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   docs-strict:

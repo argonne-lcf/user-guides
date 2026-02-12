@@ -427,7 +427,7 @@ nav:
     - Transfer & Sharing:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
-      - ALCF Community Data Co-Op: data-management/acdc/index.md
+      - ALCF Community Data Co-Op: data-management/acdc/acdc.md
       - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
 
   - Services:
