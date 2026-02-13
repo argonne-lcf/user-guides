@@ -4,13 +4,13 @@
 Make a working directory and a local copy of the Cerebras **modelzoo** repository, if not previously done, as follows.
 
 ```bash
-mkdir ~/R_2.6.0
-cd ~/R_2.6.0
+mkdir ~/R_2.9.0
+cd ~/R_2.9.0
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.6.0
+git checkout Release_2.9.0
 ```
 
 Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
@@ -43,17 +43,17 @@ To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-de
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
 export MODEL_DIR=model_dir_unet
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
+python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
 ```
 --->
 
@@ -68,7 +68,7 @@ The BraggNN model has two versions:<br>
 
 ```console
 TODO
-cd ~/R_2.6.0/anl_shared/braggnn/tf
+cd ~/R_2.9.0/anl_shared/braggnn/tf
 # This yaml has a correct path to a BraggNN dataset
 cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
 export MODEL_DIR=model_dir_braggnn
@@ -88,13 +88,13 @@ source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
 # or your personal venv
 --->
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
 cp /software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml configs/bert_large_MSL128_sampleds.yaml
 export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -102,9 +102,9 @@ cszoo fit configs/bert_large_MSL128_sampleds.yaml --job_labels name=bert_pt --mo
 ```
 <!---
 previously,
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 --->
-Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
+Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
 
@@ -130,13 +130,13 @@ This PyTorch GPT-J 6B parameter pretraining sample uses 1 CS3.
 First, source a Cerebras PyTorch virtual environment.
 
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 Then
 
 ```console
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/gptj
 cp /software/cerebras/dataset/gptj/params_gptj_6B_sampleds.yaml configs/params_gptj_6B_sampleds.yaml
 export MODEL_DIR=model_dir_gptj
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -147,7 +147,7 @@ Note: the validation has been commented out of the yaml to decrease the run time
 
 <!---
 Previously,
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 --->
 
 The last parts of the output should resemble the following:
@@ -162,7 +162,7 @@ The last parts of the output should resemble the following:
 2025-10-10 20:20:51,668 INFO:   Saved checkpoint model_dir_gptj/checkpoint_200.mdl
 2025-10-10 20:21:14,280 INFO:   Training completed successfully!
 2025-10-10 20:21:14,286 INFO:   Processed 24000 training sample(s) in 1443.67300221 seconds.
-/home/arnoldw/R_2.6.0/venv_cerebras_pt/lib/python3.8/site-packages/pydantic/_internal/_gener
+/home/arnoldw/R_2.9.0/venv_cerebras_pt/lib/python3.8/site-packages/pydantic/_internal/_gener
 ```
 
 ## Llama2-7B 
@@ -171,11 +171,11 @@ The Cerebras llama2 7B model implementation can be found at modelzoo/modelzoo/tr
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training:
 ```bash
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/llama
 cp /software/cerebras/dataset/params_llama2_7b.yaml configs/params_llama2_7b.yaml
 export MODEL_DIR=model_dir_llama2_7b
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -185,7 +185,7 @@ cszoo fit configs/params_llama2_7b.yaml --job_labels name=llama2_7b --model_dir 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_llama2_7b.yaml`. 
 <!--
 Formerly,
-python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
 -->
 
 Please find a sample output
@@ -230,11 +230,11 @@ The Cerebras ESM-2 model implementation can be found at `modelzoo/src/cerebras/m
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/esm2
 cp /software/cerebras/dataset/ESM-2/params_esm2_t12_35M_UR50D_modified.yaml configs/params_esm2_t12_35M_UR50D_modified.yaml
 export MODEL_DIR=model_dir_esm2
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -243,7 +243,7 @@ cszoo fit configs/params_esm2_t12_35M_UR50D_modified.yaml --job_labels name=esm2
 
 <!--
 Formerly,
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 -->
 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_esm2_t12_35M_UR50D_modified.yaml`. 
@@ -273,7 +273,7 @@ Saving checkpoint: 100%|██████████████████�
 Saving checkpoint: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1321/1321 [00:08<00:00, 154.35 tensors/s]
 2025-10-10 23:45:54,994 INFO:   Saved checkpoint model_dir_esm2/checkpoint_400.mdl
 2025-10-10 23:46:01,812 INFO:   Training completed successfully!
-2025-10-10 23:46:01,861 INFO:   Processed 819200 training sample(s) in 4049.286902367 seconds.
+2025-10-10 23:46:01,861 INFO:   Processed 819200 training sample(s) in 4049.286902367 seconds
 ```
 
 ## Vision Transformer
@@ -281,11 +281,11 @@ The cerebras transformer based vision classifier model implementation can be fou
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/vision/vision_transformer
 cp /software/cerebras/dataset/vision_transformer/params_vit_base_patch_16_imagenet_1k.yaml configs/params_vit_base_patch_16_imagenet_1k.yaml
 export MODEL_DIR=model_dir_vit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -293,7 +293,7 @@ cszoo fit configs/params_vit_base_patch_16_imagenet_1k.yaml --job_labels name=vi
 ```
 <!--
 Formerly,
-python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
 -->
 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_vit_base_patch_16_imagenet_1k.yaml`. 
@@ -345,12 +345,12 @@ The Cerebras Diffusion Transformer[[1](https://arxiv.org/pdf/2212.09748.pdf)] mo
 
 First, source a Cerebras PyTorch virtual environment.
 ```bash
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 Instructions for training (for 400 steps):
 ```bash
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/vision/dit
 cp /software/cerebras/dataset/params_dit_2B_patchsize_2x2_modified.yaml configs/params_dit_2B_patchsize_2x2_modified.yaml
 export MODEL_DIR=model_dir_dit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
@@ -358,7 +358,7 @@ cszoo fit configs/params_dit_2B_patchsize_2x2_modified.yaml --job_labels name=Di
 ```
 <!---
 Formerly:
-python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
+python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
 --->
 
 ???+ example "Example output:"
