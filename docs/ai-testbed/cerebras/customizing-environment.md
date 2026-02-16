@@ -4,16 +4,16 @@
 
 #### To make a PyTorch virtual environment for Cerebras
 
-Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.6.0 release.
+Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.9.0 release.
 
 ```console
-mkdir ~/R_2.6.0
-cd ~/R_2.6.0
+mkdir ~/R_2.9.0
+cd ~/R_2.9.0
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.6.0
+git checkout Release_2.9.0
 ```
 Note: a `git pull` will not update the tags; if `modelzoo/setup.py` does not exist after tag checkout, please re-clone `modelzoo`.
 
@@ -26,8 +26,8 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 Then build the virtual environment
 
 ```console
-mkdir ~/R_2.6.0
-cd ~/R_2.6.0
+mkdir ~/R_2.9.0
+cd ~/R_2.9.0
 # Note: "deactivate" does not actually work in scripts.
 deactivate
 rm -r venv_cerebras_pt
@@ -46,7 +46,7 @@ pip install -e modelzoo
 To activate a virtual environment
 
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 To deactivate a virtual environment,

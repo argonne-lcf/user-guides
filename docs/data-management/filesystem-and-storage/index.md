@@ -99,5 +99,5 @@ Model PM1725a drives [specifications](https://semiconductor.samsung.com/resource
 | Sequential Write     | 3300 MB/s       |
 
 ## Tape Storage
-ALCF operates three 10,000-slot Spectralogic tape libraries. We are currently running a combination of LTO6 and LTO8 tape technology. The LTO tape drives have built-in hardware compression which typically achieves compression ratios between 1.25:1 and 2:1 depending on the data, yielding an effective capacity of approximately 65 PB.
+ALCF operates three 10,000-slot Spectralogic tape libraries using LTO8 tape technology. The LTO tape drives have built-in hardware compression which typically achieves compression ratios between 1.25:1 and 2:1 depending on the data, yielding an effective capacity of approximately 186PB.
 <!-- todo: add link to HPSS -->

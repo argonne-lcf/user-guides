@@ -97,7 +97,7 @@ aurora/aurora-pe.md                @koysean
 **/filesystem-and-storage/          @kevin-harms
 
 # All container documentation
-**/containers/                      @atanikan
+###**/containers/                    
 
 # All debugger documentation
 **/debugging*/*                     @jkwack
