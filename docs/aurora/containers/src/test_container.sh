@@ -97,7 +97,7 @@ if [[ ! -f "$VENV/bin/activate" ]]; then
     set -eux
     python3 -m venv '$VENV'
     . '$VENV/bin/activate'
-    pip install -U pip wheel
+    pip install -U pip wheel setuptools cython
     pip install -U numpy
     python -c 'import sys; print(sys.executable); import numpy as np; print(\"numpy\", np.__version__)'
   "
