@@ -95,7 +95,7 @@ rm pg_pid.txt
 ```
 
 ### Example: simple MPI + PyTorch DDP workload
-Upload both files contained in [`src/`](./src/) to a directory on Aurora and execute `chmod +x test_container.sh`. Then, on a single Aurora compute node (from an interactive job or non-interactive PBS script), run the following [`test_container.sh`](./src/test_container.sh) script. 
+Upload both files linked below to the same directory on Aurora and execute `chmod +x test_container.sh`. Then, on a single Aurora compute node (from an interactive job or non-interactive PBS script), run the following [`test_container.sh`](./src/test_container.sh) script. 
 
 The script contains an end-to-end example: it builds an Apptainer executable, installs optimized Python, MPI, PyTorch packages, and then executes the DDP test [`mlp_ddp.py`](./src/mlp_ddp.py) across all 12 XPUs on the node:
 ```bash linenums="1" title="test_container.sh"
@@ -103,4 +103,5 @@ The script contains an end-to-end example: it builds an Apptainer executable, in
 docs/aurora/containers/src/test_container.sh
 ---8<---
 ```
+
 If you want to rerun the container from scratch, be sure to delete the Python virtual environment (by default located in `$HOME/.venv_xpu_ddp312_new/`).
