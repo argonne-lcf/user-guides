@@ -39,12 +39,12 @@ Aurora does not support directly running Docker containers because Docker depend
 apptainer build --fakeroot intel-optimized-pytorch.sing docker://intel/intel-optimized-pytorch
 ```
 
-### Example: Hello World using Apptainer
+### Example: Hello World
 ```bash linenums="1"
 apptainer exec --fakeroot docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
 ```
 
-### Example: Postgres database using Apptainer
+### Example: Postgres database
 ```bash linenums="1" title="apptainer_aurora_example.sh"
 # qsub from a UAN/login node
 qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -l filesystems=<fs1:fs2> -I
@@ -95,9 +95,12 @@ rm pg_pid.txt
 ```
 
 ### Example: simple MPI + PyTorch DDP workload
-On a single Aurora compute node (from an interactive job or non-interactive PBS script), run the following script. The script is an end-to-end example: it builds an Apptainer executable, installs optimized Python, MPI, PyTorch packages, and then executes the DDP test across all 12 XPUs on the node:
+Upload both files contained in [`src/`](./src/) to a directory on Aurora and execute `chmod +x test_container.sh`. Then, on a single Aurora compute node (from an interactive job or non-interactive PBS script), run the following [`test_container.sh`](./src/test_container.sh) script. 
+
+The script contains an end-to-end example: it builds an Apptainer executable, installs optimized Python, MPI, PyTorch packages, and then executes the DDP test [`mlp_ddp.py`](./src/mlp_ddp.py) across all 12 XPUs on the node:
 ```bash linenums="1" title="test_container.sh"
 ---8<---
 docs/aurora/containers/src/test_container.sh
 ---8<---
 ```
+If you want to rerun the container from scratch, be sure to delete the Python virtual environment (by default located in `$HOME/.venv_xpu_ddp312_new/`).
