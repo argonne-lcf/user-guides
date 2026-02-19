@@ -1,4 +1,4 @@
-# Tunneling and Forwarding Ports
+# Accessing Cerebras's Internal Grafana Dashboard
 
 The Cerebras grafana dashboard is only accessible from system's within ALCF internal networks.  To access it you will need to open a socks proxy to `cerebras.alcf.anl.gov` and then route your connection via the socks proxy.  
 
