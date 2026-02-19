@@ -353,7 +353,7 @@ nav:
           - OpenMM: polaris/applications-and-libraries/applications/openmm.md
           - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
           - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
-          - VASP: polaris/applications-and-libraries/applications/vasp.md
+          - VASP: polaris/applications-and-libraries/applications/vasp.md          
         - Libraries:
           - Math Libraries: polaris/applications-and-libraries/libraries/math-libraries.md
           - Cabana: polaris/applications-and-libraries/libraries/cabana-polaris.md
@@ -374,6 +374,7 @@ nav:
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
+          - Milvus: polaris/data-science/applications/multinode-milvus-deploy.md
       - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
