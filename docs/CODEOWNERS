@@ -63,7 +63,7 @@ aurora/aurora-pe.md                @koysean
 **/data-science/**/gpytorch.md           @FilippoSimini
 **/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
 **/data-science/**/libtorch.md           @rickybalin
-**/data-science/**/fine-tune-LLM-with-Autotrain.md  @btrungvo
+**/data-science/**/fine-tune-LLM-with-Autotrain.md  @saforem2
 
 # Python documentation across all machines
 **/data-science/**/python.md             @felker @khossain4337
