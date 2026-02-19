@@ -3,7 +3,7 @@
 The Cerebras grafana dashboard is only accessible from system's within ALCF internal networks.  To access it you will need to open a socks proxy to `cerebras.alcf.anl.gov` and then route your connection via the socks proxy.  
 
 ## Setup the socks proxy via ssh
-* SSH's -D option will opena  local socks proxy at the specified port.  In this example we use port 5555
+* SSH's -D option will open a local socks proxy at the specified port.  In this example we use port 5555
   * `ssh -D5555 ${yourUsername}@cerebras.alcf.anl.gov`
 
 ## Instuctions for setting up via Firefox
