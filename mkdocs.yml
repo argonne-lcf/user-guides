@@ -223,6 +223,8 @@ nav:
             - LibTorch: aurora/data-science/inference/libtorch.md
             - OpenVINO: aurora/data-science/inference/openvino.md
             - vLLM: aurora/data-science/inference/vllm.md
+          - Applications:
+            - Milvus: aurora/data-science/applications/milvus-deploy-multinode-aurora.md
         - Programming Models:
           - Kokkos: aurora/programming-models/kokkos-aurora.md
           - Level Zero: aurora/programming-models/level-0.md
