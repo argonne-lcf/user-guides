@@ -347,7 +347,7 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
-Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
+Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project_name> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 The new value overwrites any previous value.
 
 ## <a name="qdel"></a>`qdel`: Delete a queued or running job
