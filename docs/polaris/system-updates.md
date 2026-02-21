@@ -19,6 +19,15 @@ Eagle:
 
 - Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
+!!! danger "cgroups PID limit on login nodes"
+
+	The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
+	
+	Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
+	
+	A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`. 
+	The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`. 	
+
 ## 2025-10-24
 
 `conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).

@@ -5,28 +5,27 @@
 
 There are four production queues you can target in your qsub (`-q <queue name>`):
 
-| Queue Name    | Node Min | Node Max   | Time Min | Time Max | Notes                                                                                                 |
-|---------------|----------|------------|----------|----------|-------------------------------------------------------------------------------------------------------|
-| debug         | 1        | 2          | 5 min    | 1 hr     | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                       |
-| debug-scaling | 2        | 31         | 5 min    | 1 hr     | Max 1 job running/accruing/queued **per-user**                                                        |
-| prod          | 1        | 10,624[^1] | 5 min    | 24 hrs   | Routing queue for tiny, small, medium, and large queues; <br/> **See table below for min/max limits** |
-| prod-large    | 1920     | 10,624[^1] | 5 min    | 24 hrs   | Routing queue for large jobs;                                                                         |
-| visualization | 1        | 32         | 5 min    | 8 hrs    | ***By request only; non-exclusive nodes***                                                            |
+| Queue Name     | Node Min | Node Max   | Time Min | Time Max         | Notes                                                                                           |
+|----------------|----------|------------|----------|------------------|-------------------------------------------------------------------------------------------------|
+| debug          | 1        | 2          | 5 min    | 1 hr             | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                 |
+| debug-scaling  | 2        | 256        | 5 min    | 1 hr             | Max 1 job running/accruing/queued **per-user**                                                  |
+| next-eval		 | 1		| upto 2,600 | 5 min	| 24 hrs		   | **Temporary queue to test new compute image. See [this page](./system-updates.md/#2026-02-23) for details.**
+| prod           | 256      | 10,624[^1] | 5 min    | 24 hrs           | Routing queue for small, medium, and large queues; <br/> **See table below for min/max limits** |                                                                       |
+| capacity       | 1        | 16         | 5 min    | 7 days (168 hrs) | Max of 128 nodes across all jobs. Max 5 jobs queued or running, 2 jobs running per user.        |
+| visualization  | 1        | 32         | 5 min    | 8 hrs            | ***By request only; non-exclusive nodes***                                                      |
 
-`prod` and `prod-large` are routing queues and routes your job to one of the following eight execution queues:
+`prod` is the routing queue and routes your job to one of the following execution queues:
 
 | Queue Name      | Node Min | Node Max   | Time Min | Time Max | Notes                                                                                                                                                                                                                                                                 |
 |-----------------|----------|------------|----------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| tiny            | 1        | 512        | 5 min    | 6 hrs    |                                                                                                                                                                                                                                                                       |
-| small           | 513      | 1024       | 5 min    | 12 hrs   |                                                                                                                                                                                                                                                                       |
+| small           | 256      | 1024       | 5 min    | 12 hrs   |                                                                                                                                                                                                                                                                       |
 | medium          | 1025     | 1919       | 5 min    | 18 hrs   |                                                                                                                                                                                                                                                                       |
 | large           | 1920     | 10,624[^1] | 5 min    | 24 hrs   |                                                                                                                                                                                                                                                                       |
-| backfill-tiny   | 1        | 512        | 5 min    | 6 hrs    | Low priority, negative project balance                                                                                                                                                                                                                                |
-| backfill-small  | 513      | 1024       | 5 min    | 12 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
+| backfill-small  | 256      | 1024       | 5 min    | 12 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
 | backfill-medium | 1025     | 1919       | 5 min    | 18 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
 | backfill-large  | 1920     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
 
-[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
+[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count. The maximum available node count will decrease during testing of a new compute image in the `next-eval` queue, where approximately 2,600 nodes are allocated.
 
 !!! warning
 

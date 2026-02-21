@@ -26,9 +26,9 @@ Follow these instructions to compile and train a small (111m parameters) GPT3 mo
 
 First, make a virtual environment for Cerebras for PyTorch.
 See [Customizing Environments](./customizing-environment.md) for the procedures for making PyTorch virtual environments for Cerebras.
-If an environment is made in ```~/R_2.6.0/```, it would be activated as follows:
+If an environment is made in ```~/R_2.9.0/```, it would be activated as follows:
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
 ```
 
 Note: to access any external web resources from a Cerebras user node, you will need to have a proxy environment variable set (or equivalent). `wget` needs the lower-case proxy environment variable.
@@ -39,24 +39,24 @@ export https_proxy=http://proxy.alcf.anl.gov:3128
 
 ### Clone the Cerebras modelzoo
 
-If you have not already cloned the Cerebras modelzoo repo and checked out the Release_2.6.0 tag, do so.
+If you have not already cloned the Cerebras modelzoo repo and checked out the Release_2.9.0 tag, do so.
 
 ```console
-mkdir ~/R_2.6.0
-cd ~/R_2.6.0
+mkdir ~/R_2.9.0
+cd ~/R_2.9.0
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/modelzoo.git
 cd modelzoo
 git tag
-git checkout Release_2.6.0
+git checkout Release_2.9.0
 ```
 ## Running a Pytorch sample
 
 ### Activate your PyTorch virtual environment, and change to the working directory
 
 ```console
-source ~/R_2.6.0/venv_cerebras_pt/bin/activate
-cd ~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3
+source ~/R_2.9.0/venv_cerebras_pt/bin/activate
+cd ~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3
 ```
 
 Next, copy a sample config file. This is for a small GPT3 model, modified to use a preprocessed dataset and to run for fewer steps. 
@@ -78,7 +78,7 @@ cszoo fit configs/Cerebras_GPT/111m_modified.yaml --job_labels name=gpt3_111m --
 
 <!---
 Previously, 
-python run.py CSX --job_labels name=gpt3_111m --params configs/Cerebras_GPT/111m_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.6.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
+python run.py CSX --job_labels name=gpt3_111m --params configs/Cerebras_GPT/111m_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.9.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
 --->
 
 A successful GPT3 (111m parameters) PyTorch training/validation run should finish with output resembling the following:
@@ -100,7 +100,7 @@ A successful GPT3 (111m parameters) PyTorch training/validation run should finis
 
 As the console output shows, for this sample, the run framework starts three jobs (two compiles and one execute) as part of a single workflow:
 ```text
-(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ grep -B1 "Job id:" mytest.log 
+(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ grep -B1 "Job id:" mytest.log 
 2025-10-30 18:10:39,460 INFO:   Initiating a new compile wsjob against the cluster server.
 2025-10-30 18:10:39,479 INFO:   Job id: wsjob-acxb4mqan53ppiffvdaafq, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-acxb4mqan53ppiffvdaafq
 --
@@ -109,7 +109,7 @@ As the console output shows, for this sample, the run framework starts three job
 --
 2025-10-30 18:21:33,099 INFO:   Initiating a new compile wsjob against the cluster server.
 2025-10-30 18:21:33,118 INFO:   Job id: wsjob-6mvjwjqovjprbibbpi3w43, workflow id: wflow-ocjyqlrf5szhpecphsq3x8, namespace: job-operator, remote log path: /n1/wsjob/workdir/job-operator/wsjob-6mvjwjqovjprbibbpi3w43
-(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.6.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ 
+(venv_cerebras_pt) username@cer-anl-net001-us-sr01:~/R_2.9.0/modelzoo/src/cerebras/modelzoo/models/nlp/gpt3$ 
 ```
 
 The jobs can be seen with `csctl get jobs`, from another console session on a user node.
