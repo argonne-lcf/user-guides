@@ -19,7 +19,9 @@ Figure: Top-level diagram of Tensix Core ([source](https://github.com/tenstorren
 ///
 
 
-[One page spec sheet (pdf) for the Tenstorrent Galaxy](https://cdn.sanity.io/files/jpb4ed5r/production/b076324de309c1290fbbc033ea7253e54d452f47.pdf)
+- [One page spec sheet (pdf) for the Tenstorrent Galaxy](https://cdn.sanity.io/files/jpb4ed5r/production/b076324de309c1290fbbc033ea7253e54d452f47.pdf)
+
+- [Tenstorrent documentation on the Wormhole architecture](https://github.com/tenstorrent/tt-isa-documentation/tree/main/WormholeB0)
 
 
 
