@@ -26,7 +26,7 @@ On select Mondays when the ALCF is on a regular business schedule, ALCF systems 
 
 ## INCITE/ALCC Overburn Policy
 
-If an INCITE or ALCC project has exhausted its allocation in the first 11 months of its allocation year, it is eligible for overburn running. At this point, capability jobs (20% of the machine) submitted by INCITE and ALCC projects will run in the default queue (instead of backfill) for the first 11 months of the allocation year until 125% of the project allocation has been consumed.
+If an INCITE or ALCC project has exhausted its allocation in the first 11 months of its allocation year, it is eligible for overburn running. At this point, capability jobs (20% of the machine) submitted by INCITE and ALCC projects will run in the regular `prod` execution queues, instead of backfill queues, for the first 11 months of the allocation year until 125% of the project allocation has been consumed. Non-capability jobs will get routed to backfill queues, which have low priority for active projects with negative balance.
 
 INCITE and ALCC projects needing additional overburn hours should email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with a short description of what they plan to do with the additional hours, highlighting specific goals or milestones and the time expected to accomplish them. This will be reviewed by the scheduling committee, allocations committee, and ALCF management. Requests should be submitted 15 days before the start of the next quarter of the allocation year for full consideration. Non-capability jobs (less than 20% of the machine) from projects that have exhausted their allocation will continue to run in backfill.
 
