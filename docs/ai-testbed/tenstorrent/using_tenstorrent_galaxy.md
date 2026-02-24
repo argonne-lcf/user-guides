@@ -1,12 +1,4 @@
-# Accessing a Tenstorrent Galaxy node
-
-Note: Other login nodes may work as well
-```console
-ssh -v <youruserid>@homes.cels.anl.gov
-ssh ttgalaxy-01.ai.alcf.anl.gov   (CELS password)
-```
-
-# Starting/stopping a model
+# Starting/stopping an inference server
 If not already done, clone the tt-inference-server project, build a venv
 ```console
 git clone https://github.com/tenstorrent/tt-inference-server.git
@@ -78,7 +70,7 @@ Llama-3.3-70B-Instruct took 420 seconds to start.
 python3 run.py --model Llama-3.3-70B-Instruct --workflow server --device galaxy --docker-server --skip-system-sw-validation
 ```
 
-# Querying the api exposed by a model container:
+# Querying the api exposed by a inference server container:
 
 If you have not already done so, from your user home dir
 ```console
@@ -155,4 +147,7 @@ end_time = time.time()
 print(response.choices[0].message.content)
 print("elapsed time: " + str(end_time-start_time))
 ```
+
+
+
 
