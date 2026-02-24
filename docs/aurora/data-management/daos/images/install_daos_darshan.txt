@@ -1,0 +1,89 @@
+Darshan install notes (Aurora)
+
+1. Runtime install (DAOS + HDF5 + PnetCDF)
+
+Commands:
+  module use /soft/modulefiles
+  module load daos
+  module load cmake
+  module load hdf5
+  module load parallel-netcdf
+
+  git clone https://github.com/darshan-hpc/darshan.git
+  cd darshan
+  ./prepare.sh
+
+  ./configure \
+    --enable-daos-mod \
+    --enable-hdf5-mod \
+    --with-hdf5=/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7 \
+    --enable-pnetcdf-mod \
+    --with-pnetcdf=/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue \
+    --with-log-path=/lus/flare/projects/Aurora_deployment/kaushik/darshan-software/logs \
+    --with-jobid-env=PBS_JOBID \
+    --prefix=/lus/flare/projects/Aurora_deployment/kaushik/darshan-software/install \
+    'CFLAGS=-O2 -g -Wall' \
+    CC=mpicc
+
+  make install
+
+Note:
+  HDF5 and PnetCDF paths come from:
+    module show hdf5
+    module show parallel-netcdf
+
+Optional permission step used in original notes:
+  chmod -R 755 /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/
+
+Check config:
+  /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/install/bin/darshan-config --log-path
+
+Create log directory hierarchy once:
+  cd /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/install/bin
+  ./darshan-mk-log.pl
+
+2. Set custom logfile (optional)
+
+  export DARSHAN_LOGFILE=<full-path-to-darshan-logfile>
+
+3. Quick runtime tests
+
+Non-MPI:
+  LD_PRELOAD=/path/to/libdarshan.so DARSHAN_ENABLE_NONMPI=1 cat /some/file
+
+MPI:
+  LD_PRELOAD=/path/to/libdarshan.so mpiexec ...
+
+Example:
+  touch hello.txt
+  LD_PRELOAD=/lus/flare/projects/Aurora_deployment/kaushik/darshan-software/install/lib/libdarshan.so DARSHAN_ENABLE_NONMPI=1 cat hello.txt
+  ls /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/logs/2025/11/14/
+
+4. darshan-util / PyDarshan tools install
+
+  rm -rf /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/darshan/
+  git clone https://github.com/darshan-hpc/darshan.git
+  cd darshan
+  git submodule update --init
+  ./prepare.sh
+
+  cd darshan-util
+  ./configure \
+    --disable-darshan-runtime \
+    --prefix=/lus/flare/projects/Aurora_deployment/kaushik/darshan-software/darshan-util-install \
+    --enable-apmpi-mod \
+    --enable-apxc-mod \
+    CFLAGS='-g -O0 -Wall'
+
+  make
+  make install
+
+List installed tools:
+  ls /lus/flare/projects/Aurora_deployment/kaushik/darshan-software/darshan-util-install/bin/
+
+5. Full preload chain
+
+  LD_PRELOAD=/lus/flare/projects/Aurora_deployment/kaushik/darshan-software/install/lib/libdarshan.so:\
+  /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:\
+  /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:\
+  /usr/lib64/libpil4dfs.so
