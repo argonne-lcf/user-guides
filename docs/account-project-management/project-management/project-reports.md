@@ -11,7 +11,7 @@ PIs of INCITE, ALCC, and ADSP projects must complete quarterly reports and a fin
 - April 1, 2026 (CY2026 - Q1)
 - July 1, 2026 (CY2026 - Q2)
 - October 1, 2026 (CY2026 - Q3)
-- January 1, 2027 (CY2026 - EOY) or February 15, 2027 (entire allocation period - EOP)
+- February 1, 2027 (CY2026 - EOY) or March 15, 2027 (entire allocation period - EOP)
 
 ### 2025-2026 ALCC EOP report:
 - August 15, 2026 (CY2026)
