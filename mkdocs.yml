@@ -310,10 +310,6 @@ nav:
         - Metis Inference:
           - ai-testbed/sn40l_inference/index.md
           - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
-      - Tenstorrent Galaxy:
-        - ai-testbed/tenstorrent/index.md
-        - Getting Started: ai-testbed/tenstorrent/getting-started.md
-        - Tenstorrent Galaxy inference servers: ai-testbed/tenstorrent/using-tenstorrent-galaxy-for-inference.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
