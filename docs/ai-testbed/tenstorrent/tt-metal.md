@@ -13,6 +13,18 @@ export TT_METAL_HOME=$(pwd) && export PYTHONPATH=$(pwd)
 ./create_venv.sh # skip if virtual environment is already created.
 source python_env/bin/activate       
 ```
+```console
+2026-02-26 21:56:09.538 | info     |     Distributed | Using auto discovery to generate mesh graph. (metal_context.cpp:936)
+2026-02-26 21:56:09.538 | info     |     Distributed | Constructing control plane using auto-discovery (no mesh graph descriptor). (metal_context.cpp:913)
+2026-02-26 21:56:09.539 | info     |          Fabric | TopologyMapper mapping start (mesh=0): n_log=32, n_phys=32, log_deg_hist={2:4, 3:16, 4:12}, phys_deg_hist={4:32} (topology_mapper_utils.cpp:171)
+2026-02-26 21:56:09.540 | info     |          Fabric | TopologyMapper mapping start (mesh=0): n_log=32, n_phys=32, log_deg_hist={2:4, 3:16, 4:12}, phys_deg_hist={4:32} (topology_mapper_utils.cpp:171)
+2026-02-26 21:56:09.540 | info     |          Fabric | TopologyMapper: Using 2 pinning(s) for mesh 0: [fabric_node=(M0, D0) (mesh_id=0, chip_id=0) -> ASIC position (tray=1, loc=1), fabric_node=(M0, D31) (mesh_id=0, chip_id=31) -> ASIC position (tray=4, loc=1)] (topology_mapper_utils.cpp:257)
+2026-02-26 21:56:10.248 | warning  |           Metal | Opening subset of mmio devices slows down UMD read/write to remote chips. If opening more devices, consider using CreateDevices API. (device_manager.cpp:301)
+2026-02-26 21:56:12.691 | info     |          Always | Output vector of size 409600 (lab_eltwise_binary.cpp:336)
+2026-02-26 21:56:12.693 | info     |          Always | Test Passed (lab_eltwise_binary.cpp:365)
+2026-02-26 21:56:12.712 | info     |          Device | Closing user mode device drivers (tt_cluster.cpp:471)
+2026-02-26 21:56:12.712 | info     |             UMD | Closing devices in cluster (cluster.cpp:980)
+```
 
 3. Compile the tt-metal directory. All the dependencies that require root access are already installed on the tt-02 node. 
 ```console 
