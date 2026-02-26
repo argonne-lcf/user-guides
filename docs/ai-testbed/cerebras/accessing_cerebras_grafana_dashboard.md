@@ -7,9 +7,9 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
     * If you get an `Hmm. We’re having trouble finding that site.` or `We can’t connect to the server at grafana.anl0.cerebras.internal.` then likely your browser and proxy settings are not working.
     * ![Firefox Page Not Found](files/grafanaproxy_05_firefox_page_not_found.png){width=50%}
 * Enter your ALCF username and MobilePass+ token.  
-  * It can take upto 10 seconds before letting you in.
+  * It can take up to 10 seconds before letting you in.
     * ![Grafana Login Page](files/grafanaproxy_06_loginpage.png){width=50%}
-* We make serveral read only dashboards avaible under the Dashboard folder [UserDashboards](https://grafana.anl0.cerebras.internal/dashboards/f/bfdit1mx49ypsc/?orgId=1) 
+* We make several read only dashboards available under the Dashboard folder [UserDashboards](https://grafana.anl0.cerebras.internal/dashboards/f/bfdit1mx49ypsc/?orgId=1) 
     * ![Grafana User Dashboards](files/grafanaproxy_07_UserDashBoard.png)
 * If you wish to create your own dashboards please email [support](mailto:support@alcf.anl.gov) and request write access for a cerebras grafana dashboard.
 
