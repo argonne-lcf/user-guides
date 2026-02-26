@@ -42,7 +42,7 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
     * `--user-data-dir=$(mktemp -d)`: sets a new profile so as to not interfere with an already opened browser.
     * `--proxy-server="socks5://127.0.0.1:5555"`: Tells the browser to use our SOCKS proxy from above.
     * Example paths to the browsers with flags ::
-```
+```bash linenums="1"
       /usr/bin/vivaldi-stable --no-first-run --user-data-dir=$(mktemp -d) --proxy-server="socks5://127.0.0.1:5555" https://grafana.anl0.cerebras.internal/login
       /usr/bin/google-chrome-stable --no-first-run --user-data-dir=$(mktemp -d) --proxy-server="socks5://127.0.0.1:5555" https://grafana.anl0.cerebras.internal/login
       /usr/bin/brave-browser-stable --no-first-run --user-data-dir=$(mktemp -d) --proxy-server="socks5://127.0.0.1:5555" https://grafana.anl0.cerebras.internal/login
