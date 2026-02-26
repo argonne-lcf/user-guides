@@ -19,18 +19,19 @@ source python_env/bin/activate
 ./build_metal.sh
 ```
 
-# Running tt-nn examples 
+# tt-nn examples 
 ```console
 ./build/ttnn/examples/example_lab_eltwise_binary
 TT_METAL_DEVICE_PROFILER=1 ./build/ttnn/examples/example_lab_eltwise_binary # with profiler 
 ```
 
-# To run tt-metal examples, first build the programming-examples directory. 
+# tt-metal examples
+To run tt-metal examples, first build the programming-examples directory. 
 ```console
 ./build_metal.sh --build-programming-examples
 ```
 
-## To run Gemm example
+Run a Gemm example
 ```console 
 ./build/programming_examples/metal_example_matmul_single_core
 ```
