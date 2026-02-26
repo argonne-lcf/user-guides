@@ -3,7 +3,7 @@
 The Cerebras Grafana dashboard is only accessible from systems within ALCF's internal networks.  To access it you will need to open a SOCKS proxy to `cerebras.alcf.anl.gov` and then route your connection via the SOCKS proxy.  Instructions on how to configure SOCKS proxies for your browser are at the end of the page.
 
 ## Using Grafana Dashboard
-* Login by going to [https://grafana.anl0.cerebras.internal](https://grafana.anl0.cerebras.internal/login){width=75%}
+* Log in by going to [https://grafana.anl0.cerebras.internal](https://grafana.anl0.cerebras.internal/login){width=75%}
     * If you get an `Hmm. We’re having trouble finding that site.` or `We can’t connect to the server at grafana.anl0.cerebras.internal.` then likely your browser and proxy settings are not working.
     * ![Firefox Page Not Found](files/grafanaproxy_05_firefox_page_not_found.png){width=50%}
 * Enter your ALCF username and MobilePass+ token.  
