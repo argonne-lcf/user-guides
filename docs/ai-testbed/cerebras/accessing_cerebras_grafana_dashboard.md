@@ -31,8 +31,8 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
     * Click "OK" to save"
 * Exit out of Firefox settings/preferences tab
 
-### Instuctions for setting up Chromium based browsers (Chrome, Brave, Vivaldi) via the cli on Linux or MacOS
-* Chromium based browsers have a `--proxy` flag that lets you set a proxy for the new instance of that browser.  However they do not have a flag in all version that lets you proxy your DNS queries through the proxy.  Requiring you to update your hosts file.  The paths to your browser's binary files will be different depending on distribution and browsers.
+### Instuctions for setting up Chromium-based browsers (Chrome, Brave, Vivaldi) via the CLI on Linux or MacOS
+* Chromium-based browsers have a `--proxy` flag that lets you set a proxy for the new instance of that browser.  However they do not have a flag in all version that lets you proxy your DNS queries through the proxy.  Requiring you to update your hosts file.  The paths to your browser's binary files will be different depending on distribution and browsers.
 * Update /etc/hosts with a text editor. you will need to be root or sudo.
     * Example: `sudo vim /etc/hosts` 
     * Add the following as a new line : `10.125.8.2 grafana.anl0.cerebrassc.local grafana.anl0.cerebras.internal`
