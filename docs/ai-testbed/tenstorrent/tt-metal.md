@@ -10,7 +10,7 @@ export TT_METAL_HOME=$(pwd) && export PYTHONPATH=$(pwd)
 
 2. When using the system for the first time, create the virtual environment using the create_venv.sh script, followed by activating the virtual environment. 
 ```console
-./create_venv.sh - 1 time
+./create_venv.sh # skip if virtual environment is already created.
 source python_env/bin/activate       
 ```
 
