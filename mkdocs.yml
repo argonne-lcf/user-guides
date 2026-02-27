@@ -424,11 +424,13 @@ nav:
       - data-management/filesystem-and-storage/index.md
       - HPSS: data-management/filesystem-and-storage/hpss.md
       - Disk Quota: data-management/filesystem-and-storage/disk-quota.md
-    - Transfer & Sharing:
-      - SFTP and SCP: data-management/data-transfer/sftp-scp.md
-      - Using Globus: data-management/data-transfer/using-globus.md
-      - ALCF Community Data Co-Op: data-management/acdc/acdc.md
+    - Transfer: # Globus: # Transfer & Sharing:
+      - data-management/data-transfer/index.md
+      #- # SFTP and SCP: data-management/data-transfer/sftp-scp.md
+        #      - Using Globus: data-management/data-transfer/using-globus.md
+    - Sharing:
       - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+      - ALCF Community Data Co-Op: data-management/acdc/acdc.md
 
   - Services:
     - services/index.md
