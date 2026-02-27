@@ -13,6 +13,17 @@ export TT_METAL_HOME=$(pwd) && export PYTHONPATH=$(pwd)
 ./create_venv.sh # skip if virtual environment is already created.
 source python_env/bin/activate       
 ```
+
+3. Compile the tt-metal directory. All the dependencies that require root access are already installed on the tt-02 node. 
+```console 
+./build_metal.sh
+```
+
+# tt-nn examples 
+```console
+./build/ttnn/examples/example_lab_eltwise_binary
+TT_METAL_DEVICE_PROFILER=1 ./build/ttnn/examples/example_lab_eltwise_binary # with profiler 
+```
 ```console
 2026-02-26 21:56:09.538 | info     |     Distributed | Using auto discovery to generate mesh graph. (metal_context.cpp:936)
 2026-02-26 21:56:09.538 | info     |     Distributed | Constructing control plane using auto-discovery (no mesh graph descriptor). (metal_context.cpp:913)
@@ -24,17 +35,6 @@ source python_env/bin/activate
 2026-02-26 21:56:12.693 | info     |          Always | Test Passed (lab_eltwise_binary.cpp:365)
 2026-02-26 21:56:12.712 | info     |          Device | Closing user mode device drivers (tt_cluster.cpp:471)
 2026-02-26 21:56:12.712 | info     |             UMD | Closing devices in cluster (cluster.cpp:980)
-```
-
-3. Compile the tt-metal directory. All the dependencies that require root access are already installed on the tt-02 node. 
-```console 
-./build_metal.sh
-```
-
-# tt-nn examples 
-```console
-./build/ttnn/examples/example_lab_eltwise_binary
-TT_METAL_DEVICE_PROFILER=1 ./build/ttnn/examples/example_lab_eltwise_binary # with profiler 
 ```
 
 # tt-metal examples
