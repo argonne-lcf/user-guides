@@ -13,7 +13,7 @@ The AI accelerators complement the ALCF's current and next-generation supercompu
 The platforms are equipped with architectural features that support AI and data-centric workloads, making them well suited for research tasks involving the growing deluge of scientific data produced by powerful tools, such as supercomputers, light sources, telescopes, particle accelerators, and sensors. In addition, the testbed will allow researchers to explore novel workflows that combine AI methods with simulation and experimental science to accelerate the pace of discovery.
 
 ## How to Get Access
-Researchers interested in using the AI Testbed’s `Cerebras CS-2`, `SambaNova DataScale SN30`, `Graphcore Bow Pod64` and `GroqRack` platforms can now submit project proposals via the [ALCF’s Director’s Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Access to additional testbed resources, including `Habana` accelerators, will be announced at a later date. 
+Researchers interested in using the AI Testbed's `Cerebras CS-3`, `SambaNova DataScale SN30`, `SambaNova SN40L inference endpoints`, `Graphcore Bow Pod64` and `GroqRack` platforms can now submit project proposals via the [ALCF's Director's Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Access to additional testbed resources, including `Habana` accelerators, will be announced at a later date.
 
 Submit your proposal requests at: [Allocation Request Page](https://my.alcf.anl.gov/accounts/#/allocationRequests){:target="_blank"}
 
