@@ -416,6 +416,7 @@ nav:
   - Running Jobs with PBS:
     - running-jobs/index.md
     - Example Job Scripts: running-jobs/example-job-scripts.md
+    - Common PBS Issues: running-jobs/known-issues.md
     - Machine Reservations: running-jobs/machine-reservations.md
 
   - Data Management:
