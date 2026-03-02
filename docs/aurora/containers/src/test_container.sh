@@ -24,7 +24,7 @@ PMIX="${PMIX:-/usr/lib64/libpmix.so.2}"
 EVENT_DIR="${EVENT_DIR:-/usr/lib64}"
 
 # Use a writable filesystem for workdir (defaults to $HOME)
-WORKROOT="${WORKROOT:-/flare/datascience/vsastry/ALCC}"
+WORKROOT="${WORKROOT:-$HOME/containers}"
 PROJECT_NAME="${PROJECT_NAME:-xpu_ddp_recipe}"
 
 # Persistent venv location (on host)
