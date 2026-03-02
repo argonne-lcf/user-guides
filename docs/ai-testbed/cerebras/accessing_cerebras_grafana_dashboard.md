@@ -6,6 +6,8 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
 * Log in by going to [https://grafana.anl0.cerebras.internal](https://grafana.anl0.cerebras.internal/login){width=75%}
     * If you get an `Hmm. We’re having trouble finding that site.` or `We can’t connect to the server at grafana.anl0.cerebras.internal.` then likely your browser and proxy settings are not working.
     * ![Firefox Page Not Found](files/grafanaproxy_05_firefox_page_not_found.png){width=50%}
+    * You will likely get a `Warning: Potential Security Risk Ahead` the first time you visit the site.  This is due to the internal grafana instance using a self signed cert.  Click `advanced` and then click `Accept the Risk and Continue`.
+    * ![Firefox Warning](files/grafanaproxy_08_self_signed_cert.png){width=50%}
 * Enter your ALCF username and MobilePass+ token.  
   * It can take up to 10 seconds before letting you in.
     * ![Grafana Login Page](files/grafanaproxy_06_loginpage.png){width=50%}
