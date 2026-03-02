@@ -58,7 +58,7 @@ export APPTAINERENV_SYCL_DEVICE_FILTER=level_zero:gpu
 # ----------------------------
 if [[ ! -f "$SIF" ]]; then
   echo "=== Building SIF from docker://intel/oneapi-hpckit"
-  #apptainer build --fakeroot "$SIF" docker://intel/oneapi-hpckit
+  apptainer build --fakeroot "$SIF" docker://intel/oneapi-hpckit
 else
   echo "=== SIF exists: $SIF"
 fi
@@ -66,7 +66,7 @@ fi
 
 if [[ ! -d "$SBX" ]]; then
   echo "=== Building sandbox from SIF"
-  #apptainer build --sandbox "$SBX" "$SIF"
+  apptainer build --sandbox "$SBX" "$SIF"
 else
   echo "=== Sandbox exists: $SBX"
 fi
