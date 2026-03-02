@@ -191,7 +191,7 @@ nav:
           - DAOS: aurora/data-management/daos/daos-overview.md
           - Lustre (Flare): aurora/data-management/lustre/flare.md
           - Moving data to Aurora:
-            - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+            - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/datamover.md
             - Globus: aurora/data-management/moving_data_to_aurora/globus.md
         - Applications and Libraries:
           - Applications:
