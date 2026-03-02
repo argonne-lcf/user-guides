@@ -19,6 +19,35 @@ podman pull ghcr.io/tenstorrent/tt-inference-server/vllm-tt-metal-src-dev-ubuntu
 ```
 --->
 
+## Check for already-running inference server containers
+
+
+`podman ps` will only show containers for the current user. 
+Check to see if any processes are using any Tenstorrent Wormhole chips:
+```bash
+for i in /proc/driver/tenstorrent/*/pids; do
+    echo "=== $i ===" $(cat "$i")
+done
+```
+or, in one line:
+```
+for i in /proc/driver/tenstorrent/*/pids; do echo "=== $i ===" $(cat "$i"); done
+```
+Any devices in use (device 0 shown) will have a number after the "===". Example
+```
+=== /proc/driver/tenstorrent/0/pids === 295
+```
+Any devices not in use (device 0 shown) will not have a number after the "===". Example
+```
+=== /proc/driver/tenstorrent/0/pids ===
+```
+
+If any devices are in use, the user id(s) for their user(s) can be found by looking for podman procesess:
+```
+ps -ef | grep -v grep | grep "podman run" | awk '{print $1}'
+
+```
+
 ## Start an inference server container
 
 Optionally, set some environment variables. These can also be entered interactively. 
@@ -68,6 +97,15 @@ Try with a larger model. Again, request permissions from huggingface if you don'
 Llama-3.3-70B-Instruct took 420 seconds to start.
 ```console
 python3 run.py --model Llama-3.3-70B-Instruct --workflow server --device galaxy --docker-server --skip-system-sw-validation
+```
+
+Smaller models can be run with less hardware. Here is an example of starting four 8-chip Llama-3.1-8B-Instruct container instances, each listening on a different port.
+```console
+#default port is 8000
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 0,1,2,3,4,5,6,7 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 8,9,10,11,12,13,14,15 --service-port 8001 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 16,17,18,19,20,21,22,23 --service-port 8002 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 24,25,26,27,28,29,30,31 --service-port 8003 --skip-system-sw-validation
 ```
 
 # Querying the api exposed by a inference server container:
