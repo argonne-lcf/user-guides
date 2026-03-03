@@ -108,7 +108,7 @@ python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-serve
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 24,25,26,27,28,29,30,31 --service-port 8003 --skip-system-sw-validation
 ```
 
-# Querying the api exposed by a inference server container:
+# Querying the API exposed by a inference server container:
 
 If you have not already done so, from your user home dir
 ```console
