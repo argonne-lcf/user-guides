@@ -3,7 +3,7 @@
 
 ## Connection to a Tenstorrent Galaxy node
 
-Connection to one of the **Tenstorrent Galaxy** nodes requires use of a CELS login node. Two-factor authentication is used: your CELS password, and a code from Duo Mobiled.<br>
+Connection to one of the **Tenstorrent Galaxy** nodes requires use of a CELS login node. Two-factor authentication is used: your CELS password, and a passcode from Duo Mobiled.<br>
 *In the examples below, <strong>replace CELSUserID with your CELS user id.</strong>*<br>
 To connect to a Tenstorrent Galaxy node:<br>
 
