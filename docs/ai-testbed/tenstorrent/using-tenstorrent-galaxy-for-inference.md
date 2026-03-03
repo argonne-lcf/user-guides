@@ -23,7 +23,7 @@ podman pull ghcr.io/tenstorrent/tt-inference-server/vllm-tt-metal-src-dev-ubuntu
 
 ## Check for already-running inference server containers
 
-`podman ps` will only show containers for the current user. 
+The Tenstorrent Galaxy nodes have no scheduler for user allocation of Wormhole chips, and `podman ps` will only show containers for the current user.
 Check to see if any processes are using any Tenstorrent Wormhole chips:
 ```bash
 for i in /proc/driver/tenstorrent/*/pids; do
