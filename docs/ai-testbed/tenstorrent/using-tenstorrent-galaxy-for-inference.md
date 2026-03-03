@@ -133,7 +133,7 @@ export OPENAI_API_KEY=$BEARER_TOKEN
 export OPENAI_BASE_URL=$(echo $API_URL | sed 's/\/chat\/completions//')
 ```
 
-## bash example
+## Bash example
 
 ```bash
 #!/bin/bash
