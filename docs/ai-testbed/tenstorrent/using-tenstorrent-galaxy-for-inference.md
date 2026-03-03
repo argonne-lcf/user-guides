@@ -1,5 +1,7 @@
-# Starting/stopping an inference server
-If not already done, clone the tt-inference-server project, build a venv
+# Running an inference workload
+
+## Initial set up
+If not already done, clone the tt-inference-server project, build a venv and install all the dependencies. 
 ```console
 git clone https://github.com/tenstorrent/tt-inference-server.git
 
@@ -20,7 +22,6 @@ podman pull ghcr.io/tenstorrent/tt-inference-server/vllm-tt-metal-src-dev-ubuntu
 --->
 
 ## Check for already-running inference server containers
-
 
 `podman ps` will only show containers for the current user. 
 Check to see if any processes are using any Tenstorrent Wormhole chips:
@@ -108,9 +109,9 @@ python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-serve
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 24,25,26,27,28,29,30,31 --service-port 8003 --skip-system-sw-validation
 ```
 
-# Querying the API exposed by a inference server container:
+# Querying the API exposed by an inference server container
 
-If you have not already done so, from your user home dir
+If you have not already done so, from your user home dir.
 ```console
 git clone https://github.com/tenstorrent/tt-inference-server.git
 cd tt-inference-server
@@ -158,7 +159,7 @@ curl -s --no-buffer -X POST "${API_URL}" \
     }'
 ```
 
-## Python example. 
+## Python example
 Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. 
 
 ```console
