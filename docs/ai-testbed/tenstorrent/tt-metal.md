@@ -1,5 +1,6 @@
-# Steps to run tt-metal examples. 
+# Steps to run tt-metal examples
 
+## Initial set up
 1. Login in to tt-02 node, and clone the tt-metal repository
 ```console
 git clone https://github.com/tenstorrent/tt-metal.git --recurse-submodules 
@@ -19,7 +20,7 @@ source python_env/bin/activate
 ./build_metal.sh
 ```
 
-# tt-nn examples 
+## tt-nn examples 
 ```console
 ./build/ttnn/examples/example_lab_eltwise_binary
 TT_METAL_DEVICE_PROFILER=1 ./build/ttnn/examples/example_lab_eltwise_binary # with profiler 
@@ -37,7 +38,7 @@ TT_METAL_DEVICE_PROFILER=1 ./build/ttnn/examples/example_lab_eltwise_binary # wi
 2026-02-26 21:56:12.712 | info     |             UMD | Closing devices in cluster (cluster.cpp:980)
 ```
 
-# tt-metal examples
+## tt-metal examples
 To run tt-metal examples, first build the programming-examples directory. 
 ```console
 ./build_metal.sh --build-programming-examples
