@@ -158,7 +158,8 @@ curl -s --no-buffer -X POST "${API_URL}" \
     }'
 ```
 
-## Python example. Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. 
+## Python example. 
+Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. 
 
 ```console
 import os
