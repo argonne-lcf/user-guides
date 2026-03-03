@@ -44,7 +44,7 @@ To run tt-metal examples, first build the programming-examples directory.
 ./build_metal.sh --build-programming-examples
 ```
 
-Run a Gemm example
+Run a GEMM example
 ```console 
 ./build/programming_examples/metal_example_matmul_single_core
 ```
