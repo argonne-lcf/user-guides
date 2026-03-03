@@ -56,7 +56,7 @@ Optionally, set some environment variables. These can also be entered interactiv
 export JW_SECRET=test-secret-456
 export HF_TOKEN=<your read-only HF token>
 ```
-Check if anyone else is using the system. TODO this is temporary. tt-smi will (currently) throw an exception if any user is currently using the inference chips.
+Check if anyone else is using the system. See instructions above.
 ```console
 tt-smi
 ```
