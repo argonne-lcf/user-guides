@@ -109,7 +109,7 @@ Compilation on the Polaris login nodes should be restricted to 4 processes so as
 
 ## Running jobs on Polaris
 
-An example submission script for running a 64-node KOKKOS-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
+An example submission script for running a 64-node KOKKOS-enabled LAMMPS executable is below as an example using the Lennard-Jones benchmark input `lammps/bench/in.lj`. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
 ```bash linenums="1"
 #!/bin/bash -l

@@ -44,7 +44,7 @@ Compilation on the Aurora login nodes will work, but should be done with few pro
 
 ## Running jobs on Aurora with Kokkos package
 
-An example submission script for a KOKKOS-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
+An example submission script for a KOKKOS-enabled LAMMPS executable is below as an example using the Lennard-Jones benchmark input `lammps/bench/in.lj`. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
 A GPU affinity script, such as `gpu_tile_compact.sh` must be used to properly bind MPI ranks to GPU resources. As these affinity scripts only make a single device visible to each MPI rank, the LAMMPS command-line option requesting a number of GPUs should always be set to 1. In this example, each MPI rank is bound to a single tile of an Aurora GPU (12 per node). This is likely the optimal configuration when running with the Kokkos package on Aurora.
 
@@ -148,7 +148,7 @@ Compilation on the Aurora login nodes will work, but should be done with few pro
 
 ## Running jobs on Aurora with GPU package
 
-An example submission script for a GPU-enabled LAMMPS executable is below as an example. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
+An example submission script for a GPU-enabled LAMMPS executable is below as an example using the Lennard-Jones benchmark input `lammps/bench/in.lj`. Additional information on LAMMPS application flags and options is described on the LAMMPS website.
 
 A GPU affinity script, such as `gpu_tile_compact.sh` must be used to properly bind MPI ranks to GPU resources. As these affinity scripts only make a single device visible to each MPI rank, the LAMMPS command-line option requesting a number of GPUs should always be set to 1. In this example, each MPI rank is bound to a single tile of an Aurora GPU (12 per node). 
 
