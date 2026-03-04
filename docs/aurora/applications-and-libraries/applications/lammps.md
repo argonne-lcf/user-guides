@@ -68,7 +68,7 @@ export OMP_NUM_THREADS=${NTHREADS}
 export OMP_PROC_BIND=spread
 export OMP_PLACES=cores
 
-NTOTRANKS=$(( NNODES * NRANKS ))
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 
 cd /path_to_work/
 
@@ -79,7 +79,7 @@ EXE_ARG="-in in.lj "
 EXE_ARG+=" -k on g 1 -sf kk -pk kokkos neigh half neigh/qeq full newton on "
 
 # MPI+OMP settings
-MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} "
+MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} "
 MPI_ARG+=" --cpu-bind list:1:2:3:4:5:6:53:54:55:56:57:58 "
 MPI_ARG+=" --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PROC_BIND=spread --env OMP_PLACES=cores "
 
@@ -169,10 +169,10 @@ export OMP_PROC_BIND=spread
 export OMP_PLACES=cores
 
 NNODES=`wc -l < $PBS_NODEFILE`
-NRANKS=12
+NRANKS_PER_NODE=12
 NTHREADS=1
 
-NTOTRANKS=$(( NNODES * NRANKS ))
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 
 cd /path_to_work/
 
@@ -184,7 +184,7 @@ EXE_ARG="-in in.lj "
 EXE_ARG+=" -pk gpu 1 -pk omp ${NTHREADS} -sf hybrid gpu omp "
 
 # MPI+OMP settings
-MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} "
+MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} "
 OMP_ARG=" --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PROC_BIND=spread --env OMP_PLACES=cores "
 
 if (( NRANKS_PER_NODE <= 12 )); then
