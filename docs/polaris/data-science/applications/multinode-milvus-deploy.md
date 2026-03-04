@@ -10,14 +10,14 @@ For more information, please refer to the [Milvus documentation](https://milvus.
 
 ## Obtaining the Source Code
 
-The deployment scripts and configuration files for running Milvus on Polaris are available in the [VDBPolaris](https://github.com/jingyanjiang/VDBPolaris-main) repository. Clone the repository to your home directory on Polaris:
+The deployment scripts and configuration files for running Milvus on Polaris are available in the [VDB](https://github.com/argonne-lcf/VDB) repository. Clone the repository to your home directory on Polaris:
 
 ```bash
-git clone https://github.com/jingyanjiang/VDBPolaris-main.git
-cd VDBPolaris-main
+git clone https://github.com/argonne-lcf/VDB.git
+cd VDB
 ```
 
-The repository contains deployment code for several vector database systems including Milvus, Qdrant, and Weaviate. The Milvus multi-node deployment scripts are located under `milvus/multiNode/`.
+The Milvus multi-node deployment scripts are located under `milvus/multiNode/`.
 
 ## Building Milvus on Polaris
 
@@ -58,7 +58,7 @@ Replace `<project_name>` with your ALCF project allocation name.
 Navigate to the multi-node deployment directory within the cloned repository:
 
 ```bash
-cd VDBPolaris-main/milvus/multiNode
+cd VDB/milvus/multiNode
 ```
 
 Launch the Milvus server on the first compute node. The deployment script starts etcd, MinIO, and the Milvus process using Apptainer containers:
@@ -116,7 +116,7 @@ Next, open a new terminal window and SSH into the second compute node (the clien
 
 ```bash
 ssh <client_hostname>
-cd VDBPolaris-main/milvus/multiNode
+cd VDB/milvus/multiNode
 ```
 
 Update the connection URI in `test_cluster.py` to point to the server node's IP address:
