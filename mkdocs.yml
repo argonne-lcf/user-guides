@@ -274,6 +274,7 @@ nav:
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
         - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
         - CSL: ai-testbed/cerebras/csl.md
+        - Grafana: ai-testbed/cerebras/accessing_cerebras_grafana_dashboard.md
       - Graphcore:
         - ai-testbed/graphcore/index.md
         - Getting Started: ai-testbed/graphcore/getting-started.md
@@ -416,6 +417,7 @@ nav:
   - Running Jobs with PBS:
     - running-jobs/index.md
     - Example Job Scripts: running-jobs/example-job-scripts.md
+    - Common PBS Issues: running-jobs/known-issues.md
     - Machine Reservations: running-jobs/machine-reservations.md
 
   - Data Management:
