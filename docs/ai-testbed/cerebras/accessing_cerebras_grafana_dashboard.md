@@ -15,8 +15,8 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
     * ![Grafana User Dashboards](files/grafanaproxy_07_UserDashBoard.png)
 * If you wish to create your own dashboards, please email [support](mailto:support@alcf.anl.gov) and request write access for a Cerebras Grafana dashboard.
 
-## SOCKS Proxies
-### Setup the socks proxy via ssh
+## SOCKS proxies
+### Setup the socks proxy via SSH
 * SSH's `-D` option will open a local socks proxy at the specified port.  In this example, we use port 5555
     * `ssh -D5555 ${yourUsername}@cerebras.alcf.anl.gov`
 
