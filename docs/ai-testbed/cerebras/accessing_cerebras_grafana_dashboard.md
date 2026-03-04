@@ -6,18 +6,18 @@ The Cerebras Grafana dashboard is only accessible from systems within ALCF's int
 * Log in by going to [https://grafana.anl0.cerebras.internal](https://grafana.anl0.cerebras.internal/login){width=75%}
     * If you get an `Hmm. We’re having trouble finding that site.` or `We can’t connect to the server at grafana.anl0.cerebras.internal.` then likely your browser and proxy settings are not working.
     * ![Firefox Page Not Found](files/grafanaproxy_05_firefox_page_not_found.png){width=50%}
-    * You will likely get a `Warning: Potential Security Risk Ahead` the first time you visit the site.  This is due to the internal grafana instance using a self signed cert.  Click `advanced` and then click `Accept the Risk and Continue`.
+    * You will likely get a `Warning: Potential Security Risk Ahead` notification the first time you visit the site.  This is due to the internal Grafana instance using a self-signed cert.  Click `advanced` and then click `Accept the Risk and Continue`.
     * ![Firefox Warning](files/grafanaproxy_08_self_signed_cert.png){width=50%}
 * Enter your ALCF username and MobilePass+ token.  
-  * It can take up to 10 seconds before letting you in.
+  * It can take up to 10 seconds before you are let in.
     * ![Grafana Login Page](files/grafanaproxy_06_loginpage.png){width=50%}
 * We make several read only dashboards available under the Dashboard folder [UserDashboards](https://grafana.anl0.cerebras.internal/dashboards/f/bfdit1mx49ypsc/?orgId=1) 
     * ![Grafana User Dashboards](files/grafanaproxy_07_UserDashBoard.png)
-* If you wish to create your own dashboards please email [support](mailto:support@alcf.anl.gov) and request write access for a cerebras grafana dashboard.
+* If you wish to create your own dashboards, please email [support](mailto:support@alcf.anl.gov) and request write access for a Cerebras Grafana dashboard.
 
 ## SOCKS Proxies
 ### Setup the socks proxy via ssh
-* SSH's -D option will open a local socks proxy at the specified port.  In this example we use port 5555
+* SSH's `-D` option will open a local socks proxy at the specified port.  In this example, we use port 5555
     * `ssh -D5555 ${yourUsername}@cerebras.alcf.anl.gov`
 
 ### Instuctions for setting up via Firefox GUI
