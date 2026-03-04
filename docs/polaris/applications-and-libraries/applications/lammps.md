@@ -125,12 +125,12 @@ export MPICH_GPU_SUPPORT_ENABLED=1
 NNODES=`wc -l < $PBS_NODEFILE`
 
 # per-node settings
-NRANKS=4
+NRANKS_PER_NODE=4
 NDEPTH=8
 NTHREADS=1
 NGPUS=4
 
-NTOTRANKS=$(( NNODES * NRANKS ))
+NTOTRANKS=$(( NNODES * NRANKS_PER_NODE ))
 
 . /home/knight/public/lammps/polaris/setup_lammps_gnu.sh
 
@@ -144,7 +144,7 @@ EXE_ARG+=" -k on g ${NGPUS} -sf kk -pk kokkos neigh half neigh/qeq full newton o
 #EXE_ARG+=" -pk gpu ${NGPUS} -sf hybrid gpu omp "
 
 # MPI+OMP settings
-MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth "
+MPI_ARG=" -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind depth "
 OMP_ARG=" --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PROC_BIND=spread --env OMP_PLACES=cores "
 
 COMMAND="mpiexec ${MPI_ARG} ${OMP_ARG} ${EXE} ${EXE_ARG}"
