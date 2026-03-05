@@ -105,17 +105,14 @@ clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes; optional on
 
 DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamover.md).
 
-
 ## Job Submission
 
 The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
-
 
 ```bash linenums="1"
 qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
 qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
 ```
-
 
 ## Interception Library for POSIX Containers
 
@@ -234,7 +231,6 @@ export PYTHONPATH=/lus/flare/projects/datasets/softwares/py_daos/just_pydaos_new
 mpiexec -n ... python pydaos_torch_example.py
 ```
 
-
 ```python linenums="1" title="pydaos_torch_example.py"
 import torch as sys_torch
 from pydaos.daos_torch import Dataset as DaosDataset
@@ -271,13 +267,11 @@ print(f"Torch load completed")
 * The above build path might be upgraded with newer builds without warning
 * More examples can be found at [DAOS GitHub repo > `pydaos.torch`](https://github.com/daos-stack/daos/tree/master/src/client/pydaos/torch)
 
-
-
 ## Darshan profiler for DAOS
 
 Darshan is a lightweight I/O profiling tool consisting of a shared library that your application preloads at runtime. It generates a binary log file at program termination, plus utilities to analyze that log. Full official documentation is available [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
 
-Follow this notes to install your own darshan tool under your user space  [here](images/install_daos_darshan.txt).
+Follow these notes to install your own Darshan tool under your user space [here](files/install_daos_darshan.txt).
 
 
 ### 1. Darshan
@@ -436,15 +430,11 @@ There is maintenance overhead with containers, so it is advisable to create one 
 
          ![data model](images/datamodel.png "DAOS data model")
 
-
-
 More information: <https://docs.daos.io/v2.6/overview/architecture/>
-
 
 ## More Information on MPI-IO
 
 The MPICH MPI-IO layer on Aurora (ROMIO) provides multiple I/O backends, including one for DAOS. ROMIO can be used with `dFuse` and the interception library via the UFS backend, but the DAOS backend provides optimal performance. By default, ROMIO auto-detects DFS and uses the DAOS backend. MPI-IO itself is a common backend for many I/O libraries, including HDF5 and PNetCDF. Whether using collective I/O MPI-IO calls directly, or indirectly via an I/O library, a process called collective buffering can aggregate small non-contiguous chunks from many compute nodes into larger contiguous buffers on a subset of compute nodes (aggregators), from which DFS API calls are made to write/read data in DAOS. Collective buffering can improve or degrade I/O performance depending on the I/O pattern. In DAOS, disabling it can lead to I/O failures in some cases where all compute nodes issue extreme volumes of small non-contiguous reads/writes directly to DAOS. ROMIO hints should be set to optimally enable or disable collective buffering. At this time, you should explicitly enable collective buffering in an optimal way, as disabling it (or allowing it to default disabled) can cause I/O failures.
-
 
 ## Fixing `UNCLEAN` Container Status
 
@@ -570,7 +560,6 @@ mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata a
 If you want to create a container that includes a dataset and allows multiple users in your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), follow the procedure below. Before proceeding, ensure all intended users have access to the project, pool, and user group.
 
 More information: <https://docs.daos.io/v2.6/user/container/#ownership>
-
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
