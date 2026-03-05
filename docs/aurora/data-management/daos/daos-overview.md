@@ -8,7 +8,6 @@ This guide covers:
 - job submission and performance guidance
 - troubleshooting and known issues
 
-
 The first step in using DAOS is to get DAOS pool space allocated for your project.
 Users should submit a request as noted below to have a DAOS pool created for your project.
 
@@ -61,13 +60,11 @@ Rebuild done, 4 objs, 0 recs
 
 In DAOS terms, a container is a logical space within a pool where data and metadata are stored. For beginners, think of a container as a project directory where your files are stored. There are several container types, but this guide focuses on POSIX containers in the context of the DAOS File System (DFS). Advanced options are provided later in [Advanced container creation configuration](#advanced-container-creation-configuration).
 
-
 ```bash linenums="1"
 daos container create --type=POSIX  <pool name> <container name>
 daos cont list  <pool name>
 daos container get-prop <pool name> <container name>
 ```
-
 
 ## POSIX Container Access via DFUSE
 
@@ -75,7 +72,7 @@ DAOS POSIX container access can be done with no application code changes through
 
 Currently, this must be done manually before use on each node where you are working. In the future, this may be automated through additional `qsub` options.
 
-#### 1. Mount a POSIX container on a login node
+#### Mount a POSIX container on a login node
 
 ```bash linenums="1"
 DAOS_POOL=datascience
@@ -93,7 +90,7 @@ cat /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/temp.txt
 fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount. It is very important to clean up afterward on UAN/login nodes.
 ```
 
-#### 2. Mount a POSIX container on compute nodes
+#### Mount a POSIX container on compute nodes
 
 You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script which does a `clush` command of `start-dfuse.sh`:
 
@@ -325,7 +322,7 @@ where the last 3 directories are the date the file is generated, with your user 
 export DARSHAN_LOGFILE=<full path to binary file name>
 ```
 
-### 2. Python PyDarshan Summary Report .html
+### Python PyDarshan Summary Report .html
 
 The first step in your analysis should be to generate a graphical summary report to get a rough estimate of overall IO performance.  For generating this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
 
@@ -347,7 +344,7 @@ cd <python env dir>
 source bin/activate
 ```
 
-### 3. `darshan-parser` utility
+### `darshan-parser` utility
 
 `darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`:
 
@@ -406,9 +403,6 @@ Each DAOS server node is based on the Intel Coyote Pass platform:
 ![DAOS Node](images/daos-node.png "DAOS CYP Node")
 ![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
 ![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
-
-
-
 
 ## Advanced Container Creation Configuration
 
@@ -600,7 +594,7 @@ users
 
 ## Known issues and workarounds
 
-### 1. Large Bulk I/O Write Issue
+### Large Bulk I/O Write Issue
 
 There is a known Python issue with `pil4dfs`.
 - Fix provided in DAOS-17499 
@@ -611,11 +605,11 @@ There is a known Python issue with `pil4dfs`.
 python: can't open file '/home/jlo/dfuse/./app.py': [Errno 95] Operation not supported
 ```
 
-### 2. `pydaos.daos_torch` Disconnect and Cleanup
+### `pydaos.daos_torch` Disconnect and Cleanup
 
 There is a DFS disconnect/cleanup issue. This should be fixed in the next release.
 
-### 3. Libfabric Endpoint Creation Error
+### Libfabric Endpoint Creation Error
 
 At high node counts and/or high PPN, the following error may appear in stderr:
 
@@ -632,7 +626,7 @@ At high node counts and/or high PPN, the following error may appear in stderr:
 
 You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
 
-### 4. Issue with `gpu_tile_compact.sh` and DAOS Interception Libraries
+### Issue with `gpu_tile_compact.sh` and DAOS Interception Libraries
 
 There is currently a bug involving oneAPI Level Zero, the DAOS interception libraries (`/usr/lib64/libpil4dfs.so` and `/usr/lib64/libioil.so`), and `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` (specifically the `/usr/bin/udevadm` call), where you may sporadically see a hang or an error like:
 ```bash linenums="1"
@@ -652,7 +646,7 @@ For an example, see:
 /soft/daos/tools/scripts/gpu_tile_compact_LD_PRELOAD.sh
 ```
 
-### 5. `NA_HOSTUNREACH` Errors
+### `NA_HOSTUNREACH` Errors
 
 ```bash
 hg_core_send_input_cb() NA callback returned error (NA_HOSTUNREACH)
@@ -660,7 +654,7 @@ hg_core_send_input_cb() NA callback returned error (NA_HOSTUNREACH)
 
 This is almost always a `--no-vni` issue or a network issue, not a DAOS issue.
 
-### 6. `na_ofi_mem_register` Errors
+### `na_ofi_mem_register` Errors
 
 There is a network limitation where, if your application performs heavy I/O from a severely segmented memory buffer, you may see an error like:
 
@@ -676,7 +670,7 @@ export DAOS_IOV_FRAG_SIZE=65536
 
 ## Best Practices
 
-### 1. DAOS Agent Check
+### DAOS Agent Check
 
 Whether you are accessing DAOS from a compute-node job or managing data from a login node, the DAOS agent daemon is required to connect the DAOS client to the DAOS server cluster (in your case, `daos_user`). The DAOS agent handles authentication and communication between clients and servers.
 
@@ -704,9 +698,9 @@ echo $DAOS_AGENT_DRPC_DIR
 /run/daos_agent_oneScratch
 ```
 
-### 2. Quick Troubleshooting Checklist
+### Quick Troubleshooting Checklist
 
-#### A. Submission and Environment
+#### Submission and Environment
 
 1. Check that you **requested** DAOS:
    ```bash linenums="1"
@@ -721,7 +715,7 @@ echo $DAOS_AGENT_DRPC_DIR
    daos pool query datascience
    ```
 
-#### B. Runtime Access Validation
+#### Runtime Access Validation
 
 4. Check that the DAOS client is **running** on all nodes:
    ```bash linenums="1"
@@ -737,7 +731,7 @@ echo $DAOS_AGENT_DRPC_DIR
    ```
 7. Check that your I/O **actually failed**.
 
-#### C. Pool/Container Health
+#### Pool/Container Health
 
 8. Check the container **health property**:
    ```bash linenums="1"
@@ -757,6 +751,6 @@ echo $DAOS_AGENT_DRPC_DIR
     daos container check
     ```
 
-#### D. Escalation
+#### Escalation
 
 12. If issues persist, submit a ticket to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
