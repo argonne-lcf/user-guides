@@ -1,20 +1,20 @@
-# Moving Data Across Filesystems
+# Moving data across filesystems
 
-This guide describes practical ways to move data between filesystem - Lustre, DAOS, VAST, Weka, local /tmpfs etc.
+This guide describes practical ways to move data between filesystem - Lustre, DAOS, VAST, Weka, and local storage locations such as `/tmp` or `tmpfs`.
 
-The below documentation provides a guideline on which tool to use for the right kind of data. The data here could be python packages, large tar files, datasets, checkpoints etc.
+The sections below describe which tools are best suited for different types of data transfers, such as Python packages, large tar files, datasets, and model checkpoints.
 
-## 1. Install MPIFileUtils
+## Install MPIFileUtils
 
-You can use ![this script](install-mpifileutils.sh "Install MPIFileUtils script ") to build/install MPIFileUtils: 
+Example "Install MPIFileUtils script"
 
-```bash
-user-guides/docs/aurora/data-management/moving_data_to_aurora/install-mpifileutils.sh
+```bash title="install-mpifileutils.sh" linenums="1"
+"docs/aurora/data-management/moving_data_to_aurora/install-mpifileutils.sh"
 ```
 
-## 2. Common Data mover tools.
+## Common data mover tools.
 
-### 2.1 Using distributed copy (`dcp`)
+### Using distributed copy (`dcp`)
 
 You can use the binaries installed by script, or use existing binaries directly. Example:
 
@@ -61,17 +61,18 @@ kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec -np 8 -ppn 8 --cpu-bind list:4:56:9:
 [2025-05-17T04:08:28] Rate: 19.513 GiB/s (214748364800 bytes in 10.250 seconds)
 ```
 
-### 2.2 Using Copper for many tiny files
+### Using Copper for many tiny files
 
 Use Copper when you need scalable access to many small files from one Lustre source across all compute nodes, without first creating a tarball.
 
 Instead of packaging files, keep data at the original Lustre path and prepend `/tmp/${USER}/copper/` to input paths (for example in `PYTHONPATH`, `LD_LIBRARY_PATH`, or application file paths).
 
-Copper is a read-only cooperative cache where one process reads from Lustre and distributes data through MPI/network to other ranks. This reduces metadata storms and startup bottlenecks at scale.
+Copper is a read-only cooperative cache in which a single process reads data from Lustre and distributes it to other ranks using MPI or network transfers. This approach reduces metadata storms and improves startup performance at scale.
 
-Source: ALCF Copper docs.
+[ALCF Copper docs](../copper/copper.md)
 
-### 2.3 Using `dbcast` for one-to-many large-file distribution
+
+### Using `dbcast` for one-to-many large-file distribution
 
 Use `dbcast` to broadcast large tarballs (or a small number of large files) from one Lustre source to each compute node’s local `/tmp`.
 
@@ -110,25 +111,20 @@ kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec -np 8 -ppn 8 --cpu-bind list:4:56:9:
 [2025-05-17T05:01:04] Rate: 6.109 GiB/s (13353066496 bytes in 2.036 seconds)
 ```
 
-### 2.4 Related tools/resources
+## DAOS data management and workflows
 
-- [https://docs.alcf.anl.gov/aurora/data-management/copper/copper/](https://docs.alcf.anl.gov/aurora/data-management/copper/copper/)
-- [https://github.com/argonne-lcf/scalable_conda_env](https://github.com/argonne-lcf/scalable_conda_env)
+Consult the official [DAOS DataMover Documentation](https://docs.daos.io/v2.4/testing/datamover/) for more details.
 
-## 3. DAOS Data management and Workflows
+### Small data: mounted POSIX container + Unix tools
 
-Reference: [DAOS Data Mover Documentation](https://docs.daos.io/v2.4/testing/datamover/)
-
-### 3.1 Small data: mounted POSIX container + Unix tools
-
-For relatively small data sizes, mount the POSIX container on a UAN or compute node and use `cp`/`rm`.
+For relatively small data sizes, mount the POSIX container on a UAN or compute node and use `cp` followed by `rm` to move data out of the container.
 
 ```bash
 cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 /tmp/<daos pool name>/<daos cont name>
 rm /tmp/<daos pool name>/<daos cont name>/real-sim_M100000_K25000_S0.836
 ```
 
-### 3.2 Small data: `daos filesystem copy` without mounting the daos container.
+### Small data: `daos filesystem copy` without mounting the DAOS container.
 
 You can avoid mounting by using DAOS UUIDs directly.
 
@@ -145,7 +141,7 @@ Then copy:
 daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 --dst daos://<daos pool UUID>/<daos cont UUID>/path_starting_from_within_container/
 ```
 
-### 3.3 Larger data: distributed MPIFileUtils
+### Larger data: distributed MPIFileUtils
 
 For larger transfers, use distributed MPIFileUtils on compute nodes described in section 2.
 
@@ -207,7 +203,7 @@ mpiexec  -np $((8*nnodes)) -ppn 8 --cpu-bind list:4:56:5:57:6:58:7:59 --no-vni -
 mpiexec  -np $((8*nnodes)) -ppn 8 --cpu-bind list:4:56:5:57:6:58:7:59 --no-vni -envall -genvall dcp daos://${src_pool}/${src_cont}/testdir ${dst_dir}
 ```
 
-## 4. Performance and Operational Guidance
+## Guidance for performance optimization and robustness
 
 - Bandwidth generally increases as `select` node count increases, up to a point.
 - Achieved throughput depends on current network and filesystem load.
