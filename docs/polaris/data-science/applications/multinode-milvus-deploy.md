@@ -61,7 +61,7 @@ Navigate to the multi-node deployment directory within the cloned repository:
 cd VDB/milvus/multiNode
 ```
 
-Launch the Milvus server on the first compute node. The deployment script starts etcd, MinIO, and the Milvus process using Apptainer containers:
+Launch the Milvus server on the first compute node. The deployment script starts [etcd](https://github.com/etcd-io/etcd), [MinIO](https://github.com/minio/minio), and the Milvus process using Apptainer containers:
 
 ```bash
 bash apptainer_deploy.sh
