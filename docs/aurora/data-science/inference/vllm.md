@@ -20,7 +20,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
 
     Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 ## Provided Installation
-vLLM (version 0.10.1rc2) is available as part of the frameworks module. Please use the following command:
+vLLM (version 0.15.0) is available as part of the frameworks module. Please use the following command:
 
 ```bash
 module load frameworks
@@ -30,7 +30,7 @@ Then, you can use this framework in your code
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
-0.10.1rc2.dev189+ge2db1164a
+'0.15.0'
 ```
 
 ## Access Model Weights
