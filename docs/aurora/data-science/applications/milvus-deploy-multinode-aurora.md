@@ -1,4 +1,4 @@
-# Milvus Deployment on Aurora with MultiNode
+# Multi-Node Milvus Deployment on Aurora
 
 ## Overview
 
