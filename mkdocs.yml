@@ -224,7 +224,7 @@ nav:
             - OpenVINO: aurora/data-science/inference/openvino.md
             - vLLM: aurora/data-science/inference/vllm.md
           - Applications:
-            - Milvus: aurora/data-science/applications/milvus-deploy-multinode-aurora.md
+            - Milvus: aurora/data-science/applications/milvus.md
         - Programming Models:
           - Kokkos: aurora/programming-models/kokkos-aurora.md
           - Level Zero: aurora/programming-models/level-0.md
@@ -377,7 +377,7 @@ nav:
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
-          - Milvus: polaris/data-science/applications/multinode-milvus-deploy.md
+          - Milvus: polaris/data-science/applications/milvus.md
       - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
