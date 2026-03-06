@@ -1,4 +1,4 @@
-# Milvus Deployment on Polaris with MultiNode
+# Multi-Node Milvus Deployment on Polaris
 
 ## Overview
 
