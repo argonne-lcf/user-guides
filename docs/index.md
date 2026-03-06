@@ -14,7 +14,7 @@ Our user guides contain information for:
 - [Facility Policies](policies/index.md): Information on our policies and procedures.
 
 ## How to Get Access
-Researchers interested in using the ALCF systems (including CPU systems, GPU systems, and the AI Testbed’s Cerebras CS-2 and SambaNova DataScale platforms) can now submit project proposals via the [ALCF’s Director’s Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Calls for proposals for additional allocation programs will be open at a later date.
+Researchers interested in using the ALCF systems (including CPU systems, GPU systems, Inference Endpoints, and the AI Testbed's Cerebras CS-3, SambaNova DataScale platforms) can now submit project proposals via the [ALCF's Director's Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Calls for proposals for additional allocation programs will be open at a later date.
 
 Submit your proposal requests at: [Allocation Request Page](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program)
 
