@@ -79,7 +79,7 @@ Before launching the server, update the repository path in the deployment script
 cd /your/path/to/VDB/milvus/multiNode/$myDIR
 ```
 
-Once the path is configured, launch the Milvus server on the first compute node. The deployment script starts etcd, MinIO, and the Milvus process using Apptainer containers:
+Once the path is configured, launch the Milvus server on the first compute node. The deployment script starts [etcd](https://github.com/etcd-io/etcd), [MinIO](https://github.com/minio/minio), and the Milvus process using Apptainer containers:
 
 ```bash
 bash apptainer_deploy.sh
