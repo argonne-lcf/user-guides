@@ -32,6 +32,24 @@ Then, you can use this framework in your code
 >>> print(vllm.__version__)
 '0.15.0'
 ```
+## Known Issue
+There is a known issue related to populating the `modelinfos` in the 
+`VLLM_CACHE_ROOT` directory to run a model for the first time, which manifests
+as a `validation error for ModelConfig`. The workaround
+for this issue is to pre-populate the configs by direct downloading them. 
+We provide a script to do so here:
+
+[vLLM Workaround](https://github.com/argonne-lcf/frameworks-sdk/blob/main/tests/single_node/functionality/vllm/xpu-model-inspection-hidden-sigsegv/WA/vllm_build_all_modelinfo_caches.py#L16C1-L21C54)
+
+__Note__ Please do not forget to set the proxies from the compute node before
+doing the pre-populating step.
+
+[Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
+
+Each time we choose to change the location of the `VLLM_CACHE_ROOT` 
+(by default, `~/.cache/vllm`), we need to do the re-population step, otherwise,
+based on our testing, it is persistent. This is a temporary measure, we expect
+to provide a fix in the next module update.
 
 ## Access Model Weights
 
