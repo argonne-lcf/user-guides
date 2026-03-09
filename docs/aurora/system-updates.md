@@ -5,6 +5,10 @@ The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KM
 
 See section ["2026-02-23"](system-updates.md/#2026-02-23) below for all the change log details.
 
+!!! warning "Recompiling post Maintenance"
+
+    Due to the updates to Aurora's programing environment, users will need to recompile applications if they already haven't been recompiled in the next-eval environment.
+
 ## 2026-02-23
 We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1.
 
