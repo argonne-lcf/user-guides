@@ -1,6 +1,20 @@
 <!---# Connecting to a Tenstorrent Galaxy node--->
 # Getting Started
 
+## Join the CELS ttgalaxy project
+To access the Tenstorrent Galaxy nodes, you will need to join the Tenstorrent Galaxy CELS project (ttgalaxy).
+
+To join the Tenstorrent Galaxy CELS project, first login to [https://accounts.cels.anl.gov](https://accounts.cels.anl.gov).
+
+To login, you will need your CELS username, your CELS password, and for two factor authentication, Duo Mobile.
+
+Then,
+
+- On the left menu, click on Join Project.
+- Find the "ttgalaxy" project
+- Select it
+- Click on "Request Membership"
+
 ## Connection to a Tenstorrent Galaxy node
 
 Connection to one of the **Tenstorrent Galaxy** nodes requires use of a CELS login node. Two-factor authentication is used: your CELS password, and a passcode from Duo Mobiled.<br>
