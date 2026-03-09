@@ -1,5 +1,6 @@
 # Aurora System Updates
-## 2026-02-10
+
+## 2026-03-10
 The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1, which was previously available in next-eval queue, is rolled out to all the of nodes across Aurora. 
 
 See section ["2026-02-23"](system-updates.md/#2026-02-23) below for all the change log details.
