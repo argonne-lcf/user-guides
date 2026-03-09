@@ -9,7 +9,7 @@ contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 ## Major Changes:
 `TensorFlow` has a separate module now, as opposed to being part of the 
 `frameworks` module. This is also going to change, in near future. We are 
-testing a containerized solution, and make that available to the users. 
+testing a containerized solution that will be made available to users. 
 
 ## Provided Installation
 
