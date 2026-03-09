@@ -33,6 +33,6 @@ jobs:
         days-before-pr-close: 10
         close-pr-label: 'wontfix'
         close-issue-label: 'wontfix'
-        exempt-issue-labels: 'type: bug'
+        exempt-issue-labels: 'type: bug,pinned,never-stale'
         # stale-issue-label: 'no-issue-activity'  # default= Stale
         # stale-pr-label: 'no-pr-activity'
