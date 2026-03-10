@@ -57,11 +57,10 @@ export JW_SECRET=test-secret-456
 export HF_TOKEN=<your read-only HF token>
 ```
 Check if anyone else is using the system. See instructions above.
-```console
-tt-smi
-```
 
-Check if you are running a container
+Note: `tt-smi` will fail if any inference servers are running. This behavior may change in later releases, though.
+
+Check if you (i.e. the current user) are running a container
 ```console
 podman ps  
 # if needed: podman stop <container id>
@@ -69,6 +68,8 @@ podman ps
 
 The "model" in the run command is the "Model Name" field from [https://github.com/tenstorrent/tt-inference-server](https://github.com/tenstorrent/tt-inference-server)
 ```console
+source ~/tt-venv/bin/activate
+cd ~/tt-inference-server/
 python3 run.py --model Qwen3-8B --docker-server --workflow server --device galaxy
 ```
 It will interactively ask for JWT_SECRET and HF_TOKEN, if the environment variables are not set. JW_SECRET=test-secret-456. Use your HF token which has (read) permission for the Qwen model (or whatever model is being started). Request permission for the model from huggingface if needed.
@@ -97,12 +98,15 @@ When the server startup is completes, you should see lines like the following th
 Try with a larger model. Again, request permissions from huggingface if you don't already have them for this model. If any other inference server container is running on the node, stop it first. 
 Llama-3.3-70B-Instruct took 420 seconds to start.
 ```console
+source ~/tt-venv/bin/activate
+cd ~/tt-inference-server/
 python3 run.py --model Llama-3.3-70B-Instruct --workflow server --device galaxy --docker-server --skip-system-sw-validation
 ```
 
 Smaller models can be run with less hardware. Here is an example of starting four 8-chip Llama-3.1-8B-Instruct container instances, each listening on a different port.
 ```console
 #default port is 8000
+cd ~/tt-inference-server/
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 0,1,2,3,4,5,6,7 --skip-system-sw-validation
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 8,9,10,11,12,13,14,15 --service-port 8001 --skip-system-sw-validation
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 16,17,18,19,20,21,22,23 --service-port 8002 --skip-system-sw-validation
@@ -111,8 +115,9 @@ python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-serve
 
 # Querying the API exposed by an inference server container
 
-If you have not already done so, from your user home dir.
+If you have not already done so, from your user home dir, clone the tt-inference-server repo, cd to it, and build and activate a virtual env. 
 ```console
+cd ~/
 git clone https://github.com/tenstorrent/tt-inference-server.git
 cd tt-inference-server
 virtualenv ~/tt-venv
@@ -128,13 +133,17 @@ pip install openai  # for python queries
 export JWT_SECRET=test-secret-456
 export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
 export API_URL="http://0.0.0.0:8000/v1/chat/completions"
-# or Qwen3-8B, or some other model currently being served.
+# or Qwen/Qwen3-8B, or some other model currently being served.
 export MODEL_NAME=Llama-3.3-70B-Instruct
 export OPENAI_API_KEY=$BEARER_TOKEN
 export OPENAI_BASE_URL=$(echo $API_URL | sed 's/\/chat\/completions//')
 ```
 
 ## Bash example
+
+Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B.
+
+This example script uses environment variable JWT_SECRET. If BEARER_TOKEN, API_URL and MODEL_NAME are already set, just the curl command is needed. 
 
 ```bash
 #!/bin/bash
@@ -160,7 +169,16 @@ curl -s --no-buffer -X POST "${API_URL}" \
 ```
 
 ## Python example
-Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. 
+Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. E.g.
+```
+export JWT_SECRET=test-secret-456
+export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
+# or Qwen/Qwen3-8B, or some other model currently being served.
+export MODEL_NAME=Llama-3.3-70B-Instruct
+export OPENAI_API_KEY=$BEARER_TOKEN
+# Adjust port if inference server is listening on a port other than 8000
+export OPENAI_BASE_URL=http://0.0.0.0:8000/v1
+```
 
 ```console
 import os
