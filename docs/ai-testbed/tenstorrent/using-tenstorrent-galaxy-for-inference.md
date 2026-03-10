@@ -169,15 +169,9 @@ curl -s --no-buffer -X POST "${API_URL}" \
 ```
 
 ## Python example
-Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. E.g.
-```
-export JWT_SECRET=test-secret-456
-export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
-# or Qwen/Qwen3-8B, or some other model currently being served.
-export MODEL_NAME=Llama-3.3-70B-Instruct
-export OPENAI_API_KEY=$BEARER_TOKEN
-# Adjust port if inference server is listening on a port other than 8000
-export OPENAI_BASE_URL=http://0.0.0.0:8000/v1
+Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. To run, provide the prompt as a CLI argument 
+```console
+python run.py "What is Tenstorrent"
 ```
 
 ```console
