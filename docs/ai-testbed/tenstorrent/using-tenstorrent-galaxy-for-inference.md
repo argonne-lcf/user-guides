@@ -171,9 +171,10 @@ curl -s --no-buffer -X POST "${API_URL}" \
 ## Python example
 Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. To run, provide the prompt as a CLI argument 
 ```console
-python run.py "What is Tenstorrent"
+python query.py "What is Tenstorrent"
 ```
 
+Put this content into query.py
 ```console
 import os
 import openai
