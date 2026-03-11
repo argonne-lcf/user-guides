@@ -44,7 +44,7 @@ When running PyTorch applications, we have found the following practices to be g
 
 ## Multi-GPU / Multi-Node Scale up
 
-PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes. Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs. Good performance with PyTorch has been seen with both DDP and Horovod. For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) or the [Distributed Data Parallel documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html). Some Polaris-specific details that may be helpful to you:
+PyTorch is compatible with scaling up to multiple GPUs per node, and across multiple nodes. Good scaling performance has been seen up to the entire Polaris system, > 2048 GPUs. Good performance with PyTorch has been seen with both DDP and Horovod. For details, please see the [Horovod documentation](https://horovod.readthedocs.io/en/stable/pytorch.html) or the [Distributed Data Parallel (DDP) documentation](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html). Some Polaris-specific details that may be helpful to you:
 
 <!-- --8<-- [start:scalingsetup] -->
 1. CPU affinity can improve performance, particularly for data loading processes. In particular, we encourage users to try their scaling measurements by manually setting the CPU affinity via mpiexec, such as with `--cpu-bind verbose,list:0,8,16,24` or `--cpu-bind depth -d 16`.
@@ -54,6 +54,12 @@ PyTorch is compatible with scaling up to multiple GPUs per node, and across mult
 
 3. CUDA device setting: it works best when you limit the visible devices to only one GPU. Note that if you import `mpi4py` or `horovod`, and then do something like `os.environ["CUDA_VISIBLE_DEVICES"] = hvd.local_rank()`, it may not actually work! You must set the `CUDA_VISIBLE_DEVICES` environment variable prior to doing `MPI.COMM_WORLD.init()`, which is done in `horovod.init()` as well as implicitly in `from mpi4py import MPI`. On Polaris specifically, you can use the environment variable `PMI_LOCAL_RANK` (as well as `PMI_LOCAL_SIZE`) to learn information about the node-local MPI ranks.  
 <!-- --8<-- [end:scalingsetup] -->
+
+!!! warning "DDP backends"
+
+    The PyTorch installation available in the latest `conda` environment was built from source, and it includes support for several `torch.distributed` [backends](https://docs.pytorch.org/docs/stable/distributed.html#backends): `gloo`, `mpi`, `nccl`. The `nccl` backend is recommended for performance for the majority of use-cases. The `mpi` backend  was built against the system's HPE Cray MPICH libraries with CUDA-aware capabilities, but unfortunately PyTorch currently only supports CUDA-aware MPI operations through OpenMPI ([source](https://github.com/pytorch/pytorch/blob/2883b5ab773daf5861d43ff0b65be49a441ab3f9/torch/csrc/distributed/c10d/ProcessGroupMPI.cpp#L49-L62)). 
+	
+	Executing distributed operations on GPU tensors with the `mpi` backend will result in errors like `RuntimeError: CUDA tensor detected and the MPI used doesn't have CUDA-aware MPI support`. The operations should function without issue with the `mpi` backend when applied to CPU tensors.
 
 ### DeepSpeed
 
