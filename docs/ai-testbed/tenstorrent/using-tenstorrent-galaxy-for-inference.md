@@ -49,9 +49,14 @@ ps -ef | grep -v grep | grep "podman run" | awk '{print $1}'
 
 ```
 
-## Start an inference server container
+## Starting an inference server container
 
-Optionally, set some environment variables. These can also be entered interactively. 
+For more on Tenstorrent inference servers, including running benchmarks, see [Model Readiness Workflows User Guide](https://github.com/tenstorrent/tt-inference-server/blob/main/docs/workflows_user_guide.md)
+
+The basics for starting an inference server are documented below.
+
+
+Optionally, set some environment variables. These two variables can also be entered interactively. 
 ```console
 export JW_SECRET=test-secret-456
 export HF_TOKEN=<your read-only HF token>
@@ -141,7 +146,7 @@ export OPENAI_BASE_URL=$(echo $API_URL | sed 's/\/chat\/completions//')
 
 ## Bash example
 
-Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B.
+Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B. (Llama-3.3-70B-Instruct is  an exception.)
 
 This example script uses environment variable JWT_SECRET. If BEARER_TOKEN, API_URL and MODEL_NAME are already set, just the curl command is needed. 
 
@@ -169,7 +174,11 @@ curl -s --no-buffer -X POST "${API_URL}" \
 ```
 
 ## Python example
-Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above. To run, provide the prompt as a CLI argument 
+Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above.
+
+Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B. (Llama-3.3-70B-Instruct is an exception.)
+
+To run, provide the prompt as a CLI argument 
 ```console
 python query.py "What is Tenstorrent"
 ```
