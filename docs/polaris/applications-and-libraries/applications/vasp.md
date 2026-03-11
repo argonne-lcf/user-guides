@@ -178,27 +178,21 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 
-# uncomment for more than one node
-#export NCCL_NET_GDR_LEVEL=PHB
-#export NCCL_CROSS_NIC=1
-#export NCCL_COLLNET_ENABLE=1
-#export NCCL_NET="AWS Libfabric"
-#export LD_LIBRARY_PATH=/soft/libraries/hwloc/lib/:$LD_LIBRARY_PATH
-#export LD_LIBRARY_PATH=/lus/eagle/projects/catalyst/world-shared/avazquez/aws-ofi-install/lib:$LD_LIBRARY_PATH
-#export NCCL_SOCKET_IFNAME=hsn
-
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=$(nvidia-smi -L | wc -l)
 NDEPTH=8
 NTHREADS=1
 
 NTOTRANKS=$(( NNODES * NRANKS ))
+#IF you hold a license for 6.4.3
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
-#IF you hold a license for 6.5
+#IF you hold a license for 6.5.1
 bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
+#IF you hold a license for 6.6.0
+bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
 
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /lus/eagle/projects/catalyst/world-shared/avazquez/affinity.sh  $bin
+mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /soft/applications/vasp/affinity.sh $bin
 ```
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
