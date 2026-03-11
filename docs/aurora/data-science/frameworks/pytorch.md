@@ -24,7 +24,7 @@ Then, you can `import` PyTorch in Python as usual (below showing results from th
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
-'2.8.0a0+gitba56102'
+'2.10.0a0+git449b176'
 ```
 A simple but useful check could be to use PyTorch to get device information on a compute node. You can do this the following way:
 
