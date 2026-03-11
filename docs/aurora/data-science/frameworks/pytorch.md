@@ -346,7 +346,7 @@ Here are the steps to run the above code on Aurora:
    qsub -q debug -A <your_project_name> -l select=2,walltime=30:00 -l filesystems=home:flare -k doe -j oe -I
    ```
 1. Copy the above Python script into a file called `pytorch_ddp.py` and make it executable with `#!bash chmod a+x pytorch_ddp.py`.
-1. [Load the frameworks module](../python.md#aiml-framework-module):
+1. [Load the frameworks module](../python.md#aiml-framework-modules):
    ```bash
    module load frameworks
    ```
