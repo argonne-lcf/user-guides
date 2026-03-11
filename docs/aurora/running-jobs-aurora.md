@@ -9,7 +9,6 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 |----------------|----------|------------|----------|------------------|-------------------------------------------------------------------------------------------------|
 | debug          | 1        | 2          | 5 min    | 1 hr             | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                 |
 | debug-scaling  | 2        | 256        | 5 min    | 1 hr             | Max 1 job running/accruing/queued **per-user**                                                  |
-| next-eval		 | 1		| upto 2,600 | 5 min	| 24 hrs		   | **Temporary queue to test new compute image. See [this page](./system-updates.md/#2026-02-23) for details.**
 | prod           | 256      | 10,624[^1] | 5 min    | 24 hrs           | Routing queue for small, medium, and large queues; <br/> **See table below for min/max limits** |                                                                       |
 | capacity       | 1        | 16         | 5 min    | 7 days (168 hrs) | Max of 128 nodes across all jobs. Max 5 jobs queued or running, 2 jobs running per user.        |
 | visualization  | 1        | 32         | 5 min    | 8 hrs            | ***By request only; non-exclusive nodes***                                                      |
