@@ -128,7 +128,12 @@ The following modules will update the include and library paths used by the Cray
 
 ```
 module restore
+
+unset LD_PRELOAD
+module rm xalt
+
 module load cray-libsci
+module load nvidia/25.5
 
 export NVROOT=${NVIDIA_PATH}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/cuda/lib64
