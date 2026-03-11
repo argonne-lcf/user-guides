@@ -164,8 +164,7 @@ module rm xalt
 
 module load cray-libsci
 
-NVROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/24.11
-
+export NVROOT=${NVIDIA_PATH}
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/cuda/lib64
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
