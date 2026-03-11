@@ -1,18 +1,20 @@
 # LibTorch C++ Library
 
-LibTorch is a C++ library for Torch, with many of the APIs that are available in PyTorch. Users can find more information in the [PyTorch documentation](https://pytorch.org/cppdocs/installing.html). This is useful for integrating the Torch ML framework into traditional HPC simulation codes and therefore enables training and inference of ML models. On Aurora, the Intel Extension for PyTorch (IPEX) library is needed to access the Max 1550 GPU, which has the device name `kXPU` in LibTorch. During compilation, Intel optimizations will be activated automatically once the IPEX dynamic library is linked.
+LibTorch is a C++ library for Torch, with many of the APIs that are available in PyTorch. Users can find more information in the [PyTorch documentation](https://pytorch.org/cppdocs/installing.html). This is useful for integrating the Torch ML framework into traditional HPC simulation codes and therefore enables training and inference of ML models. On Aurora, standard LibTorch (>= version 2.8) can be used to access the Max 1550 GPU, which has the device name `kXPU` in LibTorch. 
+The Intel Extension for PyTorch (IPEX) library can also be used to provide additional optimization or coverage of features, however it is no longer required. You can find information on linking the IPEX libraries at the bottom of this page.
+
 
 ## Environment Setup
 
-To use LibTorch on Aurora, load the ML frameworks module:
+The easiest way to use LibTorch on Aurora involves loading the ML frameworks module:
 
 ```bash
 module load frameworks
 ```
 
-This will also load the consistent oneAPI SDK (version 2024.2) and `cmake`.
+This will also load the consistent oneAPI SDK (version 2025.3.1) and `cmake`.
 
-## Torch and IPEX libraries
+## Torch libraries
 
 With the ML frameworks module loaded as shown above, run:
 
@@ -23,15 +25,9 @@ python -c 'import torch; print(torch.utils.cmake_prefix_path)'
 
 to find the path to the Torch libraries, include files, and CMake files.
 
-For the path to the IPEX dynamic library, run:
+## Linking LibTorch Libraries
 
-```bash
-python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'
-```
-
-## Linking LibTorch and IPEX Libraries
-
-When using the CMake build system, LibTorch and IPEX libraries can be linked to an example C++ application using the following `CMakeLists.txt` file:
+When using the CMake build system, LibTorch libraries can be linked to an example C++ application using the following `CMakeLists.txt` file:
 
 ```cmake
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
@@ -41,10 +37,6 @@ project(project-name)
 find_package(Torch REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS} -Wl,--no-as-needed")
 set(TORCH_LIBS ${TORCH_LIBRARIES})
-
-find_library(IPEX_LIB intel-ext-pt-gpu PATHS ${INTEL_EXTENSION_FOR_PYTORCH_PATH}/lib NO_DEFAULT_PATH REQUIRED)
-set(TORCH_LIBS ${TORCH_LIBS} ${IPEX_LIB})
-include_directories(SYSTEM ${INTEL_EXTENSION_FOR_PYTORCH_PATH}/include)
 
 add_executable(exe main.cpp)
 target_link_libraries(exe ${TORCH_LIBS})
@@ -57,7 +49,6 @@ and configuring the build with:
 ```bash
 cmake \
     -DCMAKE_PREFIX_PATH=`python -c 'import torch; print(torch.utils.cmake_prefix_path)'` \
-    -DINTEL_EXTENSION_FOR_PYTORCH_PATH=`python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'` \
     ./
 make
 ```
@@ -65,6 +56,7 @@ make
 ## Device Introspection
 
 Similarly to PyTorch, LibTorch provides APIs to perform introspection on the devices available on the system. The simple code below shows how to check if XPU devices are available, how many are present, and how to loop through them to discover some properties.
+The code can be compiled with the sample `CMakeLists.txt` and `cmake` command shown above.
 
 ```cpp
 #include <torch/torch.h>
@@ -106,7 +98,6 @@ This example shows how to perform inference with the ResNet50 model using LibTor
 ```python
 import torch
 import torchvision
-import intel_extension_for_pytorch as ipex
 from time import perf_counter
 
 device = 'xpu'
@@ -126,7 +117,7 @@ print(f"Inference time: {toc-tic}")
 torch.jit.save(model_jit, f"resnet50_jit.pt")
 ```
 
-Then, build `inference-example.cpp` (shown below):
+Then, build `inference-example.cpp` (shown below) with the sample `CMakeLists.txt` and `cmake` command shown above:
 
 ```cpp
 #include <torch/torch.h>
@@ -259,6 +250,33 @@ Note that an additional C++ flag is needed in this case, as shown below in the `
 cmake \
     -DCMAKE_CXX_FLAGS="-std=c++17 -fsycl" \
     -DCMAKE_PREFIX_PATH=`python -c 'import torch; print(torch.utils.cmake_prefix_path)'` \
-    -DINTEL_EXTENSION_FOR_PYTORCH_PATH=`python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'` \
     ./
 ```
+
+## Use of Intel Extension for PyTorch (IPEX)
+
+To get the path to the IPEX dynamic library, run:
+
+```bash
+module load frameworks
+python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'
+```
+
+When using the CMake build system, the IPEX libraries can be linked to an example C++ application adding the following lines to a `CMakeLists.txt` file:
+
+```cmake
+find_library(IPEX_LIB intel-ext-pt-gpu PATHS ${INTEL_EXTENSION_FOR_PYTORCH_PATH}/lib NO_DEFAULT_PATH REQUIRED)
+set(TORCH_LIBS ${TORCH_LIBS} ${IPEX_LIB})
+include_directories(SYSTEM ${INTEL_EXTENSION_FOR_PYTORCH_PATH}/include)
+```
+
+and configuring the build with an additional argument:
+
+```bash
+cmake \
+    -DCMAKE_PREFIX_PATH=`python -c 'import torch; print(torch.utils.cmake_prefix_path)'` \
+    -DINTEL_EXTENSION_FOR_PYTORCH_PATH=`python -c 'import torch; print(torch.__path__[0].replace("torch","intel_extension_for_pytorch"))'` \
+    ./
+make
+```
+
