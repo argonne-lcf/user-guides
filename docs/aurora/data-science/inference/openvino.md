@@ -9,18 +9,17 @@ OpenVINO does not come with the default frameworks module on Aurora, but it can 
 module load frameworks
 python -m venv --clear /path/to/_ov_env --system-site-packages
 source /path/to/_ov_env/bin/activate
-pip install openvino==2024.4.0
-pip install openvino-dev==2024.4.0
+pip install openvino
 ```
 
-It is recommended that the path to the virtual environment be in the user's project space on [Flare](../../data-management/lustre/flare.md).
+See the [Python documentation](../python.md) page for more details on installing virtual environments on Aurora.
 
 ## Model Converter
 
 The first suggested step is to convert the model from one of the ML frameworks into OpenVINO's Intermediate Representation (IR). 
 This consists of an `.xml` file which describes the network topology and a `.bin` file which contains the weights and biases in binary format. 
 The conversion can be done from the command line with `ovc` or using the Python API `openvino.convert_model()`.
-Note that PyTorch models cannot be converted directly with `ovc` and need to be converted to ONNX format first.
+Note that PyTorch models cannot be converted directly with `ovc` and need to be converted to ONNX format first, thus the Python API is recommended.
 You can find more information on the conversion process on [OpenVINO's documentation page](https://docs.openvino.ai/2024/openvino-workflow/model-preparation/convert-model-to-ir.html).
 
 The following code snippet demonstrates how to use the Python API to convert the ResNet50 model from TorchVision and save the OpenVINO IR.
@@ -61,17 +60,19 @@ benchmark_app -m resnet50.xml -hint latency -d GPU.0 -data_shape [1,3,224,224]
 
 which returns a series of information on the parameters set for the benchmark tests and the performance of the tests. The last few lines of the output are shown below.
 
-``` { .bash .no-copy }
-[ INFO ] Execution Devices:['GPU.0']
-[ INFO ] Count:            42847 iterations
-[ INFO ] Duration:         60001.96 ms
-[ INFO ] Latency:
-[ INFO ]    Median:        1.38 ms
-[ INFO ]    Average:       1.38 ms
-[ INFO ]    Min:           1.35 ms
-[ INFO ]    Max:           21.31 ms
-[ INFO ] Throughput:   714.09 FPS
-```
+???+ example "Output"
+
+	``` { .bash .no-copy }
+	[ INFO ] Execution Devices:['GPU.0']
+  [ INFO ] Count:            69857 iterations
+  [ INFO ] Duration:         60000.78 ms
+  [ INFO ] Latency:
+  [ INFO ]    Median:        0.83 ms
+  [ INFO ]    Average:       0.84 ms
+  [ INFO ]    Min:           0.81 ms
+  [ INFO ]    Max:           0.87 ms
+  [ INFO ] Throughput:   1164.27 FPS
+	```
 
 Note that `benchmark_app` takes a number of additional configuration options which are listed by running `benchmark_app -h`. 
 
