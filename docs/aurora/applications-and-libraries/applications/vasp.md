@@ -21,7 +21,7 @@ Information to provide:
 ## VASP support policy
 ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
 
-Once the user licence is validated, they will be added to the UNIX groups: `vasp6` , and get access to the subdirectories in `/soft/applications/vasp`.
+Once the user licence is validated, they will be added to the UNIX groups: `vasp6` or `vasp65` , and get access to the subdirectories in `/soft/applications/vasp`.
 
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
@@ -151,35 +151,35 @@ make -j1
 
 ### Running VASP in Polaris
 
-An example of a submission script can be found here `/soft/applications/vasp/script.sh`, which would look something similar to:
+An example of a submission script can be found here `/soft/applications/vasp/example.script.sh`, which would look something similar to:
 
 ```bash linenums="1" title="script.sh"
-#!/bin/sh
-#PBS -l select=1
-#PBS -l walltime=0:30:00
-#PBS -l filesystems=home:grand:eagle
-#PBS -q debug
-#PBS -A myproject
+#!/bin/bash -l
+#PBS -N AFFINITY
+#PBS -l select=4
+#PBS -l place=scatter
+#PBS -l walltime=0:10:00
+#PBS -l filesystems=<fs1:fs2>
+#PBS -q debug-scaling
+#PBS -A <MYPROJECT>
 
-unset LD_PRELOAD
-
-module load oneapi/release/2025.3.1
-
-NVROOT=/opt/nvidia/hpc_sdk/Linux_x86_64/24.11
+export TZ='/usr/share/zoneinfo/US/Central'
+cd ${PBS_O_WORKDIR}
 
 NNODES=`wc -l < $PBS_NODEFILE`
-#Number of tiles per node
-NRANKS=12
-NDEPTH=8
-NTHREADS=1
+NRANKS=12 # Number of MPI ranks to spawn per node
+NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
+NTHREADS=4 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
 
 NTOTRANKS=$(( NNODES * NRANKS ))
-bin=/soft/applications/vasp/vasp.6.6/bin/vasp_std
-#IF you hold a license for 6.5
-bin=/soft/applications/vasp/vasp.6.6/bin/vasp_std
 
+echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
 
-mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} //soft/applications/vasp/vasp.6.6/gpu_affinity.sh  $bin
+MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support 
+
+bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
+
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores /soft/applications/vasp/gpu_tile_compact.sh $bin
 ```
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
