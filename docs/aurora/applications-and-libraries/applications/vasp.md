@@ -19,7 +19,7 @@ Information to provide:
 - Version of VASP requested (VASP 6.x):
 
 ## VASP support policy
-ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. We are able to provide Makefiles and step-by-step build instructions to users with a verified VASP license. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
+ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
 
 Once the user licence is validated, they will be added to the UNIX groups: `vasp6` or `vasp65` , and get access to the subdirectories in `/soft/applications/vasp`.
 
