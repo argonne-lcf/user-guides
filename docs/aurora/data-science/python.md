@@ -31,7 +31,7 @@ module load mpich/opt/develop-git.6037a7a
 Please note that:
 
 - Both modules automatically load a `conda` environment with GPU-supported builds of the respective framework libraries along with other popular Python and ML packages. 
-- The Frameworks modules may load a different oneAPI compiler SDK than the default module.
+- The `frameworks` and `tensorflow`  modules may load a different oneAPI compiler SDK than the default module.
 - The `frameworks` and `tensorflow` modules are updated approximately every quarter.
 
 For more information on PyTorch and TensorFlow on Aurora, please see the respective pages: 
@@ -41,7 +41,7 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 
 ## Virtual environments via `venv`
 
-While the Anaconda environment automatically loaded with the Frameworks modules contains many 
+While the Anaconda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many 
 of the most commonly used Python packages for our users, you may still 
 encounter a scenario in which you need to extend the functionality of the 
 environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
@@ -72,7 +72,7 @@ The base environment is not writable, so it is not possible to remove or
 uninstall packages from it. The packages installed with the above `pip` command 
 should shadow those installed in the base environment.
 
-Any time you wish to use this virtual environment in future shell sessions, be sure to first load the base Frameworks module (e.g., `module load frameworks`) before `source /path/to/new/venv/bin/activate`.
+Any time you wish to use this virtual environment in future shell sessions, be sure to first load the base AI/ML modules (e.g., `module load frameworks`) before `source /path/to/new/venv/bin/activate`.
 
 An alternative, although not recommended, approach to creating a `venv` is to install packages with
 ```bash
