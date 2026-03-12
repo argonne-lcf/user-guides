@@ -1,0 +1,13 @@
+[project]
+name = "alcf-user-guides"
+version = "0.1.0"
+description = "ALCF User Guides documentation site"
+requires-python = ">=3.10"
+dependencies = [
+    "zensical",
+    "mkdocs-video",
+    "mkdocs-include-markdown-plugin",
+    "pymdown-extensions>=10.12",
+    "mkdocs-minify-plugin",
+    "mkdocs-redirects",
+]
