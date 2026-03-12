@@ -137,9 +137,8 @@ module load frameworks
 ```
 
 However, `numba-dpex` is not available in the `frameworks` module, thus using this package requires additional installation steps. 
-The easiest way to get all three DPEP packages is to create a new `conda` environment and install the dpnp and dpctl packages with the following recipe. 
+The easiest way to get all three DPEP packages is to create a new `conda` environment and install the dpnp and dpctl packages with the following recipe:
 
-```bash
 module load frameworks
 module load cmake
 conda create -y --prefix /path/to/dpep_env python=3.12 pip
