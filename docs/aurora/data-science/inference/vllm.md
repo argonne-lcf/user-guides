@@ -20,7 +20,7 @@ Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for add
 
     Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 ## Provided Installation
-vLLM (version 0.10.1rc2) is available as part of the frameworks module. Please use the following command:
+vLLM (version 0.15.0) is available as part of the frameworks module. Please use the following command:
 
 ```bash
 module load frameworks
@@ -30,8 +30,26 @@ Then, you can use this framework in your code
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
-0.10.1rc2.dev189+ge2db1164a
+'0.15.0'
 ```
+## Known Issue
+There is a known issue related to populating the `modelinfos` in the 
+`VLLM_CACHE_ROOT` directory to run a model for the first time, which manifests
+as a `validation error for ModelConfig`. The workaround
+for this issue is to pre-populate the configs by direct downloading them. 
+We provide a script to do so here:
+
+[vLLM Workaround](https://github.com/argonne-lcf/frameworks-sdk/blob/main/tests/single_node/functionality/vllm/xpu-model-inspection-hidden-sigsegv/WA/vllm_build_all_modelinfo_caches.py#L16C1-L21C54)
+
+!!! tip
+    Do not forget to set the proxies from the compute node before the prepopulation step.
+
+[Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
+
+Each time we choose to change the location of the `VLLM_CACHE_ROOT` 
+(by default, `~/.cache/vllm`), we need to do the re-population step, otherwise,
+based on our testing, it is persistent. This is a temporary measure, we expect
+to provide a fix in the next module update.
 
 ## Access Model Weights
 

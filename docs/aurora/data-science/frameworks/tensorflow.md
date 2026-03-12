@@ -8,7 +8,8 @@ contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Major Changes:
 `TensorFlow` has a separate module now, as opposed to being part of the 
-`frameworks` module. 
+`frameworks` module. This is also going to change, in near future. We are 
+testing a containerized solution that will be made available to users. 
 
 ## Provided Installation
 
@@ -16,6 +17,7 @@ TensorFlow is already preinstalled on Aurora, available in the `tensorflow`
 module. To use it from a compute node, load the module:
 ```bash linenums="1"
 module load tensorflow
+module load mpich/opt/develop-git.6037a7a
 ```
 
 Then you can `import` TensorFlow as usual, the following is an output from the 
@@ -336,7 +338,8 @@ export ITEX_FP32_MATH_MODE=TF32
 # Environment set up, using the latest frameworks drop
 #####################################################################
 
-module load frameworks
+module load tensorflow
+module load mpich/opt/develop-git.6037a7a
 
 ## CCL setup
 export FI_CXI_DEFAULT_CQ_SIZE=131072
