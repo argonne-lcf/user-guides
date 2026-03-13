@@ -41,8 +41,8 @@ We provide a script to do so here:
 
 [vLLM Workaround](https://github.com/argonne-lcf/frameworks-sdk/blob/main/tests/single_node/functionality/vllm/xpu-model-inspection-hidden-sigsegv/WA/vllm_build_all_modelinfo_caches.py#L16C1-L21C54)
 
-__Note__ Please do not forget to set the proxies from the compute node before
-doing the pre-populating step.
+!!! tip
+    Do not forget to set the proxies from the compute node before the prepopulation step.
 
 [Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
 
