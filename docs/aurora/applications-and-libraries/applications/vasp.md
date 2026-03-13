@@ -136,7 +136,7 @@ INCS        =-I$(MKLROOT)/include -I$(MKLROOT)/include/fftw
 
 The following modules will update the include and library paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
 
-```
+```bash linenums="1"
 module restore
 module load oneapi/release/2025.3.1
 
