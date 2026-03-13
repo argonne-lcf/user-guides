@@ -145,7 +145,7 @@ module load oneapi/release/2025.3.1
 ### Compiling VASP
 Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
 
-``` 
+```bash linenums="1"
 make -j1
 ```
 
