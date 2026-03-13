@@ -1,7 +1,22 @@
 # ALCF User Guide
-Source for the documentation located at https://docs.alcf.anl.gov/
+Welcome to the ALCF User Guides! This repo is the source for documentation located at https://docs.alcf.anl.gov/
+
+We strongly encourage all users to help improve our docs. If you are a first-time contributor, please use this introduction as a way to familiarize yourself with ALCF's documentation processes and resources to help with this process.
+
+## Need Help?
+
+If you have questions about contributing to the User Guide, you can post them on Slack. External users can post questions for the broader user community in the [ALCF Users Slack](https://alcf-users.slack.com).
+
+For specific domain-based questions, you can also message these ALCF subject-matter experts on GitHub.
+
+| Topic                 | Point of Contact        |
+| --------------------- | ------------------------|
+| Writing assistance    | Rachel Taub (@rtaub-anl)|
+| Subject               | Name githubacct         |
 
 ## Contributing to documentation
+
+If you have a suggestion for improving our docs, you can share it with us by [opening an issue](https://github.com/argonne-lcf/user-guides/issues/new/choose). You can also make changes directly to the user guides by submitting a pull request. 
 
 ### Python environment
 
@@ -15,6 +30,14 @@ python -m venv env
 source env/bin/activate
 ```
 
+### Installing MkDocs
+
+To install `mkdocs` in the current environment: 
+```bash
+cd user-guides
+make install-dev
+```
+
 ### Git
 
 Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub account:
@@ -22,14 +45,6 @@ Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub a
 git clone git@github.com:argonne-lcf/user-guides.git
 cd user-guides
 git submodule init; git submodule update
-```
-
-### Installing MkDocs
-
-To install `mkdocs` in the current environment: 
-```bash
-cd user-guides
-make install-dev
 ```
 
 ### Preview the docs locally and test for errors
@@ -62,19 +77,25 @@ cd user-guides
 git status                         # check the status of the files you have edited
 git commit -a -m "Updated docs"    # preferably one issue per commit
 git status                         # should say working tree clean
-git push origin YOURBRANCH         # push YOURBRANCH to origin
-git checkout main                  # move to the local main
-git pull origin main               # pull the remote main to your local machine
-git checkout YOURBRANCH            # move back to your local branch
-git merge main                     # merge the local develop into **YOURBRANCH** and
-                                     # make sure NO merge conflicts exist
-git push origin YOURBRANCH         # push the changes from local branch up to your remote branch
 ```
-* Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
 
-## Inbound Links Validation
-External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
+### Writing Tips
 
-There are two Python `scripts/` that perform this function:
-1. (works with `mkdocs build` and `serve`): Translate URLs to relative path links to their matching source `.md` files; write these links to `docs/inbound-links.md`. Use MkDocs' built-in validation (adding `--strict` flag when running `mkdocs build`, in order to return an error code if they are invalid).
-2. (works with `mkdocs build`, only): Use a lightweight post-build validation on generated `site/` directory HTML contents.
+If you're new to writing documentation, here are some tips to get started:
+
+- Use simple and clear language
+  Use short, simple sentences and direct language to make your writing easy for other users to follow. 
+- Link to relevant pages
+  Link to other pages in the User Guide when relevant. This will help other users find key information with ease.
+- Include examples when appropriate
+
+**AI Tools**
+If you'd like to use AI tools to assist with your writing, here are some we recommend. Please be sure to review all AI generated content for acccuracy and clarity.
+
+* [Grammarly](https://www.grammarly.com/grammar-check)
+* [HemingwayApp](https://hemingwayapp.com) (this app is built to analyze readability and may struggle with certain HPC terminology).
+* [Dr. Doc](https://github.com/argonne-lcf/drdoc)
+* [NotebookLM](https://notebooklm.google)
+
+
+
