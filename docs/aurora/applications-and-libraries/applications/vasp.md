@@ -26,7 +26,7 @@ Once the user licence is validated, they will be added to the UNIX groups: `vasp
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
-## VASP 6.6.x in Aurora (OpenAPI+OpenMP-offload+MPI)
+## VASP 6.6.x in Aurora (oneAPI + OpenMP Offload + MPI)
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#Intel_Composer_suite_and_oneAPI_HPC_toolkit_for_CPU_and_GPU).
