@@ -33,7 +33,7 @@ Instructions and samples of `makefile.include` can be found on the [`vasp.at` wi
 
 The following `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/Makefile.include.oneapi_omp_off).
 
-```makefile
+```makefile title="makefile.include" linenums="1"
 # Precompiler options
 CPP_OPTIONS = -DHOST=\"LinuxIFC\" \
               -DMPI -DMPI_BLOCK=8000 -Duse_collective \
