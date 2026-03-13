@@ -182,9 +182,9 @@ bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores /soft/applications/vasp/gpu_tile_compact.sh $bin
 ```
 
-Submission scripts should have executable attributes to be used with `qsub` script mode.
+Submission scripts should have executable attributes to be used with `qsub` script mode:
 
-```bash
+```bash linenums="1"
 chmod +x script.sh
 qsub script.sh
 ```
