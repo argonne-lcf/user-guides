@@ -22,7 +22,7 @@ To use it from a compute node, please load the following modules:
 module load frameworks
 ```
 
-Then, you can `import` PyTorch in Python as usual (below showing results from the `frameworks/2025.3.1`  module):
+Then, you can import PyTorch in Python as usual (below showing results from the `frameworks/2025.3.1`  module):
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
@@ -236,13 +236,13 @@ The key steps in performing distributed training are:
 
 Here is the code to train the [same dummy PyTorch model](#example-training-a-pytorch-model-on-a-single-gpu-tile) on multiple GPUs, where new or modified lines have been highlighted:
 
-```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 6-16 19 22"
+```python linenums="1" title="pytorch_ddp.py" hl_lines="1 2 4 7-16 19 22 30 35 41 45 59"
 from mpi4py import MPI
 import os, socket
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-# DDP: Set environmental variables used by PyTorch
+# DDP: Set environment variables used by PyTorch
 SIZE = MPI.COMM_WORLD.Get_size()
 RANK = MPI.COMM_WORLD.Get_rank()
 LOCAL_RANK = os.environ.get('PALS_LOCAL_RANKID')
@@ -298,17 +298,17 @@ for epoch in range(10):
 torch.distributed.destroy_process_group()
 ```
 
-#### Launching Distributed Training on Aurora
+!!! info "CPU bindings for best performance on Aurora"
 
-For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec.
-
-When using all 12 PVC tiles on each of the nodes, the following setting is recommended
-```bash
-export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
-mpiexec ... --cpu-bind=${CPU_BIND} python pytorch_ddp.py
-```
-
-1. 12 processes per node, evenly split across the 2 CPU sockets, with each rank having 4 cores available
+    For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec.
+    When using all 12 PVC tiles on each of the nodes, the following setting is recommended
+    
+    ```bash
+    export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
+    mpiexec ... --cpu-bind=${CPU_BIND} python pytorch_ddp.py
+    ```
+    
+    1. 12 processes per node, evenly split across the 2 CPU sockets, with each rank having 4 cores available
 
 <!---
 !!! warning "Settings for training beyond 16 nodes"
