@@ -4,3 +4,4 @@ pymdown-extensions>=10.12
 mkdocs-video
 mkdocs-minify-plugin
 mkdocs-redirects
+mkdocs-git-revision-date-localized-plugin

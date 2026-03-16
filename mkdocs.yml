@@ -142,6 +142,15 @@ plugins:
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - git-revision-date-localized:
+      type: iso_date  # default: date
+      timezone: America/Chicago
+      #ignored_commits_file: .git-blame-ignore-revs
+      enable_creation_date: true
+      exclude:
+        - index.md
+        - inbound-links.md
+      #strict: false  # default is true
   - minify:
       minify_html: true
   - redirects:
