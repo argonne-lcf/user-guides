@@ -150,7 +150,7 @@ plugins:
       exclude:
         - index.md
         - inbound-links.md
-      #strict: false  # default is true
+      #strict: false  # default is true; might need to change to false for builds where git is not avail
   - minify:
       minify_html: true
   - redirects:
