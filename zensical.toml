@@ -411,7 +411,7 @@ nav = [
 ]
 
 [project.theme]
-variant = "classic"
+variant = "classic"  # modern does not work with our customizations
 custom_dir = "overrides"
 language = "en"
 logo = "images/logo.svg"
