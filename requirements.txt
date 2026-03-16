@@ -1,6 +1,5 @@
 zensical
 mkdocs-video
-mkdocs-include-markdown-plugin
 pymdown-extensions>=10.12
 mkdocs-minify-plugin
 mkdocs-redirects

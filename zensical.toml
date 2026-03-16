@@ -534,8 +534,6 @@ permalink = true
 
 # Plugins
 
-[project.plugins.include-markdown]
-
 [project.plugins.search]
 lang = "en"
 separator = '[\\s\\u200b\\-_,:!=\\[\\]()"`/]+|\\.(?!\\d)|&[lg]t;|(?!\\b)(?=[A-Z][a-z])'
