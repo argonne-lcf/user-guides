@@ -5,7 +5,7 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Major changes in the frameworks module in Sprint 2026 (`frameworks/2025.3.1`)
+## Major changes in the frameworks module of Spring 2026 (`frameworks/2025.3.1`)
 
 - The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
 - When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
