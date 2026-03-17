@@ -210,11 +210,11 @@ this.
 
 3. `torch.compile` is available for Intel Max 1550 GPU and can be used to speed up training and inference. See [PyTorch Docs](https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html) for more information.
 
+4. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
+
 <!---
 4. In order to run an application with `TF32` precision type, one must set the following environment parameter: `export IPEX_FP32_MATH_MODE=TF32`. This allows calculations using `TF32` as opposed to the default `FP32`, and done through `intel_extension_for_pytorch` module.
 --->
-
-5. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
 
 
 ## Distributed Training on multiple GPUs
