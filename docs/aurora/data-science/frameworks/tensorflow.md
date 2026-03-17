@@ -1,39 +1,35 @@
 # TensorFlow on Aurora
 
-TensorFlow is a popular, open-source deep learning framework developed and 
-released by Google. The 
-[TensorFlow home page](https://www.tensorflow.org/) has more information about 
-TensorFlow, which you can refer to. For troubleshooting on Aurora, please 
-contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+TensorFlow is a popular, open-source deep learning framework developed and
+released by Google. The [TensorFlow home page](https://www.tensorflow.org/)
+has more information about the framework. For troubleshooting on Aurora, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Major Changes:
-`TensorFlow` has a separate module now, as opposed to being part of the 
-`frameworks` module. This is also going to change, in near future. We are 
-testing a containerized solution that will be made available to users. 
+## Recent major changes
+`TensorFlow` now has its own module, separate from the `frameworks` module. This will change again in the near future, as we are testing a containerized solution that will be made available to users.
 
-## Provided Installation
+## Provided installation
 
-TensorFlow is already preinstalled on Aurora, available in the `tensorflow` 
-module. To use it from a compute node, load the module:
+TensorFlow is preinstalled on Aurora and available through the `tensorflow`
+module. To use it on a compute node, load the module:
 ```bash linenums="1"
 module load tensorflow
 module load mpich/opt/develop-git.6037a7a
 ```
 
-Then you can `import` TensorFlow as usual, the following is an output from the 
+Then you can `import` TensorFlow as usual. The following output is from the
 `tensorflow/2025.2.0` module:
 
 ```python linenums="1"
 import tensorflow as tf
 tf.__version__
 ```
-```
+```text
 '2.15.1'
 ```
-This import will fail on login nodes because there is no XPU on login nodes. 
+This import will fail on login nodes because they do not have XPU devices.
 
-A simple but useful check could be to use TensorFlow to get device information 
-on a compute node. You can do this the following way:
+A useful check is to verify that TensorFlow detects the available devices on a
+compute node:
 
 ```python linenums="1"
 tf.config.list_physical_devices()
@@ -54,19 +50,17 @@ PhysicalDevice(name='/physical_device:XPU:10', device_type='XPU'),
 PhysicalDevice(name='/physical_device:XPU:11', device_type='XPU')]
 ```
 
-Note that, here `tf.config` return 12 tiles of 6 cards (the number of GPU 
-resources on an Aurora compute node), and treat each tile as a device. The user
-can choose to set the environmental variable `ZE_FLAT_DEVICE_HIERARCHY` with 
-appropriate values to achieve desired behavior, as described in the 
+Note that `tf.config` returns 12 tiles across 6 GPUs (the GPU resources on an
+Aurora compute node), treating each tile as a separate device. You can set the
+environment variable `ZE_FLAT_DEVICE_HIERARCHY` to control this behavior, as
+described in the
 [Level Zero Specification documentation](https://spec.oneapi.io/level-zero/latest/core/PROG.html#device-hierarchy).
-This environment variable is equivalent to the `ITEX_TILE_AS_DEVICE`, which is
-to be deprecated soon.
+This environment variable replaces `ITEX_TILE_AS_DEVICE`, which is deprecated.
 
-Intel Extension for TensorFlow has been made publicly available as an 
-open-source project at 
+Intel Extension for TensorFlow is available as an open-source project on
 [GitHub](https://github.com/intel/intel-extension-for-tensorflow).
 
-Please consult the following resources for additional details and useful tutorials:
+Consult the following resources for additional details and tutorials:
 
 - [Intel's Documentation](https://intel.github.io/intel-extension-for-tensorflow/latest/get_started.html#documentation)
 - [Intel's Examples](https://github.com/intel/intel-extension-for-tensorflow/tree/main/examples)
@@ -77,34 +71,30 @@ Please consult the following resources for additional details and useful tutoria
 
 ### Single Device Performance
 
-To expose one particular tile out of the 12 available (6 GPUs, each with 2 
-tiles, treating each tile as a device) on a compute node, 
-this environmental variable should be set
+To expose a single tile out of the 12 available (6 GPUs, each with 2 tiles) on
+a compute node, set the following environment variable:
 
 ```bash
 export ZE_AFFINITY_MASK=0 ## Exposing tile 0 on GPU 0
 ```
-More information and details are available through
-[Level Zero Specification Documentation - Affinity Mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+More details are available in the
+[Level Zero Specification Documentation - Affinity Mask](https://spec.oneapi.io/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask).
 
 ### Single Node Performance
 
-When running TensorFlow applications, we have found the following practices to 
-be generally, if not universally, useful and encourage you to try some of these 
-techniques to boost performance of your own applications.
+The following practices have been found to generally improve performance of
+TensorFlow applications on Aurora.
 
 #### Reduced Precision
 
-Use Reduced Precision, whenever the application allows. Reduced Precision is 
-available on Intel Max 1550 and is supported with TensorFlow operations. In 
-general, the way to do this is via the `tf.keras.mixed_precision` Policy, as 
-described in the 
-[mixed precision documentation](https://www.tensorflow.org/guide/mixed_precision)
-Intel's extension for TensorFlow is fully compatible with the Keras mixed 
-precision API in TensorFlow. It also provides an advanced auto mixed precision 
-feature. For example, you can just set two environment variables to get the 
-performance benefit from low-precision data type `FP16`/`BF16` without changing the 
-application code.
+Use reduced precision whenever your application allows it. The Intel Max 1550
+GPUs support reduced precision through TensorFlow operations. The standard
+approach is through the `tf.keras.mixed_precision` policy, as described in the
+[mixed precision documentation](https://www.tensorflow.org/guide/mixed_precision).
+Intel Extension for TensorFlow is fully compatible with the Keras mixed
+precision API and also provides an advanced auto mixed precision feature. You
+can set two environment variables to gain the performance benefits of
+`FP16`/`BF16` without modifying application code:
 
 ```bash
 export ITEX_AUTO_MIXED_PRECISION=1
@@ -115,33 +105,31 @@ need to apply [loss scaling](https://www.tensorflow.org/guide/mixed_precision#tr
 
 #### TensorFlow's graph API
 
-Use TensorFlow's graph API to improve efficiency of operations. TensorFlow is, 
-in general, an imperative language but with function decorators like 
-`@tf.function` you can trace functions in your code. Tracing replaces your 
-python function with a lower-level, semi-compiled TensorFlow Graph. More 
-information about the `tf.function` interface is available 
-[here](https://www.tensorflow.org/api_docs/python/tf/function). 
-When possible, use `jit_compile`, but be aware of sharp bits when using 
-`tf.function`: python expressions that aren't tensors are often replaced as 
-constants in the graph, which may or may not be your intention.
+Use TensorFlow's graph API to improve the efficiency of operations. Although
+TensorFlow operates in eager mode by default, the `@tf.function` decorator
+traces Python functions and replaces them with lower-level, semi-compiled
+TensorFlow graphs. See the
+[`tf.function` documentation](https://www.tensorflow.org/api_docs/python/tf/function)
+for details. When possible, use `jit_compile`. Be aware that when using
+`tf.function`, Python expressions that are not tensors are often replaced with
+constants in the graph, which may not be the intended behavior.
 
-There is an experimental feature, which allows for aggressive fusion of kernels
-through 
+An experimental feature enables aggressive kernel fusion through the
 [oneDNN Graph API](https://spec.oneapi.io/onednn-graph/latest/introduction.html).
-Intel's extension for TensorFlow can offload performance critical graph 
-partitions to oneDNN library to get more aggressive graph optimizations. It can
-be done by setting this environmental variable:
+Intel Extension for TensorFlow can offload performance-critical graph
+partitions to the oneDNN library for more aggressive graph optimizations.
+Enable it by setting the following environment variable:
 
 ```bash
 export ITEX_ONEDNN_GRAPH=1
 ```
-This feature is experimental, and actively under development.
+This feature is experimental and actively under development.
 
 #### `TF32` Math Mode
 
-The Intel Xe Matrix Extensions (Intel XMX) engines in Intel Max 1550 Xe-HPC 
-GPUs natively support `TF32` math mode. Through the Intel Extension for TensorFlow,
-you can enable it by setting the following environmental variable:
+The Intel Xe Matrix Extensions (Intel XMX) engines in the Intel Max 1550
+Xe-HPC GPUs natively support `TF32` math mode. Enable it through Intel
+Extension for TensorFlow by setting the following environment variable:
 
 ```bash
 export ITEX_FP32_MATH_MODE="TF32"
@@ -149,25 +137,24 @@ export ITEX_FP32_MATH_MODE="TF32"
 
 #### XLA Compilation (Planned/Upcoming)
 
-XLA is the Accelerated Linear Algebra library that is available in TensorFlow 
-and critical in software like JAX. XLA will compile a `tf.Graph` object, 
-generated with `tf.function` or similar, and perform optimizations like 
-operation-fusion. XLA can give impressive performance boosts with almost no 
-user changes except to set an environment variable `TF_XLA_FLAGS=--tf_xla_auto_jit=2`. 
-If your code is complex, or has dynamically sized tensors (tensors where the 
-shape changes every iteration), XLA can be detrimental: the overhead for 
-compiling functions can be large enough to mitigate performance improvements. 
-XLA is particularly powerful when combined with reduced precision, 
-yielding speedups > 100% in some models. 
+XLA (Accelerated Linear Algebra) is a compiler available in TensorFlow and
+central to frameworks like JAX. XLA compiles `tf.Graph` objects generated by
+`tf.function` and performs optimizations such as operation fusion. XLA can
+deliver significant performance improvements with minimal code changes—simply
+set the environment variable `TF_XLA_FLAGS=--tf_xla_auto_jit=2`. However, if
+your code is complex or uses dynamically sized tensors (where the shape changes
+each iteration), XLA can be detrimental: the compilation overhead may outweigh
+the performance gains. XLA is particularly effective when combined with reduced
+precision, yielding speedups greater than 100% in some models.
 
-Intel provides initial Intel GPU support for TensorFlow models with XLA 
-acceleration through 
+Intel provides initial GPU support for TensorFlow models with XLA acceleration
+through
 [Intel Extension for OpenXLA](https://github.com/intel/intel-extension-for-openxla).
-Full TensorFlow and PyTorch support is planned for development.
+Full TensorFlow and PyTorch support is planned.
 
 #### A simple example
 
-A simple example on how to use Intel GPU with TensorFlow is the following:
+The following example demonstrates how to use an Intel GPU with TensorFlow:
 
 ```python linenums="1" title="intel-xpu-tf-example.py"
 import tensorflow as tf   # TensorFlow registers PluggableDevices here.
@@ -194,23 +181,22 @@ run()  # PluggableDevices also work with tf.function and graph mode. Runs on XPU
 
 ### Multi-GPU / Multi-Node Scale Up
 
-TensorFlow is compatible with scaling up to multiple GPUs per node, and across 
-multiple nodes. Good performance with tensorFlow has been seen with horovod in 
-particular. For details, please see the 
+TensorFlow supports scaling across multiple GPUs per node and across multiple
+nodes. Good performance has been observed with Horovod in particular. For
+details, see the
 [Horovod documentation](https://horovod.readthedocs.io/en/stable/tensorflow.html).
-Some Aurora specific details might be helpful to you.
+The following sections cover Aurora-specific considerations.
 
 #### Environment Variables
 
-The following environmental variables should be set on the batch submission 
-script (PBSPro script) in the case of attempting to run beyond 16 nodes.
+The following environment variables should be set in the batch submission
+script (PBS script) when running on more than 16 nodes.
 
 --8<-- "./docs/aurora/data-science/frameworks/oneCCL.md:onecclenv"
 
 #### CPU Affinity
 
-The CPU affinity should be set manually through mpiexec. 
-You can do this the following way:
+CPU affinity should be set manually through `mpiexec`:
 
 ```bash
 ## Option 1
@@ -234,57 +220,55 @@ CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
 unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
 ```
 
-When running 12 ranks per node with these settings the `framework`s use 4 cores, 
-with Horovod tightly coupled with the `framework`s using one of the 4 cores, and 
-oneCCL using a separate core for better performance, e.g. with rank 0 the 
-`framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would 
-use core 42.
+When running 12 ranks per node with these settings, the framework uses 4 cores
+per rank, with Horovod pinned to one of those 4 cores and oneCCL using a
+separate core for better performance. For example, rank 0 would use cores 4--7
+for the framework, core 4 for Horovod, and core 42 for oneCCL.
 
-In the provided CPU binding list we have provided two options. First one is
-based on one CPU core per rank. In the second option, we assign 4 CPU cores per
-rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
-rank. Notice that, these cores are picked out from the last 12 cores of each
-socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs
-to the first socket, and 94-99 belongs to the second socket. We leave a few
-cores free, in case, the user may want to use other services like copper and
-DAOS along with their application. The second oneCCL option is to delegate
-task of picking cores to the system. In this case, the user should not declare
-or export the `CCL_WORKER_AFFINITY` variable.
+The CPU binding list provides two options. The first assigns one CPU core per
+rank; the second assigns 4 CPU cores per rank. In the first oneCCL worker
+affinity option, 12 CPU cores are selected (one per rank) from the last 12
+cores of each socket, consistent with the oneCCL default core selection
+strategy: cores 42--47 belong to the first socket, and cores 94--99 belong to
+the second socket. A few cores are left free for other services such as Cray
+MPICH and DAOS. The second oneCCL option delegates core selection to the
+system; in this case, do not declare or export the `CCL_WORKER_AFFINITY`
+variable.
 
-Each workload may perform better with different settings. 
-The criteria for choosing the cpu bindings are:
+Each workload may perform better with different settings. The criteria for
+choosing CPU bindings are:
 
-- Binding for GPU and NIC affinity – To bind the ranks to cores on the proper 
-    socket or NUMA nodes.
-- Binding for cache access – This is the part that will change per application 
-    and some experimentation is needed.
+- **GPU and NIC affinity** -- Bind ranks to cores on the appropriate socket or
+    NUMA node.
+- **Cache access** -- The optimal binding varies by application and may require
+    experimentation.
 
 !!! note
 
-    This setup is a work in progress, and based on observed performance. The recommended settings are likely to change with new `framework` releases.
-    To learn more about the CPU binding, please visit the 
+    This setup is a work in progress based on observed performance. The recommended settings are likely to change with new `frameworks` module releases.
+    To learn more about CPU binding, see the
     [Running Jobs](https://docs.alcf.anl.gov/aurora/running-jobs-aurora/) page.
 
 #### Distributed Training 
 
-Distributed training with TensorFlow  on Aurora is facilitated through Horovod,
+Distributed training with TensorFlow on Aurora is facilitated through Horovod,
 using [Intel Optimization for Horovod](https://github.com/intel/intel-optimization-for-horovod).
 
-The key steps in performing distributed training are laid out in the following example:
+The key steps for distributed training are outlined in the following example:
 
 - [TensorFlow examples with Intel Optimization for Horovod](https://github.com/intel/intel-optimization-for-horovod/blob/main/xpu_docs/tensorflow_example.md)
 
-Detailed implementation of the same example is here:
+A detailed implementation of the same example is available here:
 
 - [TensorFlow with Keras and Horovod](https://github.com/intel/intel-optimization-for-horovod/blob/main/examples/tensorflow2/tensorflow2_keras_mnist.py)
 
-A suite of detailed and well documented examples is part of Intel's optimization for Horovod repository:
+A suite of detailed and well-documented examples is available in the Intel Optimization for Horovod repository:
 
 - [Distributed Training Example Suite](https://github.com/intel/intel-optimization-for-horovod/tree/main/examples)
 
 #### A simple Job Script
 
-Below we give a simple job script:
+Below is a simple job script:
 
 ```bash linenums="1"
 #!/bin/bash -l
