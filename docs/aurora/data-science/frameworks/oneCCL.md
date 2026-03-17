@@ -247,10 +247,8 @@ import sys
 import os
 import socket
 from mpi4py import MPI
-import intel_extension_for_pytorch  # Added Extra
 import torch.nn.parallel
 import torch.distributed as dist
-import oneccl_bindings_for_pytorch
 
 MPI.COMM_WORLD.Barrier()
 
@@ -275,7 +273,7 @@ os.environ["MASTER_ADDR"] = master_addr
 os.environ["MASTER_PORT"] = str(master_port)
 
 MPI.COMM_WORLD.Barrier()
-dist.init_process_group(backend="ccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
+dist.init_process_group(backend="xccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
 MPI.COMM_WORLD.Barrier()
 
 dist_my_rank = dist.get_rank()
