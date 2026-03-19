@@ -55,12 +55,12 @@ For more on Tenstorrent inference servers, including running benchmarks, see [Mo
 
 The basics for starting an inference server are documented below.
 
-Model files will be downloaded into your huggingface cache dir. The default cache directory is ~/.cache/huggingface. '/storage` has more space available than your home directory. Change the cache location by setting the shell environment variable, HF_HOME to another directory, e.g.
+Model files will be downloaded into your huggingface cache dir. The default cache directory is `~/.cache/huggingface`. `/storage` has more space available than your home directory. Change the cache location by setting the shell environment variable, `HF_HOME`, to another directory, e.g.
 ```console
 mkdir -p /storage/$(whoami)/.cache/huggingface
 export HF_HOME=/storage/$(whoami)/.cache/huggingface
 ```
-Make sure that HF_HOME is set whenever you start a model container, else the downloader will use the default (~/.cache/huggingface). 
+Make sure that `HF_HOME` environment variable is set whenever you start a model container, else the downloader will use the default (`~/.cache/huggingface`). 
 
 
 Optionally, set some environment variables. These two variables can also be entered interactively. 
