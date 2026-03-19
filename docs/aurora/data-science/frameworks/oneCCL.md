@@ -32,7 +32,7 @@ We have identified a set of environment settings that typically provide better p
 Among them, there is a minimal list, which are essential for functionality
 for training workloads, and we have tested up to 1024 nodes.
 
-** Minimal set**
+**Minimal set**
 
 ```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix
@@ -41,11 +41,9 @@ export FI_MR_CACHE_MONITOR=userfaultfd
 export CCL_KVS_MODE=mpi
 ```
 
-Beyond that an application should tune based
-on the list below. This list is not exhaustive.
+Beyond that an application should tune based on the list below. This list is not exhaustive.
 
-Users of `vLLM` and other inference services should rely on the variables
-set by the `frameworks` module.
+Users of `vLLM` and other inference services should rely on the variables set by the `frameworks` module.
 
 ```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix  
@@ -238,43 +236,6 @@ if hvd.rank() == 0:
         print(e)
 ```
 
-PyTorch Horovod example:
-
-```python linenums="1"
-from time import perf_counter_ns
-import sys
-import intel_extension_for_pytorch  # Added Extra
-import torch.nn.parallel
-import horovod.torch as hvd
-hvd.init()
-hvd_local_rank = hvd.local_rank()
-hvd_size = hvd.size()
-# print("hvd_local_rank = %d  hvd_size = %d" % (hvd_local_rank, hvd_size))
-
-def get_default_device():
-    if torch.xpu.is_available():
-        return torch.device(f"xpu:{hvd_local_rank % 12}")
-    else:
-        return torch.device('cpu')
-
-device = get_default_device()
-
-dim_size = int(int(sys.argv[1]) / 4)
-elapsed1 = []
-
-for _ in range(50):
-    x = torch.ones([1, dim_size], dtype=torch.float32).to(device, non_blocking=True)
-    # print(x)
-    t5 = perf_counter_ns() 
-    y = hvd.allreduce(x, average=False)
-    t6 = perf_counter_ns()
-    elapsed1.append(t6 - t5)
-
-if hvd.rank() == 0:
-    for e in elapsed1:
-        print(e)
-```
-
 ## PyTorch DDP
 
 ```python linenums="1"
@@ -284,10 +245,8 @@ import sys
 import os
 import socket
 from mpi4py import MPI
-import intel_extension_for_pytorch  # Added Extra
 import torch.nn.parallel
 import torch.distributed as dist
-import oneccl_bindings_for_pytorch
 
 MPI.COMM_WORLD.Barrier()
 
@@ -312,7 +271,7 @@ os.environ["MASTER_ADDR"] = master_addr
 os.environ["MASTER_PORT"] = str(master_port)
 
 MPI.COMM_WORLD.Barrier()
-dist.init_process_group(backend="ccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
+dist.init_process_group(backend="xccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
 MPI.COMM_WORLD.Barrier()
 
 dist_my_rank = dist.get_rank()

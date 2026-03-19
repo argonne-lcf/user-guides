@@ -196,7 +196,7 @@ Here are the steps to start a Dask cluster and connect to it interactively from 
 - Then, [start a Dask cluster](#start-a-cluster-with-gpu-workers) and wait about 10 seconds for the cluster to start.
 - **On your local machine**, open an SSH tunnel to the compute node (`COMPUTE_NODE` is the compute node's hostname and `YOUR_ALCF_USERNAME` is your ALCF username):
   ```bash
-  ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 YOUR_ALCF_USERNAME@bastion.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 login.aurora.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 COMPUTE_NODE
+  ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 YOUR_ALCF_USERNAME@aurora.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 COMPUTE_NODE
   ```
 !!! failure 
     

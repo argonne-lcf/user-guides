@@ -1,32 +1,33 @@
 # Moving data across filesystems
 
-This guide describes practical ways to move data between filesystem - Lustre, DAOS, VAST, Weka, and local storage locations such as `/tmp` or `tmpfs`.
+This guide describes practical ways to move data between filesystems: Lustre, DAOS, VAST, Weka, and local storage locations such as `/tmp` or `tmpfs`.
 
 The sections below describe which tools are best suited for different types of data transfers, such as Python packages, large tar files, datasets, and model checkpoints.
 
 ## Install MPIFileUtils
 
-Example "Install MPIFileUtils script"
+Example install script for MPIFileUtils:
 
 ```bash title="install-mpifileutils.sh" linenums="1"
 "docs/aurora/data-management/moving_data_to_aurora/install-mpifileutils.sh"
 ```
 
-## Common data mover tools.
+## Common data mover tools
 
 ### Using distributed copy (`dcp`)
 
-You can use the binaries installed by script, or use existing binaries directly. Example:
+You can use the binaries installed by the script, or use existing binaries directly. Example:
 
 ```console
-kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> module load mpifileutils
-kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> module load daos
+kaushikvelusamy@x4210c6s0b0n0:> module load mpifileutils
+kaushikvelusamy@x4210c6s0b0n0:> module load daos
+kaushikvelusamy@x4210c6s0b0n0:~> which dcp
+/opt/aurora/26.26.0/spack/unified/1.1.1/install/linux-x86_64/mpifileutils-develop-fnloxep/bin/dcp
+kaushikvelusamy@x4210c6s0b0n0:~> ls /opt/aurora/26.26.0/spack/unified/1.1.1/install/linux-x86_64/mpifileutils-develop-fnloxep/bin/
+dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
 
-kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> ls
-dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker1  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
-
-kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec -np 8 -ppn 8 --cpu-bind list:4:56:9:61:14:66:19:71  \
-                                                        /soft/daos/mpifileutils/bin/dcp \   
+kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec -np 8 -ppn 8 --cpu-bind list:4:56:9:61:14:66:19:71 \
+                                                        dcp \
                                                         /lus/flare/source/ \
                                                         daos://datascience/1_fSX_dS1_rd_fac_0/
 [2025-05-17T04:08:18] Walking /tmp/source
@@ -90,7 +91,7 @@ Key mechanics include:
 
 ```console
 kaushikvelusamy@x4210c6s0b0n0:/tmp> mpiexec -np 8 -ppn 8 --cpu-bind list:4:56:9:61:14:66:19:71 \
-                                                            /soft/daos/mpifileutils/bin/dbcast \
+                                                            dbcast \
                                                             /lus/flare/projects/datascience/all-my-custom-python-packages.tar \
                                                             /tmp/all-my-custom-python-packages.tar
 
@@ -124,7 +125,7 @@ cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_
 rm /tmp/<daos pool name>/<daos cont name>/real-sim_M100000_K25000_S0.836
 ```
 
-### Small data: `daos filesystem copy` without mounting the DAOS container.
+### Small data: `daos filesystem copy` without mounting the DAOS container
 
 You can avoid mounting by using DAOS UUIDs directly.
 
@@ -143,12 +144,15 @@ daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thunder
 
 ### Larger data: distributed MPIFileUtils
 
-For larger transfers, use distributed MPIFileUtils on compute nodes described in section 2.
+For larger transfers, use distributed MPIFileUtils on compute nodes, as described above.
 
 ```console
-kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> module load mpifileutils
-kaushikvelusamy@x4210c6s0b0n0:/soft/daos/mpifileutils/bin/> ls
-dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker1  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
+kaushikvelusamy@x4210c6s0b0n0:> module load mpifileutils
+kaushikvelusamy@x4210c6s0b0n0:~> which dcp
+/opt/aurora/26.26.0/spack/unified/1.1.1/install/linux-x86_64/mpifileutils-develop-fnloxep/bin/dcp
+kaushikvelusamy@x4210c6s0b0n0:~> ls /opt/aurora/26.26.0/spack/unified/1.1.1/install/linux-x86_64/mpifileutils-develop-fnloxep/bin/
+dbcast  dbz2  dchmod  dcmp  dcp  dcp1  ddup  dfilemaker  dfind  dreln  drm  dstripe  dsync  dtar  dwalk
+
 ```
 
 For convenience, scripts exist to run MPIFileUtils `dcp`/`drm` against DAOS with the needed parameters.
@@ -156,7 +160,7 @@ For convenience, scripts exist to run MPIFileUtils `dcp`/`drm` against DAOS with
 #### Copy one DAOS container to another (same or different pool)
 
 ```bash
-qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \ 
+qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
      -v src_pool=<source pool>,src_cont=<source cont>,dst_pool=<destination pool>,dst_cont=<destination cont> \
     /soft/daos/tools/scripts/dcp-cont2cont.pbs
 ```
@@ -185,9 +189,9 @@ qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_use
     /soft/daos/tools/scripts/drm-cont.pbs
 ```
 
-Because MPIFileUtils is built with DAOS DFS support, these scripts use the `daos:` prefix and do not require a `dfuse` mountpoint.
+Because MPIFileUtils is built with DAOS DFS support, these scripts use the `daos:` prefix and do not require a `dfuse` mount point.
 
-If you want to isolate the copy or remove to a specific subdirectory in a container you will need to make your own copy of the script and modify the `dcp` or `drm` command directly, adding the subdirectory to the end of the container specification, for example:
+If you want to isolate the copy or remove operation to a specific subdirectory in a container, you will need to make your own copy of the script and modify the `dcp` or `drm` command directly, adding the subdirectory to the end of the container specification, for example:
 
 ```bash
 daos://<daos pool name>/<daos cont name>/<top directory in container>/<subdirectory 1>
