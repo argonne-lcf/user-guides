@@ -1,4 +1,11 @@
-# Steps to run tt-metal examples
+# tt-Metallium 
+
+TT-Metalium is our low-level programming model, enabling kernel development for Tenstorrent hardware. Please refer to the documentation links below for programming guide, hardware software architectures and others. 
+https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#tt-metalium-tech-reports
+https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#scaleout-tech-reports
+https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#tt-metalium-programming-examples
+
+# Steps to run tt-metal examples on the galaxy server
 
 ## Initial set up
 1. Login in to tt-02 node, and clone the tt-metal repository
