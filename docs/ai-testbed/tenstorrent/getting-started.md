@@ -37,3 +37,5 @@ For tt-metal testing,
 ```bash
 ssh ttgalaxy-02.ai.alcf.anl.gov
 ```
+
+Each node has additional storage available at `/storage`. 
