@@ -1,6 +1,6 @@
-# tt-Metallium 
+# TT-Metallium 
 
-TT-Metalium is our low-level programming model, enabling kernel development for Tenstorrent hardware. Please refer to the documentation links below for programming guide, hardware software architectures and others. 
+TT-Metalium is a low-level programming model, enabling kernel development for Tenstorrent hardware. Please refer to the documentation links below for programming guide, hardware software architectures and others. 
 * https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#tt-metalium-tech-reports
 * https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#scaleout-tech-reports
 * https://github.com/tenstorrent/tt-metal/tree/main?tab=readme-ov-file#tt-metalium-programming-examples
