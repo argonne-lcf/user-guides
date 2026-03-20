@@ -17,7 +17,7 @@ Then,
 
 ## Connection to a Tenstorrent Galaxy node
 
-Connection to one of the **Tenstorrent Galaxy** nodes requires use of a CELS login node. Two-factor authentication is used: your CELS password, and a passcode from Duo Mobiled.<br>
+Connection to one of the **Tenstorrent Galaxy** nodes requires use of a CELS login node. Two-factor authentication is used: your CELS password, and a passcode from Duo Mobile.<br>
 *In the examples below, <strong>replace CELSUserID with your CELS user id.</strong>*<br>
 To connect to a Tenstorrent Galaxy node:<br>
 
@@ -29,7 +29,7 @@ ssh CELSUserID@homes.cels.anl.gov
 Then ssh to a Tenstorrent Galaxy node, using your CELS password. 
 
 **_NOTE:_**
-We have two Tenstorrent Galaxy nodes. One is reserved for testing Interence and the second is reserved for testing Mettalium/Metal - SDK
+We have two Tenstorrent Galaxy nodes. One is reserved for testing Inference and the second for testing Mettalium/Metal - SDK, which is a a low-level programming model for custom kernel development.
 
 For inference server testing, 
 ```bash
