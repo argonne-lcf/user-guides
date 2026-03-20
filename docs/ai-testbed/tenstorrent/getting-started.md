@@ -29,7 +29,7 @@ ssh CELSUserID@homes.cels.anl.gov
 Then ssh to a Tenstorrent Galaxy node, using your CELS password. 
 
 **_NOTE:_**
-We have two Tenstorrent Galaxy nodes. One is reserved for testing Inference and the second for testing Mettalium/Metal - SDK, which is a a low-level programming model for custom kernel development.
+We have two Tenstorrent Galaxy nodes. One is reserved for testing Inference and the second for testing Mettalium/Metal - SDK, a low-level programming model for custom kernel development.
 
 For inference server testing, 
 ```bash
