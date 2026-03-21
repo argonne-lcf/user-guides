@@ -100,12 +100,6 @@ Host aurora
 
 ```
 
-On Windows, the identity path might look like:
-
-```sshconfig
-IdentityFile C:/Users/your_username/.ssh/master-polaris@id_ed25519
-```
-
 Explanation:
 
 - `Host` is the short name you will use in VS Code (for example, `myserver`).
