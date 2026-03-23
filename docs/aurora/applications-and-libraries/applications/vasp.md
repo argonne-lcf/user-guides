@@ -149,7 +149,7 @@ Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, 
 make -j1
 ```
 
-### Running VASP in Polaris
+### Running VASP in Aurora
 
 An example of a submission script can be found here `/soft/applications/vasp/example.script.sh`, which would look something similar to:
 
@@ -179,7 +179,8 @@ MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support
 
 bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores /soft/applications/vasp/gpu_tile_compact.sh $bin
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G /soft/applications/vasp/gpu_tile_compact.sh $bin
+
 ```
 
 Submission scripts should have executable attributes to be used with `qsub` script mode:
