@@ -139,7 +139,6 @@ extra:
     property: G-4M48E2L33R
 
 plugins:
-  - include-markdown
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
