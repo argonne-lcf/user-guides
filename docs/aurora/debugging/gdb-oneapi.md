@@ -141,11 +141,11 @@ This example prints a backtrace where GPU segmentation violations or other types
 
 ### Adding symbol files to get debugging info for Level Zero Runtime calls
 
-By default, the backtraces with gdb-oneapi on Aurora do not show calls into the Level Zero runtime. If you would like to enable this (especially in the case you are writing code in Level Zero) you can enable it with `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/debugging_files/usr/lib/debug/` in gdb. This is likely a rare case, but it is available. An example is:
+By default, the backtraces with gdb-oneapi on Aurora do not show calls into the Level Zero runtime. If you would like to enable this (especially in the case you are writing code in Level Zero) you can enable it with `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug` in gdb. This is likely a rare case, but it is available. An example is:
 
 ```console
 > gdb-oneapi ./a.out
-> (gdb) set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/debugging_files/usr/lib/debug/
+> (gdb) set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug
 > (gdb) r
 Ctrl-C
 > (gdb) bt
@@ -174,4 +174,4 @@ Ctrl-C
     at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/api/core/ze_event_api_entrypoints.h:25
 #9  0x0000000000402396 in main () at r.cpp:132
 ```
-Without the `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/debugging_files/usr/lib/debug/` The backtrace will not resolve the Level Zero API calls.
+Without the `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug` The backtrace will not resolve the Level Zero API calls.
