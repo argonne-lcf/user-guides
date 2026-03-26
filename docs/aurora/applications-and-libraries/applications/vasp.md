@@ -175,11 +175,21 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 
 echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NRANKS} THREADS_PER_RANK= ${NTHREADS}"
 
+export OMP_NUM_THREADS=${NTHREADS}
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
+export OMP_STACKSIZE=1G
+
+
 MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support 
+export I_MPI_OFFLOAD=1 #enable GPU to GPU comm
+
+export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
+export AFFINITY=$(which gpu_tile_compact.sh)
 
 bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G /soft/applications/vasp/gpu_tile_compact.sh $bin
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
 
 ```
 
