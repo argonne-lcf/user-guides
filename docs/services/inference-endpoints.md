@@ -1,5 +1,8 @@
 # ALCF Inference Endpoints
 
+!!! warning "Important Notices / Known Issues"
+    - **Model list may be empty after login:** In some cases, available models are not shown after signing in. If the model dropdown is empty, please log out and log back in. Refresh the page if needed.
+
 Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify) to receive updates and maintenance notifications.
 
 ## Quick Start
