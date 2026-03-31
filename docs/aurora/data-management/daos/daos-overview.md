@@ -584,9 +584,51 @@ daos container get-prop  ${DAOS_POOL}  ${DAOS_CONTAINER}
 
 You can also use the following commands for further diagnosis.
 
-```bash
+```bash linenums="1"
 daos pool      autotest  ${DAOS_POOL}
-daos container check --pool=${DAOS_POOL} --cont=${DAOS_CONTAINER}
+
+> daos pool      autotest datascience
+Step Operation                 Status Time(sec) Comment
+  0  Initializing DAOS          PASS    0.000  
+  1  Connecting to pool         PASS    0.012  
+  2  Creating containers        PASS    0.004  
+  3  Opening container          PASS    0.028  
+ 10  Generating 1M S1 layouts   PASS    2.774   360.48K IO/sec
+ 11  Generating 10K SX layouts  PASS    0.028   359.75K IO/sec
+ 20  Inserting 128B values      PASS   30.004    60.80K IO/sec
+ 21  Reading 128B values back   PASS   28.755    63.84K IO/sec
+ 23  Punching object            PASS    0.009  
+ 24  Inserting 4KB values       PASS   30.004    58.06K IO/sec
+ 25  Reading 4KB values back    PASS   29.323    60.55K IO/sec
+ 27  Punching object            PASS    0.009  
+ 28  Inserting 1MB values       PASS   30.006     5.54K IO/sec
+ 29  Reading 1MB values back    PASS   39.888    12.90K IO/sec
+ 31  Punching object            PASS    0.009  
+ 40  Inserting into RF1 cont    PASS   30.004    61.95K IO/sec
+ 41  Reading RF1 values back    PASS   28.615    65.28K IO/sec
+ 42  Inserting into RF2 cont    PASS   30.005    60.20K IO/sec
+ 43  Reading RF2 values back    PASS   31.091    58.34K IO/sec
+ 96  Closing containers         PASS    0.009  
+ 97  Destroying containers      PASS    0.010  
+ 98  Disconnecting from pool    PASS    0.001  
+ 99  Tearing down DAOS          PASS    0.000  
+
+All steps passed.
+
+daos container check -p <PATH_TO_MOUNTED_CONTAINER>
+
+> daos container check -p /tmp/datascience/hacc-io-mr-17-1024 
+check container 74a6ecd1-5a9e-41cc-b544-720a91f13199 started at: Mon Mar 30 17:53:41 2026
+check container 74a6ecd1-5a9e-41cc-b544-720a91f13199 completed at: Mon Mar 30 17:53:41 2026
+checked: 2
+skipped: 0
+inconsistent: 0
+run_time: 1 seconds
+scan_speed: 2 objs/sec
+
+
+object ERR  src/object/cli_shard.c:858 dc_rw_cb()   DER_FETCH_AGAIN(-2032): 'Fetch again' can be safely ignored.
+
 ```
 
 There are example programs and job scripts provided under `/soft/daos/examples/`.
@@ -738,6 +780,13 @@ echo ${DAOS_AGENT_DRPC_DIR}
 /run/daos_agent_oneScratch
 ```
 
+Check different dfuse launching scripts at /soft/daos/bin.
+
+Note: Applications which require mmap (specifically, torch titan) should use 
+```bash linenums="1"
+launch-dfuse-with-caching.sh ${DAOS_POOL}:${DAOS_CONT}.
+```
+
 ### Quick Troubleshooting Checklist
 
 #### Submission and Environment
@@ -787,8 +836,8 @@ echo ${DAOS_AGENT_DRPC_DIR}
     ```
 11. Run explicit DAOS pool/container health checks:
     ```bash linenums="1"
-    daos pool autotest
-    daos container check
+    daos pool autotest  ${DAOS_POOL}
+    daos container check -p <PATH_TO_MOUNTED_CONTAINER>
     ```
 
 #### Escalation
