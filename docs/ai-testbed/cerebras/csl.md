@@ -267,7 +267,7 @@ The above example runs in appliance mode, but uses simulator for the backend, bu
 2. Set "simulator=False" in the appliance_run.py script.
 
 compile.py for hardware is given as below. 
-```python title="run.py" linenums="1"
+```python title="compile.py" linenums="1"
 import json
 from cerebras.sdk.client import SdkCompiler
 import logging
