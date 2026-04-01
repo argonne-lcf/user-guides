@@ -7,6 +7,17 @@
 
 Cerebras jobs are initiated and tracked automatically within the Python framework in **cerebras.modelzoo.common.run_utils**. This framework interacts with the Cerebras cluster management node.
 
+##### Timelimit and usage guidelines
+We currently have access to four CS-3 systems, which are in high demand across users. To ensure fair access and smooth operation for everyone, we kindly ask all users to be mindful of shared usage. At this stage, the system does not enforce strict scheduling policies, so it is especially important that usage remains self-regulated and considerate of others. In particular, we request that users avoid submitting multiple concurrent jobs or queuing up a large number of jobs, as this can prevent others from accessing the system. As a general guideline, large jobs should be limited to a maximum runtime of 24 hours. To help manage this, please make use of the job_time_sec parameter in your .yaml configuration to explicitly bound the duration of your jobs. For example:
+```bash
+init:                                                                                                                            
+      backend:
+        backend_type: CSX
+        cluster_config:
+            job_time_sec: 3600
+```
+We appreciate your cooperation in using the CS-3 systems responsibly and respectfully, and in helping maintain a productive and fair environment for all users.
+
 #### Login nodes
 
 Jobs are launched from **user** nodes.
