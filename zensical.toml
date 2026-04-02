@@ -1,0 +1,554 @@
+[project]
+site_name = "ALCF User Guides"
+repo_name = "argonne-lcf/user-guides"
+repo_url = "https://github.com/argonne-lcf/user-guides"
+site_url = "https://docs.alcf.anl.gov/"
+edit_uri = "edit/main/docs/"
+
+extra_css = ["stylesheets/alcf-extra.css"]
+
+extra_javascript = [
+  "javascripts/alcf-extra.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.date.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.number.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.filesize.js",
+  "https://unpkg.com/tablesort@5.3.0/dist/tablesort.dotsep.js",
+  "javascripts/tablesort.js",
+]
+
+not_in_nav = """
+not_in_nav/
+index.md
+inbound-links.md
+aurora/bugs-table.md
+"""
+
+exclude_docs = """
+unused/
+old/
+todo.md
+TODO.md
+notes.md
+sophia/not_in_nav/
+"""
+
+draft_docs = """
+drafts/
+aurora/compiling-and-linking/llvm-compilers-aurora.md
+aurora/compiling-and-linking/gnu-compilers-aurora.md
+aurora/compiling-and-linking/cce-compilers-aurora.md
+aurora/applications-and-libraries/libraries/math-libraries.md
+aurora/applications-and-libraries/libraries/mkl.md
+aurora/applications-and-libraries/libraries/mpi.md
+aurora/performance-tools/performance-overview.md
+"""
+
+watch = ["includes/", "overrides/"]
+
+nav = [
+  {"Getting Started" = "https://www.alcf.anl.gov/support-center/get-started"},
+  {"Contribute to User Guides" = "support/docs-issues.md"},
+  {"User Support" = [
+    "support/index.md",
+    {"Submit a Ticket" = "support/ticket.md"},
+    {"Get Help & Connect" = [
+      "support/get-help/index.md",
+      {"Mailing Lists" = "support/get-help/mailing-lists.md"},
+      {"Request Software" = "support/get-help/software-requests.md"},
+      {"ALCF Users Slack" = "support/get-help/alcf-users-slack.md"},
+      {"Aurora Office Hours" = "support/get-help/office-hours.md"},
+      {"AskALCF Chatbot" = "support/get-help/askalcf.md"},
+    ]},
+  ]},
+  {"Machines" = [
+    "machines/index.md",
+    {"Aurora" = [
+      "aurora/index.md",
+      {"Node Performance Overview" = "aurora/node-performance-overview/node-performance-overview.md"},
+      {"Getting Started" = "aurora/getting-started-on-aurora.md"},
+      {"Known Issues" = "aurora/known-issues.md"},
+      {"System Updates" = "aurora/system-updates.md"},
+      {"Aurora Programming Environment" = "aurora/aurora-pe.md"},
+      {"Compiling and Linking" = [
+        "aurora/compiling-and-linking/index.md",
+        {"Programming Models" = "aurora/compiling-and-linking/aurora-programming-models.md"},
+        {"Example Program and Makefile" = "aurora/compiling-and-linking/aurora-example-program-makefile.md"},
+      ]},
+      {"Build Tools" = [
+        {"CMake" = "aurora/build-tools/cmake-aurora.md"},
+      ]},
+      {"Running Jobs" = "aurora/running-jobs-aurora.md"},
+      {"Data Management" = [
+        {"Copper" = "aurora/data-management/copper/copper.md"},
+        {"DAOS" = "aurora/data-management/daos/daos-overview.md"},
+        {"Lustre (Flare)" = "aurora/data-management/lustre/flare.md"},
+        {"Moving data to Aurora" = [
+          {"Data Mover" = "aurora/data-management/moving_data_to_aurora/datamover.md"},
+          {"Globus" = "aurora/data-management/moving_data_to_aurora/globus.md"},
+        ]},
+      ]},
+      {"Applications and Libraries" = [
+        {"Applications" = [
+          {"LAMMPS" = "aurora/applications-and-libraries/applications/lammps.md"},
+        ]},
+        {"Libraries" = [
+          {"Cabana" = "aurora/applications-and-libraries/libraries/cabana-aurora.md"},
+          {"oneDAL" = "aurora/applications-and-libraries/libraries/onedal.md"},
+          {"Spack PE" = "aurora/applications-and-libraries/libraries/spack-pe.md"},
+        ]},
+      ]},
+      {"Containers" = "aurora/containers/containers.md"},
+      {"Data Science" = [
+        {"Python" = "aurora/data-science/python.md"},
+        {"Jupyter" = "aurora/data-science/jupyter.md"},
+        {"Profiling" = "aurora/data-science/profiling_dl.md"},
+        {"Frameworks" = [
+          {"DeepSpeed" = "aurora/data-science/frameworks/deepspeed.md"},
+          {"Megatron-DeepSpeed" = "aurora/data-science/frameworks/megatron-deepspeed.md"},
+          {"PyTorch" = "aurora/data-science/frameworks/pytorch.md"},
+          {"TensorFlow" = "aurora/data-science/frameworks/tensorflow.md"},
+          {"Dask" = "aurora/data-science/frameworks/dask.md"},
+          {"oneCCL" = "aurora/data-science/frameworks/oneCCL.md"},
+          {"scikit-learn" = "aurora/data-science/frameworks/scikit-learn.md"},
+          {"oneDAL" = "aurora/applications-and-libraries/libraries/onedal.md"},
+          {"GPyTorch" = "aurora/data-science/frameworks/gpytorch.md"},
+          {"PyTorch Geometric (PyG)" = "aurora/data-science/frameworks/pyg.md"},
+        ]},
+        {"AI Inference" = [
+          {"LibTorch" = "aurora/data-science/inference/libtorch.md"},
+          {"OpenVINO" = "aurora/data-science/inference/openvino.md"},
+          {"vLLM" = "aurora/data-science/inference/vllm.md"},
+        ]},
+        {"Applications" = [
+          {"Milvus" = "aurora/data-science/applications/milvus.md"},
+        ]},
+      ]},
+      {"Programming Models" = [
+        {"Kokkos" = "aurora/programming-models/kokkos-aurora.md"},
+        {"Level Zero" = "aurora/programming-models/level-0.md"},
+        {"OpenCL" = "aurora/programming-models/opencl-aurora.md"},
+        {"OpenMP" = "aurora/programming-models/openmp-aurora.md"},
+        {"SYCL" = "aurora/programming-models/sycl-aurora.md"},
+        {"HIP" = "aurora/programming-models/hip-aurora.md"},
+        {"Julia" = "aurora/programming-models/julia.md"},
+      ]},
+      {"Debugging Tools" = [
+        "aurora/debugging/index.md",
+        {"gdb-oneapi" = "aurora/debugging/gdb-oneapi.md"},
+        {"DDT" = "aurora/debugging/ddt-aurora.md"},
+        {"gdb4hpc" = "aurora/debugging/gdb4hpc.md"},
+        {"Codee" = "aurora/debugging/codee.md"},
+        {"Intel_Sanitizer" = "aurora/debugging/Intel_sanitizer.md"},
+      ]},
+      {"Performance Tools" = [
+        "aurora/performance-tools/index.md",
+        {"iprof" = "aurora/performance-tools/iprof.md"},
+        {"unitrace" = "aurora/performance-tools/unitrace.md"},
+        {"xpu-smi" = "aurora/performance-tools/xpu-smi.md"},
+        {"APS" = "aurora/performance-tools/aps.md"},
+        {"Advisor" = "aurora/performance-tools/advisor.md"},
+        {"VTune" = "aurora/performance-tools/vtune.md"},
+      ]},
+      {"Services" = [
+        {"GitLab CI" = "aurora/services/gitlab-ci.md"},
+      ]},
+      {"Visualization" = [
+        "aurora/visualization/index.md",
+        {"ParaView (Launch from Client)" = "aurora/visualization/paraview.md"},
+        {"ParaView (Manual Launch)" = "aurora/visualization/paraview-manual-launch.md"},
+        {"VisIt" = "aurora/visualization/visit.md"},
+      ]},
+      {"Workflows" = [
+        {"ADIOS2" = "aurora/workflows/adios.md"},
+        {"Balsam" = "aurora/workflows/balsam.md"},
+        {"libEnsemble" = "aurora/workflows/libensemble.md"},
+        {"Parsl" = "aurora/workflows/parsl.md"},
+        {"SmartSim" = "aurora/workflows/smartsim.md"},
+      ]},
+    ]},
+    {"AI Testbed" = [
+      "ai-testbed/index.md",
+      {"Cerebras" = [
+        "ai-testbed/cerebras/index.md",
+        {"Getting Started" = "ai-testbed/cerebras/getting-started.md"},
+        {"Running a Model/Program" = "ai-testbed/cerebras/running-a-model-or-program.md"},
+        {"Customizing Environments" = "ai-testbed/cerebras/customizing-environment.md"},
+        {"Job Queuing and Submission" = "ai-testbed/cerebras/job-queuing-and-submission.md"},
+        {"Example Programs" = "ai-testbed/cerebras/example-programs.md"},
+        {"Tunneling and Forwarding Ports" = "ai-testbed/cerebras/tunneling-and-forwarding-ports.md"},
+        {"Miscellaneous" = "ai-testbed/cerebras/miscellaneous.md"},
+        {"CSL" = "ai-testbed/cerebras/csl.md"},
+        {"Grafana" = "ai-testbed/cerebras/accessing_cerebras_grafana_dashboard.md"},
+      ]},
+      {"Graphcore" = [
+        "ai-testbed/graphcore/index.md",
+        {"Getting Started" = "ai-testbed/graphcore/getting-started.md"},
+        {"Virtual Environment" = "ai-testbed/graphcore/virtual-environments.md"},
+        {"Running a Model/Program" = "ai-testbed/graphcore/running-a-model-or-program.md"},
+        {"Job Queuing and Submission" = "ai-testbed/graphcore/job-queuing-and-submission.md"},
+        {"Example Programs" = "ai-testbed/graphcore/example-programs.md"},
+        {"Miscellaneous" = "ai-testbed/graphcore/miscellaneous.md"},
+        {"Documentation" = "ai-testbed/graphcore/documentation.md"},
+      ]},
+      {"Groq" = [
+        "ai-testbed/groq/index.md",
+        {"Getting Started" = "ai-testbed/groq/getting-started.md"},
+        {"Running a Model/Program" = "ai-testbed/groq/running-a-model-or-program.md"},
+        {"Virtual Environments" = "ai-testbed/groq/virtual-environments.md"},
+        {"Job Queueing and Submission" = "ai-testbed/groq/job-queuing-and-submission.md"},
+        {"Profiling with GroqView" = "ai-testbed/groq/groqview.md"},
+        {"Examples" = "ai-testbed/groq/examples.md"},
+      ]},
+      {"SambaNova" = [
+        {"SN30" = [
+          "ai-testbed/sambanova/index.md",
+          {"Getting Started" = "ai-testbed/sambanova/getting-started.md"},
+          {"Virtual Environment" = "ai-testbed/sambanova/virtual-environment.md"},
+          {"Running a Model/Program" = "ai-testbed/sambanova/running-a-model-or-program.md"},
+          {"Job Queuing and Submission" = "ai-testbed/sambanova/job-queuing-and-submission.md"},
+          {"Example Programs" = "ai-testbed/sambanova/example-programs.md"},
+          {"Example Multi-Node Programs" = "ai-testbed/sambanova/example-multi-node-programs.md"},
+          {"ModelZoo Samples" = "ai-testbed/sambanova/example-modelzoo-programs.md"},
+          {"Tunneling and Forwarding Ports" = "ai-testbed/sambanova/tunneling-and-forwarding-ports.md"},
+          {"SambaTune for profiling and performance tuning" = "ai-testbed/sambanova/sambatune.md"},
+          {"Miscellaneous" = "ai-testbed/sambanova/miscellaneous.md"},
+          {"SambaNova Documentation" = "ai-testbed/sambanova/documentation.md"},
+        ]},
+        {"Metis Inference" = [
+          "ai-testbed/sn40l_inference/index.md",
+          {"Using an Inference Endpoint" = "ai-testbed/sn40l_inference/using_an_inference_endpoint.md"},
+        ]},
+      ]},
+      {"Data Management" = "ai-testbed/data-management/data-management-overview.md"},
+    ]},
+    {"Crux" = [
+      "crux/index.md",
+      {"Getting Started" = "crux/getting-started.md"},
+      {"Running Jobs" = "crux/queueing-and-running-jobs/running-jobs.md"},
+      {"Compiling and Linking" = "crux/compiling-and-linking/compiling-and-linking-overview.md"},
+      {"Containers" = "crux/containers/containers.md"},
+      {"Data Science" = [
+        {"Python" = "crux/data-science/python.md"},
+      ]},
+    ]},
+    {"Polaris" = [
+      "polaris/index.md",
+      {"Getting Started" = "polaris/getting-started.md"},
+      {"Known Issues" = "polaris/known-issues.md"},
+      {"System Updates" = "polaris/system-updates.md"},
+      {"Compiling and Linking" = [
+        "polaris/compiling-and-linking/index.md",
+        {"Programming Models" = "polaris/compiling-and-linking/polaris-programming-models.md"},
+        {"Example Program and Makefile" = "polaris/compiling-and-linking/polaris-example-program-makefile.md"},
+        {"CCE Compilers" = "polaris/compiling-and-linking/cce-compilers-polaris.md"},
+        {"GNU Compilers" = "polaris/compiling-and-linking/gnu-compilers-polaris.md"},
+        {"NVIDIA Compilers" = "polaris/compiling-and-linking/nvidia-compiler-polaris.md"},
+        {"LLVM Compilers" = "polaris/compiling-and-linking/llvm-compilers-polaris.md"},
+        {"oneAPI Toolkit" = "polaris/compiling-and-linking/oneapi-compiler.md"},
+      ]},
+      {"Build Tools" = [
+        {"CMake" = "polaris/build-tools/cmake-polaris.md"},
+      ]},
+      {"Running Jobs" = [
+        "polaris/running-jobs/index.md",
+        {"Using GPUs" = "polaris/running-jobs/using-gpus.md"},
+      ]},
+      {"Applications and Libraries" = [
+        {"Applications" = [
+          {"Amber" = "polaris/applications-and-libraries/applications/amber.md"},
+          {"GROMACS" = "polaris/applications-and-libraries/applications/gromacs.md"},
+          {"LAMMPS" = "polaris/applications-and-libraries/applications/lammps.md"},
+          {"NAMD" = "polaris/applications-and-libraries/applications/namd.md"},
+          {"NekRS" = "polaris/applications-and-libraries/applications/nekrs.md"},
+          {"OpenMM" = "polaris/applications-and-libraries/applications/openmm.md"},
+          {"QMCPACK" = "polaris/applications-and-libraries/applications/QMCPACK.md"},
+          {"Quantum ESPRESSO" = "polaris/applications-and-libraries/applications/QuantumESPRESSO.md"},
+          {"VASP" = "polaris/applications-and-libraries/applications/vasp.md"},
+        ]},
+        {"Libraries" = [
+          {"Math Libraries" = "polaris/applications-and-libraries/libraries/math-libraries.md"},
+          {"Cabana" = "polaris/applications-and-libraries/libraries/cabana-polaris.md"},
+          {"Spack PE" = "polaris/applications-and-libraries/libraries/spack-pe.md"},
+          {"NCCL" = "polaris/applications-and-libraries/libraries/nccl.md"},
+          {"XALT" = "polaris/applications-and-libraries/libraries/xalt.md"},
+        ]},
+      ]},
+      {"Containers" = "polaris/containers/containers.md"},
+      {"Data Science" = [
+        {"Python" = "polaris/data-science/python.md"},
+        {"Profiling" = "polaris/data-science/profiling_dl.md"},
+        {"Frameworks" = [
+          {"TensorFlow" = "polaris/data-science/frameworks/tensorflow.md"},
+          {"PyTorch" = "polaris/data-science/frameworks/pytorch.md"},
+          {"JAX" = "polaris/data-science/frameworks/jax.md"},
+          {"DeepSpeed" = "polaris/data-science/frameworks/deepspeed.md"},
+          {"LibTorch" = "polaris/data-science/frameworks/libtorch.md"},
+          {"GPyTorch" = "polaris/data-science/frameworks/gpytorch.md"},
+        ]},
+        {"Applications" = [
+          {"Megatron-DeepSpeed" = "polaris/data-science/applications/megatron-deepspeed.md"},
+          {"gpt-neox" = "polaris/data-science/applications/gpt-neox.md"},
+          {"Milvus" = "polaris/data-science/applications/milvus.md"},
+        ]},
+      ]},
+      {"Programming Models" = [
+        {"OpenMP" = "polaris/programming-models/openmp-polaris.md"},
+        {"SYCL" = "polaris/programming-models/sycl-polaris.md"},
+        {"Kokkos" = "polaris/programming-models/kokkos-polaris.md"},
+        {"Julia" = "polaris/programming-models/julia.md"},
+      ]},
+      {"Debugging Tools" = [
+        {"CUDA-GDB" = "polaris/debugging-tools/CUDA-GDB.md"},
+      ]},
+      {"Performance Tools" = [
+        {"NVIDIA-Nsight" = "polaris/performance-tools/NVIDIA-Nsight.md"},
+      ]},
+      {"Visualization" = [
+        "polaris/visualization/index.md",
+        {"ParaView (Launch from Client)" = "polaris/visualization/paraview.md"},
+        {"ParaView (Manual Launch)" = "polaris/visualization/paraview-manual-launch.md"},
+        {"VisIt" = "polaris/visualization/visit.md"},
+        {"FFmpeg" = "polaris/visualization/ffmpeg.md"},
+        {"ImageMagick" = "polaris/visualization/imagemagick.md"},
+        {"ParaView Tutorial" = "polaris/visualization/paraview-tutorial.md"},
+        {"VNC" = "polaris/visualization/vnc.md"},
+      ]},
+      {"Workflows" = [
+        {"Balsam" = "polaris/workflows/balsam.md"},
+        {"Dragon" = "polaris/workflows/dragon.md"},
+        {"Parsl" = "polaris/workflows/parsl.md"},
+        {"libEnsemble" = "polaris/workflows/libensemble.md"},
+        {"SmartSim" = "polaris/workflows/smartsim.md"},
+      ]},
+    ]},
+    {"Sophia" = [
+      "sophia/index.md",
+      {"Getting Started" = "sophia/getting-started.md"},
+      {"Running Jobs" = "sophia/queueing-and-running-jobs/running-jobs.md"},
+      {"Compiling and Linking" = "sophia/compiling-and-linking/compiling-and-linking-overview.md"},
+      {"Containers" = "sophia/containers/containers.md"},
+      {"Data Science" = [
+        {"Python" = "sophia/data-science/python.md"},
+        {"Fine-tuning with Autotrain" = "sophia/data-science/fine-tune-LLM-with-Autotrain.md"},
+        {"Dask" = "sophia/data-science/dask.md"},
+      ]},
+      {"Visualization" = [
+        "sophia/visualization/index.md",
+        {"ParaView (Launch from Client)" = "sophia/visualization/paraview.md"},
+      ]},
+    ]},
+  ]},
+  {"Running Jobs with PBS" = [
+    "running-jobs/index.md",
+    {"Example Job Scripts" = "running-jobs/example-job-scripts.md"},
+    {"Common PBS Issues" = "running-jobs/known-issues.md"},
+    {"Machine Reservations" = "running-jobs/machine-reservations.md"},
+  ]},
+  {"Data Management" = [
+    "data-management/index.md",
+    {"File System & Storage" = [
+      "data-management/filesystem-and-storage/index.md",
+      {"HPSS" = "data-management/filesystem-and-storage/hpss.md"},
+      {"Disk Quota" = "data-management/filesystem-and-storage/disk-quota.md"},
+    ]},
+    {"Transfer & Sharing" = [
+      {"SFTP and SCP" = "data-management/data-transfer/sftp-scp.md"},
+      {"Using Globus" = "data-management/data-transfer/using-globus.md"},
+      {"ALCF Community Data Co-Op" = "data-management/acdc/acdc.md"},
+      {"Sharing on Eagle Using Globus" = "data-management/acdc/eagle-data-sharing.md"},
+    ]},
+  ]},
+  {"Services" = [
+    "services/index.md",
+    {"Inference Endpoints" = "services/inference-endpoints.md"},
+    {"JupyterHub" = "services/jupyter-hub.md"},
+    {"Continuous Integration" = [
+      {"General" = "services/continuous-integration.md"},
+      {"GitLab CI" = "services/gitlab-ci.md"},
+    ]},
+  ]},
+  {"Account & Project Management" = [
+    "account-project-management/index.md",
+    {"MyALCF" = "account-project-management/MyALCF.md"},
+    {"Accounts and Access" = [
+      "account-project-management/accounts-and-access/index.md",
+      {"Obtaining a Token" = "account-project-management/accounts-and-access/obtaining-a-token.md"},
+      {"Logging in with a Token" = "account-project-management/accounts-and-access/logging-in-with-tokens.md"},
+      {"Troubleshooting Tokens" = "account-project-management/accounts-and-access/troubleshooting-tokens.md"},
+      {"Accounts and Access FAQs" = "account-project-management/accounts-and-access/accounts-and-access-faqs.md"},
+    ]},
+    {"Project Management" = [
+      {"Starting Your ALCF Award" = "account-project-management/project-management/starting-alcf-award.md"},
+      {"Managing Your Team Members" = "account-project-management/project-management/team-management.md"},
+      {"Reporting" = "account-project-management/project-management/project-reports.md"},
+    ]},
+    {"Allocations" = [
+      "account-project-management/allocation-management/index.md",
+      {"Managing Your Allocations" = "account-project-management/allocation-management/allocation-management.md"},
+      {"sbank Allocation Accounting System" = "account-project-management/allocation-management/sbank-allocation-accounting-system.md"},
+    ]},
+  ]},
+  {"Facility Policies" = [
+    "policies/index.md",
+    {"ALCF Acknowledgement Policy" = "policies/alcf-acknowledgement-policy.md"},
+    {"Account Policies" = [
+      "policies/accounts/index.md",
+      {"Account Sponsorship & Retention Policy" = "policies/accounts/account-sponsorship-retention-policy.md"},
+      {"User Authentication Policy" = "policies/accounts/user-authentication-policy.md"},
+    ]},
+    {"Scheduling Policies" = [
+      "policies/queue-scheduling/index.md",
+      {"Refund Policy" = "policies/queue-scheduling/refund-policy.md"},
+      {"Pullback Policy" = "policies/queue-scheduling/pullback-policy.md"},
+    ]},
+    {"Data and Software Policies" = [
+      {"Data Policy" = "policies/data-and-software-policies/data-policy.md"},
+      {"Software Policy" = "policies/data-and-software-policies/software-policy.md"},
+    ]},
+  ]},
+  {"Acronyms" = "acronyms.md"},
+]
+
+[project.theme]
+variant = "classic"  # modern does not work with our customizations
+custom_dir = "overrides"
+language = "en"
+logo = "images/logo.svg"
+favicon = "images/favicon.svg"
+features = [
+  "content.action.edit",
+  "content.action.view",
+  "content.code.copy",
+  "content.code.annotate",
+  "content.tooltips",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.progress",
+  "navigation.path",
+  "navigation.top",
+  "navigation.tracking",
+  "navigation.sections",
+  "toc.follow",
+  "search.highlight",
+  "search.suggest",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+
+[project.theme.palette.toggle]
+icon = "material/brightness-auto"
+name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "alcf"
+primary = "custom"
+accent = "custom"
+
+[project.theme.palette.toggle]
+icon = "material/weather-sunny"
+name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "custom"
+
+[project.theme.palette.toggle]
+icon = "material/weather-night"
+name = "Switch to system preference"
+
+[project.theme.font]
+text = "proxima-nova"
+
+[project.extra]
+homepage = "https://docs.alcf.anl.gov"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github-alt"
+link = "https://github.com/argonne-lcf/user-guides"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/youtube"
+link = "https://www.youtube.com/c/argonneleadershipcomputingfacility"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/x-twitter"
+link = "https://x.com/argonne_lcf"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/facebook"
+link = "https://www.facebook.com/argonne.lcf/"
+
+[project.extra.analytics]
+provider = "google"
+property = "G-4M48E2L33R"
+
+# Markdown extensions
+
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.codehilite]
+[project.markdown_extensions.tables]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.abbr]
+[project.markdown_extensions."pymdownx.critic"]
+[project.markdown_extensions."pymdownx.inlinehilite"]
+[project.markdown_extensions."pymdownx.keys"]
+[project.markdown_extensions."pymdownx.caret"]
+[project.markdown_extensions."pymdownx.mark"]
+[project.markdown_extensions."pymdownx.tilde"]
+
+[project.markdown_extensions."pymdownx.snippets"]
+base_path = ["."]
+dedent_subsections = true
+check_paths = true
+url_download = true
+auto_append = ["includes/abbreviations.md"]
+
+[project.markdown_extensions."pymdownx.superfences"]
+[project.markdown_extensions."pymdownx.details"]
+
+[project.markdown_extensions."pymdownx.highlight"]
+use_pygments = true
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+
+[project.markdown_extensions."pymdownx.tabbed"]
+alternate_style = true
+combine_header_slug = true
+
+[project.markdown_extensions."pymdownx.tasklist"]
+custom_checkbox = true
+
+[project.markdown_extensions."pymdownx.blocks.definition"]
+[project.markdown_extensions."pymdownx.blocks.caption"]
+
+[project.markdown_extensions.toc]
+permalink = true
+
+# Plugins
+
+[project.plugins.search]
+lang = "en"
+separator = '[\\s\\u200b\\-_,:!=\\[\\]()"`/]+|\\.(?!\\d)|&[lg]t;|(?!\\b)(?=[A-Z][a-z])'
+
+[project.plugins.minify]
+minify_html = true
+
+[project.plugins.redirects]
+
+[project.plugins.redirects.redirect_maps]
+"support/technical-support.md" = "support/ticket.md"
+
+[project.validation]
+omitted_files = "warn"
+absolute_links = "warn"
+unrecognized_links = "warn"
+anchors = "warn"
+not_found = "warn"

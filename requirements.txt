@@ -1,6 +1,5 @@
-mkdocs-material>=9.6.0
-mkdocs>=1.6.1
-pymdown-extensions>=10.12
+zensical
 mkdocs-video
+pymdown-extensions>=10.12
 mkdocs-minify-plugin
 mkdocs-redirects
