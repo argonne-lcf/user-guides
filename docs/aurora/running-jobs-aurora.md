@@ -267,6 +267,10 @@ echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NR
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity_aurora.out
 ```
 
+!!! tip
+
+      In some cases of network or node fails, mpiexec will return non-zero. If there are multiple mpiexec commands in the submission script, it is highly recommended to check that each mpiexec either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent mpiexec commands. 
+
 ## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 
 GPU-enabled applications will similarly run on the compute nodes using the above templated PBS job-script.
