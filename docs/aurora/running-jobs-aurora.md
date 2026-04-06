@@ -269,7 +269,7 @@ mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env O
 
 !!! tip
 
-      In some cases of network or node fails, mpiexec will return non-zero. If there are multiple mpiexec commands in the submission script, it is highly recommended to check that each mpiexec either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent mpiexec commands. 
+      In some cases of network or node failures, `mpiexec` will return a non-zero value. If there are multiple `mpiexec` commands in the submission script, it is highly recommended to check that each `mpiexec` either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent `mpiexec` commands. 
 
 ## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
 
