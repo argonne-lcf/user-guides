@@ -441,6 +441,7 @@ nav:
     - Continuous Integration:
       - General: services/continuous-integration.md
       - GitLab CI: services/gitlab-ci.md
+    - Globus Compute: services/globus-compute.md
 
   - Account & Project Management:
     - account-project-management/index.md
