@@ -16,11 +16,11 @@ module load tensorflow
 module load mpich/opt/develop-git.6037a7a
 ```
 
-Then you can `import` TensorFlow as usual. The following output is from the
-`tensorflow/2025.2.0` module:
+Then, you can `import` TensorFlow as usual; however, it may also be necessary to load the Intel Extension for TensorFlow. The following output is from the `tensorflow/2025.2.0` module:
 
 ```python linenums="1"
 import tensorflow as tf
+import intel_extension_for_tensorflow as itex
 tf.__version__
 ```
 ```text
