@@ -362,10 +362,18 @@ Models are organized by cluster and marked with the following capabilities:
     - argonne/AuroraGPT-DPO-UFB-0225^B^
     - argonne/AuroraGPT-KTO-UFB-0325^B^
 
+    **Google Family**
+
+    - google/gemma-3-27b-it^BTH^
+    - google/gemma-4-26B-A4B-it^RTH^
+    - google/gemma-4-31B-it^RTH^
+    - google/gemma-4-E4B-it^RTH^
+    
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it^BTH^
+    - arcee-ai/Trinity-Large-Thinking-W4A16^RT^
+    - nvidia/nemotron-3-super-120b^RT^
     - mgoin/Nemotron-4-340B-Instruct-hf
     - AstroMLab/AstroSage-70B-20251009
 
