@@ -181,7 +181,10 @@ export OMP_PROC_BIND=close
 export OMP_STACKSIZE=1G
 
 
-MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support 
+# keep both for the test
+export MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support 
+export MPICH_GPU_SUPPORT_ENABLED=1
+
 export I_MPI_OFFLOAD=1 #enable GPU to GPU comm
 
 export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
