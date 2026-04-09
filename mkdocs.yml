@@ -294,7 +294,7 @@ nav:
         - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
         - Examples: ai-testbed/groq/examples.md
-      - SambaNova (SN40L Metis Inference):
+      - SambaNova Metis (SN40L):
         - ai-testbed/sn40l_inference/index.md
         - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
