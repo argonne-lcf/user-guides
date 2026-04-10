@@ -8,9 +8,7 @@ The sections below describe which tools are best suited for different types of d
 
 Example install script for MPIFileUtils:
 
-```bash title="install-mpifileutils.sh" linenums="1"
-"docs/aurora/data-management/moving_data_to_aurora/install-mpifileutils.sh"
-```
+[install-mpifileutils.sh](files/install-mpifileutils.sh)
 
 ## Common data mover tools
 
@@ -133,7 +131,7 @@ Get UUIDs from:
 
 ```bash
 daos pool query <daos pool name>
-daos container query <daos cont name>
+daos container query <daos pool name> <daos cont name>
 ```
 
 Then copy:
