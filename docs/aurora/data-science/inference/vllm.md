@@ -118,7 +118,7 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 ??? example "Setup script"
 
 	```bash linenums="1" title="setup_ray_cluster.sh"
-    --8<-- "./setup_ray_cluster.sh"
+    --8<-- "./aurora/data-science/inference/setup_ray_cluster.sh"
 	```
 
 From a login node, initiate the Ray cluster and execute vLLM serve:
