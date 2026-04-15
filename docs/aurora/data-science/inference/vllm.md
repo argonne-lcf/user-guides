@@ -113,12 +113,12 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 ### Using Multiple Nodes
 
-The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. First, use [`setup_ray_cluster.sh`](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/vLLM/setup_ray_cluster.sh) script to setup a Ray cluster across nodes:
+The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. First, use `setup_ray_cluster.sh` script to setup a Ray cluster across nodes:
 
 ??? example "Setup script"
 
 	```bash linenums="1" title="setup_ray_cluster.sh"
-    --8<-- "./GettingStarted/DataScience/vLLM/setup_ray_cluster.sh"
+    --8<-- "./docs/aurora/data-science/inference/setup_ray_cluster.sh"
 	```
 
 From a login node, initiate the Ray cluster and execute vLLM serve:
