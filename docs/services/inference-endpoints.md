@@ -406,7 +406,7 @@ Models are organized by cluster and marked with the following capabilities:
         The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
         package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF.
 
-        With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this all you need to begin using SAM 3:
+        With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this is all you need to begin using SAM 3:
 
         ```bash
         # SEM image of pollen grains:
