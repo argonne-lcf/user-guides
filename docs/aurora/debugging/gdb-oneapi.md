@@ -138,3 +138,40 @@ gdb-oneapi -batch -ex "handle all stop print" -ex run -ex "thread apply all bt" 
 ```
 
 This example prints a backtrace where GPU segmentation violations or other types of errors occur, and pipes the output into file names including the MPI rank number.
+
+### Adding symbol files to get debugging info for Level Zero Runtime calls
+
+By default, the backtraces with gdb-oneapi on Aurora do not show calls into the Level Zero runtime. If you would like to enable this (especially in the case you are writing code in Level Zero) you can enable it with `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug` in gdb. This is likely a rare case, but it is available. An example is:
+
+```console
+> gdb-oneapi ./a.out
+> (gdb) set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug
+> (gdb) r
+Ctrl-C
+> (gdb) bt
+#0  NEO::WaitUtils::waitFunction (timeElapsedSinceWaitStarted=1678954, expectedValue=<optimized out>,
+    pollAddress=<optimized out>)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/utilities/wait_util.h:80
+#1  NEO::CommandStreamReceiver::baseWaitFunction (this=0x2239cd0, pollAddress=0xff81ad810ec000,
+    params=..., taskCountToWait=1)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/command_stream/command_stream_receiver.cpp:508
+#2  0x0000155552f56669 in NEO::MemoryManager::waitForEnginesCompletion (this=<optimized out>,
+    graphicsAllocation=...)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/memory_manager/memory_manager.cpp:1030
+#3  0x0000155552f54b50 in NEO::MemoryManager::freeGraphicsMemory (this=0x1f88500,
+    gfxAllocation=0x2e7e0a0, isImportedAllocation=<optimized out>)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/memory_manager/memory_manager.cpp:354
+#4  0x0000155552b9f35a in NEO::MemoryManager::freeGraphicsMemory (gfxAllocation=<optimized out>,
+    this=0x1f88500)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/memory_manager/memory_manager.cpp:330
+#5  L0::EventPool::~EventPool (this=<optimized out>, this=<optimized out>)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/event/event.cpp:172
+#6  0x0000155552b5e53a in L0::EventPool::~EventPool (this=<optimized out>, this=<optimized out>)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/event/event.cpp:165
+#7  L0::EventPool::destroy (this=0x2e7d6a0)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/event/event.cpp:183
+#8  L0::zeEventPoolDestroy (hEventPool=0x2e7d6a8)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/api/core/ze_event_api_entrypoints.h:25
+#9  0x0000000000402396 in main () at r.cpp:132
+```
+Without the `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug` The backtrace will not resolve the Level Zero API calls.
