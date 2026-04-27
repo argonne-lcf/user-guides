@@ -66,6 +66,11 @@ This will generate and store access and refresh tokens in your home directory. T
 python inference_auth_token.py get_time_until_token_expiration --units seconds
 ```
 
+To print your token to the command line, this command can be used:
+```bash
+python inference_auth_token.py get_access_token
+```
+
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
     - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
