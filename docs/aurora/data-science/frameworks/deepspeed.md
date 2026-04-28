@@ -56,16 +56,16 @@ We describe below the steps needed to get started with DeepSpeed on Aurora.
     pip install deepspeed
     ```
 
-4. Clone [microsoft/DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) and navigate into the directory:
-
-    ```bash
-    git clone https://github.com/microsoft/DeepSpeedExamples.git
-    cd DeepSpeedExamples/training/cifar
-    ```
-
 ## Running DeepSpeed on Aurora
 
 We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
+
+Clone [microsoft/DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) and navigate into the directory:
+
+```bash
+git clone https://github.com/microsoft/DeepSpeedExamples.git
+cd DeepSpeedExamples/training/cifar
+```
 
 !!! example "Launching DeepSpeed"
     In both examples, the `train_batch_size` variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
