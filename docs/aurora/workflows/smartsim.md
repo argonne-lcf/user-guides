@@ -20,46 +20,44 @@ For more resources on SmartSim, follow the links below:
 
 ## Installation
 
-Create a Python virtual environment based on the ML frameworks module (note that git-lfs is also needed):
+Create a Python virtual environment based on the ML frameworks module:
 
 ```bash
 module load frameworks
-module load git-lfs
 python -m venv --clear /path/to/_ssim_env --system-site-packages
 source /path/to/_ssim_env/bin/activate
 ```
 
 It is recommended that the venv is installed in a user's project space on the Flare parallel file system.
 
-Install SmartSim:
+Install SmartRedis from source:
 
 ```bash
-git clone https://github.com/rickybalin/SmartSim.git
-cd SmartSim
-git checkout rollback_aurora
-pip install -e .
-cd ..
-```
-
-Install the RedisAI PyTorch backend for the CPU:
-
-```bash
-export TORCH_CMAKE_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
-export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
-export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
-smart build -v --device cpu --torch_dir $TORCH_CMAKE_PATH --no_tf
-smart validate --device cpu
-```
-
-Install the SmartRedis library:
-
-```bash
-git clone https://github.com/rickybalin/SmartRedis.git
+git clone https://github.com/CrayLabs/SmartRedis.git
 cd SmartRedis
 pip install -e .
 make lib
 cd ..
 ```
+
+Install SmartSim and the CPU backend for RedisAI from source (Intel GPU are not supported):
+
+```bash
+git clone https://github.com/CrayLabs/SmartSim.git
+cd SmartSim
+pip install -e .
+# Can disregard package compatibility errors
+
+export TORCH_CMAKE_PATH=$( python -c 'import torch;print(torch.utils.cmake_prefix_path)' )
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+curl -O https://gist.githubusercontent.com/rickybalin/fcf1d15a26dbbc120f42943041ada827/raw/e22485d53250b8a29ead537533bca7c8f229c362/aurora_config.patch
+git apply aurora_config.patch
+smart build -v --device cpu --skip-tensorflow --skip-onnx
+smart validate
+cd ..
+```
+
 
 !!! info "Running with SmartSim"
     When running a workload with SmartSim, please include the following in your run or submit scripts:
@@ -71,4 +69,5 @@ cd ..
 !!! warning "Known Issues"
     * Pip installing SmartSim returns some warnings which can be safely ignored.
     * The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
-    * The RedisAI backend requires an older version of TensorFlow relative to what is loaded with the frameworks module on Aurora. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
+    * The instructions focus on PyTorch workloads, thus `--skip-tensorflow --skip-onnx` are used. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
+    * The patch is needed to make sure the RedisAI installation uses the PyTorch installation provided in the frameworks module instead of installing a new one.
