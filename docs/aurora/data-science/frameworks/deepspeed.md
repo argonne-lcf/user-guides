@@ -5,13 +5,13 @@ The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpee
 ```bash
 module load frameworks
 ```
-The following output is from the `frameworks/2025.2.0` module:
+The following output is from the `frameworks/2025.3.1` module:
 
 ```python
 import deepspeed
 
 deepspeed.__version__
-'0.17.5'
+'0.18.5'
 ```
 
 <!---
