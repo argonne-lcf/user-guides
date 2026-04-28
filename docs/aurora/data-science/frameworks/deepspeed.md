@@ -1,6 +1,8 @@
 # DeepSpeed
 
-The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed. If a user needs an updated version, it should be installed outside the `frameworks` module, e.g. in a virtual environment. Further instructions for working with the base environment can be found [here](../python.md).
+## Environment Setup
+
+The base `frameworks` environment on Aurora now comes with Microsoft's [DeepSpeed](https://github.com/microsoft/DeepSpeed) pre-installed, so **you do not need to install it yourself.**
 
 ```bash
 module load frameworks
@@ -14,6 +16,8 @@ deepspeed.__version__
 '0.17.5'
 ```
 
+However, if a user needs an updated version, it should be installed outside the `frameworks` module, e.g. in a virtual environment. Further instructions for working with the base environment can be found [here](../python.md).
+
 <!---
 !Below copied from Polaris guide but needs changes for Aurora!
 A batch submission script for the following example is available
@@ -21,10 +25,6 @@ A batch submission script for the following example is available
 -->
 
 We describe below the steps needed to get started with DeepSpeed on Aurora.
-
-We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
-
-## Running DeepSpeed on Aurora
 
 !!! note
 
@@ -62,6 +62,10 @@ We focus on the `cifar` example provided in the [DeepSpeedExamples](https://gith
     git clone https://github.com/microsoft/DeepSpeedExamples.git
     cd DeepSpeedExamples/training/cifar
     ```
+
+## Running DeepSpeed on Aurora
+
+We focus on the `cifar` example provided in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples) repository, though this approach should be generally applicable for running any model with DeepSpeed support.
 
 !!! example "Launching DeepSpeed"
     In both examples, the `train_batch_size` variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
