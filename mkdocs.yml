@@ -158,7 +158,8 @@ nav:
   - User Support:
     - support/index.md
     - Submit a Ticket: support/ticket.md
-    - AI Guidance: support/ai-guidance.md
+    - AI and Editor Guidance: support/ai-guidance.md
+        - VS Code: support/vscode.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
