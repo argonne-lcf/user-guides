@@ -367,7 +367,7 @@ Models are organized by cluster and marked with the following capabilities:
     **Google Family**
 
     - google/gemma-3-27b-it^BTH^
-    - google/gemma-4-26B-A4B-it^RTH^
+    - google/gemma-4-26B-A4B-it^RT^
     - google/gemma-4-31B-it^RTH^
     - google/gemma-4-E4B-it^RTH^
     
