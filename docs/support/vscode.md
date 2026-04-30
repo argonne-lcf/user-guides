@@ -4,7 +4,7 @@
 
 This document explains how to install Visual Studio Code (VS Code) on your local machine, add the Remote - SSH extension, configure SSH for Windows, macOS, and Linux, and compile a simple `helloworld.cpp` program on a **remote ALCF server**. The compilation and execution happen on the remote Linux system; your local machine is only used to run [VS Code and initiate the SSH connection](https://code.visualstudio.com/docs/remote/ssh).
 
-## Installing Visual Studio Code (local machine)
+## Installing Visual Studio Code (local context)
 
 [VS Code](https://code.visualstudio.com) is a free, cross-platform code editor available for Windows, macOS, and Linux.
 
@@ -53,53 +53,12 @@ To use the Remote - SSH extension, your **local** machine needs an OpenSSH-compa
 
 Most Linux and macOS systems already have the `ssh` client installed; on Windows 10+ you can enable the “OpenSSH Client” via **Settings → Optional Features**.
 
-## Configuring SSH (local side)
+## Configuring SSH (local context)
 
-VS Code Remote - SSH can work directly with an SSH command (`user@host`), but for repeatable connections it is best to configure an SSH config file.
+The VS Code Remote - SSH extension can work without configuration directly with an SSH command, but for repeatable connections it is best to configure an SSH config file. The default location of this file depends on your local OS:
 
-### SSH config file locations
-
-- **Linux/macOS**: `~/.ssh/config` (note that this file should have permssions for reading `chmod 644 ~/.ssh/config`)
+- **Linux/macOS**: `~/.ssh/config` (note that this file should have permissions for reading `chmod 644 ~/.ssh/config`)
 - **Windows (OpenSSH client)**: `C:\Users\<username>\.ssh\config`
-
-VS Code can help you edit or create this config file when you use **Remote-SSH: Add New SSH Host...**.
-
-### Example SSH config entry
-
-Example entry for a `Polaris` and `Aurora` :
-
-```sshconfig
-Host *
-    ControlMaster auto
-    ControlPath ~/.ssh/master-%r@%h:%p
-    ControlPersist 10m
-    ForwardX11 yes
-    LogLevel QUIET
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
-    ConnectTimeout 0
-
-Host polaris
-    HostName polaris.alcf.anl.gov
-    User your_username
-    Port 22
-    ForwardAgent yes
-
-Host aurora
-    HostName aurora.alcf.anl.gov
-    User your_username
-    ForwardAgent yes
-
-```
-
-Explanation:
-
-- `Host` is the short name you will use in VS Code (for example, `aurora`).
-- `HostName` is the full DNS name or IP address of the remote Linux server.
-- `User` is your account name on the remote server.
-- `Port` is the SSH port (22 is standard)
-
-## Adding a new SSH host from VS Code
 
 VS Code can guide you through creating or updating the SSH configuration file. For example, to add an entry for Aurora:
 
@@ -112,6 +71,38 @@ VS Code can guide you through creating or updating the SSH configuration file. F
 5. VS Code writes the appropriate entry to the chosen config file.
 
 You can later edit this file manually if you need to change options.
+
+### Example SSH config entry
+
+Here is a minimalist example entry for both `Polaris` and `Aurora`:
+
+```bash
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p
+    ControlPersist 10m
+    ForwardX11 yes
+    LogLevel QUIET
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    ConnectTimeout 0
+
+Host polaris # (1)!
+    HostName polaris.alcf.anl.gov # (2)!
+    User your_username # (3)!
+    Port 22 # (4)!
+    ForwardAgent yes
+
+Host aurora
+    HostName aurora.alcf.anl.gov
+    User your_username
+    ForwardAgent yes
+```
+
+1. `Host` is the short name you will use in VS Code (for example, `aurora`).
+2. `HostName` is the full DNS name or IP address of the remote Linux server.
+3. `User` is your account name on the remote server.
+4. `Port` is the SSH port (22 is standard)
 
 ## Connecting to the remote Linux server
 
@@ -144,15 +135,14 @@ To work efficiently with C and C++ code on the remote Linux server, install Micr
 3. Search for `C/C++` (publisher: Microsoft).
 4. Install the **C/C++** extension; VS Code will install it where your code and compiler live (on the remote host).
 
-## Configuring compilers for VS Code (remote Linux)
+## Configuring compilers for VS Code (remote context)
 
 The VS Code installation does not include compilers; it calls the compilers that are available in the remote Linux environment, in this example. ALCF systems use Lmod to manage compilers and libraries. On `Polaris` or `Aurora`, you will typically use **GCC** , **Clang**, and **oneAPI**. See compiler documentation for [Polaris](https://docs.alcf.anl.gov/polaris/compiling-and-linking/) and [Aurora](https://docs.alcf.anl.gov/aurora/compiling-and-linking/) for more details.
 
-### Steps (remote side)
+To configure the compilers on the remote host:
 
 1. **Connect** to the remote Linux host using Remote - SSH in VS Code.
 2. **Load the desired compiler module** in a terminal inside VS Code, for example:
-
    ```bash
    module load PrgEnv-gnu
    # or:
@@ -160,7 +150,6 @@ The VS Code installation does not include compilers; it calls the compilers that
    # or:
    module oneapi # on Aurora
    ```
-
 3. **Open your C++ project folder** on the remote host in VS Code.
 4. Use **Terminal > Run Build Task...** or `Ctrl+Shift+B`. The C/C++ extension can:
    - Detect `CC` or `mpicxx` in your environment.
@@ -168,7 +157,7 @@ The VS Code installation does not include compilers; it calls the compilers that
 
 A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both module-provided GCC and a system GCC):
 
-```json
+```json linenums="1"
 {
   "version": "2.0.0",
   "tasks": [
@@ -199,13 +188,8 @@ A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both
 
 To use **oneAPI** instead, set `"command": "mpicxx"` and adjust any flags as needed; the module ensures the correct `mpicxx` is on your `PATH`.
 
-## Example: Creating and compiling `helloworld.cpp` (remote Linux)
-
-The following example assumes:
-
-- Your **local** machine is Windows, macOS, or Linux.
-- You have connected to a **remote Linux** server with Remote - SSH.
-- The remote system provides compilers via modules (for example, `gcc` or `clang` modules).
+## Example: Creating and compiling `helloworld.cpp`
+The following example assumes that you have already connected to a remote ALCF machine with VS Code.
 
 ### 1. Open a project folder on the remote host
 
@@ -254,7 +238,7 @@ Environment Modules ensure these commands point to the compiler version selected
 4. VS Code will create a `.vscode/tasks.json` see example above.
 ags.
 
-### 5. Build the program (on remote Linux)
+### 5. Build the program
 
 1. Make sure `helloworld.cpp` is the active editor tab.
 2. Run the default build task:
@@ -263,7 +247,7 @@ ags.
 3. VS Code will invoke `g++` or `clang++` (provided by the loaded module) and produce an executable named `helloworld` in the same folder.
 4. Build output and any compiler errors appear in the integrated terminal.
 
-### 6. Run the program (on remote Linux)
+### 6. Run the program
 
 From the same terminal (still on the remote Linux host):
 
