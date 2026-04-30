@@ -152,54 +152,9 @@ To work efficiently with C and C++ code on the remote Linux server, install Micr
 3. Search for `C/C++` (publisher: Microsoft).
 4. Install the **C/C++** extension; VS Code will install it where your code and compiler live (on the remote host).
 
-## Loading compiler modules on the remote Linux server
-
-Most HPC and research Linux systems use **Environment Modules** or **Lmod** to manage compilers and libraries. These provide commands like `module load gcc` or `module load clang` that modify your environment so the correct compiler is found first on your `PATH`.
-
-> Note: Some sites use `module add` as an alias for `module load`. In this guide, `module load` is shown, but `module add` may behave the same on your system.
-
-### Check available compiler modules
-
-In the integrated terminal of the remote VS Code session (or any shell on the remote server):
-
-```bash
-module avail
-```
-
-This lists available modules, such as different versions of `g++`, `nvc++`, and `clang`.
-
-You can also list currently loaded modules with:
-
-```bash
-module list
-```
-
-### Load a C++ compiler module
-
-To load GCC (g++):
-
-```bash
-module load PrgEnv-gnu
-```
-
-To load Clang:
-
-```bash
-module load PrgEnv-nvhpc
-
-```
-
-After loading, verify which compiler is active:
-
-```bash
-which cc
-CC -show
-CC --version
-```
-
 ## Configuring compilers for VS Code (remote Linux)
 
-VS Code does not include compilers; it calls the compilers that are available in the remote Linux environment. On `Polaris` or `Aurora`, you will typically use **GCC** , **Clang**, and **OneApi**. See compiler documentation for [Polaris](https://docs.alcf.anl.gov/polaris/compiling-and-linking/) and [Aurora](https://docs.alcf.anl.gov/aurora/compiling-and-linking/)
+The VS Code installation does not include compilers; it calls the compilers that are available in the remote Linux environment. ALCF systems use Lmod to manage compilers and libraries. On `Polaris` or `Aurora`, you will typically use **GCC** , **Clang**, and **oneAPI**. See compiler documentation for [Polaris](https://docs.alcf.anl.gov/polaris/compiling-and-linking/) and [Aurora](https://docs.alcf.anl.gov/aurora/compiling-and-linking/) for more details.
 
 ### Steps (remote side)
 
@@ -250,7 +205,7 @@ A typical GCC‑based task in `.vscode/tasks.json` looks like this (works for bo
 }
 ```
 
-To use **OneApi** instead, set `"command": "mpicxx"` and adjust any flags as needed; the module ensures the correct `mpicxx` is on your `PATH`.
+To use **oneAPI** instead, set `"command": "mpicxx"` and adjust any flags as needed; the module ensures the correct `mpicxx` is on your `PATH`.
 
 ## Example: Creating and compiling `helloworld.cpp` (remote Linux)
 
