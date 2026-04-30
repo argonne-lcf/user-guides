@@ -1,8 +1,5 @@
 # ALCF Inference Endpoints
 
-!!! warning "Important Notices / Known Issues"
-    - **Model list may be empty after login:** In some cases, available models are not shown after signing in. If the model dropdown is empty, please log out and log back in. Refresh the page if needed.
-
 Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify) to receive updates and maintenance notifications.
 
 ## Quick Start
@@ -64,6 +61,11 @@ This will generate and store access and refresh tokens in your home directory. T
 
 ```bash
 python inference_auth_token.py get_time_until_token_expiration --units seconds
+```
+
+To print your token to the command line, this command can be used:
+```bash
+python inference_auth_token.py get_access_token
 ```
 
 !!! warning "Token Validity"
@@ -365,7 +367,7 @@ Models are organized by cluster and marked with the following capabilities:
     **Google Family**
 
     - google/gemma-3-27b-it^BTH^
-    - google/gemma-4-26B-A4B-it^RTH^
+    - google/gemma-4-26B-A4B-it^RT^
     - google/gemma-4-31B-it^RTH^
     - google/gemma-4-E4B-it^RTH^
     

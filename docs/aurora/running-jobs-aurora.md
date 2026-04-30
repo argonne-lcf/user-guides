@@ -28,7 +28,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 !!! warning
 
-    You cannot submit to these queues directly; you can only submit to the routing queue `prod` or `prod-large`.
+    You cannot submit to these queues directly; you can only submit to the routing queue `prod`.
 
 !!! note
 
