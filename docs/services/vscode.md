@@ -1,4 +1,4 @@
-# Using Visual Studio Code with Remote SSH and C++ (Linux Remote)
+# Using Visual Studio Code with Remote SSH
 
 ## Overview
 
@@ -6,7 +6,7 @@ This document explains how to install Visual Studio Code (VS Code) on your local
 
 ## Installing Visual Studio Code (local machine)
 
-[VS Code](https://code.visualstudio.com) is a free, cross‑platform code editor available for Windows, macOS, and Linux.
+[VS Code](https://code.visualstudio.com) is a free, cross-platform code editor available for Windows, macOS, and Linux.
 
 ### Download
 
@@ -42,22 +42,14 @@ After installation, you can start VS Code from your applications menu or from a 
 
 The Remote - SSH extension lets you use any remote machine with an SSH server as your development environment from inside VS Code.
 
-### Install the extension
-
 1. Open VS Code on your local machine.
 2. Click the **Extensions** view icon on the Activity Bar (or press `Ctrl+Shift+X`).
 3. In the search box, type `remote ssh`.
 4. Install **Remote - SSH** (publisher: Microsoft).
 
-After installation, a green remote status indicator appears in the bottom‑left corner of the VS Code window showing whether VS Code is running locally or connected to a remote host.
+After installation, a green remote status indicator appears in the bottom-left corner of the VS Code window showing whether VS Code is running locally or connected to a remote host.
 
-## SSH client and host requirements
-
-To use Remote - SSH, your **local** machine needs an OpenSSH‑compatible SSH client, and the **remote** machine must be a Linux system running an SSH server.
-
-- Supported local OS: Windows, macOS, Linux.
-- Remote host: Linux with SSH server enabled (typical HPC or campus compute cluster).
-- At least 1 GB of RAM is required on the remote host; 2 GB and a 2‑core CPU are recommended.
+To use the Remote - SSH extension, your **local** machine needs an OpenSSH-compatible SSH client, and the **remote** machine must be a Linux system running an SSH server. The extension supports all major local operating systems: Windows, macOS, Linux. At least 1 GB of RAM is required on the remote host; 2 GB and a 2-core CPU are recommended.
 
 Most Linux and macOS systems already have the `ssh` client installed; on Windows 10+ you can enable the “OpenSSH Client” via **Settings → Optional Features**.
 
@@ -102,20 +94,20 @@ Host aurora
 
 Explanation:
 
-- `Host` is the short name you will use in VS Code (for example, `myserver`).
+- `Host` is the short name you will use in VS Code (for example, `aurora`).
 - `HostName` is the full DNS name or IP address of the remote Linux server.
 - `User` is your account name on the remote server.
-- `Port` is the SSH port (22 is standard; adjust if your site uses a different port).
+- `Port` is the SSH port (22 is standard)
 
 ## Adding a new SSH host from VS Code
 
-VS Code can guide you through creating or updating the SSH configuration file.
+VS Code can guide you through creating or updating the SSH configuration file. For example, to add an entry for Aurora:
 
 1. Open the **Command Palette** (`Ctrl+Shift+P`).
 2. Run **Remote-SSH: Add New SSH Host...**.
 3. When prompted, enter either:
-   - `user@hostname` (for example, `netid@login.cluster.example.edu`), or
-   - The full `ssh` command you normally run (for example, `ssh -p 2200 user@hostname`).
+   - `user@aurora.alcf.anl.gov`
+   - The full `ssh` command you normally run (for example, `ssh user@aurora.alcf.anl.gov`).
 4. VS Code will then ask which SSH config file to update. Choose the default (usually `~/.ssh/config` or the Windows equivalent).
 5. VS Code writes the appropriate entry to the chosen config file.
 
@@ -127,7 +119,7 @@ Once the extension and SSH config are set up, you can connect to the remote Linu
 
 ### Connect using the status bar
 
-1. Click the green remote status indicator in the bottom‑left corner of VS Code.
+1. Click the green remote status indicator in the bottom-left corner of VS Code.
 2. Select **Remote-SSH: Connect to Host...**.
 3. Choose one of the configured hosts, such as `polaris`.
 4. If prompted, enter your ALCF MobilePass+ token.
@@ -154,7 +146,7 @@ To work efficiently with C and C++ code on the remote Linux server, install Micr
 
 ## Configuring compilers for VS Code (remote Linux)
 
-The VS Code installation does not include compilers; it calls the compilers that are available in the remote Linux environment. ALCF systems use Lmod to manage compilers and libraries. On `Polaris` or `Aurora`, you will typically use **GCC** , **Clang**, and **oneAPI**. See compiler documentation for [Polaris](https://docs.alcf.anl.gov/polaris/compiling-and-linking/) and [Aurora](https://docs.alcf.anl.gov/aurora/compiling-and-linking/) for more details.
+The VS Code installation does not include compilers; it calls the compilers that are available in the remote Linux environment, in this example. ALCF systems use Lmod to manage compilers and libraries. On `Polaris` or `Aurora`, you will typically use **GCC** , **Clang**, and **oneAPI**. See compiler documentation for [Polaris](https://docs.alcf.anl.gov/polaris/compiling-and-linking/) and [Aurora](https://docs.alcf.anl.gov/aurora/compiling-and-linking/) for more details.
 
 ### Steps (remote side)
 
@@ -174,7 +166,7 @@ The VS Code installation does not include compilers; it calls the compilers that
    - Detect `CC` or `mpicxx` in your environment.
    - Offer to create a default `tasks.json` that compiles the active file.
 
-A typical GCC‑based task in `.vscode/tasks.json` looks like this (works for both module‑provided GCC and a system GCC):
+A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both module-provided GCC and a system GCC):
 
 ```json
 {
