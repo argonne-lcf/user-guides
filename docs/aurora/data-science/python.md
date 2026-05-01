@@ -1,28 +1,38 @@
 # Python on Aurora
 
+!!! warning "Changes to device selector"
+
+    The latest `frameworks` module for PyTorch sets the environment variable `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"` to enable Triton-XPU, vLLM, Ray, and dpctl functionality. If you encounter issues, you can revert to `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`.
+
 !!! warning "Importing Python modules at scale"
 
-	We have system-installed frameworks modules described in this page, which contain common AI/ML packages such as PyTorch and TensorFlow. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
+	We have system-installed frameworks modules, which contain common AI/ML packages such as PyTorch and TensorFlow. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
 
 	!!! info
 	
 		If you only use packages from the system installed framework module, [Copper](../data-management/copper/copper.md) is not needed. 
 
-## AI/ML Framework Module
+## AI/ML Framework Modules
 
-For most Python users on Aurora, a good starting point is the AI/ML framework module. 
-The Anaconda environment loaded with this module makes available TensorFlow, Horovod, and PyTorch with Intel extensions and optimizations, among other popular Python and ML packages. 
+For most Python users on Aurora, a good starting point are the AI/ML framework modules available on the system.
+For PyTorch users, we recommend 
 
-The following command can be used both from an interactive session on a terminal and within a batch job script to load the latest module
 ```bash
 module load frameworks
 ```
 
+and for TensorFlow users we provide a separate module accessible with
+
+```bash
+module load tensorflow
+module load mpich/opt/develop-git.6037a7a
+```
+
 Please note that:
 
-- The `frameworks` module automatically activates a pre-built `conda` environment which comes with GPU-supported builds of PyTorch and TensorFlow. Both of these frameworks have `Horovod` support for multi-node calculations, as well as PyTorch DDP with [oneCCL](./frameworks/oneCCL.md).
-- The `frameworks` module may load a different oneAPI compiler SDK than the default module
-- The `frameworks` module is updated approximately every quarter
+- Both modules automatically load a `conda` environment with GPU-supported builds of the respective framework libraries along with other popular Python and ML packages. 
+- The `frameworks` and `tensorflow`  modules may load a different oneAPI compiler SDK than the default module.
+- The `frameworks` and `tensorflow` modules are updated approximately every quarter.
 
 For more information on PyTorch and TensorFlow on Aurora, please see the respective pages: 
 
@@ -31,7 +41,7 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 
 ## Virtual environments via `venv`
 
-While the Anaconda environment automatically loaded with the `frameworks` module contains many 
+While the Anaconda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many 
 of the most commonly used Python packages for our users, you may still 
 encounter a scenario in which you need to extend the functionality of the 
 environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
@@ -47,7 +57,7 @@ python3 -m venv /path/to/new/venv --system-site-packages
 source /path/to/new/venv/bin/activate
 ```
 
-The `--system-site-packages` flag will make sure that all the packages included in the `frameworks` module are available after sourcing the `venv`.
+The `--system-site-packages` flag will make sure that all the packages included in the `frameworks` or `tensorflow` modules are still available after sourcing the `venv`.
 If, however, you would like to create an empty `venv`, simply remove this flag.
 You can always retroactively change the `--system-site-packages` flag state for 
 this virtual environment by editing `venv/pyvenv.cfg` and changing the value 
@@ -62,7 +72,7 @@ The base environment is not writable, so it is not possible to remove or
 uninstall packages from it. The packages installed with the above `pip` command 
 should shadow those installed in the base environment.
 
-Any time you wish to use this virtual environment in future shell sessions, be sure to first execute `module load frameworks` before `source /path/to/new/venv/bin/activate`.
+Any time you wish to use this virtual environment in future shell sessions, be sure to first load the base AI/ML modules (e.g., `module load frameworks`) before `source /path/to/new/venv/bin/activate`.
 
 An alternative, although not recommended, approach to creating a `venv` is to install packages with
 ```bash
@@ -70,9 +80,20 @@ pip install --user ...
 ```
 which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`.
 Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`.
-Cloning the Anaconda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
+Cloning the Anaconda environment provided with the `frameworks` or `tensorflow` modules, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
 
 ## Intel's Data Parallel Extensions for Python (DPEP)
+
+!!! warning "Managing GPU and CPU devices on Aurora"
+	On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable. 
+	The latest `frameworks` module sets `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"`, meaning that only the GPU are visible, however both through Level Zero and OpenCL. This will trick `dpctl` and `dpnp` into seeing 24 visible devices. Users can fix this by setting `export ONEAPI_DEVICE_SELECTOR=level_zero:gpu`.
+
+	Additionally, by default the CPU is not exposed as a device (e.g., `dpctl.has_cpu_devices()` returns `False`). This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it.
+	To access the CPU as a SYCL device, set `export ONEAPI_DEVICE_SELECTOR=opencl:cpu`, or to access both GPU and CPU set `export ONEAPI_DEVICE_SELECTOR="opencl:cpu;level_zero:gpu"`.
+
+	In addition, the number of GPU devices visible on each node depends on the `ZE_FLAT_DEVICE_HIERARCHY` environment variable.
+	With `ZE_FLAT_DEVICE_HIERARCHY=FLAT` 12 devices are visible (tile as device mode), 
+	whereas with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` 6 devices are visible (GPU as device).
 
 On Aurora, users can access Intel's Python stack comprising of compilers and libraries for programming heterogenous devices, namely the Data Parallel Extensions for Python (DPEP).
 DPEP is composed of three main packages for programming on CPUs and GPUs:
@@ -109,30 +130,44 @@ However, note that operating on arrays created on different devices will raise a
 
 ### Accessing the DPEP Packages
 
-Users can access the `dpnp` and `dpctl` packages by simply loading the latest AI/ML frameworks module with `module load frameworks`.
+Users can access the `dpnp` and `dpctl` packages by simply loading the latest AI/ML frameworks module with 
 
-!!! warning "Accessing numba-dpex on Aurora"
-	The current `frameworks` module does not come with the numba-dpex package installed, thus users need to install it separately. 
-	This issue will be addressed in the next `frameworks` module, but in the mean time users can either create a new environment and install the dpnp and dpctl packages with
-	```bash
-	module load frameworks
-	module load cmake
-    conda create -y --prefix /path/to/dpep_env python=3.10 pip
-	conda install -y -c https://software.repos.intel.com/python/conda/linux-64 -c conda-forge --strict-channel-priority dpctl==0.18.3 dpnp==0.16.3
-	```
-	or clone the base environment with
-	```bash
-	module load frameworks
-	conda create --prefix /path/to/dpep_env --clone /opt/aurora/24.347.0/frameworks/aurora_nre_models_frameworks-2025.0.0
-	```
-	and then install numba-dpex from source with
-	```bash
-	conda install -y scikit-build numba==0.59* -c conda-forge
-    pip install versioneer
-    git clone https://github.com/IntelPython/numba-dpex.git
-    cd numba-dpex
-    CXX=$(which dpcpp) python setup.py develop
-	```
+```bash
+module load frameworks
+```
+
+However, `numba-dpex` is not available in the `frameworks` module, thus using this package requires additional installation steps. 
+The easiest way to get all three DPEP packages is to create a new `conda` environment and install the DPEP packages with the following recipe:
+
+```bash linenums="1" title="Install numba-dpex, dpctl, and dpnp in fresh Anaconda environment"
+module load frameworks
+module load cmake
+conda create -y --prefix /path/to/dpep_env python=3.12 pip
+conda activate /path/to/dpep_env
+conda install -y scikit-build
+pip install versioneer numpy Cython ninja
+
+# dpctl
+git clone https://github.com/IntelPython/dpctl.git
+cd dpctl
+git checkout 0.21.1
+CXX=$(which dpcpp) python setup.py install
+cd ..
+
+# dpnp
+git clone https://github.com/IntelPython/dpnp.git
+cd dpnp
+git checkout 0.19.1
+CXX=$(which dpcpp) python setup.py install -- -G Ninja -DCMAKE_C_COMPILER:PATH=`which icx` -DCMAKE_CXX_COMPILER:PATH=`which icpx`
+cd ..
+
+# numba-dpex
+conda install -y numba==0.59* -c conda-forge
+git clone https://github.com/argonne-lcf/numba-dpex.git
+cd numba-dpex
+CXX=$(which dpcpp) python setup.py develop
+cd ..
+```
 
 ### dpnp
 The dpnp library implements the NumPy API using DPC++ and is meant to serve as a drop-in replacement for NumPy, similar to CuPy for CUDA devices.
@@ -221,16 +256,6 @@ print("\nFound CPU devices: ", dpctl.has_cpu_devices()) # (3)!
 	
 	Found CPU devices:  False
 	```
-
-!!! info "Managing GPU and CPU devices on Aurora"
-	On Aurora, `ONEAPI_DEVICE_SELECTOR=level_zero:gpu` is set by default, meaning that the GPU are the only devices visible to dpctl. 
-	For this reason, `dpctl.has_cpu_devices()` returns `False`. 
-	This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it.
-	To access the CPU as a SYCL device, set `ONEAPI_DEVICE_SELECTOR=opencl:cpu`.
-
-	In addition, the number of GPU devices visible on each node depends on the `ZE_FLAT_DEVICE_HIERARCHY` environment variable.
-	With `ZE_FLAT_DEVICE_HIERARCHY=FLAT` 12 devices are visible (tile as device mode), 
-	whereas with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` 6 devices are visible (GPU as device).
 
 !!! warning "dpctl.tensor deprecation"
 	The `dpctl.tensor` module (a tensor library implemented using DPC++ that follows the Python Array API standard) is deprecated as of dpctl 0.21.1 and will be removed in an upcoming dpctl release alongside oneAPI 2026.0. Users should use `dpnp` arrays as a 1-for-1 replacement of dpctl tensor operations on Intel GPUs.

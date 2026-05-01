@@ -7,6 +7,17 @@
 
 Cerebras jobs are initiated and tracked automatically within the Python framework in **cerebras.modelzoo.common.run_utils**. This framework interacts with the Cerebras cluster management node.
 
+##### Timelimit and usage guidelines
+We currently have access to four CS-3 systems, which are in high demand across users. To ensure fair access and smooth operation for everyone, we kindly ask all users to be mindful of shared usage. At this stage, the system does not enforce strict scheduling policies, so it is especially important that usage remains self-regulated and considerate of others. In particular, we request that users avoid submitting multiple concurrent jobs or queuing up a large number of jobs, as this can prevent others from accessing the system. As a general guideline, large jobs should be limited to a maximum runtime of 24 hours. To help manage this, please make use of the job_time_sec parameter in your .yaml configuration to explicitly bound the duration of your jobs. For example:
+```bash
+init:                                                                                                                            
+      backend:
+        backend_type: CSX
+        cluster_config:
+            job_time_sec: 3600
+```
+We appreciate your cooperation in using the CS-3 systems responsibly and respectfully, and in helping maintain a productive and fair environment for all users.
+
 #### Login nodes
 
 Jobs are launched from **user** nodes.
@@ -116,6 +127,24 @@ The jobs can be seen with `csctl get jobs`, from another console session on a us
 See [Job Queuing and Submission](./job-queuing-and-submission.md) for more details.
 
 
+## Checkpoints
 
+Model training can be (re-)started from a model checkpoint, if e.g. a job stops due to error, by adding `--checkpoint_path=path_to_mdl_file` to a `cszoo fit` command line.
+For example, to continue training the model above another 400 steps after it is has been trained for 400 steps, modify configs/Cerebras_GPT/111m_modified.yaml, changing the value of `max_steps` to 800
+```yaml
+      max_steps: 800
+      eval_frequency: 400
+      eval_steps: 100
+```
+
+Then
+```bash linenums="1"
+export MODEL_DIR=model_dir_gpt3_111m
+cszoo fit --checkpoint_path=model_dir_gpt3_111m/checkpoint_400.mdl configs/Cerebras_GPT/111m_modified.yaml --job_labels name=gpt3_111m --model_dir $MODEL_DIR |& tee mytest.log
+```
+
+The save of a model checkpoint requires roughly 60 seconds per billion model parameters, so adjust the checkpoint frequency accordingly.
+
+Another consideration is your disk space quota; checkpoints can quickly exceed this quota. Old checkpoints can be deleted manually, and your quota can be increased on request.
 
 
