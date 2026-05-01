@@ -63,6 +63,11 @@ This will generate and store access and refresh tokens in your home directory. T
 python inference_auth_token.py get_time_until_token_expiration --units seconds
 ```
 
+To print your token to the command line, this command can be used:
+```bash
+python inference_auth_token.py get_access_token
+```
+
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
     - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
@@ -328,9 +333,9 @@ Models are organized by cluster and marked with the following capabilities:
 - **R** - Reasoning Enabled
 - **H** - Always Hot Model
 
-### Sophia Cluster (vLLM)
+### Sophia Cluster
 
-??? "Chat Language Models"
+??? "Chat Language Models (vLLM)"
 
     **Meta Llama Family**
 
@@ -359,18 +364,26 @@ Models are organized by cluster and marked with the following capabilities:
     - argonne/AuroraGPT-DPO-UFB-0225^B^
     - argonne/AuroraGPT-KTO-UFB-0325^B^
 
+    **Google Family**
+
+    - google/gemma-3-27b-it^BTH^
+    - google/gemma-4-26B-A4B-it^RT^
+    - google/gemma-4-31B-it^RTH^
+    - google/gemma-4-E4B-it^RTH^
+    
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it^BTH^
+    - arcee-ai/Trinity-Large-Thinking-W4A16^RT^
+    - nvidia/nemotron-3-super-120b^RT^
     - mgoin/Nemotron-4-340B-Instruct-hf
     - AstroMLab/AstroSage-70B-20251009
 
-??? "Vision Language Models"
+??? "Vision Language Models (vLLM)"
 
     - meta-llama/Llama-3.2-90B-Vision-Instruct
 
-??? "Embedding Models"
+??? "Embedding Models (vLLM)"
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
     - Salesforce/SFR-Embedding-Mistral
@@ -386,6 +399,30 @@ Models are organized by cluster and marked with the following capabilities:
     - genslm-test/genslm-esmc-600M-contrastive-codon
     - genslm-test/genslm-esmc-600M-joint-aminoacid
     - genslm-test/genslm-esmc-600M-joint-codon
+
+??? "Image Segmentation"
+
+    - facebook/sam3
+
+    !!! info "Promptable Image Segmentation Models"
+        The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
+        package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF.
+
+        With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this is all you need to begin using SAM 3:
+
+        ```bash
+        # SEM image of pollen grains:
+        curl https://upload.wikimedia.org/wikipedia/commons/a/a4/Misc_pollen.jpg > Misc_pollen.jpg
+
+        # Identify 'spiky spheres'
+        uvx alcf-ai sam3 submit-image Misc_pollen.jpg "Spiky sphere" --save-preview pollen-grains.png
+
+        # Preview results:
+        open pollen-grains.png
+        ```
+
+        If this your first time accessing the inference service via `alcf-ai`, you will be prompted to log in interactively.
+
 
 ### Metis Cluster (SambaNova)
 
