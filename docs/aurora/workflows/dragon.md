@@ -190,7 +190,7 @@ For more details on how to use Dragon Dictionaries, see the Dragon [documentatio
 
 ## Running MPI applications
 
-MPI applications can be run with the Dragon `ProcessGroup`.  To enable message passing between processes in a Dragon ProcessGroup on Polais set the `pmi` flag when creating the process group like this:
+MPI applications can be run with the Dragon `ProcessGroup`.  To enable message passing between processes in a Dragon ProcessGroup on Aurora, set the `pmi` flag when creating the process group to `PMIBackend.PMIX` like this:
 
 ```python linenums="1"
 from dragon.native.process_group import ProcessGroup
