@@ -158,6 +158,9 @@ nav:
   - User Support:
     - support/index.md
     - Submit a Ticket: support/ticket.md
+    - AI and Editor Guidance:
+        - support/ai-guidance.md
+        - VS Code example: support/vscode.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
@@ -195,6 +198,7 @@ nav:
         - Applications and Libraries:
           - Applications:
             - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
+            - VASP: aurora/applications-and-libraries/applications/vasp.md
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
             #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
@@ -258,6 +262,7 @@ nav:
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
+          - Dragon: aurora/workflows/dragon.md
           - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md
           - SmartSim: aurora/workflows/smartsim.md
