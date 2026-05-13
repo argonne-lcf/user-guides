@@ -158,7 +158,7 @@ After loading the modules and placing `makefile.include` in the `vasp` source fo
 make -j1
 ```
 
-### Running VASP in Aurora
+### Running VASP on Aurora
 
 An example of a submission script can be found here `/soft/applications/vasp/example.script.sh`.
 
