@@ -5,3 +5,4 @@ mkdocs-video
 mkdocs-minify-plugin
 mkdocs-redirects
 mkdocs-git-revision-date-localized-plugin
+mkdocs-git-authors

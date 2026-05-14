@@ -142,6 +142,10 @@ plugins:
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - git-authors:
+      exclude:
+        - index.md
+        - inbound-links.md
   - git-revision-date-localized:
       type: iso_date  # default: date
       timezone: America/Chicago
