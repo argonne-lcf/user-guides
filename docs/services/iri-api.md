@@ -1,8 +1,6 @@
 # ALCF IRI API
 
-The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token). For the specification details of the API, please visit the [Swagger documentation](https://api.alcf.anl.gov/).  Polaris and Crux are currently available via the compute interfaces and the home and Eagle filesystems are currently available via the filesystems interface.
-
-The OpenAPI specification may be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json)
+The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token). The OpenAPI specification can be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json).
 
 !!! info "Access"
     The ALCF IRI API is available to all users who can authenticate with their ALCF credentials.
@@ -129,6 +127,11 @@ This section provides simple examples on how to interface with the API as a star
         ```
 
 ### 2. Compute
+
+!!! info "Currently Supported Compute Resources"
+
+    - Polaris
+    - Crux
 
 ??? "2.1. Submit a Job"
 
@@ -347,8 +350,12 @@ This section provides simple examples on how to interface with the API as a star
 
 ### 3. Filesystem
 
-!!! note "Asynchronous Operations"
+!!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
+
+!!! info "Currently Supported Filesystems"
+    - Eagle
+    - Home
 
 ??? "3.1. List Directory Contents (`ls`)"
 
