@@ -1,6 +1,8 @@
 # ALCF IRI API
 
-The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token). For the specification details of the API, please visit the [Swagger documentation](https://api.alcf.anl.gov/).
+The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token). For the specification details of the API, please visit the [Swagger documentation](https://api.alcf.anl.gov/).  Polaris and Crux are currently available via the compute interfaces and the home and Eagle filesystems are currently available via the filesystems interface.
+
+The OpenAPI specification may be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json)
 
 !!! info "Access"
     The ALCF IRI API is available to all users who can authenticate with their ALCF credentials.
@@ -681,6 +683,8 @@ Comming soon.
 - **Permission Denied:** Your token may have expired or you may not be authenticated with your ALCF credentials. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout), clear your browser cache or use an incognito window, and re-authenticate with `python alcf_facility_api_globus_token.py authenticate`.
 - **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used. Locate your tokens file (typically at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`), delete it, and restart the authentication process.
 
+## Further Information
+Further information on and examples for the IRI API may be found at [https://github.com/doe-iri](https://github.com/doe-iri)
 
 ## Contact Us
 
