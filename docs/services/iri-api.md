@@ -155,7 +155,7 @@ This section provides simple examples on how to interface with the API as a star
                    },
                    "attributes": {
                        "duration": 300,
-                       "queue_name": "debug",
+                       "queue_name": "<system-queue-name>",
                        "account": "<project_account>",
                        "custom_attributes": {"filesystems": "eagle"}
                    }
@@ -194,7 +194,7 @@ This section provides simple examples on how to interface with the API as a star
                 },
                 "attributes": {
                     "duration": 300,
-                    "queue_name": "debug",
+                    "queue_name": "<system-queue-name>",
                     "account": "<project_account>",
                     "custom_attributes": {"filesystems": "eagle"}
                 }
