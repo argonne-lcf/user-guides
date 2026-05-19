@@ -22,8 +22,9 @@ dragon-config add --ofi-runtime-lib=/opt/cray/libfabric/1.22.0/lib64
 
 The last installation step that calls `dragon-config` is necessary to enable `dragon` to use high-speed RDMA transfers across Aurora's Slingshot network.  Skipping this step will result in `dragon` using slower TCP transfers for cross node communication and data transfer.
 
-!!! info "GPU Device Hierarchy"
-    * Dragon is able to support both composite and flat settings for the GPU device hierarchy (set with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` and `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, respectively). In composite mode, 6 GPU devices are exposed, each with 2 sub-devices (tiles). In flat mode, 12 GPU devices are exposed (tile-as-device). Most applications on Aurora benefit from the flat mode, which is set by default when loading the `frameworks` module. 
+!!! info "Managing GPU Devices on Aurora"
+   * Dragon uses `xpu-smi` to discover devices Intel GPU devices, however this tool is not available by default on Aurora. To make the best use of Dragon's internal GPU discovery utilities, add `module load xpu-smi` to your job scripts.
+   * Dragon is able to support both composite and flat settings for the GPU device hierarchy (set with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` and `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, respectively). In composite mode, 6 GPU devices are exposed, each with 2 sub-devices (tiles). In flat mode, 12 GPU devices are exposed (tile-as-device). Most applications on Aurora benefit from the flat mode, which is set by default when loading the `frameworks` module. 
 
 
 
