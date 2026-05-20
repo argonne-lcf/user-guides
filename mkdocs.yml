@@ -152,7 +152,7 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+  - Getting Started: https://www.alcf.anl.gov/managing-your-award
   - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
