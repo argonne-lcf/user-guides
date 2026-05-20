@@ -1,0 +1,222 @@
+# Running an inference workload
+
+## Initial set up
+If not already done, clone the tt-inference-server project, build a venv and install all the dependencies. 
+```console
+git clone https://github.com/tenstorrent/tt-inference-server.git
+
+virtualenv ~/tt-venv
+source ~/tt-venv/bin/activate
+cd ~/tt-inference-server/
+pip install -r requirements-dev.txt 
+pip install numpy
+pip install transformers
+pip install openai  # for python queries
+```
+
+<!---
+## Pull container. As root. 
+```console
+podman pull ghcr.io/tenstorrent/tt-inference-server/vllm-tt-metal-src-dev-ubuntu-22.04-amd64:0.4.0-9b67e09-a91b644
+```
+--->
+
+## Check for already-running inference server containers
+
+The Tenstorrent Galaxy nodes have no scheduler for user allocation of Wormhole chips, and `podman ps` will only show containers for the current user.
+Check to see if any processes are using any Tenstorrent Wormhole chips:
+```bash
+for i in /proc/driver/tenstorrent/*/pids; do
+    echo "=== $i ===" $(cat "$i")
+done
+```
+or, in one line:
+```
+for i in /proc/driver/tenstorrent/*/pids; do echo "=== $i ===" $(cat "$i"); done
+```
+Any devices in use (device 0 shown) will have a number after the "===". Example
+```
+=== /proc/driver/tenstorrent/0/pids === 295
+```
+Any devices not in use (device 0 shown) will not have a number after the "===". Example
+```
+=== /proc/driver/tenstorrent/0/pids ===
+```
+
+If any devices are in use, the user id(s) for their user(s) can be found by looking for podman procesess:
+```
+ps -ef | grep -v grep | grep "podman run" | awk '{print $1}'
+
+```
+
+## Starting an inference server container
+
+For more on Tenstorrent inference servers, including running benchmarks, see [Model Readiness Workflows User Guide](https://github.com/tenstorrent/tt-inference-server/blob/main/docs/workflows_user_guide.md)
+
+The basics for starting an inference server are documented below.
+
+Model files will be downloaded into your huggingface cache dir. The default cache directory is `~/.cache/huggingface`. `/storage` has more space available than your home directory. Change the cache location by setting the shell environment variable, `HF_HOME`, to another directory, e.g.
+```console
+mkdir -p /storage/$(whoami)/.cache/huggingface
+export HF_HOME=/storage/$(whoami)/.cache/huggingface
+```
+Make sure that `HF_HOME` environment variable is set whenever you start a model container, else the downloader will use the default (`~/.cache/huggingface`). 
+
+
+Optionally, set some environment variables. These two variables can also be entered interactively. 
+```console
+export JW_SECRET=test-secret-456
+export HF_TOKEN=<your read-only HF token>
+```
+Check if anyone else is using the system. See instructions above.
+
+Note: `tt-smi` will fail if any inference servers are running. This behavior may change in later releases, though.
+
+Check if you (i.e. the current user) are running a container
+```console
+podman ps  
+# if needed: podman stop <container id>
+```
+
+The "model" in the run command is the "Model Name" field from [https://github.com/tenstorrent/tt-inference-server](https://github.com/tenstorrent/tt-inference-server)
+```console
+source ~/tt-venv/bin/activate
+cd ~/tt-inference-server/
+python3 run.py --model Qwen3-8B --docker-server --workflow server --device galaxy
+```
+It will interactively ask for JWT_SECRET and HF_TOKEN, if the environment variables are not set. JW_SECRET=test-secret-456. Use your HF token which has (read) permission for the Qwen model (or whatever model is being started). Request permission for the model from huggingface if needed.
+Inference server containers can take many minutes to set up. 
+
+Get the container id from the last line of the run.py console output, e.g.
+```console
+2026-02-17 20:31:10,890 - run_docker_server.py:370 - INFO: To stop the running container run: docker stop 1aa42296a1c1
+```
+or by listing containers with `podman ps`
+```console
+podman ps
+```
+Check the container status by using:
+```console
+podman logs -f <container-id>
+```
+
+When the server startup is completes, you should see lines like the following three lines:
+```console
+2026-02-09 20:58:41,623 - utils.prompt_client - INFO - ✅ Background trace capture completed successfully
+2026-02-09 20:58:41,624 - utils.prompt_client - INFO - Creating readiness signal file at /tmp/ready...
+2026-02-09 20:58:41,629 - utils.prompt_client - INFO - ✅ Readiness file created. Pod will now become ready.
+```
+
+Try with a larger model. Again, request permissions from huggingface if you don't already have them for this model. If any other inference server container is running on the node, stop it first. 
+Llama-3.3-70B-Instruct took 420 seconds to start.
+```console
+source ~/tt-venv/bin/activate
+cd ~/tt-inference-server/
+python3 run.py --model Llama-3.3-70B-Instruct --workflow server --device galaxy --docker-server --skip-system-sw-validation
+```
+
+Smaller models can be run with less hardware. Here is an example of starting four 8-chip Llama-3.1-8B-Instruct container instances, each listening on a different port.
+```console
+#default port is 8000
+cd ~/tt-inference-server/
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 0,1,2,3,4,5,6,7 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 8,9,10,11,12,13,14,15 --service-port 8001 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 16,17,18,19,20,21,22,23 --service-port 8002 --skip-system-sw-validation
+python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 24,25,26,27,28,29,30,31 --service-port 8003 --skip-system-sw-validation
+```
+
+# Querying the API exposed by an inference server container
+
+If you have not already done so, from your user home dir, clone the tt-inference-server repo, cd to it, and build and activate a virtual env. 
+```console
+cd ~/
+git clone https://github.com/tenstorrent/tt-inference-server.git
+cd tt-inference-server
+virtualenv ~/tt-venv
+source ~/tt-venv/bin/activate
+pip install -r requirements-dev.txt
+pip install numpy
+pip install transformers
+pip install openai  # for python queries
+```
+
+## Set environment variables for sample code
+```
+export JWT_SECRET=test-secret-456
+export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
+export API_URL="http://0.0.0.0:8000/v1/chat/completions"
+# or Qwen/Qwen3-8B, or some other model currently being served.
+export MODEL_NAME=Llama-3.3-70B-Instruct
+export OPENAI_API_KEY=$BEARER_TOKEN
+export OPENAI_BASE_URL=$(echo $API_URL | sed 's/\/chat\/completions//')
+```
+
+## Bash example
+
+Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B. (Llama-3.3-70B-Instruct is  an exception.)
+
+This example script uses environment variable JWT_SECRET. If BEARER_TOKEN, API_URL and MODEL_NAME are already set, just the curl command is needed. 
+
+```bash
+#!/bin/bash
+export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
+
+# for example HTTP request using curl, assuming SERVICE_PORT=7000
+export API_URL="http://0.0.0.0:8000/v1/chat/completions"
+#export MODEL_NAME=Qwen/Qwen3-8B
+export MODEL_NAME=meta-llama/Llama-3.3-70B-Instruct
+curl -s --no-buffer -X POST "${API_URL}" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $BEARER_TOKEN" \
+    -d '{
+        "model": "'$MODEL_NAME'",
+        "messages": [
+        {
+            "role": "user",
+            "content": "What is Tenstorrent?"
+        }
+        ],
+        "max_tokens": 256
+    }'
+```
+
+## Python example
+Uses OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME environment variables, set as above.
+
+Generally, the MODEL_NAME should be set to the Huggingface path, e.q. Qwen/Qwen3-8B. (Llama-3.3-70B-Instruct is an exception.)
+
+To run, provide the prompt as a CLI argument 
+```console
+python query.py "What is Tenstorrent"
+```
+
+Put this content into query.py
+```console
+import os
+import openai
+import sys
+import time
+
+client = openai.OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+    base_url=os.environ.get("OPENAI_BASE_URL")
+)
+
+modelname = os.environ.get("MODEL_NAME")
+query = sys.argv[1]
+start_time = time.time()
+response = client.chat.completions.create(
+    model=modelname,
+    messages=[{"role":"user","content":query}],
+    temperature =  0.1,
+    top_p = 0.1
+)
+end_time = time.time()
+
+print(response.choices[0].message.content)
+print("elapsed time: " + str(end_time-start_time))
+```
+
+
+
+
