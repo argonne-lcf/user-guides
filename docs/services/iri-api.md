@@ -1,6 +1,6 @@
 # ALCF IRI API
 
-The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token). The OpenAPI specification can be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json).
+The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API). The OpenAPI specification can be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json).
 
 !!! info "Access"
     The ALCF IRI API is available to all users who can authenticate with their ALCF credentials.
@@ -682,7 +682,7 @@ This section provides simple examples on how to interface with the API as a star
 
 ### 5. Account
 
-Comming soon.
+Coming soon.
 
 
 ## Troubleshooting
@@ -695,4 +695,4 @@ Further information on and examples for the IRI API may be found at [https://git
 
 ## Contact Us
 
-For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API%20Token).
+For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API).
