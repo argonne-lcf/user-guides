@@ -1,5 +1,24 @@
 # Aurora System Updates
 
+## 2026-05-21
+Release notes:
+
+OS Image - compute_aurora_prod_20260520T215745_835edd6
+
+ - Kernel update
+ - vastnfs 4.0.40
+ - lustre-client cray-2.15.B24
+ - xpmem-2.7.17
+ - kdreg2 from SHS 14.0 (kdreg2-1.0.0-0__2e1e777.SHS14.0.0)
+ - msr-safe and sepdk KMDs rebuilt, but version unchanged.
+
+ECB Firmware
+
+ - BIOS 0116.D10
+ - PVC IFWI WW43.3_14
+
+
+
 ## 2026-03-10
 The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1, which was previously available in next-eval queue, is rolled out to all the of nodes across Aurora. 
 
