@@ -14,24 +14,17 @@ pip install transformers
 pip install openai  # for python queries
 ```
 
-<!---
-## Pull container. As root. 
-```console
-podman pull ghcr.io/tenstorrent/tt-inference-server/vllm-tt-metal-src-dev-ubuntu-22.04-amd64:0.4.0-9b67e09-a91b644
-```
---->
-
 ## Check for already-running inference server containers
 
 The Tenstorrent Galaxy nodes have no scheduler for user allocation of Wormhole chips, and `podman ps` will only show containers for the current user.
 Check to see if any processes are using any Tenstorrent Wormhole chips:
-```bash
+```console
 for i in /proc/driver/tenstorrent/*/pids; do
     echo "=== $i ===" $(cat "$i")
 done
 ```
 or, in one line:
-```
+```console
 for i in /proc/driver/tenstorrent/*/pids; do echo "=== $i ===" $(cat "$i"); done
 ```
 Any devices in use (device 0 shown) will have a number after the "===". Example
@@ -62,6 +55,16 @@ export HF_HOME=/storage/$(whoami)/.cache/huggingface
 ```
 Make sure that `HF_HOME` environment variable is set whenever you start a model container, else the downloader will use the default (`~/.cache/huggingface`). 
 
+If you find that the partition that hosts your home directory is full, you can try pruning unused volumes.
+```console
+podman volume list
+```
+then, for any currently-unused volumes,
+```console
+podman volume rm <VOLUME NAME>
+```
+
+Similarly, if the huggingface cache directory is not set to a directory on /storage, the ~/.cache/huggingface dir may use all available storage on that drive. It can be safely deleted if necessary. 
 
 Optionally, set some environment variables. These two variables can also be entered interactively. 
 ```console
@@ -82,7 +85,8 @@ The "model" in the run command is the "Model Name" field from [https://github.co
 ```console
 source ~/tt-venv/bin/activate
 cd ~/tt-inference-server/
-python3 run.py --model Qwen3-8B --docker-server --workflow server --device galaxy
+git checkout v0.10.0 # Other git tags may not work.
+python3 run.py --model gpt-oss-20b --docker-server --workflow server --device galaxy --skip-system-sw-validation
 ```
 It will interactively ask for JWT_SECRET and HF_TOKEN, if the environment variables are not set. JW_SECRET=test-secret-456. Use your HF token which has (read) permission for the Qwen model (or whatever model is being started). Request permission for the model from huggingface if needed.
 Inference server containers can take many minutes to set up. 
@@ -112,6 +116,7 @@ Llama-3.3-70B-Instruct took 420 seconds to start.
 ```console
 source ~/tt-venv/bin/activate
 cd ~/tt-inference-server/
+git checkout v0.7.0 # Other git tags may not work.
 python3 run.py --model Llama-3.3-70B-Instruct --workflow server --device galaxy --docker-server --skip-system-sw-validation
 ```
 
@@ -119,10 +124,25 @@ Smaller models can be run with less hardware. Here is an example of starting fou
 ```console
 #default port is 8000
 cd ~/tt-inference-server/
+git checkout v0.7.0 # Other git tags may not work.
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 0,1,2,3,4,5,6,7 --skip-system-sw-validation
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 8,9,10,11,12,13,14,15 --service-port 8001 --skip-system-sw-validation
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 16,17,18,19,20,21,22,23 --service-port 8002 --skip-system-sw-validation
 python3 run.py  --model Llama-3.1-8B-Instruct  --workflow server  --docker-server  --device galaxy_t3k  --device-id 24,25,26,27,28,29,30,31 --service-port 8003 --skip-system-sw-validation
+```
+
+Other language models that are working include
+```console
+git checkout v0.9.0
+python3 run.py --model gemma-3-27b-it --docker-server --workflow server --device galaxy --skip-system-sw-validation
+```
+```console
+git checkout v0.10.0
+python3 run.py --model Qwen3-32B --docker-server --workflow server --device galaxy --skip-system-sw-validation
+```
+```console
+git checkout v0.10.0
+python3 run.py --model Qwen3-8B --docker-server --workflow server --device galaxy --skip-system-sw-validation
 ```
 
 # Querying the API exposed by an inference server container
