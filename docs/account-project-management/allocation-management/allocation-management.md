@@ -141,6 +141,10 @@ sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 
 ### FAQs
 
+!!! note
+
+    There is currently a bug in the `sbank l a` command for suballocations where the `charged` column could display an incorrect value. The `Available Balance` column should display the right value.
+
 ##### Q1: I am trying to move hours from one suballocation to another using `sbank e sub`, but I am getting the error "allocation balance < hours to move." My source suballocation shows a positive available balance, why am I still getting this error? 
 **A:** This error means that the **parent** allocation does not have sufficient available balance to cover the hours you are attempting to move - even if the source suballocation appears to show a positive balance. The command checks the balance at the parent allocation level, not the individual suballocation level. In this case, the overall allocation balance may be negative or insufficient, which will trigger this error regardless of what any individual suballocation shows. A suballocation can show a positive available balance while the parent allocation's total balance is negative or exhausted. This can happen when other suballocations under the same parent allocation have consumed more hours than were assigned to them - which is possible if jobs ran under backfill mode, allowing usage to go negative. Always check the total available balance of the parent allocation, not just the individual suballocation, before attempting a transfer.
 
