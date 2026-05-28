@@ -161,6 +161,7 @@ sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 
 ##### Q5: I am still confused about when jobs will run and won't. Can you provide the rules in an easy-to-read format?
 **A:** 
+
 | Allocation Balance | Suballocation Balance | Job Status |
 | -------- | -------- | -------- |
 | Positive    | Positive     | Job will run     |
