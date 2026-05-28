@@ -640,7 +640,7 @@ This section provides simple examples on how to interface with the API as a star
 
 ??? "3.7. Remove File or Directory (`rm`)"
 
-    Removes file or directory given a specific path.
+    Delete file or directory given a specific path.
 
     === "cURL"
 
