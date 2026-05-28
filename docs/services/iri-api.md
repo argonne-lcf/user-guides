@@ -638,6 +638,49 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
+??? "3.7. Remove File or Directory (`rm`)"
+
+    Removes file or directory given a specific path.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Home
+        resource_id="6115bd2c-957a-4543-abff-5fae52992ff2"
+
+        curl -X DELETE "https://api.alcf.anl.gov/api/v1/filesystem/rm/${resource_id}?path=/home/<username>/my_dir" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Home
+        resource_id = "6115bd2c-957a-4543-abff-5fae52992ff2"
+
+        response = requests.delete(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/rm/{resource_id}",
+            params={"path": "/home/<username>/my_dir"},
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
 ### 4. Tasks
 
 ??? "4.1. Get a Task"
