@@ -148,7 +148,7 @@ To configure the compilers on the remote host:
    # or:
    module load PrgEnv-nvhpc # on Polaris
    # or:
-   module oneapi # on Aurora
+   module load oneapi # on Aurora
    ```
 3. **Open your C++ project folder** on the remote host in VS Code.
 4. Use **Terminal > Run Build Task...** or `Ctrl+Shift+B`. The C/C++ extension can:
@@ -219,13 +219,15 @@ module load PrgEnv-gnu
 # or:
 module load PrgEnv-nvhpc # on Polaris
 # or:
-module oneapi # on Aurora
+module load oneapi # on Aurora
 ```
 
 Check that the compiler is available:
 
 ```bash
 CC --version
+#or:
+gcc --version
 ```
 
 Environment Modules ensure these commands point to the compiler version selected by the module.
@@ -236,7 +238,7 @@ Environment Modules ensure these commands point to the compiler version selected
 2. Run **Tasks: Configure Default Build Task** or **C/C++: Edit Configurations (UI)**.
 3. If prompted, select `g++` (GCC) or `clang++` (Clang) as your compiler.
 4. VS Code will create a `.vscode/tasks.json` see example above.
-ags.
+
 
 ### 5. Build the program
 
