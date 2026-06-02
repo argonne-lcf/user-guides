@@ -118,6 +118,17 @@ or
 export DisableDeepBind=1
 ```
 
+### SEGV on multi-node runs with ASAN on the host
+
+When a code is compiled with "-Xarch_host -fsanitize=address" to turn on address sanitizer on the device, there may be a SEGV as below:
+
+```console
+> mpicxx -Xarch_host -fsanitize=address -fsycl sycl.cpp
+> mpirun -n 2 -ppn 1 ./a.out
+==111900==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000898ce (pc 0x0000000898ce bp 0x000000000000 sp 0x7ffc1a1e1f38 T0)
+```
+
+This is due to a conflict of libfabric's memory monitor memhook (the default) and asan both intercepting mmap in incompatible ways, resulting in ASAN segfaulting. A workaround for this is to change the Libfabric memory monitor and set: `export FI_MR_CACHE_MONITOR=userfaultfd`. See more details here: https://github.com/argonne-lcf/AuroraBugTracking/issues/141 
 
 ## References  
 [Intel Sanitizer documentation](https://www.intel.com/content/www/us/en/developer/articles/technical/find-bugs-quickly-using-sanitizers-with-oneapi-compiler.html)
