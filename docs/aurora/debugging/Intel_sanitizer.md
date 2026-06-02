@@ -123,7 +123,7 @@ export DisableDeepBind=1
 When a code is compiled with "-Xarch_host -fsanitize=address" to turn on address sanitizer on the device, there may be a SEGV as below:
 
 ```console
-> mpicxx -Xarch_host -fsanitize=address -fsycl sycl.cpp
+> mpicxx -Xarch_host -fsanitize=address -fsycl -g sycl.cpp
 > mpirun -n 2 -ppn 1 ./a.out
 ==111900==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000898ce (pc 0x0000000898ce bp 0x000000000000 sp 0x7ffc1a1e1f38 T0)
 ```
