@@ -1,5 +1,7 @@
 # AskALCF: An AI Support Assistant
 
+**AskALCF is an intelligent AI support assistant designed to enhance user support at the Argonne Leadership Computing Facility (ALCF).**
+
 !!! warning "Disclaimer"
 
 	AskALCF is an AI-assisted tool designed to help ALCF users quickly access information. Responses are generated using automated methods and may not always be accurate, complete, or current. Users should confirm critical information through official ALCF documentation or by contacting ALCF support.
@@ -8,7 +10,13 @@
 
 	We value your input to improve AskALCF. If you encounter incorrect or unclear information, please share your feedback to help us enhance the service.
 
-AskALCF is an intelligent AI support assistant designed to enhance user support at the Argonne Leadership Computing Facility (ALCF). It combines two core capabilities:
+## Accessing AskALCF
+
+The chatbot is accessible through [https://ask.alcf.anl.gov](https://ask.alcf.anl.gov)
+
+## About AskALCF
+
+AskALCF combines two core capabilities:
 
 - **Retrieval-Augmented Generation (RAG)**: Provides accurate, context-aware responses by retrieving relevant information from a curated HPC-specific knowledge base before generating answers.
 - **HPC Operation MCP (Model Context Protocol)**: Enables real-time queries of machine and job status for ALCF systems — **Aurora**, **Polaris**, **Sophia**, and **Crux** — by interfacing with runtime machine activity data and the ALCF Facility API.
@@ -36,10 +44,6 @@ Below are the documents curated in the vector database used by AskALCF.
 | Intel OneAPI Documentation  | Web           |
 
 ---
-
-## Accessing AskALCF
-
-The chatbot is currently hosted on a CELS Virtual Machine accessible through [https://ask.alcf.anl.gov](https://ask.alcf.anl.gov)
 
 ## Example Questions
 
@@ -79,8 +83,7 @@ Example: Comparing machine availability across ALCF systems
 
 ## Providing Feedback
 
-- If you have feedback on a specific response, you can rate and comment directly:
+- If you have feedback on a specific response, you can rate and comment directly. All feedback is anonymous by default. If you would like to receive follow-up communication, please provide your contact info.:
     - Click on the stars under **"Rate the Answer"** to submit a rating
     - Click **"Add Feedback Comment"** to provide additional comments
 - For high-level comments or feedback, please contact: [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
-- All feedback is anonymous by default. If you would like to receive follow-up communication, please provide your contact info.
