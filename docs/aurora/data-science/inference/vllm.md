@@ -1,24 +1,7 @@
-# Inference with vLLM
+# Inference with vLLM on Aurora
 
 [vLLM](https://docs.vllm.ai/) is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.
 
-## Install vLLM 
-
-First, SSH to an Aurora login node:
-```bash linenums="1"
-ssh <username>@aurora.alcf.anl.gov
-```
-
-Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
-
-!!! note
-
-    The instructions below should be **run directly from a compute node**. Explicitly, to request an interactive job (from `aurora-uan`):
-    ```bash
-    qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
-    ```
-
-    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
 ## Provided Installation
 vLLM (version 0.15.0) is available as part of the frameworks module. Please use the following command:
 
@@ -26,13 +9,15 @@ vLLM (version 0.15.0) is available as part of the frameworks module. Please use 
 module load frameworks
 export CCL_PROCESS_LAUNCHER=hydra
 ```
+
 Then, you can use this framework in your code 
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
 '0.15.0'
 ```
-## Known Issue
+
+## Known Issue on Aurora
 There is a known issue related to populating the `modelinfos` in the 
 `VLLM_CACHE_ROOT` directory to run a model for the first time, which manifests
 as a `validation error for ModelConfig`. The workaround
@@ -54,10 +39,13 @@ to provide a fix in the next module update.
 ## Access Model Weights
 
 Model weights for commonly used open-weight models are downloaded and available in the following directory on Aurora:
+
 ```bash linenums="1"
 /flare/datasets/model-weights/hub
 ```
+
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
+
 ```bash linenums="1"
 export HF_HOME="/flare/datasets/model-weights"
 export HF_DATASETS_CACHE="/flare/datasets/model-weights"
@@ -70,6 +58,7 @@ export TMPDIR="/tmp"
 ## Common Configuration Recommendations 
 
 For small models that fit within a single tile's memory (64 GB), no additional configuration is required to serve the model. Simply set `TP=1` (Tensor Parallelism). This configuration ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 7 billion parameters typically fit within a single tile. To utilize multiple tiles for larger models (`TP>1`), a more advanced setup is necessary. This involves configuring a Ray cluster and setting the `ZE_FLAT_DEVICE_HIERARCHY` environment variable:
+
 ```bash linenums="1"
 export ZE_FLAT_DEVICE_HIERARCHY=FLAT
 
@@ -85,6 +74,7 @@ export no_proxy="localhost,127.0.0.1" #Set no_proxy for the client to interact w
 #### Using Single Tile
 
 The following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
+
 ```bash linenums="1"
 vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype float16 
 ```
@@ -122,13 +112,22 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 	```
 
 From a login node, initiate the Ray cluster and execute vLLM serve:
+
 ```bash linenums="1"
 source /path/to/setup_ray_cluster.sh
 main 
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2  --dtype float16 --trust-remote-code --max-model-len 1024
 ```
+
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
 In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in your environment. 
+
+
+## Scaling vLLM Workflows
+
+To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup.
+These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
+
 
 
 
