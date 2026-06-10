@@ -36,7 +36,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.4.0
+git checkout v2.10.0
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
 bash commands_wse3.sh
 ```
@@ -126,7 +126,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.4.0
+git checkout v2.10.0
 cd ~/csl-examples/tutorials/gemv-01-complete-program/
 ```
 
