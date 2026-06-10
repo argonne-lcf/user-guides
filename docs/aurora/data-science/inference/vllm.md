@@ -3,14 +3,14 @@
 [vLLM](https://docs.vllm.ai/) is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.
 
 ## Provided Installation
-vLLM (version 0.15.0) is available as part of the frameworks module. Please use the following command:
+vLLM (version 0.15.0) is available as part of the `frameworks` module. Please use the following commands:
 
 ```bash
 module load frameworks
 export CCL_PROCESS_LAUNCHER=hydra
 ```
 
-Then, you can use this framework in your code 
+Then, you can import `vllm` as follows
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
@@ -38,7 +38,7 @@ to provide a fix in the next module update.
 
 ## Access Model Weights
 
-Model weights for commonly used open-weight models are downloaded and available in the following directory on Aurora:
+Model weights for commonly used open-weight models are downloaded and available in the following directory on Aurora.
 
 ```bash linenums="1"
 /flare/datasets/model-weights/hub
@@ -55,53 +55,39 @@ export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
 ```
 
-## Common Configuration Recommendations 
+## Serving Small Models on a Single Tile
 
-For small models that fit within a single tile's memory (64 GB), no additional configuration is required to serve the model. Simply set `TP=1` (Tensor Parallelism). This configuration ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 7 billion parameters typically fit within a single tile. To utilize multiple tiles for larger models (`TP>1`), a more advanced setup is necessary. This involves configuring a Ray cluster and setting the `ZE_FLAT_DEVICE_HIERARCHY` environment variable:
+For small models that fit within the memory of a single PVC tile (64 GB), no additional configuration is required to serve the model. Simply use the default tensor parallelism size (`TP`) of 1 when serving the model. This ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 20 billion parameters typically fit within a single tile when using half precision (e.g., `bfloat16`). 
+
+For example, the following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
 
 ```bash linenums="1"
-export ZE_FLAT_DEVICE_HIERARCHY=FLAT
+vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype bfloat16 
+```
 
+## Serving Medium Models on Multiple Tiles (Single Node)
+
+To serve larger models which require multiple tiles (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves configuring the Ray cluster and setting the `VLLM_HOST_IP`. Models with a few hundred billion parameters can usually fit within a single node utilizing half precition.
+
+The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. 
+
+```bash linenums="1"
+# Set hierarchy for safety, but already set by frameworks module
+export ZE_FLAT_DEVICE_HIERARCHY=FLAT 
+
+# Start ray cluster
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export tiles=12
 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
 
-export no_proxy="localhost,127.0.0.1" #Set no_proxy for the client to interact with the locally hosted model
-```
+# Set no_proxy for the client to interact with the locally hosted model
+export no_proxy="localhost,127.0.0.1"
 
-## Serve Small Models 
-
-#### Using Single Tile
-
-The following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
-
-```bash linenums="1"
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype float16 
-```
-
-#### Using Multiple Tiles
-
-Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve the `meta-llama/Llama-2-7b-chat-hf` model across 8 tiles on a single node:
-
-```bash linenums="1"
-export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --tensor-parallel-size 8 --dtype float16 --trust-remote-code
-```
-
-## Serve Medium Models 
-
-#### Using Single Node
-
-Refer to [Common Configuration Recommendations](#common-configuration-recommendations) for guidance on setting up the Ray cluster. The following script demonstrates how to serve `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. Models with up to 70 billion parameters can usually fit within a single node, utilizing multiple tiles.
-
-```bash linenums="1"
-export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
+# Serve the model
 vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype float16 --trust-remote-code --max-model-len 32768
 ```
 
-## Serve Large Models 
-
-### Using Multiple Nodes
+## Serving Large Models on Multiple Tiles and Nodes
 
 The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. First, use `setup_ray_cluster.sh` script to setup a Ray cluster across nodes:
 
@@ -127,7 +113,3 @@ In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in y
 
 To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup.
 These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
-
-
-
-
