@@ -435,6 +435,29 @@ Models are organized by cluster and marked with the following capabilities:
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
         - Only chat completions endpoint is available
 
+### Model Serving Configuration
+
+When available, model serving configuration details can be viewed for each cluster.
+
+```bash
+#!/bin/bash
+
+# Get your access token
+access_token=$(python inference_auth_token.py get_access_token)
+
+# Check serving configuration for all Sophia models
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for all Metis models
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/models" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for a specific model (e.g., openai/gpt-oss-120b)
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?model_id=openai/gpt-oss-120b" \
+    -H "Authorization: Bearer ${access_token}"
+```
+
 !!! note "Want to add a model?"
     To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).
 

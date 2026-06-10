@@ -138,3 +138,33 @@ sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 !!! tip
 
     See `sbank l a -h` for all the options and `sbank –f\?` for a list of fields that can be displayed.
+
+### FAQs
+
+!!! note
+
+    There is currently a bug in the `sbank l a` command for suballocations where the `charged` column could display an incorrect value. The `Available Balance` column should display the right value.
+
+##### Q1: I am trying to move hours from one suballocation to another using `sbank e sub`, but I am getting the error "allocation balance < hours to move." My source suballocation shows a positive available balance, why am I still getting this error? 
+**A:** This error means that the **parent** allocation does not have sufficient available balance to cover the hours you are attempting to move - even if the source suballocation appears to show a positive balance. The command checks the balance at the parent allocation level, not the individual suballocation level. In this case, the overall allocation balance may be negative or insufficient, which will trigger this error regardless of what any individual suballocation shows. A suballocation can show a positive available balance while the parent allocation's total balance is negative or exhausted. This can happen when other suballocations under the same parent allocation have consumed more hours than were assigned to them, allowing usage to go negative. Always check the total available balance of the parent allocation, not just the individual suballocation, before attempting a transfer.
+
+##### Q2: How do I check the total balance of a parent allocation?
+**A:** Use the following command, specifying the parent allocation ID: `sbank-list-allocations -a <allocation_id>`
+
+##### Q3: Can a suballocation have a negative balance?
+**A:** Yes. Suballocations can go negative for different reasons. 
+ - When the suballocation has a positive balance at the time jobs are **queued** but once jobs finish running the charges exceed the balance that was available when they were queued.
+ - If the **allocation** has a negative balance (regardless of whether the suballocation has a positive balance or not, as long as the allocation is still active), jobs will be routed to backfill queues.
+
+##### Q4: Why is my job getting rejected even though the alloacation has node-hours available?
+**A:** Your jobs will only run if the **suballocation** has a positive balance. It will be rejected otherwise.
+
+##### Q5: I am still confused about when jobs will run and won't. Can you provide the rules in an easy-to-read format?
+**A:** 
+
+| Allocation Balance | Suballocation Balance | Job Status |
+| -------- | -------- | -------- |
+| Positive    | Positive     | Job will run     |
+| Positive   |  Negative     | Job rejected; won't run    |
+| Negative    | Positive     | Routed to backfill queues (lower priority)  |
+| Negative    | Negative     | Routed to backfill queues (lower priority) |
