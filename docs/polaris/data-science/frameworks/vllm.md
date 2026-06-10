@@ -41,10 +41,32 @@ export TMPDIR="/tmp"
 
 For small models that fit within the memory of a single A100 GPU (40 GB), no additional configuration is required to serve the model. Simply use the default tensor parallelism size (`TP`) of 1 when serving the model. This ensures the model is run on a single GPU without the need for distributed setup. Models with fewer than 15 billion parameters typically fit within a single GPU when using half precision (e.g., `bfloat16`). 
 
-For example, the following command serves `meta-llama/Llama-2-7b-chat-hf` on a single GPU of a single node:
+For example, the following command serves `meta-llama/Llama-3.1-8B-Instruct` on a single GPU of a single node.
 
 ```bash linenums="1"
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype bfloat16 
+vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000 --dtype bfloat16 
+```
+
+After the server output says `Application startup complete.`, it is ready to accept prompt requests, for example with the following simple Python code (can background the server process)
+
+```python linenums="1"
+from openai import OpenAI
+
+openai_api_base = f"http://localhost:8000/v1"
+client = OpenAI(
+    api_key="EMPTY",
+    base_url=openai_api_base,
+)
+
+prompt = "Hi, can you introduce yourself?"
+response = client.chat.completions.create(
+    model="meta-llama/Llama-3.1-8B-Instruct",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.0,
+    max_tokens=1024,
+    stream=False
+)
+print(f"\n{response.choices[0].message.content}\n")
 ```
 
 ## Serving Medium Models on Multiple GPUs (Single Node)

@@ -59,10 +59,32 @@ export TMPDIR="/tmp"
 
 For small models that fit within the memory of a single PVC tile (64 GB), no additional configuration is required to serve the model. Simply use the default tensor parallelism size (`TP`) of 1 when serving the model. This ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 20 billion parameters typically fit within a single tile when using half precision (e.g., `bfloat16`). 
 
-For example, the following command serves `meta-llama/Llama-2-7b-chat-hf` on a single tile of a single node:
+For example, the following command serves `meta-llama/Llama-3.1-8B-Instruct` on a single tile of a single node:
 
 ```bash linenums="1"
-vllm serve meta-llama/Llama-2-7b-chat-hf --port 8000 --dtype bfloat16 
+vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000 --dtype bfloat16 
+```
+
+After the server output says `Application startup complete.`, it is ready to accept prompt requests, for example with the following simple Python code (can background the server process)
+
+```python linenums="1"
+from openai import OpenAI
+
+openai_api_base = f"http://localhost:8000/v1"
+client = OpenAI(
+    api_key="EMPTY",
+    base_url=openai_api_base,
+)
+
+prompt = "Hi, can you introduce yourself?"
+response = client.chat.completions.create(
+    model="meta-llama/Llama-3.1-8B-Instruct",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.0,
+    max_tokens=1024,
+    stream=False
+)
+print(f"\n{response.choices[0].message.content}\n")
 ```
 
 ## Serving Medium Models on Multiple Tiles (Single Node)
@@ -84,12 +106,12 @@ ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP
 export no_proxy="localhost,127.0.0.1"
 
 # Serve the model
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype float16 --trust-remote-code --max-model-len 32768
+vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype bfloat16 --trust-remote-code --max-model-len 32768
 ```
 
 ## Serving Large Models on Multiple Tiles and Nodes
 
-The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and `PP=2`. Models exceeding 70 billion parameters generally require more than one Aurora node. First, use `setup_ray_cluster.sh` script to setup a Ray cluster across nodes:
+The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and pipeline parallelism (`PP`) of 2. First, use `setup_ray_cluster.sh` script to setup a Ray cluster across nodes:
 
 ??? example "Setup script"
 
@@ -97,12 +119,12 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
     --8<-- "./docs/aurora/data-science/inference/setup_ray_cluster.sh"
 	```
 
-From a login node, initiate the Ray cluster and execute vLLM serve:
+From a **login node**, initiate the Ray cluster and execute vLLM serve:
 
 ```bash linenums="1"
 source /path/to/setup_ray_cluster.sh
-main 
-vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2  --dtype float16 --trust-remote-code --max-model-len 1024
+main #??
+vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2  --dtype bfloat16 --trust-remote-code --max-model-len 1024
 ```
 
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
