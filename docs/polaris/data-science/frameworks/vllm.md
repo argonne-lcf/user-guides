@@ -71,6 +71,24 @@ print(f"\n{response.choices[0].message.content}\n")
 
 ## Serving Medium Models on Multiple GPUs (Single Node)
 
+To serve larger models which require multiple GPUs (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves configuring the Ray cluster and setting the `VLLM_HOST_IP`. Models with less than 70 billion parameters can usually fit within a single node utilizing half precition.
+
+The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 4 GPUs on a single node. 
+
+```bash linenums="1"
+# Start ray cluster
+export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.polaris.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
+export GPUS=4
+ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=32 --num-gpus=$GPUS&
+
+# Set no_proxy for the client to interact with the locally hosted model
+export no_proxy="localhost,127.0.0.1"
+
+# Serve the model
+vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 4 --dtype bfloat16 --trust-remote-code --max-model-len 32768
+```
+
+## Serving Large Models on Multiple GPUs and Nodes
 
 ## Scaling vLLM Workflows
 
