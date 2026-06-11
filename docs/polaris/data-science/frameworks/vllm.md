@@ -73,7 +73,7 @@ print(f"\n{response.choices[0].message.content}\n")
 
 To serve larger models which require multiple GPUs (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves configuring the Ray cluster and setting the `VLLM_HOST_IP`. Models with less than 70 billion parameters can usually fit within a single node utilizing half precition.
 
-The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 4 GPUs on a single node. 
+The following commands demonstrate how to serve the `meta-llama/Llama-3.1-70B-Instruct` on 4 GPUs on a single node. 
 
 ```bash linenums="1"
 # Start ray cluster
@@ -85,10 +85,33 @@ ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP
 export no_proxy="localhost,127.0.0.1"
 
 # Serve the model
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 4 --dtype bfloat16 --trust-remote-code --max-model-len 32768
+vllm serve meta-llama/Llama-3.1-70B-Instruct --port 8000 --tensor-parallel-size 4 --dtype bfloat16 --trust-remote-code --max-model-len 8192
 ```
 
 ## Serving Large Models on Multiple GPUs and Nodes
+
+To serve models across multiple nodes, we suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
+
+??? example "Setup script"
+
+	```bash linenums="1" title="setup_ray_cluster.sh"
+    --8<-- "./docs/polaris/data-science/frameworks/setup_ray_cluster.sh"
+	```
+
+The following example serves `meta-llama/Llama-3.1-70B-Instruct` model using 2 nodes. It sets tensor parallelism `TP=4` for intra-node communications and pipeline parallelism `PP=2` for inter-node communication, for a total of 16 shards. 
+
+```bash linenums="1"
+source /path/to/setup_ray_cluster.sh
+main
+ray status # should show 2 active nodes and 8 GPUs total
+vllm serve meta-llama/Llama-3.1-70B-Instruct --port 8000 --tensor-parallel-size 4 --pipeline-parallel-size 2 --dtype bfloat16 --trust-remote-code --max-model-len 8192
+```
+
+General guidelines to keep in mind when serving models across nodes:
+
+* Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. However, setting `TP` size equal to the number of GPUs on the node (4 for Polaris) is preferred to utilize intra-node communications for this parallism dimension. 
+* Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. In this case `PP` is set to the number of nodes used.
+* The product `TP x PP` indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16`, `(num. billion paramemers x 2) / GPU GB mem` gives the number of GPUs needed. 
 
 ## Scaling vLLM Workflows
 
