@@ -79,7 +79,7 @@ The following commands demonstrate how to serve the `meta-llama/Llama-3.1-70B-In
 # Start ray cluster
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.polaris.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export GPUS=4
-ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=32 --num-gpus=$GPUS&
+ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=32 --num-gpus=$GPUS &
 
 # Set no_proxy for the client to interact with the locally hosted model
 export no_proxy="localhost,127.0.0.1"
