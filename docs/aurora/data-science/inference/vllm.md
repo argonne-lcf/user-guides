@@ -47,10 +47,10 @@ Model weights for commonly used open-weight models are downloaded and available 
 To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 
 ```bash linenums="1"
+export HF_TOKEN="YOUR_HF_TOKEN"
 export HF_HOME="/flare/datasets/model-weights"
 export HF_DATASETS_CACHE="/flare/datasets/model-weights"
 export HF_MODULES_CACHE="/flare/datasets/model-weights"
-export HF_TOKEN="YOUR_HF_TOKEN"
 export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
 ```
@@ -62,7 +62,7 @@ For small models that fit within the memory of a single PVC tile (64 GB), no add
 For example, the following command serves `meta-llama/Llama-3.1-8B-Instruct` on a single tile of a single node:
 
 ```bash linenums="1"
-vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000 --dtype bfloat16 
+vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000 --dtype bfloat16 --enforce-eager
 ```
 
 After the server output says `Application startup complete.`, it is ready to accept prompt requests, for example with the following simple Python code (can background the server process)
@@ -94,24 +94,24 @@ To serve larger models which require multiple tiles (`TP>1`) but still only a si
 The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. 
 
 ```bash linenums="1"
-# Set hierarchy for safety, but already set by frameworks module
+# Set hierarchy
 export ZE_FLAT_DEVICE_HIERARCHY=FLAT 
 
 # Start ray cluster
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
 export tiles=12
-ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles&
+ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles &
 
 # Set no_proxy for the client to interact with the locally hosted model
 export no_proxy="localhost,127.0.0.1"
 
 # Serve the model
-vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype bfloat16 --trust-remote-code --max-model-len 32768
+vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
 ## Serving Large Models on Multiple Tiles and Nodes
 
-The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes with `TP=8` and pipeline parallelism (`PP`) of 2. First, use `setup_ray_cluster.sh` script to setup a Ray cluster across nodes:
+To serve models across multiple nodes, we suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
 
 ??? example "Setup script"
 
@@ -119,12 +119,13 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
     --8<-- "./docs/aurora/data-science/inference/setup_ray_cluster.sh"
 	```
 
-From a **login node**, initiate the Ray cluster and execute vLLM serve:
+The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes. It sets tensor parallelism `TP=8` for intra-node communications and pipeline parallelism `PP=2` for inter-node communication, for a total of 16 shards. 
 
 ```bash linenums="1"
 source /path/to/setup_ray_cluster.sh
-main #??
-vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2  --dtype bfloat16 --trust-remote-code --max-model-len 1024
+main
+ray status # should show 2 active nodes and 16 GPUs total
+vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --dtype bfloat16 --trust-remote-code --max-model-len 8192
 ```
 
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
