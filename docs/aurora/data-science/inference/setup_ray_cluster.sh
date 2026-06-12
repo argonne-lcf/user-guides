@@ -30,8 +30,8 @@ setup_environment() {
     #export CCL_ZE_IPC_EXCHANGE=drmfd
     export OMP_NUM_THREADS=8
     export TORCH_LLM_ALLREDUCE=1
-    export HF_HOME="/eagle/datasets/model-weights/hub"
-    export HF_DATASETS_CACHE="/flare/datasets/model-weights/hub"
+    export HF_HOME="/flare/datasets/model-weights"
+    export HF_DATASETS_CACHE="/flare/datasets/model-weights"
     export TMPDIR="/tmp"
     export RAY_TMPDIR="/tmp"
     export VLLM_IMAGE_FETCH_TIMEOUT=60
@@ -39,7 +39,7 @@ setup_environment() {
     ulimit -c unlimited
 
     # Derive the node's HSN IP address (modify the getent command as needed)
-    export HSN_IP_ADDRESS=$(getent hosts "$(hostname).hsn.cm.polaris.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
+    export HSN_IP_ADDRESS=$(getent hosts "$(hostname).hsn.cm.aurora.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
     export VLLM_HOST_IP="$HSN_IP_ADDRESS"
 
     echo "[$(hostname)] Environment setup complete. HSN_IP_ADDRESS is $HSN_IP_ADDRESS"
@@ -54,7 +54,7 @@ stop_ray() {
 # Start Ray head node
 start_ray_head() {
     echo "[$(hostname)] Starting Ray head..."
-    ray start --num-gpus=4 --num-cpus=32 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray start --num-gpus=12 --num-cpus=64 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     # Wait until Ray reports that the head node is up
     echo "[$(hostname)] Waiting for Ray head to be up..."
@@ -70,7 +70,7 @@ start_ray_head() {
 start_ray_worker() {
     echo "[$(hostname)] Starting Ray worker, connecting to head at $RAY_HEAD_IP..."
     echo "HSN IP Address : $HSN_IP_ADDRESS"
-    ray start --num-gpus=4 --num-cpus=32 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray start --num-gpus=12 --num-cpus=64 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     echo "[$(hostname)] Waiting for Ray worker to be up..."
     until ray status &>/dev/null; do
