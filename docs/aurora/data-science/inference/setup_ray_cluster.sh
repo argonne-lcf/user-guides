@@ -27,6 +27,8 @@ setup_environment() {
     module load frameworks
 
     export ZE_FLAT_DEVICE_HIERARCHY=FLAT
+    RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
+    RAY_EXPERIMENTAL_NOSET_ONEAPI_DEVICE_SELECTOR=1
     #export CCL_ZE_IPC_EXCHANGE=drmfd
     export OMP_NUM_THREADS=8
     export TORCH_LLM_ALLREDUCE=1
@@ -54,7 +56,7 @@ stop_ray() {
 # Start Ray head node
 start_ray_head() {
     echo "[$(hostname)] Starting Ray head..."
-    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray start --num-gpus=12 --num-cpus=64 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7 ray start --num-gpus=8 --num-cpus=64 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     # Wait until Ray reports that the head node is up
     echo "[$(hostname)] Waiting for Ray head to be up..."
@@ -70,7 +72,7 @@ start_ray_head() {
 start_ray_worker() {
     echo "[$(hostname)] Starting Ray worker, connecting to head at $RAY_HEAD_IP..."
     echo "HSN IP Address : $HSN_IP_ADDRESS"
-    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray start --num-gpus=12 --num-cpus=64 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7 ray start --num-gpus=8 --num-cpus=64 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     echo "[$(hostname)] Waiting for Ray worker to be up..."
     until ray status &>/dev/null; do
@@ -143,4 +145,3 @@ main() {
 
     echo "[$(hostname)] Ray cluster is up and running with $num_nodes nodes."
 }
-

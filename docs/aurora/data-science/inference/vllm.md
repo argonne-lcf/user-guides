@@ -88,29 +88,20 @@ print(f"\n{response.choices[0].message.content}\n")
 
 ## Serving Medium Models on Multiple Tiles (Single Node)
 
-To serve larger models which require multiple tiles (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves configuring the Ray cluster and setting the `VLLM_HOST_IP`. Models with a few hundred billion parameters can usually fit within a single node utilizing half precition.
+To serve larger models which require multiple tiles (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves setting the `VLLM_HOST_IP` and the `TP` size. By default, vLLM uses the `mp` backend, which is sufficient for single node model serving. Models with a few hundred billion parameters can usually fit within a single node utilizing half precition.
 
 The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. 
 
 ```bash linenums="1"
-# Set hierarchy
-export ZE_FLAT_DEVICE_HIERARCHY=FLAT 
-
-# Start ray cluster
 export VLLM_HOST_IP=$(getent hosts $(hostname).hsn.cm.aurora.alcf.anl.gov | awk '{ print $1 }' | tr ' ' '\n' | sort | head -n 1)
-export tiles=12
-ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7,8,9,10,11 ray --logging-level debug start --head --verbose --node-ip-address=$VLLM_HOST_IP --port=6379 --num-cpus=64 --num-gpus=$tiles &
-
-# Set no_proxy for the client to interact with the locally hosted model
 export no_proxy="localhost,127.0.0.1"
 
-# Serve the model
 vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 8 --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
 ## Serving Large Models on Multiple Tiles and Nodes
 
-To serve models across multiple nodes, we suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
+To serve models across multiple nodes, vLLM uses Ray to launch processes across nodes. We suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
 
 ??? example "Setup script"
 
@@ -124,11 +115,12 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 source /path/to/setup_ray_cluster.sh
 main
 ray status # should show 2 active nodes and 16 GPUs total
-vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
+vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --distributed-executor-backend ray --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
-Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
-In `setup_ray_cluster.sh`, change `/path/to/setup_ray_cluster.sh` to a path in your environment. 
+!!! info
+    * By default, `setup_ray_cluster.sh` launches a ray cluster with 8 raylets per node by specifing `ONEAPI_DEVICE_SELECTOR=level_zero:0,1,2,3,4,5,6,7` and `--num-gpus=8`. This matches the `vllm serve` command with `TP=8`. This is the recommended setup, however if users want to change the TP size, remember to also change the number of GPUs in the Ray setup script. 
+    * Setting `--max-model-len` can be important in order to fit the model on the GPUs.  
 
 
 ## Scaling vLLM Workflows
