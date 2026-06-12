@@ -32,8 +32,8 @@ setup_environment() {
     export RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES=1
     export OMP_NUM_THREADS=8
     export TORCH_LLM_ALLREDUCE=1
-    export HF_HOME="/eagle/datasets/model-weights/hub"
-    export HF_DATASETS_CACHE="/flare/datasets/model-weights/hub"
+    export HF_HOME="/eagle/datasets/model-weights"
+    export HF_DATASETS_CACHE="/flare/datasets/model-weights"
     export TMPDIR="/tmp"
     export RAY_TMPDIR="/tmp"
     export VLLM_IMAGE_FETCH_TIMEOUT=60
