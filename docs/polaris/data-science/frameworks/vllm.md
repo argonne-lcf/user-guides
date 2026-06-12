@@ -103,9 +103,11 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct --port 8000 --tensor-parallel-size 
 
 General guidelines to keep in mind when serving models across nodes:
 
-* Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. However, setting `TP` size equal to the number of GPUs on the node (4 for Polaris) is preferred to utilize intra-node communications for this parallism dimension. 
-* Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. In this case `PP` is set to the number of nodes used.
-* The product `TP x PP` indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16`, `(num. billion paramemers x 2) / GPU GB mem` gives the number of GPUs needed. 
+!!! info "Guidelines for vLLM Model Serving"
+    * Setting `--max-model-len` can be important in order to fit the model on the GPUs.
+    * Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. However, setting `TP` size equal to the number of GPUs on the node (4 for Polaris) is preferred to utilize intra-node communications for this parallism dimension. 
+    * Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. In this case `PP` is set to the number of nodes used.
+    * The product `TP x PP` indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16`, `(num. billion paramemers x 2) / GPU GB mem` gives the number of GPUs needed. 
 
 ## Scaling vLLM Workflows
 
