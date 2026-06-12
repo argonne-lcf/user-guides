@@ -7,7 +7,6 @@ vLLM (version 0.15.0) is available as part of the `frameworks` module. Please us
 
 ```bash
 module load frameworks
-export CCL_PROCESS_LAUNCHER=hydra
 ```
 
 Then, you can import `vllm` as follows
@@ -125,7 +124,7 @@ The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 
 source /path/to/setup_ray_cluster.sh
 main
 ray status # should show 2 active nodes and 16 GPUs total
-vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --dtype bfloat16 --trust-remote-code --max-model-len 8192
+vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
 Setting `--max-model-len` is important in order to fit this model on 2 nodes. In order to use higher `--max-model-len` values, you will need to use additonal nodes. 
