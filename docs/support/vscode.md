@@ -4,6 +4,11 @@
 
 This document explains how to install Visual Studio Code (VS Code) on your local machine, add the Remote - SSH extension, configure SSH for Windows, macOS, and Linux, and compile a simple `helloworld.cpp` program on a **remote ALCF server**. The compilation and execution happen on the remote Linux system; your local machine is only used to run [VS Code and initiate the SSH connection](https://code.visualstudio.com/docs/remote/ssh).
 
+## VS Code is allowed, but ALCF cannot provide support
+
+This document is to provide guidance when using VS Code. 
+If you have an issue with VS Code that is not covered below, then we suggest reaching out to VS Code support.
+
 ## Installing Visual Studio Code (local context)
 
 [VS Code](https://code.visualstudio.com) is a free, cross-platform code editor available for Windows, macOS, and Linux.
@@ -282,3 +287,21 @@ With these steps, users can:
 - Connect to your Linux compute server over SSH.
 - Use `module load` / `module add` to select compilers on the remote system.
 - Compile and debug C++ programs such as `helloworld.cpp` entirely on the remote Linux host.
+
+## Known Issues
+
+### `ssh` Issues
+
+If your VS Code ends abruptly then zombie processes will likely remain due to incomplete clean-up when you were disconnected.
+This can result in latency issues when attempting to `ssh` back into the system.
+If this happens, try to reconnect to the same login your previous session was on, and then delete any unnecessary processes tied to your ALCF user ID.
+You can view your VS Code processes with the following command:
+
+`ps -ef | grep vscode-server`
+
+Then you can delete those processes with the following:
+
+`kill -9 <PID>`
+
+###
+
