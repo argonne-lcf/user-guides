@@ -1,24 +1,52 @@
 # ALCF User Guides
 The ALCF user-facing documentation source material is hosted on GitHub, in order to facilitate contributions and issue reporting from the community.
 
-Our user guides contain information for:
+## Quick Access
 
-- [Account and Project Management](account-project-management/accounts-and-access/index.md): Information and instructions on how to manage your ALCF account and awarded project.
-- [Data Management](data-management/filesystem-and-storage/index.md): Information on our file systems that are mounted globally across all of our production systems.
-- [Aurora](aurora/index.md): Information on getting your code ready for Aurora, Argonne's exacale supercomputer.
-- [AI Testbed](ai-testbed/index.md): Information on the advanced, non-GPU AI accelerators housed within the ALCF
-- [Crux](crux/index.md): A 256-node, dual-socket AMD CPU platform
-- [Polaris](polaris/index.md): Our 560-node HPE system with NVIDIA A100 GPUs
-- [Sophia](sophia/index.md): Our 24-node NVIDIA DGX A100 system
-- [Services](services/index.md): Information on how to use various services provided across clusters.
-- [Facility Policies](policies/index.md): Information on our policies and procedures.
+<div class="portal-grid">
+    <a class="portal-card" href="docs/support/index.md">
+    <div class="portal-card__title">Get Support</div>
+    </a>
+    <a class="portal-card" href="<!--Rachel add link!-->">
+    <div class="portal-card__title">ALCF Users Slack</div>
+    </a>
+    <a class="portal-card" href="https://my.alcf.anl.gov">
+    <div class="portal-card__title">MyALCF</div>
+    </a>
+    <a class="portal-card" href="https://www.alcf.anl.gov/events">
+    <div class="portal-card__title">Training Events and Webinars</div>
+    </a>
+    <a class="portal-card" href="https://inference.alcf.anl.gov/">
+    <div class="portal-card__title">Inference</div>
+    </a>
+    <a class="portal-card" href="https://www.alcf.anl.gov/support-center/training">
+    <div class="portal-card__title">Training Videos and Resources</div>
+    </a>
+</div>
 
-## How to Get Access
-Researchers interested in using the ALCF systems (including CPU systems, GPU systems, Inference Endpoints, and the AI Testbed's Cerebras CS-3, SambaNova DataScale platforms) can now submit project proposals via the [ALCF's Director's Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Calls for proposals for additional allocation programs will be open at a later date.
+## Explore the User Guides
 
-Submit your proposal requests at: [Allocation Request Page](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program)
+<div class="portal-grid">
+    <a class="portal-card" href="https://www.alcf.anl.gov/managing-your-award">
+    <div class="portal-card__title">Managing Your Award</div>
+    </a>
+    <a class="portal-card" href="docs/account-project-management/index.md">
+    <div class="portal-card__title">Account and Project Management</div>
+    </a>
+    <a class="portal-card" href="docs/machines/index.md">
+    <div class="portal-card__title">Machines</div>
+    </a>
+    <a class="portal-card" href="docs/running-jobs/index.md">
+    <div class="portal-card__title">Running Jobs</div>
+    </a>
+    <a class="portal-card" href="docs/data-management/index.md">
+    <div class="portal-card__title">Data Management</div>
+    </a>
+    <a class="portal-card" href="docs/services/index.md">
+    <div class="portal-card__title">Services</div>
+    </a>
+    
+</div>
 
-## Getting Started
-If you'd like to get started using our ALCF resources, our [Getting Started Page](https://www.alcf.anl.gov/support-center/get-started) provides information on what you need to do in order to get time on our systems, get an account, and how to start running jobs.
 
-Please send feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
+[def]: y.alcf.anl.go

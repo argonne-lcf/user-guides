@@ -1681,7 +1681,7 @@ footer .grid {
   grid-row-gap: 0;
   row-gap: 0;
 }
-}
+
 
 .footer--attr {
   grid-column: 1 / span 2;
@@ -1894,4 +1894,42 @@ pre .normal a {
 :root {
   --md-footer-height: 160px;
   --md-header-height: 72px;
+}
+
+/*Homepage Portal Cards*/
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.portal-card {
+  grid-column: span 4;
+  display: block;
+  padding: 1.25rem 1.25rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--md-default-fg-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.portal-card:hover,
+.portal-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--md-accent-fg-color) 35%, var(--onboard-border-light));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+}
+.portal-card__title {
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: var(--onboard-header-blue);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+}
+@media (max-width: 900px) {
+  .portal-card {
+    grid-column: 1 / -1;
+  }
 }
