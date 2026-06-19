@@ -6,7 +6,7 @@ Users are invited to find more information about ADIOS2 on their [GitHub page](h
 
 ## Accessing ADIOS2 on Aurora
 
-Pre-built modules are available to all users, enabling access to the latest version of ADIOS2 (v2.10). These modules can be displayed with `module avail adios2` and comprise a CPU-only build and a SYCL build of the library, with the SYCL build being the default. Note that both ADIOS2 modules also load a Spack installation of Python 3.10 with the `numpy`, `mpi4py`, and `adios2` packages. For instance, the default SYCL build can be loaded by executing
+Pre-built modules are available to all users, enabling access to the latest version of ADIOS2 (v2.11). These modules can be displayed with `module avail adios2` and comprise a CPU-only build and a SYCL build of the library, with the SYCL build being the default. Note that both ADIOS2 modules also load a Spack installation of Python 3.12 with the `numpy`, `mpi4py`, and `adios2` packages. For instance, the default SYCL build can be loaded by executing
 
 ```bash
 module load adios2

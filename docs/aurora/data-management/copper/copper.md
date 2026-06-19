@@ -43,14 +43,14 @@ module load copper
 APP_BASE=/lus/flare/projects/datascience/${USER}/exp1
 MY_COPPER_MOUNT=/tmp/${USER}/copper_mount
 
-launch_copper_aurora.sh -d ${APP_BASE}/copper-logs-dir -v ${MY_COPPER_MOUNT}
+launch_copper.sh -d ${APP_BASE}/copper-logs-dir -v ${MY_COPPER_MOUNT}
 
 time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
   --cpu-bind=list:4:56:9:61:14:66:19:71:20:74:25:79 --genvall \
   --genv=PYTHONPATH=${MY_COPPER_MOUNT}${APP_BASE}/lus_custom_pip_env:$PYTHONPATH \
   python3 -c "import torch; print(torch.__file__)"
 
-stop_copper_aurora.sh -d ${APP_BASE}/copper-logs-dir -v ${MY_COPPER_MOUNT}
+stop_copper.sh -d ${APP_BASE}/copper-logs-dir -v ${MY_COPPER_MOUNT}
 ```
 
 If you omit the Copper-prefixed path, your application reads directly from the filesystem as usual.
@@ -58,8 +58,8 @@ If you omit the Copper-prefixed path, your application reads directly from the f
 ## Starting and Stopping Copper
 
 ```bash
-launch_copper_aurora.sh [-d log_dir_base] [-v CU_FUSE_MNT_VIEWDIR]
-stop_copper_aurora.sh   [-d log_dir_base] [-v CU_FUSE_MNT_VIEWDIR]
+launch_copper.sh [-d log_dir_base] [-v CU_FUSE_MNT_VIEWDIR]
+stop_copper.sh   [-d log_dir_base] [-v CU_FUSE_MNT_VIEWDIR]
 ```
 
 On Aurora, a common mount path is `/tmp/${USER}/copper_mount`, and common Copper service cores are `48,49,50,51`.
@@ -74,7 +74,7 @@ If your packages live in a custom directory, prepend only that `PYTHONPATH` entr
 
 ```bash
 module load copper
-launch_copper_aurora.sh
+launch_copper.sh
 
 CUSTOM_PKG_DIR=/lus/flare/projects/${PROJECT_NAME}/${USER}/lus_custom_pip_env
 
@@ -83,7 +83,7 @@ time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
   --genv=PYTHONPATH=/tmp/${USER}/copper/${CUSTOM_PKG_DIR}:$PYTHONPATH \
   python3 -c "import dragon; print(dragon.__file__)"
 
-stop_copper_aurora.sh
+stop_copper.sh
 ```
 
 ### Python virtual environment
@@ -95,14 +95,14 @@ CUSTOM_VENV_PATH=/lus/flare/projects/${PROJECT_NAME}/${USER}/myenv
 source ${CUSTOM_VENV_PATH}/bin/activate
 
 module load copper
-launch_copper_aurora.sh
+launch_copper.sh
 
 time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
   --cpu-bind=list:4:56:9:61:14:66:19:71:20:74:25:79 --genvall \
   --genv=PYTHONPATH=/tmp/${USER}/copper/${CUSTOM_VENV_PATH}/lib64/python3.10/site-packages:$PYTHONPATH \
   python3 -c "import dragon; print(dragon.__file__)"
 
-stop_copper_aurora.sh
+stop_copper.sh
 ```
 
 ### Personal Conda environment
@@ -111,7 +111,7 @@ When using a personal Conda environment, prepending Copper only to the path pass
 
 ```bash
 module load copper
-launch_copper_aurora.sh
+launch_copper.sh
 
 CONDA_ENV=/lus/flare/projects/${PROJECT_NAME}/${USER}/conda_env
 conda activate /tmp/${USER}/copper/${CONDA_ENV}
@@ -120,7 +120,7 @@ time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
   --cpu-bind=list:4:56:9:61:14:66:19:71:20:74:25:79 --genvall \
   python3 -c "import torch; print(torch.__file__)"
 
-stop_copper_aurora.sh
+stop_copper.sh
 ```
 
 ### Application input files
@@ -129,7 +129,7 @@ If only specific input files should flow through Copper, prepend Copper only to 
 
 ```bash
 module load copper
-launch_copper_aurora.sh
+launch_copper.sh
 
 APP_BASE=/lus/flare/projects/${PROJECT_NAME}/${USER}/thunder/svm_mpi
 
@@ -140,7 +140,7 @@ time mpiexec -np ${NRANKS} -ppn ${RANKS_PER_NODE} \
   -s 0 -t 2 -g 1 -c 10 -o 1 \
   /tmp/${USER}/copper/${APP_BASE}/data/sc-40-data/input_file_M100000_K25000_S0.836
 
-stop_copper_aurora.sh
+stop_copper.sh
 ```
 
 Copper is read-only, so do not use Copper-prefixed paths for output files, checkpoints, scratch directories, or temporary files.
@@ -150,7 +150,7 @@ Copper is read-only, so do not use Copper-prefixed paths for output files, check
 The common launch wrapper interface is:
 
 ```bash
-launch_copper_aurora.sh
+launch_copper.sh
 
 [-l log_level]                  # Copper log verbosity level: 0 no logging, 5 most logging
 [-t log_type]                   # Copper log destination: file / stdout / both
@@ -173,7 +173,7 @@ launch_copper_aurora.sh
 Example:
 
 ```bash
-launch_copper_aurora.sh -d /lus/flare/projects/${PROJECT_NAME}/${USER}/copper-logs -v /tmp/${USER}/copper_mount
+launch_copper.sh -d /lus/flare/projects/${PROJECT_NAME}/${USER}/copper-logs -v /tmp/${USER}/copper_mount
 ```
 
 ## Address-book modes

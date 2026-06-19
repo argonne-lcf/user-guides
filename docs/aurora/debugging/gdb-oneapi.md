@@ -37,7 +37,7 @@ From the interactive prompt on your lead Aurora compute node, issue
 ```bash linenums="1"
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
-ZET_ENABLE_PROGRAM_DEBUGGING=1
+export ZET_ENABLE_PROGRAM_DEBUGGING=1
 ```
 
 ## Notes on GPU Debugging

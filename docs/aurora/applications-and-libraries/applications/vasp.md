@@ -39,7 +39,7 @@ This section describes a VASP 6.6.x build configuration for Aurora using:
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#Intel_Composer_suite_and_oneAPI_HPC_toolkit_for_CPU_and_GPU).
 
-The example below was adapted for Polaris from the VASP wiki page for `makefile.include` found [here](https://www.vasp.at/wiki/Makefile.include.oneapi_omp_off).
+The example below was adapted for Aurora from the VASP wiki page for `makefile.include` found [here](https://www.vasp.at/wiki/Makefile.include.oneapi_omp_off).
 
 ```makefile title="makefile.include" linenums="1"
 # Precompiler options
