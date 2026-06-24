@@ -19,7 +19,7 @@ Additional modules loading `GNU` CPU compilers and parallel application launch s
 
 - `mpicc` - C Compiler
 - `mpicxx` - C++ Compiler (a.k.a `mpic++`)
-- `mpifort` - Fortran Compiler (a.k.a `mpif70` & `mpif90`)
+- `mpifort` - Fortran Compiler (a.k.a `mpif77` & `mpif90`)
 
 ## Mixed C/C++ & Fortran Applications
 
@@ -32,5 +32,5 @@ A suite of build tools and libraries are available in the default Aurora PE envi
 ```bash
 $ module load cmake
 $ cmake --version
-cmake version 3.27.7
+cmake version 3.31.11
 ```

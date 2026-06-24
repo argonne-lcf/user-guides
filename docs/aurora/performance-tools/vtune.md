@@ -21,7 +21,7 @@ Use VTune Profiler to locate or determine:
 
 ### GPU offload
 ```bash
-vtune –collect gpu-offload <target>
+vtune -collect gpu-offload <target>
 ```
 
 This analysis enables you to:
@@ -31,7 +31,7 @@ This analysis enables you to:
 
 ### GPU Compute/Media Hotspots
 ```bash
-vtune –collect gpu-hotspots <target>
+vtune -collect gpu-hotspots <target>
 ```
 
 Use the GPU Compute/Media Hotspots analysis to:

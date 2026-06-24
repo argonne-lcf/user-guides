@@ -393,7 +393,7 @@ MPI 001 - OMP 000 - HWT 105 (Running on: 105) - Node x4407c6s2b0n0 - RT_GPU_ID 0
 MPI 002 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 MPI 003 - OMP 000 - HWT 105 (Running on: 105) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
-The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Here, rank 0 is bound to logical processor 0 and rank 1 is bound to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
+The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Here, rank 0 is bound to logical processor 1 and rank 1 is bound to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
 
 <figure markdown>
   ![Example3](images/example3.png){ width="700" }
@@ -487,7 +487,7 @@ gpu_id=$(( (PALS_LOCAL_RANKID / num_tile ) % num_gpu ))
 tile_id=$((PALS_LOCAL_RANKID % num_tile))
 export ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
 export ZE_AFFINITY_MASK=$gpu_id.$tile_id
-#echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
+#echo "RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}"
 exec "$@"
 ```
 
@@ -616,7 +616,7 @@ Here is how to submit an interactive job to, for example, edit/build/test an app
 qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <MYPROJECT> -q debug
 ```
 
-This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
+This command requests 1 node for a period of 1 hour in the `debug` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
 
 !!! warning
 

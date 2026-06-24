@@ -6,7 +6,7 @@ As of June 2025, the latest VisIt version installed on Aurora is 3.4.2.
 
 Follow these steps to install VisIt on your local machine:
 
-- Download and install VisIt for your local platform (macOS, Windows, Linux). The version you download must match the server version installed on Polaris. [Use this page](https://visit-dav.github.io/visit-website/releases-as-tables/)
+- Download and install VisIt for your local platform (macOS, Windows, Linux). The version you download must match the server version installed on Aurora. [Use this page](https://visit-dav.github.io/visit-website/releases-as-tables/)
 - Download the [Aurora host profile for VisIt](serverfiles/host_anl_aurora.xml) (you may need to right-click and choose "Save link as..." or "Save target as...")
 - Copy this file to a file called `~/.visit/hosts/host_anl_aurora.xml` on Mac or Linux. For Windows, specify the equivalent path.
 
