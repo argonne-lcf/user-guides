@@ -13,6 +13,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 | prod          | 10       | 496      | 5 min    | 24 hrs   | Routing queue; See below                                                                             |
 | *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
 | *demand*        | 1        | 56       | 5 min    | 1 hr     | ***By request only***; max 100 jobs running/accruing/queued **per-project**                          |
+| *capacity*        | 1        | 4       | 5 min    | 168 hrs     | Max of 32 nodes across all jobs. Max 2 jobs queued or running, 1 jobs running per user.                          |
 
 ******
 

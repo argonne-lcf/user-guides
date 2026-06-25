@@ -1,4 +1,108 @@
 # Aurora System Updates
+
+## 2026-05-21
+Release notes:
+
+OS Image - compute_aurora_prod_20260520T215745_835edd6
+
+ - Kernel update
+ - vastnfs 4.0.40
+ - lustre-client cray-2.15.B24
+ - xpmem-2.7.17
+ - kdreg2 from SHS 14.0 (kdreg2-1.0.0-0__2e1e777.SHS14.0.0)
+ - msr-safe and sepdk KMDs rebuilt, but version unchanged.
+
+ECB Firmware
+
+ - BIOS 0116.D10
+ - PVC IFWI WW43.3_14
+
+
+
+## 2026-03-10
+The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1, which was previously available in next-eval queue, is rolled out to all the of nodes across Aurora. 
+
+See section ["2026-02-23"](system-updates.md/#2026-02-23) below for all the change log details.
+
+!!! warning "Recompiling post-maintenance"
+
+    Due to the updates to Aurora's programing environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+
+## 2026-02-23
+We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1.
+
+Details of the full change log are below (**next-eval test queue only**):
+
+### OS Image
+ - Intel KMD/UMD 1146.40 / LTS 2523.40
+ - Intel SEPDK KMDs from OneAPI 2025.3.0
+ - Lustre Client cray-2.15.B23
+ - Geopm 3.2.2
+ - DAOS Client 2.6.4-11
+ - /daos is now a symlink to /tmp for use with DAOS dfuse mounts
+ - Legacy AuroraSDK / PE versions dropped:
+   - 24.347.0 (OneAPI 2025.0.5)
+   - 24.180.3 (OneAPI 2024.2.1)
+
+### PE 26.26.0
+- OneAPI 2025.3.1
+  - [oneAPI Base Toolkit 2025.3.1](running-jobs-aurora.md)
+  - [oneAPI HPC Toolkit 2025.3.1](running-jobs-aurora.md)
+  - [Intel Deep Learning Essentials 2025.3.2](running-jobs-aurora.md)
+  - [Intel Compiler 2025.3.2](running-jobs-aurora.md)
+  - See [Known Issues](https://docs.alcf.anl.gov/aurora/bugs-table/)
+- Spack
+    - Spack 1.1 update with backported patches for externals and OneAPI
+    - Base Python updated to 3.12.12
+- Spack - Packages (limited to oneapi dependencies)
+    - amrex - 26.02
+    - ginkgo - 1.11
+    - blaspp, lapackpp - 2025.05.28
+    - hdf5 - 2.0.0, 1.14.6
+    - kokkos - 5.0.1, 4.7.02
+    - umpire - 2025.12.0 +sycl
+    - raja - 2025.12.0
+    - petsc - 3.24.3 +sycl
+    - hypre - 3.0.0 +sycl
+    - geopm - 3.2.2
+    - boost - 1.88
+    - py-torch - 2.10.0 and deps
+    - xpu-smi - 1.2.42, 1.3.5
+    - warpx - 26.02
+- Forge
+    - 25.1.1
+- MPICH
+    - aurora_test branch @ [3c70a61](https://github.com/pmodels/mpich/compare/6037a7a..3c70a61)
+    - Libfabric optimization variables set by default according to HPE's SHS guide
+       - Can be checked by `ml show mpich`
+    - New pipeline algorithm disabled by default
+- Frameworks/2025.3.1
+    - Major packages:
+        - torch 2.10.0a0+git449b176
+        - torchao 0.15.0+git9338966da
+        - torchdata 0.11.0+377e64c
+        - torchvision 0.25.0+8ac84ee
+        - torchcomms 0.1.0
+        - intel-extension-for-pytorch 2.10.10+gitd0f992f
+        - pytorch-triton-xpu 3.6.0+git225cdbde
+        - vllm 0.15.0+xpu
+        - scikit_learn_intelex-20260205.124755 (tag: 2025.10.1)
+        - dpnp 0.19.1
+        - dpctl 0.21.1
+    - Major Change:
+        - `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"`
+            - Exposing both to ensure functionality of `torch` , `triton-xpu` , `vLLM`, `ray` and `dpctl` 
+            - We warn the users to this change upon loading the module
+            - Request switch to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` and report unusual behaviors
+            - **Temporary**, with proposed fixes included `triton-xpu` release we will switch back to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
+
+
+## 2026-02-02
+Flare is scheduled to be upgraded Feb 2 - Feb 5, 2026 resulting in Aurora being unavailable during this time. 
+
+- NEO 7.2-021 software updates and hardware firmware updates.
+
+
 ## 2025-10-27
 Slingshot Fabric Manager Update to 2.3.1
 
@@ -46,7 +150,7 @@ Details of the full change log are below (**next-eval test queue only**):
  - Intel SEPDK KMDs from OneAPI 2025.2.0
  - Cray PALS 1.8.0 - (Built from source on SLES 15 SP4 against PMIX 4.2.9)
  - Cray PE 25.03, drop old Cray PE 23.03
- - Geompm 3.2.0
+ - GEOPM 3.2.0
  - DAOS Agent 2.6.4 RC1
  - Lustre cray-2.15.B21
  - vastnfs 4.0.34 (replaces inbox NFS client so used on OS boot, PE, /soft.)
@@ -123,7 +227,7 @@ Details of the full change log are below (**next-eval test queue only**):
    - `conda list` throws a warning about `setuptools` and freeing file handles.
    - `DeepSpeed` `JIT` compilation failure
    - `oneccl` collectives requiring explicit synchronization step
-     - Workaround: `export CCL_OP_SYNC = 1` set in frameworks module
+     - Workaround: `export CCL_OP_SYNC=1` set in frameworks module
    - `oneccl` Rabenseifner algorithm for `Allreduce` failure (potential bug). Recommending `direct`
    - `vLLM` failure to start EngineCore on multiple ranks
      - Workaround `unset CCL_PROCESS_LAUNCHER && export CCL_PROCESS_LAUNCHER=None && unset ONEAPI_DEVICE_SELECTOR`

@@ -10,6 +10,7 @@
 <!-- *[CUDA]: Compute Unified Device Architecture -->
 *[DFT]: Density Functional Theory
 *[DGX]: Data Center Graphics Accelerator (NVIDIA)
+*[DKMS]: Dynamic Kernel Module Support
 *[DOE]: Department of Energy
 *[DPC]: Data Parallel C++
 <!-- *[DRAM]: Dynamic Random-Access Memory -->
@@ -28,7 +29,9 @@
 <!-- *[HPC]: High Performance Computing -->
 *[HPCM]: HPE Performance Cluster Manager
 <!-- *[HPE]: Hewlett Packard Enterprise -->
-*[HSI]: High-Speed Interface
+<!-- *[HSI]: High-Speed Interface -->
+*[HSI]: Hierarchical Storage Interface
+*[HTAR]: HPSS Tape Archiver
 <!-- *[I/O]: Input/Output -->
 *[INCITE]: Innovative and Novel Computational Impact on Theory and Experiment
 *[IPEX]: Intel Extension for PyTorch

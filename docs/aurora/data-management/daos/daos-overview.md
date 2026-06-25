@@ -1,33 +1,33 @@
-# DAOS Architecture
+# DAOS
 
-DAOS is a major file system in Aurora with 230 PB delivering up to >30 TB/s with 1024 DAOS server storage Nodes. DAOS is an open-source software-defined object store designed for massively distributed Non-Volatile Memory (NVM) and NVMe SSD. DAOS presents a unified storage model with a native Key-array Value storage interface supporting POSIX, MPIO, DFS and HDF5. Users can use DAOS for their I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric as can be seen in the overall storage architecture below.
-![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
-![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
+DAOS is a major file system on Aurora, with 230 PB and up to >30 TB/s from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.
 
-## DAOS Overview
+This guide covers:
+- DAOS pool allocation and container setup
+- POSIX/DFS/MPI-IO access modes
+- Job submission and performance guidance
+- troubleshooting and known issues
 
-The first step in using DAOS is to get DAOS POOL space allocated for your project.
+The first step in using DAOS is to get DAOS pool space allocated for your project.
 Users should submit a request as noted below to have a DAOS pool created for your project.
 
 ## DAOS Pool Allocation
 
-DAOS pool is a physically allocated dedicated storage space for your project.
+A DAOS pool is physically allocated dedicated storage space for your project.
 
 Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request a DAOS pool with the following information:
 
 - Project Name
 - ALCF User Names
-- Total Space requested (typically 100 TBs++)
+- Total space requested (typically 100 TB+)
 - Justification
 - Preferred pool name
 
-### Note
-
-This is an initial test DAOS configuration and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system. Warning will be given before the system is wiped to allow time for users to move any important data off.
+This is an initial test DAOS configuration, and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system. Warning will be given before the system is wiped to allow time for users to move any important data off.
 
 ## Modules
 
-Please load the `daos` module when using DAOS. This should be done on the login node (UAN) or in the compute node (jobscript):
+Load the `daos` module when using DAOS. This can be done on the login node (UAN) or in the compute node job script:
 
 ```bash linenums="1"
 module use /soft/modulefiles
@@ -39,7 +39,8 @@ module load daos
 A pool is a dedicated space allocated to your project. Once your pool has been allocated for your project space, confirm that you are able to query the pool:
 
 ```bash linenums="1"
-daos pool query <pool_name>
+DAOS_POOL=<YOUR_PROJECT_NAME>
+daos pool query ${DAOS_POOL}
 ```
 
 ```output title="Example output:"
@@ -58,148 +59,443 @@ Rebuild done, 4 objs, 0 recs
 
 ## POSIX Containers
 
-In DAOS general terms, a container is a logical space within a pool where data and metadata are stored. It's essentially a self-contained object namespace and versioning space.  There are several types of containers, but all of the focus in this guide and all future references will be on utilizing containers of the POSIX type in the context of the DAOS File System (DFS). DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the libdfs library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. libdfs supports files, directories, and symbolic links, but not hard links.  The DAOS official documentation on DFS can be found [here](https://docs.daos.io/v2.6/user/filesystem).
+In DAOS terms, a container is a logical space within a pool where data and metadata are stored. For beginners, think of a container as a project directory where your files are stored. There are several container types, but this guide focuses on POSIX containers in the context of the DAOS File System (DFS). Advanced options are provided later in [Advanced container creation configuration](#advanced-container-creation-configuration).
 
-With more than 1024 servers at full deployment, the user-accessible cluster named `daos_user` has 16,384 solid state drives (SSDs) and 16,384 persistent memory modules, and without some amount of data redundancy a hardware failure on any one could result in the loss of your data.  DAOS has several data redundancy options available, and a tradeoff must be made between data resiliency, performance, and volume.  The recommended tradeoff is to specify a redundancy factor of 3 on the container for both files and directories via the `rd_fac:3` container property.  By default, this means files will utilize an erasure coding algorithm with a ratio of 16 data blocks to 3 parity blocks (in DAOS file object class terms `EC_16P3GX`), which in simplest terms, means 19 blocks of erasure coding stores 16 blocks of data. For directories, the default is to create 3 full duplicates of the directory, which is basically an emulation of an inode in traditional file system terms, by setting the directory object class to `RP_4G1`. For this default setting, there is little performance tradeoff for directories at this redundancy level, since it just contains metadata.
+```bash linenums="1"
+daos container create --type=POSIX ${DAOS_POOL} ${DAOS_CONT}
+daos cont list ${DAOS_POOL}
+daos container get-prop ${DAOS_POOL} ${DAOS_CONT}
+```
+
+## POSIX Container Access via DFUSE
+
+DAOS POSIX container access can be done with no application code changes through DAOS filesystem (DFS) `dfuse` mount points on both compute and login nodes. Once mounted, you can access files in the container as you normally would with POSIX or Lustre commands.
+
+Currently, this must be done manually before use on each node where you are working. In the future, this may be automated through additional `qsub` options.
+
+### Mount a POSIX container on a login node
+
+```bash linenums="1"
+DAOS_POOL=datascience
+DAOS_CONT=thundersvm_exp1
+mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
+mount | grep dfuse # To confirm it is mounted
+
+# You can now access your space as you would normally do in Lustre.
+ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+cd /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
+cp ~/temp.txt /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/
+cat /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/temp.txt
+
+fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount. It is very important to clean up afterward on UAN/login nodes.
+```
+
+### Mount a POSIX container on compute nodes
+
+You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script, which runs a `clush` command for `start-dfuse.sh`:
+
+```bash linenums="1"
+launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes, mounted at: /tmp/<pool>/<container>
+mount | grep dfuse # To confirm it is mounted
+
+ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
+
+clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes; optional on compute nodes since PBS epilogue does this for you
+```
+
+DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamover.md).
+
+### To delete the container
+
+```bash linenums="1"
+daos container destroy ${DAOS_POOL} ${DAOS_CONT}
+daos cont list ${DAOS_POOL}
+```
+
+## Job Submission
+
+The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
+
+```bash linenums="1"
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
+qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
+```
+
+## Interception Library for POSIX Containers
+
+The interception library (IL) is a next step for improving DAOS performance. It provides kernel bypass for I/O data.
+The `libpil4dfs` IL should be used so that both data and metadata calls go through `dFuse`.
+
+```bash linenums="1" title="Interception library for POSIX mode"
+mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so # Preferred: both metadata and data are intercepted. This provides performance close to DFS mode.
+```
+
+## Sample Job Script
+
+Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
+
+```bash linenums="1"
+#!/bin/bash -x
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh
+# or: qsub -I ...
+#PBS -l select=512
+#PBS -l walltime=01:00:00
+#PBS -A <ProjectName>
+#PBS -q prod
+#PBS -k doe
+#PBS -l filesystems=flare:daos_user_fs
+
+module use /soft/modulefiles
+module load daos
+DAOS_POOL=datascience
+DAOS_CONT=thundersvm_exp1
+daos container create --type=POSIX ${DAOS_POOL} ${DAOS_CONT}
+launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To mount on a compute node
+ls /tmp/${DAOS_POOL}/${DAOS_CONT} # Optional for compute node
+
+# cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 /tmp/${DAOS_POOL}/${DAOS_CONT} # see user-guides/docs/aurora/data-management/moving_data_to_aurora/datamover.md
+
+NNODES=$(wc -l < "$PBS_NODEFILE")
+RANKS_PER_NODE=12
+NRANKS=$(( NNODES * RANKS_PER_NODE ))
+echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NRANKS}  RANKS_PER_NODE=${RANKS_PER_NODE}"
+CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
+
+export THUN_WS_PROB_SIZE=1024
+
+ mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
+                                            --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
+                                            -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
+
+clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on a compute node
+# fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount on a login node
+```
+
+## MPI-IO Container Access
+
+MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.0/user/mpi-io/>
+
+To optimally enable collective buffering, create a file with the following contents:
+
+```bash linenums="1"
+cat my_hints_file.txt
+
+romio_cb_write enable
+romio_cb_read enable
+cb_buffer_size 16777216
+cb_config_list *:8
+striping_unit 2097152
+```
+
+Then set the following environment variables at runtime to point to the file:
+```bash linenums="1"
+export ROMIO_HINTS=<path to hints file>
+export ROMIO_PRINT_HINTS=1 # If you want to verify the settings
+```
+
+## DFS Container Access
+
+DFS is the user-level API for DAOS. This API is very similar to POSIX, but it still has many differences that would require code changes to use DFS directly. The DFS API can provide the best overall performance for any scenario other than workloads that benefit from caching.
+
+```c linenums="1" title="Reference code for using DAOS through DFS mode and DAOS APIs"
+#include <stdio.h>
+#include <stdlib.h>
+#include <mpi.h>
+#include <daos.h>
+#include <daos_fs.h>
+int main(int argc, char **argv)
+{
+    dfs_t *dfs;
+    d_iov_t global;
+    ret = MPI_Init(&argc, &argv);
+    ret = MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    ret = dfs_init();
+    ret = dfs_connect(getenv("DAOS_POOL"), NULL, getenv("DAOS_CONT"), O_RDWR, NULL, &dfs);
+    ret = dfs_open(dfs, NULL, filename, S_IFREG|S_IRUSR|S_IWUSR,  O_CREAT|O_WRONLY,  obj_class, chunk_size, NULL, &obj);
+    ret = dfs_write(dfs, obj, &sgl, off, NULL);
+    ret = dfs_read(dfs, obj, &sgl, off, &read, NULL);
+    ret = dfs_disconnect(dfs);
+    ret = daos_fini();
+    ret = MPI_Finalize();
+}
+```
+
+The full code is available on the Aurora filesystem within `/soft/daos/examples/src/`
+
+## PyDAOS PyTorch access through `pydaos.daos_torch` module
+
+First, set up an interactive job on a compute node and initialize the environment as follows:
+
+```bash linenums="1"
+qsub ... -l filesystems=flare:daos_perf_fs
+
+module use /soft/modulefiles
+module load daos_perf
+module load frameworks
+launch-dfuse_perf.sh ${DAOS_POOL}:${DAOS_CONT}
+
+export LD_LIBRARY_PATH=/lus/flare/projects/datasets/softwares/py_daos/daos_client_master_build_may2/lib64:$LD_LIBRARY_PATH
+export PYTHONPATH=/lus/flare/projects/datasets/softwares/py_daos/just_pydaos_new/:$PYTHONPATH
+mpiexec -n ... python pydaos_torch_example.py
+```
+
+```python linenums="1" title="pydaos_torch_dataloader.py"
+import os
+from io import BytesIO
+
+import numpy as np
+from pydaos.torch import Dataset as DaosDataset
+
+os.makedirs("/tmp/perftesting/pydaos_test/run_1", exist_ok=True)
+
+for i in range(3):
+    x = np.random.randint(0, 256, size=(32, 32), dtype=np.uint8)
+    with open(f"/tmp/perftesting/pydaos_test/run_1/sample_{i}.npz", "wb") as f:
+        np.savez(f, x=x)
+
+
+def transform(data):
+    return np.load(BytesIO(data), allow_pickle=True)["x"]
+
+
+ds = DaosDataset(
+    pool="perftesting",
+    cont="pydaos_test",
+    path="/run_1",
+    transform_fn=transform,
+)
+
+print("dataset size:", len(ds))
+
+for i in range(len(ds)):
+    x = ds[i]
+    print(f"item {i}: shape={x.shape}, dtype={x.dtype}")
+
+
+```
+
+
+```python linenums="1" title="pydaos_torch_checkpoint.py"
+from io import BytesIO
+
+import numpy as np
+import torch
+from pydaos.daos_torch import Checkpoint as DaosCheckpoint
+from pydaos.daos_torch import Dataset as DaosDataset
+
+
+def transform(data):
+    return np.load(BytesIO(data), allow_pickle=True)["x"]
+
+
+ds = DaosDataset(
+    pool="datascience",
+    cont="my-dataset",
+    transform_fn=transform,
+)
+
+print("dataset size:", len(ds))
+print("first item shape:", ds[0].shape)
+
+
+ckpt = DaosCheckpoint("datascience", "my_container", "")
+
+with ckpt.writer("/model.pt") as f:
+    torch.save({"a": torch.ones(8)}, f)
+
+print("Torch save completed")
+
+loaded_data = torch.load(ckpt.reader("/model.pt"), weights_only=True)
+
+print("Torch load completed")
+print(loaded_data["a"])
+```
+
+* PyDAOS uses `dfs_write()` and read functions, which are faster than POSIX `dfuse_write()` and read functions.
+* PyDAOS uses DFS containers and Python DAOS containers.
+* The path to the dataset folders inside these containers does not include `/tmp` and starts at `/dataset_dir1`, which assumes a folder inside the `DAOS_POOL` and `DAOS_CONT`
+* The above build path might be upgraded with newer builds without warning.
+* More examples can be found at [DAOS GitHub repo > `pydaos.torch`](https://github.com/daos-stack/daos/tree/master/src/client/pydaos/torch)
+
+## Darshan profiler for DAOS
+
+Darshan is a lightweight I/O profiling tool consisting of a shared library that your application preloads at runtime. It generates a binary log file at program termination, plus utilities to analyze that log. Full official documentation is available [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
+
+Follow these notes to install your own Darshan tool under your user space [here](files/install_daos_darshan.txt).
+
+
+### 1. Darshan
+
+On Aurora, Darshan has been built in the programming environment in `/soft`.
+
+To get the Darshan parser utilities loaded into your programming environment, execute the following:
+
+```bash linenums="1"
+module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
+module load darshan
+```
+
+In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
+
+```bash linenums="1"
+LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:\
+            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:\
+            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:\
+            /usr/lib64/libpil4dfs.so
+```
+
+If your application uses `gpu_tile_compact.sh` and you experience a hang or error as described in the 'Known issues and workarounds' section below, you should add the entire `LD_PRELOAD` definition to your personal copy of the Bash script. Do this by using the `export` builtin command. See here for an example:
+
+```bash linenums="1"
+/soft/daos/tools/scripts/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
+```
+
+Run your application normally with `mpiexec` or `mpirun`.
+
+This generates a binary log file which has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.
+
+By default, the binary log file is stored here:
+
+```bash linenums="1"
+/lus/flare/logs/darshan/aurora/YYYY/M/D
+```
+
+where the last 3 directories are the date the file is generated, with your user ID, job ID, and timestamp in the file name. Alternatively, at run time, you can specify the file name and save it in a different location with the following environment variable:
+
+```bash
+export DARSHAN_LOGFILE=<full path to binary file name>
+```
+
+### Python PyDarshan Summary Report .html
+
+The first step in your analysis should be to generate a graphical summary report to get a rough estimate of overall I/O performance. To generate this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
+
+For custom build:
+```bash linenums="1"
+module load python
+mkdir <python env dir>
+python -m venv <python env dir>
+cd <python env dir>
+source bin/activate
+pip install darshan
+python -m darshan summary <binary log file>
+```
+
+This should generate the `.html` Darshan report. Once the environment is created, just activate it again for subsequent analyses:
+
+```bash linenums="1"
+cd <python env dir>
+source bin/activate
+```
+
+### `darshan-parser` utility
+
+`darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`:
+
+```bash linenums="1"
+module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
+module load darshan
+darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt
+```
+
+## Cluster Size
+
+DAOS cluster size is the number of available DAOS servers. While we are working toward bringing up all 1024 DAOS servers for users, different numbers of DAOS nodes may be up at any given time. Please check with support or run an IOR test to estimate the current number of DAOS servers available. The bandwidth in the last column below is theoretical peak bandwidth.
+
+**Expected Bandwidth** Expected number of DAOS servers and its approximate expected bandwidth
+
+| Nodes | Percentage | Throughput |
+| :---: | :--------: | :--------: |
+|  20  |     2%     |   1 TB/s   |
+|  128  |   12.50%   |   5 TB/s   |
+|  600  |    60%    |  10 TB/s  |
+|  800  |    78%    |  20 TB/s  |
+| 1024 |    100%    |  30 TB/s  |
+
+The size of your current DAOS cluster can be found using the following formula:
+```text
+daos_cluster_size = ntarget / targets_per_node
+```
+The value of `ntarget` comes from the output of:
+```bash linenums="1"
+daos pool query ${DAOS_POOL}
+```
+and the value of `targets_per_node=32` is fixed given the node hardware configuration of our filesystem.
+
+An example:
+```console
+> daos pool query hacc
+Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
+```
+So the DAOS cluster size is:
+```text
+4096 targets / 32 targets per node 
+ = 128 daos servers
+```
+
+
+## DAOS Hardware and Aurora Architecture
+
+Each DAOS server node is based on the Intel Coyote Pass platform:
+
+- (2) Xeon 5320 CPU (Ice Lake)
+- (16) 32GB DDR4 DIMMs
+- (16) 512GB Intel Optane Persistent Memory 200
+- (16) 15.3TB Samsung PM1733 NVMe
+- (2) HPE Slingshot NIC
+
+![DAOS Node](images/daos-node.png "DAOS CYP Node")
+![Aurora Storage Architecture](images/aurora-storage-architecture.png "Aurora Storage Architecture")
+![Aurora Interconnect](images/dragonfly.png "Aurora Slingshot Dragonfly")
+
+## Advanced Container Creation Configuration
+
+DFS is essentially a POSIX emulation layer on top of DAOS and is implemented in the `libdfs` library, allowing a DAOS container to be accessed as a hierarchical POSIX namespace. `libdfs` supports files, directories, and symbolic links, but not hard links. The DAOS official documentation on DFS is [here](https://docs.daos.io/v2.6/user/filesystem).
+
+With more than 1024 servers at full deployment, the user-accessible cluster named `daos_user` has 16,384 solid state drives (SSDs) and 16,384 persistent memory modules, and without some amount of data redundancy a hardware failure on any one could result in the loss of your data.  DAOS has several data redundancy options available, and a tradeoff must be made between data resiliency, performance, and volume.  The recommended tradeoff is to specify a redundancy factor of 3 on the container for both files and directories via the `rd_fac:3` container property.  By default, this means files will utilize an erasure coding algorithm with a ratio of 16 data blocks to 3 parity blocks (in DAOS file object class terms `EC_16P3G32`), which in simplest terms, means 19 blocks of erasure coding stores 16 blocks of data. For directories, the default is to create 3 full duplicates of the directory, which is basically an emulation of an inode in traditional file system terms, by setting the directory object class to `RP_4G1`. For this default setting, there is little performance tradeoff for directories at this redundancy level, since it just contains metadata.
 
 In the scenario with the above settings, when a server failure occurs, be it a software or hardware failure (e.g. an SSD, persistent memory module, or a networking switch failure) on up to 3 servers, a process called a _rebuild_ occurs. During rebuild, the data on the failed servers is reconstructed to preserve data integrity, and the servers with the failures are excluded from the cluster. The servers or network can be repaired in the future so that the servers are eventually reintegrated to the cluster.  The rebuild process in this scenario does not disrupt service, and the cluster does not experience any outage.  If more than 3 servers are lost (say, due to a network issue) or more servers are lost during the rebuild, then the cluster will be taken offline to conduct repairs.
 
 These parameters are set at container creation as follows along with others which will be described below for best practices:
 ```bash linenums="1"
-daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3GX --dir-oclass=RP_4G1 <pool name> <container name>
+daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3G32 --dir-oclass=RP_4G1  ${DAOS_POOL} ${DAOS_CONT} 
 ```
 
 The chunk-size of 2 MB and the `ec_cell_sz` (erasure coding cell size) of 128 KB work together to optimally stripe the data across the 16 data servers plus 3 parity servers (19 erasure coding servers) and set the maximum amount of data written to one SSD on one server by one client per transaction to the `ec_cell_sz` of 128 KB. The general rule of thumb is the chunk-size should equal the number of data servers (excluding parity servers) multiplied by the `ec_cell_sz` or at least be an even multiple of it.  If your application does large amounts of IO per process, you could experiment with the settings by increasing them proportionately, e.g. setting the chunk-size to 16 MB and the `ec_cell_sz` to 1 MB.  DAOS containers have a property for both server and client checksum, whereby the client will retry the data transfer to or from the server in the case of corruption, however by default this is disabled, to enable it for best performance and acceptable accuracy usage of the CRC-32 algorithm is recommended with the above parameters `cksum:crc32,srv_cksum:on`.
 
-Now, the `GX` in `EC_16P3GX` tells the container to stripe the data across all servers in the pool, which is optimum if your application is writing a single shared file or at most one file per node, but instead if your application is writing more than one file per node, say file per process, for best performance you should change the `GX` to `G32`, the 32 being the hard-coded number of servers the data in the file will be striped across.  You can do this in one of two ways:
+Now, the `G32` in `EC_16P3G32` tells the container to stripe the file across 32 servers in the pool, which is optimum if your application is writing file per node or file per process, but instead if your application is writing a single shared file - which can be the case for MPI-IO or IO libraries like HDF5 or PNetCDF - then for best performance you should change the `G32` to `GX`, whereby the file will be striped across all servers in the pool.  You can do this in one of two ways:
 
 1. Use the `--file-oclass` parameter explicitly in the container creation. The call would look like:
 ```bash
-daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P3G32 --dir-oclass=RP_4G1 --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on <pool name> <container name>
+daos container create --type=POSIX  --chunk-size=2097152 --file-oclass=EC_16P3GX --dir-oclass=RP_4G1 --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on  ${DAOS_POOL} ${DAOS_CONT}
 ```
-2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P3GX` and you wanted a subdirectory `<dir name>` to have `EC_16P3G32`, mount the container (this is described in the [POSIX Container Access via DFUSE](#posix-container-access-via-dfuse) section below) with directory `<dir name>` at `/tmp/<pool name>/<container name>` and then:
+2. Create a subdirectory in the container and set the attribute on it. For example, if your container was created with `EC_16P3G32` and you wanted a subdirectory `<dir name>` to have `EC_16P3GX`, mount the container (this is described in the [POSIX Container Access via DFUSE](#posix-container-access-via-dfuse) section below) with directory `<dir name>` at `/tmp/${DAOS_POOL}/${DAOS_CONT}` and then:
 ```bash
-daos fs set-attr --path=/tmp/<pool name>/<container name>/<dir name> --oclass=EC_16P3G32
+daos fs set-attr --path=/tmp/${DAOS_POOL}/${DAOS_CONT}/<dir_name> --oclass=EC_16P3GX
 ```
 By default any top-level directory created in a container will inherit the directory and file object class from the container, and any subdirectory inherits from its parent, so in this fashion you can change the default and have a mix of file object classes in the same container.
 
-There is maintenance overhead with containers, therefore it is advisable to create just one or a few containers and create multiple directories in the few containers to partition your work.
+There is maintenance overhead with containers, so it is advisable to create one (or a small number of) containers and then create multiple directories in those containers to partition your work.
 
-![data model](images/datamodel.png "DAOS data model")
 
-## DAOS Agent Check
-Whether you are accessing DAOS when running a job from a compute node or managing data from a login node, the DAOS agent daemon is needed to connect the DAOS client to the DAOS server cluster, in your case `daos_user`.  The DAOS agent facilitates all authentication and communication between the DAOS clients and servers.  The DAOS agent daemon should always be running for the `daos_user` cluster on the UANs, however on the compute nodes the `daos_user` agent is only started in the PBS prologue specified via the `-l filesystems=daos_user_fs` resource requirement, and is terminated in the PBS epilogue.  To verify that it is running, first load the `daos` module:
+         ![data model](images/datamodel.png "DAOS data model")
 
-```bash linenums="1"
-module use /soft/modulefiles
-module load daos
-```
+More information: <https://docs.daos.io/v2.6/overview/architecture/>
 
-Then to verify the DAOS daemon process for `daos_user` is running, run this command:
+## More Information on MPI-IO
 
-```bash linenums="1"
-ps -ef | grep daos
-```
+The MPICH MPI-IO layer on Aurora (ROMIO) provides multiple I/O backends, including one for DAOS. ROMIO can be used with `dFuse` and the interception library via the UFS backend, but the DAOS backend provides optimal performance. By default, ROMIO auto-detects DFS and uses the DAOS backend. MPI-IO itself is a common backend for many I/O libraries, including HDF5 and PNetCDF. Whether using collective I/O MPI-IO calls directly, or indirectly via an I/O library, a process called collective buffering can aggregate small non-contiguous chunks from many compute nodes into larger contiguous buffers on a subset of compute nodes (aggregators), from which DFS API calls are made to write/read data in DAOS. Collective buffering can improve or degrade I/O performance depending on the I/O pattern. In DAOS, disabling it can lead to I/O failures in some cases where all compute nodes issue extreme volumes of small non-contiguous reads/writes directly to DAOS. ROMIO hints should be set to optimally enable or disable collective buffering. At this time, you should explicitly enable collective buffering in an optimal way, as disabling it (or allowing it to default disabled) can cause I/O failures.
 
-Additionally on the compute nodes, you can run this `clush` command to check if the agent is running on all nodes in the job:
+## Fixing `UNCLEAN` Container Status
+
+If you get an error while trying to access your container (for example, on a `dfuse` mount), the container may have status `UNCLEAN`. You can check this with:
 
 ```bash linenums="1"
-clush --hostfile ${PBS_NODEFILE} ps –ef | grep agent | grep -v grep'  | dshbak -c
+daos cont get-prop  ${DAOS_POOL} ${DAOS_CONT}
 ```
 
-On the UANs there may be several agents running for different clusters so you may get several lines of output (on the compute node you will get only one), but the one for daos_user is named `daos_agent_oneScratch` and looks like this:
-
-```bash linenums="1"
-daos_ag+   6431      1  0 Jul21 ?        00:00:12 /usr/bin/daos_agent --config-path=/etc/daos/daos_agent_oneScratch.yml --runtime_dir=/run/daos_agent_oneScratch --logfile=/var/log/daos_agent/daos_agent_oneScratch.log
-```
-
-Then verify the daos_user agent will be the one used by the DAOS client:
-
-```bash linenums="1"
-echo $DAOS_AGENT_DRPC_DIR
-```
-
-You should then see this:
-
-```bash linenums="1"
-/run/daos_agent_oneScratch
-```
-
-## DAOS pool and container sanity checks (is the daos_user cluster up or down?)
-
-If any of the following command results in an error, then you can confirm the daos_user cluster is currently down
-
-```bash linenums="1"
-Note qsub ... -l filesystems=flare:daos_user_fs
-
-module use /soft/modulefiles
-module load daos
-export DAOS_POOL=Your_allocated_pool_name
-export DAOS_CONTAINER=any_label_name
-daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3GX --dir-oclass=RP_4G1  ${DAOS_POOL} ${DAOS_CONTAINER}
-daos pool query ${DAOS_POOL}
-daos cont list ${DAOS_POOL}
-daos container get-prop  $DAOS_POOL  $DAOS_CONTAINER
-
-```
-
-- Look for messages like `Rebuild busy and state degraded in the daos pool query.`
-- 'Out of group or member list' error is an exception and can be safely ignored. This error message will be fixed in the next DAOS release.
-
-You can also use the following commands for further diagnosis.
-
-```bash
-daos pool      autotest  $DAOS_POOL
-daos container check --pool=$DAOS_POOL --cont=$DAOS_CONTAINER
-```
-
-There are example programs and job scripts provided under `/soft/daos/examples/`.
-
-## POSIX Container Access via DFUSE
-
-DAOS POSIX container access can be accomplished with no application code modifications needed through DAOS filesystem (DFS) dfuse mount points for both the compute and UANs.  Once mounted, you can access files in the container as you normally would via POSIX file system commands.  Currently, this must be done manually prior to use on any node on which you are working.  In the future, we hope to automate some of this via additional `qsub` options.
-
-#### 1. To mount a POSIX container on a UAN
-
-```bash linenums="1"
-mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
-start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
-mount | grep dfuse # To confirm if its mounted
-
-# Mode 1
-ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
-cd /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
-cp ~/temp.txt ~ /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/
-cat /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}/temp.txt
-
-fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount - very important to clean up afterward on the UAN
-```
-
-#### 2. To mount a POSIX container on Compute Nodes
-
-You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script which does a `clush` command of `start-dfuse.sh`:
-
-```bash linenums="1"
-launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes mounted at: /tmp/<pool>/<container>
-mount | grep dfuse # To confirm if its mounted
-
-ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
-
-clean-dfuse.sh  ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes - optional on compute nodes as PBS epilogue script does this for you
-```
-
-DAOS Data mover instruction is provided at [here](../moving_data_to_aurora/daos_datamover.md).
-
-
-## 'UNCLEAN' Container Status
-
-If you get an error trying to access your container (such as on the dfuse container mount) your container may have a status of 'UNCLEAN'.  You can check this with the following command:
-
-```bash linenums="1"
-daos cont get-prop <pool name> <container name>
-```
-
-You should see output with the 'Health' property set to 'UNCLEAN':
+You should see output with the `Health` property set to `UNCLEAN`:
 
 ```bash
 Properties for container posix-ec16p2gx-crc32
@@ -210,19 +506,19 @@ Health (status)                                  UNCLEAN
 ...
 ```
 
-This 'UNCLEAN' status indicates that the DAOS system has had a temporary loss of redundancy which may or may not have resulted in corruption of the metadata (including directory structures) or the data itself.  In order to investigate to determine if there is actual metadata or data corruption, you will first need to be able to access the container by explicitly setting the status of the container to HEALTHY:
+This `UNCLEAN` status indicates that DAOS had a temporary loss of redundancy, which may or may not have caused metadata corruption (including directory structures) or data corruption. To investigate, first make the container accessible by explicitly setting status to `HEALTHY`:
 
 ```bash linenums="1"
-daos cont set-prop <pool name> <container name> status:HEALTHY
+daos cont set-prop ${DAOS_POOL} ${DAOS_CONT} status:HEALTHY
 ```
 
-To check on metadata corruption run this DAOS filesystem command to have DAOS check for metadata corruption.:
+To check metadata corruption, run this DAOS filesystem command:
 
 ```bash linenums="1"
-daos fs check --flags=evict <pool name> <container name>
+daos fs check --flags=evict ${DAOS_POOL} ${DAOS_CONT}
 ```
 
-If the metadata is ok you should see something like this:
+If metadata is healthy, you should see output similar to:
 
 ```bash linenums="1"
 DFS checker: Start (2025-07-17-19:23:14)
@@ -234,24 +530,7 @@ DFS checker: Done! (runtime: 4 sec)
 DFS checker: Number of leaked OIDs in namespace = 0
 ```
 
-However if you see failure messages or the 'Number of leaked OIDs in namespace' is greater than 0 then you have metadata corruption.  Otherwise, the next step is to manually manually verify the data correctness yourself, by whatever means is appropriate (i.e. loading data into your simulator, loading the data into analysis programs, utilizing your own checksums, or just visually inspecting the files).  So if your metadata or data has been corrupted, you should report this data corruption to ALCF Support [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and someone from the DAOS team will follow up wtih you to investigate.
-
-## Job Submission
-
-The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
-
-Job submission without requesting DAOS:
-
-```bash
-# replace `./pbs_script1.sh` with `-I` for an interactive job
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare -q debug ./pbs_script1.sh
-```
-
-Job submission with DAOS:
-
-```bash
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh
-```
+If you see failure messages, or if `Number of leaked OIDs in namespace` is greater than 0, then metadata corruption exists. Otherwise, manually verify data correctness by appropriate means (for example: loading data into your simulator, using analysis programs, running your own checksums, or visually inspecting files). If metadata or data is corrupted, report it to ALCF Support at [support@alcf.anl.gov](mailto:support@alcf.anl.gov), and someone from the DAOS team will follow up with you to investigate.
 
 ## NIC and Core Binding
 
@@ -281,11 +560,83 @@ CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
 
 : Sample NIC to Core binding
 
-## Interception library for POSIX containers
 
-The interception library (IL) is a next step in improving DAOS performance. This provides kernel-bypass for I/O data, leading to improved performance. The `libioil` IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse. The `libpil4dfs` IL should be used for both data and metadata calls to go through dFuse.
+## DAOS Pool and Container Sanity Checks (`daos_user` cluster up or down)
 
-The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and commuNICates with DAOS directly in userspace. It will also take advantage of the multiple NICs on the node based on how many MPI processes are running on the node and which CPU socket they are on.
+If any of the following commands results in an error, the `daos_user` cluster may currently be down.
+
+```bash linenums="1"
+Note: qsub ... -l filesystems=flare:daos_user_fs
+
+module use /soft/modulefiles
+module load daos
+export DAOS_POOL=Your_allocated_pool_name
+export DAOS_CONTAINER=any_label_name
+daos container create --type=POSIX  ${DAOS_POOL} ${DAOS_CONTAINER}
+daos pool query ${DAOS_POOL}
+daos cont list ${DAOS_POOL}
+daos container get-prop  ${DAOS_POOL}  ${DAOS_CONTAINER}
+
+```
+
+- Look for messages like `Rebuild busy and state degraded in the daos pool query.`
+- 'Out of group or member list' error is an exception and can be safely ignored. This error message will be fixed in the next DAOS release.
+
+You can also use the following commands for further diagnosis.
+
+```bash linenums="1"
+daos pool      autotest  ${DAOS_POOL}
+
+> daos pool      autotest datascience
+Step Operation                 Status Time(sec) Comment
+  0  Initializing DAOS          PASS    0.000  
+  1  Connecting to pool         PASS    0.012  
+  2  Creating containers        PASS    0.004  
+  3  Opening container          PASS    0.028  
+ 10  Generating 1M S1 layouts   PASS    2.774   360.48K IO/sec
+ 11  Generating 10K SX layouts  PASS    0.028   359.75K IO/sec
+ 20  Inserting 128B values      PASS   30.004    60.80K IO/sec
+ 21  Reading 128B values back   PASS   28.755    63.84K IO/sec
+ 23  Punching object            PASS    0.009  
+ 24  Inserting 4KB values       PASS   30.004    58.06K IO/sec
+ 25  Reading 4KB values back    PASS   29.323    60.55K IO/sec
+ 27  Punching object            PASS    0.009  
+ 28  Inserting 1MB values       PASS   30.006     5.54K IO/sec
+ 29  Reading 1MB values back    PASS   39.888    12.90K IO/sec
+ 31  Punching object            PASS    0.009  
+ 40  Inserting into RF1 cont    PASS   30.004    61.95K IO/sec
+ 41  Reading RF1 values back    PASS   28.615    65.28K IO/sec
+ 42  Inserting into RF2 cont    PASS   30.005    60.20K IO/sec
+ 43  Reading RF2 values back    PASS   31.091    58.34K IO/sec
+ 96  Closing containers         PASS    0.009  
+ 97  Destroying containers      PASS    0.010  
+ 98  Disconnecting from pool    PASS    0.001  
+ 99  Tearing down DAOS          PASS    0.000  
+
+All steps passed.
+
+daos container check -p <PATH_TO_MOUNTED_CONTAINER>
+
+> daos container check -p /tmp/datascience/hacc-io-mr-17-1024 
+check container 74a6ecd1-5a9e-41cc-b544-720a91f13199 started at: Mon Mar 30 17:53:41 2026
+check container 74a6ecd1-5a9e-41cc-b544-720a91f13199 completed at: Mon Mar 30 17:53:41 2026
+checked: 2
+skipped: 0
+inconsistent: 0
+run_time: 1 seconds
+scan_speed: 2 objs/sec
+
+
+object ERR  src/object/cli_shard.c:858 dc_rw_cb()   DER_FETCH_AGAIN(-2032): 'Fetch again' can be safely ignored.
+
+```
+
+There are example programs and job scripts provided under `/soft/daos/examples/`.
+
+## More Information on Interception Library
+
+The `libioil` IL will intercept basic read and write POSIX calls while all metadata calls still go through dFuse. 
+The IL can provide a large performance improvement for bulk I/O as it bypasses the kernel and communicates with DAOS directly in user space. It will also take advantage of multiple NICs on the node based on how many MPI processes are running and which CPU socket they are on.
 
 ![Interception library](images/interception.png "Interception library")
 
@@ -295,309 +646,13 @@ mpiexec --env LD_PRELOAD=/usr/lib64/libioil.so     # only data is intercepted
 mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so  # preferred - both metadata and data is intercepted. This provides close to DFS mode performance.
 ```
 
-## Sample job script
 
-Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
-
-```bash linenums="1"
-#!/bin/bash -x
-#PBS -l select=512
-#PBS -l walltime=01:00:00
-#PBS -A <ProjectName>
-#PBS -q prod
-#PBS -k doe
-#PBS -l filesystems=flare:daos_user_fs
-
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh or - I
-
-# please do not miss -l filesystems=daos_user_fs and in your qsub :'(
-
-export TZ='/usr/share/zoneinfo/US/Central'
-date
-module use /soft/modulefiles
-module load daos
-echo $DAOS_AGENT_DRPC_DIR                           #optional
-ps -ef|grep daos                                    #optional
-clush --hostfile ${PBS_NODEFILE}  'ps -ef|grep agent|grep -v grep'  | dshbak -c  #optional
-DAOS_POOL=datascience
-DAOS_CONT=thundersvm_exp1
-daos pool query ${DAOS_POOL}                        #optional
-daos cont list ${DAOS_POOL}                         #optional
-daos container destroy   ${DAOS_POOL}  ${DAOS_CONT} #optional
-daos container create --type=POSIX  --chunk-size=2097152  --properties=rd_fac:3,ec_cell_sz:131072,cksum:crc32,srv_cksum:on --file-oclass=EC_16P3GX --dir-oclass=RP_4G1 ${DAOS_POOL}  ${DAOS_CONT}
-daos container query     ${DAOS_POOL}  ${DAOS_CONT} #optional
-daos container get-prop  ${DAOS_POOL}  ${DAOS_CONT} #optional
-daos container list      ${DAOS_POOL}               #optional
-launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT}           # To mount on a compute node
-
-# mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}           # To mount on a login node
-# start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}     --pool ${DAOS_POOL} --cont ${DAOS_CONT}  # To mount on a login node
-
-mount|grep dfuse                                    #optional
-ls /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}         #optional for login node
-ls /tmp/${DAOS_POOL}/${DAOS_CONT}                   #optional for compute node
-
-# cp /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 /tmp/${DAOS_POOL}/${DAOS_CONT} #one time
-# daos filesystem copy --src /lus/flare/projects/CSC250STDM10_CNDA/kaushik/thundersvm/input_data/real-sim_M100000_K25000_S0.836 --dst daos://tmp/${DAOS_POOL}/${DAOS_CONT}  # check https://docs.daos.io/v2.4/testing/datamover/
-
-
-cd $PBS_O_WORKDIR
-echo Jobid: $PBS_JOBID
-echo Running on nodes `cat $PBS_NODEFILE`
-NNODES=`wc -l < $PBS_NODEFILE`
-RANKS_PER_NODE=12          # Number of MPI ranks per node
-NRANKS=$(( NNODES * RANKS_PER_NODE ))
-echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NRANKS}  RANKS_PER_NODE=${RANKS_PER_NODE}"
-CPU_BINDING1=list:4:9:14:19:20:25:56:61:66:71:74:79
-
-export THUN_WS_PROB_SIZE=1024
-export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
-export AFFINITY_ORDERING=compact
-export RANKS_PER_TILE=1
-export PLATFORM_NUM_GPU=6
-export PLATFORM_NUM_GPU_TILES=2
-
-
-date
- mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
-                                            --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
-                                            -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
-date
-
-clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} #to unmount on compute node
-# fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} #to unmount on login node
-```
-
-## MPI-IO Container Access
-
-The MPICH MPI-IO layer on Aurora (ROMIO) provides multiple I/O backends including one for DAOS. ROMIO can be used with dFuse and the interception library utilizing the UFS backend, but the DAOS backend will provide optimal performance. By default ROMIO will auto-detect DFS and use the DAOS backend.   MPI-IO itself is a common backend for many I/O libraries, including HDF5 and PNetCDF.  Whether using collective I/O MPI-IO calls directly or indirectly via an I/O library, a  process called collective buffering can be done where data from small non-contiguous chunks across many compute nodes in the collective is aggregated into larger contiguous buffers on a few compute nodes, referred to as aggregators, from which DFS API calls are made to write to or read from DAOS.  Collective buffering can improve or degrade I/O performance depending on the I/O pattern, and in the case of DAOS, disabling it can lead to I/O failures in some cases, where the I/O traffic directly from all the compute nodes in the collective to DAOS is too stressful in the form of extreme numbers of small non-contiguous data reads and writes.  In ROMIO there are hints that should be set to either optimally enable or disable collective buffering.  At this time you should explicitly enable collective buffering in the most optimal fashion, as disabling it or allowing it to default to disabled could result in I/O failures.  To optimally enable collective buffering, create a file with the following contents:
-```bash linenums="1"
-romio_cb_write enable
-romio_cb_read enable
-cb_buffer_size 16777216
-cb_config_list *:8
-striping_unit 2097152
-```
-
-Then simply set the following environment variable at run time to point to it:
-```bash linenums="1"
-export ROMIO_HINTS=<path to hints file>
-```
-
-If you want to verify the settings, additionally set:
-```bash linenums="1"
-export ROMIO_PRINT_HINTS=1
-```
-
-Which will print out all the ROMIO hints at run time.
-
-## DFS Container Access
-
-DFS is the user level API for DAOS. This API is very similar to POSIX but still has many differences that would require code changes to utilize DFS directly. The DFS API can provide the best overall performance for any scenario other than workloads which benefit from caching.
-
-```c linenums="1" title="Reference code for using DAOS through DFS mode and DAOS APIs"
-#include <stdio.h>
-#include <stdlib.h>
-#include <mpi.h>
-#include <daos.h>
-#include <daos_fs.h>
-int main(int argc, char **argv)
-{
-    dfs_t *dfs;
-    d_iov_t global;
-    ret = MPI_Init(&argc, &argv);
-    ret = MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    ret = dfs_init();
-    ret = dfs_connect(getenv("DAOS_POOL"), NULL, getenv("DAOS_CONT"), O_RDWR, NULL, &dfs);
-    ret = dfs_open(dfs, NULL, filename, S_IFREG|S_IRUSR|S_IWUSR,  O_CREAT|O_WRONLY,  obj_class, chunk_size, NULL, &obj);
-    ret = dfs_write(dfs, obj, &sgl, off, NULL);
-    ret = dfs_read(dfs, obj, &sgl, off, &read, NULL);
-    ret = dfs_disconnect(dfs);
-    ret = daos_fini();
-    ret = MPI_Finalize();
-}
-```
-
-The full code is available on the Aurora filesystem within `/soft/daos/examples/src/`
-
-## Example of PyTorch integration: `pydaos.daos_torch` module
-
-First, setup an interactive job on a compute node and initialize the environment as follows:
-```bash linenums="1"
-qsub ... -l filesystem:flare,daos_perf_fs
-
-module use /soft/modulefiles
-module load daos_perf
-module load frameworks
-launch-dfuse_perf.sh ${DAOS_POOL}:${DAOS_CONT}
-
-export LD_LIBRARY_PATH=/lus/flare/projects/datasets/softwares/py_daos/daos_client_master_build_may2/lib64:$LD_LIBRARY_PATH
-export PYTHONPATH     =/lus/flare/projects/datasets/softwares/py_daos/just_pydaos_new/:$PYTHONPATH
-mpiexec -n ... python pydaos_torch_example.py
-```
-
-Where the example Python script is:>
-```python linenums="1" title="pydaos_torch_example.py"
-import torch as sys_torch
-from pydaos.daos_torch import Dataset as DaosDataset
-from pydaos.daos_torch import Checkpoint as DaosCheckpoint
-from io import BytesIO
-from mpi4py import MPI
-
-comm = MPI.COMM_WORLD
-pydaos_torch_ckpt = DaosCheckpoint("datascience", "my_container", "") #To connect to DFS container
-a    = sys_torch.ones(1048576)
-data = dict()
-data = { "a": a, }
-name = f"/data-{comm.rank}-of-{comm.size}.pt"
-
-# PyDAOS Torch dataloader example
-def transform(data):
-     return np.load(BytesIO(data), allow_pickle=True)['x']
-ds = DaosDataset(pool="datascience", cont="my-dataset", transform_fn=transform)
-
-# PyDAOS Torch checkpoint save example
-with pydaos_torch_ckpt.writer(name) as f:
-    sys_torch.save(data, f)
-print(f"Torch save completed")
-
-# PyDAOS Torch checkpoint load example
-stream = pydaos_torch_ckpt.reader(name)
-loaded_data = sys_torch.load(stream, weights_only=True)
-print(f"Torch load completed")
-```
-
-* PyDAOS uses `dfs_write()` and read functions, which are faster than POSIX `dfuse_write()` and read functions.
-* PyDAOS uses DFS containers and Python DAOS containers.
-* The path to the dataset folders inside these containers does not include `/tmp` and just starts from `/dataset_dir1` which assumes a folder inside the `DAOS_POOL` and `DAOS_CONT`
-* The above build path might be upgraded with newer builds without warning
-* More examples can be found at [DAOS GitHub repo > `pydaos.torch`](https://github.com/daos-stack/daos/tree/master/src/client/pydaos/torch)
-
-## DAOS Hardware
-
-Each DAOS server node is based on the Intel Coyote Pass platform:
-
-- (2) Xeon 5320 CPU (Ice Lake)
-- (16) 32GB DDR4 DIMMs
-- (16) 512GB Intel Optane Persistent Memory 200
-- (16) 15.3TB Samsung PM1733 NVMe
-- (2) HPE Slingshot NIC
-
-![DAOS Node](images/daos-node.png "DAOS CYP Node")
-
-## Darshan profiler for DAOS
-
-Darshan is a lightweight I/O profiling tool consisting of a shared library your application preloads at runtime which generates a binary log file at program termination, and a suite of utilities to analyze this file.  Full official documentation can be found [here](https://www.mcs.anl.gov/research/projects/darshan/documentation/).
-
-### 1. Darshan
-
-On Aurora, Darshan has been built in the programming environment in `/soft`.
-
-To get the Darshan parser utilities loaded into your programming environment, execute the following:
-
-```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-```
-
-In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
-
-```bash linenums="1"
-LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:/opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:/usr/lib64/libpil4dfs.so
-```
-
-If your application uses `gpu_tile_compact.sh` and you experience a hang or error as described in the 'Known issues and workarounds' section below, you should add the entire `LD_PRELOAD` definition to your personal copy of the Bash script. Do this by using the `export` builtin command. See here for an example:
-
-```bash linenums="1"
-$HOME/gpu_tile_compact_LD_PRELOAD_with_darshan.sh
-```
-
-Run your application normally as you would do with `mpiexec` or `mpirun`.
-
-This generates a binary log file which has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.
-
-By default, the binary log file is stored here:
-
-```bash linenums="1"
-/lus/flare/logs/darshan/aurora/YYYY/M/D
-```
-
-where the last 3 directories are the date the file is generated, with your user ID, job ID and timestamp in the file name.  Alternatively, at run time you can specify the file name to be saved with a specified name in a different location with the following environment variable:
-
-```bash
-export DARSHAN_LOGFILE=<full path to binary file name>
-```
-
-### 2. Python PyDarshan Summary Report .html
-
-The first step in your analysis should be to generate a graphical summary report to get a rough estimate of overall IO performance.  For generating this graphical summary report, it is recommended to use the PyDarshan module on Aurora. It is a simple process of creating and activating a Python environment, installing the Darshan package, and then running the summary report generation command:
-
-For custom build:
-```bash linenums="1"
-module load python
-mkdir <python env dir>
-python -m venv <python env dir>
-cd <python env dir>
-source bin/activate
-pip install darshan
-python -m darshan summary <binary log file>
-```
-
-should generate the `.html` Darshan report.  Once the environment is created, to reuse it on subsequent analysis just activate it again:
-
-```bash linenums="1"
-cd <python env dir>
-source bin/activate
-```
-
-### 3. `darshan-parser` utility
-
-`darshan-parser` can be used on the binary log file to get a text output of all the raw counters which is much more accurate and detailed than the python summary `.html` as follows:
-
-```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt.
-```
-
-## Cluster Size
-
-DAOS cluster size is the number of available DAOS servers. While we are working towards bringing up the entire 1024 DAOS server available users, currently different number of DAOS nodes could be up. Please check with support or run an IOR test to get an estimate on the current number of DAOS servers available. The bandwidth listed here in the last column is a theoretical peak bandwidth.
-
-**Expected Bandwidth** Expected number of DAOS servers and its approximate expected bandwidth
-
-| Nodes | Percentage | Throughput |
-| :---: | :--------: | :--------: |
-|  20  |     2%     |   1 TB/s   |
-|  128  |   12.50%   |   5 TB/s   |
-|  600  |    60%    |  10 TB/s  |
-|  800  |    78%    |  20 TB/s  |
-| 1024 |    100%    |  30 TB/s  |
-
-The size of your current DAOS cluster can be found using the following formula:
-```text
-daos_cluster_size = ntarget / targets_per_node
-```
-The value of `ntarget` comes from the output of:
-```bash linenums="1"
-daos pool query <pool_name>
-```
-and the value of `targets_per_node=32` is fixed given the node hardware configuration of our filesystem.
-
-An example:
-```console
-> daos pool query hacc
-Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
-```
-So the DAOS cluster size is:
-```text
-4096 targets / 32 targets per node 
- = 128 daos servers
-```
 
 ## Sharing containers with multiple users
 
-If you'd like to create a container that includes a dataset and allows multiple users from your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), you can follow the below procedure below. Before proceeding, ensure that all intended users have the necessary access to your project, pool, and user group.
+If you want to create a container that includes a dataset and allows multiple users in your project team to reuse it concurrently (with simultaneous mounting and safe read/write operations, i.e., without race conditions), follow the procedure below. Before proceeding, ensure all intended users have access to the project, pool, and user group.
+
+More information: <https://docs.daos.io/v2.6/user/container/#ownership>
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
@@ -605,7 +660,7 @@ daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
 groups                                                        # to check if the users are in the same group name 
-chmod -R 775 /tmp/$DAOS_POOL/$DAOS_CONT/shared-dir            # provide the right chmod settings on the directory where they can read or write
+chmod -R 775 /tmp/${DAOS_POOL}/${DAOS_CONT}/shared-dir            # provide the right chmod settings on the directory where they can read or write
 kaushikvelusamy@x4405c0s0b0n0:> daos container get-prop d9cbdfc4-628b-4ec1-ad01-0b506e4fb3c0 ba1d5b48-4a88-4052-b764-729328a0dac3 # POOLUUID CONTUUID
 Properties for container ba1d5b48-4a88-4052-b764-729328a0dac3
 Name                                             Value                       
@@ -621,24 +676,24 @@ users
 
 ## Known issues and workarounds
 
-### 1. Large bulk I/O write issue
+### Large Bulk I/O Write Issue
 
-There is a known issue Python with `pil4dfs`
+There is a known Python issue with `pil4dfs`.
 - Fix provided in DAOS-17499 
-- Current workaround is to set `D_IL_COMPATIBLE=1` environment variable. Y
+- Current workaround is to set the `D_IL_COMPATIBLE=1` environment variable.
 - You can skip `pil4dfs` for now if that happens.
 
 ```output
 python: can't open file '/home/jlo/dfuse/./app.py': [Errno 95] Operation not supported
 ```
 
-### 2. `pydaos.daos_torch` disconnect and clean up
+### `pydaos.daos_torch` Disconnect and Cleanup
 
-There is a DFS disconnect clean up issue. This should be fixed in the next release.
+There is a DFS disconnect/cleanup issue. This should be fixed in the next release.
 
-### 3. Libfabric endpoint creation error
+### Libfabric Endpoint Creation Error
 
-Occasionally at a high number of nodes and/or high PPN the following error that looks like this may show up in your stderr log:
+At high node counts and/or high PPN, the following error may appear in stderr:
 
 ```output
 04/02-11:03:16.60 x4319c0s0b0n0 DAOS[53174/53174/0] external ERR  # [1092097.708457] mercury->ctx [error] /builddir/build/BUILD/mercury-2.4.0/src/na/na_ofi.c:5400 na_ofi_eq_open() fi_cq_open failed, rc: -17 (File exists)
@@ -653,9 +708,9 @@ Occasionally at a high number of nodes and/or high PPN the following error that 
 
 You can disregard this, as the DAOS client will simply retry the operation until it succeeds.
 
-### 4. Issue with the `gpu_tile_compact.sh` bash script and the DAOS Interception Libraries
+### Issue with `gpu_tile_compact.sh` and DAOS Interception Libraries
 
-There is currently a bug between the oneAPI Level Zero, the DAOS Interception Libraries (/usr/lib64/libpil4dfs.so and /usr/lib64/libioil.so) and the /soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh bash script (specifically the `/usr/bin/udevadm` call) where you may get a hang or an error like this sporadically:
+There is currently a bug involving oneAPI Level Zero, the DAOS interception libraries (`/usr/lib64/libpil4dfs.so` and `/usr/lib64/libioil.so`), and `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` (specifically the `/usr/bin/udevadm` call), where you may sporadically see a hang or an error like:
 ```bash linenums="1"
 terminate called after throwing an instance of 'std::invalid_argument'
   what():  stoul
@@ -664,26 +719,26 @@ x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2355 exited with code 13
 x4616c3s4b0n0.hostmgmt2616.cm.aurora.alcf.anl.gov: rank 2358 died from signal 15
 ```
 
-This issue is still under investigation. In the meantime, there is a workaround which is to take the `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` Bash script and create your own version of it to perform the `LD_PRELOAD` of the interception library within this script. In the case of the `libpil4dfs.so`, you would add the following line after the `/usr/bin/udevadm` call and just before the execution of the binary:
+This issue is still under investigation. In the meantime, a workaround is to copy `/soft/tools/mpi_wrapper_utils/gpu_tile_compact.sh` and add `LD_PRELOAD` of the interception library within your local script. For `libpil4dfs.so`, add the following line after the `/usr/bin/udevadm` call and just before binary execution:
 ```bash linenums="1"
 export LD_PRELOAD=/usr/lib64/libpil4dfs.so
 ```
 For an example, see:
 ```bash linenums="1"
-$HOME/gpu_tile_compact_LD_PRELOAD.sh
+/soft/daos/tools/scripts/gpu_tile_compact_LD_PRELOAD.sh
 ```
 
-### 5. `NA_HOSTUNREACH` errors
+### `NA_HOSTUNREACH` Errors
 
 ```bash
 hg_core_send_input_cb() NA callback returned error (NA_HOSTUNREACH)
 ```
 
-is almost always the no-vni issue or network issue and not a DAOS issue
+This is almost always a `--no-vni` issue or a network issue, not a DAOS issue.
 
-### 5. `na_ofi_mem_register` errors
+### `na_ofi_mem_register` Errors
 
-There is a network limitation where if your application does a lot of IO from a memory buffer that is severely segmented you may see an error like this:
+There is a network limitation where, if your application performs heavy I/O from a severely segmented memory buffer, you may see an error like:
 
 ```bash linenums="1"
 11/25-21:17:21.87 x4305c3s5b0n0 DAOS[75672/75672/0] external ERR  # [7284.159605] mercury->mem [error] /home/daos/pre/build/external/release/mercury/src/na/na_ofi.c:8870 na_ofi_mem_register() fi_mr_enable() failed, rc: -28 (No space left on device), mr_reg_count: 15677
@@ -695,21 +750,63 @@ A workaround for this error is to set the following environment variable at runt
 export DAOS_IOV_FRAG_SIZE=65536
 ```
 
-## Best practices
+## Best Practices
+
+### DAOS Agent Check
+
+Whether you are accessing DAOS from a compute-node job or managing data from a login node, the DAOS agent daemon is required to connect the DAOS client to the DAOS server cluster (in your case, `daos_user`). The DAOS agent handles authentication and communication between clients and servers.
+
+The DAOS agent daemon should always be running for the `daos_user` cluster on UANs. On compute nodes, the `daos_user` agent is started by the PBS prologue specified via `-l filesystems=daos_user_fs` and terminated in the PBS epilogue.
+
+To verify it is running, first load the `daos` module and inspect processes:
+
+```bash linenums="1"
+module use /soft/modulefiles
+module load daos
+ps -ef | grep daos # login node
+clush --hostfile ${PBS_NODEFILE} ps -ef | grep agent | grep -v grep | dshbak -c # compute nodes
+```
+
+On UANs, several agents may be running for different clusters (on compute nodes, usually one). The `daos_user` agent is named `daos_agent_oneScratch` and looks similar to:
+
+```bash linenums="1"
+daos_ag+   6431      1  0 Jul21 ?        00:00:12 /usr/bin/daos_agent --config-path=/etc/daos/daos_agent_oneScratch.yml --runtime_dir=/run/daos_agent_oneScratch --logfile=/var/log/daos_agent/daos_agent_oneScratch.log
+```
+
+Then verify the DAOS client is using the `daos_user` agent:
+
+```bash linenums="1"
+echo ${DAOS_AGENT_DRPC_DIR}
+/run/daos_agent_oneScratch
+```
+
+Check different dfuse launching scripts at /soft/daos/bin.
+
+Note: Applications which require mmap (specifically, torch titan) should use 
+```bash linenums="1"
+launch-dfuse-with-caching.sh ${DAOS_POOL}:${DAOS_CONT}.
+```
+
+### Quick Troubleshooting Checklist
+
+#### Submission and Environment
 
 1. Check that you **requested** DAOS:
    ```bash linenums="1"
-   qsub –l filesystems=daos_user_fs
+   qsub -l filesystems=daos_user_fs
    ```
 2. Check that you **loaded** the DAOS module:
    ```bash linenums="1"
    module load daos
    ```
-3. Check that you have your DAOS pool **allocated**:
+3. Check that your DAOS pool is **allocated**:
    ```bash linenums="1"
    daos pool query datascience
    ```
-4. Check that the DAOS client is **running** on all your nodes:
+
+#### Runtime Access Validation
+
+4. Check that the DAOS client is **running** on all nodes:
    ```bash linenums="1"
    ps -ef | grep daos
    ```
@@ -717,26 +814,32 @@ export DAOS_IOV_FRAG_SIZE=65536
    ```bash linenums="1"
    mount | grep dfuse
    ```
-6. Check that you **can `ls`** in your container:
+6. Check that you **can list files** in your container:
    ```bash linenums="1"
    ls /tmp/${DAOS_POOL}/${DAOS_CONT}
    ```
 7. Check that your I/O **actually failed**.
-8. Check the **health property** in your container:
+
+#### Pool/Container Health
+
+8. Check the container **health property**:
    ```bash linenums="1"
-   daos container get-prop $DAOS_POOL $CONT
+   daos container get-prop ${DAOS_POOL} ${DAOS_CONT}
    ```
-9. Check if your space is **full** (min and max):
+9. Check whether your pool space is **full** (min/max free space):
    ```bash linenums="1"
    daos pool query datascience
    ```
-10. Check if your query shows **failed targets** or **rebuild in process**:
+10. Check whether your pool reports **failed targets** or **rebuild in process**:
     ```bash linenums="1"
     daos pool query datascience
     ```
-11. Run the following commands to **check the health** of your DAOS pool and container:
+11. Run explicit DAOS pool/container health checks:
     ```bash linenums="1"
-    daos pool autotest
-    daos container check
+    daos pool autotest  ${DAOS_POOL}
+    daos container check -p <PATH_TO_MOUNTED_CONTAINER>
     ```
-12. If you are still having issues, please submit a ticket at [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
+
+#### Escalation
+
+12. If issues persist, submit a ticket to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).

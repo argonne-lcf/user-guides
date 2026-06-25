@@ -1,12 +1,12 @@
 # Dragon
 
-[DragonHPC](https://dragonhpc.org/portal/index.html) is a composable distributed runtime for managing processes, memory, and data at scale through high-performance communication.  Dragon is an open source project developed by HPE.
+[Dragon](https://dragonhpc.org/portal/index.html) is a composable distributed runtime for managing processes, memory, and data at scale through high-performance communication.  Dragon is an open source project developed by HPE.
 
-Dragon has a Python API and a C/c++ API.  The Python API is an extension of Python's `multiprocessing` API, and therefore DragonHPC can be used to scale Python `multiprocessing` code across multi-node jobs.  It can be installed with pip in conda or Python virtual environments.
+Dragon has a Python API and a C/c++ API.  The Python API is an extension of Python's `multiprocessing` API, and therefore Dragon can be used to scale Python `multiprocessing` code across multi-node jobs.  It can be installed with pip in conda or Python virtual environments.
 
-DragonHPC allows parallel process launching, including PMI enabled processes for MPI applications, with fine-grained control of CPU/GPU affinity.  DragonHPC also has a distributed data layer or distributed dictionary that allows for in-memory data sharing between processes on different nodes.
+Dragon allows parallel process launching, including PMI enabled processes for MPI applications, with fine-grained control of CPU/GPU affinity.  Dragon also has a distributed data layer or distributed dictionary that allows for in-memory data sharing between processes on different nodes.
 
-Please see DragonHPC's [Introduction in their documenation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html) for examples of how to use `dragon`.
+Please see Dragon's [Introduction in their documenation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html) for examples of how to use `dragon`.
 
 ## Installation
 
@@ -167,7 +167,7 @@ dict_mem_per_node = 1 * 1024**3 # ask for 1 GB per node, expressed in units of b
 # Note that the total_mem is the total memory across all the nodes
 dist_dict = DDict(managers_per_node=1, n_nodes=num_nodes, total_mem=num_nodes*dict_mem_per_node)
 ```
-For more details on how to use Dragon Dictionaries, see the DragonHPC [documentation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html#data).
+For more details on how to use Dragon Dictionaries, see the Dragon [documentation](https://dragonhpc.github.io/dragon/doc/_build/html/start.html#data).
 
 ## Running MPI applications
 
@@ -179,4 +179,4 @@ from dragon.infrastructure.facts import PMIBackend
 
 pg = ProcessGroup(pmi=PMIBackend.CRAY) 
 ```
-Processes can be added to the `ProcessGroup` according to your application needs.  See the DragonHPC [documentation](https://dragonhpc.github.io/dragon/doc/_build/html/uses/orchestrate_mpi.html) on orchestrating MPI applications.
+Processes can be added to the `ProcessGroup` according to your application needs.  See the Dragon [documentation](https://dragonhpc.github.io/dragon/doc/_build/html/uses/orchestrate_mpi.html) on orchestrating MPI applications.

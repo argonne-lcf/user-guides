@@ -8,7 +8,7 @@ We can use `unitrace` to trace an application running on multiple ranks and mult
 
 There are several important shell variables in the wrapper, which may require modification:
 
-```bash
+```bash linenums="1" title="unitrace_wrapper.sh"
 #!/bin/bash
 ## This wrapper should be used with unitrace to trace in any number of nodes.
 ## The script for this example is set up to trace rank 0 of the first 4 nodes in the case of
@@ -19,7 +19,7 @@ FNAME="${FNAME_EXT%%.*}"
 NNODES=`wc -l < $PBS_NODEFILE`
 
 WORK_DIR=/path/to/the/Python/program
-UNITRACE_DIR=/opt/aurora/24.180.1/support/tools/pti-gpu/063214e # (1)!
+UNITRACE_DIR=/opt/aurora/26.26.0/support/tools/pti-gpu/0.16.0-rc1/ # (1)!
 UNITRACE_LIB=${UNITRACE_DIR}/lib64
 UNITRACE_BIN=${UNITRACE_DIR}/bin
 UNITRACE_EXE=${UNITRACE_BIN}/unitrace
@@ -72,7 +72,7 @@ NRANKS_PER_NODE=12
 
 let NRANKS=${NNODES}*${NRANKS_PER_NODE}
 
-module load frameworks/2024.2.1_u1
+module load frameworks
 
 mpiexec --pmi=pmix -n ${NRANKS} -ppn ${NRANKS_PER_NODE} -l --line-buffer \
 ${UNITRACE_WRAPPER} python ${WORK_DIR}/application.py 

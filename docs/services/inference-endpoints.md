@@ -63,9 +63,14 @@ This will generate and store access and refresh tokens in your home directory. T
 python inference_auth_token.py get_time_until_token_expiration --units seconds
 ```
 
+To print your token to the command line, this command can be used:
+```bash
+python inference_auth_token.py get_access_token
+```
+
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
-    - An internal policy requires re-authentication every 7 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
+    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
 
 #### 3. Make a Test Call
 
@@ -83,7 +88,7 @@ Once authenticated, you can make a test call using cURL or Python.
          -H "Authorization: Bearer ${access_token}" \
          -H "Content-Type: application/json" \
          -d '{
-                "model": "gpt-oss-120b-131072",
+                "model": "gpt-oss-120b",
                 "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
              }'
     ```
@@ -103,7 +108,7 @@ Once authenticated, you can make a test call using cURL or Python.
     )
 
     response = client.chat.completions.create(
-        model="gpt-oss-120b-131072",
+        model="gpt-oss-120b",
         messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     )
 
@@ -203,7 +208,7 @@ Two clusters are currently active, with additional systems coming soon:
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
              -d '{
-                    "model": "gpt-oss-120b-131072",
+                    "model": "gpt-oss-120b",
                     "temperature": 0.2,
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -237,7 +242,7 @@ Two clusters are currently active, with additional systems coming soon:
         )
 
         response = client_metis.chat.completions.create(
-            model="gpt-oss-120b-131072",
+            model="gpt-oss-120b",
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
@@ -328,47 +333,57 @@ Models are organized by cluster and marked with the following capabilities:
 - **R** - Reasoning Enabled
 - **H** - Always Hot Model
 
-### Sophia Cluster (vLLM)
+### Sophia Cluster
 
-??? "Chat Language Models"
+??? "Chat Language Models (vLLM)"
 
     **Meta Llama Family**
 
-    - meta-llama/Meta-Llama-3.1-8B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Meta-Llama-3.1-70B-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Meta-Llama-3.1-405B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Llama-3.3-70B-Instruct<sup>B</sup><sup>T</sup>
-    - meta-llama/Llama-4-Scout-17B-16E-Instruct<sup>B</sup><sup>T</sup><sup>H</sup>
-    - meta-llama/Llama-4-Maverick-17B-128E-Instruct<sup>T</sup>
+    - meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^
+    - meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^
+    - meta-llama/Meta-Llama-3.1-405B-Instruct^BT^
+    - meta-llama/Llama-3.3-70B-Instruct^BT^
+    - meta-llama/Llama-4-Scout-17B-16E-Instruct^BTH^
+    - meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^
 
     **Mistral Family**
 
     - mistralai/Mistral-Large-Instruct-2407
     - mistralai/Mixtral-8x22B-Instruct-v0.1
+    - mistralai/Devstral-2-123B-Instruct-2512
 
     **OpenAI Family**
 
-    - openai/gpt-oss-20b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
-    - openai/gpt-oss-120b<sup>B</sup><sup>R</sup><sup>T</sup><sup>H</sup>
+    - openai/gpt-oss-20b^BRTH^
+    - openai/gpt-oss-120b^BRTH^
 
     **Aurora GPT Family**
 
-    - argonne/AuroraGPT-IT-v4-0125<sup>B</sup>
-    - argonne/AuroraGPT-Tulu3-SFT-0125<sup>B</sup>
-    - argonne/AuroraGPT-DPO-UFB-0225<sup>B</sup>
-    - argonne/AuroraGPT-KTO-UFB-0325<sup>B</sup>
+    - argonne/AuroraGPT-IT-v4-0125^B^
+    - argonne/AuroraGPT-Tulu3-SFT-0125^B^
+    - argonne/AuroraGPT-DPO-UFB-0225^B^
+    - argonne/AuroraGPT-KTO-UFB-0325^B^
 
+    **Google Family**
+
+    - google/gemma-3-27b-it^BTH^
+    - google/gemma-4-26B-A4B-it^RT^
+    - google/gemma-4-31B-it^RTH^
+    - google/gemma-4-E4B-it^RTH^
+    
     **Other Models**
 
     - allenai/Llama-3.1-Tulu-3-405B
-    - google/gemma-3-27b-it<sup>B</sup><sup>T</sup><sup>H</sup>
+    - arcee-ai/Trinity-Large-Thinking-W4A16^RT^
+    - nvidia/nemotron-3-super-120b^RT^
     - mgoin/Nemotron-4-340B-Instruct-hf
+    - AstroMLab/AstroSage-70B-20251009
 
-??? "Vision Language Models"
+??? "Vision Language Models (vLLM)"
 
     - meta-llama/Llama-3.2-90B-Vision-Instruct
 
-??? "Embedding Models"
+??? "Embedding Models (vLLM)"
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
     - Salesforce/SFR-Embedding-Mistral
@@ -385,16 +400,63 @@ Models are organized by cluster and marked with the following capabilities:
     - genslm-test/genslm-esmc-600M-joint-aminoacid
     - genslm-test/genslm-esmc-600M-joint-codon
 
+??? "Image Segmentation"
+
+    - facebook/sam3
+
+    !!! info "Promptable Image Segmentation Models"
+        The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
+        package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF.
+
+        With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this is all you need to begin using SAM 3:
+
+        ```bash
+        # SEM image of pollen grains:
+        curl https://upload.wikimedia.org/wikipedia/commons/a/a4/Misc_pollen.jpg > Misc_pollen.jpg
+
+        # Identify 'spiky spheres'
+        uvx alcf-ai sam3 submit-image Misc_pollen.jpg "Spiky sphere" --save-preview pollen-grains.png
+
+        # Preview results:
+        open pollen-grains.png
+        ```
+
+        If this your first time accessing the inference service via `alcf-ai`, you will be prompted to log in interactively.
+
+
 ### Metis Cluster (SambaNova)
 
 ??? "Chat Language Models"
 
-    - gpt-oss-120b-131072<sup>H</sup>
-    - Llama-4-Maverick-17B-128E-Instruct^H
+    - gpt-oss-120b^H^
+    - Llama-4-Maverick-17B-128E-Instruct^H^
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
         - Only chat completions endpoint is available
+
+### Model Serving Configuration
+
+When available, model serving configuration details can be viewed for each cluster.
+
+```bash
+#!/bin/bash
+
+# Get your access token
+access_token=$(python inference_auth_token.py get_access_token)
+
+# Check serving configuration for all Sophia models
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for all Metis models
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/models" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for a specific model (e.g., openai/gpt-oss-120b)
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?model_id=openai/gpt-oss-120b" \
+    -H "Authorization: Bearer ${access_token}"
+```
 
 !!! note "Want to add a model?"
     To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).

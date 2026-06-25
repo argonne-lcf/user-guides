@@ -29,13 +29,13 @@ compute resources for all systems at ALCF.
         * [qmsg](#qmsg): Write a message into a job's output file
         * [qsig](#qsig): Send a signal to a job
         * [pbsnodes](#pbsnodes): Get information about the current state of nodes
-        * [pbs-tui](https://github.com/saforem2/pbs-tui)
-
+        * [pbs-tui](https://github.com/saforem2/pbs-tui)[^uv]: A terminal user interface built with Textual for monitoring the scheduler
             ```bash
-            uv run --with pbs-tui pbs-tui
+            uvx pbs-tui
             ```
+        * [PBS Helper Utilities](https://github.com/argonne-lcf/pbs_utils): You may find some of the shell scripts, Python scripts, and Python modules in this repository useful for querying and managing PBS jobs (see `pu_nodeStat` and `pu_qstat`, in particular)
 
-
+[^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 ## Introduction
 
 At a high level, getting computational tasks run on an HPC system is a two-step process:
@@ -347,7 +347,7 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
-Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
+Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project_name> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 The new value overwrites any previous value.
 
 ## <a name="qdel"></a>`qdel`: Delete a queued or running job

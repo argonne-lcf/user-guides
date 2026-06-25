@@ -11,24 +11,39 @@ oneCCL can be used through:
 ## Aurora oneCCL environment
 
 ```bash linenums="1"
-hossainm@aurora-uan-0011:~> module load frameworks
-(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:~> echo $CCL_ROOT
-/opt/aurora/25.190.0/oneapi/ccl/latest
-(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:~> cd /opt/aurora/25.190.0/oneapi/ccl/
-(/opt/aurora/25.190.0/frameworks/aurora_frameworks-2025.2.0) hossainm@aurora-uan-0010:/opt/aurora/25.190.0/oneapi/ccl> ls -lah
+(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> echo $CCL_ROOT
+/opt/aurora/26.26.0/oneapi/ccl/latest
+(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> cd /opt/aurora/26.26.0/oneapi/ccl/
+(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:/opt/aurora/26.26.0/oneapi/ccl> ls -lah
 total 0
-drwxr-xr-x  3 root root  44 Oct  3 17:35 .
-drwxr-xr-x 30 root root 734 Oct  3 17:39 ..
-drwxr-xr-x  8 root root 117 Oct  3 17:35 2021.16
-lrwxrwxrwx  1 root root   7 Oct  3 17:35 latest -> 2021.16
+drwxr-xr-x  3 root root  44 Feb 18 04:17 .
+drwxr-xr-x 31 root root 742 Feb 18 04:23 ..
+drwxr-xr-x  8 root root 117 Feb 18 04:17 2021.17
+lrwxrwxrwx  1 root root   7 Feb 18 04:17 latest -> 2021.17
 ```
-`2021.16` is the current version of oneCCL that is available to users 
+`2021.17` is the current version of oneCCL that is available to users 
 through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
 We have identified a set of environment settings that typically provide better performance or address potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. Users are encouraged to check this page regularly.
+
+Among them, there is a minimal list, which are essential for functionality
+for training workloads, and we have tested up to 1024 nodes.
+
+**Minimal set**
+
+```bash linenums="1"
+export CCL_PROCESS_LAUNCHER=pmix
+export CCL_ATL_TRANSPORT=mpi
+export FI_MR_CACHE_MONITOR=userfaultfd
+export CCL_KVS_MODE=mpi
+```
+
+Beyond that an application should tune based on the list below. This list is not exhaustive.
+
+Users of `vLLM` and other inference services should rely on the variables set by the `frameworks` module.
 
 ```bash linenums="1"
 export CCL_PROCESS_LAUNCHER=pmix  
@@ -221,43 +236,6 @@ if hvd.rank() == 0:
         print(e)
 ```
 
-PyTorch Horovod example:
-
-```python linenums="1"
-from time import perf_counter_ns
-import sys
-import intel_extension_for_pytorch  # Added Extra
-import torch.nn.parallel
-import horovod.torch as hvd
-hvd.init()
-hvd_local_rank = hvd.local_rank()
-hvd_size = hvd.size()
-# print("hvd_local_rank = %d  hvd_size = %d" % (hvd_local_rank, hvd_size))
-
-def get_default_device():
-    if torch.xpu.is_available():
-        return torch.device(f"xpu:{hvd_local_rank % 12}")
-    else:
-        return torch.device('cpu')
-
-device = get_default_device()
-
-dim_size = int(int(sys.argv[1]) / 4)
-elapsed1 = []
-
-for _ in range(50):
-    x = torch.ones([1, dim_size], dtype=torch.float32).to(device, non_blocking=True)
-    # print(x)
-    t5 = perf_counter_ns() 
-    y = hvd.allreduce(x, average=False)
-    t6 = perf_counter_ns()
-    elapsed1.append(t6 - t5)
-
-if hvd.rank() == 0:
-    for e in elapsed1:
-        print(e)
-```
-
 ## PyTorch DDP
 
 ```python linenums="1"
@@ -267,10 +245,8 @@ import sys
 import os
 import socket
 from mpi4py import MPI
-import intel_extension_for_pytorch  # Added Extra
 import torch.nn.parallel
 import torch.distributed as dist
-import oneccl_bindings_for_pytorch
 
 MPI.COMM_WORLD.Barrier()
 
@@ -295,7 +271,7 @@ os.environ["MASTER_ADDR"] = master_addr
 os.environ["MASTER_PORT"] = str(master_port)
 
 MPI.COMM_WORLD.Barrier()
-dist.init_process_group(backend="ccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
+dist.init_process_group(backend="xccl", init_method='env://', world_size=mpi_world_size, rank=mpi_my_rank, timeout=datetime.timedelta(seconds=3600))
 MPI.COMM_WORLD.Barrier()
 
 dist_my_rank = dist.get_rank()

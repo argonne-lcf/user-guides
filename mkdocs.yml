@@ -139,7 +139,6 @@ extra:
     property: G-4M48E2L33R
 
 plugins:
-  - include-markdown
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
@@ -153,12 +152,15 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+  - Getting Started: https://www.alcf.anl.gov/managing-your-award
   - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
     - support/index.md
     - Submit a Ticket: support/ticket.md
+    - AI and Editor Guidance:
+        - support/ai-guidance.md
+        - VS Code Example: support/vscode.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
@@ -191,9 +193,12 @@ nav:
           - DAOS: aurora/data-management/daos/daos-overview.md
           - Lustre (Flare): aurora/data-management/lustre/flare.md
           - Moving data to Aurora:
-            - DAOS Data Mover: aurora/data-management/moving_data_to_aurora/daos_datamover.md
+            - Data Mover: aurora/data-management/moving_data_to_aurora/datamover.md
             - Globus: aurora/data-management/moving_data_to_aurora/globus.md
         - Applications and Libraries:
+          - Applications:
+            - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
+            - VASP: aurora/applications-and-libraries/applications/vasp.md
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
             #- Math Libraries: aurora/applications-and-libraries/libraries/math-libraries.md
@@ -221,6 +226,8 @@ nav:
             - LibTorch: aurora/data-science/inference/libtorch.md
             - OpenVINO: aurora/data-science/inference/openvino.md
             - vLLM: aurora/data-science/inference/vllm.md
+          - Applications:
+            - Milvus: aurora/data-science/applications/milvus.md
         - Programming Models:
           - Kokkos: aurora/programming-models/kokkos-aurora.md
           - Level Zero: aurora/programming-models/level-0.md
@@ -228,6 +235,7 @@ nav:
           - OpenMP: aurora/programming-models/openmp-aurora.md
           - SYCL: aurora/programming-models/sycl-aurora.md
           - HIP: aurora/programming-models/hip-aurora.md
+          - Julia: aurora/programming-models/julia.md
         - Debugging Tools:
           - aurora/debugging/index.md
           - gdb-oneapi: aurora/debugging/gdb-oneapi.md
@@ -254,6 +262,7 @@ nav:
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
+          - Dragon: aurora/workflows/dragon.md
           - libEnsemble: aurora/workflows/libensemble.md
           - Parsl: aurora/workflows/parsl.md
           - SmartSim: aurora/workflows/smartsim.md
@@ -271,6 +280,7 @@ nav:
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
         - Miscellaneous: ai-testbed/cerebras/miscellaneous.md
         - CSL: ai-testbed/cerebras/csl.md
+        - Grafana: ai-testbed/cerebras/accessing_cerebras_grafana_dashboard.md
       - Graphcore:
         - ai-testbed/graphcore/index.md
         - Getting Started: ai-testbed/graphcore/getting-started.md
@@ -289,24 +299,9 @@ nav:
         - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
         - Examples: ai-testbed/groq/examples.md
-      - SambaNova:
-        - SN30:
-          - ai-testbed/sambanova/index.md
-          - Getting Started: ai-testbed/sambanova/getting-started.md
-          - Virtual Environment: ai-testbed/sambanova/virtual-environment.md
-          - Running a Model/Program: ai-testbed/sambanova/running-a-model-or-program.md
-          - Job Queuing and Submission: ai-testbed/sambanova/job-queuing-and-submission.md
-          - Example Programs: ai-testbed/sambanova/example-programs.md
-          - Example Multi-Node Programs: ai-testbed/sambanova/example-multi-node-programs.md
-          # - Running BERT Large on Sambanova DataScale SN30-8: ai-testbed/sambanova/running-bert-large-on-sn30.md
-          - ModelZoo Samples: ai-testbed/sambanova/example-modelzoo-programs.md
-          - Tunneling and Forwarding Ports: ai-testbed/sambanova/tunneling-and-forwarding-ports.md
-          - SambaTune for profiling and performance tuning: ai-testbed/sambanova/sambatune.md
-          - Miscellaneous: ai-testbed/sambanova/miscellaneous.md
-          - SambaNova Documentation: ai-testbed/sambanova/documentation.md
-        - Metis Inference:
-          - ai-testbed/sn40l_inference/index.md
-          - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
+      - SambaNova Metis (SN40L):
+        - ai-testbed/sn40l_inference/index.md
+        - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
@@ -371,6 +366,7 @@ nav:
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
+          - Milvus: polaris/data-science/applications/milvus.md
       - Programming Models:
         - OpenMP: polaris/programming-models/openmp-polaris.md
         - SYCL: polaris/programming-models/sycl-polaris.md
@@ -413,6 +409,7 @@ nav:
   - Running Jobs with PBS:
     - running-jobs/index.md
     - Example Job Scripts: running-jobs/example-job-scripts.md
+    - Common PBS Issues: running-jobs/known-issues.md
     - Machine Reservations: running-jobs/machine-reservations.md
 
   - Data Management:
@@ -424,16 +421,18 @@ nav:
     - Transfer & Sharing:
       - SFTP and SCP: data-management/data-transfer/sftp-scp.md
       - Using Globus: data-management/data-transfer/using-globus.md
-      - ALCF Community Data Co-Op: data-management/acdc/index.md
+      - ALCF Community Data Co-Op: data-management/acdc/acdc.md
       - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
 
   - Services:
     - services/index.md
     - Inference Endpoints: services/inference-endpoints.md
+    - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md
       - GitLab CI: services/gitlab-ci.md
+    - Globus Compute: services/globus-compute.md
 
   - Account & Project Management:
     - account-project-management/index.md

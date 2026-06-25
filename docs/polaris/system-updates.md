@@ -1,5 +1,33 @@
 # Polaris System Updates
 
+## 2026-01-07
+
+Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
+
+- Update NVIDIA driver version (570.124.06) (CUDA driver API 12.8)
+- Default base nvidia-hpc_sdk is now at 25.5 (CUDA toolkit 12.9)
+- Upgrade Slingshot Host Software (SHS) to 13.0.0
+- Upgraded PALS and the user services stack (USS)
+- Minor OS security patch updates
+- Support Edge Services Nodes (ESN) and Service Nodes (SN), which replace the Access and Management Nodes (AMN)
+- Change to how add-in kernel modules are handled. Migrated from kmod/static kernel modules to Dynamic Kernel Module Support (DKMS), impacting:
+  - Lustre
+  - NVIDIA (Driver, gdrcopy)
+  - SHS (kfabric, kdrge2, cxi driver, sl-driver)
+
+Eagle:
+
+- Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
+
+!!! danger "cgroups PID limit on login nodes"
+
+	The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
+	
+	Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
+	
+	A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`. 
+	The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`. 	
+
 ## 2025-10-24
 
 `conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
@@ -27,14 +55,14 @@ Some highlights of changes relative to previous versions of this module:
 
 !!! note
 
-	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model. 
+	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
 
 ## 2025-08-29
 
 Polaris HPCM upgrade involves the following key version software changes:
 
 - SUSE 15 SP6 (a major kernel change)
-- Slingshot host stack 12.0.0, with improvements to handling nvidia/nccl/etc and updates to libfabric
+- Slingshot host stack 12.0.0, with improvements to handling NVIDIA/NCCL/etc and updates to libfabric
 - Update NVIDIA driver version (565.57.01) (CUDA driver API 12.7)
 - Default base nvidia-hpc_sdk is now at 24.11 (CUDA toolkit 12.6)
 - Updated Cray Programming Environment (PE) release 25.03, includes support for older releases of 23.12, 24.03, 24.07, 24.11
@@ -54,7 +82,7 @@ The XALT library tracking software has been enabled for all Polaris users. More 
 The management software on Polaris has been upgraded to HPCM 1.10. The following version changes are in place with the upgrade to HPCM 1.10:
 
 - HPE Cray Programming Environment (CPE) 23.12
-- SlingShot version 2.1.2
+- Slingshot version 2.1.2
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
@@ -87,7 +115,7 @@ We have updated the datascience Anaconda module and built various packages and l
 
 To use the new environment, type:
 ```bash linenums="1"
-module use /soft/modulefiles 
+module use /soft/modulefiles
 module load conda; conda activate
 ```
 

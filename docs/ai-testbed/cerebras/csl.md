@@ -36,7 +36,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.4.0
+git checkout v2.10.0
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
 bash commands_wse3.sh
 ```
@@ -89,7 +89,7 @@ Example script to forward port 8000 to localhost 8008:
 export SDK_PORT=8000
 export LOCAL_PORT=8008
 export ALCFUserID=<your alcf username>
-ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cer-login-04.ai.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
+ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cerebras.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
 ```
 
 Then open the following URL in your web browser:  `http://localhost:8008/sdk-gui/`
@@ -114,8 +114,8 @@ pip install --upgrade pip
 
 **Install SDK Packages:** Install the `cerebras_appliance` and `cerebras_sdk` Python packages in the virtual environment, specifying the appropriate Cerebras Software release:
 ```bash linenums="1"
-pip install cerebras_appliance==2.6.0
-pip install cerebras_sdk==2.6.0
+pip install cerebras_appliance==2.10.0
+pip install cerebras_sdk==2.10.0
 ```
 
 ### Examples
@@ -126,7 +126,7 @@ We will use examples from the `csl-examples` repository provided by Cerebras. To
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 git clone https://github.com/Cerebras/csl-examples.git
 cd csl-examples
-git checkout rel-sdk-1.4.0
+git checkout v2.10.0
 cd ~/csl-examples/tutorials/gemv-01-complete-program/
 ```
 
@@ -260,3 +260,34 @@ https://squidfunk.github.io/mkdocs-material/reference/tooltips/#adding-a-glossar
 <!-- but you can add more abbreviations (locally, per page) that arent in the shared, auto-appended glossary -->
 
 <!-- *[CS-3]: test -->
+
+#### Appliance mode with WSE
+The above example runs in appliance mode, but uses simulator for the backend, but if you wish to run on the hardware, then 
+1. Use the actual WSE-3 fabric dims in the compile script : "--arch=wse3 --fabric-dims=762,1172 --fabric-offsets=4,1 --memcpy --channels=1 -o out"
+2. Set "simulator=False" in the appliance_run.py script.
+
+compile.py for hardware is given as below. 
+```python title="compile.py" linenums="1"
+import json
+from cerebras.sdk.client import SdkCompiler
+import logging
+from cerebras.appliance import logger
+logging.basicConfig(level=logging.INFO)
+
+# Instantiate copmiler using a context manager
+# Disable version check to ignore appliance client and server version differences.
+with SdkCompiler(disable_version_check=True) as compiler:
+
+    # Launch compile job
+    artifact_path = compiler.compile(
+        ".",
+        "layout.csl",
+        "--arch=wse3 --fabric-dims=762,1172 --fabric-offsets=4,1 --memcpy --channels=1 -o out",
+        "."
+    )
+
+# Write the artifact_path to a JSON file
+with open("artifact_path.json", "w", encoding="utf8") as f:
+    json.dump({"artifact_path": artifact_path,}, f)
+
+```

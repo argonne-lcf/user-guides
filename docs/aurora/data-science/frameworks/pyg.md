@@ -5,11 +5,11 @@
 ## PyG on Aurora
 
 PyTorch Geometric includes a base library, called [`torch_geometric`](https://github.com/pyg-team/pytorch_geometric), and a number of optional dependencies:
-- [`torch_scatter`](https://github.com/rusty1s/pytorch_scatter)
-- [`torch_sparse`](https://github.com/rusty1s/pytorch_sparse)
-- [`torch_cluster`](https://github.com/rusty1s/pytorch_cluster)
-- [`torch_spline_conv`](https://github.com/rusty1s/pytorch_spline_conv)
-- [`pyg_lib`](https://github.com/pyg-team/pyg-lib)
+  - [`torch_scatter`](https://github.com/rusty1s/pytorch_scatter)
+  - [`torch_sparse`](https://github.com/rusty1s/pytorch_sparse)
+  - [`torch_cluster`](https://github.com/rusty1s/pytorch_cluster)
+  - [`torch_spline_conv`](https://github.com/rusty1s/pytorch_spline_conv)
+  - [`pyg_lib`](https://github.com/pyg-team/pyg-lib)
 
 The [base library](#pyg-base-library), `torch_geometric`, relies solely on PyTorch and can utilize Intel GPUs through the `xpu` device specification.
 
@@ -40,7 +40,6 @@ The following example is inspired by the [`gcn.py` example](https://github.com/p
   import argparse
   import time
   import torch
-  import intel_extension_for_pytorch as ipex
   import torch_geometric
   
   parser = argparse.ArgumentParser()
@@ -48,7 +47,7 @@ The following example is inspired by the [`gcn.py` example](https://github.com/p
   parser.add_argument('--hidden_channels', type=int, default=256)
   parser.add_argument('--lr', type=float, default=0.01)
   parser.add_argument('--epochs', type=int, default=20)
-  parser.add_argument('--device', choices=['auto', 'cpu'], default='auto', help='device to use')
+  parser.add_argument('--device', choices=['xpu', 'cpu'], default='xpu', help='device to use')
   parser.add_argument('--num_nodes', type=int, default=10000)
   parser.add_argument('--num_edges', type=int, default=5000000)
   parser.add_argument('--num_features', type=int, default=32)
@@ -87,7 +86,6 @@ The following example is inspired by the [`gcn.py` example](https://github.com/p
       dict(params=model.conv1.parameters(), weight_decay=5e-4),
       dict(params=model.conv2.parameters(), weight_decay=0)
   ], lr=args.lr)  # Only perform weight-decay on first convolution.
-  model, optimizer = ipex.optimize(model, optimizer=optimizer)
   
   def train():
       model.train()

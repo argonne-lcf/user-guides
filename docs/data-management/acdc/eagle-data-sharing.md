@@ -6,7 +6,7 @@ Collaborators throughout the scientific community have the ability to write data
 
 !!! note
 
-	The project PI needs to have an **active** ALCF account to set up Globus guest collections on Eagle and set permissions for collaborators to access data. If the PI does not have an account or has an inactive account, they will not be able to create a Globus guest collection. If a PI's account goes inactive after the Globus guest collection was created and shared, the collection will become inaccessible until the PI's account is reactivated. Only the project PI has the ability to create a collection; project proxies cannot create a collection.
+	The project PI needs to have an **active** ALCF account to set up Globus guest collections on Eagle and set permissions for collaborators to access data. If the PI does not have an account or has an inactive account, they will not be able to create a Globus guest collection. If a PI's account goes inactive after the Globus guest collection was created and shared, the collection will become inaccessible. It is possible for the collection to become accessible once again, provided the PI's account is reactivated within 3 months. Only the project PI has the ability to create a collection; project proxies cannot create a collection.
 
 Globus is a service that provides research data management, including managed transfer and sharing. It makes it easy to move, sync, and share large amounts of data. Globus will manage file transfers, monitor performance, retry failures, recover from faults automatically when possible, and report the status of your data transfer. Globus supports GridFTP for bulk and high-performance file transfer, and direct HTTPS for download. The service allows the user to submit a data transfer request and performs the transfer asynchronously in the background. For more information, see Globus data transfer and Globus data sharing.
 
@@ -42,7 +42,7 @@ A project PI needs to have an 'active' ALCF account in place to create and share
 
 !!! info 
 
-    PIs with an "Inactive/Deleted" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
+    PIs with an "Inactive" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate). Note that if the PI's account has been inactive for more than 3 months, the PI should email to support@alcf.anl.gov to have their sharing policy re-enabled after their account is reactivated. Once the sharing policy is set up, they will need to recreate the guest collections.
 
 !!! info
 
@@ -114,7 +114,7 @@ List of people that you have shared with
 3. Globus allows directory trees to be shared as either read or read/write. This means that any subdirectories within that tree also have the same permissions. Globus supports setting permissions at a folder level, so there is no need to create multiple guest collections for a project. You can create a guest collection at the top level and share sub-directories with the collaborators by assigning the appropriate permissions.
 4. When you create a guest collection endpoint and give access to one or more Globus users, you can select whether each person has read or read/write access. If they have write access, they can also delete files within that directory tree, so you should be careful about providing write access.
 5. Globus guest collections are created and managed by project PIs. If the PI of a project changes, the new PI will have to create a new guest collection and share them with the users. Contact ALCF Support (support@alcf.anl.gov) in such cases. Globus guest collections' ownership cannot be transferred.
-6. Guest collections are active as long as the project directory is available **and** the PI's ALCF account is active. If the PI's ALCF account goes inactive, the collections become inaccessible to all its collaborators. Access is restored once the PI's account is reactivated.
+6. Guest collections are active as long as the project directory is available **and** the PI's ALCF account is active. If the PI's ALCF account goes inactive, the collections become inaccessible to all its collaborators. Access is restored once the PI's account is reactivated, provided it is reactivated within 3 months.
 7. All RW actions are performed as the PI when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
 
 ## <a name="Creating-a-group"></a>Creating a group
@@ -281,7 +281,7 @@ A project PI can request an allocation by filling out the Director’s Discretio
 
 Yes. The PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators.
 
-- PIs with an "Inactive/Deleted" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate)
+- PIs with an "Inactive/Deleted" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate). Note that if the PI's account has been inactive for more than 3 months, the PI should email to support@alcf.anl.gov to have their sharing policy re-enabled after their account is reactivated. Once the sharing policy is set up, they will need to recreate the guest collections.
 - PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)
 
 **3. What endpoint should the PI use?**
@@ -351,7 +351,7 @@ When collaborators read files from or write files to the guest collection, they 
 
 **14. What happens to the guest collections when the PI's account goes inactive?**
 
-The collections go inactive and will remain in that state until the PI's account is re-activated.
+The collections go inactive and will remain in that state until the PI's account is re-activated, provided it is done within 3 months.
 
 **15. How long does it take for the endpoint to become accessible to collaborators after a PI's account is re-activated?**
 

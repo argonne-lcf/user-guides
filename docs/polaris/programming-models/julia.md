@@ -6,7 +6,7 @@
 ## Introduction
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
-This guide details how to install, configure, and run Julia on the Polaris supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
+This guide details how to configure and run Julia on the Polaris supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
 
 !!! example "Contributing"
 
@@ -14,45 +14,69 @@ This guide details how to install, configure, and run Julia on the Polaris super
 
 All the source files used in this documentation are located at [https://github.com/anlsys/julia_alcf](https://github.com/anlsys/julia_alcf). Feel free to open PRs!
 
-## Julia Installation
+## Julia Setup
 
-We recommend installing Julia in a project directory `$PROJECT` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid your home directory.
+Julia is available on Polaris as a module.
 
-1. Clone the configuration files
-    ```bash
-    git clone https://github.com/anlsys/julia_alcf
-    ```
-2. Run setup script
-    ```bash
-    cd julia_alcf/polaris
-    ./setup.sh
-    ```
-    This script contains steps that eventually will be executed by an admin
-    + Install Julia in `$JULIA_DEPOT_PATH` (e.g., `/eagle/$PROJECT/path/to/julia_depot`)
-    + Configure Julia options through a global `LocalPreferences.toml` file
-    + Set up module files
-3. Add `$JULIA_DEPOT_PATH` that you entered during setup to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`) and load the module path.
+We recommend setting your `$JULIA_DEPOT_PATH` to a project directory `PROJECT` on [Eagle or Flare](../../data-management/filesystem-and-storage/index.md) for faster file access and to avoid filling up your home directory.
 
-    ```bash
-    export JULIA_DEPOT_PATH=/eagle/$PROJECT/.../julia_depot
-    module use $JULIA_DEPOT_PATH/modulefiles
-    ```
+Add the following to your shell configuration file (e.g., `~/.bashrc` or `~/.bash_profile`):
+
+```bash
+export JULIA_DEPOT_PATH="/eagle/PROJECT/$USER/julia_depot"
+```
+
+If `$JULIA_DEPOT_PATH` is not set, it defaults to `~/.julia` with a warning when you load the module.
 
 ## Loading Julia
 Load the Julia module:
 ```bash
+module use /soft/modulefiles
 module load julia
 ```
+
+By default, this loads the latest stable version of Julia. To load a specific version:
+```bash
+module load julia/1.12  # Latest version
+module load julia/1.11  # Previous version
+module load julia/1.10  # LTS (Long Term Support)
+```
+
+### Version Policy
+
+Polaris maintains three Julia versions:
+
+- **Latest stable release** (currently 1.12): The most recent stable version with the newest features and performance improvements
+- **Previous version** (currently 1.11): The previous stable release for compatibility with recent projects
+- **LTS (Long Term Support)** (currently 1.10): Provides long-term stability with bug fixes but no new features, ideal for production workloads requiring consistency
+
+When new versions are released, the oldest non-LTS version is retired (removed from the system and no longer available), and the LTS version is updated according to the [Julia LTS release schedule](https://julialang.org/downloads/#long_term_support_release).
 
 ## Configuring the Programming Environment
 To leverage Polaris's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`CUDA.jl`](https://github.com/JuliaGPU/CUDA.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
 
-Installing all required packages can be done in a Julia REPL with the following commands:
+The Julia module on Polaris is pre-configured with system-specific preferences (via `LocalPreferences.toml` in the system load path) to ensure these packages use the correct system libraries (MPICH, CUDA 12.6, HDF5).
+
+Install the required packages in your Julia environment with the following commands:
 ```julia
 using Pkg
-Pkg.add(["MPI", "MPIPreferences", "CUDA", "HDF5"])
+Pkg.add(["MPI", "CUDA", "HDF5"])
 ```
-The packages will be loaded with the options specified in the `LocalPreferences.toml` file created during the setup process in `$JULIA_DEPOT_PATH/environments/v1.12`.
+
+Note: `MPIPreferences` does not need to be explicitly added as it's a dependency of `MPI.jl`.
+
+### CUDA-Aware MPI
+
+CUDA-aware MPI is enabled by default on Polaris. You can pass `CuArray` objects directly to `MPI.jl` functions without explicit host-device transfers, enabling efficient GPU-to-GPU communication across nodes:
+
+```julia
+using CUDA, MPI
+MPI.Init()
+
+# Create a CuArray and pass it directly to MPI operations
+data = CUDA.rand(Float64, 100)
+MPI.Allreduce!(data, +, MPI.COMM_WORLD)  # GPU-to-GPU communication
+```
 
 ## Verify Configuration on a Compute Node
 
@@ -62,11 +86,13 @@ The Polaris login nodes do not have GPU access. You must request an interactive 
 # Request an interactive node
 qsub -I -l select=1,walltime=1:00:00,filesystems=home:eagle -A [PROJECT] -q debug
 
-# Once on the node, run the verification
-julia --project -e "using CUDA; CUDA.versioninfo()"
+# Once on the node, load Julia and run the verification
+module use /soft/modulefiles
+module load julia
+julia -e "using CUDA; CUDA.versioninfo()"
 
 # Expected Output Snippet
-# CUDA runtime 12.2, local installation
+# CUDA runtime 12.6, local installation
 # ...
 # Preferences:
 # - CUDA_Runtime_jll.local: true
@@ -156,6 +182,7 @@ This PBS script requests resources and launches the Julia application using `mpi
 #PBS -A YOUR_PROJECT_ID
 
 cd ${PBS_O_WORKDIR}
+module use /soft/modulefiles
 module load julia
 
 # --- Job Settings ---

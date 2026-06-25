@@ -1,0 +1,40 @@
+name: Export All Commits
+
+on:
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+jobs:
+  get-history:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Crucial: 0 fetches all history for all branches and tags
+      
+      - name: Extract Log for Each File
+        run: |
+          # Find all files (excluding the .git folder) and run git log on each
+          find . -type f -name "*.md" -not -path '*/.*' | while read -r file; do
+              git log --stat --pretty=format:"__|__$file||%H||%s||%an||%ae||%ar||%ad||%B" -- "$file" >> commit_history.txt
+              echo "_/^\_" >> commit_history.txt
+          done && [ -s commit_history.txt ] && sed -i '$d' commit_history.txt
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pandas
+          
+      - name: Process with Python
+        run: |
+          # Set PYTHONPATH to the current directory so imports work correctly
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          python3 scripts/summarize_commits.py
+          
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-commit-log
+          path: |
+            commit_history.txt
+            commits_summary.csv

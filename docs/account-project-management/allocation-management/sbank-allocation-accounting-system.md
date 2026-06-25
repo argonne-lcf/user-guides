@@ -5,7 +5,7 @@ sbank is the accounting system used within the ALCF. It tracks project allocatio
 The sbank accounting system helps users manage their allocations and usage per job. It gives PIs the ability to monitor their allocation usage by user, job, and machine. It also allows the user to monitor their usage per allocation and provides insight into how many hours are left on the project.
 
 ## sbank Interface Options
-sbank is available through a command line interface (see below for example commands and docs) or through a [graphic interface](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) in the MyALCF user portal further explained in [MyALCF documentation.](../../account-project-management/MyALCF.md)  
+sbank is available through a command line interface (see below for example commands and docs) or through a [graphical interface](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) in the MyALCF user portal. You can learn more about using [the MyALCF user portal here.](../../account-project-management/MyALCF.md)  
 
 ## Getting Started with sbank (Command Line)
 
@@ -28,5 +28,3 @@ Use these sbank man pages to get information on how to use the commands.
 - [sbank-list-projects](not_in_nav/sbank-list-projects.md)
 - [sbank-list-transactions](not_in_nav/sbank-list-transactions.md)
 - [sbank-list-users](not_in_nav/sbank-list-users.md)
-
----

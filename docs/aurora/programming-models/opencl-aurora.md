@@ -37,7 +37,7 @@ During the configure step, CMake may need help finding the OpenCL library. You c
 ```bash
 export OPENCL_BASE_DIR=$(dirname $(which icx))/..
 cmake -DOpenCL_LIBRARY=${OPENCL_BASE_DIR}/lib/libOpenCL.so \
-      -DOpenCL_INCLUDE_DIR=${OPENCL_BASE_DIR}/include/sycl \
+      -DOpenCL_INCLUDE_DIR=${OPENCL_BASE_DIR}/include \
       <other_cmake_options>
 ```
 

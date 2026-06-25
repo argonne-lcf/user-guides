@@ -1,10 +1,10 @@
 # Managing Your Allocations
 
-Allocations require management – balance checks, resource allocation, requesting more time, etc. Allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface. 
+Allocations require management. This can include balance checks, resource allocation, requesting more time, or other actions. Your allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface.
 
-## Active Allocations on MyACLF
+## Active Allocations on MyALCF
 
-Select data for active allocations are shown on the dashboard of the MyALCF portal when signed into an ALCF user account. The dashboard section labeled "Active Project Allocations" provides an overview of activity with allocation start and end dates, allocation node hour usage, remaining node hours, usage trend data for future planning, and job sizes run. More detailed queries can be done using the sbank graphic interface in the [sbank section](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) of the MyALCF portal. Further information on how to use the sbank graphic interface is available in the [MyALCF documentation.](../../account-project-management/MyALCF.md)
+Select data for active allocations are shown on the dashboard of the MyALCF portal when you sign into an ALCF user account. The dashboard section labeled "Active Project Allocations" provides an overview of activity with allocation start and end dates, allocation node hour usage, remaining node hours, usage trend data for future planning, and job sizes run. You can make more detailed queries using the sbank graphical interface in the [sbank section](https://my.alcf.anl.gov/ni/#/list/:command%3Dsbank-list-allocations) of the MyALCF portal. Further information on how to use the sbank graphic interface is available in the [MyALCF documentation.](../../account-project-management/MyALCF.md)
 
 ![Dashboard Screenshot](files/dash_allocation.png)
 
@@ -28,9 +28,7 @@ To determine which platforms have an active balance, check our allocation accoun
 
 ## Allocation Expiration
 
-Projects and allocations at the ALCF are different. A particular project might have multiple allocations of time. For example, a discretionary project that has been approved more than three times will have three allocations
-(two are probably expired) but just one project. Projects will not expire -- allocations will. If allocations are expired, or have no hours left, jobs will not be able to run. Consult the two above sections
-to determine active allocations.
+Projects and allocations at the ALCF are different. A project can have multiple allocations of compute and/or storage. For example, a discretionary project that has been renewed multiple times will have multiple allocations, with only one or a few of them as active. If a project's allocations have expired (.i.e. allocation end date is in the past), jobs will not be able to run. Consult the the above two sections to determine if your project has active allocations.
 
 ## Getting More Time
 
@@ -58,7 +56,7 @@ Suballocations let PIs control who in their team can run jobs, how much they are
 
 ### Step 1: Create Suballocations (Project PI):
 
-PI creates suballocations 
+PI creates suballocations
 
 ```bash linenums="1"
 sbank new sub <allocationid> --name <nameofsuballoc>
@@ -72,13 +70,17 @@ sbank new sub <allocationid> --name <nameofsuballoc>
 sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."
 ```
 
-#### PI can change the name of a suballocation 
+#### PI can change the name of a suballocation
 
 ```bash linenums="1"
 sbank e sub <suballocationID> --name=<new_name_of_suballocation>
 ```
 
 By default, the primary suballocation (which is the default suballocation created when the allocation is created by ALCF) is unrestricted, i.e., enabled for all project members. That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default, and users have to be added for each of them.
+
+!!! note
+
+    Suballocation names must be unique across **all** allocations and resources **within a project**.
 
 #### To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation:
 
@@ -129,7 +131,6 @@ or
 qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<suballocationName> -q demand test.sh
 ```
 
-
 ### Useful commands:
 
 List all suballocations for a project that shows the number of jobs run, charges, allocation balance, suballocation name, and list of users:
@@ -138,6 +139,34 @@ List all suballocations for a project that shows the number of jobs run, charges
 sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 ```
 
-!!! tip 
+!!! tip
 
     See `sbank l a -h` for all the options and `sbank –f\?` for a list of fields that can be displayed.
+
+### FAQs
+**subname needs to be unique in a project - across all resources**
+
+##### Q1: I am trying to move hours from one suballocation to another using `sbank e sub`, but I am getting the error "allocation balance < hours to move." My source suballocation shows a positive available balance, why am I still getting this error? 
+**A:** This error means that the **parent** allocation does not have sufficient available balance to cover the hours you are attempting to move - even if the source suballocation appears to show a positive balance. The command checks the balance at the parent allocation level, not the individual suballocation level. In this case, the overall allocation balance may be negative or insufficient, which will trigger this error regardless of what any individual suballocation shows. A suballocation can show a positive available balance while the parent allocation's total balance is negative or exhausted. This can happen when other suballocations under the same parent allocation have consumed more hours than were assigned to them, allowing usage to go negative. Always check the total available balance of the parent allocation, not just the individual suballocation, before attempting a transfer.
+
+##### Q2: How do I check the total balance of a parent allocation?
+**A:** Use the following command, specifying the parent allocation ID: `sbank-list-allocations -a <allocation_id>`
+
+##### Q3: Can a suballocation have a negative balance?
+**A:** Yes. Suballocations can go negative for different reasons. 
+ - When the suballocation has a positive balance at the time jobs are **queued** but once jobs finish running the charges exceed the balance that was available when they were queued.
+ - If the **allocation** has a negative balance (regardless of whether the suballocation has a positive balance or not, as long as the allocation is still active), jobs will be routed to backfill queues.
+
+##### Q4: Why is my job getting rejected even though the alloacation has node-hours available?
+**A:** Your jobs will only run if the **suballocation** has a positive balance. It will be rejected otherwise.
+
+##### Q5: I am still confused about when jobs will run and won't. Can you provide the rules in an easy-to-read format?
+**A:** 
+The following will apply as long as the allocation/sub-allocation is **active** (i.e. end date is not in the past. Time is always UTC.) If the allocation/sub-a
+
+| Allocation Balance | Suballocation Balance | Job Status |
+| -------- | -------- | -------- |
+| Positive    | Positive     | Job will run     |
+| Positive   |  Negative or 0     | Job rejected; won't run    |
+| Negative or 0   | Positive     | Routed to backfill queues (lower priority)  |
+| Negative or 0   | Negative or 0     | Routed to backfill queues (lower priority) |

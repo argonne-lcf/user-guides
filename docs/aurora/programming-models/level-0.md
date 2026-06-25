@@ -9,20 +9,10 @@ interface can be tailored to any device's needs and can be adapted to support a
 broader set of language features such as function pointers, virtual functions,
 unified memory, and I/O capabilities.
 
-## Setting the environment to use Level-Zero on Aurora
+## Using Level-Zero on Aurora
 
-The Intel Programming Environment is the main environment on Aurora. The Intel
-Compute Runtime is part of this environment and grants access to Level-Zero.
-The Intel Compute Runtime is loaded by default in your environment.
-
-```
-> module list
-
-Currently Loaded Modules:
-  1) gcc/11.2.0                    3) intel_compute_runtime/release/agama-devel-551   5) libfabric/1.15.2.0   7) cray-libpals/1.3.3
-  2) mpich/51.2/icc-all-pmix-gpu   4) oneapi/eng-compiler/2022.12.30.003              6) cray-pals/1.3.3
-
-```
+The Intel Compute Runtime is part of the node images on Aurora, and available under
+standard system paths (`/usr/include/level_zero/` for example).
 
 ## Building on Aurora
 
@@ -30,7 +20,7 @@ Level-Zero is a C API that can be used in your application by including the
 `ze_api.h` file:
 
 ```c
-#include <ze_api.h>
+#include <level_zero/ze_api.h>
 ```
 
 Applications that use the Level-Zero API need to be linked to the Level-Zero
