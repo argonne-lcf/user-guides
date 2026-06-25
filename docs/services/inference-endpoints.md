@@ -430,6 +430,8 @@ Models are organized by cluster and marked with the following capabilities:
 
     - gpt-oss-120b^H^
     - Llama-4-Maverick-17B-128E-Instruct^H^
+    - Mistral-Large-3-675B-Instruct-2512^H^
+    - gemma-4-31B-it^H^
 
     !!! note "Metis Limitations"
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
