@@ -725,7 +725,163 @@ This section provides simple examples on how to interface with the API as a star
 
 ### 5. Account
 
-Coming soon.
+??? "5.1. List Projects"
+
+    Returns the list of projects associated with your account.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.get(
+            "https://api.alcf.anl.gov/api/v1/account/projects",
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "5.2. Get a Specific Project"
+
+    Returns a specific project by its ID.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        project_id="<project_id>"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        project_id = "<project_id>"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}",
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "5.3. List Project Allocations"
+
+    Returns the list of allocations for a specific project.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        project_id="<project_id>"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}/project_allocations" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        project_id = "<project_id>"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}/project_allocations",
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "5.4. Get a Specific Project Allocation"
+
+    Returns a specific project allocation by its ID.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        project_id="<project_id>"
+        project_allocation_id="<allocation_id>"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}/project_allocations/${project_allocation_id}" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        project_id = "<project_id>"
+        project_allocation_id = "<allocation_id>"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}/project_allocations/{project_allocation_id}",
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
 
 
 ## Troubleshooting
