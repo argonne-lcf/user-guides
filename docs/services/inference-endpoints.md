@@ -373,7 +373,6 @@ Models are organized by cluster and marked with the following capabilities:
     
     **Other Models**
 
-    - allenai/Llama-3.1-Tulu-3-405B
     - arcee-ai/Trinity-Large-Thinking-W4A16^RT^
     - nvidia/nemotron-3-super-120b^RT^
     - mgoin/Nemotron-4-340B-Instruct-hf
