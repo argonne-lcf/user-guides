@@ -24,16 +24,15 @@ setup_environment() {
     export COMMON_SETUP_SCRIPT=$SCRIPT_PATH
     
     # Load modules and activate your conda environment
-    module load frameworks
+    module use /soft/modulefiles
+    module load conda
+    conda activate
 
-    export ZE_FLAT_DEVICE_HIERARCHY=FLAT
-    export RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
-    export RAY_EXPERIMENTAL_NOSET_ONEAPI_DEVICE_SELECTOR=1
-    export CCL_ZE_IPC_EXCHANGE=sockets
-    export CCL_PROCESS_LAUNCHER=hydra
+    export CUDA_VISIBLE_DEVICES=0,1,2,3
+    export RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES=1
     export OMP_NUM_THREADS=8
     export TORCH_LLM_ALLREDUCE=1
-    export HF_HOME="/flare/datasets/model-weights"
+    export HF_HOME="/eagle/datasets/model-weights"
     export HF_DATASETS_CACHE="/flare/datasets/model-weights"
     export TMPDIR="/tmp"
     export RAY_TMPDIR="/tmp"
@@ -42,7 +41,7 @@ setup_environment() {
     ulimit -c unlimited
 
     # Derive the node's HSN IP address (modify the getent command as needed)
-    export HSN_IP_ADDRESS=$(getent hosts "$(hostname).hsn.cm.aurora.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
+    export HSN_IP_ADDRESS=$(getent hosts "$(hostname).hsn.cm.polaris.alcf.anl.gov" | awk '{ print $1 }' | sort | head -n 1)
     export VLLM_HOST_IP="$HSN_IP_ADDRESS"
 
     echo "[$(hostname)] Environment setup complete. HSN_IP_ADDRESS is $HSN_IP_ADDRESS"
@@ -57,7 +56,7 @@ stop_ray() {
 # Start Ray head node
 start_ray_head() {
     echo "[$(hostname)] Starting Ray head..."
-    ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:0,1,2,3,4,5,6,7" ray start --num-gpus=8 --num-cpus=64 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ray start --num-gpus=4 --num-cpus=32 --head --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     # Wait until Ray reports that the head node is up
     echo "[$(hostname)] Waiting for Ray head to be up..."
@@ -73,7 +72,7 @@ start_ray_head() {
 start_ray_worker() {
     echo "[$(hostname)] Starting Ray worker, connecting to head at $RAY_HEAD_IP..."
     echo "HSN IP Address : $HSN_IP_ADDRESS"
-    ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:0,1,2,3,4,5,6,7" ray start --num-gpus=8 --num-cpus=64 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
+    ray start --num-gpus=4 --num-cpus=32 --address="$RAY_HEAD_IP:6379" --node-ip-address="$HSN_IP_ADDRESS" --temp-dir=/tmp
 
     echo "[$(hostname)] Waiting for Ray worker to be up..."
     until ray status &>/dev/null; do
@@ -146,3 +145,4 @@ main() {
 
     echo "[$(hostname)] Ray cluster is up and running with $num_nodes nodes."
 }
+
