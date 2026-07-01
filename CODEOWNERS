@@ -1,0 +1,144 @@
+# CODEOWNERS file for ALCF User Guides
+
+# Directory format #1: /path/dir_name/ @username1 @username2
+# ---> path is relative to the repository root
+# ---> any file in the /path/dir_name/ directory in the root of your repository and any of its subdirectories.
+
+# Directory format #2: path/dir_name/ @username1 @username2
+# ---> any file in a directory/ anywhere in your repository (and any of their subdirs?)
+
+# Directory format #3: **/path/dir_name/ @username1 @username2
+# ---> any file in a `/path/dir_name` directory such as `/build/path/dir_name`, `/scripts/path/dir_name`,
+# and `/deeply/nested/path/dir_name` (same as #2?)
+
+###############
+
+# Default owners for everything in the repo
+# These owners will be the default owners for everything in the repository,
+# unless a later match takes precedence
+#### *                                   @???
+
+
+# Machine-specific documentation
+**/ai-testbed/                     @vksastry @wcarnold1010
+#**/ai-testbed/cerebras/           @sraskar
+# aurora/
+# polaris/
+# sophia/
+# crux/
+
+# Aurora compilers, PE documentation
+aurora/compiling-and-linking/**         @TApplencourt @colleeneb
+aurora/aurora-pe.md                @koysean
+
+# Programming models
+**/programming-models/kokkos-*.md   @zippylab  # @masterleinad
+**/programming-models/sycl-*.md     @TApplencourt @colleeneb
+
+# Computational chemistry and molecular dynamics
+**/applications/namd.md             @cjknight
+**/applications/gromacs.md          @cjknight
+**/applications/lammps.md           @cjknight
+**/applications/amber.md            @cjknight
+**/applications/openmm.md           @cjknight
+**/applications/QMCPACK.md          @ye-luo
+**/applications/QuantumESPRESSO.md  @ye-luo
+**/applications/vasp.md             @alvarovm
+
+# Example programs and makefiles
+**/example-program-makefile.md      @cjknight
+**/example-program*.md              @cjknight
+
+# Data Science frameworks and applications across all machines
+**/data-science/**/pytorch.md            @khossain4337 @FilippoSimini @saforem2
+**/data-science/**/tensorflow.md         @zhenghh04 @khossain4337
+**/data-science/**/deepspeed.md          @saforem2 @hatanp
+**/data-science/**/megatron-deepspeed.md @saforem2 @hatanp
+**/data-science/**/gpt-neox.md           @saforem2 @hatanp
+**/data-science/**/jax.md                @khossain4337
+**/data-science/**/scikit-learn.md       @BethanyL
+**onedal.md                              @BethanyL
+**/data-science/**/dask.md               @okaforn @FilippoSimini
+**/data-science/**/pyg.md                @FilippoSimini
+**/data-science/**/gpytorch.md           @FilippoSimini
+**/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
+**/data-science/**/libtorch.md           @rickybalin
+**/data-science/**/fine-tune-LLM-with-Autotrain.md  @saforem2
+
+# Python documentation across all machines
+**/data-science/**/python.md             @felker @khossain4337
+**/data-science/**/jupyter*			         @keceli
+
+# Julia documentation
+#**/julia.md                         @michel2323
+
+# Inference documentation
+**/data-science/**/inference/            @rickybalin
+**/data-science/**/inference/vllm.md     @FilippoSimini @khossain4337
+
+# Profiling documentation
+**/data-science/**/profiling_dl.md  @zhenghh04 @khossain4337
+**/performance-tools/vtune.md       @jkwack
+
+# Libraries documentation
+**/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
+**/libraries/cabana-*.md            @zippylab
+**/libraries/spack-pe.md            @koysean
+
+# Visualization documentation
+**/visualization/**                 @srizzi88
+
+# Data management across all machines
+**/daos*.md                         @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/**/lustre/       @kaushikvelusamy @zhenghh04 @kevin-harms
+**/data-management/**/copper/       @kaushikvelusamy @kevin-harms
+**/filesystem-and-storage/          @kevin-harms
+
+# All container documentation
+#### **/containers/                      @bcote-anl  # ?
+
+# All debugger documentation
+**/debugging*/*                     @jkwack
+
+# Account & Project Management documentation
+#####/account-project-management/	    @mantrala-ops @???
+
+# Running Jobs documentation
+#/running-jobs*                      @????
+**/queueing-and-running-jobs/       @pmrich @cjknight
+**/pbs-*.md                         @pmrich
+
+# Policies documentation
+**/policies/                          @bethcerny @alcf-haritha
+
+# Services documentation
+###**/services/                          @???
+**/services/gitlab-ci.md            @peterupton @thilinarmtb
+**/services/inference-endpoints.md  @bcote-anl @vksastry
+
+# Workflows
+####**/workflows/                       @???
+**/workflows/**/smartsim.md         @rickybalin
+**/workflows/**/adios.md            @rickybalin
+**/workflows/**/parsl.md            @cms21
+**/workflows/**/balsam.md           @cms21
+**/workflows/**/dragon.md           @cms21
+**/workflows/**/libensemble.md      @shuds13
+
+# User Support documentation
+###**/support/                @alcf-haritha @jfrancis-anl
+*support*                @alcf-haritha @jfrancis-anl
+
+# Core configuration files
+/mkdocs.yml                         @felker @saforem2
+/requirements.txt                   @felker
+/Makefile                           @felker
+/.github/                           @felker
+
+# Metadata and developer tools
+/includes/                          @felker
+
+# HTML, CSS, and theme-related files
+/overrides/                         @saforem2 @felker
+*.html                              @saforem2 @felker
+*.css                               @saforem2 @felker
