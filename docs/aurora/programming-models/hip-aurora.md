@@ -10,8 +10,10 @@ Below is a simple example of setting the HIP environment, building, and running 
 
 ```bash linenums="1"
 module use /soft/modulefiles
-module load chipStar/1.2.1
+module load chipStar/default
 ```
+
+Run `module avail chipStar` to list the available builds. The modules are date-stamped, as in `module load chipStar/llvm19/20251107-19/release`. The chipStar/default module points at the recommended date-stamped build.
 
 With this, the `hipcc` executable should be in your path. For projects using CMake, there is support via `find_package(hip CONFIG REQUIRED)` which can be used with chipStar.
 

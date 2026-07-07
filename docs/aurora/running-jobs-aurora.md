@@ -10,7 +10,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | debug          | 1        | 2          | 5 min    | 1 hr             | 64 nodes (non-exclusive);  <br/> Max 1 job running/accruing/queued **per-user**                 |
 | debug-scaling  | 2        | 256        | 5 min    | 1 hr             | Max 1 job running/accruing/queued **per-user**                                                  |
 | prod           | 256      | 10,624[^1] | 5 min    | 24 hrs           | Routing queue for small, medium, and large queues; <br/> **See table below for min/max limits** |                                                                       |
-| capacity       | 1        | 16         | 5 min    | 7 days (168 hrs) | Max of 128 nodes across all jobs. Max 5 jobs queued or running, 2 jobs running per user.        |
+| capacity       | 1        | 16         | 5 min    | 7 days (168 hrs) | Max of 512 nodes across all jobs. Max 5 jobs queued or running, 2 jobs running per user.      |
 | visualization  | 1        | 32         | 5 min    | 8 hrs            | ***By request only; non-exclusive nodes***                                                      |
 
 `prod` is the routing queue and routes your job to one of the following execution queues:
@@ -18,11 +18,11 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | Queue Name      | Node Min | Node Max   | Time Min | Time Max | Notes                                                                                                                                                                                                                                                                 |
 |-----------------|----------|------------|----------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | small           | 256      | 1024       | 5 min    | 12 hrs   |                                                                                                                                                                                                                                                                       |
-| medium          | 1025     | 1919       | 5 min    | 18 hrs   | **Starting 6/19/26, max job size will be 1999 nodes**                                                                                                                                                                                                                                                                      |
-| large           | 1920     | 10,624[^1] | 5 min    | 24 hrs   | **Starting 6/19/26, min job size will be 2000 nodes**                                                                                                                                                                                                                    |
+| medium          | 1025     | 1999       | 5 min    | 18 hrs   |                                                                                                                                                                                                                                                                       |
+| large           | 2000     | 10,624[^1] | 5 min    | 24 hrs   |                                                                                                                                                                                                                     |
 | backfill-small  | 256      | 1024       | 5 min    | 12 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
-| backfill-medium | 1025     | 1919       | 5 min    | 18 hrs   | Low priority, negative project balance. **Starting 6/19/26, max job size will be 1999 nodes**                                                                                                                                                                                                                                 |
-| backfill-large  | 1920     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. **Starting 6/19/26, min job size will be 2000 nodes**  |
+| backfill-medium | 1025     | 1999       | 5 min    | 18 hrs   | Low priority, negative project balance.                                                                                                                                                                                                                                  |
+| backfill-large  | 2000     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount.   |
 
 [^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count. The maximum available node count will decrease during testing of a new compute image in the `next-eval` queue, where approximately 2,600 nodes are allocated.
 
@@ -393,7 +393,7 @@ MPI 001 - OMP 000 - HWT 105 (Running on: 105) - Node x4407c6s2b0n0 - RT_GPU_ID 0
 MPI 002 - OMP 000 - HWT 1 (Running on: 001) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 MPI 003 - OMP 000 - HWT 105 (Running on: 105) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1,2,3,4,5 - GPU_ID N/A - Bus_ID 18,42,6c,18,42,6c
 ```
-The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Here, rank 0 is bound to logical processor 0 and rank 1 is bound to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
+The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Here, rank 0 is bound to logical processor 1 and rank 1 is bound to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
 
 <figure markdown>
   ![Example3](images/example3.png){ width="700" }
@@ -487,7 +487,7 @@ gpu_id=$(( (PALS_LOCAL_RANKID / num_tile ) % num_gpu ))
 tile_id=$((PALS_LOCAL_RANKID % num_tile))
 export ZE_ENABLE_PCI_ID_DEVICE_ORDER=1
 export ZE_AFFINITY_MASK=$gpu_id.$tile_id
-#echo “RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}”
+#echo "RANK= ${PMI_RANK} LOCAL_RANK= ${PMI_LOCAL_RANK} gpu= ${gpu}"
 exec "$@"
 ```
 
@@ -616,7 +616,7 @@ Here is how to submit an interactive job to, for example, edit/build/test an app
 qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <MYPROJECT> -q debug
 ```
 
-This command requests 1 node for a period of 1 hour in the `workq` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
+This command requests 1 node for a period of 1 hour in the `debug` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
 
 !!! warning
 
