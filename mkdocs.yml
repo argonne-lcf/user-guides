@@ -165,7 +165,7 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-  - Getting Started: https://www.alcf.anl.gov/support-center/get-started
+  - Getting Started: https://www.alcf.anl.gov/managing-your-award
   - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
@@ -173,7 +173,7 @@ nav:
     - Submit a Ticket: support/ticket.md
     - AI and Editor Guidance:
         - support/ai-guidance.md
-        - VS Code example: support/vscode.md
+        - VS Code Example: support/vscode.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
@@ -440,6 +440,7 @@ nav:
   - Services:
     - services/index.md
     - Inference Endpoints: services/inference-endpoints.md
+    - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
       - General: services/continuous-integration.md

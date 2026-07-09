@@ -1,7 +1,9 @@
 # VASP
 
 ## What is VASP?
-The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. A more complete description of VASP can be found here: [https://www.vasp.at](https://www.vasp.at)
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. 
+
+For a full documentation of VASP, visit: [https://www.vasp.at](https://www.vasp.at)
 
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be granted after the user requesting access has been verified to be on the VASP license by an official VASP license distributor.
@@ -18,20 +20,26 @@ Information to provide:
 - VASP license number:
 - Version of VASP requested (VASP 6.x):
 
-## VASP support policy
-ALCF compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. Limited support is available for fatal errors encountered at runtime.
+## Support policy
+ALCF suport team compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP  or with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. ALCF can provide limited help with fatal runtime errors encountered on ALCF systems.
 
-Once the user licence is validated, they will be added to the UNIX groups: `vasp6` or `vasp65` , and get access to the subdirectories in `/soft/applications/vasp`.
+Once the user licence is validated, ALCF will add the user to the UNIX groups: `vasp65` or `vasp6` , and grant access to the subdirectories in `/soft/applications/vasp`.
 
 ## How to obtain the code
 The VASP source can only be obtained from an official license reseller of VASP. This is either the University of Vienna or Material Designs, Inc.
 
-## VASP 6.6.x in Aurora (oneAPI + OpenMP Offload + MPI)
+## Building VASP 6.6.x on Aurora
+
+This section describes a VASP 6.6.x build configuration for Aurora using:
+
+- oneAPI
+- OpenMP offload
+- Cray MPI
 
 ### General compiling/installing instructions provided by VASP support 
 Instructions and samples of `makefile.include` can be found on the [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#Intel_Composer_suite_and_oneAPI_HPC_toolkit_for_CPU_and_GPU).
 
-The following `makefile.include` was tailored for Polaris, originally taken from [here](https://www.vasp.at/wiki/Makefile.include.oneapi_omp_off).
+The example below was adapted for Aurora from the VASP wiki page for `makefile.include` found [here](https://www.vasp.at/wiki/Makefile.include.oneapi_omp_off).
 
 ```makefile title="makefile.include" linenums="1"
 # Precompiler options
@@ -134,7 +142,7 @@ INCS        =-I$(MKLROOT)/include -I$(MKLROOT)/include/fftw
 
 #### Setting up compiler and libraries with `module`
 
-The following modules will update the include and library paths used by the Cray compiler wrapper `ftn` to load additional math libraries for the CPU.
+The following modules will update the include and library paths used by the Cray compiler wrapper `mpif90` to load additional math libraries for the CPU and GPU.
 
 ```bash linenums="1"
 module restore
@@ -143,15 +151,18 @@ module load oneapi/release/2025.3.1
 ```
 
 ### Compiling VASP
-Once the `modules` are loaded and a `makefile.include` is in the `vasp` folder, compiling all the object files and binaries is done with:
+
+After loading the modules and placing `makefile.include` in the `vasp` source folder, compiling all the object files and binaries is done with:
 
 ```bash linenums="1"
 make -j1
 ```
 
-### Running VASP in Aurora
+### Running VASP on Aurora
 
-An example of a submission script can be found here `/soft/applications/vasp/example.script.sh`, which would look something similar to:
+An example of a submission script can be found here `/soft/applications/vasp/example.script.sh`.
+
+A typical submission script looks like this:
 
 ```bash linenums="1" title="script.sh"
 #!/bin/bash -l

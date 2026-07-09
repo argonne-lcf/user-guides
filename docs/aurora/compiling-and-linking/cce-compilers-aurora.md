@@ -1,1 +1,1 @@
-# CCE Compilers on Polaris
+# CCE Compilers on Aurora

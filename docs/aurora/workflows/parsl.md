@@ -23,7 +23,7 @@ pip install parsl
 ```
 
 !!! info "Python on Aurora"
-	To get Python on Aurora, users can either load the AI frameworks module with `module load frameworks` or the basic Python 3.10 module with `module load python/3.10.13`
+	To get Python on Aurora, users can either load the AI frameworks module with `module load frameworks` or the basic Python module with `module load python/3.10.14` (or `module load python/3.12.12`, the default)
 
 When using Parsl to distribute work over many PBS Jobs (first two examples below), your workflow script will be executed on a login node and will not return until all tasks are completed.  In this situation, it is advisable to run your script in a [screen](https://linuxize.com/post/how-to-use-linux-screen/) session on the login node.
 

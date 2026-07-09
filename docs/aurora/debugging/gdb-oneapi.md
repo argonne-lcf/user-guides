@@ -37,7 +37,7 @@ From the interactive prompt on your lead Aurora compute node, issue
 ```bash linenums="1"
 export NNODES=`wc -l < $PBS_NODEFILE`
 mpiexec -n $NNODES ./helper_toggle_eu_debug.sh 1
-ZET_ENABLE_PROGRAM_DEBUGGING=1
+export ZET_ENABLE_PROGRAM_DEBUGGING=1
 ```
 
 ## Notes on GPU Debugging
@@ -175,3 +175,26 @@ Ctrl-C
 #9  0x0000000000402396 in main () at r.cpp:132
 ```
 Without the `set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug` The backtrace will not resolve the Level Zero API calls.
+
+If you are using gdb-oneapi to look at a corefile, it is likely that you will to do the following to get the debugging symbols loaded properly:
+```console
+> gdb-oneapi ./a.out core.x4305c0s6b0n0.94789
+(gdb)  set debug-file-directory /lus/flare/projects/catalyst/world_shared/runtime_debugging/1146.40/15sp4-debug/debugging_files/usr/lib/debug/
+(gdb) nosharedlibrary
+(gdb) sharedlibrary
+(gdb) bt
+#0  NEO::TagNodeBase::getBaseGraphicsAllocation (this=<optimized out>) at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/shared/source/utilities/tag_allocator.cpp:33
+#1  L0::Event::getAllocation (this=0x1477cc00f320, device=<optimized out>) at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/event/event.cpp:590
+#2  0x000014781a7bd4fd in L0::CommandListCoreFamily<(GFXCORE_FAMILY)3080>::appendSignalEventPostWalker (this=0x1477dc000b60, event=0x1477cc00f320, syncCmdBuffer=0x0, outTimeStampSyncCmds=0x0, skipBarrierForEndProfiling=false,
+    skipAddingEventToResidency=false, copyOperation=true) at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/cmdlist/cmdlist_hw.inl:2455
+#3  0x000014781a7c1ef1 in L0::BcsSplit::appendSplitCall<(GFXCORE_FAMILY)3080, void*, void const*> (performMigration=true, appendCall=..., direction=<optimized out>, hasRelaxedOrderingDependencies=false, phWaitEvents=0x0,
+    numWaitEvents=0, hSignalEvent=0x1477dc00bfe8, size=5242880, srcptr=0xff94781b000000, dstptr=0xff0000000c800000, cmdList=0x1477dc000b60, this=<optimized out>)
+    at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/device/bcs_split.h:143
+#4  L0::CommandListCoreFamilyImmediate<(GFXCORE_FAMILY)3080>::appendMemoryCopy (this=0x1477dc000b60, dstptr=<optimized out>, srcptr=<optimized out>, size=<optimized out>, hSignalEvent=<optimized out>, numWaitEvents=<optimized out>,
+    phWaitEvents=<optimized out>, memoryCopyParams=...) at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/core/source/cmdlist/cmdlist_hw_immediate.inl:688
+#5  0x000014781a696b2d in L0::zeCommandListAppendMemoryCopy (hCommandList=<optimized out>, dstptr=<optimized out>, srcptr=<optimized out>, size=<optimized out>, hSignalEvent=<optimized out>, numWaitEvents=<optimized out>,
+    phWaitEvents=0x0) at /usr/src/debug/intel-compute-runtime-25.18.33578.42-1146.x86_64/level_zero/api/core/ze_copy_api_entrypoints.h:23
+[...]
+```
+
+
