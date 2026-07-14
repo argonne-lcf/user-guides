@@ -363,6 +363,7 @@ nav:
           - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
           - LibTorch: polaris/data-science/frameworks/libtorch.md
           - GPyTorch: polaris/data-science/frameworks/gpytorch.md
+          - vLLM: polaris/data-science/frameworks/vllm.md
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
