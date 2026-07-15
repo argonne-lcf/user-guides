@@ -23,7 +23,7 @@ To get a reservation, you must first demonstrate a need to run outside of the no
 
 ## Score Boosts
 
-Score boosts allow users' jobs to move ahead in the queue, but it still allow the scheduler to more efficiently fill the machine. 
+Score boosts allow jobs to move ahead in the queue, but they still allow the scheduler to more efficiently fill the machine. This is the recommended approach for workloads that still fit within the normal queuing policies.
 
 !!! info "Disclaimer"
 
@@ -51,7 +51,7 @@ Resv ID      Queue     User     State               Start / Duration / End
 A123456.po   A123456   smith@   CO       Mon Aug 18 09:00 / 43200 / Tue Aug 19 11:00
 ```
 
-To get more details on a specific reservation, use the command `pbs_rstat -f <resv_id>`, where `<resv_id>` is the reservation queue (`A123456` in the sample output above.)
+To get more details on a specific reservation, use the command `pbs_rstat -f <resv_id>`, where `<resv_id>` is the reservation queue (`A123456` in the sample output above).
 
 For recurring reservations, the start and end times are always those from the first instance. `reserve_index` and `reserve_count` tell you where you are in the recurrence.
 
