@@ -29,7 +29,7 @@ Address, Memory, and Thread Sanitizers are provided with the oneAPI compiler for
 
 * Enabling device-side ASAN on a SYCL kernel
 ```bash
-icpx –fsycl –Xarch_device –fsanitize=address -g demo.cpp
+icpx -fsycl -Xarch_device -fsanitize=address -g demo.cpp
 ./demo 
 ```
 
@@ -53,7 +53,7 @@ WRITE of size 8 at kernel <__omp_offloading_10301_140c146_gpu_rhf_j01_ssss__l85>
 
 * Enabling device-side MSAN on a SYCL kernel
 ```bash
-icpx –fsycl –Xarch_device –fsanitize=memory -g demo.cpp
+icpx -fsycl -Xarch_device -fsanitize=memory -g demo.cpp
 ./demo 
 ```
 
@@ -77,7 +77,7 @@ use of size 1 at kernel <__omp_offloading_10301_12070fb__ZN6openmc19process_init
 
 * Enabling device-side TSAN on a SYCL kernel
 ```bash
-icpx –fsycl –Xarch_device –fsanitize=thread -g demo.cpp
+icpx -fsycl -Xarch_device -fsanitize=thread -g demo.cpp
 ./demo 
 ```
 
@@ -98,7 +98,7 @@ When write of size 1 at 0xff00fffffffe0000 in kernel <typeinfo name for main::{l
 
 ## Notes
 * For CPU-side sanitizers, you can build your code with `-Xarch_host` instead of `-Xarch_device`. 
-* To enable memory sanitizer origin tracking, you can use `-fsanitizer-memory-track-origins=1`.
+* To enable memory sanitizer origin tracking, you can use `-fsanitize-memory-track-origins=1`.
 
 
 ## Known issues and workarounds

@@ -214,7 +214,7 @@ mpicxx main.cpp -lOpenCL
 This simple example can be run on a single tile of an Aurora GPU as follows.
 
 ```bash
-$ export XE_AFFINITY_MASK=0.0
+$ export ZE_AFFINITY_MASK=0.0
 $ ./vecadd
 Running on GPU!
 Using double-precision

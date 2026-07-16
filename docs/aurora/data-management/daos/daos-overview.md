@@ -109,7 +109,7 @@ DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamo
 ### To delete the container
 
 ```bash linenums="1"
-daos container destroy ${DAOS_POOL} ${DAOS_CONT}/
+daos container destroy ${DAOS_POOL} ${DAOS_CONT}
 daos cont list ${DAOS_POOL}
 ```
 
@@ -228,7 +228,7 @@ The full code is available on the Aurora filesystem within `/soft/daos/examples/
 First, set up an interactive job on a compute node and initialize the environment as follows:
 
 ```bash linenums="1"
-qsub ... -l filesystem:flare,daos_perf_fs
+qsub ... -l filesystems=flare:daos_perf_fs
 
 module use /soft/modulefiles
 module load daos_perf
@@ -509,7 +509,7 @@ Health (status)                                  UNCLEAN
 This `UNCLEAN` status indicates that DAOS had a temporary loss of redundancy, which may or may not have caused metadata corruption (including directory structures) or data corruption. To investigate, first make the container accessible by explicitly setting status to `HEALTHY`:
 
 ```bash linenums="1"
-daos cont set-prop  ${DAOS_POOL} ${DAOS_CONT}status:HEALTHY
+daos cont set-prop ${DAOS_POOL} ${DAOS_CONT} status:HEALTHY
 ```
 
 To check metadata corruption, run this DAOS filesystem command:

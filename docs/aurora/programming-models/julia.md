@@ -32,14 +32,14 @@ If `$JULIA_DEPOT_PATH` is not set, it defaults to `~/.julia` with a warning when
 Load the Julia module:
 ```bash
 module use /soft/modulefiles
-module load julia
+module load libraries/julia
 ```
 
 By default, this loads the latest stable version of Julia. To load a specific version:
 ```bash
-module load julia/1.12  # Latest version
-module load julia/1.11  # Previous version
-module load julia/1.10  # LTS (Long Term Support)
+module load libraries/julia/1.12  # Latest version
+module load libraries/julia/1.11  # Previous version
+module load libraries/julia/1.10  # LTS (Long Term Support)
 ```
 
 ### Version Policy
@@ -88,7 +88,7 @@ qsub -I -l select=1,walltime=1:00:00,filesystems=home:flare -A [PROJECT] -q debu
 
 # Once on the node, load Julia and run the verification
 module use /soft/modulefiles
-module load julia
+module load libraries/julia
 julia -e "using oneAPI; oneAPI.versioninfo()"
 
 # Expected Output Snippet
@@ -180,7 +180,7 @@ This PBS script requests resources and launches the Julia application using `mpi
 
 cd ${PBS_O_WORKDIR}
 module use /soft/modulefiles
-module load julia
+module load libraries/julia
 
 # --- Job Settings ---
 NNODES=`wc -l < $PBS_NODEFILE`
