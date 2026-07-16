@@ -45,6 +45,8 @@ from parsl.executors import HighThroughputExecutor
 # Use the MPI launcher to launch worker processes:
 from parsl.launchers import MpiExecLauncher
 
+from parsl.addresses import address_by_interface
+
 # These options will run work in 1 node batch jobs run one at a time
 nodes_per_job = 1
 max_num_jobs = 1
@@ -56,6 +58,8 @@ execute_dir = os.getcwd()
 aurora_single_tile_config = Config(
     executors=[
         HighThroughputExecutor(
+			# Ensures connections are made over the slingshot network
+			address=address_by_interface('hsn0'),
             # Ensures one worker per GPU tile on each node
             available_accelerators=tile_names,
             max_workers_per_node=12,
@@ -181,6 +185,8 @@ from parsl.executors import MPIExecutor
 # Use the Simple launcher
 from parsl.launchers import SimpleLauncher
 
+from parsl.addresses import address_by_interface
+
 # These options will run work in 10 node batch jobs run one at a time
 nodes_per_task = 2
 nodes_per_job = 10
@@ -192,6 +198,8 @@ working_directory = os.getcwd()
 mpi_ensemble_config = Config(
     executors=[
         MPIExecutor(
+			# Ensure connections go over slingshot network
+			address=address_by_interface('hsn0'),
             # This creates 1 worker for each multinode task slot
             max_workers_per_block=nodes_per_job//nodes_per_task,
             provider=PBSProProvider(
@@ -278,6 +286,8 @@ from parsl.executors import HighThroughputExecutor
 # Use the MPI launcher to launch worker processes:
 from parsl.launchers import MpiExecLauncher
 
+from parsl.addresses import address_by_interface
+
 tile_names = [f'{gid}.{tid}' for gid in range(6) for tid in range(2)]
 
 # The config will launch workers from this directory
@@ -292,6 +302,8 @@ with open(node_file,"r") as f:
 aurora_single_tile_config = Config(
     executors=[
         HighThroughputExecutor(
+			# Ensure connections go over slingshot network
+			address=address_by_interface('hsn0'),
             # Ensures one worker per GPU tile on each node
             available_accelerators=tile_names,
             max_workers_per_node=12,
