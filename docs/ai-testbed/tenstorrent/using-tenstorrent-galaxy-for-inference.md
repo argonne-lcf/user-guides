@@ -144,6 +144,10 @@ python3 run.py --model Qwen3-32B --docker-server --workflow server --device gala
 git checkout v0.10.0
 python3 run.py --model Qwen3-8B --docker-server --workflow server --device galaxy --skip-system-sw-validation
 ```
+```console
+git checkout v0.10.0
+python3 run.py --model gpt-oss-120b --docker-server --workflow server --device galaxy --skip-system-sw-validation
+```
 
 # Querying the API exposed by an inference server container
 
@@ -165,7 +169,7 @@ pip install openai  # for python queries
 export JWT_SECRET=test-secret-456
 export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_id": "tenstorrent", "token_id": "debug-test"}, os.getenv("JWT_SECRET"), algorithm="HS256"))')
 export API_URL="http://0.0.0.0:8000/v1/chat/completions"
-# or Qwen/Qwen3-8B, or some other model currently being served.
+# or Qwen/Qwen3-8B, or openai/gpt-oss-120b, or some other model currently being served.
 export MODEL_NAME=Llama-3.3-70B-Instruct
 export OPENAI_API_KEY=$BEARER_TOKEN
 export OPENAI_BASE_URL=$(echo $API_URL | sed 's/\/chat\/completions//')
@@ -184,6 +188,7 @@ export BEARER_TOKEN=$(python -c 'import os, json, jwt; print(jwt.encode({"team_i
 # for example HTTP request using curl, assuming SERVICE_PORT=7000
 export API_URL="http://0.0.0.0:8000/v1/chat/completions"
 #export MODEL_NAME=Qwen/Qwen3-8B
+#export MODEL_NAME=openai/gpt-oss-120b
 export MODEL_NAME=meta-llama/Llama-3.3-70B-Instruct
 curl -s --no-buffer -X POST "${API_URL}" \
     -H "Content-Type: application/json" \
