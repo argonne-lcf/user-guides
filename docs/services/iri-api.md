@@ -23,7 +23,7 @@ Download our auth script from [this repository](https://github.com/argonne-lcf/a
 wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
 ```
 
-If `wget` does not work, please try `curl -O` instead.
+If `wget` is unavailable on your system, try `curl -O` instead.
 
 ### 2. Authenticate
 
