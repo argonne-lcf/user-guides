@@ -23,6 +23,8 @@ Download our auth script from [this repository](https://github.com/argonne-lcf/a
 wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
 ```
 
+If `wget` does not work, please try `curl -O` instead.
+
 ### 2. Authenticate
 
 Generate the authentication flow URL with the command below. Copy-paste the URL to your browser, authenticate with your ALCF credentials, and copy-paste the resulting authorization code in your terminal.
