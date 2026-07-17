@@ -354,8 +354,8 @@ This section provides simple examples on how to interface with the API as a star
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
 
 !!! info "Currently Supported Filesystems"
-    - Eagle
-    - Home
+    - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
+    - Home (All paths must start with `/home`)
 
 ??? "3.1. List Directory Contents (`ls`)"
 
