@@ -394,8 +394,32 @@ qdel 1991684[]
 
 ### Limits on job arrays
 
-The number of subjobs in a job array is limited by the number of jobs that can be submitted to the queue.
+The number of subjobs that a job array can have **in the queued or running state at one time** is limited by the number of jobs that can be simultaneously queued/running in the destination queue.
 
-On Polaris, for the debug queue, that is 1, for preemptable, that is 20, and for prod that is 10.
+On Polaris, that concurrent limit is:
 
-The limit for prod on Polaris is 10 because 10 is the maximum number of jobs that can be routed by prod to one of the execution queues (small, medium, or large). One note, PBS will allow job array submissions of up to 100 subjobs in prod, however, these job arrays will not run because they will not route to an execution queue. This is a known issue on Polaris.
+| Queue | Max concurrent (queued + running) jobs |
+| --- | --- |
+| `debug` | 1 |
+| `preemptable` | 20 |
+| `prod` | 10 |
+
+The limit for `prod` on Polaris is 10 because 10 is the maximum number of jobs that can be routed by `prod` to one of the execution queues (`small`, `medium`, or `large`) at once.
+
+!!! warning "A job array wider than the queue limit will never run in `prod`"
+
+    PBS will *accept* a job array submission to `prod` with up to 100 subjobs, but if more subjobs become eligible than the routing limit allows, the excess subjobs **cannot route to an execution queue and will sit forever without running** (they accrue eligible time but are never placed). This is a known issue on Polaris. It is easy to hit accidentally with a parameter sweep, because by default *every* subjob in an array becomes eligible the moment the array is submitted.
+
+    **To use an array in `prod`, throttle the number of concurrently eligible subjobs with `%<num_concurrent>` so it never exceeds the queue limit.** For example, an array of 100 subjobs that only ever has 10 eligible at a time is compatible with the `prod` limit of 10:
+
+    ```bash
+    #PBS -J 0-99%10
+    ```
+
+    You can also apply the throttle to an already-submitted array without resubmitting:
+
+    ```bash
+    qalter -J 0-99%10 <job_array_id>[]
+    ```
+
+    If you cannot express your work within the concurrent limit (for example you want many subjobs running at once), submit the array to `preemptable` (limit 20) instead of `prod`, or drive the tasks with a [workflow management tool](../polaris/workflows/balsam.md) such as Balsam rather than a job array.
