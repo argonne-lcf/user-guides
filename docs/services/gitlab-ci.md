@@ -52,7 +52,7 @@ For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl
 
 ## Glossary
 * **Group** - A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When an ALCF Project is allocated resources on the GitLab-CI environment, we will create a GitLab `Group` that will map to your ALCF Project allocation.
-* **Jacamar-CI** - A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers like Cobalt and PBS.
+* **Jacamar-CI** - A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers such as PBS.
 * **Job** - An individual set of commands that are run. This is the lowest unit of GitLab-CI abstraction.
 * **Pipeline** - GitLab organizes your jobs for each run into a `pipeline`.
 * **Project** - GitLab Projects can be thought of as an individual git repository plus all services and features GitLab layers on top. This term is unrelated to the ALCF Project concept. ALCF Projects often map to LDAP groups and/or quotas and allocations.
@@ -91,6 +91,12 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
     * On Linux, Unix, and OSX-based systems using OpenSSH, your SSH public key is commonly found at `~/.ssh/id_rsa.pub`. If using Windows, you will need to consult your application's documentation on the location of your public key.
     * Give it a descriptive title such as where the key resides; by default, it will extract the name from the end of the public key if possible.
   * Click the `Add Key` button. The button is disabled until you paste a key.
+
+Once your SSH key is added, you can clone projects over SSH. Each project's landing page in the GitLab web UI displays its exact SSH and HTTPS clone URLs. The SSH form is:
+
+```
+git clone ssh://git@gitlab-ci-ssh.alcf.anl.gov:2222/<group>/<project>.git
+```
 
 ### GitLab Projects (repositories)
 GitLab takes a git repository, adds additional functionality, and calls it a `GitLab Project`. This is the most common level you will be interacting with GitLab at. Please do not confuse ALCF Projects with `GitLab Projects` as they are two separate things. ALCF Projects more closely map to the `GitLab Group/SubGroup` concept, which we explain in the next section. 
@@ -366,18 +372,22 @@ _Example: Use a job template so two tests will only run on merge requests_
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'    
 
 test1:
-  extends: .MR_rules
+  extends:
+    - .MR_rules
+    - .polaris-shell-runner
   stage: stage1
-  extends: .polaris-shell-runner
   script:
     - echo "Run test 1"
 test2:
-  extends: .MR_rules
+  extends:
+    - .MR_rules
+    - .polaris-shell-runner
   stage: stage2
-  extends: .polaris-shell-runner
   script:
     - echo "Run test 2"
-```   
+```
+
+A job may extend multiple templates by passing a list to `extends`. Templates are merged in order, so later entries override earlier ones on conflicting keys, and the job's own keys override all templates.
 
 ### Console Output
 To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both. Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords. Please do not output large amounts of data from your jobs to the stdout. If your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
@@ -386,6 +396,55 @@ To see the output of a job, click on it in the GUI, and it will show the STDOUT 
   ![GitLab CI/CD Add Variable](files/gitlab-ci/GitlabJobConsole.png){ width="700" }
   <figcaption>GitLab Group Job Console</figcaption>
 </figure>
+
+## Container Registry
+The ALCF GitLab-CI environment runs an integrated container image registry. Every `GitLab Project` can store, share, and version container images (Docker/OCI format) alongside its source code, and CI/CD jobs can push and pull images without relying on an external registry.
+
+The registry is served on port `8443` of the GitLab host. Image names therefore take the form:
+
+```
+gitlab-ci.alcf.anl.gov:8443/<group>/<subgroup>/<project>[/<image>]:<tag>
+```
+
+Each project has its own registry namespace, browsable in the web UI under "Deploy" > "Container Registry". The exact image path for a project is shown on that page.
+
+### Enabling the Container Registry for a Project
+The registry follows the project's "Container Registry" feature toggle. If it is not visible, navigate to "Settings" > "General", expand "Visibility, project features, permissions", and ensure "Container Registry" is enabled.
+
+### Authenticating to the Registry
+Authenticate to the registry with any container client using one of the following credential types:
+
+* A [Personal Access Token](https://docs.gitlab.com/user/profile/personal_access_tokens/) with the `read_registry` and/or `write_registry` scope, using your username.
+* A [Project or Group Deploy Token](https://docs.gitlab.com/user/project/deploy_tokens/) with the appropriate registry scopes.
+* The `CI_JOB_TOKEN` automatically provided inside CI/CD jobs.
+
+### Using the Registry from a CI/CD Job
+GitLab injects a set of predefined variables into every job so you can authenticate to the registry without hard-coding credentials:
+
+| Variable | Description |
+|:--------|:------------|
+| `CI_REGISTRY` | The registry host and port, e.g. `gitlab-ci.alcf.anl.gov:8443`. |
+| `CI_REGISTRY_IMAGE` | The registry path for the current project, e.g. `gitlab-ci.alcf.anl.gov:8443/mygroup/myproject`. |
+| `CI_REGISTRY_USER` | Username for the ephemeral job token. |
+| `CI_REGISTRY_PASSWORD` | Password for the ephemeral job token (`CI_JOB_TOKEN`). |
+
+For details on building container images in a CI/CD pipeline, see the upstream [Container Registry documentation](https://docs.gitlab.com/user/packages/container_registry/).
+
+### Container Registry Storage
+Registry images are held in ALCF object storage, separate from the 1&nbsp;GB per-repository Git quota described below. Delete tags and images you no longer need, and consider configuring a [cleanup policy](https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/) ("Settings" > "Packages and registries" > "Container registry cleanup policies") to expire stale tags automatically.
+
+## Additional Package and Artifact Features
+Beyond the container registry, the following GitLab features are enabled on the ALCF GitLab-CI environment. All are backed by ALCF object storage and are managed per `GitLab Project` or `Group` from the web UI.
+
+* **Package Registry** — Publish and consume language packages (PyPI, npm, Maven, Conan, NuGet, generic, and others) scoped to a project. See the upstream [Package Registry documentation](https://docs.gitlab.com/user/packages/package_registry/). Available under "Deploy" > "Package Registry".
+* **Dependency Proxy** — A pull-through cache for upstream container images at the `Group` level, which reduces repeated pulls from public registries such as Docker Hub. Reference cached images through the `${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}` prefix. See the [Dependency Proxy documentation](https://docs.gitlab.com/user/packages/dependency_proxy/).
+* **Git LFS (Large File Storage)** — Store large binary files outside the main Git history. Install the [`git-lfs`](https://git-lfs.com/) client and track files with `git lfs track`.
+* **CI/CD Secure Files** — Store certificates, keystores, and other secrets outside the repository for use in jobs. See the [Secure Files documentation](https://docs.gitlab.com/ci/secure_files/).
+* **Terraform/OpenTofu State** — GitLab can act as an HTTP backend for storing Terraform/OpenTofu state.
+
+!!! note "GitLab Pages is not enabled"
+
+    GitLab Pages is not available on the ALCF GitLab-CI environment. Job artifacts and the features above cover most publishing needs; contact [ALCF Support](mailto:support@alcf.anl.gov) if you have a use case that requires static site hosting.
 
 ## Storage Use and Policy 
 ### GitLab Project Quota
