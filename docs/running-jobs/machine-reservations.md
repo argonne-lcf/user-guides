@@ -35,7 +35,9 @@ Use the form linked below to submit reservation or score boost requests.
 
 ----
 
-### [-> Fill out the Form <-](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u)
+<div style="text-align: center" markdown>
+[Fill out the Form](https://forms.office.com/Pages/ResponsePage.aspx?id=haH8DPcl40mK53BNUybihXhEiVpWIVZNp8Ow6W1CJnVUNTZLQ1c2N1lSOVNFQkg4RkJTSTAyMUJCNi4u){ .md-button .md-button--primary }
+</div>
 
 ----
 
