@@ -1,8 +1,13 @@
-# Machine Reservations
+# Machine Reservations and Score Boosts
 
+## Reservations
+
+A reservation allows users to set aside a number of nodes on a system from the general pool of resources for a limited time. Only certain users or projects can submit to the queues assigned to the reservation. 
 To get a reservation, you must first demonstrate a need to run outside of the normal queueing policies. Reservations are available only to projects with a positive allocation.
 
-A **5-business-day** lead time is recommended to ensure timely approval. Scheduling is contingent on machine availability.
+!!! info "Disclaimer"
+
+    A **5-business-day** lead time is recommended to ensure timely approval. Requests submitted with less than 5 business days notice will be accommodated subject to machine availability. 
 
 !!! info "Disclaimer"
 
@@ -16,17 +21,17 @@ A **5-business-day** lead time is recommended to ensure timely approval. Schedul
     
     	If you have finished running your jobs before your reservation has ended, please reach out to the support team ([support@alcf.anl.gov](mailto:support@alcf.anl.gov)) to release it for other users. At this time, there is no way for a user to release a reservation early.
 
-### Relevant terms
-/// define
-Reservation
+## Score Boosts
 
-- A number of nodes on a system set aside from the general pool of resources for a limited time. Only certain users or projects can submit to the queues assigned to the reservation.
+Score boosts allow jobs to move ahead in the queue, but they still allow the scheduler to more efficiently fill the machine. This is the recommended approach for workloads that still fit within the normal queuing policies.
 
-Score boost
+!!! info "Disclaimer"
 
-- A job with a boosted score helps it move ahead in the queue, but it still allows the scheduler to more efficiently fill the machine.
+    Approval for score boosts is subject to their appropriateness. Not all requests will be approved. Please clearly explain the reason for requesting a score boost in the request form.
 
-///
+## Submitting Reservation and Score Boost Requests
+
+Use the form linked below to submit reservation or score boost requests.
 
 ----
 
@@ -34,13 +39,10 @@ Score boost
 
 ----
 
-# Querying Reservations via Command Line
+## Querying Reservations via Command Line
 
-You can see reservations using the `pbs_rstat` command:
-
-### Submitting to a reservation
-
-Use the `pbs_rstat` command on the login node to view the list of all reservations.
+You can see reservations using the `pbs_rstat` command.
+For instance, use the `pbs_rstat` command on the login node to view the list of all reservations.
 
 ```bash
 > pbs_rstat
@@ -49,9 +51,11 @@ Resv ID      Queue     User     State               Start / Duration / End
 A123456.po   A123456   smith@   CO       Mon Aug 18 09:00 / 43200 / Tue Aug 19 11:00
 ```
 
-For recurring reservations, the `reserve_start` and `reserve_end` are always the first instance. `reserve_index` and `reserve_count` tell you where you are in the recurrence.
+To get more details on a specific reservation, use the command `pbs_rstat -f <resv_id>`, where `<resv_id>` is the reservation queue (`A123456` in the sample output above).
 
-# Using a Reservation
+For recurring reservations, the start and end times are always those from the first instance. `reserve_index` and `reserve_count` tell you where you are in the recurrence.
+
+## Using a Reservation
 
 Once the reservation is set up, jobs can be submitted to the reservation queue prior to the reservation start time. In the example above, the queue name is shown in the `Queue` column.
 
