@@ -17,7 +17,7 @@ Facility supported, multiuser endpoints are currently offered on Polaris and Cru
 | System  | UUID |
 | ------  | ---- |
 | Polaris | [9a947ba5-f537-4681-acf3-cc66485aadec](https://app.globus.org/compute/endpoints/9a947ba5-f537-4681-acf3-cc66485aadec) |
-| Crux | [d01d0c83-e570-4977-9170-1b8f2316e7c6](https://app.globus.org/compute/endpoints/d01d0c83-e570-4977-9170-1b8f2316e7c6) |
+| Crux | [fd8b54bb-9452-411d-8e3a-09408156a886](https://app.globus.org/compute/endpoints/fd8b54bb-9452-411d-8e3a-09408156a886) |
 
 The globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
 
@@ -55,7 +55,7 @@ And then execute one of these example python scripts (paste your project name in
         return "hello from crux"
 
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
-    gce = Executor(endpoint_id="d01d0c83-e570-4977-9170-1b8f2316e7c6",
+    gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
                    serializer=serializer,
                    user_endpoint_config={"account": "<your project name>", 
                                          "queue": "debug",})
@@ -193,15 +193,15 @@ serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 
 # Run on Polaris
 polaris_gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
-                       searlizer=serializer,
+                       serializer=serializer,
                        user_endpoint_config={"queue": "debug",
                                              "account": account})
 polaris_future = gce.submit_to_registered_function(args=(5, 10), 
                                                    function_id=function_id))
 
 # Run on Crux
-crux_gce = Executor(endpoint_id="d01d0c83-e570-4977-9170-1b8f2316e7c6",
-                    searlizer=serializer,
+crux_gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
+                    serializer=serializer,
                     user_endpoint_config={"queue": "debug",
                                           "account": account})
 crux_future = gce.submit_to_registered_function(args=(2, 3), 
@@ -236,12 +236,12 @@ def query_host():
     time.sleep(5)
     return f"Hello from node {socket.gethostname()}"
 
-endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris
+endpoint_id = "fd8b54bb-9452-411d-8e3a-09408156a886" # Polaris
 num_nodes = 2
 user_endpoint_config = {"account": "datascience", 
                         "queue": "debug",
-                        "launcher": "MpiExecLauncher",
-                        "scheduler_options": "#PBS -l filesystems=home\n #PBS -l place=scatter",
+                        "launcher_type": "MpiExecLauncher",
+                        "scheduler_options": "#PBS -l filesystems=home\n#PBS -l place=scatter",
                         "max_workers_per_node": 1,
                         "nodes_per_block": num_nodes,
                         }
