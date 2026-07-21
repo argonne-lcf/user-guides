@@ -180,36 +180,7 @@ print(f"Registered adder; id {function_id}")
 
 The `register_function` call will return a UUID which is the function id.  This id can be used to run the function on any system that has environments and software capable executing it.  To run this example on the Crux and Polaris MEPs, copy the function id and paste it into this script:
 ```python
-from globus_compute_sdk import Executor
-from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
-
-# Paste your adder function id here
-function_id = ''
-
-# Paste your project name here
-account = ''
-
-serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
-
-# Run on Polaris
-polaris_gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
-                       serializer=serializer,
-                       user_endpoint_config={"queue": "debug",
-                                             "account": account})
-polaris_future = gce.submit_to_registered_function(args=(5, 10), 
-                                                   function_id=function_id))
-
-# Run on Crux
-crux_gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
-                    serializer=serializer,
-                    user_endpoint_config={"queue": "debug",
-                                          "account": account})
-crux_future = gce.submit_to_registered_function(args=(2, 3), 
-                                                function_id=function_id))
-
-# Get results
-print(f"Polaris sum is {polaris_future.result()}")
-print(f"Crux sum is {crux_future.result()}")
+TBD
 ```
 
 ### Wrap Compiled Executable
