@@ -21,11 +21,11 @@ Facility supported, multiuser endpoints are currently offered on Polaris and Cru
 
 The globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
 
-To submit a simple function to these endpoints from a remote system install `globus_compute_sdk` v4+:
+To submit a simple function to these endpoints from a remote system install `globus_compute_sdk` v4+ at the remote site:
 ```
 pip install globus_compute_sdk > 4.0
 ```
-And then execute one of these example python scripts (first paste your project name in the account setting):
+And then execute one of these example python scripts (paste your project name in the account setting before execution):
 
 === "Polaris"
 
@@ -122,23 +122,143 @@ The setting of `TMPDIR` is to fix a known issue with Parsl running single node j
 
 ## Single User Endpoints
 
-Users may, with caution, create their own single-user compute endpoints on login nodes.  This is appropriate for machines that do not yet support MEPs, like Aurora, or for workloads that require options not accomodated by the MEPs configuration options.
+Users may, with caution, create their own single-user compute endpoints on login nodes.  This is appropriate for machines that do not yet support MEPs, like Aurora, or for workloads that require options not accomodated by the MEP configuration options.
 
 The [ALCF globus compute repository](https://github.com/argonne-lcf/alcf-globus-compute) gives example config templates and instructions on how to use them.
 
 ## Examples
 
-### Hello world
+### Hello affinity
 
-Here is an example running a hello world that gives you information on the environment activated by the endpoint.
+Here is a simple example that will return information on the endpoint environment.  This can be a useful example when debugging environments or running for the first time.
+
+=== "Polaris"
+
+    ```
+    from globus_compute_sdk import Executor
+
+    def hello_affinity():
+        import sys
+        import parsl
+        import socket
+        import os
+        import globus_compute_endpoint
+        return f""" hostname: {socket.gethostname()}\n \
+                    CUDA_VISIBLE_DEVICES: {os.environ.get('CUDA_VISIBLE_DEVICES')}\n \
+                    remote environment: {sys.executable}\n \
+                    python version: {sys.version}\n \
+                    parsl version: {parsl.__version__}\n \
+                    GCE version: {globus_compute_endpoint.__version__}
+                """
+
+    # Paste your endpoint id here
+    endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
+
+    # ... then create the executor, ...
+    gce = Executor(endpoint_id=endpoint_id,
+                   user_endpoint_config={"account": "<your account name>", 
+                                        "queue": "debug",})
+    future = gce.submit(hello_affinity)
+    print(future.result())
+    ```
 
 ### Register Function
 
-Here is an example of how to register a function and run it.
+Globus compute allows users to register functions with the service that can then be called with a function id.  Registered Globus functions can be used in Globus Flows.
+
+Here is an example of how to register a Globus function with a Globus Client:
+```
+from globus_compute_sdk import Client
+
+def adder(a, b):
+    return a+b
+
+gcc = Client()
+function_id = gcc.register_function(adder)
+print(f"Registered adder; id {function_id}")
+```
+
+The `register_function` call will return a UUID which is the function id.  This id can be used to run the function on any system that has environments and software capable executing it.  To run this example on the Crux and Polaris MEPs, copy the function id and paste it into this script:
+```
+from globus_compute_sdk import Executor
+from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
+
+# Paste your adder function id here
+function_id = ''
+
+# Paste your project name here
+account = ''
+
+serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
+
+# Run on Polaris
+polaris_gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
+                       searlizer=serializer,
+                       user_endpoint_config={"queue": "debug",
+                                             "account": account})
+polaris_future = gce.submit_to_registered_function(args=(5, 10), 
+                                                   function_id=function_id))
+
+# Run on Crux
+crux_gce = Executor(endpoint_id="d01d0c83-e570-4977-9170-1b8f2316e7c6",
+                    searlizer=serializer,
+                    user_endpoint_config={"queue": "debug",
+                                          "account": account})
+crux_future = gce.submit_to_registered_function(args=(2, 3), 
+                                                function_id=function_id))
+
+# Get results
+print(f"Polaris sum is {polaris_future.result()}")
+print(f"Crux sum is {crux_future.result()}")
+```
+
+### Wrap Compiled Executable
+
+This is a simple example to show how to wrap a compiled executable with a python function for execution with a Globus Compute endpoint.
+
+```
+TBD
+```
+
 
 ### Multinode example
 
-Here is an example of using MpiExecLauncher
+Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute on function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
+
+```
+from globus_compute_sdk import Executor
+from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
+from concurrent.futures import as_completed
+
+def query_host():
+    import socket
+    import time
+    time.sleep(5)
+    return f"Hello from node {socket.gethostname()}"
+
+endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris
+num_nodes = 2
+user_endpoint_config = {"account": "datascience", 
+                        "queue": "debug",
+                        "launcher": "MpiExecLauncher",
+                        "scheduler_options": "#PBS -l filesystems=home\n #PBS -l place=scatter",
+                        "max_workers_per_node": 1,
+                        "nodes_per_block": num_nodes,
+                        }
+serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
+with Executor(endpoint_id=endpoint_id,
+                serializer=serializer,
+                user_endpoint_config=user_endpoint_config) as gce:
+    
+    # Submit functions
+    futures = []
+    for _ in range(2*num_nodes):
+        futures.append(gce.submit(query_host))
+    
+    # Collect results
+    for f in as_completed(futures):
+        print(f.result())
+```
 
 ## Troubleshooting
 
