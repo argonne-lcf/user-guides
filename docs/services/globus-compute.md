@@ -29,7 +29,7 @@ And then execute one of these example python scripts (paste your project name in
 
 === "Polaris"
 
-    ```
+    ```python
     from globus_compute_sdk import Executor
     from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
@@ -47,7 +47,7 @@ And then execute one of these example python scripts (paste your project name in
 
 === "Crux"
 
-    ```
+    ```python
     from globus_compute_sdk import Executor
     from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
@@ -134,7 +134,7 @@ Here is a simple example that will return information on the endpoint environmen
 
 === "Polaris"
 
-    ```
+    ```python
     from globus_compute_sdk import Executor
 
     def hello_affinity():
@@ -167,7 +167,7 @@ Here is a simple example that will return information on the endpoint environmen
 Globus compute allows users to register functions with the service that can then be called with a function id.  Registered Globus functions can be used in Globus Flows.
 
 Here is an example of how to register a Globus function with a Globus Client:
-```
+```python
 from globus_compute_sdk import Client
 
 def adder(a, b):
@@ -179,7 +179,7 @@ print(f"Registered adder; id {function_id}")
 ```
 
 The `register_function` call will return a UUID which is the function id.  This id can be used to run the function on any system that has environments and software capable executing it.  To run this example on the Crux and Polaris MEPs, copy the function id and paste it into this script:
-```
+```python
 from globus_compute_sdk import Executor
 from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
@@ -225,7 +225,7 @@ TBD
 
 Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute on function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
 
-```
+```python
 from globus_compute_sdk import Executor
 from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 from concurrent.futures import as_completed
@@ -267,7 +267,7 @@ with Executor(endpoint_id=endpoint_id,
 The most common pitfall users will encounter is that the endpoint gets into a loop of queuing and running jobs that immediately fail.
 
 To stop this behavior, delete the pid file(s) referenced by the endpoint.  This applies both to use of MEPs and single user endpoints.  To do this, login to the target machine and executue this command:
-```
+```bash
 rm ~/.globus_compute/*/daemon.pid
 ```
 
@@ -296,7 +296,7 @@ To resolve this issue there are a few options:
 
 2. Pass a `serializer` to the `Executor`.  The `AllCodeStrategies` serializer is recommended as a first choice:
 
-    ```
+    ```python
     from globus_compute_sdk import Executor
     from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
