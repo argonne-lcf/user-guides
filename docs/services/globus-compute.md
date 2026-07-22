@@ -164,33 +164,104 @@ Here is a simple example that will return information on the endpoint environmen
 
 ### Register Function
 
-Globus compute allows users to register functions with the service that can then be called with a function id.  Registered Globus functions can be used in Globus Flows.
+Globus compute allows users to register functions with the service that can then be called with a function id.  Registered Globus functions can be used in [Globus Flows](https://docs.globus.org/api/flows/).
 
-Here is an example of how to register a Globus function with a Globus Client:
+Here is one example of how to register a Globus function with a Globus Client:
 ```python
 from globus_compute_sdk import Client
 
+source = '''
 def adder(a, b):
     return a+b
+'''
 
 gcc = Client()
-function_id = gcc.register_function(adder)
+function_id = gcc.register_source_code(source=source, 
+                                       function_name="adder",
+                                       description="Adds two numbers")
 print(f"Registered adder; id {function_id}")
 ```
 
-The `register_function` call will return a UUID which is the function id.  This id can be used to run the function on any system that has environments and software capable executing it.  To run this example on the Crux and Polaris MEPs, copy the function id and paste it into this script:
+This routine will print a UUID which is the function id for the `adder` function.  This id can be used to run the function on any system that has environments and software capable executing it.  To run this example on the Crux and Polaris MEPs, copy the function id and paste it into this script along with your project name:
 ```python
-TBD
+from globus_compute_sdk import Executor
+
+# Paste your adder function id here
+function_id = ''
+
+# Paste your project name here
+account = ''
+
+# Run on Polaris
+polaris_gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
+                       user_endpoint_config={"queue": "debug",
+                                             "account": account})
+polaris_future = polaris_gce.submit_to_registered_function(args=(5, 10), 
+                                                           function_id=function_id)
+
+# Run on Crux
+crux_gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
+                    user_endpoint_config={"queue": "debug",
+                                          "account": account})
+crux_future = crux_gce.submit_to_registered_function(args=(2, 3),
+                                                     function_id=function_id)
+
+# Get results
+print(f"Polaris sum is {polaris_future.result()}")
+print(f"Crux sum is {crux_future.result()}")
 ```
 
 ### Wrap Compiled Executable
 
-This is a simple example to show how to wrap a compiled executable with a python function for execution with a Globus Compute endpoint.
+This is a simple example to show how to wrap a compiled executable with a python function for execution with a Globus Compute endpoint.  In this case, the shell command `hostname; sleep <sleeptime>` stands in for the path to an executable:
 
-```
-TBD
-```
+```python
+from globus_compute_sdk import Executor
+from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
+def host_sleep_wrapper(sleeptime):
+    import os
+    import subprocess
+
+    command = f"hostname; sleep {sleeptime}"
+
+    run_directory = "$HOME/globus_test"
+    # This will create a run directory for the application to execute
+    os.makedirs(os.path.expandvars(run_directory), exist_ok=True)
+    os.chdir(os.path.expandvars(run_directory))
+
+    # This runs the application command
+    res = subprocess.run(command, 
+                         stdout=subprocess.PIPE, 
+                         stderr=subprocess.PIPE,
+                         shell=True)
+
+    # Write stdout and stderr to files on Polaris filesystem
+    with open("hello.stdout", "w") as f:
+        f.write(res.stdout.decode("utf-8"))
+
+    with open("hello.stderr", "w") as f:
+        f.write(res.stderr.decode("utf-8"))
+
+    # This does some error handling for safety, in case your application fails.
+    # stdout and stderr are returned by the function
+    if res.returncode != 0:
+        raise Exception(f"Application failed with non-zero return code: {res.returncode} stdout='{res.stdout.decode('utf-8')}' stderr='{res.stderr.decode('utf-8')}'")
+    else:
+        return res.returncode, res.stdout.decode("utf-8"), res.stderr.decode("utf-8")
+
+# Paste endpoint id and project name
+endpoint_id = ''
+account = ''
+
+serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
+gce = Executor(endpoint_id=endpoint_id,
+               serializer=serializer,
+               user_endpoint_config={"queue": "debug",
+                                     "account": account})
+future = gce.submit(host_sleep_wrapper, 10)
+print(f"Results of wrapper function:\n{future.result()}")
+```
 
 ### Multinode example
 
