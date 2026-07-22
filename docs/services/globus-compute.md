@@ -138,6 +138,8 @@ The [ALCF globus compute repository](https://github.com/argonne-lcf/alcf-globus-
 
 Here is a simple example that will return information on the endpoint environment.  This can be a useful example when debugging environments or running for the first time.
 
+Paste your project name in the account setting before execution.
+
 === "Polaris"
 
     ```python
@@ -160,7 +162,7 @@ Here is a simple example that will return information on the endpoint environmen
     endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your account name>", 
+                   user_endpoint_config={"account": "<your project name>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
@@ -187,7 +189,7 @@ Here is a simple example that will return information on the endpoint environmen
     endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your account name>", 
+                   user_endpoint_config={"account": "<your project name>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
