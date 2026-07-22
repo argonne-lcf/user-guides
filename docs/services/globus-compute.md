@@ -115,6 +115,12 @@ The default environment activated by the endpoint includes all necessary depende
 ```
 If you wish to replace the default `worker_init` for your own `worker_init`, you must either activate a python environment with `globus-compute-endpoint` installed or append the default `work_init` commands to your custom `worker_init` commands.
 
+In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
+```
+pip install globus-compute-endpoint parsl==2026.02.23
+```
+The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
+
 !!! warning
     If you replace `worker_init` with your own commands, the environment it creates must include `globus_compute_endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submited by globus compute ednpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moroever, if this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
 
@@ -349,3 +355,18 @@ To resolve this issue there are a few options:
     ```
 
 3. If submitting a registered function, re-register the function with environment on the target machine where the endpoint is located.  This gaurentees the serialization and deserialization of the function will be done in the same environment.
+
+### Manager version doesn't match
+
+If using your own python environment on the target machine, it is necessary to match the version of the `parsl` package to the version used by the MEPs.  The `parsl` package is a dependency of `globus-compute-endpoint`.
+
+If the version of `parsl` differs from the MEP environment version, you will get an error similar to this:
+
+```
+parsl.executors.errors.BadStateException: Executor GlobusComputeEngine-HighThroughputExecutor failed due to: Manager version info py.v=3.12 parsl.v=2026.04.20 does not match interchange version info py.v=3.13 parsl.v=2026.02.23
+```
+
+To fix this, in your environment on the target machine (Polaris, Crux, etc.), install the correct parsl version:
+```
+pip install --upgrade parsl==2026.02.23
+```
