@@ -157,16 +157,41 @@ Here is a simple example that will return information on the endpoint environmen
                     GCE version: {globus_compute_endpoint.__version__}
                 """
 
-    # Paste your endpoint id here
     endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
-    # ... then create the executor, ...
     gce = Executor(endpoint_id=endpoint_id,
                    user_endpoint_config={"account": "<your account name>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
     ```
+
+=== "Crux"
+
+    ```python
+    from globus_compute_sdk import Executor
+
+    def hello_affinity():
+        import sys
+        import parsl
+        import socket
+        import os
+        import globus_compute_endpoint
+        return f""" hostname: {socket.gethostname()}\n \
+                    remote environment: {sys.executable}\n \
+                    python version: {sys.version}\n \
+                    parsl version: {parsl.__version__}\n \
+                    GCE version: {globus_compute_endpoint.__version__}
+                """
+
+    endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
+
+    gce = Executor(endpoint_id=endpoint_id,
+                   user_endpoint_config={"account": "<your account name>", 
+                                        "queue": "debug",})
+    future = gce.submit(hello_affinity)
+    print(future.result())
+    ```    
 
 ### Register Function
 
@@ -219,7 +244,9 @@ print(f"Crux sum is {crux_future.result()}")
 
 ### Wrap Compiled Executable
 
-This is a simple example to show how to wrap a compiled executable with a python function for execution with a Globus Compute endpoint.  In this case, the shell command `hostname; sleep <sleeptime>` stands in for the path to an executable:
+This is a simple example to show how to wrap a compiled executable with a python function for execution with a Globus Compute endpoint.  In this case, the shell command `hostname; sleep <sleeptime>` stands in for the path to an executable.
+
+Paste your project name and the endpoint id in the script before execution.
 
 ```python
 from globus_compute_sdk import Executor
@@ -257,8 +284,8 @@ def host_sleep_wrapper(sleeptime):
         return res.returncode, res.stdout.decode("utf-8"), res.stderr.decode("utf-8")
 
 # Paste endpoint id and project name
-endpoint_id = ''
-account = ''
+endpoint_id = '<selected endpoint id>'
+account = '<your project name>'
 
 serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 gce = Executor(endpoint_id=endpoint_id,
@@ -273,6 +300,8 @@ print(f"Results of wrapper function:\n{future.result()}")
 
 Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute on function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
 
+Paste your project name and the endpoint id in the script before execution.
+
 ```python
 from globus_compute_sdk import Executor
 from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
@@ -284,9 +313,10 @@ def query_host():
     time.sleep(5)
     return f"Hello from node {socket.gethostname()}"
 
-endpoint_id = "fd8b54bb-9452-411d-8e3a-09408156a886" # Polaris
+endpoint_id = "<selected endpoint id>"
+account = "<your project name>"
 num_nodes = 2
-user_endpoint_config = {"account": "datascience", 
+user_endpoint_config = {"account": account, 
                         "queue": "debug",
                         "launcher_type": "MpiExecLauncher",
                         "scheduler_options": "#PBS -l filesystems=home\n#PBS -l place=scatter",
