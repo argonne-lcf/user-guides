@@ -28,6 +28,62 @@ In the model selection dropdown, you can see the status of each model:
 !!! note "For Advanced UI Features"
     For a full guide on advanced features like RAG (Retrieval-Augmented Generation), function calling, and more, please refer to the official [Open WebUI documentation](https://docs.openwebui.com/).
 
+### Coding Agents
+
+If your coding agent supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoint as its backend.
+
+| Cluster | Endpoint URL |
+| --- | --- |
+| Sophia | `https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1` |
+| Metis | `https://inference-api.alcf.anl.gov/resource_server/metis/api/v1` |
+
+The model can be specified by it's fully qualfied name (see [Available Models](#available-models)).
+
+!!! warning "Responses API Support"
+    Streaming support is currently **disabled** for the OpenAI Responses API, meaning agents which rely on the Responses API as its default wire protocol will fail to send requests to the Inference Service. Configure your agent to utilize the OpenAI Chat Completion API instead for compatibility.
+
+#### Codex
+
+OpenAI's Codex is a popular coding agent that can be configured to use the ALCF Inference Service.
+
+##### 1. Installation
+
+!!! note "Codex Version Requirement"
+    Codex removed support for the Chat Completion API in `0.95`. Use `0.94` or lower for the Inference Service endpoints to be supported.
+
+Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
+
+If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+
+##### 2. Configuration
+
+In your `~/.codex/config.toml`, add these configuration values.
+
+```toml
+model = "<your model here>"
+model_provider = "inference-service"
+
+[model_providers.inference-service]
+name = "ALCF Inference Service"
+base_url = "<your endpoint url here>"
+env_key = "ALCF_AI_TOKEN"
+wire_api = "chat" # required to use Chat Completion API
+```
+
+`openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex.
+
+##### 3. Usage
+
+Before running Codex, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
+
+```sh
+uvx alcf-ai auth login # follow interactive instructions to login
+
+export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and store
+
+codex # now, you can finally run Codex and begin vibecoding
+```
+
 ### API Access
 
 For programmatic access, you can use the API endpoints directly.
