@@ -431,8 +431,8 @@ nav:
     - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
-      - General: services/continuous-integration.md
-      - GitLab CI: services/gitlab-ci.md
+      - services/ci/index.md
+      - GitLab CI: services/ci/gitlab-ci.md
     - Globus Compute: services/globus-compute.md
 
   - Account & Project Management:
