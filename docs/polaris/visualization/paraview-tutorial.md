@@ -10,10 +10,10 @@ This tutorial is intended to be a hands-on resource for users interested in lear
 - Feel for ParaView "way"
 - Terminology and step-by-step process peculiar to ParaView, which may differ from other packages, e.g., VisIt
 
-<figure markdown>
-  ![Bloodflow Visualization by Joe Insley, ALCF](images/img-01.jpg){ width="700" }
-  <figcaption>Bloodflow Visualization by Joe Insley, ALCF</figcaption>
-</figure>
+![Bloodflow Visualization by Joe Insley, ALCF](images/img-01.jpg){ width="700" }
+/// caption
+Bloodflow Visualization by Joe Insley, ALCF
+///
 
 ## Data
 
@@ -45,10 +45,10 @@ The data is available for download here (~27MB compressed, ~39MB uncompressed):
 
 **Note:** The "..." in the name, and the arrow in the file browser, indicates that there are multiple time steps for each of these files.
 
-<figure markdown>
-  ![Default settings](images/img-02.jpg){ width="700" }
-  <figcaption>With all of the default settings, you should see something like this</figcaption>
-</figure>
+![Default settings](images/img-02.jpg){ width="700" }
+/// caption
+With all of the default settings, you should see something like this
+///
 
 ## 2. Select which data to view
 
@@ -63,10 +63,10 @@ Let's start by looking at the continuum.000\* data. This is an unstructured mesh
 - Under Color by, select Velocity from the dropdown.
   - There is also a shortcut to Color by in the menu bar near the top of the GUI.
 
-<figure markdown>
-  ![Select which data to view](images/img-04.jpg){ width="700" }
-  <figcaption>Select which data to view</figcaption>
-</figure>
+![Select which data to view](images/img-04.jpg){ width="700" }
+/// caption
+Select which data to view
+///
 
 ## 3. Manipulating the Color Map
 
@@ -77,10 +77,10 @@ To change the colors used to represent the Velocity:
 - On the Preset Color Scales window, select: Blue to Red Rainbow, and click OK. Then click Close on the Color Scale Editor window.
 - You can also create and save your own color maps.
 
-<figure markdown>
-  ![Manipulating the Color Map](images/img-05.jpg){ width="700" }
-  <figcaption>Manipulating the Color Map</figcaption>
-</figure>
+![Manipulating the Color Map](images/img-05.jpg){ width="700" }
+/// caption
+Manipulating the Color Map
+///
 
 ## 4. Data Representation
 
@@ -89,10 +89,10 @@ In order to be able to see the particles and red blood cells inside the cylinder
 - Group of controls labeled Style
 - In the Representation dropdown, select Wireframe
 
-<figure markdown>
-  ![Data Representation](images/img-06.jpg){ width="700" }
-  <figcaption>Data Representation</figcaption>
-</figure>
+![Data Representation](images/img-06.jpg){ width="700" }
+/// caption
+Data Representation
+///
 
 ## 5. Generate Streamlines
 
@@ -106,10 +106,10 @@ In order to be able to see the particles and red blood cells inside the cylinder
 - The default Resolution is set to 100. This will make things a bit cluttered, especially when we start adding in the other data, so let's reduce this to 25.
 - Click the Apply button.
 
-<figure markdown>
-  ![Generate Streamlines](images/img-07.jpg){ width="700" }
-  <figcaption>Generate Streamlines</figcaption>
-</figure>
+![Generate Streamlines](images/img-07.jpg){ width="700" }
+/// caption
+Generate Streamlines
+///
 
 ## 6. Streamlines as Tubes
 
@@ -124,10 +124,10 @@ The streamlines are just that, lines. We can use the Tubes filter to represent t
 - With Tubes1 selected, switch to the Display tab in the Object Inspector.
 - The Color by dropdown lets you choose from a handful of different variables.
 
-<figure markdown>
-  ![Streamlines as Tubes](images/img-08.jpg){ width="700" }
-  <figcaption>Streamlines as Tubes</figcaption>
-</figure>
+![Streamlines as Tubes](images/img-08.jpg){ width="700" }
+/// caption
+Streamlines as Tubes
+///
 
 ## 7. Cutting Planes (Slices)
 
@@ -144,10 +144,10 @@ Now let's add some cutting planes, or slices, to see what the cross-section of t
 - With Slice1 selected in the Object Inspector, switch to the Display tab.
 - Set Color by value to Velocity.
 
-<figure markdown>
-  ![Cutting Planes (Slices)](images/img-09.jpg){ width="700" }
-  <figcaption>Cutting Planes (Slices)</figcaption>
-</figure>
+![Cutting Planes (Slices)](images/img-09.jpg){ width="700" }
+/// caption
+Cutting Planes (Slices)
+///
 
 ## 8. Data Representation: Opacity
 
@@ -158,10 +158,10 @@ Even with the continuum data represented as wireframe, there is still considerab
 - In the Object Inspector there is a section titled Style.
 - Set Opacity to 0.2.
 
-<figure markdown>
-  ![Data Representation: Opacity](images/img-10.png){ width="700" }
-  <figcaption>Data Representation: Opacity</figcaption>
-</figure>
+![Data Representation: Opacity](images/img-10.png){ width="700" }
+/// caption
+Data Representation: Opacity
+///
 
 ## 9. Animating Simulation Data
 
@@ -171,10 +171,10 @@ Since our data has multiple time steps, we can easily animate through them to se
 - Pause to make it stop.
 - Loop: With this button toggled on, animation will repeat until stopped.
 
-<figure markdown>
-  ![Animating Simulation Data](images/img-11.png){ width="700" }
-  <figcaption>Animating Simulation Data</figcaption>
-</figure>
+![Animating Simulation Data](images/img-11.png){ width="700" }
+/// caption
+Animating Simulation Data
+///
 
 ## 10. Animations
 
@@ -187,10 +187,10 @@ Animations can be saved to disk as a movie file, to be played back later.
 - Click OK.
 - Movie can be played back with standard media players (Windows Media Player, QuickTime, VLC, etc.).
 
-<figure markdown>
-  ![Animations](images/img-12.png){ width="700" }
-  <figcaption>Animations</figcaption>
-</figure>
+![Animations](images/img-12.png){ width="700" }
+/// caption
+Animations
+///
 
 ## 11. Particles as Glyphs
 
@@ -219,10 +219,10 @@ All of the particles are displayed as red points in the graphics window. There a
 - Since our goal was to unclutter the display, let's hide the particles.000* by toggling them off, by clicking on the Eye icon next to it in the Pipeline Browser.
 - Let's also switch to the Display tab in the Object Inspector, with Glyph1 selected, and change the Color by value to GlyphVector. Since the GlyphVector value is based on the velocity, we can Edit Color Map... and choose the same Blue to Red Rainbow preset that we previously chose for velocity.
 
-<figure markdown>
-  ![Particles as Glyphs](images/img-13.jpg){ width="700" }
-  <figcaption>Particles as Glyphs</figcaption>
-</figure>
+![Particles as Glyphs](images/img-13.jpg){ width="700" }
+/// caption
+Particles as Glyphs
+///
 
 ## 12. Enter: Red Blood Cells
 
@@ -232,10 +232,10 @@ These two data sets are essentially the same kind of data, so we can apply the s
 
 - Unhide the rbc.000* and bad_rbc.000* data sets by clicking the Eye icon next to each of them to make them visible.
 
-<figure markdown>
-  ![Enter: Red Blood Cells](images/img-14.jpg){ width="700" }
-  <figcaption>Enter: Red Blood Cells</figcaption>
-</figure>
+![Enter: Red Blood Cells](images/img-14.jpg){ width="700" }
+/// caption
+Enter: Red Blood Cells
+///
 
 ## 13. Using Color to Differentiate Data
 
@@ -250,10 +250,10 @@ One way to do this is by setting the color of the two data sets to different col
 - Select a color from the Select Color dialog that appears.
 - Repeat for the other RBC data set, choosing a different color.
 
-<figure markdown>
-  ![Using Color to Differentiate Data](images/img-15.jpg){ width="700" }
-  <figcaption>Using Color to Differentiate Data</figcaption>
-</figure>
+![Using Color to Differentiate Data](images/img-15.jpg){ width="700" }
+/// caption
+Using Color to Differentiate Data
+///
 
 ## 14. Further Exploration: Highlight the Mesh
 
@@ -266,10 +266,10 @@ In this example, the continuum.000* data is also hidden to reduce confusion with
 - For the Representation select Surface With Edges.
 - In the Edge Style section click on the Set Edge Color... button to select a different color from the Select Color dialog.
 
-<figure markdown>
-  ![Further Exploration: Highlight the Mesh](images/img-16.jpg){ width="700" }
-  <figcaption>Further Exploration: Highlight the Mesh</figcaption>
-</figure>
+![Further Exploration: Highlight the Mesh](images/img-16.jpg){ width="700" }
+/// caption
+Further Exploration: Highlight the Mesh
+///
 
 ## 15. Further Exploration: Highlight the Vertices
 
@@ -281,10 +281,10 @@ Add glyphs to illustrate the position of the vertices of one of the RBC data set
 - As in the earlier example, set the various configuration options for the glyph attributes.
 - **Note:** that this time, we want to show all of the vertices of the RBC, so we should uncheck the Mask Points option.
 
-<figure markdown>
-  ![Further Exploration: Highlight the Vertices](images/img-17.png){ width="700" }
-  <figcaption>Further Exploration: Highlight the Vertices</figcaption>
-</figure>
+![Further Exploration: Highlight the Vertices](images/img-17.png){ width="700" }
+/// caption
+Further Exploration: Highlight the Vertices
+///
 
 ## 16. Further Exploration: Color by Variable
 
@@ -297,10 +297,10 @@ Change the:
 - Representation
 - Etc.
 
-<figure markdown>
-  ![Further Exploration: Color by Variable](images/img-18.png){ width="700" }
-  <figcaption>Further Exploration: Color by Variable</figcaption>
-</figure>
+![Further Exploration: Color by Variable](images/img-18.png){ width="700" }
+/// caption
+Further Exploration: Color by Variable
+///
 
 ## 17. Background Color
 
@@ -310,9 +310,9 @@ Change the:
 - Select Color: OK.
 - Apply, then OK.
 
-<figure markdown>
-  ![Background Color](images/img-19.jpg){ width="700" }
-  <figcaption>Background Color</figcaption>
-</figure>
+![Background Color](images/img-19.jpg){ width="700" }
+/// caption
+Background Color
+///
 
 This tutorial was developed with support from National Science Foundation Grant OCI-0904190, and from the Argonne Leadership Computing Facility at Argonne National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under contract DE-AC02-06CH11357.

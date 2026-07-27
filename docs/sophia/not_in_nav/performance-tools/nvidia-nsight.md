@@ -245,9 +245,7 @@ Report file moved to "/gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_theta
 Report file moved to "/gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_thetaGPU/JKreport-nsys-BableStream.sqlite"
 ```
 
-<figure markdown>
-  ![Nsight Systems](files/JK_Nsys_Plot01.png){ width="700" }
-</figure>
+![Nsight Systems](files/JK_Nsys_Plot01.png){ width="700" }
 
 ### Nsight Compute
 
@@ -295,20 +293,12 @@ Dot         1081921.148 0.00050     0.00055     0.00053
 ==PROF== Report: /gpfs/mira-home/jkwack/HPC_benchmarks/BabelStream/JK_thetaGPU/JKreport-ncu_detailed-triad_kernel-BableStream.ncu-rep
 ```
 
-<figure markdown>
-  ![Nsight Compute example](files/JK_Ncu_Plots_Details.png){ width="700" }
-</figure>
+![Nsight Compute example](files/JK_Ncu_Plots_Details.png){ width="700" }
 
-<figure markdown>
-  ![Nsight Compute example](files/JK_Ncu_Plots_SOL.png){ width="700" }
-</figure>
+![Nsight Compute example](files/JK_Ncu_Plots_SOL.png){ width="700" }
 
-<figure markdown>
-  ![Nsight Compute example](files/JK_Ncu_Plots_Roofline.png){ width="700" }
-</figure>
+![Nsight Compute example](files/JK_Ncu_Plots_Roofline.png){ width="700" }
 
-<figure markdown>
-  ![Nsight Compute example](files/JK_Ncu_Plots_sources.png){ width="700" }
-</figure>
+![Nsight Compute example](files/JK_Ncu_Plots_sources.png){ width="700" }
 
 ---
