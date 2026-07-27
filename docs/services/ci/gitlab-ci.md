@@ -96,7 +96,7 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 
 Once your SSH key is added, you can clone projects over SSH. Each project's landing page in the GitLab web UI displays its exact SSH and HTTPS clone URLs. The SSH form is:
 
-```
+```bash
 git clone ssh://git@gitlab-ci-ssh.alcf.anl.gov:2222/<group>/<project>.git
 ```
 
