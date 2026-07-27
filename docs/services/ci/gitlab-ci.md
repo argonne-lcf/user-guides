@@ -12,33 +12,30 @@ Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ci/yaml/
 ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
 ## Quickstart
-* A user emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for their ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) (see [On-Boarding with CI/CD](#on-boarding-with-cicd) for what to include in the request).
-* ALCF Support will add the ALCF Project to the appropriate system(s) via the Account and Project management system.
-* ALCF will create a `GitLab Group/SubGroup` for the ALCF Project and map it to the appropriate LDAP group that maps to the ALCF Project.
-* ALCF Support will reply back to the user and inform them that the project is created.
-* User(s) will need to log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure their initial GitLab profile. Users will add an SSH key so they can pull/push code to the GitLab server.
-* User will then need to create a `GitLab Project` in their assigned `GitLab Group/SubGroup`.
-* CI/CD needs to be enabled for the GitLab Project.
-* When ready to run CI/CD jobs, users will add a `.gitlab-ci.yml` file to their git repositories.
-* They will need to set any [ALCF specific variable(s)](gitlab-ci.md#alcf-specific-variables).
+1. A user emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for their ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) (see [On-Boarding with CI/CD](#on-boarding-with-cicd) for what to include in the request).
+2. ALCF Support will add the ALCF Project to the appropriate system(s) via the Account and Project management system.
+3. ALCF will create a `GitLab Group/SubGroup` for the ALCF Project and map it to the appropriate LDAP group that maps to the ALCF Project.
+4. ALCF Support will reply back to the user and inform them that the project is created.
+5. User(s) will need to log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) and configure their initial GitLab profile. Users will add an SSH key so they can pull/push code to the GitLab server.
+6. User will then need to create a `GitLab Project` in their assigned `GitLab Group/SubGroup`.
+7. CI/CD needs to be enabled for the GitLab Project.
+8. When ready to run CI/CD jobs, users will add a `.gitlab-ci.yml` file to their git repositories.
+9. They will need to set any [ALCF specific variable(s)](#alcf-specific-variables).
 
-_Example: `.gitlab-ci.yml` file for Aurora_
-```yaml
-# this include allows us to reference defaults in anl/ci-resources/defaults
-include:
+```yaml title="Example: .gitlab-ci.yml for Aurora"
+include: # (1)!
   - project: 'anl/ci-resources/defaults'
     ref: main
     file:
       - '/runners.yml'
 
-stages:
-  - my_batch # stages may have any name
+stages: # (2)!
+  - my_batch
 
-# the below submits a batch job to the scheduler
-submit_batch: # CI jobs may have any name
-  stage: my_batch  # from the stages list above
-  extends: .aurora-batch-runner # this includes the defaults provided in the 'anl/ci-resources/defaults' project
-  variables:  # scheduler parameters must be included, adjust the below to match your values
+submit_batch: # (3)!
+  stage: my_batch # (4)!
+  extends: .aurora-batch-runner # (5)!
+  variables: # (6)!
     ANL_AURORA_SCHEDULER_PARAMETERS: "-A ProjectName -l select=1,walltime=10:00,filesystems=home -q myQueue"
   script:
     - id
@@ -46,18 +43,48 @@ submit_batch: # CI jobs may have any name
     - echo "Running on $(hostname) with setuid shell runner"
 ```
 
+1.  Lets you reference the ALCF-provided defaults in the `anl/ci-resources/defaults` project.
+2.  Stages may have any name.
+3.  CI jobs may have any name. This one submits a batch job to the scheduler.
+4.  Must be one of the names from the `stages` list above.
+5.  Pulls in the defaults provided by the `anl/ci-resources/defaults` project.
+6.  Scheduler parameters must be included; adjust these to match your values.
+
 To run a stage on a different system, change the `extends` key and the scheduler parameters. The list of ALCF provided `extends` is in the `include`ed [runners.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/defaults/-/blob/main/runners.yml?ref_type=heads) file. For Crux, proxy variables are provided through the same file.
 
 For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example/-/blob/master/.gitlab-ci.yml?ref_type=heads) file in the [large-example](https://gitlab-ci.alcf.anl.gov/anl/ci-resources/examples/large-example) project.
 
 ## Glossary
-* **Group** - A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When an ALCF Project is allocated resources on the GitLab-CI environment, we will create a GitLab `Group` that will map to your ALCF Project allocation.
-* **Jacamar-CI** - A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers such as PBS.
-* **Job** - An individual set of commands that are run. This is the lowest unit of GitLab-CI abstraction.
-* **Pipeline** - GitLab organizes your jobs for each run into a `pipeline`.
-* **Project** - `GitLab Projects` can be thought of as an individual git repository plus all services and features GitLab layers on top. This term is unrelated to the ALCF Project concept. ALCF Projects often map to LDAP groups and/or quotas and allocations.
-* **Stage** - A collection of jobs in a pipeline. Jobs in the next stage will not start until the jobs in the current stage complete. If a job fails, the pipeline will not run the following stages by default.
-* **Triggering User** - The user whose actions cause a CI/CD job to run and who the Jacamar-CI executor will run the jobs as. Examples include pushing commits up to the server, creating a merge request, and/or merging one branch into another branch.
+
+/// define
+Group
+
+- A collection of projects. Certain settings can be applied at the `Group` level and apply down to all child `SubGroups` and/or `Projects`. When an ALCF Project is allocated resources on the GitLab-CI environment, we will create a GitLab `Group` that will map to your ALCF Project allocation.
+
+Jacamar-CI
+
+- A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers such as PBS.
+
+Job
+
+- An individual set of commands that are run. This is the lowest unit of GitLab-CI abstraction.
+
+Pipeline
+
+- GitLab organizes your jobs for each run into a `pipeline`.
+
+Project
+
+- `GitLab Projects` can be thought of as an individual git repository plus all services and features GitLab layers on top. This term is unrelated to the ALCF Project concept. ALCF Projects often map to LDAP groups and/or quotas and allocations.
+
+Stage
+
+- A collection of jobs in a pipeline. Jobs in the next stage will not start until the jobs in the current stage complete. If a job fails, the pipeline will not run the following stages by default.
+
+Triggering User
+
+- The user whose actions cause a CI/CD job to run and who the Jacamar-CI executor will run the jobs as. Examples include pushing commits up to the server, creating a merge request, and/or merging one branch into another branch.
+///
 
 ## Projects Using CI/CD
 Any project with a git repository on the GitLab-CI environment has access to the CI/CD environment by default. In order to launch a shell job on a system, you must already have access to that system.
@@ -66,33 +93,41 @@ Any project with a git repository on the GitLab-CI environment has access to the
 To gain access to the GitLab-CI environment, send an email to [support@alcf.anl.gov](mailto:support@alcf.anl.gov) requesting access for your project(s).
 Include with the request:
 
-* That you are requesting access to the GitLab-CI environment at https://gitlab-ci.alcf.anl.gov
-* The ALCF Project shortname
-* The PI’s name 
+- [ ] That you are requesting access to the GitLab-CI environment at <https://gitlab-ci.alcf.anl.gov>
+- [ ] The ALCF Project shortname
+- [ ] The PI’s name
 
 GitLab-CI jobs run as the triggering user on relevant systems. The triggering user's home directory will be used by Jacamar-CI to copy the git repository and cache files into `~/.jacamar-ci`. This job will run out of their home directory and consume filesystem quota. If you need more space, you should try to reference files in any ALCF Project allocations you have on shared filesystems. Unfortunately, the initial git clone must run out of `~/.jacamar-ci` in your home directory.
 
 The triggering user is defined as the user account who caused the CI/CD pipeline to execute, via scheduling a recurring job, pushing commits up to the server, creating a merge request, and/or merging a branch. When the CI/CD jobs run, they will run as that user on the relevant systems. For a job to succeed, the `triggering user` must have appropriate permissions and access to all relevant systems and files.
 
 ### Initial Login and Profile Setup of GitLab-CI
-* Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
-* Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
-  * Click the Profile icon on the upper right-hand corner, then click "Edit Profile"
-    ![GitLab Profile Dropdown](files/GitlabProfileDropDown.png){ width="200" }
+1. Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
 
-    /// caption
-    GitLab Profile Dropdown screenshot
-    ///
-  * Click "SSH Keys" on the left-hand menu.
-    ![GitLab Profile Add SSH Key](files/GitlabAddSSHKey.png){ width="700" }
+2. Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
 
-    /// caption
-    GitLab Profile Add SSH Key screenshot
-    ///
-  * Copy/Paste your SSH public key into the large text box under the word Key.
-    * On Linux, Unix, and OSX-based systems using OpenSSH, your SSH public key is commonly found at `~/.ssh/id_rsa.pub`. If using Windows, you will need to consult your application's documentation on the location of your public key.
-    * Give it a descriptive title such as where the key resides; by default, it will extract the name from the end of the public key if possible.
-  * Click the `Add Key` button. The button is disabled until you paste a key.
+    1. Click the Profile icon on the upper right-hand corner, then click "Edit Profile"
+
+        ![GitLab Profile Dropdown](files/GitlabProfileDropDown.png){ width="200" }
+
+        /// caption
+        GitLab Profile Dropdown screenshot
+        ///
+
+    2. Click "SSH Keys" on the left-hand menu.
+
+        ![GitLab Profile Add SSH Key](files/GitlabAddSSHKey.png){ width="700" }
+
+        /// caption
+        GitLab Profile Add SSH Key screenshot
+        ///
+
+    3. Copy/Paste your SSH public key into the large text box under the word Key.
+
+        * On Linux, Unix, and OSX-based systems using OpenSSH, your SSH public key is commonly found at `~/.ssh/id_rsa.pub`. If using Windows, you will need to consult your application's documentation on the location of your public key.
+        * Give it a descriptive title such as where the key resides; by default, it will extract the name from the end of the public key if possible.
+
+    4. Click the `Add Key` button. The button is disabled until you paste a key.
 
 Once your SSH key is added, you can clone projects over SSH. Each project's landing page in the GitLab web UI displays its exact SSH and HTTPS clone URLs. The SSH form is:
 
@@ -103,41 +138,61 @@ git clone ssh://git@gitlab-ci-ssh.alcf.anl.gov:2222/<group>/<project>.git
 ### GitLab Projects (repositories)
 GitLab takes a git repository, adds additional functionality, and calls it a `GitLab Project`. This is the most common level you will be interacting with GitLab at. Please do not confuse ALCF Projects with `GitLab Projects` as they are two separate things. ALCF Projects more closely map to the `GitLab Group/SubGroup` concept, which we explain in the next section.
 
-Remember: ALCF Projects map to `GitLab Groups/SubGroups`, not `GitLab Projects`.
+!!! warning "ALCF Projects are not `GitLab Projects`"
+
+    ALCF Projects map to `GitLab Groups/SubGroups`, not `GitLab Projects`.
+
 Once you are assigned access to a `GitLab Group/SubGroup`, you will be able to create arbitrary `GitLab Projects` underneath, configuring CI/CD jobs for each independently.
 
 To create a new `GitLab Project`:
 
-* In the left pane, click "Groups", and then click the "Explore groups" link on the right.
-![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
-/// caption
-GitLab Your Groups Page screenshot
-///
+1. In the left pane, click "Groups", and then click the "Explore groups" link on the right.
 
-* From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
+    ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
 
-![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
-/// caption
-GitLab Explore Groups Page screenshot
-///
+    /// caption
+    GitLab Your Groups Page screenshot
+    ///
 
-* Click the `New project` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
-![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
-/// caption
-GitLab Empty Group Page screenshot
-///
-* On the `Create new project` page, click `Create blank project`.
-![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
-/// caption
-GitLab Create New Project page screenshot
-///
-* Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it. If you are pushing an existing repository, you *MUST* uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
-![GitLab Create Blank Project](files/GitlabNewProject2.png){ width="700" }
-/// caption
-GitLab Create Blank Project form screenshot
-///
-* Click the `Create project` button near the bottom.
-* After creating the project, navigate to "Settings" > "General", expand the "Visibility, project features, permissions" section, and enable the "CI/CD" toggle.
+2. From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
+
+    ![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
+
+    /// caption
+    GitLab Explore Groups Page screenshot
+    ///
+
+3. Click the `New project` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
+
+    ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
+
+    /// caption
+    GitLab Empty Group Page screenshot
+    ///
+
+4. On the `Create new project` page, click `Create blank project`.
+
+    ![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
+
+    /// caption
+    GitLab Create New Project page screenshot
+    ///
+
+5. Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it.
+
+    !!! danger "Uncheck `Initialize repository with a README`"
+
+        If you are pushing an existing repository, you **must** uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
+
+    ![GitLab Create Blank Project](files/GitlabNewProject2.png){ width="700" }
+
+    /// caption
+    GitLab Create Blank Project form screenshot
+    ///
+
+6. Click the `Create project` button near the bottom.
+
+7. After creating the project, navigate to "Settings" > "General", expand the "Visibility, project features, permissions" section, and enable the "CI/CD" toggle.
 
 ### GitLab Groups/SubGroups (Folders)
 GitLab organizes `GitLab Projects` into "folders" called `GitLab Groups` or `GitLab SubGroups`. When an ALCF Project is granted access to GitLab-CI, a `GitLab Group` will be created with access for all members of that ALCF Project. Users will then be able to create arbitrary `GitLab Projects`.
@@ -146,31 +201,39 @@ Each ALCF Project will have a top-level `GitLab Group` or `GitLab SubGroup` crea
 
 To create a new `GitLab SubGroup`:
 
-* In the left pane, click "Groups", and then click the "Explore groups" link on the right.
+1. In the left pane, click "Groups", and then click the "Explore groups" link on the right.
 
-![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
-/// caption
-GitLab Your Groups Page screenshot
-///
+    ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
 
-* From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
+    /// caption
+    GitLab Your Groups Page screenshot
+    ///
 
-![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
-/// caption
-GitLab Explore Groups Page screenshot
-///
+2. From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
-* Click the `New subgroup` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
-![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
-/// caption
-GitLab Empty Group Page screenshot
-///
-* On the `Create subgroup` page, enter the `Subgroup name`. `Subgroup slug` will auto-populate; do not change it.
-![GitLab Create New Group](files/GitlabNewSubGroup.png){ width="700" }
-/// caption
-GitLab Create New SubGroup screenshot
-///
-* Click the `Create subgroup` button near the bottom.
+    ![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
+
+    /// caption
+    GitLab Explore Groups Page screenshot
+    ///
+
+3. Click the `New subgroup` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
+
+    ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
+
+    /// caption
+    GitLab Empty Group Page screenshot
+    ///
+
+4. On the `Create subgroup` page, enter the `Subgroup name`. `Subgroup slug` will auto-populate; do not change it.
+
+    ![GitLab Create New Group](files/GitlabNewSubGroup.png){ width="700" }
+
+    /// caption
+    GitLab Create New SubGroup screenshot
+    ///
+
+5. Click the `Create subgroup` button near the bottom.
 
 ### GitLab Runner Nodes
 Each system is assigned one or more GitLab runner node(s) that are shared by all users in GitLab-CI. Each runner is only capable of running one user's pipeline at a time, while multiple jobs in that pipeline may run in parallel.
@@ -196,20 +259,24 @@ Tags are used to select which runner a job will be sent to. Improper tags can pr
 ##### ALCF Specific tags
 Two tags are necessary to run on our systems. One tag will select which cluster the jobs are sent to. The other will determine if the job is to be run locally on the GitLab runner host, or if it is to be submitted to a job scheduler on an HPC cluster.
 
-_Cluster Tag(s)_
+| Cluster | Tag | Description |
+|:--------|:----------|:------------|
+| Polaris | `polaris` | This tag will send jobs to the Polaris HPC runners  |
+| Aurora  | `aurora`  | This tag will send jobs to the Aurora HPC runners  |
+| Crux    | `crux`    | This tag will send jobs to the Crux HPC runners |
 
-| Cluster | tag | Description |
-|:--------|:---------:|:-------------:|
-| Polaris | polaris   | This tag will send jobs to the Polaris HPC runners  |
-| Aurora  | aurora    | This tag will send jobs to the Aurora HPC runners  |
-| Crux    | crux      | This tag will send jobs to the Crux HPC runners |
+/// caption
+Cluster tags
+///
 
-_Job Type Tag(s)_
+| Tag | Description |
+|:--------|:------------|
+| `shell` | This tag will execute the job locally on the GitLab runner host. |
+| `batch` | This tag will submit the job to the HPC cluster's job scheduler. |
 
-| tag | Description |
-|:---------:|:------------:|
-| shell | This tag will execute the job locally on the GitLab runner host. |
-| batch | This tag will submit the job to the HPC cluster's job scheduler. |
+/// caption
+Job type tags
+///
 
 #### Variables
 Variables can be stored two ways: inline in the `.gitlab-ci.yml` file or as a setting in the GitLab `Group` or `Project` itself. Variables are exported as environment variables by gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
@@ -218,8 +285,7 @@ GitLab also has a list of [predefined variables](https://docs.gitlab.com/ci/vari
 
 To set a variable directly in the `.gitlab-ci.yml` file, declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line. `variables:` can be declared globally or in individual jobs.
 
-_Example: Declaring variables_
-```yaml
+```yaml title="Example: declaring variables"
 variables:
   GlobalVariable1: "Global Value 1"
   GlobalVariable2: "Global Value 2"
@@ -249,13 +315,16 @@ GitLab CI/CD Add Variable screenshot
 If you are planning to submit jobs to a scheduler, then you will need to specify a per system variable `ANL_${CLUSTER}_SCHEDULER_PARAMETERS`; where `${CLUSTER}` is the name of the cluster. This variable will contain any command line flags you would need to submit jobs as if you were on the command line/scripting. Please consult the below table for more info.
 
 | Cluster | Scheduler | Variable Name | Support docs |
-|:--------|:---------:|:-------------:|:------------:|
-| Polaris | PBS       | ANL_POLARIS_SCHEDULER_PARAMETERS  | [Polaris Getting Started](../../polaris/getting-started.md) |
-| Aurora  | PBS       | ANL_AURORA_SCHEDULER_PARAMETERS   | [Aurora Getting Started](../../aurora/getting-started-on-aurora.md) |
-| Crux    | PBS       | ANL_CRUX_SCHEDULER_PARAMETERS   | [Crux Getting Started](../../crux/getting-started.md) |
+|:--------|:----------|:--------------|:-------------|
+| Polaris | PBS       | `ANL_POLARIS_SCHEDULER_PARAMETERS` | [Polaris Getting Started](../../polaris/getting-started.md) |
+| Aurora  | PBS       | `ANL_AURORA_SCHEDULER_PARAMETERS`  | [Aurora Getting Started](../../aurora/getting-started-on-aurora.md) |
+| Crux    | PBS       | `ANL_CRUX_SCHEDULER_PARAMETERS`    | [Crux Getting Started](../../crux/getting-started.md) |
 
-_Example: Running a batch job_
-```yaml
+/// caption
+Per-system scheduler parameter variables
+///
+
+```yaml title="Example: running a batch job"
 include:
   - project: 'anl/ci-resources/defaults'
     ref: main
@@ -276,7 +345,7 @@ batch_test:
 
 #### Stages
 Jobs can be organized into `stages`. Jobs in the next stage will not start until all dependencies in the previous stage have completed. This is often used if there are building and testing steps required before code may be run or packaged. These stages are assembled in a `Pipeline`, a directed graph of `stages`. By default, GitLab includes the following stages executed in the below order:
-```
+```text
 .pre
 build
 test
@@ -286,16 +355,14 @@ deploy
 
 You may declare your own stages by first declaring a `stages:` array near the top of your `.gitlab-ci.yml` file. Stages will be processed in the order given in the array.
 
-_Example: Declaring Stages_
-```yaml
+```yaml title="Example: declaring stages"
 stages:
   - stage1
   - stage2
   - stage3
 ```
 
-_Example: Pipeline with custom stages_
-```yaml
+```yaml title="Example: pipeline with custom stages"
 # this include allows us to reference defaults in anl/ci-resources/defaults
 include:
   - project: 'anl/ci-resources/defaults'
@@ -334,7 +401,7 @@ GitLab allows for CI/CD jobs to be launched only if certain conditions are met. 
 For more details, please see the upstream [docs](https://docs.gitlab.com/ci/yaml/#rules).
 
 Rules can use the following conditional checks:
-```
+```text
 if
 changes
 exists
@@ -343,8 +410,7 @@ variables
 when
 ```
 
-_Example: GitLab job designed to only run on merge requests_
-```yaml
+```yaml title="Example: job that only runs on merge requests"
 test1:
   rules:
     - if: $CI_COMMIT_TAG                    # Do not execute jobs for tag context
@@ -364,8 +430,7 @@ GitLab provides pipeline scheduling functionality to support recurring pipelines
 #### Template Jobs
 GitLab allows you to create `template jobs`, these are pieces of job specifications which can be included in jobs. Each `template job` name must begin with a period (.) and follow the same syntax as normal jobs. To instantiate a job based on the `template job`, use the keyword `extends`. If your specific job declares a key/value already in the template, the specific job will overwrite it.
 
-_Example: Use a job template so two tests will only run on merge requests_
-```yaml
+```yaml title="Example: job template so two tests only run on merge requests"
 .MR_rules:
   rules:
     - if: $CI_COMMIT_TAG                    # Do not execute jobs for tag context
@@ -394,7 +459,11 @@ test2:
 A job may extend multiple templates by passing a list to `extends`. Templates are merged in order, so later entries override earlier ones on conflicting keys, and the job's own keys override all templates.
 
 ### Console Output
-To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both. Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords. Please do not output large amounts of data from your jobs to the stdout. If your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
+To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both.
+
+!!! warning "Job consoles are persistent"
+
+    Be aware of any sensitive data, such as passwords, that you do not want exported or saved to the output console. Do not output large amounts of data from your jobs to stdout; if your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
 
 ![GitLab CI/CD Job Console](files/GitlabJobConsole.png){ width="700" }
 /// caption
@@ -406,7 +475,7 @@ The ALCF GitLab-CI environment runs an integrated container image registry. Ever
 
 The registry is served on port `8443` of the GitLab host. Image names therefore take the form:
 
-```
+```text
 gitlab-ci.alcf.anl.gov:8443/<group>/<subgroup>/<project>[/<image>]:<tag>
 ```
 
@@ -432,6 +501,10 @@ GitLab injects a set of predefined variables into every job so you can authentic
 | `CI_REGISTRY_USER` | Username for the ephemeral job token. |
 | `CI_REGISTRY_PASSWORD` | Password for the ephemeral job token (`CI_JOB_TOKEN`). |
 
+/// caption
+Predefined container registry variables
+///
+
 For details on building container images in a CI/CD pipeline, see the upstream [Container Registry documentation](https://docs.gitlab.com/user/packages/container_registry/).
 
 ### Container Registry Storage
@@ -440,17 +513,33 @@ Registry images are held in ALCF object storage, separate from the 1&nbsp;GB per
 ## Additional Package and Artifact Features
 Beyond the container registry, the following GitLab features are enabled on the ALCF GitLab-CI environment. All are backed by ALCF object storage and are managed per `GitLab Project` or `Group` from the web UI.
 
-* **Package Registry** — Publish and consume language packages (PyPI, npm, Maven, Conan, NuGet, generic, and others) scoped to a project. See the upstream [Package Registry documentation](https://docs.gitlab.com/user/packages/package_registry/). Available under "Deploy" > "Package Registry".
-* **Dependency Proxy** — A pull-through cache for upstream container images at the `Group` level, which reduces repeated pulls from public registries such as Docker Hub. Reference cached images through the `${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}` prefix. See the [Dependency Proxy documentation](https://docs.gitlab.com/user/packages/dependency_proxy/).
-* **Git LFS (Large File Storage)** — Store large binary files outside the main Git history. Install the [`git-lfs`](https://git-lfs.com/) client and track files with `git lfs track`.
-* **CI/CD Secure Files** — Store certificates, keystores, and other secrets outside the repository for use in jobs. See the [Secure Files documentation](https://docs.gitlab.com/ci/secure_files/).
-* **Terraform/OpenTofu State** — GitLab can act as an HTTP backend for storing Terraform/OpenTofu state.
+/// define
+Package Registry
+
+- Publish and consume language packages (PyPI, npm, Maven, Conan, NuGet, generic, and others) scoped to a project. See the upstream [Package Registry documentation](https://docs.gitlab.com/user/packages/package_registry/). Available under "Deploy" > "Package Registry".
+
+Dependency Proxy
+
+- A pull-through cache for upstream container images at the `Group` level, which reduces repeated pulls from public registries such as Docker Hub. Reference cached images through the `${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}` prefix. See the [Dependency Proxy documentation](https://docs.gitlab.com/user/packages/dependency_proxy/).
+
+Git LFS (Large File Storage)
+
+- Store large binary files outside the main Git history. Install the [`git-lfs`](https://git-lfs.com/) client and track files with `git lfs track`.
+
+CI/CD Secure Files
+
+- Store certificates, keystores, and other secrets outside the repository for use in jobs. See the [Secure Files documentation](https://docs.gitlab.com/ci/secure_files/).
+
+Terraform/OpenTofu State
+
+- GitLab can act as an HTTP backend for storing Terraform/OpenTofu state.
+///
 
 !!! note "GitLab Pages is not enabled"
 
     GitLab Pages is not available on the ALCF GitLab-CI environment. Job artifacts and the features above cover most publishing needs; contact [ALCF Support](mailto:support@alcf.anl.gov) if you have a use case that requires static site hosting.
 
-## Storage Use and Policy 
+## Storage Use and Policy
 ### GitLab Project Quota
 Each repository has a default quota of 1GB. Quota increases may be requested by emailing [Support](mailto:support@alcf.anl.gov). This quota is separate from the storage quotas allocated to ALCF Projects and ALCF Users on the HPC clusters and shared filesystems.
 
@@ -460,7 +549,10 @@ CI/CD jobs will run out of your home directory by default. Each job will begin b
 It is recommended that if you need more space than your home directory can provide, you leverage any ALCF Project space you may have been allocated on a shared filesystem.
 
 ## GitLab-CI Access Termination Policy
-Projects that have been inactive for at least 6 months will have their access disabled and their repositories deleted. Notification will be sent to the PI 30 days prior to the day of the action. 
+
+!!! danger "Inactive projects are deleted"
+
+    Projects that have been inactive for at least 6 months will have their access disabled and their repositories deleted. Notification will be sent to the PI 30 days prior to the day of the action.
 
 Inactivity is defined as, but not limited to:
 
@@ -469,9 +561,12 @@ Inactivity is defined as, but not limited to:
 * Prolonged period of continuously failing CI/CD jobs (In the case of recurring scheduled jobs)
 
 ## GitLab Repository Mirroring
-Some users prefer to host the canonical copy of their project on another Git hosting service, such as GitHub. 
+Some users prefer to host the canonical copy of their project on another Git hosting service, such as GitHub.
 It is possible to still use ALCF's GitLab-CI service to provide CI/CD for such projects via GitLab's [Repository Mirroring](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) feature.
-Limited support is available for this workflow due to the additional complexity. Review the [related GitLab documentation](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) carefully.
+
+!!! info "Limited support"
+
+    Limited support is available for this workflow due to the additional complexity. Review the [related GitLab documentation](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) carefully.
 
 
 ## GitLab REST API
@@ -479,17 +574,22 @@ The GitLab REST API provides programmatic access to read and modify GitLab resou
 methods and JSON data formats.[^1]
 The examples below demonstrate how to fetch the logs and artifacts from a GitLab pipeline in a GitLab project.
 
-In order to use the REST API,  a personal access token is required.
+In order to use the REST API, a personal access token is required.
 Please follow the instructions at
 [GitLab Personal Access Token](https://docs.gitlab.com/user/profile/personal_access_tokens/) documentation to
 create one.
-This token is used to authenticate the user and must be kept secure and not shared with others.
+
+!!! warning "Keep your access token secret"
+
+    The token authenticates as you. Never commit it to a repository or share it with others; store it outside the repository, as the examples below do with `secrets.data`.
+
 Next, we need to find the project id for the GitLab project.
 In order to find the project ID, navigate to the project homepage in the GitLab web interface and click the
 button with three vertical dots in the upper right corner of the page and then click `Copy project ID` (see
 the figure below).
 
 ![GitLab Project ID](files/GitLabProjectID.png){ width="700" }
+
 /// caption
 GitLab Project ID screenshot
 ///
@@ -497,7 +597,7 @@ GitLab Project ID screenshot
 We use the `curl` command to interact with the GitLab REST API. First, let's get all the pipeline IDs for the
 given project ID. Each GitLab CI/CD run (or a pipeline) has a unique ID.
 
-```bash linenums="1"
+```bash linenums="1" title="List the pipeline IDs for a project"
 source ./secrets.data
 
 # GitLab project ID
@@ -531,7 +631,7 @@ Note that you may want to change the `PROJ_URL` based on the root endpoint of yo
 appropriately replace `gitlab-ci.alcf.anl.gov` with your GitLab instance URL).
 Once the pipeline IDs are obtained, we can fetch the logs and artifacts for a specific pipeline as shown below.
 
-```bash linenums="1"
+```bash linenums="1" title="Download the logs and artifacts for a pipeline"
 source ./secrets.data
 
 # GitLab project ID
