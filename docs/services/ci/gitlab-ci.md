@@ -3,11 +3,11 @@
 ## GitLab-CI
 GitLab is an application that offers combined functionality as a git repository, issue tracker, and CI/CD platform. The ALCF implementation of the GitLab-CI environment leverages upstream GitLab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into GitLab, it can allow for tighter DevOps processes.
 
-GitLab-CI is meant to provide CI/CD services for projects using GitLab-CI to store your git repositories and execute code on our HPC clusters. ALCF does not allow users to join their own private runners to our existing GitLab CI/CD environment and provides dedicated runners for our supported systems.
+GitLab-CI is meant to provide CI/CD services for projects using GitLab-CI to store your git repositories and execute code on our HPC clusters. ALCF does not allow users to join their own private runners to our existing GitLab-CI environment and provides dedicated runners for our supported systems.
 
 Additional information, technical and user documentation, and community support can be found on [GitLab's Runner website](https://docs.gitlab.com/runner/).
 
-Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ee/ci/yaml) for the full list of keywords supported by GitLab CI.
+Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ci/yaml/) for the full list of keywords supported by GitLab CI/CD.
 
 ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
@@ -24,7 +24,7 @@ ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI
 
 _Example: `.gitlab-ci.yml` file for Aurora_
 ```yaml
-# this include allows us to reference defaults in anl/ci-resource/defaults
+# this include allows us to reference defaults in anl/ci-resources/defaults
 include:
   - project: 'anl/ci-resources/defaults'
     ref: main
@@ -78,15 +78,15 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 * Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
 * Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
   * Click the Profile icon on the upper right-hand corner, then click "Edit Profile"
-    <figure markdown>
     ![GitLab Profile Dropdown](files/GitlabProfileDropDown.png){ width="200" }
-    <figcaption>GitLab Profile Dropdown screenshot</figcaption>
-    </figure>
+    /// caption
+    GitLab Profile Dropdown screenshot
+    ///
   * Click "SSH Keys" on the left-hand menu.
-    <figure markdown>
     ![GitLab Profile Add SSH Key](files/GitlabAddSSHKey.png){ width="700" }
-    <figcaption>GitLab Profile Add SSH Key screenshot</figcaption>
-    </figure>
+    /// caption
+    GitLab Profile Add SSH Key screenshot
+    ///
   * Copy/Paste your SSH public key into the large text box under the word Key.
     * On Linux, Unix, and OSX-based systems using OpenSSH, your SSH public key is commonly found at `~/.ssh/id_rsa.pub`. If using Windows, you will need to consult your application's documentation on the location of your public key.
     * Give it a descriptive title such as where the key resides; by default, it will extract the name from the end of the public key if possible.
@@ -105,33 +105,33 @@ Once you are assigned access to a `GitLab Group/SubGroup`, you will be able to c
 To create a new `GitLab Project`:
 
 * In the left pane, click "Groups", and then click the "Explore groups" link on the right.
-<figure markdown>
-  ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
-  <figcaption>GitLab Your Groups Page screenshot</figcaption>
-</figure>
+![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
+/// caption
+GitLab Your Groups Page screenshot
+///
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
-<figure markdown>
-  ![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
-  <figcaption>GitLab Explore Groups Page screenshot</figcaption>
-</figure>
+![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
+/// caption
+GitLab Explore Groups Page screenshot
+///
 
 * Click the `New project` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
-<figure markdown>
-  ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
-  <figcaption>GitLab Empty Group Page screenshot</figcaption>
-</figure>
+![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
+/// caption
+GitLab Empty Group Page screenshot
+///
 * On the `Create new project` page, click `Create blank project`.
-<figure markdown>
-  ![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
-  <figcaption>GitLab Create New Project screenshot</figcaption>
-</figure>
+![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
+/// caption
+GitLab Create New Project screenshot
+///
 * Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it. If you are pushing an existing repository, you *MUST* uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
-<figure markdown>
-  ![GitLab Create New Project](files/GitlabNewProject2.png){ width="700" }
-  <figcaption>GitLab Create New Project screenshot</figcaption>
-</figure>
+![GitLab Create New Project](files/GitlabNewProject2.png){ width="700" }
+/// caption
+GitLab Create New Project screenshot
+///
 * Click the `Create project` button near the bottom.
 * After creating the project, navigate to "Settings" > "General", expand the "Visibility, project features, permissions" section, and enable the "CI/CD" toggle.
 
@@ -144,50 +144,50 @@ To create a new `GitLab SubGroup`:
 
 * In the left pane, click "Groups", and then click the "Explore groups" link on the right.
 
-<figure markdown>
-  ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
-  <figcaption>GitLab Your Groups Page screenshot</figcaption>
-</figure>
+![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
+/// caption
+GitLab Your Groups Page screenshot
+///
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
-<figure markdown>
-  ![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
-  <figcaption>GitLab Explore Groups Page screenshot</figcaption>
-</figure>
+![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
+/// caption
+GitLab Explore Groups Page screenshot
+///
 
 * Click the `New subgroup` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
-<figure markdown>
-  ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
-  <figcaption>GitLab Empty Group Page screenshot</figcaption>
-</figure>
+![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
+/// caption
+GitLab Empty Group Page screenshot
+///
 * On the `Create subgroup` page, enter the `Subgroup name`. `Subgroup slug` will auto-populate; do not change it.
-<figure markdown>
-  ![GitLab Create New Group](files/GitlabNewSubGroup.png){ width="700" }
-  <figcaption>GitLab Create New SubGroup screenshot</figcaption>
-</figure>
+![GitLab Create New Group](files/GitlabNewSubGroup.png){ width="700" }
+/// caption
+GitLab Create New SubGroup screenshot
+///
 * Click the `Create subgroup` button near the bottom.
 
 ### GitLab Runner Nodes
 Each system is assigned one or more GitLab runner node(s) that are shared by all users in GitLab-CI. Each runner is only capable of running one user's pipeline at a time, while multiple jobs in that pipeline may run in parallel.
 
-Each node will have two runners available, `shell` and `batch`. `shell` will run shell jobs directly on the runner node as the user. `batch` will submit the job to the HPC cluster's scheduler that is paired to that node. You will need to select the appropriate runner in your `.gitlab-ci.yml` file for the job to be executed properly. For more details on the `.gitlab-ci.yml` file, please see upstream [docs](https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html).
+Each node will have two runners available, `shell` and `batch`. `shell` will run shell jobs directly on the runner node as the user. `batch` will submit the job to the HPC cluster's scheduler that is paired to that node. You will need to select the appropriate runner in your `.gitlab-ci.yml` file for the job to be executed properly. For more details on the `.gitlab-ci.yml` file, please see upstream [docs](https://docs.gitlab.com/ci/yaml/gitlab_ci_yaml/).
 
 ### `.gitlab-ci.yml` Configuration Sections
 GitLab uses a per repository `.gitlab-ci.yml` file. On any commit, merge request, or merge, GitLab will attempt to trigger a CI/CD pipeline based on the contents of this file. Within the `.gitlab-ci.yml` file, you can limit jobs to only run under certain conditions. A common workflow is to have linting and validation happen on every commit to a non-master/non-main branch. Larger, more complex tasks are then performed when that branch is merged back into master/main. All jobs launched on a given event are organized into a `Pipeline`. You can watch the progress of your pipeline via the CI/CD pipeline page for your `Project`.
 
-<figure markdown>
-  ![GitLab CI/CD Pipeline Overview](files/GitlabPipelineOverview.png){ width="700" }
-  <figcaption>GitLab Group and Projects screenshot</figcaption>
-</figure>
+![GitLab CI/CD Pipeline Overview](files/GitlabPipelineOverview.png){ width="700" }
+/// caption
+GitLab Group and Projects screenshot
+///
 
-<figure markdown>
-  ![GitLab CI/CD Pipeline Detailed](files/GitlabPipelineDetailed.png){ width="700" }
-  <figcaption>GitLab Group and Projects screenshot</figcaption>
-</figure>
+![GitLab CI/CD Pipeline Detailed](files/GitlabPipelineDetailed.png){ width="700" }
+/// caption
+GitLab Group and Projects screenshot
+///
 
 #### Tags
-Tags are used to select which runner a job will be sent to. Improper tags can prevent your job from running and result in a failed job. Tags should be added by extending the defaults in the 'anl/ci-resources/defaults' runner.yml file. ALCF specific tags are described here in case overrides are needed.
+Tags are used to select which runner a job will be sent to. Improper tags can prevent your job from running and result in a failed job. Tags should be added by extending the defaults in the 'anl/ci-resources/defaults' runners.yml file. ALCF specific tags are described here in case overrides are needed.
 
 ##### ALCF Specific tags
 Two tags are necessary to run on our systems. One tag will select which cluster the jobs are sent to. The other will determine if the job is to be run locally on the GitLab runner host, or if it is to be submitted to a job scheduler on an HPC cluster.
@@ -210,7 +210,7 @@ _Job Type Tag(s)_
 #### Variables
 Variables can be stored two ways: inline in the `.gitlab-ci.yml` file or as a setting in the GitLab `Group` or `Project` itself. Variables are exported as environment variables by gitlab-runner for each job and can be used inside the `.gitlab-ci.yml` file.
 
-GitLab also has a list of [predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) available in every GitLab CI/CD pipeline.
+GitLab also has a list of [predefined variables](https://docs.gitlab.com/ci/variables/predefined_variables/) available in every GitLab CI/CD pipeline.
 
 To set a variable directly in the `.gitlab-ci.yml` file, declare a `variables:` section with each `VariableName: "VariableValue"` being on its own line. `variables:` can be declared globally or in individual jobs.
 
@@ -229,17 +229,17 @@ job:
 
 To store variables in the `Group` or `Project` settings, in the left side menu, click `Settings>CI/CD`. Expand the Variables option on the right side frame. You can then add variables by clicking `Add variable`.
 
-For more details, please see the upstream [docs](https://docs.gitlab.com/ee/ci/variables/#create-a-custom-cicd-variable-in-the-gitlab-ciyml-file).
+For more details, please see the upstream [docs](https://docs.gitlab.com/ci/variables/#define-a-cicd-variable-in-the-gitlab-ciyml-file).
 
-<figure markdown>
-  ![GitLab CI/CD Variable settings ](files/GitlabVariables.png){ width="700" }
-  <figcaption>GitLab Group and Projects screenshot</figcaption>
-</figure>
+![GitLab CI/CD Variable settings ](files/GitlabVariables.png){ width="700" }
+/// caption
+GitLab Group and Projects screenshot
+///
 
-<figure markdown>
-  ![GitLab CI/CD Add Variable](files/GitlabAddVariable.png){ width="700" }
-  <figcaption>GitLab Group and Projects screenshot</figcaption>
-</figure>
+![GitLab CI/CD Add Variable](files/GitlabAddVariable.png){ width="700" }
+/// caption
+GitLab Group and Projects screenshot
+///
 
 ##### ALCF Specific Variables
 If you are planning to submit jobs to a scheduler, then you will need to specify a per system variable `ANL_${CLUSTER}_SCHEDULER_PARAMETERS`; where `${CLUSTER}` is the name of the cluster. This variable will contain any command line flags you would need to submit jobs as if you were on the command line/scripting. Please consult the below table for more info.
@@ -292,7 +292,7 @@ stages:
 
 _Example: Pipeline with custom stages_
 ```yaml
-# this include allows us to reference defaults in anl/ci-resource/defaults
+# this include allows us to reference defaults in anl/ci-resources/defaults
 include:
   - project: 'anl/ci-resources/defaults'
     ref: main
@@ -327,7 +327,7 @@ test2:
 #### Rules
 GitLab allows for CI/CD jobs to be launched only if certain conditions are met. GitLab sets a series of variables in addition to any the user explicitly sets when a job launches. A job can check these variables and choose to run or not based on the results. This is often used to ensure certain jobs only run on commits, merge requests, and/or merges. By default, if any rule matches, it will run. You can override this behavior with commands like `when: never` when a conditional matches.
 
-For more details, please see the upstream [docs](https://docs.gitlab.com/ee/ci/yaml/index.html#rules).
+For more details, please see the upstream [docs](https://docs.gitlab.com/ci/yaml/#rules).
 
 Rules can use the following conditional checks:
 ```
@@ -392,10 +392,10 @@ A job may extend multiple templates by passing a list to `extends`. Templates ar
 ### Console Output
 To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both. Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords. Please do not output large amounts of data from your jobs to the stdout. If your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
 
-<figure markdown>
-  ![GitLab CI/CD Add Variable](files/GitlabJobConsole.png){ width="700" }
-  <figcaption>GitLab Group Job Console</figcaption>
-</figure>
+![GitLab CI/CD Add Variable](files/GitlabJobConsole.png){ width="700" }
+/// caption
+GitLab Group Job Console
+///
 
 ## Container Registry
 The ALCF GitLab-CI environment runs an integrated container image registry. Every `GitLab Project` can store, share, and version container images (Docker/OCI format) alongside its source code, and CI/CD jobs can push and pull images without relying on an external registry.
@@ -486,13 +486,12 @@ button with three vertical dots in the upper right corner of the page and then c
 the figure below).
 
 ![GitLab Project ID](files/GitLabProjectID.png){ width="700" }
-
 /// caption
 GitLab Project ID screenshot
 ///
 
 We use the `curl` command to interact with the GitLab REST API. First, let's get all the pipeline IDs for the
-given project ID. Each GitLab CI run (or a pipeline) has a unique ID.
+given project ID. Each GitLab CI/CD run (or a pipeline) has a unique ID.
 
 ```bash linenums="1"
 source ./secrets.data
@@ -520,7 +519,7 @@ for id in $pipeline_ids; do
 done
 ```
 
-The file `secret.data` contains the `SECRET_ACCESS_TOKEN` variable which stores the personal access token
+The file `secrets.data` contains the `SECRET_ACCESS_TOKEN` variable which stores the personal access token
 for the user.
 The `jq` command is used to parse the JSON response from the GitLab REST API and extract the pipeline IDs
 (you can read more about the `jq` command at [jq Manual](https://jqlang.org/manual/)).
