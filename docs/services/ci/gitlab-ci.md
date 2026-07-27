@@ -55,7 +55,7 @@ For a more complete example, see the [.gitlab-ci.yml](https://gitlab-ci.alcf.anl
 * **Jacamar-CI** - A Custom Executor we use that runs jobs as a given user on the shell and is capable of submitting jobs to schedulers such as PBS.
 * **Job** - An individual set of commands that are run. This is the lowest unit of GitLab-CI abstraction.
 * **Pipeline** - GitLab organizes your jobs for each run into a `pipeline`.
-* **Project** - GitLab Projects can be thought of as an individual git repository plus all services and features GitLab layers on top. This term is unrelated to the ALCF Project concept. ALCF Projects often map to LDAP groups and/or quotas and allocations.
+* **Project** - `GitLab Projects` can be thought of as an individual git repository plus all services and features GitLab layers on top. This term is unrelated to the ALCF Project concept. ALCF Projects often map to LDAP groups and/or quotas and allocations.
 * **Stage** - A collection of jobs in a pipeline. Jobs in the next stage will not start until the jobs in the current stage complete. If a job fails, the pipeline will not run the following stages by default.
 * **Triggering User** - The user whose actions cause a CI/CD job to run and who the Jacamar-CI executor will run the jobs as. Examples include pushing commits up to the server, creating a merge request, and/or merging one branch into another branch.
 
@@ -101,7 +101,9 @@ git clone ssh://git@gitlab-ci-ssh.alcf.anl.gov:2222/<group>/<project>.git
 ```
 
 ### GitLab Projects (repositories)
-GitLab takes a git repository, adds additional functionality, and calls it a `GitLab Project`. This is the most common level you will be interacting with GitLab at. Please do not confuse ALCF Projects with `GitLab Projects` as they are two separate things. ALCF Projects more closely map to the `GitLab Group/SubGroup` concept, which we explain in the next section. 
+GitLab takes a git repository, adds additional functionality, and calls it a `GitLab Project`. This is the most common level you will be interacting with GitLab at. Please do not confuse ALCF Projects with `GitLab Projects` as they are two separate things. ALCF Projects more closely map to the `GitLab Group/SubGroup` concept, which we explain in the next section.
+
+Remember: ALCF Projects map to `GitLab Groups/SubGroups`, not `GitLab Projects`.
 Once you are assigned access to a `GitLab Group/SubGroup`, you will be able to create arbitrary `GitLab Projects` underneath, configuring CI/CD jobs for each independently.
 
 To create a new `GitLab Project`:
@@ -138,9 +140,9 @@ GitLab Create Blank Project form screenshot
 * After creating the project, navigate to "Settings" > "General", expand the "Visibility, project features, permissions" section, and enable the "CI/CD" toggle.
 
 ### GitLab Groups/SubGroups (Folders)
-GitLab organizes `GitLab Projects` into "folders" called `Groups` or `SubGroups`. When an ALCF Project is granted access to GitLab-CI, a GitLab `Group` will be created with access for all members of that ALCF Project. Users will then be able to create arbitrary GitLab `Projects`. 
+GitLab organizes `GitLab Projects` into "folders" called `GitLab Groups` or `GitLab SubGroups`. When an ALCF Project is granted access to GitLab-CI, a `GitLab Group` will be created with access for all members of that ALCF Project. Users will then be able to create arbitrary `GitLab Projects`.
 
-Each ALCF Project will have a top-level `Group` or `SubGroup` created with the ALCF Project’s name. It is used for organization in the multi-project environment and is required for implementing the needed level of security. The `Group` folder is where all of your `GitLab Projects` are to be stored. You can additionally create new `SubGroups`, `Projects`, group variables, etc., within your designated `Group`, `SubGroups`, and/or `Projects`.
+Each ALCF Project will have a top-level `GitLab Group` or `GitLab SubGroup` created with the ALCF Project’s name. It is used for organization in the multi-project environment and is required for implementing the needed level of security. The `GitLab Group` folder is where all of your `GitLab Projects` are to be stored. You can additionally create new `GitLab SubGroups`, `GitLab Projects`, group variables, etc., within your designated `GitLab Group`, `GitLab SubGroups`, and/or `GitLab Projects`.
 
 To create a new `GitLab SubGroup`:
 
