@@ -343,7 +343,7 @@ Models are organized by cluster and marked with the following capabilities:
     - meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^
     - meta-llama/Meta-Llama-3.1-405B-Instruct^BT^
     - meta-llama/Llama-3.3-70B-Instruct^BT^
-    - meta-llama/Llama-4-Scout-17B-16E-Instruct^BTH^
+    - meta-llama/Llama-4-Scout-17B-16E-Instruct^BT^
     - meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^
 
     **Mistral Family**
@@ -366,7 +366,7 @@ Models are organized by cluster and marked with the following capabilities:
 
     **Google Family**
 
-    - google/gemma-3-27b-it^BTH^
+    - google/gemma-3-27b-it^BT^
     - google/gemma-4-26B-A4B-it^RT^
     - google/gemma-4-31B-it^RTH^
     - google/gemma-4-E4B-it^RTH^
