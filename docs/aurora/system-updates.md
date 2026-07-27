@@ -47,38 +47,38 @@ ECB firmware:
 
 ### 2026-03-10: Rolled out to all Aurora nodes
 
-The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1, which was previously available in the `next-eval` queue, is rolled out to all of the nodes across Aurora.
+The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1, which was previously available in the `next-eval` queue, is rolled out to all of the nodes across Aurora.
 
 The full change log is in the [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue) entry below.
 
 ### 2026-02-23: Available in the `next-eval` test queue
 
-We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and OneAPI 2025.3.1.
+We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1.
 
 Details of the full change log are below (**`next-eval` test queue only**):
 
 #### OS image
 
 - Intel KMD/UMD 1146.40 / LTS 2523.40
-- Intel SEPDK KMDs from OneAPI 2025.3.0
+- Intel sepdk KMDs from oneAPI 2025.3.0
 - Lustre Client cray-2.15.B23
 - GEOPM 3.2.2
 - DAOS Client 2.6.4-11
 - `/daos` is now a symlink to `/tmp` for use with DAOS dfuse mounts
 - Legacy AuroraSDK / PE versions dropped:
-    - 24.347.0 (OneAPI 2025.0.5)
-    - 24.180.3 (OneAPI 2024.2.1)
+    - 24.347.0 (oneAPI 2025.0.5)
+    - 24.180.3 (oneAPI 2024.2.1)
 
 #### PE 26.26.0
 
-- OneAPI 2025.3.1
+- oneAPI 2025.3.1
     - oneAPI Base Toolkit 2025.3.1
     - oneAPI HPC Toolkit 2025.3.1
     - Intel Deep Learning Essentials 2025.3.2
     - Intel Compiler 2025.3.2
     - See [Known Issues](bugs-table.md)
 - Spack
-    - Spack 1.1 update with backported patches for externals and OneAPI
+    - Spack 1.1 update with backported patches for externals and oneAPI
     - Base Python updated to 3.12.12
 - Spack - packages (limited to oneapi dependencies)
     - amrex - 26.02
@@ -99,7 +99,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
     - 25.1.1
 - MPICH
     - `aurora_test` branch @ [3c70a61](https://github.com/pmodels/mpich/compare/6037a7a..3c70a61)
-    - Libfabric optimization variables set by default according to HPE's SHS guide
+    - libfabric optimization variables set by default according to HPE's SHS guide
         - Can be checked by `ml show mpich`
     - New pipeline algorithm disabled by default
 - `frameworks/2025.3.1` module
@@ -186,14 +186,14 @@ We had 32 fixes in the new SDK based on the bug reproducer test set. Notable fix
 
 We have a **temporary** test queue `next-eval` (open to all users) with 2,688 nodes that has a new compute image. **UAN-0014 has the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and OneAPI 2025.2.0.
+The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0.
 
 Details of the full change log are below (**`next-eval` test queue only**):
 
 #### OS image: compute_aurora_test_20250905T165210_95b26e6
 
 - Intel KMD/UMD 1146.12 / Rolling Release 2523.12
-- Intel SEPDK KMDs from OneAPI 2025.2.0
+- Intel sepdk KMDs from oneAPI 2025.2.0
 - Cray PALS 1.8.0 - (Built from source on SLES 15 SP4 against PMIX 4.2.9)
 - Cray PE 25.03, drop old Cray PE 23.03
 - GEOPM 3.2.0
@@ -213,7 +213,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
 
 #### PE 25.190.0
 
-- OneAPI 2025.2.0
+- oneAPI 2025.2.0
 - Spack
     - Spack configurations are now available in `/opt/aurora/25.190.0/spack/unified/0.10.0/config`
         - Compatible with Spack v0.23.1
@@ -310,7 +310,7 @@ This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1,
 - Intel Agama KMD 1099.12
 - Intel Agama UMD 1099.12
     - Rolling release 2507.12 for SLES 15 SP4
-- Intel Vtune Sepdk KMD from 2025.0.5
+- Intel VTune sepdk KMD from 2025.0.5
 - Slingshot Host Software 11.1
 - libfabric 1.22.0 compiled from HPE SHS-12.0
 - mcelog v204
@@ -364,11 +364,11 @@ This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1,
     - hypre: v2.33.0 +sycl +mixedint
     - kokkos: add 4.5.01
     - kokkos-kernels: add 4.5.01
-        - Dropped 4.5.01 sycl variant: Build failed on OneAPI 2025.0.5
+        - Dropped 4.5.01 sycl variant: Build failed on oneAPI 2025.0.5
     - libceed: add sycl variant, track alcf fork
     - mpich: aurora branch (6037a7a); variants: ze, filesystem, daos, misc configuration; add patches from ALCF + Intel; hardcode some configs.
     - petsc: add patches, sycl-arch variant, kokkos dependencies
-        - Dropped sycl variant: Build failed on OneAPI 2025.0.5
+        - Dropped sycl variant: Build failed on oneAPI 2025.0.5
     - reframe: v4.7.4
     - adios2: fix python env location
     - thapi: 9f2ed86b
