@@ -28,9 +28,10 @@ From the ParaView client, choose to connect to a server by either clicking on th
 
 or selecting File->Connect from the main menu.
 
-<figure markdown>
-  ![Select connect](images/ParaviewConnectMenu.png){ width="700" }
-</figure>
+![Select connect](images/ParaviewConnectMenu.png){ width="700" }
+/// caption
+Selecting Connect from the ParaView File menu
+///
 
 #### 2. Set Up Servers (first time only)
 
@@ -42,24 +43,24 @@ Kitware, the developers of ParaView, maintain a database of server configuration
     At this time, there are no specific files for Sophia available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac](serverfiles/sophia.pvsc) [Windows](serverfiles/windowsToSophia.pvsc)
 
 <!--
-<figure markdown>
-  ![Load servers](images/ParaviewFetchServers.png){ width="700" }
-</figure>
+![Load servers](images/ParaviewFetchServers.png){ width="700" }
 -->
 
 #### 3. Use ParaView
 
 After the previous step, you can now select SOPHIA@ANL in the File->Connect menu and press Connect.
 
-<figure markdown>
-  ![Load servers](images/ParaviewChooseServerConfig.png){ width="700" }
-</figure>
+![Choose server configuration](images/ParaviewChooseServerConfig.png){ width="700" }
+/// caption
+Selecting the SOPHIA@ANL server configuration
+///
 
 At this point, a new window will pop up.
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnectionOptions.png){ width="700" }
-</figure>
+![Connection options](images/ParaviewConnectionOptions.png){ width="700" }
+/// caption
+ParaView server connection options
+///
 
 There are a number of parameters that you must enter manually here:
 
@@ -90,15 +91,17 @@ An SSH connection will be established with a Sophia login node, and a password w
 
 After you enter your password, a job will be queued, and you will see a window like this:
 
-<figure markdown>
-  ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
-</figure>
+![Waiting for server](images/ParaviewWaitForServer.png){ width="700" }
+/// caption
+Waiting for the ParaView server job to start
+///
 
 When the job is launched on the compute nodes, the previous window will go away, and ParaView will show it is connected to Sophia in its Pipeline Browser:
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnected.png){ width="700" }
-</figure>
+![Connected to Sophia](images/ParaviewConnected.png){ width="700" }
+/// caption
+Pipeline Browser showing the connection to Sophia
+///
 
 At this point, you can open datasets stored on the ALCF file systems and use ParaView normally.
 
