@@ -251,14 +251,12 @@ nav:
           - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
-        - Services:
-          - GitLab CI: aurora/services/gitlab-ci.md
+#        - Services:
         - Visualization:
           - aurora/visualization/index.md
           - ParaView (Launch from Client): aurora/visualization/paraview.md
           - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
           - VisIt: aurora/visualization/visit.md
-
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
