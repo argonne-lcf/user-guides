@@ -72,7 +72,7 @@ Include with the request:
 
 GitLab-CI jobs run as the triggering user on relevant systems. The triggering user's home directory will be used by Jacamar-CI to copy the git repository and cache files into `~/.jacamar-ci`. This job will run out of their home directory and consume filesystem quota. If you need more space, you should try to reference files in any ALCF Project allocations you have on shared filesystems. Unfortunately, the initial git clone must run out of `~/.jacamar-ci` in your home directory.
 
-The triggering user is defined as the user account who caused the CI/CD pipeline to execute, via scheduling a re-occurring job, pushing commits up to the server, creating a merge request, and/or merging a branch. When the CI/CD jobs run, they will run as that user on the relevant systems. For a job to succeed, the `triggering user` must have appropriate permissions and access to all relevant systems and files.
+The triggering user is defined as the user account who caused the CI/CD pipeline to execute, via scheduling a recurring job, pushing commits up to the server, creating a merge request, and/or merging a branch. When the CI/CD jobs run, they will run as that user on the relevant systems. For a job to succeed, the `triggering user` must have appropriate permissions and access to all relevant systems and files.
 
 ### Initial Login and Profile Setup of GitLab-CI
 * Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
@@ -462,7 +462,7 @@ Inactivity is defined as, but not limited to:
 
 * No new projects created
 * No new commits to an existing project
-* Prolonged period of continuously failing CI/CD jobs (In the case of re-occurring scheduled jobs)
+* Prolonged period of continuously failing CI/CD jobs (In the case of recurring scheduled jobs)
 
 ## GitLab Repository Mirroring
 Some users prefer to host the canonical copy of their project on another Git hosting service, such as GitHub. 
@@ -491,8 +491,8 @@ the figure below).
 GitLab Project ID screenshot
 ///
 
-We use the `curl` command to interact with the GitLab REST API. First, lets get all the pipeline IDs for the
-given project ID. Each of the GitLab CI run (or a pipeline) has an unique ID.
+We use the `curl` command to interact with the GitLab REST API. First, let's get all the pipeline IDs for the
+given project ID. Each GitLab CI run (or a pipeline) has a unique ID.
 
 ```bash linenums="1"
 source ./secrets.data
@@ -577,7 +577,7 @@ echo "$jobs" | jq -c '.[]' | while read -r job; do
 done
 ```
 
-Note that the `gitlab-ci.alcf.anl.gov` doesn't require a proxy or to be connected to Argonne network.
-If you run into issue, please contact [ALCF Support](mailto:support@alcf.anl.gov).
+Note that `gitlab-ci.alcf.anl.gov` doesn't require a proxy or a connection to the Argonne network.
+If you run into issues, please contact [ALCF Support](mailto:support@alcf.anl.gov).
 
 [^1]: [GitLab REST API](https://docs.gitlab.com/api/rest/)
