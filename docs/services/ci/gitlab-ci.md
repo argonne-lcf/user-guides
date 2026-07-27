@@ -79,11 +79,13 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 * Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
   * Click the Profile icon on the upper right-hand corner, then click "Edit Profile"
     ![GitLab Profile Dropdown](files/GitlabProfileDropDown.png){ width="200" }
+
     /// caption
     GitLab Profile Dropdown screenshot
     ///
   * Click "SSH Keys" on the left-hand menu.
     ![GitLab Profile Add SSH Key](files/GitlabAddSSHKey.png){ width="700" }
+
     /// caption
     GitLab Profile Add SSH Key screenshot
     ///
