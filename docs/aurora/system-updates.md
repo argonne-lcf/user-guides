@@ -62,7 +62,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
 - Intel KMD/UMD 1146.40 / LTS 2523.40
 - Intel SEPDK KMDs from OneAPI 2025.3.0
 - Lustre Client cray-2.15.B23
-- Geopm 3.2.2
+- GEOPM 3.2.2
 - DAOS Client 2.6.4-11
 - `/daos` is now a symlink to `/tmp` for use with DAOS dfuse mounts
 - Legacy AuroraSDK / PE versions dropped:
@@ -102,7 +102,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
     - Libfabric optimization variables set by default according to HPE's SHS guide
         - Can be checked by `ml show mpich`
     - New pipeline algorithm disabled by default
-- Frameworks/2025.3.1
+- `frameworks/2025.3.1` module
     - Major packages:
         - torch 2.10.0a0+git449b176
         - torchao 0.15.0+git9338966da
@@ -155,7 +155,7 @@ The compute image with Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1
 
 See [Running jobs on Aurora](running-jobs-aurora.md).
 
-The full change log is in the [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4) and [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue) entries below.
+The full changelog is in the [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4) and [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue) entries below.
 
 ### 2025-10-07: `next-eval` updated to AuroraSDK 25.190.0 RC4
 
@@ -175,11 +175,11 @@ The image in the `next-eval` queue, and `uan-0014`, has been updated to AuroraSD
 
 We had 32 fixes in the new SDK based on the bug reproducer test set. Notable fixes include:
 
-- SYCL In-order queue fixed (affecting any application using in-order SYCL queues)
+- SYCL in-order queue fixed (affecting any application using in-order SYCL queues)
 - Bug in SYCL `peer_access` fixed
 - Runtime error in pytorch with `CCL_BCAST` fixed
 - Compile fail in Lattice App fixed
-- Fails in fortran if compiled with MKL and `-fpe0` fixed
+- Fails in Fortran if compiled with MKL and `-fpe0` fixed
 - Issues with `-fopenmp-target-simd` usage fixed
 
 ### 2025-09-08: Available in the `next-eval` test queue
