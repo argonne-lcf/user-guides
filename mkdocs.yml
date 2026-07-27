@@ -79,7 +79,6 @@ extra_javascript:
 markdown_extensions:
   - footnotes
   - admonition
-  - codehilite
   - tables
   - attr_list
   - md_in_html
