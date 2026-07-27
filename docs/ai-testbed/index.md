@@ -1,8 +1,9 @@
 # ALCF AI Testbed
 
-<figure markdown>
-  ![Cerebras and SambaNova detail photos](files/home-cerebras-sambanova.png){ width="700" }
-</figure>
+![Cerebras and SambaNova detail photos](files/home-cerebras-sambanova.png){ width="700" }
+/// caption
+Cerebras and SambaNova systems installed in the ALCF AI Testbed
+///
 
 The [ALCF AI Testbed](https://www.alcf.anl.gov/alcf-ai-testbed) houses some of the most advanced AI accelerators for scientific research. 
 
