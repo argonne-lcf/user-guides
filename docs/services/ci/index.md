@@ -1,6 +1,5 @@
 # Continuous Integration
 
-## Continuous Integration
 Continuous Integration (CI) in software development is the practice of committing code changes regularly to a version control system and having automated processes perform build, test, package, and deploy activities.
 
 The key concepts of CI include high frequency, repeatability, and automation in order to realize increased quality and ease of delivery. The main goal CI aims to achieve is the elimination of build and deployment issues, which in turn improves development cycles, provides a timely feedback loop with developers, and results in higher quality deliverables with reduced development time.
@@ -12,4 +11,6 @@ Today it is a common practice to use a CI tool for defining pipelines and execut
 ## CI Tools at ALCF
 
 ### GitLab-CI
-[GitLab](gitlab-ci.md) is an application that offers combined functionality as a git repository, issue tracker, and CI/CD platform. The ALCF implementation of the GitLab-CI environment leverages upstream GitLab runners combined with the [ECP's Jacamar custom executor](https://gitlab.com/ecp-ci/jacamar-ci). As CI/CD is built directly into GitLab, it can allow for tighter DevOps processes. [GitLab-CI](https://gitlab-ci.alcf.anl.gov) is meant to provide CI/CD services for projects using [GitLab-CI](https://gitlab-ci.alcf.anl.gov) to store their git repositories. ALCF does not allow users to join their own private runners to our existing GitLab CI environment and provides runners on our supported systems.
+GitLab is an application that offers combined functionality as a git repository, issue tracker, and CI/CD platform. ALCF runs a GitLab-CI environment at [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) that provides CI/CD services for projects that store their git repositories there and execute code on our HPC clusters. ALCF does not allow users to join their own private runners to our existing GitLab-CI environment and provides dedicated runners for our supported systems.
+
+For details on getting access, setting up a project, and writing pipelines, see the [GitLab-CI](gitlab-ci.md) page.
