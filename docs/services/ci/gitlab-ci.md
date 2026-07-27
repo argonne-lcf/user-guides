@@ -12,7 +12,7 @@ Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ci/yaml/
 ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
 
 ## Quickstart
-* A user emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for their ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov).
+* A user emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for their ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) (see [On-Boarding with CI/CD](#on-boarding-with-cicd) for what to include in the request).
 * ALCF Support will add the ALCF Project to the appropriate system(s) via the Account and Project management system.
 * ALCF will create a `GitLab Group/SubGroup` for the ALCF Project and map it to the appropriate LDAP group that maps to the ALCF Project.
 * ALCF Support will reply back to the user and inform them that the project is created.
@@ -498,8 +498,8 @@ source ./secrets.data
 
 # GitLab project ID
 PROJ_ID="18"
-# Gitlab project URL
-PROJ_URL="https://gitlab-ci.alcf.anl.gov/api/v4/projects/${PROJ_ID}/"
+# GitLab project URL
+PROJ_URL="https://gitlab-ci.alcf.anl.gov/api/v4/projects/${PROJ_ID}"
 
 # GitLab API endpoint to list pipelines.
 PIPELINE_URL="${PROJ_URL}/pipelines"
@@ -529,6 +529,11 @@ Once the pipeline IDs are obtained, we can fetch the logs and artifacts for a sp
 
 ```bash linenums="1"
 source ./secrets.data
+
+# GitLab project ID
+PROJ_ID="18"
+# GitLab project URL
+PROJ_URL="https://gitlab-ci.alcf.anl.gov/api/v4/projects/${PROJ_ID}"
 
 # GitLab pipeline ID
 PIPELINE_ID="2040"
