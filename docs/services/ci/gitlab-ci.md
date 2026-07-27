@@ -112,7 +112,7 @@ GitLab Your Groups Page screenshot
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
-![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
+![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
 /// caption
 GitLab Explore Groups Page screenshot
 ///
@@ -125,12 +125,12 @@ GitLab Empty Group Page screenshot
 * On the `Create new project` page, click `Create blank project`.
 ![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
 /// caption
-GitLab Create New Project screenshot
+GitLab Create New Project page screenshot
 ///
 * Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it. If you are pushing an existing repository, you *MUST* uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
-![GitLab Create New Project](files/GitlabNewProject2.png){ width="700" }
+![GitLab Create Blank Project](files/GitlabNewProject2.png){ width="700" }
 /// caption
-GitLab Create New Project screenshot
+GitLab Create Blank Project form screenshot
 ///
 * Click the `Create project` button near the bottom.
 * After creating the project, navigate to "Settings" > "General", expand the "Visibility, project features, permissions" section, and enable the "CI/CD" toggle.
@@ -151,7 +151,7 @@ GitLab Your Groups Page screenshot
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
-![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
+![GitLab Explore Groups](files/GitlabSelectFromExplore.png){ width="700" }
 /// caption
 GitLab Explore Groups Page screenshot
 ///
@@ -178,12 +178,12 @@ GitLab uses a per repository `.gitlab-ci.yml` file. On any commit, merge request
 
 ![GitLab CI/CD Pipeline Overview](files/GitlabPipelineOverview.png){ width="700" }
 /// caption
-GitLab Group and Projects screenshot
+GitLab CI/CD Pipeline Overview screenshot
 ///
 
 ![GitLab CI/CD Pipeline Detailed](files/GitlabPipelineDetailed.png){ width="700" }
 /// caption
-GitLab Group and Projects screenshot
+GitLab CI/CD Detailed Pipeline screenshot
 ///
 
 #### Tags
@@ -231,14 +231,14 @@ To store variables in the `Group` or `Project` settings, in the left side menu, 
 
 For more details, please see the upstream [docs](https://docs.gitlab.com/ci/variables/#define-a-cicd-variable-in-the-gitlab-ciyml-file).
 
-![GitLab CI/CD Variable settings ](files/GitlabVariables.png){ width="700" }
+![GitLab CI/CD Variable settings](files/GitlabVariables.png){ width="700" }
 /// caption
-GitLab Group and Projects screenshot
+GitLab CI/CD Variable settings screenshot
 ///
 
 ![GitLab CI/CD Add Variable](files/GitlabAddVariable.png){ width="700" }
 /// caption
-GitLab Group and Projects screenshot
+GitLab CI/CD Add Variable screenshot
 ///
 
 ##### ALCF Specific Variables
@@ -392,9 +392,9 @@ A job may extend multiple templates by passing a list to `extends`. Templates ar
 ### Console Output
 To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both. Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords. Please do not output large amounts of data from your jobs to the stdout. If your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
 
-![GitLab CI/CD Add Variable](files/GitlabJobConsole.png){ width="700" }
+![GitLab CI/CD Job Console](files/GitlabJobConsole.png){ width="700" }
 /// caption
-GitLab Group Job Console
+GitLab CI/CD Job Console screenshot
 ///
 
 ## Container Registry
