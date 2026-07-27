@@ -79,12 +79,12 @@ The triggering user is defined as the user account who caused the CI/CD pipeline
 * Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
   * Click the Profile icon on the upper right-hand corner, then click "Edit Profile"
     <figure markdown>
-    ![GitLab Profile Dropdown](files/gitlab-ci/GitlabProfileDropDown.png){ width="200" }
+    ![GitLab Profile Dropdown](files/GitlabProfileDropDown.png){ width="200" }
     <figcaption>GitLab Profile Dropdown screenshot</figcaption>
     </figure>
   * Click "SSH Keys" on the left-hand menu.
     <figure markdown>
-    ![GitLab Profile Add SSH Key](files/gitlab-ci/GitlabAddSSHKey.png){ width="700" }
+    ![GitLab Profile Add SSH Key](files/GitlabAddSSHKey.png){ width="700" }
     <figcaption>GitLab Profile Add SSH Key screenshot</figcaption>
     </figure>
   * Copy/Paste your SSH public key into the large text box under the word Key.
@@ -106,30 +106,30 @@ To create a new `GitLab Project`:
 
 * In the left pane, click "Groups", and then click the "Explore groups" link on the right.
 <figure markdown>
-  ![GitLab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="700" }
+  ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
   <figcaption>GitLab Your Groups Page screenshot</figcaption>
 </figure>
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
 <figure markdown>
-  ![GitLab Your Groups](files/gitlab-ci/GitlabSelectFromExplore.png){ width="700" }
+  ![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
   <figcaption>GitLab Explore Groups Page screenshot</figcaption>
 </figure>
 
 * Click the `New project` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
 <figure markdown>
-  ![GitLab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }
+  ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
   <figcaption>GitLab Empty Group Page screenshot</figcaption>
 </figure>
 * On the `Create new project` page, click `Create blank project`.
 <figure markdown>
-  ![GitLab Create New Project](files/gitlab-ci/GitlabNewProject1.png){ width="700" }
+  ![GitLab Create New Project](files/GitlabNewProject1.png){ width="700" }
   <figcaption>GitLab Create New Project screenshot</figcaption>
 </figure>
 * Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it. If you are pushing an existing repository, you *MUST* uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
 <figure markdown>
-  ![GitLab Create New Project](files/gitlab-ci/GitlabNewProject2.png){ width="700" }
+  ![GitLab Create New Project](files/GitlabNewProject2.png){ width="700" }
   <figcaption>GitLab Create New Project screenshot</figcaption>
 </figure>
 * Click the `Create project` button near the bottom.
@@ -145,25 +145,25 @@ To create a new `GitLab SubGroup`:
 * In the left pane, click "Groups", and then click the "Explore groups" link on the right.
 
 <figure markdown>
-  ![GitLab Your Groups](files/gitlab-ci/GitlabSelectYourGroup.png){ width="700" }
+  ![GitLab Your Groups](files/GitlabSelectYourGroup.png){ width="700" }
   <figcaption>GitLab Your Groups Page screenshot</figcaption>
 </figure>
 
 * From the list in the "Explore groups" page, click the group you were informed corresponds to your `ALCF Project`.
 
 <figure markdown>
-  ![GitLab Your Groups](files/gitlab-ci/GitlabSelectFromExplore.png){ width="700" }
+  ![GitLab Your Groups](files/GitlabSelectFromExplore.png){ width="700" }
   <figcaption>GitLab Explore Groups Page screenshot</figcaption>
 </figure>
 
 * Click the `New subgroup` button near the upper right. If this is the first project you are creating, you will have two large square buttons near the middle of the screen to create `GitLab SubGroups` or `GitLab Projects`.
 <figure markdown>
-  ![GitLab Empty Group](files/gitlab-ci/GitlabNewSG_or_Project.png){ width="700" }
+  ![GitLab Empty Group](files/GitlabNewSG_or_Project.png){ width="700" }
   <figcaption>GitLab Empty Group Page screenshot</figcaption>
 </figure>
 * On the `Create subgroup` page, enter the `Subgroup name`. `Subgroup slug` will auto-populate; do not change it.
 <figure markdown>
-  ![GitLab Create New Group](files/gitlab-ci/GitlabNewSubGroup.png){ width="700" }
+  ![GitLab Create New Group](files/GitlabNewSubGroup.png){ width="700" }
   <figcaption>GitLab Create New SubGroup screenshot</figcaption>
 </figure>
 * Click the `Create subgroup` button near the bottom.
@@ -177,12 +177,12 @@ Each node will have two runners available, `shell` and `batch`. `shell` will run
 GitLab uses a per repository `.gitlab-ci.yml` file. On any commit, merge request, or merge, GitLab will attempt to trigger a CI/CD pipeline based on the contents of this file. Within the `.gitlab-ci.yml` file, you can limit jobs to only run under certain conditions. A common workflow is to have linting and validation happen on every commit to a non-master/non-main branch. Larger, more complex tasks are then performed when that branch is merged back into master/main. All jobs launched on a given event are organized into a `Pipeline`. You can watch the progress of your pipeline via the CI/CD pipeline page for your `Project`.
 
 <figure markdown>
-  ![GitLab CI/CD Pipeline Overview](files/gitlab-ci/GitlabPipelineOverview.png){ width="700" }
+  ![GitLab CI/CD Pipeline Overview](files/GitlabPipelineOverview.png){ width="700" }
   <figcaption>GitLab Group and Projects screenshot</figcaption>
 </figure>
 
 <figure markdown>
-  ![GitLab CI/CD Pipeline Detailed](files/gitlab-ci/GitlabPipelineDetailed.png){ width="700" }
+  ![GitLab CI/CD Pipeline Detailed](files/GitlabPipelineDetailed.png){ width="700" }
   <figcaption>GitLab Group and Projects screenshot</figcaption>
 </figure>
 
@@ -232,12 +232,12 @@ To store variables in the `Group` or `Project` settings, in the left side menu, 
 For more details, please see the upstream [docs](https://docs.gitlab.com/ee/ci/variables/#create-a-custom-cicd-variable-in-the-gitlab-ciyml-file).
 
 <figure markdown>
-  ![GitLab CI/CD Variable settings ](files/gitlab-ci/GitlabVariables.png){ width="700" }
+  ![GitLab CI/CD Variable settings ](files/GitlabVariables.png){ width="700" }
   <figcaption>GitLab Group and Projects screenshot</figcaption>
 </figure>
 
 <figure markdown>
-  ![GitLab CI/CD Add Variable](files/gitlab-ci/GitlabAddVariable.png){ width="700" }
+  ![GitLab CI/CD Add Variable](files/GitlabAddVariable.png){ width="700" }
   <figcaption>GitLab Group and Projects screenshot</figcaption>
 </figure>
 
@@ -393,7 +393,7 @@ A job may extend multiple templates by passing a list to `extends`. Templates ar
 To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both. Please be aware of any sensitive data you do not want exported or saved to the output console, such as passwords. Please do not output large amounts of data from your jobs to the stdout. If your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
 
 <figure markdown>
-  ![GitLab CI/CD Add Variable](files/gitlab-ci/GitlabJobConsole.png){ width="700" }
+  ![GitLab CI/CD Add Variable](files/GitlabJobConsole.png){ width="700" }
   <figcaption>GitLab Group Job Console</figcaption>
 </figure>
 
@@ -485,7 +485,7 @@ In order to find the project ID, navigate to the project homepage in the GitLab 
 button with three vertical dots in the upper right corner of the page and then click `Copy project ID` (see
 the figure below).
 
-![GitLab Project ID](files/gitlab-ci/GitLabProjectID.png){ width="700" }
+![GitLab Project ID](files/GitLabProjectID.png){ width="700" }
 
 /// caption
 GitLab Project ID screenshot
@@ -581,4 +581,3 @@ Note that the `gitlab-ci.alcf.anl.gov` doesn't require a proxy or to be connecte
 If you run into issue, please contact [ALCF Support](mailto:support@alcf.anl.gov).
 
 [^1]: [GitLab REST API](https://docs.gitlab.com/api/rest/)
-
