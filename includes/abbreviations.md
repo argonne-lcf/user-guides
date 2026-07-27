@@ -22,6 +22,7 @@
 <!-- *[GCC]: GNU Compiler Collection -->
 <!-- *[GDB]: GNU Debugger -->
 *[GEMM]: General Matrix Multiply
+*[GEOPM]: Global Extensible Open Power Manager
 <!-- *[GPU]: Graphics Processing Unit -->
 *[GTL]: GPU Transfer Library (HPE Cray)
 *[HBM]: High Bandwidth Memory
@@ -38,6 +39,7 @@
 *[ITEX]: Intel Extension for TensorFlow
 *[IPU]: Intelligence Processing Unit
 *[JIT]: Just-In-Time (compilation)
+*[KMD]: Kernel Mode Driver
 <!-- *[LLVM]: Low Level Virtual Machine -->
 *[MFA]: Multi-Factor Authentication
 *[MIG]: Multi-Instance GPU (NVIDIA)
@@ -68,6 +70,7 @@
 *[RPC]: Remote Procedure Call
 *[SCM]: Source Control Management
 <!-- *[SDK]: Software Development Kit -->
+*[sepdk]: Sampling Driver Kit (Intel VTune sampling drivers)
 <!-- *[SFTP]: SSH File Transfer Protocol -->
 *[SIMD]: Single Instruction, Multiple Data
 *[SIMT]: Single Instruction, Multiple Threads
@@ -82,6 +85,7 @@
 *[TDP]: Thermal Design Power
 *[UAN]: User Access Node
 *[UCX]: Unified Communication X
+*[UMD]: User Mode Driver
 *[UPI]: Ultra Path Interconnect
 <!-- *[URL]: Uniform Resource Locator -->
 *[USM]: Unified Shared Memory
