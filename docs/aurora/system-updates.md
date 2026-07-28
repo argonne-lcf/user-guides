@@ -271,8 +271,9 @@ Details of the full change log are below (**`next-eval` test queue only**):
         - PyTorch-DDP must be initialized with **`backend='xccl'`** instead of **`backend='ccl'`**
         - `import oneccl_bindings_for_pytorch` must be removed, otherwise `ModuleNotFoundError`
     - Introducing **`numpy==2.0.2`**
-        - All of the PyTorch ecosystem has been compiled with `numpy==2.0.2`
-            - Workloads using `numpy==1.x.x` should work seamlessly, as compilations with numpy>2.0.0 promises backward compatibility. Please report issues to ALCF Support.
+        - All of the PyTorch ecosystem has been compiled against `numpy==2.0.2`
+        - Workloads that pin `numpy` 1.x should continue to work. Since NumPy 1.25, extensions built against a newer NumPy stay binary compatible with older 1.x releases at runtime, so these modules do not force you off `numpy` 1.x.
+        - That guarantee covers the binary interface only. Python code calling names removed in NumPy 2.0, such as `np.float_`, `np.unicode_`, and `np.NaN`, must be updated regardless of which `numpy` is installed. See the [NumPy 2.0 migration guide](https://numpy.org/doc/stable/numpy_2_0_migration_guide.html).
 - Frameworks-Preview known issues:
     - `conda list` throws a warning about `setuptools` and freeing file handles.
     - `DeepSpeed` `JIT` compilation failure
