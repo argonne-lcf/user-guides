@@ -243,7 +243,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
     - stat@6c83af9
     - minor version updates to several other packages
 
-#### Frameworks-Preview
+#### `frameworks` (preview) module
 
 - `miniforge` based `conda` environment with source builds of
     - torch 2.8.0a0+gitba56102
@@ -274,11 +274,11 @@ Details of the full change log are below (**`next-eval` test queue only**):
         - All of the PyTorch ecosystem has been compiled against `numpy==2.0.2`
         - Workloads that pin `numpy` 1.x should continue to work. Since NumPy 1.25, extensions built against a newer NumPy stay binary compatible with older 1.x releases at runtime, so these modules do not force you off `numpy` 1.x.
         - That guarantee covers the binary interface only. Python code calling names removed in NumPy 2.0, such as `np.float_`, `np.unicode_`, and `np.NaN`, must be updated regardless of which `numpy` is installed. See the [NumPy 2.0 migration guide](https://numpy.org/doc/stable/numpy_2_0_migration_guide.html).
-- Frameworks-Preview known issues:
+- `frameworks` (preview) module's known issues:
     - `conda list` throws a warning about `setuptools` and freeing file handles.
     - `DeepSpeed` `JIT` compilation failure
     - `oneccl` collectives requiring explicit synchronization step
-        - Workaround: `export CCL_OP_SYNC=1` set in frameworks module
+        - Workaround: `export CCL_OP_SYNC=1` (already set in `frameworks` module)
     - `oneccl` Rabenseifner algorithm for `Allreduce` failure (potential bug). Recommending `direct`
     - `vLLM` failure to start EngineCore on multiple ranks
         - Workaround: `unset CCL_PROCESS_LAUNCHER && export CCL_PROCESS_LAUNCHER=None && unset ONEAPI_DEVICE_SELECTOR`
@@ -338,7 +338,7 @@ This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1,
         - basekit-2025.0.1
         - hpckit-2025.0.1
         - mkl-core-2025.0-2025.0.1
-    - Frameworks 2025.0.5
+    - `frameworks/2025.0.5` module 
         - torch==2.5.1+cxx11.abi
         - intel_extension_for_pytorch==2.5.10+xpu
         - oneccl_bind_pt==2.5.0+xpu
