@@ -55,6 +55,7 @@
 *[MTBF]: Mean Time Between Failures
 *[NAMD]: Nanoscale Molecular Dynamics
 *[NCCL]: NVIDIA Collective Communications Library
+*[NEO]: Network Element Operating System (storage platform management software)
 *[NFS]: Network File System
 *[NIC]: Network Interface Card
 *[NLP]: Natural Language Processing
