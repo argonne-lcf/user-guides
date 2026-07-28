@@ -81,7 +81,7 @@ If port 8000 is already in use, the script will retry 10 times and then try 8001
     Press Ctrl-C to exit
     ```
 
-To access the GUI from your local computer, forward port 8000 from the user node through a login node to a local machine port 8008.
+To access the GUI from your local computer, forward port 8000 (or the port the visualizer ended up using) from the user node through a login node to a local machine port 8008.
 
 Adjust one or both port numbers if they are already in use.
 
