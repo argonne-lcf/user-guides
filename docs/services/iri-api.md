@@ -23,6 +23,8 @@ Download our auth script from [this repository](https://github.com/argonne-lcf/a
 wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
 ```
 
+If `wget` is unavailable on your system, try `curl -O` instead.
+
 ### 2. Authenticate
 
 Generate the authentication flow URL with the command below. Copy-paste the URL to your browser, authenticate with your ALCF credentials, and copy-paste the resulting authorization code in your terminal.
@@ -354,8 +356,8 @@ This section provides simple examples on how to interface with the API as a star
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
 
 !!! info "Currently Supported Filesystems"
-    - Eagle
-    - Home
+    - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
+    - Home (All paths must start with `/home`)
 
 ??? "3.1. List Directory Contents (`ls`)"
 
