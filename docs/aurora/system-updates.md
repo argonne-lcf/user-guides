@@ -77,10 +77,10 @@ Details of the full change log are below (**`next-eval` test queue only**):
     - Intel Deep Learning Essentials 2025.3.2
     - Intel Compiler 2025.3.2
     - See [Known Issues](bugs-table.md)
-- Spack
+- Spack (configuration)
     - Spack 1.1 update with backported patches for externals and oneAPI
     - Base Python updated to 3.12.12
-- Spack - packages (limited to oneapi dependencies)
+- Spack (packages, limited to oneAPI dependencies)
     - amrex - 26.02
     - ginkgo - 1.11
     - blaspp, lapackpp - 2025.05.28
@@ -177,7 +177,7 @@ We had 32 fixes in the new SDK based on the bug reproducer test set. Notable fix
 
 - SYCL in-order queue fixed (affecting any application using in-order SYCL queues)
 - Bug in SYCL `peer_access` fixed
-- Runtime error in pytorch with `CCL_BCAST` fixed
+- Runtime error in PyTorch with `CCL_BCAST` fixed
 - Compile fail in Lattice App fixed
 - Fails in Fortran if compiled with MKL and `-fpe0` fixed
 - Issues with `-fopenmp-target-simd` usage fixed
@@ -214,10 +214,10 @@ Details of the full change log are below (**`next-eval` test queue only**):
 #### PE 25.190.0
 
 - oneAPI 2025.2.0
-- Spack
+- Spack (configuration)
     - Spack configurations are now available in `/opt/aurora/25.190.0/spack/unified/0.10.0/config`
         - Compatible with Spack v0.23.1
-- Spack - packages
+- Spack (packages)
     - Package additions: subversion, zip, py-parsl, py-mpi4py, py-h5py
     - ML components added in Spack
         - py-torch: 2.7.1.a0, 2.8.0.a0, 2.9.0.dev20250804
@@ -231,7 +231,7 @@ Details of the full change log are below (**`next-eval` test queue only**):
     - reframe: include fast polling variant (`reframe-compute`; please only use this if running directly from a compute node)
     - darshan-runtime: 3.4.7, set MPICH profiles. Applications built with darshan-runtime loaded will be built with automatic instrumentation at runtime.
     - MPICH@aurora
-        - Uses aurora branch of upstream mpich - [https://github.com/pmodels/mpich/tree/aurora](https://github.com/pmodels/mpich/tree/aurora)
+        - Uses the [`aurora` branch](https://github.com/pmodels/mpich/tree/aurora) of upstream MPICH
         - Manually set `MPIR_CVAR_CH4_OFI_EAGER_THRESHOLD=1000000` so large message above 1MB will use the new auto rndv mode which includes the pipeline algorithm.
         - Default tuning files
     - petsc: use 64-bit indices
@@ -265,13 +265,13 @@ Details of the full change log are below (**`next-eval` test queue only**):
 - Associated 302 dependency packages coming exclusively from `pip`
 - `torchtitan==0.1.0` dependencies included
 - Major changes:
-    - Dropped `JAX` for this iteration. Expected to be added back in future updates.
-    - Separated `TensorFlow` and `Horovod` in favor of a separate ecosystem
+    - Dropped JAX for this iteration. Expected to be added back in future updates.
+    - Separated TensorFlow and Horovod in favor of a separate ecosystem
     - Removed `oneccl-bindings-for-pytorch` in favor of the `xccl` backend of the PyTorch-DDP. This is a **breaking change**:
         - PyTorch-DDP must be initialized with **`backend='xccl'`** instead of **`backend='ccl'`**
         - `import oneccl_bindings_for_pytorch` must be removed, otherwise `ModuleNotFoundError`
     - Introducing **`numpy==2.0.2`**
-        - All of the PyTorch eco-system has been compiled with `numpy==2.0.2`
+        - All of the PyTorch ecosystem has been compiled with `numpy==2.0.2`
             - Workloads using `numpy==1.x.x` should work seamlessly, as compilations with numpy>2.0.0 promises backward compatibility. Please report issues to ALCF Support.
 - Frameworks-Preview known issues:
     - `conda list` throws a warning about `setuptools` and freeing file handles.
@@ -346,7 +346,7 @@ This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1,
         - intel-extension-for-openxla==0.5.0
 - Support libraries
     - Updated OpenCL headers, loader 2022.05.18 to 2023.12.14
-        - To match [https://github.com/intel/compute-runtime/tree/master/third_party/opencl_headers](https://github.com/intel/compute-runtime/tree/master/third_party/opencl_headers)
+        - To match the [OpenCL headers in Intel's compute-runtime](https://github.com/intel/compute-runtime/tree/master/third_party/opencl_headers)
     - gpu wrapper scripts tile and dev compact revamp with fixes
     - Dropped `gpu_check` script
     - Added gemm node test
@@ -381,7 +381,7 @@ We ran the test set on the new SDK and overall the results had more fixes than r
 - 37 fixes
 - 9 regressions
 
-One important note is that **kokkos kernels fail to compile** in this SDK. If this impacts you, please let us know.
+One important note is that **Kokkos Kernels fails to compile** in this SDK. If this impacts you, please let us know.
 
 The full list of regressions and fixes is below. If you see any new issues with this compute image, let us know.
 
