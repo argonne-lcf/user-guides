@@ -69,6 +69,7 @@ To launch the SDK Debug GUI, run the following commands:
 cd ~/csl-examples/benchmarks/gemm-collectives_2d
 sdk_debug_shell visualize
 ```
+If port 8000 is already in use, the script will retry 10 times and then try 8001, etc.
 
 ???+ example "Sample output:"
     ``` { .output .no-copy }
