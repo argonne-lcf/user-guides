@@ -2,7 +2,7 @@
 
 This page is a reverse-chronological log of changes to Aurora's system software, firmware, and programming environment.
 
-Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full change log under the stage that introduced it. **Major updates require recompiling applications.**
+Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full change log under the stage that introduced it. **Major updates typically require recompiling applications.**
 
 Everything else appears as a standalone dated entry: firmware refreshes, fabric and storage updates, and policy changes.
 
