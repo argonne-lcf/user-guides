@@ -399,6 +399,6 @@ parsl.executors.errors.BadStateException: Executor GlobusComputeEngine-HighThrou
 ```
 
 To fix this, in your environment on the target machine (Polaris, Crux, etc.), install the correct parsl version:
-```
+```bash
 pip install --upgrade parsl==2026.02.23
 ```
