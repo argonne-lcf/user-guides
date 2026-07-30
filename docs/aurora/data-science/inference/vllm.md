@@ -3,7 +3,7 @@
 [vLLM](https://docs.vllm.ai/) is an open-source library designed to optimize the inference and serving. Originally developed at UC Berkeley's Sky Computing Lab, it has evolved into a community-driven project. The library is built around the innovative PagedAttention algorithm, which significantly improves memory management by reducing waste in Key-Value (KV) cache memory.
 
 ## Provided Installation
-vLLM (version 0.15.0) is available as part of the `frameworks` module. Please use the following commands:
+vLLM is installed and available as part of the `frameworks` module. Please use the following commands to load the installation and query the version info:
 
 ```bash
 module load frameworks
@@ -43,7 +43,7 @@ Model weights for commonly used open-weight models are downloaded and available 
 /flare/datasets/model-weights/hub
 ```
 
-To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
+To ensure your workflows utilize the preloaded model weights and datasets, update the following environment variables in your session. Some models hosted on Hugging Face (HF) may be gated, requiring additional authentication. To access these gated models, you will need a [Hugging Face authentication token](https://huggingface.co/docs/hub/en/security-tokens).
 
 ```bash linenums="1"
 export HF_TOKEN="YOUR_HF_TOKEN"
@@ -52,6 +52,12 @@ export HF_DATASETS_CACHE="/flare/datasets/model-weights"
 export HF_MODULES_CACHE="/flare/datasets/model-weights"
 export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
+```
+
+Set the following environment variables to avoid hitting the Hugging Face Hub API, if a model is already cached. 
+```bash linenums="1"
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
 ```
 
 ## Serving Small Models on a Single Tile
@@ -88,7 +94,7 @@ print(f"\n{response.choices[0].message.content}\n")
 
 ## Serving Medium Models on Multiple Tiles (Single Node)
 
-To serve larger models which require multiple tiles (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves setting the `VLLM_HOST_IP` and the `TP` size. By default, vLLM uses the `mp` backend, which is sufficient for single node model serving. Models with a few hundred billion parameters can usually fit within a single node utilizing half precition.
+To serve larger models which require multiple tiles (`TP>1`) but still only a single node, a more advanced setup is necessary. This involves setting the `VLLM_HOST_IP` and the `TP` size. By default, vLLM uses the `mp` backend, which is sufficient for single node model serving. Models with a few hundred billion parameters can usually fit within a single node utilizing half precision.
 
 The following commands demonstrate how to serve the `meta-llama/Llama-3.3-70B-Instruct` on 8 tiles on a single node. 
 
