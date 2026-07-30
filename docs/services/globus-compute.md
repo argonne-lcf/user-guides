@@ -372,7 +372,7 @@ example, to use globus_compute_sdk.serialize.AllCodeStrategies:
 
 To resolve this issue there are a few options:
 
-1. Match the python versions of the client and endpoint environments.
+1. Match the Python versions of the client and endpoint environments.
 
 2. Pass a `serializer` to the `Executor`.  The `AllCodeStrategies` serializer is recommended as a first choice:
 
