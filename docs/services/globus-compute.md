@@ -25,7 +25,7 @@ To submit a simple function to these endpoints from a remote system install `glo
 ```
 pip install globus_compute_sdk > 4.0
 ```
-And then execute one of these example python scripts (paste your project name in the account setting before execution):
+And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
 
 === "Polaris"
 
