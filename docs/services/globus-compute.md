@@ -8,7 +8,7 @@ There are two options for using Globus Compute on ALCF systems:
 
 2. Users may run their own Globus Compute Endpoints on login nodes or edge service nodes on ALCF systems.  This approach allows users to run Globus Compute on systems that currently do not have facility supported endpoints.  It also allows users to create endpoints with features not currently supported by facility endpoints.
 
-In addition to these docs, the [globus compute docs](https://globus-compute.readthedocs.io/en/stable/index.html) are a useful reference.
+In addition to these docs, the [Globus Compute docs](https://globus-compute.readthedocs.io/en/stable/index.html) are a useful reference.
 
 ## Facility Supported Multiuser Endpoints (MEPs)
 
