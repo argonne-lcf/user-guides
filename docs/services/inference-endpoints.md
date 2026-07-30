@@ -123,13 +123,13 @@ Two clusters are currently active, with additional systems coming soon:
 
 | Cluster | Status | Framework | Base URL | Supported Endpoints |
 |---------|--------|-----------|----------|---------------------|
-| **[Sophia](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/completions`<br>`/embeddings`<br>`/batches` |
+| **[Sophia](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings`<br>`/batches` |
 | **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | SambaNova API | `/resource_server/metis/api/v1` | `/chat/completions` |
+| **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | API | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings` |
 | Cerebras CS-3 | Coming Soon | - | - | - |
-| GH200 Nvidia | Coming Soon | - | - | - |
 
 !!! info "Cluster Differences"
-    - **Sophia** uses [vLLM](https://docs.vllm.ai/) and supports the full range of OpenAI-compatible endpoints including chat, completions, embeddings, and batch processing.
+    - **Sophia** and **Minerva** use [vLLM](https://docs.vllm.ai/) and supports the full range of OpenAI-compatible endpoints. Batch processing is available on **Sophia**.
     - **Metis** uses SambaNova's inference API and currently supports only chat completions.
 
 !!! tip "Discovering Available Models"
@@ -160,13 +160,17 @@ Two clusters are currently active, with additional systems coming soon:
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/jobs" \
          -H "Authorization: Bearer ${access_token}"
 
-        # Check Metis cluster status (replace 'sophia' with 'metis')
+        # Check Metis cluster status
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/jobs" \
+         -H "Authorization: Bearer ${access_token}"
+
+        # Check Minerva cluster status
+        curl -X GET "https://inference-api.alcf.anl.gov/resource_server/minerva/jobs" \
          -H "Authorization: Bearer ${access_token}"
         ```
 
         !!! tip "Switching Between Clusters"
-            Replace `/sophia/` with `/metis/` in the URL to query the Metis cluster instead.
+            Replace `/sophia/` with `/metis/` or `/minerva/` in the URL.
 
     === "List All Available Endpoints"
         This provides a list of all available endpoints.
@@ -213,6 +217,17 @@ Two clusters are currently active, with additional systems coming soon:
                     "max_tokens": 150,
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
                  }'
+
+        # Minerva cluster example (replace '/sophia/vllm' with '/minerva/api')
+        curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/chat/completions" \
+             -H "Authorization: Bearer ${access_token}" \
+             -H "Content-Type: application/json" \
+             -d '{
+                    "model": "nemotron-3-ultra",
+                    "temperature": 0.2,
+                    "max_tokens": 150,
+                    "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+                 }'
         ```
 
     === "Python (OpenAI SDK)"
@@ -246,6 +261,18 @@ Two clusters are currently active, with additional systems coming soon:
             messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
         )
         print(response.choices[0].message.content)
+
+        # Minerva cluster (replace '/sophia/vllm' with '/minerva/api')
+        client_minerva = OpenAI(
+            api_key=access_token,
+            base_url="https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1"
+        )
+
+        response = client_minerva.chat.completions.create(
+            model="nemotron-3-ultra",
+            messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+        )
+        print(response.choices[0].message.content)
         ```
 
     !!! tip "Switching Between Clusters"
@@ -253,6 +280,7 @@ Two clusters are currently active, with additional systems coming soon:
         
         - **Sophia**: `/resource_server/sophia/vllm/v1`
         - **Metis**: `/resource_server/metis/api/v1`
+        - **Minerva**: `/resource_server/minerva/api/v1`
 
 ### Vision Language Models
 
@@ -435,6 +463,12 @@ Models are organized by cluster and marked with the following capabilities:
         - Batch processing and Tool Calling is not currently supported on the Metis cluster
         - Only chat completions endpoint is available
 
+### Minerva Cluster (NVIDIA)
+
+??? "Chat Language Models"
+
+    - nemotron-3-ultra^H^
+
 ### Model Serving Configuration
 
 When available, model serving configuration details can be viewed for each cluster.
@@ -447,10 +481,6 @@ access_token=$(python inference_auth_token.py get_access_token)
 
 # Check serving configuration for all Sophia models
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
-    -H "Authorization: Bearer ${access_token}"
-
-# Check serving configuration for all Metis models
-curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/models" \
     -H "Authorization: Bearer ${access_token}"
 
 # Check serving configuration for a specific model (e.g., openai/gpt-oss-120b)
