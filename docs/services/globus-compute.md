@@ -363,7 +363,7 @@ To diagnose why this happened, there are several things to check:
 
 When submiting or registering functions from a client Executor on a remote machine, globus compute will serialize the function code and send the serialized code through the globus service to the compute endpoint on the target machine.  On the target machine, the environment activated by `worker_init` will deserailze the function for execution.
 
-If there is a major version difference in the python version on the client side and the endpoint side of this exchange, it is possible to get an error due to seraization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
+If there is a major version difference in the Python version on the client side and the endpoint side of this exchange, it is possible to get an error due to serialization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
 ```
 This appears to be an error with serialization. If it is, using a different
 serialization strategy from globus_compute_sdk.serialize might resolve the issue. For
