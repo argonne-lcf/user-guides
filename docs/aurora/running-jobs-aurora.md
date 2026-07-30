@@ -288,10 +288,10 @@ Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 
 
 A visual representation of node in Aurora is shown below. Each socket is represented by a large blue bubble. Inside, each CPU is represented by a red bubble. Inside of CPU, the white boxes represent the physical cores, and the two grey squares in each tile represent the two logical processors. Each GPU is represented by a large white box, with two grey boxes inside to represent the two tiles. As mentioned in the warning above, the cores 0 and 52 are reserved for the OS, and so are crossed out in red.
 
-<figure markdown>
-  ![Aurore node](images/aurora_node_simple.png){ width="1000" }
-  <figcaption>Simplified representation of Aurora node </figcaption>
-</figure>
+![Aurore node](images/aurora_node_simple.png){ width="1000" }
+/// caption
+Simplified representation of Aurora node
+///
 
 For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core.
 
@@ -338,10 +338,10 @@ MPI 007 - OMP 000 - HWT 4 (Running on: 004) - Node x4407c6s7b0n0 - RT_GPU_ID 0,1
 ```
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
-<figure markdown>
-  ![Example1](images/example1.png){ width="700" }
-  <figcaption>Example 1 Mapping </figcaption>
-</figure>
+![Example1](images/example1.png){ width="700" }
+/// caption
+Example 1 Mapping
+///
 
 #### Example 2: 2 nodes, 2 ranks/node, 2 thread/rank
 
@@ -378,10 +378,10 @@ MPI 003 - OMP 001 - HWT 4 (Running on: 004) - Node x4707c0s1b0n0 - RT_GPU_ID 0,1
 ```
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
-<figure markdown>
-  ![Example2](images/example2.png){ width="700" }
-  <figcaption>Example 2 Mapping </figcaption>
-</figure>
+![Example2](images/example2.png){ width="700" }
+/// caption
+Example 2 Mapping
+///
 
 #### Example 3: 2 nodes, 2 ranks/node, 1 thread/rank, compact fashion
 
@@ -395,10 +395,10 @@ MPI 003 - OMP 000 - HWT 105 (Running on: 105) - Node x4407c6s7b0n0 - RT_GPU_ID 0
 ```
 The `--cpu-bind=list` argument explicitly lists which logical processor to bind to per node. Here, rank 0 is bound to logical processor 1 and rank 1 is bound to logical processor 105, which share the same physical core. The figure below shows the mapping, where the different colors are different MPI ranks.
 
-<figure markdown>
-  ![Example3](images/example3.png){ width="700" }
-  <figcaption>Example 3 Mapping </figcaption>
-</figure>
+![Example3](images/example3.png){ width="700" }
+/// caption
+Example 3 Mapping
+///
 
 #### Example 4: 1 node, 12 ranks/node
 
@@ -426,10 +426,10 @@ MPI 011 - OMP 000 - HWT 93-100 (Running on: 100) - Node x4407c6s2b0n0 - RT_GPU_I
 
 The figure below shows the mapping, where the different colors are different MPI ranks.
 
-<figure markdown>
-  ![Example4](images/example4.png){ width="700" }
-  <figcaption>Example 4 Mapping </figcaption>
-</figure>
+![Example4](images/example4.png){ width="700" }
+/// caption
+Example 4 Mapping
+///
 
 The important point here is that with this explicit binding from `cpu-bind=list`, we are able to ensure socket 0 has 6 ranks and socket 1 has 6 ranks. Note how MPI rank 5 ends at logical processor 48, but MPI rank 6 begins with logical processor 53, so this involves leaving several cores empty. However, it allows the cores to be spread evenly across the two sockets. 
 
@@ -453,10 +453,10 @@ MPI 011 - OMP 000 - HWT 90-97 (Running on: 097) - Node x4407c6s2b0n0 - RT_GPU_ID
 
 A small misconfiguration of the `--depth` option for instance, using `--depth=8` can result in unexpectedly bad performance. Note that the threads of MPI rank 6 are bound on both socket 0 and socket 1, which potentially will lead to worse performance than using cpu-bind=list to explicitly spread out the ranks (as above), since the threads can migrate across sockets. This is shown in the image below. Note that the pink MPI rank (rank 6) is split between socket 0 and socket 1.
 
-<figure markdown>
-  ![Example4](images/example4_bad.png){ width="700" }
-  <figcaption>Example 4 Mapping Which Splits a MPI Rank Across Sockets </figcaption>
-</figure>
+![Example4](images/example4_bad.png){ width="700" }
+/// caption
+Example 4 Mapping Which Splits a MPI Rank Across Sockets
+///
 
 !!! info
 
@@ -533,10 +533,10 @@ MPI 011 - OMP 000 - HWT 93-100 (Running on: 100) - Node x4407c6s2b0n0 - RT_GPU_I
 - The `gpu_tile_compact.sh` wrapper sets ZE_AFFINITY_MASK for each of the 12 ranks such that rank 0 maps to GPU 0:Tile 0, rank 1 maps to GPU 0:Tile 1, rank 2 maps to GPU 1:Tile 0 etc. in a round-robin compact fashion.
 
 
-<figure markdown>
-  ![Example5](images/example5.png){ width="700" }
-  <figcaption>Example 1 GPU Tile Mapping </figcaption>
-</figure>
+![Example5](images/example5.png){ width="700" }
+/// caption
+Example 1 GPU Tile Mapping
+///
 
 ##### Example 2: (Implicit Scaling) 1 node, 6 ranks/node, 1 thread/rank, 1 rank/GPU
 
@@ -556,10 +556,10 @@ MPI 005 - OMP 000 - HWT 85-100 (Running on: 100) - Node x4407c6s2b0n0 - RT_GPU_I
 - The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
 - The `gpu_dev_compact.sh` wrapper sets ZE_AFFINITY_MASK for each of the 6 ranks such that rank 0 maps to GPU 0, rank 1 maps to GPU 1 etc. in a round-robin compact fashion.
 
-<figure markdown>
-  ![Example5](images/example6.png){ width="700" }
-  <figcaption>Example 1 GPU Device Mapping </figcaption>
-</figure>
+![Example5](images/example6.png){ width="700" }
+/// caption
+Example 1 GPU Device Mapping
+///
 
 #### 2) Binding MPI ranks to GPUs using `--gpu-bind` option from MPICH
 
