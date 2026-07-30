@@ -19,7 +19,7 @@ Facility supported, multiuser endpoints are currently offered on Polaris and Cru
 | Polaris | [9a947ba5-f537-4681-acf3-cc66485aadec](https://app.globus.org/compute/endpoints/9a947ba5-f537-4681-acf3-cc66485aadec) |
 | Crux | [fd8b54bb-9452-411d-8e3a-09408156a886](https://app.globus.org/compute/endpoints/fd8b54bb-9452-411d-8e3a-09408156a886) |
 
-The globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
+The Globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
 
 To submit a simple function to these endpoints from a remote system install `globus_compute_sdk` v4+ at the remote site:
 ```
