@@ -79,7 +79,6 @@ extra_javascript:
 markdown_extensions:
   - footnotes
   - admonition
-  - codehilite
   - tables
   - attr_list
   - md_in_html
@@ -251,14 +250,12 @@ nav:
           - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
-        - Services:
-          - GitLab CI: aurora/services/gitlab-ci.md
+#        - Services:
         - Visualization:
           - aurora/visualization/index.md
           - ParaView (Launch from Client): aurora/visualization/paraview.md
           - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
           - VisIt: aurora/visualization/visit.md
-
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
@@ -363,6 +360,7 @@ nav:
           - DeepSpeed: polaris/data-science/frameworks/deepspeed.md
           - LibTorch: polaris/data-science/frameworks/libtorch.md
           - GPyTorch: polaris/data-science/frameworks/gpytorch.md
+          - vLLM: polaris/data-science/frameworks/vllm.md
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
@@ -430,8 +428,8 @@ nav:
     - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
-      - General: services/continuous-integration.md
-      - GitLab CI: services/gitlab-ci.md
+      - services/ci/index.md
+      - GitLab CI: services/ci/gitlab-ci.md
     - Globus Compute: services/globus-compute.md
 
   - Account & Project Management:
