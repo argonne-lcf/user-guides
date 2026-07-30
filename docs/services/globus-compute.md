@@ -47,7 +47,7 @@ And then execute one of these example Python scripts (paste your project name in
 
 === "Crux"
 
-    ```python
+    ```python linenums="1"
     from globus_compute_sdk import Executor
     from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
