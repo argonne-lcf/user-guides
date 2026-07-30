@@ -394,7 +394,7 @@ If using your own python environment on the target machine, it is necessary to m
 
 If the version of `parsl` differs from the MEP environment version, you will get an error similar to this:
 
-```
+```output
 parsl.executors.errors.BadStateException: Executor GlobusComputeEngine-HighThroughputExecutor failed due to: Manager version info py.v=3.12 parsl.v=2026.04.20 does not match interchange version info py.v=3.13 parsl.v=2026.02.23
 ```
 
