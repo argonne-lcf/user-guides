@@ -54,6 +54,13 @@ export RAY_TMPDIR="/tmp"
 export TMPDIR="/tmp"
 ```
 
+Set the following environment variables to avoid hitting the HF Hub API, if a model is already cached. 
+```bash linenums="1"
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+```
+
+
 ## Serving Small Models on a Single Tile
 
 For small models that fit within the memory of a single PVC tile (64 GB), no additional configuration is required to serve the model. Simply use the default tensor parallelism size (`TP`) of 1 when serving the model. This ensures the model is run on a single tile without the need for distributed setup. Models with fewer than 20 billion parameters typically fit within a single tile when using half precision (e.g., `bfloat16`). 
