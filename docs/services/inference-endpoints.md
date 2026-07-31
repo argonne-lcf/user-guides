@@ -128,10 +128,6 @@ Two clusters are currently active, with additional systems coming soon:
 | **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | API | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings` |
 | Cerebras CS-3 | Coming Soon | - | - | - |
 
-!!! info "Cluster Differences"
-    - **Sophia** and **Minerva** use [vLLM](https://docs.vllm.ai/) and supports the full range of OpenAI-compatible endpoints. Batch processing is available on **Sophia**.
-    - **Metis** uses SambaNova's inference API and currently supports only chat completions.
-
 !!! tip "Discovering Available Models"
     You can programmatically query all available models and endpoints:
     ```bash
