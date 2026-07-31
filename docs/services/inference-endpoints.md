@@ -119,7 +119,7 @@ Once authenticated, you can make a test call using cURL or Python.
 
 ### Available Clusters
 
-Two clusters are currently active, with additional systems coming soon:
+Three clusters are currently active, with additional systems coming soon:
 
 | Cluster | Status | Framework | Base URL | Supported Endpoints |
 |---------|--------|-----------|----------|---------------------|
@@ -129,7 +129,7 @@ Two clusters are currently active, with additional systems coming soon:
 | Cerebras CS-3 | Coming Soon | - | - | - |
 
 !!! info "Cluster Differences"
-    - **Sophia** and **Minerva** use [vLLM](https://docs.vllm.ai/) and supports the full range of OpenAI-compatible endpoints. Batch processing is available on **Sophia**.
+    - **Sophia** and **Minerva** use [vLLM](https://docs.vllm.ai/) and both support the full range of OpenAI-compatible endpoints. Batch processing is available on **Sophia**.
     - **Metis** uses SambaNova's inference API and currently supports only chat completions.
 
 !!! tip "Discovering Available Models"
