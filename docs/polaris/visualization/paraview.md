@@ -25,32 +25,36 @@ From the ParaView client, choose to connect to a server by either clicking on th
 
 or selecting File->Connect from the main menu.
 
-<figure markdown>
-  ![Select connect](images/ParaviewConnectMenu.png){ width="700" }
-</figure>
+![Select connect](images/ParaviewConnectMenu.png){ width="700" }
+/// caption
+Selecting Connect from the ParaView File menu
+///
 
 #### 2. Set Up Servers (first time only)
 The first time you want to run a server on Polaris and have it connect to your local ParaView client, you will need to set up a server. Once this server is set up, you can reuse it each time you run the ParaView client with the ParaView server on Polaris.
 
 Kitware, the developers of ParaView, maintain a database of server configurations that you can retrieve through the ParaView client. In the File->Connect menu, press the button named "Fetch Servers" and select POLARIS@ANL. Windows users should select "windows to POLARIS@ANL". Press "Import Selected".
 
-<figure markdown>
-  ![Load servers](images/ParaviewFetchServers.png){ width="700" }
-</figure>
+![Fetch servers](images/ParaviewFetchServers.png){ width="700" }
+/// caption
+Fetching the POLARIS@ANL server configuration
+///
 
 #### 3. Use ParaView
 
 After the previous step, you can now select POLARIS@ANL in the File->Connect menu and press Connect.
 
-<figure markdown>
-  ![Load servers](images/ParaviewChooseServerConfig.png){ width="700" }
-</figure>
+![Choose server configuration](images/ParaviewChooseServerConfig.png){ width="700" }
+/// caption
+Selecting the POLARIS@ANL server configuration
+///
 
 At this point, a new window will pop up.
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnectionOptions.png){ width="700" }
-</figure>
+![Connection options](images/ParaviewConnectionOptions.png){ width="700" }
+/// caption
+ParaView server connection options
+///
 
 There are a number of parameters that you must enter manually here:
 
@@ -93,15 +97,17 @@ An SSH connection will be established with a Polaris login node, and a password 
 
 After you enter your password, a job will be queued, and you will see a window like this:
 
-<figure markdown>
-  ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
-</figure>
+![Waiting for server](images/ParaviewWaitForServer.png){ width="700" }
+/// caption
+Waiting for the ParaView server job to start
+///
 
 When the job is launched on the compute nodes, the previous window will go away, and ParaView will show it is connected to Polaris in its Pipeline Browser:
 
-<figure markdown>
-  ![Load servers](images/ParaviewConnected.png){ width="700" }
-</figure>
+![Connected to Polaris](images/ParaviewConnected.png){ width="700" }
+/// caption
+Pipeline Browser showing the connection to Polaris
+///
 
 At this point, you can open datasets stored on the ALCF file systems and use ParaView normally.
 

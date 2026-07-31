@@ -73,6 +73,28 @@ This means that the resources you requested for your job are not yet available (
 The ```Not Running: Job is requesting an exclusive node and node is in use``` comment means you have requested a specific node, 
 instead of allowing PBS to select the first available node(s) for your job, and the specific compute node you requested in still in use or unavailable. 
 
+## Job Array Submitted to `prod` Never Runs
+
+If you submit a [job array](example-job-scripts.md#job-array-example) to the Polaris (or Aurora) `prod` routing queue and it sits indefinitely without ever running &mdash; accruing eligible time but never being placed &mdash; the most likely cause is that the array has **more concurrently eligible subjobs than the routing queue allows**.
+
+`prod` is a routing queue that can route at most a fixed number of jobs to the execution queues (`small`, `medium`, `large`) at one time (10 on Polaris). By default, *every* subjob in an array becomes eligible as soon as the array is submitted, so an array wider than that limit cannot fully route, and the excess subjobs never run. PBS will accept the submission without an error, which makes this easy to hit accidentally with a parameter sweep.
+
+To diagnose, look at the array and its subjobs:
+
+```shell
+qstat -t <job_array_id>[]
+qstat -was1 <job_array_id>[]
+```
+
+To fix, throttle the number of concurrently eligible subjobs with `%<num_concurrent>` so it never exceeds the queue limit (e.g. `%10` for Polaris `prod`). You can do this at submit time or on an already-submitted array:
+
+```shell
+#PBS -J 0-99%10                    # at submission
+qalter -J 0-99%10 <job_array_id>[] # on an existing array
+```
+
+If you need more subjobs eligible at once than `prod` permits, use the `preemptable` queue (higher limit) or a [workflow management tool](../polaris/workflows/balsam.md) such as Balsam instead. See [Limits on job arrays](example-job-scripts.md#limits-on-job-arrays) for details.
+
 ## "Job to be deleted at request of Scheduler"
 
 If you are running in the ```preemptable``` queue on Polaris and receive an email informing you that your has been deleted by at the request of the scheduler, 

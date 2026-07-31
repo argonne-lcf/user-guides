@@ -11,15 +11,15 @@ jobs:
   docs-strict:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
-          # Uncomment if PR build checks fail duye to new plugin needing full commit history. Will slow down build
+          # Uncomment if PR build checks fail due to new plugin needing full commit history. Will slow down build
           # fetch-depth: 0
           # sparse-checkout: |
           #   docs
           #   includes
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.x
       - name: Setup Python environment
