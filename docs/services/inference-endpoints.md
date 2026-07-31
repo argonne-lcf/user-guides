@@ -203,7 +203,7 @@ Three clusters are currently active, with additional systems coming soon:
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
                  }'
 
-        # Metis cluster example (replace '/sophia/vllm' with '/metis/api')
+        # Metis cluster example
         curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
@@ -214,7 +214,7 @@ Three clusters are currently active, with additional systems coming soon:
                     "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
                  }'
 
-        # Minerva cluster example (replace '/sophia/vllm' with '/minerva/api')
+        # Minerva cluster example
         curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/chat/completions" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
