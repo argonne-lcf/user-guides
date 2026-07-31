@@ -21,8 +21,8 @@ Facility supported, multiuser endpoints are currently offered on Polaris and Cru
 
 The Globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
 
-To submit a simple function to these endpoints from a remote system install `globus_compute_sdk` v4+ at the remote site:
-```
+To submit a simple function to these endpoints from a remote system install `globus-compute-sdk` v4+ at the remote site:
+```bash
 pip install "globus-compute-sdk>=4.0"
 ```
 And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
@@ -39,7 +39,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<your project name>",
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -57,7 +57,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<your project name>",
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -65,11 +65,11 @@ And then execute one of these example Python scripts (paste your project name in
 
 These scripts create a Globus Compute `Executor`.  The `Executor` requires the `endpoint_id` and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
 
-The first time this script is executed, a request to authenticate with the globus service will appear at the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code.  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should be complete and should be valid for 7 days.
+The first time this script is executed, a request to authenticate with the Globus service will appear at the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code (see [Obtaining a Token](../account-project-management/accounts-and-access/obtaining-a-token.md) if you have not set one up).  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should be complete and should be valid for 7 days.
 
 ### Configuration Options
 
-The following configuration options are available on the MEPs.  When users create globus compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
+The following configuration options are available on the MEPs.  When users create Globus Compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
 
 === "Polaris"
 
@@ -107,30 +107,45 @@ The following configuration options are available on the MEPs.  When users creat
     | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
     | `select_options` | `"system=crux"` | PBS select line options |
 
+Valid queue names and their limits are documented in the [Polaris](../polaris/running-jobs/index.md) and [Crux](../crux/queueing-and-running-jobs/running-jobs.md) job submission pages.  The examples on this page all use the `debug` queue.
+
+!!! warning "Requesting filesystems"
+    The default `scheduler_options` requests only the `home` filesystem, so jobs submitted by the endpoint cannot read or write Eagle.  If your functions touch Eagle, you must override `scheduler_options`.  The override **replaces** the default rather than adding to it, so the `filesystems=` line has to be re-included:
+
+    ```python
+    user_endpoint_config = {"account": "<your project name>",
+                            "queue": "debug",
+                            "scheduler_options": "#PBS -l filesystems=home:eagle"}
+    ```
+
+    See [Specifying Filesystems](../running-jobs/index.md#specifying-filesystems) for the valid values.  A job that requests a filesystem it does not need will not run while that filesystem is marked down, so request only what you use.
+
 ### Setting your own environment with `worker_init`
 
 The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user with the configuration option `worker_init`.  The default setting for `worker_init` is:
-```
+```bash
 "export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
 If you wish to replace the default `worker_init` for your own `worker_init`, you must either activate a python environment with `globus-compute-endpoint` installed or append the default `worker_init` commands to your custom `worker_init` commands.
 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
-```
+```bash
 pip install globus-compute-endpoint parsl==2026.02.23
 ```
-The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
+The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is version `2026.02.23` as of this writing.  This version changes when the MEPs are updated, so confirm it before pinning: run the [hello affinity](#hello-affinity) example against the default environment, which reports the `parsl` and `globus-compute-endpoint` versions the MEP is actually running.  A mismatch produces the error described in [Manager version doesn't match](#manager-version-doesnt-match).
 
 !!! warning
-    If you replace `worker_init` with your own commands, the environment it creates must include `globus_compute_endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submitted by globus compute endpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moreover, if this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.  [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
+    If you replace `worker_init` with your own commands, the environment it creates must include `globus-compute-endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submitted by Globus Compute endpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moreover, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.  If this happens, [stop the endpoint](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
 
 The setting of `TMPDIR` is to fix a known issue with Parsl running single node jobs with the `MpiExecLauncher` on ALCF systems.  It should be included if you expect running jobs that match this use case.
+
+Globus Compute endpoints are built on Parsl, so the `launcher_type`, `nodes_per_block`, and `*_blocks` options above behave as they do in a standalone Parsl configuration.  For using Parsl directly on ALCF systems, see the [Polaris](../polaris/workflows/parsl.md) and [Aurora](../aurora/workflows/parsl.md) Parsl pages.
 
 ## Single User Endpoints
 
 Users may, with caution, create their own single-user compute endpoints on login nodes.  This is appropriate for machines that do not yet support MEPs, like Aurora, or for workloads that require options not accommodated by the MEP configuration options.
 
-The [ALCF globus compute repository](https://github.com/argonne-lcf/alcf-globus-compute) gives example config templates and instructions on how to use them.
+The [ALCF Globus Compute repository](https://github.com/argonne-lcf/alcf-globus-compute) gives example config templates and instructions on how to use them.
 
 ## Examples
 
@@ -144,6 +159,7 @@ Paste your project name in the account setting before execution.
 
     ```python
     from globus_compute_sdk import Executor
+    from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
     def hello_affinity():
         import sys
@@ -161,9 +177,11 @@ Paste your project name in the account setting before execution.
 
     endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
+    serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
-                                        "queue": "debug",})
+                   serializer=serializer,
+                   user_endpoint_config={"account": "<your project name>",
+                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
     ```
@@ -172,6 +190,7 @@ Paste your project name in the account setting before execution.
 
     ```python
     from globus_compute_sdk import Executor
+    from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
     def hello_affinity():
         import sys
@@ -188,12 +207,14 @@ Paste your project name in the account setting before execution.
 
     endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
 
+    serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
-                                        "queue": "debug",})
+                   serializer=serializer,
+                   user_endpoint_config={"account": "<your project name>",
+                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
-    ```    
+    ```
 
 ### Register Function
 
@@ -209,7 +230,7 @@ def adder(a, b):
 '''
 
 gcc = Client()
-function_id = gcc.register_source_code(source=source, 
+function_id = gcc.register_source_code(source=source,
                                        function_name="adder",
                                        description="Adds two numbers")
 print(f"Registered adder; id {function_id}")
@@ -229,7 +250,7 @@ account = ''
 polaris_gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
                        user_endpoint_config={"queue": "debug",
                                              "account": account})
-polaris_future = polaris_gce.submit_to_registered_function(args=(5, 10), 
+polaris_future = polaris_gce.submit_to_registered_function(args=(5, 10),
                                                            function_id=function_id)
 
 # Run on Crux
@@ -266,8 +287,8 @@ def host_sleep_wrapper(sleeptime):
     os.chdir(os.path.expandvars(run_directory))
 
     # This runs the application command
-    res = subprocess.run(command, 
-                         stdout=subprocess.PIPE, 
+    res = subprocess.run(command,
+                         stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE,
                          shell=True)
 
@@ -300,7 +321,7 @@ print(f"Results of wrapper function:\n{future.result()}")
 
 ### Multinode example
 
-Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute one function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
+Here is an example of running functions across many nodes with `MpiExecLauncher`.  Setting `max_workers_per_node` to 1 means one function executes per node at a time.  The example submits twice as many functions as there are nodes, so they run in two waves.  Note that it is important to include `place=scatter` in the `scheduler_options`.
 
 Paste your project name and the endpoint id in the script before execution.
 
@@ -318,7 +339,7 @@ def query_host():
 endpoint_id = "<selected endpoint id>"
 account = "<your project name>"
 num_nodes = 2
-user_endpoint_config = {"account": account, 
+user_endpoint_config = {"account": account,
                         "queue": "debug",
                         "launcher_type": "MpiExecLauncher",
                         "scheduler_options": "#PBS -l filesystems=home\n#PBS -l place=scatter",
@@ -329,12 +350,12 @@ serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 with Executor(endpoint_id=endpoint_id,
                 serializer=serializer,
                 user_endpoint_config=user_endpoint_config) as gce:
-    
+
     # Submit functions
     futures = []
     for _ in range(2*num_nodes):
         futures.append(gce.submit(query_host))
-    
+
     # Collect results
     for f in as_completed(futures):
         print(f.result())
@@ -346,12 +367,29 @@ with Executor(endpoint_id=endpoint_id,
 
 The most common pitfall users will encounter is that the endpoint gets into a loop of queuing and running jobs that immediately fail.
 
-To stop this behavior, delete the pid file(s) referenced by the endpoint.  This applies both to use of MEPs and single user endpoints.  To do this, login to the target machine and execute this command:
+To stop this behavior, login to the target machine and stop the endpoint.  This applies both to use of MEPs and single user endpoints.  First list your endpoints to find the name of the offending one:
+```bash
+globus-compute-endpoint list
+```
+The `<endpoint_name>` will begin with `uep` if using the MEPs.  It may have another name if using a single user endpoint.  Then stop it:
+```bash
+globus-compute-endpoint stop <endpoint_name>
+```
+
+If `globus-compute-endpoint` is not on your `PATH` on the login node, activate the environment you installed it into, as described in [Setting your own environment with `worker_init`](#setting-your-own-environment-with-worker_init).
+
+If the endpoint is unresponsive and `stop` does not work, delete the pid file(s) referenced by the endpoint:
 ```bash
 rm ~/.globus_compute/*/daemon.pid
 ```
 
 This will stop all PBS job submissions under your user account, by the multiuser or single user endpoints.
+
+Stopping the endpoint does not remove jobs it has already queued.  Check for and delete any that remain:
+```bash
+qstat -u $USER
+qdel <job_id>
+```
 
 To diagnose why this happened, there are several things to check:
 
@@ -361,9 +399,9 @@ To diagnose why this happened, there are several things to check:
 
 ### Serialization errors
 
-When submitting or registering functions from a client Executor on a remote machine, globus compute will serialize the function code and send the serialized code through the globus service to the compute endpoint on the target machine.  On the target machine, the environment activated by `worker_init` will deserialize the function for execution.
+When submitting or registering functions from a client Executor on a remote machine, Globus Compute will serialize the function code and send the serialized code through the Globus service to the compute endpoint on the target machine.  On the target machine, the environment activated by `worker_init` will deserialize the function for execution.
 
-If there is a major version difference in the Python version on the client side and the endpoint side of this exchange, it is possible to get an error due to serialization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
+If the Python version differs between the client side and the endpoint side of this exchange (for example, a 3.12 client submitting to a 3.13 endpoint), it is possible to get an error due to serialization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
 ```
 This appears to be an error with serialization. If it is, using a different
 serialization strategy from globus_compute_sdk.serialize might resolve the issue. For
@@ -398,7 +436,9 @@ If the version of `parsl` differs from the MEP environment version, you will get
 parsl.executors.errors.BadStateException: Executor GlobusComputeEngine-HighThroughputExecutor failed due to: Manager version info py.v=3.12 parsl.v=2026.04.20 does not match interchange version info py.v=3.13 parsl.v=2026.02.23
 ```
 
-To fix this, in your environment on the target machine (Polaris, Crux, etc.), install the correct parsl version:
+To fix this, in your environment on the target machine (Polaris, Crux, etc.), install the `parsl` version reported by the interchange in the error message above:
 ```bash
-pip install --upgrade parsl==2026.02.23
+pip install --upgrade parsl==<interchange parsl version>
 ```
+
+See [Setting your own environment with `worker_init`](#setting-your-own-environment-with-worker_init) for how to confirm the version the MEPs are currently running.
