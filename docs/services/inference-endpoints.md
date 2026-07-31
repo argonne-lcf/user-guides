@@ -246,7 +246,7 @@ Three clusters are currently active, with additional systems coming soon:
         )
         print(response.choices[0].message.content)
 
-        # Metis cluster (replace '/sophia/vllm' with '/metis/api')
+        # Metis cluster
         client_metis = OpenAI(
             api_key=access_token,
             base_url="https://inference-api.alcf.anl.gov/resource_server/metis/api/v1"
@@ -258,7 +258,7 @@ Three clusters are currently active, with additional systems coming soon:
         )
         print(response.choices[0].message.content)
 
-        # Minerva cluster (replace '/sophia/vllm' with '/minerva/api')
+        # Minerva cluster
         client_minerva = OpenAI(
             api_key=access_token,
             base_url="https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1"
