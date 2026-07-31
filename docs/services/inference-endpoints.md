@@ -119,7 +119,7 @@ Once authenticated, you can make a test call using cURL or Python.
 
 ### Available Clusters
 
-Two clusters are currently active, with additional systems coming soon:
+Three clusters are currently active, with additional systems coming soon:
 
 | Cluster | Status | Framework | Base URL | Supported Endpoints |
 |---------|--------|-----------|----------|---------------------|
