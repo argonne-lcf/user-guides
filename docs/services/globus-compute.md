@@ -63,7 +63,7 @@ And then execute one of these example Python scripts (paste your project name in
     print(future.result())
     ```
 
-These scripts create a Globus Compute `Executor`.  The `Executor` requires the `endpoint_id` and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
+These scripts create a Globus Compute `Executor`.  The `Executor` requires the endpoint id and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
 
 The first time this script is executed, a request to authenticate with the Globus service will appear at the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code (see [Obtaining a Token](../account-project-management/accounts-and-access/obtaining-a-token.md) if you have not set one up).  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should be complete and should be valid for 7 days.
 
