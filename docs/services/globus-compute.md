@@ -1,10 +1,10 @@
 # Globus Compute
 
-The [Globus Compute platform](https://www.globus.org/compute) allows users to execute workloads remotely by submiting functions to endpoints on ALCF systems.
+The [Globus Compute platform](https://www.globus.org/compute) allows users to execute workloads remotely by submitting functions to endpoints on ALCF systems.
 
 There are two options for using Globus Compute on ALCF systems:
 
-1. Facility supported Globus Comute Endpoints (currently supported on Polaris and Crux).  These endpoints offer a set of options suitable for many common workloads.
+1. Facility supported Globus Compute Endpoints (currently supported on Polaris and Crux).  These endpoints offer a set of options suitable for many common workloads.
 
 2. Users may run their own Globus Compute Endpoints on login nodes or edge service nodes on ALCF systems.  This approach allows users to run Globus Compute on systems that currently do not have facility supported endpoints.  It also allows users to create endpoints with features not currently supported by facility endpoints.
 
@@ -21,9 +21,9 @@ Facility supported, multiuser endpoints are currently offered on Polaris and Cru
 
 The Globus pages for these endpoints will give up-to-date details on their configuration templates, schemas, and status.
 
-To submit a simple function to these endpoints from a remote system install `globus_compute_sdk` v4+ at the remote site:
-```
-pip install globus_compute_sdk > 4.0
+To submit a simple function to these endpoints from a remote system install `globus-compute-sdk` v4+ at the remote site:
+```bash
+pip install "globus-compute-sdk>=4.0"
 ```
 And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
 
@@ -65,11 +65,11 @@ And then execute one of these example Python scripts (paste your project name in
 
 These scripts create a Globus Compute `Executor`.  The `Executor` requires the `endpoint_id` and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
 
-The first time this script is executed, a request to authenticate with the globus service will appear a the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code.  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should now be complete.
+The first time this script is executed, a request to authenticate with the Globus service will appear at the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code.  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should now be complete.
 
 ### Configuration Options
 
-The following configuration options are available on the MEPs.  When users create globus compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
+The following configuration options are available on the MEPs.  When users create Globus Compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
 
 === "Polaris"
 
@@ -109,28 +109,28 @@ The following configuration options are available on the MEPs.  When users creat
 
 ### Setting your own environment with `worker_init`
 
-The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user the configuration option `worker_init`.  The default setting for `worker_init` is:
-```
+The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user with the configuration option `worker_init`.  The default setting for `worker_init` is:
+```bash
 "export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
-If you wish to replace the default `worker_init` for your own `worker_init`, you must either activate a python environment with `globus-compute-endpoint` installed or append the default `work_init` commands to your custom `worker_init` commands.
+If you wish to replace the default `worker_init` for your own `worker_init`, you must either activate a python environment with `globus-compute-endpoint` installed or append the default `worker_init` commands to your custom `worker_init` commands.
 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
-```
+```bash
 pip install globus-compute-endpoint parsl==2026.02.23
 ```
 The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
 
 !!! warning
-    If you replace `worker_init` with your own commands, the environment it creates must include `globus_compute_endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submited by globus compute ednpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moroever, if this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
+    If you replace `worker_init` with your own commands, the environment it creates must include `globus-compute-endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submitted by Globus Compute endpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moreover, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.  If this happens, [delete the Globus Compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
 
 The setting of `TMPDIR` is to fix a known issue with Parsl running single node jobs with the `MpiExecLauncher` on ALCF systems.  It should be included if you expect running jobs that match this use case.
 
 ## Single User Endpoints
 
-Users may, with caution, create their own single-user compute endpoints on login nodes.  This is appropriate for machines that do not yet support MEPs, like Aurora, or for workloads that require options not accomodated by the MEP configuration options.
+Users may, with caution, create their own single-user compute endpoints on login nodes.  This is appropriate for machines that do not yet support MEPs, like Aurora, or for workloads that require options not accommodated by the MEP configuration options.
 
-The [ALCF globus compute repository](https://github.com/argonne-lcf/alcf-globus-compute) gives example config templates and instructions on how to use them.
+The [ALCF Globus Compute repository](https://github.com/argonne-lcf/alcf-globus-compute) gives example config templates and instructions on how to use them.
 
 ## Examples
 
@@ -300,7 +300,7 @@ print(f"Results of wrapper function:\n{future.result()}")
 
 ### Multinode example
 
-Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute on function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
+Here is an example of running functions across many nodes with `MpiExecLauncher`.  This example will execute one function per node concurrently.  Note that it is important to include `place=scatter` in the `scheduler_options`.
 
 Paste your project name and the endpoint id in the script before execution.
 
@@ -346,7 +346,7 @@ with Executor(endpoint_id=endpoint_id,
 
 The most common pitfall users will encounter is that the endpoint gets into a loop of queuing and running jobs that immediately fail.
 
-To stop this behavior, delete the pid file(s) referenced by the endpoint.  This applies both to use of MEPs and single user endpoints.  To do this, login to the target machine and executue this command:
+To stop this behavior, delete the pid file(s) referenced by the endpoint.  This applies both to use of MEPs and single user endpoints.  To do this, login to the target machine and execute this command:
 ```bash
 rm ~/.globus_compute/*/daemon.pid
 ```
@@ -355,15 +355,15 @@ This will stop all PBS job submissions under your user account, by the multiuser
 
 To diagnose why this happened, there are several things to check:
 
-1. Look at the PBS job logs created by the endpoint.  Look in `~/.globus_compute/<endpoint_name>/submit_scripts`.  The `<endpoint_name>` will begin with `uep` if useing the MEPs.  It may have another name if using a single user endpoint.  This directory will contain the PBS submit scripts and the PBS job stdout and stderr files.
+1. Look at the PBS job logs created by the endpoint.  Look in `~/.globus_compute/<endpoint_name>/submit_scripts`.  The `<endpoint_name>` will begin with `uep` if using the MEPs.  It may have another name if using a single user endpoint.  This directory will contain the PBS submit scripts and the PBS job stdout and stderr files.
 
 2. A common issue you may find in the PBS job stdout files (found in `~/.globus_compute/<endpoint_name>/submit_scripts`) is that `globus-compute-endpoint` cannot be found.  If that is the case, check the environment commands you have activated in `worker_init`.  Make sure `globus-compute-endpoint` is in the PATH.
 
 ### Serialization errors
 
-When submiting or registering functions from a client Executor on a remote machine, globus compute will serialize the function code and send the serialized code through the globus service to the compute endpoint on the target machine.  On the target machine, the environment activated by `worker_init` will deserailze the function for execution.
+When submitting or registering functions from a client Executor on a remote machine, Globus Compute will serialize the function code and send the serialized code through the Globus service to the compute endpoint on the target machine.  On the target machine, the environment activated by `worker_init` will deserialize the function for execution.
 
-If there is a major version difference in the Python version on the client side and the endpoint side of this exchange, it is possible to get an error due to serialization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
+If the Python version differs between the client side and the endpoint side of this exchange, it is possible to get an error due to serialization.  When this happens a message will often be returned on the client side with a `ManagerLost` error and this message:
 ```
 This appears to be an error with serialization. If it is, using a different
 serialization strategy from globus_compute_sdk.serialize might resolve the issue. For
@@ -386,7 +386,7 @@ To resolve this issue there are a few options:
                     user_endpoint_config=...)
     ```
 
-3. If submitting a registered function, re-register the function with environment on the target machine where the endpoint is located.  This gaurentees the serialization and deserialization of the function will be done in the same environment.
+3. If submitting a registered function, re-register the function with environment on the target machine where the endpoint is located.  This guarantees the serialization and deserialization of the function will be done in the same environment.
 
 ### Manager version doesn't match
 
