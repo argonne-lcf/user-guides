@@ -1448,10 +1448,21 @@
   font-size: 19px;
 }
 
-@media only screen and (min-width: 1020px) {
+@media only screen and (min-width: 1021px) {
   .header--mobile {
     display: none;
   }
+}
+
+/* Drawer hamburger in the primary header: the mobile header (and its
+   hamburger) is hidden above 1020px, but the left sidebar stays in drawer
+   mode until Material's 76.25em breakpoint. Material hides any
+   .md-header__button[for="__drawer"] at ≥76.25em, so this button is only
+   visible in the 1021px–76.1875em band where no other nav toggle exists. */
+.header--primary .header__site-title .md-header__button[for="__drawer"] {
+  vertical-align: middle;
+  margin: 0 .5rem 0 0;
+  padding: .4rem 0;
 }
 
 .header--mobile .grid {
