@@ -6,6 +6,12 @@
   <div class="header--primary">
     <div class="grid">
       <div class="header__site-title">
+        <!-- Button to open drawer: only visible below the 76.25em sidebar
+             breakpoint, where the mobile header is already hidden -->
+        <label class="md-header__button md-icon" for="__drawer">
+          {% set icon = config.theme.icon.menu or "material/menu" %}
+          {% include ".icons/" ~ icon ~ ".svg" %}
+        </label>
         <!-- <h1><a href="https://www.alcf.anl.gov/">Argonne Leadership Computing Facility</a></h1> -->
         <a href="https://www.alcf.anl.gov/">
           <img src="{{ config.site_url }}/images/ANL_ALCF-white.svg" />
