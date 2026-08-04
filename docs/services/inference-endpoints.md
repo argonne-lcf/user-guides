@@ -464,6 +464,7 @@ Models are organized by cluster and marked with the following capabilities:
 ??? "Chat Language Models"
 
     - nemotron-3-ultra^H^
+    - inkling-bf16^H^
 
 ### Model Serving Configuration
 
