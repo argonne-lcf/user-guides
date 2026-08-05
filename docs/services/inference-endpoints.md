@@ -714,7 +714,9 @@ For large-scale inference, the batch processing service allows you to submit a f
         response = requests.get(url, headers=headers)
         print(response.json())
         ```
+
     **Batch Status Codes:**
+
     - **pending**: The request was submitted, but the job has not started yet.
     - **running**: The job is currently running on a compute node.
     - **failed**: An error occurred; the error message will be displayed when querying the result.

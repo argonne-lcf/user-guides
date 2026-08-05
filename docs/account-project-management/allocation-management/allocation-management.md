@@ -154,6 +154,7 @@ sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
 
 ##### Q3: Can a suballocation have a negative balance?
 **A:** Yes. Suballocations can go negative for different reasons. 
+
  - When the suballocation has a positive balance at the time jobs are **queued** but once jobs finish running the charges exceed the balance that was available when they were queued.
  - If the **allocation** has a negative balance (regardless of whether the suballocation has a positive balance or not, as long as the allocation is still active), jobs will be routed to backfill queues.
 
