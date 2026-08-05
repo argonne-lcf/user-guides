@@ -40,6 +40,7 @@ export XLA_FLAGS="--xla_gpu_force_compilation_parallelism=1"
 JAX has intrinsic scaling tools to use multiple GPUs on a single node, via the `pmap` function. If this is sufficient for your needs, excellent. If not, another alternative is to use the newer package [mpi4jax](https://github.com/mpi4jax/mpi4jax).
 
 mpi4jax is a relatively new project and requires setting some environment variables for good performance and usability:
+
 - Set `MPI4JAX_USE_CUDA_MPI=1` to use CUDA-Aware MPI, supported in the `conda` module, to do operations directly from the GPU.
 - Set `MPICH_GPU_SUPPORT_ENABLED=1` to use CUDA-Aware MPI.
 

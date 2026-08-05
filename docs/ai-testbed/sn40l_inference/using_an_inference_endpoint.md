@@ -30,7 +30,7 @@ For programmatic access, you can use the API endpoints directly.
 
 #### 1. Setup Your Environment
 
-You can run the following setup from any internet connected machine (your local machine, or an ALCF machine).
+You can run the following setup from any internet-connected machine (e.g. your local machine or an ALCF node).
 
 ```bash
 # Create a new Conda environment
@@ -40,7 +40,8 @@ conda activate globus_env
 # Install necessary packages
 pip install openai globus_sdk
 ```
-Note: A python virtual environment may be used as well.
+
+Note: A Python virtual environment may be used as well:
 ```bash
 virtualenv -p python3.10 globus_env
 source globus_env/bin/activate
@@ -116,9 +117,7 @@ Once authenticated, you can make a test call using cURL or Python.
 !!! tip "Discovering Available Models"
 The endpoint information can be accessed using the [Metis status page](https://metis.alcf.anl.gov/status). It provides the status of the endpoints and the models and the associated configurations.
 
-The list of currently supported chat-completion models on Metis are : 
-- gpt-oss-120b
-- Llama-4-Maverick-17B-128E-Instruct
+The list of currently supported chat-completion models on Metis can be found in [Available Models](../../services/inference-endpoints.md#available-models).
 
 You can programmatically query all available models and endpoints:
 
@@ -127,7 +126,8 @@ You can programmatically query all available models and endpoints:
     curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}" | jq -C '.clusters.metis'
 ```
-If you need any other models to be provisioned via these endpoints, please reach out to support[at]alcf.anl.gov.
+
+If you need any other models to be provisioned via these endpoints, please reach out to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 See SambaNova's documentation for additional information to supplement the instructions below: [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html).
 

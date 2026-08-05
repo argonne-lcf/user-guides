@@ -3,6 +3,7 @@
 DAOS is a major file system on Aurora, with 230 PB and up to >30 TB/s from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.
 
 This guide covers:
+
 - DAOS pool allocation and container setup
 - POSIX/DFS/MPI-IO access modes
 - Job submission and performance guidance
@@ -679,6 +680,7 @@ users
 ### Large Bulk I/O Write Issue
 
 There is a known Python issue with `pil4dfs`.
+
 - Fix provided in DAOS-17499 
 - Current workaround is to set the `D_IL_COMPATIBLE=1` environment variable.
 - You can skip `pil4dfs` for now if that happens.

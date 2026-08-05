@@ -124,13 +124,17 @@ We have an allocation management tool called sbank, and below are a few helpful 
 - `myquota`: Log into Polaris and type this command to view your home directory quota.
 
 You can use the following command to check your project balance on Polaris:
-- `sbank-list-allocations -p <Project Shortname> -r <system name>`
+
+```bash
+sbank-list-allocations -p <Project Shortname> -r <system name>
+```
 
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).
 
 ## How Can We Help?
 
 We can also help resolve any issues or needs that may be delaying the start of your scientific campaign.
+
 - Are you in need of high-throughput software?
 - Are you having difficulty compiling your application?
 - Does your code have limited restart capabilities?

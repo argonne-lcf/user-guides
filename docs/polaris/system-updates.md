@@ -94,6 +94,7 @@ The management software on Polaris has been upgraded to HPCM 1.10. The following
          which is consistent with 2.1.2 here in April 2024. Exact version unverified
          against HPE release notes (support-portal gated) -- confirm against the April
          2024 upgrade records if the distinction ever matters. -->
+
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
