@@ -52,6 +52,7 @@ Filter on name or ID. DO NOT MIX. Enter 'all' to get all. Wildcards '*' are allo
 #### -E END, --end=END
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following:
+
 - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`.
 
 **Operator Defaults:**
@@ -73,6 +74,7 @@ Get inactive allocations.
 #### -S START, --start=START
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following:
+
 - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`.
 
 **Operator Defaults:**
