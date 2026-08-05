@@ -53,9 +53,9 @@ Aurora maintains three Julia versions:
 When new versions are released, the oldest non-LTS version is retired (removed from the system and no longer available), and the LTS version is updated according to the [Julia LTS release schedule](https://julialang.org/downloads/#long_term_support_release).
 
 ## Configuring the Programming Environment
-To leverage Aurora's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl), [`oneAPI.jl`](https://github.com/JuliaGPU/oneAPI.jl), and [`HDF5.jl`](https://juliaio.github.io/HDF5.jl/stable/). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
+To leverage Aurora's architecture, you must configure Julia to use the system's optimized libraries for [`MPI.jl`](https://github.com/JuliaParallel/MPI.jl) and [`oneAPI.jl`](https://github.com/JuliaGPU/oneAPI.jl). For a modern, interactive development experience, we recommend using **Visual Studio Code** with the official Julia and **Remote - SSH** extensions.
 
-The Julia module on Aurora is pre-configured with system-specific preferences (via `LocalPreferences.toml` in the system load path) to ensure these packages use the correct system libraries (MPICH, Intel Level Zero, HDF5).
+The Julia module on Aurora is pre-configured with system-specific preferences (via `LocalPreferences.toml` in the system load path) so that these packages use the correct system libraries: the MPICH provided by the `mpich` module, and the Intel Level Zero loader, Compute Runtime (NEO) and Graphics Compiler (IGC) installed under `/usr/lib64`.
 
 Install the required packages in your Julia environment with the following commands:
 ```julia
@@ -63,7 +63,60 @@ using Pkg
 Pkg.add(["MPI", "oneAPI", "HDF5", "KernelAbstractions"])
 ```
 
-Note: `MPIPreferences` does not need to be explicitly added as it's a dependency of `MPI.jl`.
+!!! note "`HDF5.jl` is not configured against a system build"
+
+    Unlike on Polaris, `HDF5.jl` on Aurora is **not** pointed at a system HDF5 installation. It uses its own binary artifact, which is serial: writing from a single rank (as in the example below) works, but collective parallel I/O does not. If you need parallel HDF5, configure `HDF5.jl` against an MPI-enabled system build yourself following the [HDF5.jl documentation](https://juliaio.github.io/HDF5.jl/stable/mpi/).
+
+### Intel LTS Driver Stack
+
+Aurora runs Intel's long-term-servicing (LTS) branch of the Compute Runtime (NEO 25.18.33578 / IGC 2.11.29 / Level Zero 1.24), not the rolling releases that `oneAPI.jl` targets by default. That branch predates a number of driver and compiler fixes, several of which corrupt results silently rather than raise an error.
+
+`oneAPI.jl` v2.8 added workarounds for these behind a single opt-in switch, `ONEAPI_LTS`, which the Julia module sets for you. No action is required on your part beyond using a recent enough `oneAPI.jl`.
+
+!!! warning "`oneAPI.jl` v2.8 or newer is required"
+
+    Older versions ignore `ONEAPI_LTS` entirely, without a warning, leaving the workarounds disabled. The resulting failures are silent: wrong numerical results from reductions over strided arrays, or a banned Level Zero context that surfaces much later as a `ZE_RESULT_ERROR_UNKNOWN` at an unrelated call.
+
+    If you are reusing an environment whose `Manifest.toml` predates this, run `Pkg.update("oneAPI")` and confirm the resolved version with `Pkg.status("oneAPI")`.
+
+!!! warning "Recompile required"
+
+    Julia does not invalidate precompilation caches when an environment variable changes. If you precompiled `oneAPI.jl` in a depot created before the LTS switch was enabled, run `Pkg.precompile()` once. This affects first-call latency only, never correctness.
+
+Confirm that the LTS path is active (on a compute node — see [Verify Configuration](#verify-configuration-on-a-compute-node) below):
+
+```julia
+julia> using oneAPI
+
+julia> oneAPI.oneL0.LTS[]
+true
+```
+
+`oneAPI.versioninfo()` does not report this, so the check above is the only way to confirm it.
+
+#### What changes on the LTS path
+
+| Change | What it means for you |
+| --- | --- |
+| Kernels are compiled with the [Khronos SPIR-V translator](https://github.com/KhronosGroup/SPIRV-LLVM-Translator) instead of LLVM's SPIR-V back-end | Transparent — the LTS runtime does not accept the back-end's output. `@device_code_spirv` reports which tool was used in its `Generator:` line |
+| `BFloat16` is unavailable | Forced off regardless of what the hardware reports, because the LTS SPIR-V stack cannot translate the LLVM `bfloat` type. Other floating-point types are unaffected |
+| Reductions over strided inputs are materialized into a dense array first | `sum(transpose(x))`, `a == transpose(b)` and `ishermitian(x)` cost an extra allocation and copy. Without this the LTS compiler miscompiles them and silently returns wrong numbers |
+| Reductions that keep the contiguous leading dimension use a coalesced kernel | `sum(A; dims=2)` and friends stay correct, but get less parallelism when there are few output slices |
+| Buffers are freed only after draining the work that may reference them | A garbage collection can block until outstanding GPU work completes |
+
+See [Intel LTS driver stack](https://juliagpu.github.io/oneAPI.jl/stable/lts/) in the `oneAPI.jl` documentation for the full details.
+
+#### Oversubscribing a tile
+
+The module sets `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, so each of a node's 6 GPUs is exposed as 2 separate tiles, for 12 devices in total. The [job submission script](#job-submission-script) below uses 12 ranks per node, giving one rank per tile.
+
+If you place **more ranks than tiles** on a node, the LTS stack can silently drop the tail of a kernel or a copy — the last work-items simply never land, with no error reported. Setting
+
+```bash
+export ONEAPI_SYNC_EACH_SUBMISSION=1
+```
+
+eliminates it, at roughly a 3x throughput cost. Leave it unset for the one-rank-per-tile mapping used below.
 
 ### oneAPI-Aware MPI
 
@@ -77,6 +130,12 @@ MPI.Init()
 data = oneAPI.rand(Float64, 100)
 MPI.Allreduce!(data, +, MPI.COMM_WORLD)  # GPU-to-GPU communication
 ```
+
+!!! warning "Do not configure `MPIPreferences` yourself"
+
+    `MPIPreferences` is a dependency of `MPI.jl` and does not need to be added explicitly. Do **not** run `MPIPreferences.use_system_binary()`, and do not keep an `[MPIPreferences]` section in your own project's `LocalPreferences.toml`. Either one shadows the system configuration and pins `MPI.jl` to a specific MPICH installation path, which breaks outright once that Aurora programming environment release is retired.
+
+    The system configuration instead tracks whichever MPICH the `mpich` module provides at deployment time, so it follows Aurora's programming environment updates. If you have an `[MPIPreferences]` section of your own, delete it and restart Julia.
 
 ## Verify Configuration on a Compute Node
 
@@ -95,9 +154,23 @@ julia -e "using oneAPI; oneAPI.versioninfo()"
 # oneAPI.jl version: ...
 # Intel Level Zero version: ...
 # ...
-# 12 devices:
+# 12 devices:                                   # 6 GPUs x 2 tiles (ZE_FLAT_DEVICE_HIERARCHY=FLAT)
 #   0: Intel(R) Data Center GPU Max 1550 ...
 ```
+
+Two further checks are worth running once per environment. The first confirms that the
+[LTS workarounds](#intel-lts-driver-stack) are active, the second that `MPI.jl` picked up the system MPICH:
+
+```bash linenums="1"
+julia -e "using oneAPI; @show oneAPI.oneL0.LTS[]"
+# oneAPI.oneL0.LTS[] = true
+
+julia -e "using MPI; @show MPI.MPI_LIBRARY_VERSION_STRING MPI.has_oneapi()"
+# MPI.MPI_LIBRARY_VERSION_STRING = "MPICH Version: ..."
+# MPI.has_oneapi() = true
+```
+
+If `oneAPI.oneL0.LTS[]` is `false`, your `oneAPI.jl` predates v2.8 or was precompiled before the switch was set — see the warnings under [Intel LTS Driver Stack](#intel-lts-driver-stack).
 
 ## Example Julia Code for Approximating Pi
 
