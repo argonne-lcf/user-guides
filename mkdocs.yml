@@ -486,10 +486,6 @@ exclude_docs: |
   todo.md
   TODO.md
   notes.md
-  sophia/not_in_nav/
-
-# (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
-# content to Sophia and remove the rest entirely)
 
 # Pages still built during "mkdocs serve" for local testing, but not during "mkdocs build"
 # appears to suppress not_in_nav WARNINGs for these pages, too
