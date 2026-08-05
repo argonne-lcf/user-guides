@@ -5,6 +5,7 @@
 ## PyG on Aurora
 
 PyTorch Geometric includes a base library, called [`torch_geometric`](https://github.com/pyg-team/pytorch_geometric), and a number of optional dependencies:
+
   - [`torch_scatter`](https://github.com/rusty1s/pytorch_scatter)
   - [`torch_sparse`](https://github.com/rusty1s/pytorch_sparse)
   - [`torch_cluster`](https://github.com/rusty1s/pytorch_cluster)

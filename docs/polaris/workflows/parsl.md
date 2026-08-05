@@ -4,11 +4,11 @@
 > 
 > -- <cite>Parsl Documentation</cite>
 
-For many applications, managing an ensemble of jobs into a workflow is a critical step that can easily become a performance bottleneck. Many tools exist to address this, of which `parsl` is just one. On this page, we'll highlight some of the key pieces of information about `parsl` that are relevant to Polaris. `Parsl` is also [extensively documented](https://parsl.readthedocs.io/en/stable/), has a dedicated Slack channel, and a large community of users and developers beyond ALCF. We encourage you to engage with the `parsl` community for support with `parsl`-specific questions, and for Polaris-specific questions or problems, please contact support@alcf.anl.gov.
+For many applications, managing an ensemble of jobs into a workflow is a critical step that can easily become a performance bottleneck. Many tools exist to address this, of which `parsl` is just one. On this page, we'll highlight some of the key pieces of information about `parsl` that are relevant to Polaris. Parsl is also [extensively documented](https://parsl.readthedocs.io/en/stable/), has a dedicated Slack channel, and a large community of users and developers beyond ALCF. We encourage you to engage with the `parsl` community for support with `parsl`-specific questions, and for Polaris-specific questions or problems, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Getting Parsl on Polaris
 
-You can install parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the ``conda`` module to include parsl, but here is an example way to do it:
+You can install Parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the `conda` module to include Parsl, but here is an example way to do it:
 
 ```bash linenums="1"
 # Load the Conda Module (needed every time you use parsl)
@@ -25,7 +25,6 @@ source /path/to/your/virtualenv/bin/activate
 
 # Install parsl (only once)
 pip install parsl
-
 ```
 
 ## Using Parsl on Polaris
