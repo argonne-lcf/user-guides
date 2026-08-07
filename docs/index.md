@@ -32,7 +32,7 @@ Researchers interested in using the ALCF systems (including CPU systems, GPU sys
 
 Submit your proposal requests at: [Allocation Request Page](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program)
 
-## Omboarding
+## Onboarding
 If you'd like to get started using our ALCF resources, our [Onboarding Your Award](https://www.alcf.anl.gov/onboarding-your-project) provides information on what you need to do in order to get time on our systems, get an account, and how to start running jobs.
 
 Please send feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov)
