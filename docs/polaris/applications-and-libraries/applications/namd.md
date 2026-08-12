@@ -11,6 +11,7 @@ ALCF offers assistance with building binaries and compiling instructions for NAM
 ## Running NAMD on Polaris
 
 Prebuilt releases of NAMD binaries can be found in the directory `/soft/applications/namd`. 
+
 * `Linux-x86_64-netlrts-smp-CUDA` supports GPU-resident runs. 
 * `Linux-x86_64-ofi-smp-CUDA` supports general GPU-offload runs.
 * `Linux-x86_64-ofi-smp-CUDA-memopt` supports memory-optimized input files and parallel I/O for the largest simulations (~100 million atoms or more).

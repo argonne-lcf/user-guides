@@ -1448,10 +1448,21 @@
   font-size: 19px;
 }
 
-@media only screen and (min-width: 1020px) {
+@media only screen and (min-width: 1021px) {
   .header--mobile {
     display: none;
   }
+}
+
+/* Drawer hamburger in the primary header: the mobile header (and its
+   hamburger) is hidden above 1020px, but the left sidebar stays in drawer
+   mode until Material's 76.25em breakpoint. Material hides any
+   .md-header__button[for="__drawer"] at ≥76.25em, so this button is only
+   visible in the 1021px–76.1875em band where no other nav toggle exists. */
+.header--primary .header__site-title .md-header__button[for="__drawer"] {
+  vertical-align: middle;
+  margin: 0 .5rem 0 0;
+  padding: .4rem 0;
 }
 
 .header--mobile .grid {
@@ -1922,4 +1933,100 @@ pre .normal a {
 :root {
   --md-footer-height: 160px;
   --md-header-height: 72px;
+}
+
+/* ---------------------------------------------------------------------------
+   Landing page tile grids ("help desk" buttons)
+   Usage in markdown (requires md_in_html + attr_list):
+
+     <div class="alcf-tile-grid" markdown>
+     - [Label](path/to/page.md)
+     </div>
+
+   Renders a responsive grid: 3 columns, collapsing to 2 then 1.
+   --------------------------------------------------------------------------- */
+/* Specificity note: Material sets `.md-typeset ul:not([hidden]) { display: flow-root }`
+   (0,2,1), so these selectors must match or exceed that to win. */
+.md-typeset .alcf-tile-grid ul:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1em 0 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .alcf-tile-grid ul li {
+  margin: 0;
+  display: flex;
+  list-style: none;
+}
+
+/* The tile itself */
+.md-typeset .alcf-tile-grid ul li > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  width: 100%;
+  min-height: 4.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.3rem;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    border-color 125ms,
+    background-color 125ms,
+    color 125ms,
+    box-shadow 125ms,
+    transform 125ms;
+}
+
+.md-typeset .alcf-tile-grid ul li > a:hover,
+.md-typeset .alcf-tile-grid ul li > a:focus-visible {
+  border-color: var(--md-accent-fg-color);
+  background-color: var(--md-accent-fg-color--transparent);
+  color: var(--md-accent-fg-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.md-typeset .alcf-tile-grid ul li > a:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+/* Icons, when added: :material-foo: inside the link text */
+.md-typeset .alcf-tile-grid ul li > a .twemoji,
+.md-typeset .alcf-tile-grid ul li > a svg {
+  flex: 0 0 auto;
+  width: 1.4em;
+  height: 1.4em;
+  fill: currentColor;
+}
+
+/* Hide the external-link glyph Material appends, so tiles stay uniform */
+.md-typeset .alcf-tile-grid ul li > a.external::after,
+.md-typeset .alcf-tile-grid ul li > a[href^="http"]::after {
+  display: none;
+}
+
+@media screen and (max-width: 60em) {
+  .md-typeset .alcf-tile-grid ul:not([hidden]) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 30em) {
+  .md-typeset .alcf-tile-grid ul:not([hidden]) {
+    grid-template-columns: 1fr;
+  }
 }

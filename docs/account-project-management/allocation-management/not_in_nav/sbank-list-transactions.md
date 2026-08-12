@@ -63,6 +63,7 @@ Filter on name or ID. **Do not mix.** Enter 'all' to get all. Wildcards '*' are 
 #### -E JOB_END, --end=JOB_END
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -80,6 +81,7 @@ Abbreviate numbers and use unit suffixes: K (thousands), M (millions), G (billio
 #### -S JOB_START, --start=JOB_START
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -97,6 +99,7 @@ Transaction types: CHARGE, REFUND, PULLBACK, DEPOSIT, VOID.
 #### --at=TRANSACTION_AT_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -114,6 +117,7 @@ Filter on Clusterbank reference ID.
 #### --created=JOB_CREATED_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -151,6 +155,7 @@ Do not display the totals.
 #### --queued=JOB_QUEUED_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 

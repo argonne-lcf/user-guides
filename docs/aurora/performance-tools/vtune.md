@@ -25,6 +25,7 @@ vtune -collect gpu-offload <target>
 ```
 
 This analysis enables you to:
+
 * Identify how effectively your application uses SYCL, OpenMP, or OpenCL kernels and explore them further with GPU Compute/Media Hotspots analysis
 * Analyze execution of Intel Media SDK tasks over time
 * Explore GPU usage and analyze a software queue for GPU engines at each moment of time
@@ -35,11 +36,13 @@ vtune -collect gpu-hotspots <target>
 ```
 
 Use the GPU Compute/Media Hotspots analysis to:
+
 * Explore GPU kernels with high GPU utilization, estimate the effectiveness of this utilization, identify possible reasons for stalls or low occupancy, and options.
 * Explore the performance of your application per selected GPU metrics over time.
 * Analyze the hottest SYCL* standards or OpenCL™ kernels for inefficient kernel code algorithms or incorrect work item configuration.
 
 The GPU Compute/Media Hotspots analysis is a good next step if you have already run the GPU Offload analysis and identified:
+
 * a performance-critical kernel for further analysis and optimization;
 * a performance-critical kernel that is tightly connected with other kernels in the program and may slow down their performance.
 
