@@ -1,5 +1,15 @@
 # Polaris System Updates
 
+## 2026-08-19; HPCM, PE, NVIDIA driver updates
+Polaris and Eagle to be upgraded between Aug 17 - Aug 19, 2026.
+
+- Upgrade to SLES 15 SP7
+- Upgrade to HPE PE 26.03
+- Upgrade to NVIDIA driver/cuda
+  - NVIDIA driver Driver Version: 580.65.06 CUDA Version: 13.0
+  - NVIDIAN hpc_sdk 25.9 CUDA Version: 13.0
+- Upgrade to Slingshot Host stack to 14.0.1
+
 ## 2026-01-07: NVIDIA driver, SHS 13.0.0, and DKMS migration
 
 Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
