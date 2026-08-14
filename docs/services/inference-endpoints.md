@@ -348,41 +348,52 @@ Three clusters are currently active, with additional systems coming soon:
 
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).
 
-## Coding Agents
+## Agents
 
-If your coding agent supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
+If your agent harness supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
 
-### OpenCode (recommended)
+### Installation
 
-[OpenCode](https://opencode.ai/) is an open-source coding agent that is well-supported by the ALCF Inference Service.
+Most agents have an installation script that you can run with one command to install in `~/.local/bin`.
 
-#### Installation
+| Agent | Install Command |
+| --- | --- |
+| **[OpenCode](https://opencode.ai/) (recommended)** | `curl -fsSL https://opencode.ai/install | bash` |
+| **[Pi](https://pi.dev/) (recommended)** | `curl -fsSL https://pi.dev/install.sh | sh` |
 
-Run their installation script:
-
-```sh
-curl -fsSL https://opencode.ai/install | bash
-source ~/.bashrc
-```
+Most scripts will require you to reload your environment with `source ~/.bashrc` before the agent will be in your `PATH`.
 
 Alternatively, you can also install via your system package manager (i.e. `brew`, `apt`, etc.).
 
-#### Automatic Configuration w/ alcf-ai
+#### Codex
+!!! warning "Codex Version Requirement"
+    Codex removed support for the Chat Completions API in `0.95`. Use `0.94` or lower for the ALCF Inference Service endpoints to be fully supported.
 
-You can quick-configure `opencode` to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
+Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
+
+If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+
+### Automatic Configuration w/ alcf-ai
+
+You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
 
 ```sh
 curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
-uvx alcf-ai agent configure opencode
-
-opencode
+uvx alcf-ai agent configure <agent>
 ```
+
+Supported `agent`s include:
+
+- `opencode`
+- `pi`
+- `codex`
 
 !!! tip "Refreshing API Keys"
     `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
 
-#### Manual Configuration
+### Manual Configuration
 
+#### OpenCode
 After installing `opencode`, place the following in your `~/.config/opencode/opencode.jsonc`.
 
 ```json
@@ -421,30 +432,30 @@ export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and s
 opencode
 ```
 
-### Codex
+#### Pi
 
-OpenAI's [Codex](https://openai.com/codex) is a popular coding agent popularized during the rise of ChatGPT. Codex also supports external model providers and can be configured to use the ALCF Inference Service.
+Add the following provider to your `~/.pi/agent/models.json`.
 
-#### Installation
-
-!!! warning "Codex Version Requirement"
-    Codex removed support for the Chat Completions API in `0.95`. Use `0.94` or lower for the ALCF Inference Service endpoints to be fully supported.
-
-Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
-
-If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
-
-#### Automatic Configuration w/ alcf-ai
-
-`alcf-ai` also supports configuring Codex:
-
-```sh
-uvx alcf-ai agent configure codex
-
-codex
+```json
+{
+    ...
+    "providers": {
+        "alcf-minerva": {
+            "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+                "api": "openai-completions",
+                "apiKey": "!uvx alcf-ai auth get-access-token",
+                "compat": {
+                    "supportsDeveloperRole": false,
+                    "supportsReasoningEffort": false
+                },
+                "models": [{ "id": "inkling-bf16" }, {"id": "nemotron-3-ultra"}]
+        }
+    }
+    ...
+}
 ```
 
-#### Manual Configuration
+#### Codex
 
 In your `~/.codex/config.toml`, add these configuration values.
 
@@ -464,11 +475,11 @@ You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI to
 !!! note "Suggested Models"
     `openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
 
-### Other 3rd-Party Agents
+#### Other 3rd-Party Agents
 
 Other OpenAI-compatible agents can also be configured to use the service, albeit with varying degrees of support. After familiarizing yourself with your agent's configuration format, see [Available Clusters](#available-clusters) for integration choices. The model can be specified by its fully qualfied name (see [Available Models](#available-models)).
 
-#### Shims/Proxies
+##### Shims/Proxies
 
 Some AI agents need to have their inference requests translated and sanitized prior to calling the ALCF Inference Service endpoints for correct behavior. Several community-developed shims and resources are available to aid the integration of these agents with the service:
 
