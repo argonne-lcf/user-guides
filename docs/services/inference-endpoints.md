@@ -28,142 +28,6 @@ In the model selection dropdown, you can see the status of each model:
 !!! note "For Advanced UI Features"
     For a full guide on advanced features like RAG (Retrieval-Augmented Generation), function calling, and more, please refer to the official [Open WebUI documentation](https://docs.openwebui.com/).
 
-### Coding Agents
-
-If your coding agent supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
-
-#### OpenCode (recommended)
-
-[OpenCode](https://opencode.ai/) is an open-source coding agent that is well-supported by the ALCF Inference Service.
-
-##### Installation
-
-Run their installation script:
-
-```sh
-curl -fsSL https://opencode.ai/install | bash
-source ~/.bashrc
-```
-
-Alternatively, you can also install via your system package manager (i.e. `brew`, `apt`, etc.).
-
-##### Automatic Configuration w/ alcf-ai
-
-You can quick-configure `opencode` to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
-
-```sh
-curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
-uvx alcf-ai agent configure opencode
-
-opencode
-```
-
-!!! tip "Refreshing API Keys"
-    `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
-
-##### Manual Configuration
-
-After installing `opencode`, place the following in your `~/.config/opencode/opencode.jsonc`.
-
-```json
-{
-    ...
-    "provider": {
-        "alcf-inference-service-sophia": {
-            "name": "ALCF Inference Service (Sophia)",
-            "npm": "@ai-sdk/openai-compatible",
-            "options": {
-                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
-                "apiKey": "{env:ALCF_AI_TOKEN}"
-            },
-            "models": {
-                "openai/gpt-oss-120b": {
-                    "name": "openai/gpt-oss-120b",
-                    "timeout": false,
-                    "limit": {
-                        "context": 65536,
-                        "output": 0
-                    }
-                }
-            }
-        }
-    }
-    ...
-}
-```
-
-Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
-
-```sh
-uvx alcf-ai auth login # follow interactive instructions to login
-export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and store
-
-opencode
-```
-
-#### Codex
-
-OpenAI's [Codex](https://openai.com/codex) is a popular coding agent popularized during the rise of ChatGPT. Codex also supports external model providers and can be configured to use the ALCF Inference Service.
-
-##### Installation
-
-!!! warning "Codex Version Requirement"
-    Codex removed support for the Chat Completions API in `0.95`. Use `0.94` or lower for the ALCF Inference Service endpoints to be fully supported.
-
-Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
-
-If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
-
-##### Automatic Configuration w/ alcf-ai
-
-`alcf-ai` also supports configuring Codex:
-
-```sh
-uvx alcf-ai agent configure codex
-
-codex
-```
-
-##### Manual Configuration
-
-In your `~/.codex/config.toml`, add these configuration values.
-
-```toml
-model = "<your model here>"
-model_provider = "inference-service"
-
-[model_providers.inference-service]
-name = "ALCF Inference Service"
-base_url = "<your endpoint url here>"
-env_key = "ALCF_AI_TOKEN"
-wire_api = "chat" # required to use Chat Completions API
-```
-
-You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
-
-!!! note "Suggested Models"
-    `openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
-
-#### Other 3rd-Party Agents
-
-Other OpenAI-compatible agents can also be configured to use the service, albeit with varying degrees of support. After familiarizing yourself with your agent's configuration format, see [Available Clusters](#available-clusters) for integration choices. The model can be specified by its fully qualfied name (see [Available Models](#available-models)).
-
-##### Shims/Proxies
-
-Some AI agents need to have their inference requests translated and sanitized prior to calling the ALCF Inference Service endpoints for correct behavior. Several community-developed shims and resources are available to aid the integration of these agents with the service:
-
-1. [alcf-proxy](https://alcf-proxy.readthedocs.io/en/latest) - [Hongwei Jin](https://www.anl.gov/profile/hongwei-jin)
-2. [DIY w/ llm-rosetta](https://samf.sh/posts/2026/06/27) - [Sam Foreman](https://www.alcf.anl.gov/about/people/sam-foreman)
-
-!!! warning "Responses API Streaming Support"
-    Streaming support is currently **disabled** for the OpenAI Responses API on *non-Direct API endpoints*. This means agents that rely on the Responses API as their default wire protocol will fail to send requests to clusters like Sophia. Either configure your agent to utilize the OpenAI Chat Completions API or switch clusters for compatibility.
-
-!!! warning "Metis Tool Calling"
-    There is a known issue related to SambaNova's sanitization of tool calls, leading to strange error responses like this when processing requests.
-    ```json
-    {\"error\":\"Model started a function call but did not complete it.\",\"error_code\":null,\"error_model_output\":\"\\u003c|channel|\\u003eanalysis\\u003c|message|\\u003eWe needto adjust imports and usage in main.rs.\\n\\nSearch for clear_lines usage. Already seen at line 327. Need to modify that block.\\n\\nOpen around lines 320-340.\\u003c|end|\\u003e\\u003c|start|\\u003eassistant\\u003c|channel|\\u003ecommentary to=functions.read\\u003c|message|\\u003e{\\\"filePath\\\":\\\"/Users/ewong/Documents/alcf/inference-service/vibecoding/rust_vibecoding/src/main.rs\\\",\\\"offset\\\":320,\\\"limit\\\":80}\",\"error_param\":null,\"error_type\":\"Invalid function calling output.\"}
-    ```
-
 ### API Access
 
 For programmatic access, you can use the API endpoints directly.
@@ -483,6 +347,142 @@ Three clusters are currently active, with additional systems coming soon:
         ```
 
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).
+
+## Coding Agents
+
+If your coding agent supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
+
+### OpenCode (recommended)
+
+[OpenCode](https://opencode.ai/) is an open-source coding agent that is well-supported by the ALCF Inference Service.
+
+#### Installation
+
+Run their installation script:
+
+```sh
+curl -fsSL https://opencode.ai/install | bash
+source ~/.bashrc
+```
+
+Alternatively, you can also install via your system package manager (i.e. `brew`, `apt`, etc.).
+
+#### Automatic Configuration w/ alcf-ai
+
+You can quick-configure `opencode` to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
+uvx alcf-ai agent configure opencode
+
+opencode
+```
+
+!!! tip "Refreshing API Keys"
+    `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
+
+#### Manual Configuration
+
+After installing `opencode`, place the following in your `~/.config/opencode/opencode.jsonc`.
+
+```json
+{
+    ...
+    "provider": {
+        "alcf-inference-service-sophia": {
+            "name": "ALCF Inference Service (Sophia)",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
+                "apiKey": "{env:ALCF_AI_TOKEN}"
+            },
+            "models": {
+                "openai/gpt-oss-120b": {
+                    "name": "openai/gpt-oss-120b",
+                    "timeout": false,
+                    "limit": {
+                        "context": 65536,
+                        "output": 0
+                    }
+                }
+            }
+        }
+    }
+    ...
+}
+```
+
+Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
+
+```sh
+uvx alcf-ai auth login # follow interactive instructions to login
+export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and store
+
+opencode
+```
+
+### Codex
+
+OpenAI's [Codex](https://openai.com/codex) is a popular coding agent popularized during the rise of ChatGPT. Codex also supports external model providers and can be configured to use the ALCF Inference Service.
+
+#### Installation
+
+!!! warning "Codex Version Requirement"
+    Codex removed support for the Chat Completions API in `0.95`. Use `0.94` or lower for the ALCF Inference Service endpoints to be fully supported.
+
+Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
+
+If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+
+#### Automatic Configuration w/ alcf-ai
+
+`alcf-ai` also supports configuring Codex:
+
+```sh
+uvx alcf-ai agent configure codex
+
+codex
+```
+
+#### Manual Configuration
+
+In your `~/.codex/config.toml`, add these configuration values.
+
+```toml
+model = "<your model here>"
+model_provider = "inference-service"
+
+[model_providers.inference-service]
+name = "ALCF Inference Service"
+base_url = "<your endpoint url here>"
+env_key = "ALCF_AI_TOKEN"
+wire_api = "chat" # required to use Chat Completions API
+```
+
+You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
+
+!!! note "Suggested Models"
+    `openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+
+### Other 3rd-Party Agents
+
+Other OpenAI-compatible agents can also be configured to use the service, albeit with varying degrees of support. After familiarizing yourself with your agent's configuration format, see [Available Clusters](#available-clusters) for integration choices. The model can be specified by its fully qualfied name (see [Available Models](#available-models)).
+
+#### Shims/Proxies
+
+Some AI agents need to have their inference requests translated and sanitized prior to calling the ALCF Inference Service endpoints for correct behavior. Several community-developed shims and resources are available to aid the integration of these agents with the service:
+
+1. [alcf-proxy](https://alcf-proxy.readthedocs.io/en/latest) - [Hongwei Jin](https://www.anl.gov/profile/hongwei-jin)
+2. [DIY w/ llm-rosetta](https://samf.sh/posts/2026/06/27) - [Sam Foreman](https://www.alcf.anl.gov/about/people/sam-foreman)
+
+!!! warning "Responses API Streaming Support"
+    Streaming support is currently **disabled** for the OpenAI Responses API on *non-Direct API endpoints*. This means agents that rely on the Responses API as their default wire protocol will fail to send requests to clusters like Sophia. Either configure your agent to utilize the OpenAI Chat Completions API or switch clusters for compatibility.
+
+!!! warning "Metis Tool Calling"
+    There is a known issue related to SambaNova's sanitization of tool calls, leading to strange error responses like this when processing requests.
+    ```json
+    {\"error\":\"Model started a function call but did not complete it.\",\"error_code\":null,\"error_model_output\":\"\\u003c|channel|\\u003eanalysis\\u003c|message|\\u003eWe needto adjust imports and usage in main.rs.\\n\\nSearch for clear_lines usage. Already seen at line 327. Need to modify that block.\\n\\nOpen around lines 320-340.\\u003c|end|\\u003e\\u003c|start|\\u003eassistant\\u003c|channel|\\u003ecommentary to=functions.read\\u003c|message|\\u003e{\\\"filePath\\\":\\\"/Users/ewong/Documents/alcf/inference-service/vibecoding/rust_vibecoding/src/main.rs\\\",\\\"offset\\\":320,\\\"limit\\\":80}\",\"error_param\":null,\"error_type\":\"Invalid function calling output.\"}
+    ```
 
 ## Available Models
 
