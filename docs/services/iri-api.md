@@ -352,6 +352,9 @@ This section provides simple examples on how to interface with the API as a star
 
 ### 3. Filesystem
 
+!!! info "Restricted Access (temporary)"
+    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
+
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
 
