@@ -352,8 +352,8 @@ This section provides simple examples on how to interface with the API as a star
 
 ### 3. Filesystem
 
-!!! info "Account on Sophia Needed (temporary)"
-    Our current architecture requires users to have an active account on the HPC cluster Sophia to be able to submit filesystem tasks. We are working towards removing this dependency.
+!!! info "Restricted Access (temporary)"
+    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
 
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
