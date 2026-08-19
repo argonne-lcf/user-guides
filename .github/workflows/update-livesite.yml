@@ -5,6 +5,11 @@ on:
       - main
   workflow_dispatch:  # Allow manual triggering
 
+permissions:
+  contents: write
+
+concurrency: update-livesite
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,4 +21,14 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force --strict
+      - run: mkdocs build --strict
+      # mkdocs gh-deploy used to add .nojekyll on gh-pages; mkdocs build
+      # does not emit it, so recreate it to keep Jekyll disabled.
+      - run: touch site/.nojekyll
+      - name: Deploy to gh-pages, preserving PR previews
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: site
+          branch: gh-pages
+          clean-exclude: pr-preview/
+          single-commit: true

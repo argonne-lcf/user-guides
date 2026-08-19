@@ -2,17 +2,15 @@
 <!-- Describe your changes in detail -->
 
 ## Screenshots (if applicable)
+<!-- A live preview of your changes is built automatically for every push: a bot
+     posts a single comment on this PR with the preview link
+     (https://docs.alcf.anl.gov/pr-preview/pr-<N>/) and keeps it up to date.
+     Screenshots are only needed when a side-by-side "before" comparison helps
+     reviewers, since the preview cannot show the old state. -->
 <details>
 <summary>Before</summary>
 
-<!-- Add your "before" screenshots here via paste and ![]() image link/include syntax -->
-
-</details>
-
-<details>
-<summary>After</summary>
-
-<!-- Add your "after" screenshots here -->
+<!-- Optional: add "before" screenshots here via paste and ![]() image link/include syntax -->
 
 </details>
 
