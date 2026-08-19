@@ -899,6 +899,12 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 
 To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify).
 
+## Acknowledgement
+
+If you use the ALCF Inference Service for your publications, please add the following in your acknowledgement:
+
+- This research used resources of the Argonne Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility operated under contract DE-AC02-06CH11357.
+
 ## Contact Us
 
 For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint).
