@@ -901,9 +901,7 @@ To receive notifications regarding new model support, maintenances, and policy u
 
 ## Acknowledgement
 
-If you use the ALCF Inference Service for your publications, please add the following in your acknowledgement:
-
-- This research used resources of the Argonne Leadership Computing Facility, which is a U.S. Department of Energy Office of Science User Facility operated under contract DE-AC02-06CH11357.
+If you use the Inference Service for your publications, please add the Non-INCITE, Non-ALCC ALCF Acknowledgement from the [ALCF Policies](https://docs.alcf.anl.gov/policies/alcf-acknowledgement-policy).
 
 ## Contact Us
 
