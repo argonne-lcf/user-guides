@@ -660,7 +660,8 @@ daos container get-prop DAOS_POOL DAOS_CONT                   # provides the det
 daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
-groups                                                        # to check if the users are in the same group name 
+groups                                                        # to check if the users are in the same group name
+chmod 0775 /tmp/${DAOS_POOL}/${DAOS_CONT}   # give adequate linux permission to base directory
 chmod -R 775 /tmp/${DAOS_POOL}/${DAOS_CONT}/shared-dir            # provide the right chmod settings on the directory where they can read or write
 kaushikvelusamy@x4405c0s0b0n0:> daos container get-prop d9cbdfc4-628b-4ec1-ad01-0b506e4fb3c0 ba1d5b48-4a88-4052-b764-729328a0dac3 # POOLUUID CONTUUID
 Properties for container ba1d5b48-4a88-4052-b764-729328a0dac3
