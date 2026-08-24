@@ -65,11 +65,11 @@ And then execute one of these example Python scripts (paste your project name in
 
 These scripts create a Globus Compute `Executor`.  The `Executor` requires the `endpoint_id` and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
 
-The first time this script is executed, a request to authenticate with the globus service will appear a the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code.  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should now be complete.
+The first time this script is executed, a request to authenticate with the Globus service will appear a the command line.  Copy the URL given at the command line and paste it into an internet browser.  The URL will take you to the Globus website where you will be asked to authenticate your credentials.  Select "Argonne LCF" from the organizations menu and you will be taken to an ALCF page where you will be asked for your ALCF username and MobilePass+ code.  Once you successfully provide your MobilePass+ code, you will be taken back to the Globus page where you will be given a token of letters and numbers to copy.  Copy this token and paste it in your original command line prompt.  Authentication should now be complete.
 
 ### Configuration Options
 
-The following configuration options are available on the MEPs.  When users create globus compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
+The following configuration options are available on the MEPs.  When users create Globus compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
 
 === "Polaris"
 
@@ -80,6 +80,9 @@ The following configuration options are available on the MEPs.  When users creat
     | `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
     | `nodes_per_block` | 1 | number of nodes per PBS job |
     | `max_workers_per_node` | 100 | concurrent function executions per node |
+    | `cores_per_worker` | 1 | cores per worker |
+    | `available_accelerators` | not set | gpus threads per node |
+    | `cpu_affinity` | `"alternating"` | binding strategy of cpu cores to workers |
     | `max_idletime` | 240 | seconds before an idle PBS job shuts down |
     | `init_blocks` | 0 | initial number of PBS jobs queued at the start of the workload |
     | `min_blocks` |  0 | minimum number of PBS jobs queued/running during the workload  |
@@ -88,6 +91,14 @@ The following configuration options are available on the MEPs.  When users creat
     | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs |
     | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
     | `select_options` | `"system=polaris"` | PBS select line options |
+    | `allowed_functions` | not set (all work will be accepted) | list of UUIDs of registered functions that are allowed to run |
+    | `max_retries_on_system_failure` | 0 | number of times a failed function call will be retried |
+    | `drain_period` | not set | number of seconds after start of PBS job when workers will begin to drain and then exit |
+    | `container_type` | not set | container type, e.g. `"apptainer"` |
+    | `container_uri` | not set | container URI or file path to `sif` file |
+    | `container_cmd_options` | not set | custom commands to pass to the container launch command |
+
+
 
 === "Crux"
 
@@ -109,12 +120,13 @@ The following configuration options are available on the MEPs.  When users creat
 
 ### Setting your own environment with `worker_init`
 
-The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user the configuration option `worker_init`.  The default setting for `worker_init` is:
+The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user the configuration option `worker_init`.  The default environment is appended the user supplied `worker_init` string in the following way:
+```python
+f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
-"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
-```
-If you wish to replace the default `worker_init` for your own `worker_init`, you must either activate a python environment with `globus-compute-endpoint` installed or append the default `work_init` commands to your custom `worker_init` commands.
+The setting of `TMPDIR` is to fix a known issue with Parsl running single node jobs with the `MpiExecLauncher` on ALCF systems.
 
+If your `worker_init` activates a python environment (e.g. with conda, venv, uv), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your evironment to avoid environment conflicts. 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
 ```
 pip install globus-compute-endpoint parsl==2026.02.23
@@ -122,9 +134,7 @@ pip install globus-compute-endpoint parsl==2026.02.23
 The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
 
 !!! warning
-    If you replace `worker_init` with your own commands, the environment it creates must include `globus_compute_endpoint`.  The `globus-compute-endpoint` application is required by compute jobs submited by globus compute ednpoints.  If your `worker_init` doesn't activate an environment with `globus-compute-endpoint` installed or include a path to an installation of `globus-compute-endpoint` in `PATH`, your PBS compute jobs will fail.  Moroever, if this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions.
-
-The setting of `TMPDIR` is to fix a known issue with Parsl running single node jobs with the `MpiExecLauncher` on ALCF systems.  It should be included if you expect running jobs that match this use case.
+    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions. 
 
 ## Single User Endpoints
 
@@ -339,6 +349,26 @@ with Executor(endpoint_id=endpoint_id,
     for f in as_completed(futures):
         print(f.result())
 ```
+
+### Using GPUs
+
+Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in a Polaris job, use the configuration option `available_accelerators` that should be set to the number of GPUs threads per node.  
+
+```python
+endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris endpoint
+account = "<your project name>"
+num_nodes = 2
+user_endpoint_config = {"account": account, 
+                        "queue": "debug",
+                        "launcher_type": "MpiExecLauncher",
+                        "scheduler_options": "#PBS -l filesystems=home\n#PBS -l place=scatter",
+                        "max_workers_per_node": 4,
+                        "available_accelerators": 4,
+                        "cpu_affinity:": "list:24-31,56-63:16-23,48-55:8-15,40-47:0-7,32-39",
+                        "nodes_per_block": num_nodes,
+                        }
+```
+This `user_endpoing_config` process 4 functions concurrently per node, pinning them to unique GPUs with the optimal CPU to GPU binding on Polaris nodes.
 
 ## Troubleshooting
 
