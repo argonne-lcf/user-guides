@@ -123,10 +123,10 @@ Three clusters are currently active, with additional systems coming soon:
 
 | Cluster | Status | Framework | Base URL | Supported Endpoints |
 |---------|--------|-----------|----------|---------------------|
-| **[Sophia](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings`<br>`/batches` |
+| **[NVIDIA A100 (Sophia)](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings`<br>`/batches` |
 | **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | SambaNova API | `/resource_server/metis/api/v1` | `/chat/completions` |
 | **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | API | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions` |
-| Cerebras CS-3 | Coming Soon | - | - | - |
+
 
 !!! tip "Discovering Available Models"
     You can programmatically query all available models and endpoints:
@@ -348,6 +348,153 @@ Three clusters are currently active, with additional systems coming soon:
 
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).
 
+## Agents
+
+If your agent harness supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
+
+### Installation
+
+Most agents have an installation script that you can run with one command to install in `~/.local/bin`.
+
+| Agent | Install Command |
+| --- | --- |
+| **[OpenCode](https://opencode.ai/) (recommended)** | `curl -fsSL https://opencode.ai/install | bash` |
+| **[Pi](https://pi.dev/) (recommended)** | `curl -fsSL https://pi.dev/install.sh | sh` |
+
+Most scripts will require you to reload your environment with `source ~/.bashrc` before the agent will be in your `PATH`.
+
+Alternatively, you can also install via your system package manager (i.e. `brew`, `apt`, etc.).
+
+#### Codex
+!!! warning "Codex Version Requirement"
+    Codex removed support for the Chat Completions API in `0.95`. Use `0.94` or lower for the ALCF Inference Service endpoints to be fully supported.
+
+Install [Codex `0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0).
+
+If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+
+### Automatic Configuration w/ alcf-ai
+
+You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
+uvx alcf-ai agent configure <agent>
+```
+
+Supported `agent`s include:
+
+- `opencode`
+- `pi`
+- `codex`
+
+!!! tip "Refreshing API Keys"
+    `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
+
+### Manual Configuration
+
+#### OpenCode
+After installing `opencode`, place the following in your `~/.config/opencode/opencode.jsonc`.
+
+```json
+{
+    ...
+    "provider": {
+        "alcf-inference-service-sophia": {
+            "name": "ALCF Inference Service (Sophia)",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
+                "apiKey": "{env:ALCF_AI_TOKEN}"
+            },
+            "models": {
+                "openai/gpt-oss-120b": {
+                    "name": "openai/gpt-oss-120b",
+                    "timeout": false,
+                    "limit": {
+                        "context": 65536,
+                        "output": 0
+                    }
+                }
+            }
+        }
+    }
+    ...
+}
+```
+
+Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
+
+```sh
+uvx alcf-ai auth login # follow interactive instructions to login
+export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and store
+
+opencode
+```
+
+#### Pi
+
+Add the following provider to your `~/.pi/agent/models.json`.
+
+```json
+{
+    ...
+    "providers": {
+        "alcf-minerva": {
+            "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+                "api": "openai-completions",
+                "apiKey": "!uvx alcf-ai auth get-access-token",
+                "compat": {
+                    "supportsDeveloperRole": false,
+                    "supportsReasoningEffort": false
+                },
+                "models": [{ "id": "inkling-bf16" }, {"id": "nemotron-3-ultra"}]
+        }
+    }
+    ...
+}
+```
+
+#### Codex
+
+In your `~/.codex/config.toml`, add these configuration values.
+
+```toml
+model = "<your model here>"
+model_provider = "inference-service"
+
+[model_providers.inference-service]
+name = "ALCF Inference Service"
+base_url = "<your endpoint url here>"
+env_key = "ALCF_AI_TOKEN"
+wire_api = "chat" # required to use Chat Completions API
+```
+
+You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
+
+!!! note "Suggested Models"
+    `openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+
+#### Other 3rd-Party Agents
+
+Other OpenAI-compatible agents can also be configured to use the service, albeit with varying degrees of support. After familiarizing yourself with your agent's configuration format, see [Available Clusters](#available-clusters) for integration choices. The model can be specified by its fully qualfied name (see [Available Models](#available-models)).
+
+##### Shims/Proxies
+
+Some AI agents need to have their inference requests translated and sanitized prior to calling the ALCF Inference Service endpoints for correct behavior. Several community-developed shims and resources are available to aid the integration of these agents with the service:
+
+1. [alcf-proxy](https://alcf-proxy.readthedocs.io/en/latest) - [Hongwei Jin](https://www.anl.gov/profile/hongwei-jin)
+2. [DIY w/ llm-rosetta](https://samf.sh/posts/2026/06/27) - [Sam Foreman](https://www.alcf.anl.gov/about/people/sam-foreman)
+
+!!! warning "Responses API Streaming Support"
+    Streaming support is currently **disabled** for the OpenAI Responses API on *non-Direct API endpoints*. This means agents that rely on the Responses API as their default wire protocol will fail to send requests to clusters like Sophia. Either configure your agent to utilize the OpenAI Chat Completions API or switch clusters for compatibility.
+
+!!! warning "Metis Tool Calling"
+    There is a known issue related to SambaNova's sanitization of tool calls, leading to strange error responses like this when processing requests.
+    ```json
+    {\"error\":\"Model started a function call but did not complete it.\",\"error_code\":null,\"error_model_output\":\"\\u003c|channel|\\u003eanalysis\\u003c|message|\\u003eWe needto adjust imports and usage in main.rs.\\n\\nSearch for clear_lines usage. Already seen at line 327. Need to modify that block.\\n\\nOpen around lines 320-340.\\u003c|end|\\u003e\\u003c|start|\\u003eassistant\\u003c|channel|\\u003ecommentary to=functions.read\\u003c|message|\\u003e{\\\"filePath\\\":\\\"/Users/ewong/Documents/alcf/inference-service/vibecoding/rust_vibecoding/src/main.rs\\\",\\\"offset\\\":320,\\\"limit\\\":80}\",\"error_param\":null,\"error_type\":\"Invalid function calling output.\"}
+    ```
+
 ## Available Models
 
 Models are organized by cluster and marked with the following capabilities:
@@ -464,6 +611,7 @@ Models are organized by cluster and marked with the following capabilities:
 ??? "Chat Language Models"
 
     - nemotron-3-ultra^H^
+    - inkling-bf16^H^
 
 ### Model Serving Configuration
 
@@ -713,7 +861,9 @@ For large-scale inference, the batch processing service allows you to submit a f
         response = requests.get(url, headers=headers)
         print(response.json())
         ```
+
     **Batch Status Codes:**
+
     - **pending**: The request was submitted, but the job has not started yet.
     - **running**: The job is currently running on a compute node.
     - **failed**: An error occurred; the error message will be displayed when querying the result.
@@ -748,6 +898,10 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 ## Notifications
 
 To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify).
+
+## Acknowledgement
+
+If you use the Inference Service for your publications, please add the Non-INCITE, Non-ALCC ALCF Acknowledgement from the [ALCF Policies](https://docs.alcf.anl.gov/policies/alcf-acknowledgement-policy).
 
 ## Contact Us
 

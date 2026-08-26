@@ -66,6 +66,9 @@ You can programatically retrieve your access token either from your terminal or 
 
 This section provides simple examples on how to interface with the API as a starting point. A complete list of input arguments, filters, and capabilities can be found on the [Swagger documentation](https://api.alcf.anl.gov/).
 
+!!! tip "Rendering"
+    If available on your machine, you can add `| jq` at the end of your cURL commands to pretty-print the JSON output.
+
 ### 1. Status
 
 ??? "1.1. Resources"
@@ -261,6 +264,48 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
+    You can filter results by adding a JSON body (e.g., `{"states": ["active"]}`) to the request:
+
+    === "cURL"
+
+        ```bash
+        # Filter by job state (e.g., active, queued, completed)
+        curl -X POST "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}?historical=true&limit=10&offset=0" \
+             -H "Authorization: Bearer ${access_token}" \
+             -H "Content-Type: application/json" \
+             -d '{"states": ["active"]}'
+        ```
+
+    === "Python"
+
+        ```python
+        # Filter by job state
+        response = requests.post(
+            f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}",
+            params={"historical": "true", "limit": 10, "offset": 0},
+            json={"states": ["active"]},
+            headers=headers
+        )
+        ```
+
+    Available filters are: 
+
+    - **states**: List of job states (new, queued, held, active, completed, failed, canceled)
+        - Example: `{"states": ["active", "completed"]}`
+    - **owner**: ALCF username
+        - Example: `{"owner": "<my-alcf-username>"}`
+    - **jobIds**: List of job IDs
+        - Example: `{"jobIds": ["12345", "12346", "12347"]}` 
+    - **queue**: Name of the PBS queue
+        - Example: `{"queue": "debug"}`
+    - **accountingId**: Name of the compute allocation
+        - Example: `{"accountingId": "<my-polaris-allocation>"}`
+
+    !!! info "Combining Filters"
+        More than one filter can be added to the same request body:
+
+        - Example: `{"states": ["active"], "queue": "debug"}`
+
 ??? "2.3. Get a Specific Job"
 
     Returns the status and details of a single job by its ID.
@@ -351,6 +396,9 @@ This section provides simple examples on how to interface with the API as a star
         ```
 
 ### 3. Filesystem
+
+!!! info "Restricted Access (temporary)"
+    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
 
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
