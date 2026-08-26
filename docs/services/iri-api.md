@@ -591,7 +591,139 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.5. Change File Ownership (`chown`)"
+??? "3.5. Read Last Lines of a File (`tail`)"
+
+    Returns the last N `lines` of a file.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/tail/${resource_id}?path=/eagle/<your-project>/file.txt&lines=3" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/tail/{resource_id}",
+            params={
+                "path": "/eagle/<your-project>/file.txt",
+                "lines": 3
+            },
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.6. Get File Checksum (`checksum`)"
+
+    Returns the SHA-256 checksum of a file.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/checksum/${resource_id}?path=/eagle/<your-project>/file.txt" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/checksum/{resource_id}",
+            params={"path": "/eagle/<your-project>/file.txt"},
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.7. Get File Type (`file`)"
+
+    Returns the type of a file or directory.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/file/${resource_id}?path=/eagle/<your-project>/file.txt" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/file/{resource_id}",
+            params={"path": "/eagle/<your-project>/file.txt"},
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.8. Change File Ownership (`chown`)"
 
     Changes the `owner` and/or `group` of a file or directory.
 
@@ -640,7 +772,7 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.6. Change File Permissions (`chmod`)"
+??? "3.9. Change File Permissions (`chmod`)"
 
     Changes the permissions of a file or directory using an octal `mode` string.
 
@@ -688,7 +820,7 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.7. Remove File or Directory (`rm`)"
+??? "3.10. Remove File or Directory (`rm`)"
 
     Delete file or directory given a specific path.
 
