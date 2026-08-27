@@ -8,6 +8,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 | Date | Update |
 | --- | --- |
+| 2026-08-31 | [Available in the next-eval test queue](#2026-08-31-Available-in-the-next-eval-test-queue) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
 | 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-agama-114640-drivers-and-oneapi-202531-feb-mar-2026) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
@@ -15,6 +16,19 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 | 2025-09-08 → 2025-10-13 | **Major update:** [Agama 1146.12 drivers and oneAPI 2025.2.0](#major-update-agama-114612-drivers-and-oneapi-202520-sep-oct-2025) |
 | 2025-06-13 | [Lower memory limit on compute nodes](#2025-06-13-lower-memory-limit-on-compute-nodes-effective-2025-06-23) |
 | 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-agama-109912-drivers-and-oneapi-202505-2025-04-28) |
+
+## 2026-08-31: Available in the next-eval test queue
+We have a temporary test queue next-eval (open to all users) with upto 2,112 nodes that has a new compute image. UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling. 
+The new image includes updates to :
+ - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
+ - HPE's Slingshot Host Software 14.0.1
+ - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
+ - oneAPI 2026.1.0
+ - and many other updates.
+
+**This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
+
+See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
 ## 2026-05-21: OS image and firmware update
 
