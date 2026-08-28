@@ -66,6 +66,9 @@ You can programatically retrieve your access token either from your terminal or 
 
 This section provides simple examples on how to interface with the API as a starting point. A complete list of input arguments, filters, and capabilities can be found on the [Swagger documentation](https://api.alcf.anl.gov/).
 
+!!! tip "Rendering"
+    If available on your machine, you can add `| jq` at the end of your cURL commands to pretty-print the JSON output.
+
 ### 1. Status
 
 ??? "1.1. Resources"
@@ -261,6 +264,48 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
+    You can filter results by adding a JSON body (e.g., `{"states": ["active"]}`) to the request:
+
+    === "cURL"
+
+        ```bash
+        # Filter by job state (e.g., active, queued, completed)
+        curl -X POST "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}?historical=true&limit=10&offset=0" \
+             -H "Authorization: Bearer ${access_token}" \
+             -H "Content-Type: application/json" \
+             -d '{"states": ["active"]}'
+        ```
+
+    === "Python"
+
+        ```python
+        # Filter by job state
+        response = requests.post(
+            f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}",
+            params={"historical": "true", "limit": 10, "offset": 0},
+            json={"states": ["active"]},
+            headers=headers
+        )
+        ```
+
+    Available filters are: 
+
+    - **states**: List of job states (new, queued, held, active, completed, failed, canceled)
+        - Example: `{"states": ["active", "completed"]}`
+    - **owner**: ALCF username
+        - Example: `{"owner": "<my-alcf-username>"}`
+    - **jobIds**: List of job IDs
+        - Example: `{"jobIds": ["12345", "12346", "12347"]}` 
+    - **queue**: Name of the PBS queue
+        - Example: `{"queue": "debug"}`
+    - **accountingId**: Name of the compute allocation
+        - Example: `{"accountingId": "<my-polaris-allocation>"}`
+
+    !!! info "Combining Filters"
+        More than one filter can be added to the same request body:
+
+        - Example: `{"states": ["active"], "queue": "debug"}`
+
 ??? "2.3. Get a Specific Job"
 
     Returns the status and details of a single job by its ID.
@@ -351,6 +396,9 @@ This section provides simple examples on how to interface with the API as a star
         ```
 
 ### 3. Filesystem
+
+!!! info "Restricted Access (temporary)"
+    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
 
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
@@ -543,7 +591,139 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.5. Change File Ownership (`chown`)"
+??? "3.5. Read Last Lines of a File (`tail`)"
+
+    Returns the last N `lines` of a file.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/tail/${resource_id}?path=/eagle/<your-project>/file.txt&lines=3" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/tail/{resource_id}",
+            params={
+                "path": "/eagle/<your-project>/file.txt",
+                "lines": 3
+            },
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.6. Get File Checksum (`checksum`)"
+
+    Returns the SHA-256 checksum of a file.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/checksum/${resource_id}?path=/eagle/<your-project>/file.txt" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/checksum/{resource_id}",
+            params={"path": "/eagle/<your-project>/file.txt"},
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.7. Get File Type (`file`)"
+
+    Returns the type of a file or directory.
+
+    === "cURL"
+
+        ```bash
+        #!/bin/bash
+        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+
+        # Eagle
+        resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/file/${resource_id}?path=/eagle/<your-project>/file.txt" \
+             -H "Authorization: Bearer ${access_token}"
+        ```
+
+    === "Python"
+
+        ```python
+        import requests
+        from alcf_facility_api_globus_token import get_access_token
+
+        # Create headers with access token
+        access_token = get_access_token()
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json"
+        }
+
+        # Eagle
+        resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+        response = requests.get(
+            f"https://api.alcf.anl.gov/api/v1/filesystem/file/{resource_id}",
+            params={"path": "/eagle/<your-project>/file.txt"},
+            headers=headers
+        )
+
+        print(response.status_code)
+        print(response.json())
+        ```
+
+??? "3.8. Change File Ownership (`chown`)"
 
     Changes the `owner` and/or `group` of a file or directory.
 
@@ -592,7 +772,7 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.6. Change File Permissions (`chmod`)"
+??? "3.9. Change File Permissions (`chmod`)"
 
     Changes the permissions of a file or directory using an octal `mode` string.
 
@@ -640,7 +820,7 @@ This section provides simple examples on how to interface with the API as a star
         print(response.json())
         ```
 
-??? "3.7. Remove File or Directory (`rm`)"
+??? "3.10. Remove File or Directory (`rm`)"
 
     Delete file or directory given a specific path.
 
