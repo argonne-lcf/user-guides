@@ -136,7 +136,7 @@ pip install globus-compute-endpoint parsl==2026.02.23
 The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
 
 !!! warning
-    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and update your environment or `worker_init` before resubmitting functions. 
+    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the Globus Compute `pid` file](#runaway-job-submission) and update your environment or `worker_init` before resubmitting functions. 
 
 ## Single User Endpoints
 
