@@ -1990,7 +1990,14 @@ pre .normal a {
     transform 125ms;
 }
 
-.md-typeset .alcf-tile-grid ul li > a:hover,
+.md-typeset .alcf-tile-grid ul li > a:hover {
+  border-color: #0061AF;
+  background-color: #E7F6FD;
+  color: #0061AF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
 .md-typeset .alcf-tile-grid ul li > a:focus-visible {
   border-color: var(--md-accent-fg-color);
   background-color: var(--md-accent-fg-color--transparent);
