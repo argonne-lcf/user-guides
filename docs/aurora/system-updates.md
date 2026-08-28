@@ -8,7 +8,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 | Date | Update |
 | --- | --- |
-| 2026-08-31 | [Available in the next-eval test queue](#2026-08-31-available-in-the-next-eval-test-queue) |
+| 2026-08-31 → 2026-09 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#2026-08-31-available-in-the-next-eval-test-queue) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
 | 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-agama-114640-drivers-and-oneapi-202531-feb-mar-2026) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
