@@ -18,7 +18,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 | 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-agama-109912-drivers-and-oneapi-202505-2025-04-28) |
 
 ## 2026-08-31: Available in the next-eval test queue
-We have a temporary test queue next-eval (open to all users) with upto 2,112 nodes that has a new compute image. UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling. 
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. 
 The new image includes updates to :
  - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
  - HPE's Slingshot Host Software 14.0.1
