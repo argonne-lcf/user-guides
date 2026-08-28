@@ -389,7 +389,7 @@ To diagnose why this happened, there are several things to check:
 
 1. Look at the PBS job logs created by the endpoint.  Look in `~/.globus_compute/<endpoint_name>/submit_scripts`.  The `<endpoint_name>` will begin with `uep` if using the MEPs.  It may have another name if using a single user endpoint created by the user.  This directory will contain the PBS submit scripts and the PBS job stdout and stderr files.
 
-2. A common issue you may find in the PBS job stdout files (found in `~/.globus_compute/<endpoint_name>/submit_scripts`) is that the MEP environment running `globus-compute-endpoint` conflicts with the user activated python environment.  If that is the case, install `globus-compute-endpoint` and `parsl` according to [these instructions](#setting-your-own-environment-with-worker_init).
+2. A common issue you may find in the PBS job stdout files (found in `~/.globus_compute/<endpoint_name>/submit_scripts`) is that the MEP environment running `globus-compute-endpoint` conflicts with the user-activated Python environment.  If that is the case, install `globus-compute-endpoint` and `parsl` according to [these instructions](#setting-your-own-environment-with-worker_init).
 
 ### Serialization errors
 
