@@ -154,7 +154,7 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-  - Getting Started: https://www.alcf.anl.gov/managing-your-award
+  - Onboarding Your Award: https://www.alcf.anl.gov/onboarding-your-project
   - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
