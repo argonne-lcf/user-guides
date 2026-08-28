@@ -6,7 +6,7 @@ To log into Crux:
 ```bash
 ssh <username>@crux.alcf.anl.gov
 ```
-Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged in, you land on one of the Crux login nodes (`crux-login-01`, `crux-login-02`).
+Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged in, you land on one of the Crux login nodes (`crux-uan-0001`, `crux-uan-0002`).
 
 ## Hardware Overview
 
