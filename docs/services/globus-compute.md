@@ -126,7 +126,7 @@ The default environment activated by the endpoint includes all necessary depende
 ```python
 f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
-The setting of `TMPDIR` is to fix a known issue with `parsl` running single node jobs with the `MpiExecLauncher` on ALCF systems.
+The setting of `TMPDIR` is to fix a known issue with `parsl` running single-node jobs with the `MpiExecLauncher` on ALCF systems.
 
 If your `worker_init` activates a python environment (e.g. with conda, venv, uv), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your evironment to avoid environment conflicts. 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
