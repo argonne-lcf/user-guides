@@ -122,7 +122,7 @@ The following configuration options are available on the MEPs.  When users creat
 
 ### Setting your own environment with `worker_init`
 
-The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user the configuration option `worker_init`.  The default environment is appended the user supplied `worker_init` string in the following way:
+The default environment activated by the endpoint includes all necessary dependencies to execute simple Python functions.  A custom environment can be set by the user via the configuration option `worker_init`.  The default environment is appended to the user-supplied `worker_init` string as follows:
 ```python
 f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
