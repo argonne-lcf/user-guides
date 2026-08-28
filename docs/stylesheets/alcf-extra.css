@@ -2020,6 +2020,19 @@ pre .normal a {
   fill: currentColor;
 }
 
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.md-typeset .alcf-tile-grid ul li > a .alcf-tile-image {
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  border: 0;
+  object-fit: contain;
+}
+
 /* Hide the external-link glyph Material appends, so tiles stay uniform */
 .md-typeset .alcf-tile-grid ul li > a.external::after,
 .md-typeset .alcf-tile-grid ul li > a[href^="http"]::after {
