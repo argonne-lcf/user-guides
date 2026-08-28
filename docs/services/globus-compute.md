@@ -128,7 +128,7 @@ f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent
 ```
 The setting of `TMPDIR` is to fix a known issue with `parsl` running single-node jobs with the `MpiExecLauncher` on ALCF systems.
 
-If your `worker_init` activates a python environment (e.g. with conda, venv, uv), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your evironment to avoid environment conflicts. 
+If your `worker_init` activates a Python environment (e.g. with Conda, `venv`, `uv`), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your environment to avoid conflicts. 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
 ```bash
 pip install globus-compute-endpoint parsl==2026.02.23
