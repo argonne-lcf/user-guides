@@ -19,7 +19,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 ## 2026-08-31: Available in the next-eval test queue
 We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. 
-The new image includes updates to :
+The new image includes updates to:
  - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
  - HPE's Slingshot Host Software 14.0.1
  - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
