@@ -78,21 +78,21 @@ The following configuration options are available on the MEPs.  When users creat
     | `queue` | required option; no default | queue to submit PBS jobs to |
     | `account` | required option; no default | project account to charge PBS jobs to |
     | `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
-    | `nodes_per_block` | 1 | number of nodes per PBS job |
-    | `max_workers_per_node` | 100 | concurrent function executions per node |
-    | `cores_per_worker` | 1 | cores per worker |
-    | `available_accelerators` | not set | gpus threads per node |
-    | `cpu_affinity` | `"alternating"` | binding strategy of cpu cores to workers |
-    | `max_idletime` | 240 | seconds before an idle PBS job shuts down |
-    | `init_blocks` | 0 | initial number of PBS jobs queued at the start of the workload |
-    | `min_blocks` |  0 | minimum number of PBS jobs queued/running during the workload  |
-    | `max_blocks` | 1 | maximum number of PBS jobs queued/running during the workload |
+    | `nodes_per_block` | `1` | number of nodes per PBS job |
+    | `max_workers_per_node` | `100` | concurrent function executions per node |
+    | `cores_per_worker` | `1` | CPU threads per worker |
+    | `available_accelerators` | not set | GPU threads per node |
+    | `cpu_affinity` | `"alternating"` | binding strategy of CPU threads to workers |
+    | `max_idletime` | `240` | seconds before an idle PBS job shuts down |
+    | `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
+    | `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
+    | `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
     | `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
-    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs |
+    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
     | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
     | `select_options` | `"system=polaris"` | PBS select line options |
     | `allowed_functions` | not set (all work will be accepted) | list of UUIDs of registered functions that are allowed to run |
-    | `max_retries_on_system_failure` | 0 | number of times a failed function call will be retried |
+    | `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
     | `drain_period` | not set | number of seconds after start of PBS job when workers will begin to drain and then exit |
     | `container_type` | not set | container type, e.g. `"apptainer"` |
     | `container_uri` | not set | container URI or file path to `sif` file |
@@ -107,16 +107,18 @@ The following configuration options are available on the MEPs.  When users creat
     | `queue` | required option; no default | queue to submit PBS jobs to |
     | `account` | required option; no default | project account to charge PBS jobs to |
     | `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
-    | `nodes_per_block` | 1 | number of nodes per PBS job |
-    | `max_workers_per_node` | 100 | concurrent function executions per node |
-    | `max_idletime` | 240 | seconds before an idle PBS job shuts down |
-    | `init_blocks` | 0 | initial number of PBS jobs queued at the start of the workload |
-    | `min_blocks` |  0 | minimum number of PBS jobs queued/running during the workload  |
-    | `max_blocks` | 1 | maximum number of PBS jobs queued/running during the workload |
+    | `nodes_per_block` | `1` | number of nodes per PBS job |
+    | `max_workers_per_node` | `100` | concurrent function executions per node |
+    | `cores_per_worker` | `1` | CPU threads per worker |
+    | `max_idletime` | `240` | seconds before an idle PBS job shuts down |
+    | `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
+    | `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
+    | `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
     | `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
-    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs |
+    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
     | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
     | `select_options` | `"system=crux"` | PBS select line options |
+    | `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
 
 ### Setting your own environment with `worker_init`
 
@@ -124,7 +126,7 @@ The default environment activated by the endpoint includes all necessary depende
 ```python
 f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"
 ```
-The setting of `TMPDIR` is to fix a known issue with Parsl running single node jobs with the `MpiExecLauncher` on ALCF systems.
+The setting of `TMPDIR` is to fix a known issue with `parsl` running single node jobs with the `MpiExecLauncher` on ALCF systems.
 
 If your `worker_init` activates a python environment (e.g. with conda, venv, uv), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your evironment to avoid environment conflicts. 
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
@@ -134,7 +136,7 @@ pip install globus-compute-endpoint parsl==2026.02.23
 The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
 
 !!! warning
-    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and revise your `worker_init` before resubmitting functions. 
+    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the globus compute `pid` file](#runaway-job-submission) and update your environment or `worker_init` before resubmitting functions. 
 
 ## Single User Endpoints
 
@@ -352,7 +354,7 @@ with Executor(endpoint_id=endpoint_id,
 
 ### Using GPUs
 
-Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in a Polaris job, use the configuration option `available_accelerators` that should be set to the number of GPUs threads per node.  
+Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in a Polaris job, use the configuration option `available_accelerators`.  To assign 1 GPU per worker, set `available_accelerators` to 4:
 
 ```python
 endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris endpoint
@@ -368,7 +370,7 @@ user_endpoint_config = {"account": account,
                         "nodes_per_block": num_nodes,
                         }
 ```
-This `user_endpoing_config` process 4 functions concurrently per node, pinning them to unique GPUs with the optimal CPU to GPU binding on Polaris nodes.
+This `user_endpoing_config` process 4 functions concurrently per node, pinning each to a unique GPU and includes the optimal CPU to GPU binding on Polaris nodes.
 
 ## Troubleshooting
 
@@ -385,9 +387,9 @@ This will stop all PBS job submissions under your user account, by the multiuser
 
 To diagnose why this happened, there are several things to check:
 
-1. Look at the PBS job logs created by the endpoint.  Look in `~/.globus_compute/<endpoint_name>/submit_scripts`.  The `<endpoint_name>` will begin with `uep` if using the MEPs.  It may have another name if using a single user endpoint.  This directory will contain the PBS submit scripts and the PBS job stdout and stderr files.
+1. Look at the PBS job logs created by the endpoint.  Look in `~/.globus_compute/<endpoint_name>/submit_scripts`.  The `<endpoint_name>` will begin with `uep` if using the MEPs.  It may have another name if using a single user endpoint created by the user.  This directory will contain the PBS submit scripts and the PBS job stdout and stderr files.
 
-2. A common issue you may find in the PBS job stdout files (found in `~/.globus_compute/<endpoint_name>/submit_scripts`) is that `globus-compute-endpoint` cannot be found.  If that is the case, check the environment commands you have activated in `worker_init`.  Make sure `globus-compute-endpoint` is in the PATH.
+2. A common issue you may find in the PBS job stdout files (found in `~/.globus_compute/<endpoint_name>/submit_scripts`) is that the MEP environment running `globus-compute-endpoint` conflicts with the user activated python environment.  If that is the case, install `globus-compute-endpoint` and `parsl` according to [these instructions](#setting-your-own-environment-with-worker_init).
 
 ### Serialization errors
 
