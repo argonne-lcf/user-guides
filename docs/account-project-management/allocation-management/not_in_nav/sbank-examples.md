@@ -204,6 +204,7 @@ Totals:
 List of transactions that were at or after 2016-02-29 for ProjectX add fields: job_duration, nodes_used, and hosts
 
 **Note**: 
+
 - job_duration, nodes_used, and hosts are shortened, but they are still uniquely identified
 - host has the left justified width of 20, specified as "h:-20"
 

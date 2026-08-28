@@ -79,12 +79,14 @@ extra_javascript:
 markdown_extensions:
   - footnotes
   - admonition
-  - codehilite
   - tables
   - attr_list
   - md_in_html
   - abbr
   - pymdownx.critic
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.caret
@@ -152,7 +154,7 @@ plugins:
 nav:
   # - ALCF User Guides:
   #   - index.md
-  - Getting Started: https://www.alcf.anl.gov/managing-your-award
+  - Onboarding Your Award: https://www.alcf.anl.gov/onboarding-your-project
   - Contribute to User Guides: support/docs-issues.md
 
   - User Support:
@@ -251,14 +253,12 @@ nav:
           - APS: aurora/performance-tools/aps.md
           - Advisor: aurora/performance-tools/advisor.md
           - VTune: aurora/performance-tools/vtune.md
-        - Services:
-          - GitLab CI: aurora/services/gitlab-ci.md
+#        - Services:
         - Visualization:
           - aurora/visualization/index.md
           - ParaView (Launch from Client): aurora/visualization/paraview.md
           - ParaView (Manual Launch): aurora/visualization/paraview-manual-launch.md
           - VisIt: aurora/visualization/visit.md
-
         - Workflows:
           - ADIOS2: aurora/workflows/adios.md
           - Balsam: aurora/workflows/balsam.md
@@ -431,8 +431,8 @@ nav:
     - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
-      - General: services/continuous-integration.md
-      - GitLab CI: services/gitlab-ci.md
+      - services/ci/index.md
+      - GitLab CI: services/ci/gitlab-ci.md
     - Globus Compute: services/globus-compute.md
 
   - Account & Project Management:
@@ -486,10 +486,6 @@ exclude_docs: |
   todo.md
   TODO.md
   notes.md
-  sophia/not_in_nav/
-
-# (old ThetaGPU docs, probably better to rename folder+exclude from livesite; or port old
-# content to Sophia and remove the rest entirely)
 
 # Pages still built during "mkdocs serve" for local testing, but not during "mkdocs build"
 # appears to suppress not_in_nav WARNINGs for these pages, too

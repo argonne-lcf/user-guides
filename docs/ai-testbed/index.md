@@ -1,8 +1,9 @@
 # ALCF AI Testbed
 
-<figure markdown>
-  ![Cerebras and SambaNova detail photos](files/home-cerebras-sambanova.png){ width="700" }
-</figure>
+![Cerebras and SambaNova detail photos](files/home-cerebras-sambanova.png){ width="700" }
+/// caption
+Cerebras and SambaNova systems installed in the ALCF AI Testbed
+///
 
 The [ALCF AI Testbed](https://www.alcf.anl.gov/alcf-ai-testbed) houses some of the most advanced AI accelerators for scientific research. 
 
@@ -10,10 +11,10 @@ The goal of the testbed is to enable explorations into next-generation machine l
 
 The AI accelerators complement the ALCF's current and next-generation supercomputers to provide a state-of-the-art computing environment that supports pioneering research at the intersection of AI, big data, and high performance computing (HPC). 
 
-The platforms are equipped with architectural features that support AI and data-centric workloads, making them well suited for research tasks involving the growing deluge of scientific data produced by powerful tools, such as supercomputers, light sources, telescopes, particle accelerators, and sensors. In addition, the testbed will allow researchers to explore novel workflows that combine AI methods with simulation and experimental science to accelerate the pace of discovery.
+The platforms are equipped with architectural features that support AI and data-centric workloads, making them well suited for research tasks involving the growing deluge of scientific data produced by powerful tools, such as supercomputers, light sources, telescopes, particle accelerators, and sensors. In addition, the testbed will allow researchers to explore novel workflows that combine AI methods with simulation and experimental science to accelerate the pace of discovery. The current deployment includes `Cerebras CS-3 (AI training and low-level SDK programming)`, `SambaNova SN40L (Metis cluster: for AI inference)`, `Graphcore BowPod64 (AI training)`, and `GroqRack (AI Inference)`. 
 
 ## How to Get Access
-Researchers interested in using the AI Testbed's `Cerebras CS-3`, `Graphcore Bow Pod64` and `GroqRack` platforms can now submit project proposals via the [ALCF's Director's Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). Access to additional testbed resources will be announced as systems become available for use.
+Researchers interested in using the AI Testbed's `Cerebras CS-3`, `Graphcore Bow Pod64` and `GroqRack` platforms can now submit project proposals via the [ALCF's Director's Discretionary program](https://www.alcf.anl.gov/science/directors-discretionary-allocation-program). `SambaNova SN40L` (Metis) can be accessed via [ALCF Inference Service](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/using_an_inference_endpoint/). Access to additional testbed resources will be announced as systems become available for use.
 
 Submit your proposal requests at: [Allocation Request Page](https://my.alcf.anl.gov/accounts/#/allocationRequests){:target="_blank"}
 

@@ -38,6 +38,7 @@ Detailed Apptainer documentation is available [here](https://apptainer.org/docs/
 ## Building Containers from Docker or Argonne GitHub Container Registry
 
 Containers can be built by:
+
 - Creating Dockerfiles locally and publishing to DockerHub, then converting to Apptainer.
 - Building directly on ALCF nodes using Apptainer recipe files.
 

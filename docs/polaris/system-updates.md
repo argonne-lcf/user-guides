@@ -1,6 +1,16 @@
 # Polaris System Updates
 
-## 2026-01-07
+## 2026-08-19; HPCM, PE, NVIDIA driver updates
+Polaris and Eagle to be upgraded between Aug 17 - Aug 19, 2026.
+
+- Upgrade to SLES 15 SP7
+- Upgrade to HPE PE 26.03
+- Upgrade to NVIDIA driver/cuda
+  - NVIDIA driver Driver Version: 580.65.06 CUDA Version: 13.0
+  - NVIDIAN hpc_sdk 25.9 CUDA Version: 13.0
+- Upgrade to Slingshot Host stack to 14.0.1
+
+## 2026-01-07: NVIDIA driver, SHS 13.0.0, and DKMS migration
 
 Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
 
@@ -13,26 +23,27 @@ Polaris and Eagle were upgraded between Jan 5 - Jan 7, 2026.
 - Change to how add-in kernel modules are handled. Migrated from kmod/static kernel modules to Dynamic Kernel Module Support (DKMS), impacting:
   - Lustre
   - NVIDIA (Driver, gdrcopy)
-  - SHS (kfabric, kdrge2, cxi driver, sl-driver)
+  - SHS (kfabric, kdreg2, cxi driver, sl-driver)
 
 Eagle:
 
-- Network Element Operating system (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
+- Network Element Operating System (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
 !!! danger "cgroups PID limit on login nodes"
 
-	The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
-	
-	Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
-	
-	A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`. 
-	The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`. 	
+    The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
 
-## 2025-10-24
+    Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
 
-`conda/2025-09-25` is now the default module loaded by "module load conda" on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
+    A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
+    The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
 
-## 2025-10-10
+## 2025-10-24: `conda/2025-09-25` becomes the default module
+
+`conda/2025-09-25` is now the default module loaded by `module load conda` on Polaris. The previous default, `conda/2024-04-29`, remains available for now. The old module may be removed entirely in the future (advanced notice will be given).
+
+## 2025-10-10: New `conda/2025-09-25` module available
+
 Following the system HPCM upgrade in August, the new `conda/2025-09-25` module is now available to users on Polaris; it is recommended that all users of the previous `conda/2024-04-29` module switch as soon as possible. While the old module remains the default if `module load conda` is used, the default will change in two weeks. The old module may be removed entirely in the future (advanced notice will be given).
 
 The new module restores functionality broken by the system upgrade and updates the following major libraries and package versions:
@@ -55,14 +66,14 @@ Some highlights of changes relative to previous versions of this module:
 
 !!! note
 
-	The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
+    The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
 
-## 2025-08-29
+## 2025-08-29: HPCM upgrade to SUSE 15 SP6
 
 Polaris HPCM upgrade involves the following key version software changes:
 
 - SUSE 15 SP6 (a major kernel change)
-- Slingshot host stack 12.0.0, with improvements to handling NVIDIA/NCCL/etc and updates to libfabric
+- Slingshot Host Software (SHS) 12.0.0, with improvements to handling NVIDIA/NCCL/etc and updates to libfabric
 - Update NVIDIA driver version (565.57.01) (CUDA driver API 12.7)
 - Default base nvidia-hpc_sdk is now at 24.11 (CUDA toolkit 12.6)
 - Updated Cray Programming Environment (PE) release 25.03, includes support for older releases of 23.12, 24.03, 24.07, 24.11
@@ -70,19 +81,30 @@ Polaris HPCM upgrade involves the following key version software changes:
 - USS 1.3.1 / PALS updates to 1.6.1
 - PBS update to 2025.2.0
 
-***IMPORTANT NOTE: The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.***
+!!! warning "Recompile recommended"
 
-## 2024-09-09
+    The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.
+
+## 2024-09-09: XALT enabled
 
 ### XALT
 The XALT library tracking software has been enabled for all Polaris users. More information can be found on the [XALT](./applications-and-libraries/libraries/xalt.md) page.
 
-## 2024-04-22
+## 2024-04-22: HPCM 1.10 upgrade
 
 The management software on Polaris has been upgraded to HPCM 1.10. The following version changes are in place with the upgrade to HPCM 1.10:
 
 - HPE Cray Programming Environment (CPE) 23.12
-- Slingshot version 2.1.2
+- Slingshot Fabric Manager 2.1.2
+    <!-- "Fabric Manager" is inferred, not stated in the original notes, which read only
+         "Slingshot version 2.1.2". Reasoning: a 2.x number cannot be Slingshot Host
+         Software, which runs 11.x-14.x on our systems; HPE ships the fabric side and the
+         host side as separately versioned products. The 2.x train is the fabric one, and
+         the Aurora page logs "Slingshot Fabric Manager update to 2.3.1" for 2025-10-27,
+         which is consistent with 2.1.2 here in April 2024. Exact version unverified
+         against HPE release notes (support-portal gated) -- confirm against the April
+         2024 upgrade records if the distinction ever matters. -->
+
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
@@ -109,7 +131,7 @@ In addition to the system upgrades, several changes have been made to the user s
 
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the upgraded system stack and are no longer available for use.
 
-### Datascience Anaconda Module Updates
+#### Datascience Anaconda Module Updates
 
 We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
 
@@ -161,9 +183,9 @@ The following modules have been removed:
    gsl/2.7                                                           xalt/3.0.1-202308261842                                                  (D)
 ```
 
-#### Modules Newly Installed
+#### Modules Added
 
-The following modules have been newly installed:
+The following modules have been added:
 
 ```output
    cabana/dev-9a1ad605/kokv/4.2.01/PrgEnv-gnu/8.5.0/gnu/12.3/cuda_cudatoolkit_12.2.91
@@ -216,5 +238,3 @@ These errors are likely due to exhausting the per-user resources on a login node
 
 - Reduce the parallelism of your compile, such as using `-j` or `-j4` flags
 - Request a debug node and run your compile there where you will have the full resources of the node at your disposal
-
----
