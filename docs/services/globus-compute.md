@@ -370,7 +370,7 @@ user_endpoint_config = {"account": account,
                         "nodes_per_block": num_nodes,
                         }
 ```
-This `user_endpoing_config` process 4 functions concurrently per node, pinning each to a unique GPU and includes the optimal CPU to GPU binding on Polaris nodes.
+This `user_endpoing_config` process 4 functions concurrently per node, pinning each to a unique GPU and includes the optimal CPU-to-GPU binding on Polaris nodes.
 
 ## Troubleshooting
 
