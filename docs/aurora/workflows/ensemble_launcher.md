@@ -40,8 +40,7 @@ The list of compute nodes is read automatically from `$PBS_NODEFILE`, so you do 
 
 Describe the ensemble as a JSON file. The `cmd_template` is expanded once per parameter set:
 
-**sweep.json:**
-```json linenums="1"
+```json linenums="1" title="sweep.json"
 {
     "ensembles": {
         "forces_sweep": {
@@ -58,8 +57,7 @@ Describe the ensemble as a JSON file. The `cmd_template` is expanded once per pa
 
 This creates 24 tasks, each using one node with 12 MPI ranks and one GPU per rank. Use `"relation": "many-to-many"` for a Cartesian product over multiple parameters instead of element-wise pairing.
 
-**run_sweep.py:**
-```python linenums="1"
+```python linenums="1" title="run_sweep.py"
 from ensemble_launcher import EnsembleLauncher, write_results_to_json
 from ensemble_launcher.config import LauncherConfig, get_system_config
 
@@ -76,8 +74,7 @@ if __name__ == "__main__":
     write_results_to_json(results, "results.json")
 ```
 
-**submit.sh:**
-```bash linenums="1"
+```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
 #PBS -A <myproject>
 #PBS -l select=2
@@ -186,8 +183,7 @@ el start sweep.json \
 
 For cluster mode, set `"cluster": true` in the launcher config:
 
-**launcher_cluster.json:**
-```json linenums="1"
+```json linenums="1" title="launcher_cluster.json"
 {
     "task_executor_name": "async_mpi",
     "cluster": true,
