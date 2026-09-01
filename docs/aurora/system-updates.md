@@ -25,15 +25,15 @@ We have created a temporary test queue `next-eval` (open to all users) with up t
 See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
 The new image includes updates to:
- - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
- - HPE's Slingshot Host Software 14.0.1
- - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
- - libfabric 2.3.1
-   - Default log levels increased as below. If log output is too high with lines starting with `libfabric` unset FI_LOG_LEVEL.
-     `FI_LOG_LEVEL=warn`
-     `FI_LOG_PROV=cxi`
+- SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
+- HPE's Slingshot Host Software 14.0.1
+- Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
+- libfabric 2.3.1
+- Default log levels increased as below. If log output is too high with lines starting with `libfabric` unset FI_LOG_LEVEL.
+&emsp;`FI_LOG_LEVEL=warn`
+&emsp;`FI_LOG_PROV=cxi`
      
- #### PE 26.181.0
+#### PE 26.181.0
 - OneAPI Toolkit 2026.1
 - Standalone oneDAL 2026.1
 - Standalone advisor 2026.0
