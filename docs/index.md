@@ -5,11 +5,11 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- <a href="support/ticket.md" class="alcf-tile-link"><img src="images/support_agent_80.png" alt="" class="alcf-tile-image"><span>Support Tickets</span></a>
-- <a href="support/get-help/alcf-users-slack.md" class="alcf-tile-link"><img src="images/SLA-Slack.png" alt="" class="alcf-tile-image"><span>ALCF User Slack</span></a>
-- <a href="account-project-management/MyALCF.md" class="alcf-tile-link"><img src="images/myalcf-portal.png" alt="" class="alcf-tile-image"><span>MyALCF</span></a>
+- <a href="support/ticket" class="alcf-tile-link"><img src="images/support_agent_80.png" alt="" class="alcf-tile-image"><span>Support Tickets</span></a>
+- <a href="support/get-help/alcf-users-slack" class="alcf-tile-link"><img src="images/SLA-Slack.png" alt="" class="alcf-tile-image"><span>ALCF User Slack</span></a>
+- <a href="account-project-management/MyALCF" class="alcf-tile-link"><img src="images/myalcf-portal.png" alt="" class="alcf-tile-image"><span>MyALCF</span></a>
 - <a href="https://www.alcf.anl.gov/events" class="alcf-tile-link"><img src="images/event.png" alt="" class="alcf-tile-image"><span>Upcoming Events</span></a>
-- <a href="services/inference-endpoints.md" class="alcf-tile-link"><img src="images/inference.png" alt="" class="alcf-tile-image"><span>Inference</span></a>
+- <a href="services/inference-endpoints" class="alcf-tile-link"><img src="images/inference.png" alt="" class="alcf-tile-image"><span>Inference</span></a>
 - <a href="https://www.alcf.anl.gov/support-center/training" class="alcf-tile-link"><img src="images/video_library.png" alt="" class="alcf-tile-image"><span>Training Videos</span></a>
 
 </div>
