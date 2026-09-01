@@ -2,7 +2,7 @@
 
 This page is a reverse-chronological log of changes to Aurora's system software, firmware, and programming environment.
 
-Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full change log under the stage that introduced it. **Major updates typically require recompiling applications.**
+Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full changelog under the stage that introduced it. **Major updates typically require recompiling applications.**
 
 Everything else appears as a standalone dated entry: firmware refreshes, fabric and storage updates, and policy changes.
 
@@ -39,7 +39,7 @@ We have created a temporary test queue `next-eval` (open to all users) with up t
 
 See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-Details of the full change log are below (**`next-eval` test queue only**):
+Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image
 
@@ -153,13 +153,13 @@ ECB firmware:
 
 The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1, which was previously available in the `next-eval` queue, is rolled out to all of the nodes across Aurora.
 
-The full change log is in the [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue) entry below.
+The full changelog is in the [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue) entry below.
 
 ### 2026-02-23: Available in the `next-eval` test queue
 
 We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1.
 
-Details of the full change log are below (**`next-eval` test queue only**):
+Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image
 
@@ -292,7 +292,7 @@ We have a **temporary** test queue `next-eval` (open to all users) with 2,688 no
 
 The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0.
 
-Details of the full change log are below (**`next-eval` test queue only**):
+Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image: compute_aurora_test_20250905T165210_95b26e6
 
