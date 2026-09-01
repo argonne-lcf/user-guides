@@ -18,11 +18,11 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 | 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-agama-109912-drivers-and-oneapi-202505-2025-04-28) |
 
 ## 2026-08-31: Available in the next-eval test queue
-We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026.\
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026.
 
 **This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
 
-See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.\
+See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
 The new image includes updates to:
  - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
@@ -30,7 +30,7 @@ The new image includes updates to:
  - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
  - libfabric 2.3.1
    - Default log levels increased as below. If log output is too high with lines starting with `libfabric` unset FI_LOG_LEVEL.
-     `FI_LOG_LEVEL=warn`\
+     `FI_LOG_LEVEL=warn`
      `FI_LOG_PROV=cxi`
      
  #### PE 26.181.0
@@ -61,15 +61,15 @@ The new image includes updates to:
     - dpctl 0.23.0.dev0+205.gb24f931fde 
     - dpnp 0.21.0.dev3+8.g987f2992697 
     - scikit-learn 1.9.0 
-    - scikit-learn-intelex 20260728.214749\
+    - scikit-learn-intelex 20260728.214749
     - Known Issues
         - Workaround for frameworks module load:
-            `export LD_LIBRARY_PATH=/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0/lib:$LD_LIBRARY_PATH`\
+            `export LD_LIBRARY_PATH=/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0/lib:$LD_LIBRARY_PATH`
             `ml add frameworks`
         - For vllm XPUGraph capturing to work, in your job script:
-            `unset CCL_OP_SYNC`\
-            `unset CCL_ATL_SYNC_COLL`\
-            `export CCL_OP_SYNC=0`\
+            `unset CCL_OP_SYNC`
+            `unset CCL_ATL_SYNC_COLL`
+            `export CCL_OP_SYNC=0`
             `export CCL_ATL_SYNC_COLL=0`
 
 
