@@ -17,18 +17,18 @@ This page aims to give you a high-level overview of key performance numbers for 
 Don't hesitate to contact ALCF staff (via email or Slack) for complaints, bug reports, or praise for these benchmarks.
 
 !!! note
-     These values were measured on Jan. 12th, 2026. The default GPU frequency on Aurora was 1.5 GHz.
+     These values were measured on Aug. 25th, 2026. The default GPU frequency on Aurora was 1.5 GHz.
 
 ## Micro-benchmarks
 
 |                                     |   One Tile |   Full Node | Scaling |
-|-------------------------------------|-----------:|------------:|--------:|
+|                                  ---|-----------:| -----------:|    ----:|
 |         Single Precision Peak Flops | 21 TFlop/s | 252 TFlop/s |    11.8 |
-|         Double Precision Peak Flops | 11 TFlop/s | 127 TFlop/s |    11.9 |
+|         Double Precision Peak Flops | 16 TFlop/s | 190 TFlop/s |    11.8 |
 |            Memory Bandwidth (triad) |     1 TB/s |     12 TB/s |    11.9 |
-| PCIe Unidirectional Bandwidth (H2D) |    54 GB/s |    318 GB/s |     5.9 |
-| PCIe Unidirectional Bandwidth (D2H) |    55 GB/s |    257 GB/s |     4.7 |
-|        PCIe Bidirectional Bandwidth |    76 GB/s |    339 GB/s |     4.5 |
+| PCIe Unidirectional Bandwidth (H2D) |    54 GB/s |    328 GB/s |     6.1 |
+| PCIe Unidirectional Bandwidth (D2H) |    55 GB/s |    264 GB/s |     4.8 |
+|        PCIe Bidirectional Bandwidth |    76 GB/s |    357 GB/s |     4.7 |
 |  Tile2Tile Unidirectional Bandwidth |   185 GB/s |      1 TB/s |     6.0 |
 |   Tile2Tile Bidirectional Bandwidth |   269 GB/s |      2 TB/s |     6.0 |
 |    GPU2GPU Unidirectional Bandwidth |    15 GB/s |     95 GB/s |     6.3 |
@@ -83,12 +83,12 @@ See the source code for this test: [`mpi_sycl_intranode_bw.cpp`](./src/mpi_sycl_
 
 |          |    One Tile |    Full Node | Scaling |
 |       ---| -----------:|  -----------:|    ----:|
-|    DGEMM |  10 TFlop/s |  125 TFlop/s |    11.9 |
+|    DGEMM |  14 TFlop/s |  175 TFlop/s |    12.5 |
 |    SGEMM |  21 TFlop/s |  247 TFlop/s |    12.0 |
-|    HGEMM | 247 TFlop/s | 2469 TFlop/s |    10.0 |
-| BF16GEMM | 256 TFlop/s | 2487 TFlop/s |     9.7 |
-| TF32GEMM | 130 TFlop/s | 1254 TFlop/s |     9.7 |
-|   I8GEMM | 529 TFlop/s | 5128 TFlop/s |     9.7 |
+|    HGEMM | 248 TFlop/s | 2369 TFlop/s |     9.6 |
+| BF16GEMM | 255 TFlop/s | 2454 TFlop/s |     9.6 |
+| TF32GEMM | 125 TFlop/s | 1279 TFlop/s |    10.3 |
+|   I8GEMM | 537 TFlop/s | 5095 TFlop/s |     9.5 |
 
 See the source code for this test: [`gemm.cpp`](./src/gemm.cpp)
 
@@ -97,6 +97,6 @@ See the source code for this test: [`gemm.cpp`](./src/gemm.cpp)
 |                             |   One Tile |  Full Node | Scaling |
 |                          ---|-----------:|-----------:|    ----:|
 | Single-precision FFT C2C 1D |  3 TFlop/s | 36 TFlop/s |    11.6 |
-| Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.8 |
+| Single-precision FFT C2C 2D |  3 TFlop/s | 35 TFlop/s |    10.6 |
 
 See the source code for this test: [`fftc2c.cpp`](./src/fftc2c.cpp)
