@@ -8,37 +8,57 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 | Date | Update |
 | --- | --- |
-| 2026-08-31 → 2026-09-01 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#2026-08-31-available-in-the-next-eval-test-queue) |
+| 2026-09-01 → 2026-10 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
-| 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-agama-114640-drivers-and-oneapi-202531-feb-mar-2026) |
+| 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-2026-02) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
 | 2025-10-27 | [Slingshot fabric manager and DAOS updates](#2025-10-27-slingshot-fabric-manager-and-daos-updates) |
-| 2025-09-08 → 2025-10-13 | **Major update:** [Agama 1146.12 drivers and oneAPI 2025.2.0](#major-update-agama-114612-drivers-and-oneapi-202520-sep-oct-2025) |
+| 2025-09-08 → 2025-10-13 | **Major update:** [Agama 1146.12 drivers and oneAPI 2025.2.0](#major-update-2025-09) |
 | 2025-06-13 | [Lower memory limit on compute nodes](#2025-06-13-lower-memory-limit-on-compute-nodes-effective-2025-06-23) |
-| 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-agama-109912-drivers-and-oneapi-202505-2025-04-28) |
+| 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-2025-04) |
 
-## 2026-08-31: Available in the next-eval test queue
+## Major update: Agama 1146.78 drivers and oneAPI 2026.1.0 (Sep-Oct 2026) { #major-update-2026-09 }
+
+!!! warning "Recompile required"
+
+    Due to the updates to Aurora's OS, GPU drivers, and programming environment, users will need to recompile applications.
+
+!!! abstract "At a glance"
+
+    - **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
+    - **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
+    - **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
+    - **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+    - **Rolled out to all nodes:** expected 2026-10, after about a month of testing in `next-eval`
+
+### 2026-09-01: Available in the `next-eval` test queue
+
 We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026.
 
 **This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
 
 See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-The new image includes updates to:
+Details of the full change log are below (**`next-eval` test queue only**):
+
+#### OS image
 
 - SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
 - HPE's Slingshot Host Software 14.0.1
 - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
 - libfabric 2.3.1
 - Default log levels were increased to the following environment variable levels:
-```bash
-FI_LOG_LEVEL=warn
-FI_LOG_PROV=cxi
-```
-If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`
-     
+
+    ```bash
+    FI_LOG_LEVEL=warn
+    FI_LOG_PROV=cxi
+    ```
+
+    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`
+
 #### PE 26.181.0
-- OneAPI Toolkit 2026.1
+
+- oneAPI Toolkit 2026.1
 - Standalone oneDAL 2026.1
 - Standalone advisor 2026.0
 - Standalone shmem 1.5.0
@@ -47,45 +67,52 @@ If the log output is too high (specifically with lines starting with `libfabric`
 - Drop Kokkos 4.x
 - hypre: 3.1.0 → 3.1.1.abaebcc
 - ginkgo: patch for SYCL API deprecations
-- mpich: 5.0.0.aurora_test.87e2045
+- MPICH: 5.0.0.aurora_test.87e2045
 - UMD: AICOE: 2026.06.19 release
 - UMD: debuginfo for 1146.78
-- Frameworks 2026.1.0
-    - torch 2.13.0a0+gitcf30153 
-    - torchao 0.17.0+git02105d46c 
-    - torchcodec 0.15.0 
-    - torchcomms 0.3.1 
-    - torchdata 0.11.0+377e64c 
-    - torchvision 0.28.0+8fb8771 
-    - triton-xpu 3.7.2 
-    - mpi4py 4.1.2 
-    - vllm 0.26.1.dev0+g568afb3a1.d20260803.xpu 
-    - vllm-xpu-kernels 0.1.11.2.dev0+ga692986.d20260803 
-    - deepspeed 0.19.3 
-    - dpctl 0.23.0.dev0+205.gb24f931fde 
-    - dpnp 0.21.0.dev3+8.g987f2992697 
-    - scikit-learn 1.9.0 
+- `frameworks/2026.1.0` module
+    - torch 2.13.0a0+gitcf30153
+    - torchao 0.17.0+git02105d46c
+    - torchcodec 0.15.0
+    - torchcomms 0.3.1
+    - torchdata 0.11.0+377e64c
+    - torchvision 0.28.0+8fb8771
+    - triton-xpu 3.7.2
+    - mpi4py 4.1.2
+    - vllm 0.26.1.dev0+g568afb3a1.d20260803.xpu
+    - vllm-xpu-kernels 0.1.11.2.dev0+ga692986.d20260803
+    - deepspeed 0.19.3
+    - dpctl 0.23.0.dev0+205.gb24f931fde
+    - dpnp 0.21.0.dev3+8.g987f2992697
+    - scikit-learn 1.9.0
     - scikit-learn-intelex 20260728.214749
     - Known Issues
-        - Workaround for frameworks module load:
-            `export LD_LIBRARY_PATH=/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0/lib:$LD_LIBRARY_PATH`
-            `ml add frameworks`
-        - For vllm XPUGraph capturing to work, in your job script:
-            `unset CCL_OP_SYNC`
-            `unset CCL_ATL_SYNC_COLL`
-            `export CCL_OP_SYNC=0`
-            `export CCL_ATL_SYNC_COLL=0`
+        - Workaround for `frameworks` module load:
 
+            ```bash
+            export LD_LIBRARY_PATH=/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0/lib:$LD_LIBRARY_PATH
+            ml add frameworks
+            ```
+
+        - For vLLM XPUGraph capturing to work, in your job script:
+
+            ```bash
+            unset CCL_OP_SYNC
+            unset CCL_ATL_SYNC_COLL
+            export CCL_OP_SYNC=0
+            export CCL_ATL_SYNC_COLL=0
+            ```
 
 #### PE 26.26.0
+
 Largely matches current deployed PE on Aurora, but recompiled for SLES 15 SP7 and Intel UMD 1146.78. Includes fixes/changes:
 
 - Fixes for libxml2 missing pkgconfig
 - Update darshan 3.4.7 → 3.5.0 and include all optional extras
 - move pti to a spack package
 - Kokkos: 4.7.04 → 4.7.02, However, 5.1.1 is default
-- mpich: 5.0.0.aurora_test.e358bbd → 5.0.0.aurora_test.87e2045
-- py-torch: +gloo
+- MPICH: 5.0.0.aurora_test.e358bbd → 5.0.0.aurora_test.87e2045
+- PyTorch: +gloo
 - pti: +0.17.0
 - mpi eager threshold: on by default
 - petsc: 3.24.5-sycl → 3.25.2-sycl
@@ -109,7 +136,7 @@ ECB firmware:
 - BIOS 0116.D10
 - PVC IFWI WW43.3_14
 
-## Major update: Agama 1146.40 drivers and oneAPI 2025.3.1 (Feb-Mar 2026)
+## Major update: Agama 1146.40 drivers and oneAPI 2025.3.1 (Feb-Mar 2026) { #major-update-2026-02 }
 
 !!! warning "Recompile required"
 
@@ -210,7 +237,7 @@ Flare is scheduled to be upgraded Feb 2 - Feb 5, 2026 resulting in Aurora being 
 - Slingshot Fabric Manager update to 2.3.1
 - System `daos_user` has been upgraded to `daos-2.6.4` GA, enabled in PBS
 
-## Major update: Agama 1146.12 drivers and oneAPI 2025.2.0 (Sep-Oct 2025)
+## Major update: Agama 1146.12 drivers and oneAPI 2025.2.0 (Sep-Oct 2025) { #major-update-2025-09 }
 
 !!! warning "Recompile required"
 
@@ -371,7 +398,7 @@ However, with our current approach due to limitations in cgroup-based enforcemen
 
 This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1, Reducing our ability to protect system services and prevent node-wide panics triggered by OOMs.
 
-## Major update: Agama 1099.12 drivers and oneAPI 2025.0.5 (2025-04-28)
+## Major update: Agama 1099.12 drivers and oneAPI 2025.0.5 (2025-04-28) { #major-update-2025-04 }
 
 !!! warning "Recompile required"
 
