@@ -47,7 +47,7 @@ Details of the full changelog are below (**`next-eval` test queue only**):
 - HPE's Slingshot Host Software 14.0.1
 - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
 - libfabric 2.3.1
-- Default log levels were increased to the following environment variable levels:
+- Default log levels were increased to the following environment variable settings:
 
     ```bash
     FI_LOG_LEVEL=warn
