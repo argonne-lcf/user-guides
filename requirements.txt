@@ -1,6 +1,6 @@
-mkdocs-material>=9.6.0
+mkdocs-material>=9.7.7
 mkdocs>=1.6.1
-pymdown-extensions>=10.12
+pymdown-extensions>=11.0.2
 mkdocs-video
 mkdocs-minify-plugin
 mkdocs-redirects
