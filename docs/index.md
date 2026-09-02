@@ -5,12 +5,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [:material-face-agent:<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
+- [:symbols-support_agent:<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
 - [:material-slack:<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
-- [:material-view-quilt-outline:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
-- [:material-calendar-clock-outline:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
-- [:material-auto-fix:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
-- [:material-play-box-multiple-outline:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
+- [:symbols-web:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
+- [:symbols-calendar_clock:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
+- [:symbols-wand_stars:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [:symbols-video_library:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
 
@@ -18,12 +18,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [![](images/onboarding.png){ .alcf-tile-image }<span>Onboarding</span>](https://www.alcf.anl.gov/onboarding-your-project){ .alcf-tile-link }
-- [![](images/account-project.png){ .alcf-tile-image }<span>Account and Project Management</span>](account-project-management/index.md){ .alcf-tile-link }
-- [![](images/machines.png){ .alcf-tile-image }<span>Machines</span>](machines/index.md){ .alcf-tile-link }
-- [![](images/running-jobs.png){ .alcf-tile-image }<span>Running Jobs</span>](running-jobs/index.md){ .alcf-tile-link }
-- [![](images/data-management.png){ .alcf-tile-image }<span>Data Management</span>](data-management/index.md){ .alcf-tile-link }
-- [![](images/services.png){ .alcf-tile-image }<span>Services</span>](services/index.md){ .alcf-tile-link }
+- [:symbols-tour:<span>Onboarding</span>](https://www.alcf.anl.gov/onboarding-your-project){ .alcf-tile-link }
+- [:symbols-monitoring:<span>Account and Project Management</span>](account-project-management/index.md){ .alcf-tile-link }
+- [:symbols-hard_drive:<span>Machines</span>](machines/index.md){ .alcf-tile-link }
+- [:symbols-input:<span>Running Jobs</span>](running-jobs/index.md){ .alcf-tile-link }
+- [:symbols-folder_data:<span>Data Management</span>](data-management/index.md){ .alcf-tile-link }
+- [:symbols-design_services:<span>Services</span>](services/index.md){ .alcf-tile-link }
 
 </div>
 
