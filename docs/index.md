@@ -5,12 +5,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [![](images/support_agent_80.png){ .alcf-tile-image }<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
-- [![](images/SLA-Slack.png){ .alcf-tile-image }<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
-- [![](images/myalcf-portal.png){ .alcf-tile-image }<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
-- [![](images/event.png){ .alcf-tile-image }<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
-- [![](images/inference.png){ .alcf-tile-image }<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
-- [![](images/video_library.png){ .alcf-tile-image }<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
+- [:material-face-agent:<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
+- [:material-slack:<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
+- [:material-view-quilt-outline:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
+- [:material-calendar-clock-outline:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
+- [:material-auto-fix:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [:material-play-box-multiple-outline:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
 
