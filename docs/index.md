@@ -5,12 +5,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- <a href="support/ticket.md" class="alcf-tile-link"><img src="images/support_agent_80.png" alt="" class="alcf-tile-image"><span>Support Tickets</span></a>
-- <a href="support/get-help/alcf-users-slack.md" class="alcf-tile-link"><img src="images/SLA-Slack.png" alt="" class="alcf-tile-image"><span>ALCF User Slack</span></a>
-- <a href="account-project-management/MyALCF.md" class="alcf-tile-link"><img src="images/myalcf-portal.png" alt="" class="alcf-tile-image"><span>MyALCF</span></a>
-- <a href="https://www.alcf.anl.gov/events" class="alcf-tile-link"><img src="images/event.png" alt="" class="alcf-tile-image"><span>Upcoming Events</span></a>
-- <a href="services/inference-endpoints.md" class="alcf-tile-link"><img src="images/inference.png" alt="" class="alcf-tile-image"><span>Inference</span></a>
-- <a href="https://www.alcf.anl.gov/support-center/training" class="alcf-tile-link"><img src="images/video_library.png" alt="" class="alcf-tile-image"><span>Training Videos</span></a>
+- [![](images/support_agent_80.png){ .alcf-tile-image }<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
+- [![](images/SLA-Slack.png){ .alcf-tile-image }<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
+- [![](images/myalcf-portal.png){ .alcf-tile-image }<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
+- [![](images/event.png){ .alcf-tile-image }<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
+- [![](images/inference.png){ .alcf-tile-image }<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [![](images/video_library.png){ .alcf-tile-image }<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
 
@@ -18,12 +18,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [Onboarding](https://www.alcf.anl.gov/onboarding-your-project)
-- [Account and Project Management](account-project-management/index.md)
-- [Machines](machines/index.md)
-- [Running Jobs](running-jobs/index.md)
-- [Data Management](data-management/index.md)
-- [Services](services/index.md)
+- [![](images/onboarding.png){ .alcf-tile-image }<span>Onboarding</span>](https://www.alcf.anl.gov/onboarding-your-project){ .alcf-tile-link }
+- [![](images/account-project.png){ .alcf-tile-image }<span>Account and Project Management</span>](account-project-management/index.md){ .alcf-tile-link }
+- [![](images/machines.png){ .alcf-tile-image }<span>Machines</span>](machines/index.md){ .alcf-tile-link }
+- [![](images/running-jobs.png){ .alcf-tile-image }<span>Running Jobs</span>](running-jobs/index.md){ .alcf-tile-link }
+- [![](images/data-management.png){ .alcf-tile-image }<span>Data Management</span>](data-management/index.md){ .alcf-tile-link }
+- [![](images/services.png){ .alcf-tile-image }<span>Services</span>](services/index.md){ .alcf-tile-link }
 
 </div>
 
