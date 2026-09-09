@@ -361,6 +361,7 @@ Most agents have an installation script that you can run with one command to ins
 | **[OpenCode](https://opencode.ai/) (recommended)** | `curl -fsSL https://opencode.ai/install | bash` |
 | **[Pi](https://pi.dev/) (recommended)** | `curl -fsSL https://pi.dev/install.sh | sh` |
 | **[OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli)** | `curl -fsSL https://chatgpt.com/codex/install.sh | sh` |
+| **[Claude Code](https://code.claude.com/docs/en/quickstart)** | `curl -fsSL https://claude.ai/install.sh | bash` |
 
 Most scripts will require you to reload your environment with `source ~/.bashrc` before the agent will be in your `PATH`.
 
@@ -383,6 +384,7 @@ Supported `agent`s include:
 - `opencode`
 - `pi`
 - `codex`
+- `claude`
 
 !!! tip "Refreshing API Keys"
     `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
@@ -586,6 +588,25 @@ codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disa
 
 !!! note "Suggested Models"
     `openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+
+#### Claude Code
+
+Add the following to `~/.claude/settings.json`.
+
+```json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+    "ANTHROPIC_AUTH_TOKEN": "<your-api-key-here>",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "inkling-bf16",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "inkling-bf16",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "inkling-bf16"
+  }
+}
+```
+
+!!! note "Anthropic Messages Support"
+    You need to use a Direct API-backed endpoint that suppports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva).
 
 #### Other 3rd-Party Agents
 
@@ -1011,9 +1032,34 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 
 To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify).
 
-## Acknowledgement
+## Acknowledgements
+
+This work was supported by the U.S. Department of Energy, Office of Science, Office of Advanced Scientific Computing Research, under Contract No. DE-AC02-06CH11357. This research used resources of the Argonne Leadership Computing Facility, which is a DOE Office of Science User Facility.
+
+### Citations
 
 If you use the Inference Service for your publications, please add the Non-INCITE, Non-ALCC ALCF Acknowledgement from the [ALCF Policies](https://docs.alcf.anl.gov/policies/alcf-acknowledgement-policy).
+
+Additionally, please cite our paper:
+
+```tex
+@inproceedings{10.1145/3731599.3767346,
+  author = {Tanikanti, Aditya and C\^{o}t\'{e}, Benoit and Guo, Yanfei and Chen, Le and Saint, Nickolaus and Chard, Ryan and Raffenetti, Ken and Thakur, Rajeev and Uram, Thomas and Foster, Ian and Papka, Michael E. and Vishwanath, Venkatram},
+  title = {FIRST: Federated Inference Resource Scheduling Toolkit for Scientific AI Model Access},
+  year = {2025},
+  isbn = {9798400718717},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3731599.3767346},
+  doi = {10.1145/3731599.3767346},
+  abstract = {We present the Federated Inference Resource Scheduling Toolkit (FIRST), a framework enabling Inference-as-a-Service across distributed High-Performance Computing (HPC) clusters. FIRST provides cloud-like access to diverse AI models, like Large Language Models (LLMs), on existing HPC infrastructure. Leveraging Globus Auth and Globus Compute, the system allows researchers to run parallel inference workloads via an OpenAI-compliant API on private, secure environments. This cluster-agnostic API allows requests to be distributed across federated clusters, targeting numerous hosted models. FIRST supports multiple inference backends (e.g., vLLM), auto-scales resources, maintains "hot" nodes for low-latency execution, and offers both high-throughput batch and interactive modes. The framework addresses the growing demand for private, secure, and scalable AI inference in scientific workflows, allowing researchers to generate billions of tokens daily on-premises without relying on commercial cloud infrastructure.},
+  booktitle = {Proceedings of the SC '25 Workshops of the International Conference for High Performance Computing, Networking, Storage and Analysis},
+  pages = {52–60},
+  numpages = {9},
+  keywords = {Inference as a Service, High Performance Computing, Job Schedulers, Large Language Models, Globus, Scientific Computing},
+  series = {SC Workshops '25}
+}
+```
 
 ## Contact Us
 
