@@ -38,7 +38,7 @@ The list of compute nodes is read automatically from `$PBS_NODEFILE`, so you do 
 
 ## Batch Mode
 
-Describe the ensemble as a JSON file. The `cmd_template` is expanded once per parameter set:
+In batch mode, you first describe the ensemble by writing a JSON file. The `cmd_template` is expanded once per parameter set:
 
 ```json linenums="1" title="sweep.json"
 {
@@ -73,6 +73,8 @@ if __name__ == "__main__":
     results = el.run()
     write_results_to_json(results, "results.json")
 ```
+
+Submit the driver script with a standard PBS job script:
 
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
