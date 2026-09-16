@@ -657,7 +657,7 @@ More information: <https://docs.daos.io/v2.6/user/container/#ownership>
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
-daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
+daos cont update-acl -e "A::pkcoff@:rwta" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
 groups                                                        # to check if the users are in the same group name
