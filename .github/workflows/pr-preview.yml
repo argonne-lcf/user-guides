@@ -1,0 +1,43 @@
+name: pr-preview
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+# Queue (not cancel) per-PR so an in-flight teardown is never killed
+concurrency: preview-${{ github.ref }}
+
+permissions:
+  contents: write        # push preview to gh-pages
+  pull-requests: write   # sticky comment
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    # Same-repo branch PRs only (pr-preview-action v1 does not support forks).
+    # head.repo is populated on 'closed' too, so cleanup still runs.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Submodules only needed to build; skip for teardown-only runs
+          submodules: ${{ github.event.action != 'closed' && 'recursive' || 'false' }}
+      - uses: actions/setup-python@v7
+        if: github.event.action != 'closed'
+        with:
+          python-version: 3.x
+      - name: Setup Python environment
+        if: github.event.action != 'closed'
+        run: pip install -r requirements.txt
+      - name: Build docs with --strict
+        if: github.event.action != 'closed'
+        run: make build-docs
+      - name: Discourage search indexing of previews
+        if: github.event.action != 'closed'
+        run: find site -name '*.html' -exec sed -i 's|<head>|<head><meta name="robots" content="noindex">|' {} +
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          pages-base-url: docs.alcf.anl.gov
