@@ -9,58 +9,103 @@ The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and
 
 ### 1. Setup Your Environment
 
-Create a Python 3 virtual environment and install the [Globus SDK](https://globus-sdk-python.readthedocs.io/en/stable):
+Create a Python (>=3.10) virtual environment and install [alcf-tokens](https://pypi.org/project/alcf-tokens/).
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install globus-sdk
-```
+=== "Python"
 
-Download our auth script from [this repository](https://github.com/argonne-lcf/alcf-facility-api-token):
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install alcf-tokens
+    ```
 
-```bash
-wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
-```
+=== "Anaconda or Miniconda"
 
-If `wget` is unavailable on your system, try `curl -O` instead.
+    ```bash
+    conda create -n alcf-tokens python=3.12 -y
+    conda activate alcf-tokens
+    pip install alcf-tokens
+    ```
+
+=== "Uv"
+
+    ```bash
+    uv venv --python 3.12 .venv
+    source .venv/bin/activate
+    uv pip install alcf-tokens
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    pip install globus-sdk
+
+    wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
+    # If `wget` is unavailable on your system, try `curl -O` instead.
+    ```
 
 ### 2. Authenticate
 
 Generate the authentication flow URL with the command below. Copy-paste the URL to your browser, authenticate with your ALCF credentials, and copy-paste the resulting authorization code in your terminal.
 
+=== "alcf-tokens"
+
+    ```bash
+    alcf-tokens login iri
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    python alcf_facility_api_globus_token.py authenticate
+    ```
+
+Test your token with the following:
 ```bash
-python alcf_facility_api_globus_token.py authenticate
+alcf-tokens test-token iri
 ```
 
-If you have issues, make sure to logout from Globus at [app.globus.org/logout](https://app.globus.org/logout), clear your browser cache or use an incognito window, and try to re-authenticate.
+If your token is authorized to use the IRI API, you should see `"ready": true`. If you have issues, make sure to logout from Globus at [app.globus.org/logout](https://app.globus.org/logout), clear your browser cache or use an incognito window, and try to re-authenticate.
 
 ### 3. Retrieve Your Access Token
 
 You can programatically retrieve your access token either from your terminal or from Python.
 
-=== "Bash"
+=== "Shell"
 
     ```bash
-    python alcf_facility_api_globus_token.py get_access_token
+    alcf-tokens get-token iri
     ```
 
 === "Environment Variable"
 
     ```bash
-    access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+    access_token=$(alcf-tokens get-token iri)
     ```
 
 === "Python"
 
     ```python
+    from alcf_tokens.auth import get_access_token
+    access_token = get_access_token("iri")
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    # Shell
+    access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+    ```
+
+    ```python
+    # Python
     from alcf_facility_api_globus_token import get_access_token
     access_token = get_access_token()
     ```
 
 !!! info "Token Validity"
-    - Access tokens are valid for **48 hours**. The `get_access_token` command will automatically refresh your token if it has expired.
-    - Refreshed tokens are authorized for up to **7 days**, after which you will need to manually reauthenticate with `python alcf_facility_api_globus_token.py authenticate`. 
+    - Access tokens are valid for **48 hours**. The token retrieval commands will automatically refresh your token if it has expired.
+    - Refreshed tokens are authorized for up to **7 days**, after which you will need to manually re-authenticate. 
 
 ## API Usage Examples
 
@@ -146,7 +191,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
@@ -176,10 +221,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -224,7 +269,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
@@ -238,10 +283,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -314,7 +359,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
@@ -328,10 +373,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -359,7 +404,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
@@ -373,10 +418,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -415,7 +460,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -428,10 +473,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -458,7 +503,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -473,10 +518,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -506,7 +551,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -519,10 +564,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -553,7 +598,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -566,10 +611,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -599,7 +644,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -612,10 +657,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -645,7 +690,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -658,10 +703,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -688,7 +733,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -701,10 +746,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -731,7 +776,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -746,10 +791,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -780,7 +825,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
@@ -795,10 +840,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -828,7 +873,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         # Home
         resource_id="6115bd2c-957a-4543-abff-5fae52992ff2"
@@ -841,10 +886,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -873,7 +918,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         task_id="<task_id>"
 
@@ -885,10 +930,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -915,7 +960,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects" \
              -H "Authorization: Bearer ${access_token}"
@@ -925,10 +970,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -951,7 +996,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         project_id="<project_id>"
 
@@ -963,10 +1008,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -991,7 +1036,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         project_id="<project_id>"
 
@@ -1003,10 +1048,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -1031,7 +1076,7 @@ This section provides simple examples on how to interface with the API as a star
 
         ```bash
         #!/bin/bash
-        access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+        access_token=$(alcf-tokens get-token iri)
 
         project_id="<project_id>"
         project_allocation_id="<allocation_id>"
@@ -1044,10 +1089,10 @@ This section provides simple examples on how to interface with the API as a star
 
         ```python
         import requests
-        from alcf_facility_api_globus_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Create headers with access token
-        access_token = get_access_token()
+        access_token = get_access_token("iri")
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
@@ -1068,8 +1113,8 @@ This section provides simple examples on how to interface with the API as a star
 
 ## Troubleshooting
 
-- **Permission Denied:** Your token may have expired or you may not be authenticated with your ALCF credentials. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout), clear your browser cache or use an incognito window, and re-authenticate with `python alcf_facility_api_globus_token.py authenticate`.
-- **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used. Locate your tokens file (typically at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`), delete it, and restart the authentication process.
+- **Permission Denied:** Your token may have expired or you may not be authenticated with your ALCF credentials. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout), clear your browser cache or use an incognito window, and re-authenticate.
+- **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used. Locate your tokens file (typically at `~/.globus/app/7f3e61f5-e0de-4e8f-9150-0a62c65dda63/alcf_tokens/tokens.json` or `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`), delete it, and restart the authentication process.
 
 ## Further Information
 Further information on and examples for the IRI API may be found at [https://github.com/doe-iri](https://github.com/doe-iri)
