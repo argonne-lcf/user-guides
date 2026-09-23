@@ -124,13 +124,20 @@ ray status # should show 2 active nodes and 16 GPUs total
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --distributed-executor-backend ray --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
-!!! info "Guidelines for vLLM Model Serving"
+!!! info "Additional Notes on Ray"
     * By default, `setup_ray_cluster.sh` launches a ray cluster with 8 raylets per node by specifing `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:0,1,2,3,4,5,6,7"` and `--num-gpus=8`. This matches the `vllm serve` command with `TP=8`. This is the recommended setup, however if users want to change the TP size, remember to also change the number of GPUs in the Ray setup script. 
-    * Setting `--max-model-len` can be important in order to fit the model on the GPUs.
-    * Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. On Aurora, setting `TP` size equal to the number of GPUs on the node (12 PVC tiles per node) is usually not the preferred approach; `TP=4,8` are preferred instead. 
-    * Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. Usually, `PP` is set to the number of nodes used, which was 2 in the case above.
-    * The product `TP x PP` indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16`, `(num. billion paramemers x 2) / GPU GB mem` gives the number of GPUs needed. 
 
+## Guidelines for vLLM Model Serving
+
+### Setting the parallel dimensions
+* Tensor parallelism (`TP`) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. Usually, `TP` is set to the number of GPUs per node being used to serve the model. On Aurora, using all 12 PVC tiles per node is not the preferred approach; `TP=2,4,8` are preferred instead. 
+* Pipeline parallelism (`PP`) is the second dimension, and it is sized to evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. Usually, `PP` is set to the number of nodes used to serve the model.
+* The product `TP x PP` indicates the total number of GPUs used to serve the model. This number is sized to be large enough to provide enough memory for both the model weights and the KV cache, as discussed below, however it can be beneficial to reduce parallelism where possible to improve performance. 
+
+### Memory management
+* vLLM offers multiple parameters to control the memory overhead of a model serving instance. These are: `--max-model-len`, `--dtype bfloat16`, `--gpu-memory-utilization`, `--kv-cache-dtype`, `--max-num-seqs`, `--max_tokens`.
+* GPU serving the model has to hold: model weights + KV cache + activation/runtime overhead. Last piece is only a few GB usually, which is why setting `--gpu-memory-utilization` can be an issue.
+* For the memory used by the weights, a back of the envelope calculation when using half precision such as `bfloat16` is `GB of memory = num. billion paramemers x 2`. 
 
 ## Scaling vLLM Workflows
 
