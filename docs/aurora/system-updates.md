@@ -33,7 +33,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 ### 2026-09-01: Available in the `next-eval` test queue
 
-We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026.
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026. Image was updated on 9/21, see change log below for details.
 
 **This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
 
@@ -43,10 +43,10 @@ Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image
 
-- SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
+- SLES 15 SP7 with kernel 6.4.0-150700.53.78-default
 - HPE's Slingshot Host Software 14.0.1
 - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
-- libfabric 2.3.1
+- libfabric 2.3.1. Fixed path in /etc/ld.so.conf.d/libfabric.conf
 - Default log levels were increased to the following environment variable settings:
 
     ```bash
@@ -54,10 +54,13 @@ Details of the full changelog are below (**`next-eval` test queue only**):
     FI_LOG_PROV=cxi
     ```
 
-    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`
+    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`.
 
 #### PE 26.181.0
 
+- Unset FI_LOG_* variables (**9/21**)
+- Updated mpich - mpich/prd/5.0.0.aurora_test.b76b754 (**9/21**)
+  - Set MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE = 1024  
 - oneAPI Toolkit 2026.1
 - Standalone oneDAL 2026.1
 - Standalone advisor 2026.0
@@ -87,13 +90,7 @@ Details of the full changelog are below (**`next-eval` test queue only**):
     - scikit-learn 1.9.0
     - scikit-learn-intelex 20260728.214749
     - Known Issues
-        - Workaround for `frameworks` module load:
-
-            ```bash
-            export LD_LIBRARY_PATH=/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0/lib:$LD_LIBRARY_PATH
-            ml add frameworks
-            ```
-
+        - Frameworks module no longer requires LD_LIBRARY_PATH workaround (fixed on **9/21**)
         - For vLLM XPUGraph capturing to work, in your job script:
 
             ```bash
@@ -119,6 +116,7 @@ Largely matches current deployed PE on Aurora, but recompiled for SLES 15 SP7 an
 - adios: 2.11.0 → 2.12.1
 - UMD: AICOE: 2026.06.19 release
 - UMD: debuginfo for 1146.78
+
 
 ## 2026-05-21: OS image and firmware update
 
