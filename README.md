@@ -3,18 +3,6 @@ Source for the documentation located at https://docs.alcf.anl.gov/
 
 ## Contributing to documentation
 
-### Python environment
-
-To build documentation locally, you need a Python environment with `mkdocs` installed.  Check that Python 3.6+ is installed:
-```bash
-python --version
-```
-e.g. `Python 3.8.3`. Then create a new virtual env to isolate the `mkdocs` installation:
-```bash
-python -m venv env
-source env/bin/activate
-```
-
 ### Git
 
 Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub account:
@@ -24,11 +12,46 @@ cd user-guides
 git submodule init; git submodule update
 ```
 
-### Installing MkDocs
+### Python environment and MkDocs
 
-To install `mkdocs` in the current environment: 
+To build the documentation locally, you need a Python 3.10+ environment with `mkdocs` and the
+plugins listed in [requirements.txt](requirements.txt) installed. Use either of the two options
+below.
+
+#### Option 1: `uv` (recommended)
+
+[`uv`](https://docs.astral.sh/uv/) manages the Python interpreter and the virtual environment for
+you, and is considerably faster than `pip`. If you do not already have it:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh    # macOS/Linux
+```
+Then, from the root of the repository:
 ```bash
 cd user-guides
+uv venv                                  # creates ./.venv, downloading Python if needed
+source .venv/bin/activate
+uv pip install -r requirements.txt
+```
+Equivalently, `make install-uv` runs the last two steps for you.
+
+Alternatively, skip the virtual environment entirely and prefix each command with
+[`uv run`](https://docs.astral.sh/uv/guides/scripts/), which resolves the dependencies on the fly:
+```bash
+uv run --with-requirements requirements.txt mkdocs serve
+```
+
+#### Option 2: `venv` + `pip`
+
+Check that Python 3.10+ is installed:
+```bash
+python --version
+```
+e.g. `Python 3.13.5`. Then create a new virtual env to isolate the `mkdocs` installation, and
+install the dependencies into it:
+```bash
+cd user-guides
+python -m venv env
+source env/bin/activate
 make install-dev
 ```
 

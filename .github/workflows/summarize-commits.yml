@@ -20,10 +20,14 @@ jobs:
               echo "_/^\_" >> commit_history.txt
           done && [ -s commit_history.txt ] && sed -i '$d' commit_history.txt
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.2.0
+        with:
+          activate-environment: true
+          python-version: "3.13"
+          enable-cache: true
       - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip install pandas
+        run: uv pip install pandas
           
       - name: Process with Python
         run: |

@@ -43,13 +43,15 @@ theme:
     - content.code.copy
     - content.code.annotate
     - content.tooltips
-    #- content.code.select # insiders-4.32.0
+    - content.footnote.tooltips
+    - content.tabs.link
+    - content.code.select
     #- navigation.expand
     - navigation.indexes
     - navigation.instant
     - navigation.instant.progress
-    #- navigation.instant.prefetch   # insiders-4.36
-    #- material.extensions.preview ... # insiders-4.52
+    - navigation.instant.prefetch
+    - navigation.instant.preview
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
@@ -60,6 +62,7 @@ theme:
     #- toc.integrate  # move right-side intra-page TOC within left nav sidebar
     - search.highlight
     - search.suggest
+    - search.share
 
   logo: images/logo.svg
   favicon: "images/favicon.svg"
@@ -70,10 +73,10 @@ extra_css:
 extra_javascript:
   - javascripts/alcf-extra.js
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.date.js
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.number.js
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.filesize.js
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.dotsep.js
+  - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.date.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.number.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.filesize.min.js
+  - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.dotsep.min.js
   - javascripts/tablesort.js
 
 markdown_extensions:
@@ -115,6 +118,13 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
+  # Instant previews: hover cards for links to these reference pages.
+  # Requires the navigation.instant.preview theme feature; a no-op without targets.
+  - material.extensions.preview:
+      targets:
+        include:
+          - acronyms.md
+          - support/ticket.md
 
   - toc:
       permalink: true
@@ -146,6 +156,9 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+  # Vendors external assets (e.g. the unpkg tablesort scripts) at build time so
+  # pages make no third-party requests at runtime.
+  - privacy
   - redirects:
       redirect_maps:
         'support/technical-support.md': 'support/ticket.md'
