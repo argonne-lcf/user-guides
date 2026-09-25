@@ -8,7 +8,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 | Date | Update |
 | --- | --- |
-| 2026-09-01 → 2026-10 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
+| 2026-09-01 → 2026-09-28 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
 | 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-2026-02) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
@@ -28,8 +28,17 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
     - **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
     - **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
     - **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
+    - **PBS scheduler:** Updated to 2026.1.0
     - **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Rolled out to all nodes:** expected 2026-10, after about a month of testing in `next-eval`
+    - **Rolled out to all nodes:** On 2026-09-28
+
+### 2026-09-28: Rolled out to all Aurora nodes
+
+The compute image with updates to Aurora's OS, GPU drivers, and programming environment, which is available in the `next-eval` queue, will be rolled out to all of the nodes across Aurora.
+
+The changelog is in the [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entry below.
+
+In addition to the updates listed below, Aurora's **PBS scheduler will be updated to 2026.1.0.**
 
 ### 2026-09-01: Available in the `next-eval` test queue
 
