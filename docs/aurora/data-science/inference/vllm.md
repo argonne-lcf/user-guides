@@ -129,22 +129,38 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
 
 ## Guidelines for vLLM Model Serving
 
-### Setting the parallel dimensions
-* Tensor parallelism (`TP`) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. Usually, `TP` is set to the number of GPUs per node being used to serve the model. On Aurora, using all 12 PVC tiles per node is not the preferred approach; `TP=2,4,8` are preferred instead. 
-* Pipeline parallelism (`PP`) is the second dimension, and it is sized to evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. Usually, `PP` is set to the number of nodes used to serve the model.
-* The product `TP x PP` indicates the total number of GPUs used to serve the model. This number is sized to be large enough to provide enough memory for both the model weights and the KV cache, as discussed below, however it can be beneficial to reduce parallelism where possible to improve performance. 
+### Estimating the memory requirements
+When serving a model, the GPU memory has to hold the model weights, the KV cache and any additional runtime overhead. 
+The memory for the model weights and the KV cache is managed by vLLM, which pre-allocates the entire memory block at initialization. 
+This memory can be controlled with a number of parameters which can be passed to `vllm serve`. Some of the main ones to consider are:
 
-### Memory management
-* vLLM offers multiple parameters to control the memory overhead of a model serving instance. Some of the main ones to consider are:
 	* `--gpu-memory-utilization`: The fraction of GPU memory to be used for the model executor, ranges from 0 to 1 and is set to 0.92 by default.
 	* `--kv-cache-memory-bytes`: Size of KV Cache per GPU in bytes. By default, this is set to None and vLLM automatically infers the KV cache size based on `gpu-memory-utilization`.
 	* `--max-model-len`: Model context length (prompt and output).
 	* `--max-num-seqs`: Maximum number of sequences to be processed in a single iteration.
 	* `--dtype`: Data type for model weights and activations.
 	* `--kv-cache-dtype`: Data type for KV cache storage. If "auto" (default), will use model data type.
-* When serving a model, the GPU memory has to hold the model weights, the KV cache and any additional runtime overhead. The memory for the model weights and the KV cache is managed by vLLM, which pre-allocates the entire memory block at initialization. In most cases, the default value of 0.92 (i.e., 92% of the total GPU memory) is sufficient to leave enough spare memory for the runtime, however reducing this slightly can avoid crashes when the runtime needs more memory (e.g., when running with both `TP` and `PP` greater than 1).
-* The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For the preferred precision `bfloat16`, the memory used by the weights in GB is estimated as `num. billion paramemers x 2`. Note that `fp8` is not supported on Aurora. 
-* The memory used by the context, ...
+
+The main knob to control how much memory vLLm uses is `--gpu-memory-utilization`. In most cases, the default value of 0.92 (i.e., 92% of the total GPU memory) is sufficient to leave enough spare memory for the runtime, however reducing this slightly can avoid crashes when the runtime needs more memory (e.g., when running with both `TP` and `PP` greater than 1).
+
+The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For the preferred precision `bfloat16`, the memory used by the weights in GB is estimated as `num. billion paramemers x 2`. Note that `fp8` is not supported on Aurora. 
+
+The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is `per_token_bytes = num_layers × (2 × num_kv_heads × head_dim × bytes_per_element)`, where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. Then, the total cache size scales the per-token bytes by the total context length (`--max-model-len`) and the concurrency (--max-num-seqs); namely `total_kv_cache = (per_token_bytes × max_model_len × max_concurrent_sequences) / 1e9 GB`.
+
+Based on the model parameters, the data type and desired context length, the total amount of memory needed to serve the model can now estimated. Often, this is more than the memory of a single GPU.
+For example, for the GPT-OSS-120B model, ...
+
+### Determining the number of GPUs to serve a model on
+
+To help support the significant memory requirements of LLMs, the models can be parallelized across multiple GPUs and nodes along two main dimensions:
+* Tensor parallelism (TP) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. The KV cache is also sharded across GPUs in a TP group, and in this case the KV heads are divided across GPUs. KV heads can be repeated across GPUs, however it is best to ensure that the TP value also divides the KV heads equally. Usually, `TP` is set to the number of GPUs per node being used to serve the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads and 8 KV heads, so valid TP values are 1, 2, 4, 8. On Aurora, using all 12 PVC tiles per node is not the preferred approach; `TP=2,4,8` are preferred instead. 
+* Pipeline parallelism (`PP`) is the second dimension, and it is sized to evenly divide the number of layers in the model. The KV cache is sharded in this case too. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. Usually, `PP` is set to the number of nodes used to serve the model.
+* The product `TP x PP` is the total number of GPUs used to serve the model.
+
+Therefore, the configuration for serving a model is determined by:
+
+1. Estimating the memory requirements
+2. Obtaining the number of GPUs needed to provide enough memoryis estimated as `(weight memory + KV cache memory) / memory per GPU`, then determining the appropriate TP size, and lastly increasing the PP size as needed. To serve the GPT-OSS-120B model with full model context length on Aurora, X PVC tiles are needed with TP=Y and PP=Z.
 
 ## Scaling vLLM Workflows
 
