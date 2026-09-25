@@ -20,4 +20,10 @@ jobs:
           enable-cache: true
       - name: Install dependencies
         run: uv pip install -r requirements.txt
+      - name: Cache external assets downloaded by the privacy plugin
+        uses: actions/cache@v6
+        with:
+          path: .cache/plugin/privacy
+          key: privacy-${{ hashFiles('mkdocs.yml') }}
+          restore-keys: privacy-
       - run: mkdocs gh-deploy --force --strict
