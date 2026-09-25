@@ -20,7 +20,13 @@ For more resources on SmartSim, follow the links below:
 
 ## Installation with PyTorch GPU Backend
 
-SmartSim on Polaris can be installed by creating a virtual environment based on the ML conda module. From a compute node, execute:
+SmartSim on Polaris can be installed by creating a virtual environment based on the ML conda module.
+
+!!! warning
+
+    These instructions were written for the `conda/2024-04-29` module, which was removed after the August 2026 system upgrade. They have not yet been validated with newer `conda` modules; in particular, the CUDA/cuDNN paths below and the TensorFlow 2.13.1 downgrade are specific to that module.
+
+From a compute node, execute:
 ```
 module use /soft/modulefiles
 module load conda/2024-04-29

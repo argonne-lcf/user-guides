@@ -12,20 +12,20 @@ module load conda
 conda activate
 ```
 
-Then, you can load PyTorch in `python` as usual (below showing results from the `conda/2024-04-29` module):
+Then, you can load PyTorch in `python` as usual (below showing results from the `conda/2026-10-01` module):
 
 ```python
 >>> import torch
 >>> torch.__version__
-'2.3.0'
+'2.14.0'
 >>>
 ```
 
-This installation of PyTorch was built from source, and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2024-04-29` module):
+This installation of PyTorch was built from source, and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2026-10-01` module):
 
 ```bash
 $ echo $CUDA_HOME
-/soft/compilers/cudatoolkit/cuda-12.4.1/
+/soft/compilers/cudatoolkit/cuda-13.0.3/
 ```
 
 If you need to build applications that use this version of PyTorch and CUDA, we recommend using these CUDA libraries to ensure compatibility. We periodically update the PyTorch release, though updates will come in the form of new versions of the `conda` module.
