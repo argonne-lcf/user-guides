@@ -135,9 +135,16 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
 * The product `TP x PP` indicates the total number of GPUs used to serve the model. This number is sized to be large enough to provide enough memory for both the model weights and the KV cache, as discussed below, however it can be beneficial to reduce parallelism where possible to improve performance. 
 
 ### Memory management
-* vLLM offers multiple parameters to control the memory overhead of a model serving instance. These are: `--max-model-len`, `--dtype bfloat16`, `--gpu-memory-utilization`, `--kv-cache-dtype`, `--max-num-seqs`, `--max_tokens`.
-* GPU serving the model has to hold: model weights + KV cache + activation/runtime overhead. Last piece is only a few GB usually, which is why setting `--gpu-memory-utilization` can be an issue.
-* For the memory used by the weights, a back of the envelope calculation when using half precision such as `bfloat16` is `GB of memory = num. billion paramemers x 2`. 
+* vLLM offers multiple parameters to control the memory overhead of a model serving instance. Some of the main ones to consider are:
+ * `--gpu-memory-utilization`: The fraction of GPU memory to be used for the model executor, ranges from 0 to 1 and is set to 0.92 by default.
+ * `--kv-cache-memory-bytes`: Size of KV Cache per GPU in bytes. By default, this is set to None and vLLM automatically infers the KV cache size based on `gpu-memory-utilization`.
+ * `--max-model-len`: Model context length (prompt and output).
+ * `--max-num-seqs`: Maximum number of sequences to be processed in a single iteration.
+ * `--dtype`: Data type for model weights and activations.
+ * `--kv-cache-dtype`: Data type for KV cache storage. If "auto" (default), will use model data type.
+* When serving a model, the GPU memory has to hold the model weights, the KV cache and any additional runtime overhead. The memory for the model weights and the KV cache is managed by vLLM, which pre-allocates the entire memory block at initialization. In most cases, the default value of 0.92 (i.e., 92% of the total GPU memory) is sufficient to leave enough spare memory for the runtime, however reducing this slightly can avoid crashes when the runtime needs more memory (e.g., when running with both `TP` and `PP` greater than 1).
+* The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For the preferred precision `bfloat16`, the memory used by the weights in GB is estimated as `num. billion paramemers x 2`. Note that `fp8` is not supported on Aurora. 
+* The memory used by the context, ...
 
 ## Scaling vLLM Workflows
 
