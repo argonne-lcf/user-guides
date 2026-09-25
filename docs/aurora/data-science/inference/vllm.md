@@ -134,18 +134,26 @@ When serving a model, the GPU memory has to hold the model weights, the KV cache
 The memory for the model weights and the KV cache is managed by vLLM, which pre-allocates the entire memory block at initialization. 
 This memory can be controlled with a number of parameters which can be passed to `vllm serve`. Some of the main ones to consider are:
 
-	* `--gpu-memory-utilization`: The fraction of GPU memory to be used for the model executor, ranges from 0 to 1 and is set to 0.92 by default.
-	* `--kv-cache-memory-bytes`: Size of KV Cache per GPU in bytes. By default, this is set to None and vLLM automatically infers the KV cache size based on `gpu-memory-utilization`.
-	* `--max-model-len`: Model context length (prompt and output).
-	* `--max-num-seqs`: Maximum number of sequences to be processed in a single iteration.
-	* `--dtype`: Data type for model weights and activations.
-	* `--kv-cache-dtype`: Data type for KV cache storage. If "auto" (default), will use model data type.
+* `--gpu-memory-utilization`: The fraction of GPU memory to be used for the model executor, ranges from 0 to 1 and is set to 0.92 by default.
+* `--kv-cache-memory-bytes`: Size of KV Cache per GPU in bytes. By default, this is set to None and vLLM automatically infers the KV cache size based on `gpu-memory-utilization`.
+* `--max-model-len`: Model context length (prompt and output).
+* `--max-num-seqs`: Maximum number of sequences to be processed in a single iteration.
+* `--dtype`: Data type for model weights and activations.
+* `--kv-cache-dtype`: Data type for KV cache storage. If "auto" (default), will use model data type.
 
 The main knob to control how much memory vLLm uses is `--gpu-memory-utilization`. In most cases, the default value of 0.92 (i.e., 92% of the total GPU memory) is sufficient to leave enough spare memory for the runtime, however reducing this slightly can avoid crashes when the runtime needs more memory (e.g., when running with both `TP` and `PP` greater than 1).
 
-The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For the preferred precision `bfloat16`, the memory used by the weights in GB is estimated as `num. billion paramemers x 2`. Note that `fp8` is not supported on Aurora. 
+The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For the preferred precision `bfloat16`, the memory used by the weights in GB is estimated as `num. billion paramemers x 2`. 
+Note that `fp8` is not supported on Aurora. 
 
-The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is `per_token_bytes = num_layers × (2 × num_kv_heads × head_dim × bytes_per_element)`, where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. Then, the total cache size scales the per-token bytes by the total context length (`--max-model-len`) and the concurrency (--max-num-seqs); namely `total_kv_cache = (per_token_bytes × max_model_len × max_concurrent_sequences) / 1e9 GB`.
+The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
+
+`per_token_bytes = num_layers × (2 × num_kv_heads × head_dim × bytes_per_element)`, 
+
+where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically.  
+Then, the total cache size scales the per-token bytes by the total context length (`--max-model-len`) and the concurrency (--max-num-seqs); namely 
+
+`total_kv_cache = (per_token_bytes × max_model_len × max_concurrent_sequences) / 1e9 GB`.
 
 Based on the model parameters, the data type and desired context length, the total amount of memory needed to serve the model can now estimated. Often, this is more than the memory of a single GPU.
 For example, for the GPT-OSS-120B model, ...
@@ -159,8 +167,12 @@ To help support the significant memory requirements of LLMs, the models can be p
 
 Therefore, the configuration for serving a model is determined by:
 
-1. Estimating the memory requirements
-2. Obtaining the number of GPUs needed to provide enough memoryis estimated as `(weight memory + KV cache memory) / memory per GPU`, then determining the appropriate TP size, and lastly increasing the PP size as needed. To serve the GPT-OSS-120B model with full model context length on Aurora, X PVC tiles are needed with TP=Y and PP=Z.
+1. Estimating the memory requirements as `total memory = weight memory + KV cache memory`
+2. Obtaining the number of GPUs needed: `num. GPU = total memory / memory per GPU`
+3. Determining the appropriate TP size (usually 2, 4 or 8)
+4. Increasing the PP size as needed to match or exceed the number of GPUs needed.
+
+For example, to serve the GPT-OSS-120B model with full model context length on Aurora, X PVC tiles are needed with TP=Y and PP=Z.
 
 ## Scaling vLLM Workflows
 
