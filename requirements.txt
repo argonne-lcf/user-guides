@@ -3,4 +3,7 @@ mkdocs>=1.6.1
 pymdown-extensions>=12.1
 mkdocs-video
 mkdocs-minify-plugin
-mkdocs-redirects
+# Pinned: 1.2.3 moved to the ProperDocs fork and added a hard `properdocs`
+# dependency solely to print a promo banner on every build. 1.2.2 is
+# functionally identical (only the banner import differs).
+mkdocs-redirects==1.2.2
