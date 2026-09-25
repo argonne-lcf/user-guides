@@ -377,6 +377,7 @@ nav:
         - Julia: polaris/programming-models/julia.md
       - Debugging Tools:
         - CUDA-GDB: polaris/debugging-tools/CUDA-GDB.md
+        - DDT: polaris/debugging-tools/ddt-polaris.md
       - Performance Tools:
         - NVIDIA-Nsight: polaris/performance-tools/NVIDIA-Nsight.md
       - Visualization:
