@@ -161,7 +161,7 @@ For example, for the [Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/
 
 `weight memory = 70e9 x 2 = 140 GB`
 
-`per_token_bytes = 80 x (2 x 8 x 128 x 2) = 327680`
+`per_token_bytes = 80 x (2 x 8 x 128 x 2) = 327680 bytes`
 
 `KV cache memory = (327680 × 131072 × 1) / 1e9 = 42.9 GB`
 
