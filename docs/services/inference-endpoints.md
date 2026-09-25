@@ -1,6 +1,6 @@
 # ALCF Inference Endpoints
 
-Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify) to receive updates and maintenance notifications.
+Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://mailman.cels.anl.gov/mailman3/lists/inference-service-notify.lists.alcf.anl.gov/) to receive updates and maintenance notifications.
 
 ## Quick Start
 
@@ -1030,7 +1030,7 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 
 ## Notifications
 
-To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://lists.alcf.anl.gov/mailman/listinfo/inference-service-notify).
+To receive notifications regarding new model support, maintenances, and policy updates, please join our [mailing list](https://mailman.cels.anl.gov/mailman3/lists/inference-service-notify.lists.alcf.anl.gov/).
 
 ## Acknowledgements
 
