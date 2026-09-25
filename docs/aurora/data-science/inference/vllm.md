@@ -155,8 +155,17 @@ Then, the total cache size scales the per-token bytes by the total context lengt
 
 `total_kv_cache = (per_token_bytes × max_model_len × max_concurrent_sequences) / 1e9 GB`.
 
-Based on the model parameters, the data type and desired context length, the total amount of memory needed to serve the model can now estimated. Often, this is more than the memory of a single GPU.
-For example, for the GPT-OSS-120B model, ...
+Based on the model parameters, the data type and desired context length, the total amount of memory needed to serve the model can now estimated. 
+Often, this is more than the memory of a single GPU.
+For example, for the [Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct) model, 
+
+`weight memory = 70e9 x 2 = 140 GB`
+
+`per_token_bytes = 80 x (2 x 8 x 128 x 2) = 327680`
+
+`KV cache memory = (327680 × 131072 × 1) / 1e9 = 42.9 GB`
+
+`total memory = 140 + 42.9 = 182.9 GB`
 
 ### Determining the number of GPUs to serve a model on
 
@@ -168,11 +177,11 @@ To help support the significant memory requirements of LLMs, the models can be p
 Therefore, the configuration for serving a model is determined by:
 
 1. Estimating the memory requirements as `total memory = weight memory + KV cache memory`
-2. Obtaining the number of GPUs needed: `num. GPU = total memory / memory per GPU`
+2. Obtaining the number of GPUs needed: `num. GPU = ceil(total memory / memory per GPU)`
 3. Determining the appropriate TP size (usually 2, 4 or 8)
 4. Increasing the PP size as needed to match or exceed the number of GPUs needed.
 
-For example, to serve the GPT-OSS-120B model with full model context length on Aurora, X PVC tiles are needed with TP=Y and PP=Z.
+For example, to serve the `Llama-3.1-70B-Instruct` model with full model context length on Aurora, 4 PVC tiles are needed with TP=4 and PP=1.
 
 ## Scaling vLLM Workflows
 
