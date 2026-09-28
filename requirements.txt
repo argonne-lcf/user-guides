@@ -3,6 +3,7 @@ mkdocs>=1.6.1
 pymdown-extensions>=12.1
 mkdocs-video
 mkdocs-minify-plugin
+pillow  # required by mkdocs-material's optimize plugin for .jpg
 # Pinned: 1.2.3 moved to the ProperDocs fork and added a hard `properdocs`
 # dependency solely to print a promo banner on every build. 1.2.2 is
 # functionally identical (only the banner import differs).

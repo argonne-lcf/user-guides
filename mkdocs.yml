@@ -78,6 +78,8 @@ extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.filesize.min.js
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.dotsep.min.js
   - javascripts/tablesort.js
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 markdown_extensions:
   - footnotes
@@ -116,6 +118,20 @@ markdown_extensions:
       combine_header_slug: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  # Autolinks bare URLs only. repo_url_shorthand/social_url_shorthand are OFF:
+  # prose here uses "see note #1" and "@alcf", which they turn into bogus
+  # links to github issues/users.
+  - pymdownx.magiclink:
+      repo_url_shorthand: false
+      social_url_shorthand: false
+  - pymdownx.escapeall
+  - pymdownx.fancylists
+  - pymdownx.bracketspan
+  - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
   # Instant previews: hover cards for links to these reference pages.
@@ -158,7 +174,16 @@ plugins:
       minify_html: true
   # Vendors external assets (e.g. the unpkg tablesort scripts) at build time so
   # pages make no third-party requests at runtime.
-  - privacy
+  - privacy:
+      assets_exclude:
+        # MathJax loads font/component files relative to its own script path;
+        # vendoring only the bundle would 404 on output/chtml/fonts/*.
+        - cdn.jsdelivr.net/npm/mathjax@3/*
+  # optimize needs the pngquant binary, so run it only in CI (CI=true there).
+  - group:
+      enabled: !ENV [CI, false]
+      plugins:
+        - optimize
   - redirects:
       redirect_maps:
         'support/technical-support.md': 'support/ticket.md'
