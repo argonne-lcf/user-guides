@@ -35,58 +35,12 @@ Switching to the data parallel mode will force a one-time recompile (with compil
 
 Note : The Cerebras CS3 cluster has 2 sets of MemX. One the larger memory group inteded for larger models (12 nodes of 1128Gi memory) and another smaller memX group ((12 nodes of 183Gi memory). Each memX node group can only be associated to a given job, hence we can have a maximum of 2 training jobs. So we encourage users to use distributed training for better utilization of resources and faster training. 
 
-<!---
-## UNet
-
-An implementation of this: [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/pdf/1505.04597.pdf), Ronneberger et.  al 2015<br>
-To run Unet with the <a href="https://www.kaggle.com/c/severstal-steel-defect-detection">Severstal: Steel Defect Detection</a> kaggle dataset, using a pre-downloaded copy of the dataset:<br>
-First, source a Cerebras PyTorch virtual environment.
-
-```console
-source ~/R_2.10.0/venv_cerebras_pt/bin/activate
-```
-
-Then
-
-```console
-cd ~/R_2.10.0/modelzoo/src/cerebras/modelzoo/models/nlp/bert
-cp /software/cerebras/dataset/severstal-steel-defect-detection/params_severstal_binary_rawds.yaml configs/params_severstal_binary_rawds.yaml
-export MODEL_DIR=model_dir_unet
-if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-python run.py CSX --job_labels name=unet_pt --params configs/params_severstal_binary_rawds.yaml --model_dir $MODEL_DIR --mode train --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/ --compile_dir $(whoami) |& tee mytest.log 
-```
---->
-
-<!--- Appears to not have been ported to 1.7.1
-## BraggNN
-An implementation of this: [BraggNN: fast X-ray Bragg peak analysis using deep
-learning](https://journals.iucr.org/m/issues/2022/01/00/fs5198/fs5198.pdf)<br>
-The BraggNN model has two versions:<br>
-1) Convolution only - this version does not include the non-local attention block<br>
-2) Nonlocal - This version includes the nonlocal attention block as described in  <br>
-[https://arxiv.org/pdf/1711.07971.pdf](https://arxiv.org/pdf/1711.07971.pdf)
-
-```console
-TODO
-cd ~/R_2.10.0/anl_shared/braggnn/tf
-# This yaml has a correct path to a BraggNN dataset
-cp /software/cerebras/dataset/BraggN/params_bragg_nonlocal_sampleds.yaml configs/params_bragg_nonlocal_sampleds.yaml
-export MODEL_DIR=model_dir_braggnn
-if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
-```
---->
-
-
 ## BERT - PyTorch
 
 The modelzoo/modelzoo/transformers/pytorch/bert directory is a PyTorch implementation of [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)<br>
 This BERT-large msl128 example uses a single sample dataset for both training and evaluation. See the README.md in the source directory for details on how to build a dataset from text input.
 First, source a Cerebras PyTorch virtual environment.
 
-<!---
-source /software/cerebras/venvs/venv_cerebras_pt/bin/activate
-# or your personal venv
---->
 ```console
 source ~/R_2.10.0/venv_cerebras_pt/bin/activate
 ```
