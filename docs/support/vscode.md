@@ -303,5 +303,4 @@ Then you can delete those processes with the following:
 
 `kill -9 <PID>`
 
-###
 

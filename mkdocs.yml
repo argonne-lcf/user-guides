@@ -131,6 +131,8 @@ markdown_extensions:
   - pymdownx.escapeall
   - pymdownx.fancylists
   - pymdownx.bracketspan
+  # Requires a space after '#' for headings; guards against unfenced '#PBS'/'#!' lines.
+  - pymdownx.saneheaders
   - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
