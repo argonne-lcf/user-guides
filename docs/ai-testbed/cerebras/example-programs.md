@@ -100,10 +100,7 @@ export MODEL_DIR=model_dir_bert_large_pytorch
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cszoo fit configs/bert_large_MSL128_sampleds.yaml --job_labels name=bert_pt --model_dir $MODEL_DIR |& tee mytest.log
 ```
-<!---
-previously,
-python run.py CSX --job_labels name=bert_pt --params configs/bert_large_MSL128_sampleds.yaml --num_workers_per_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software/ --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
---->
+
 Note: the vocabulary file referenced in `/software/cerebras/dataset/bert_large/bert_large_MSL128_sampleds.yaml` is the same as the one at `/home/$(whoami)/R_2.10.0/modelzoo/src/cerebras/modelzoo/models/vocab/google_research_uncased_L-12_H-768_A-12.txt`. 
 
 The last parts of the output should resemble the following, with messages about cuda that should be ignored and are not shown.
@@ -145,11 +142,6 @@ cszoo fit configs/params_gptj_6B_sampleds.yaml --job_labels name=gptj --model_di
 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_gptj_6B_sampleds.yaml`. 
 
-<!---
-Previously,
-python run.py CSX --job_labels name=gptj_pt --params configs/params_gptj_6B_sampleds.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
---->
-
 The last parts of the output should resemble the following:
 
 ```console
@@ -183,10 +175,6 @@ cszoo fit configs/params_llama2_7b.yaml --job_labels name=llama2_7b --model_dir 
 ```
 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_llama2_7b.yaml`. 
-<!--
-Formerly,
-python run.py CSX --job_labels name=llama2_7b --params configs/params_llama2_7b.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /projects /home/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src  --compile_dir $(whoami) |& tee mytest.log
--->
 
 Please find a sample output
 ```bash
@@ -241,11 +229,6 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cszoo fit configs/params_esm2_t12_35M_UR50D_modified.yaml --job_labels name=esm2_t12_35m --model_dir $MODEL_DIR |& tee mytest.log
 ```
 
-<!--
-Formerly,
-python run.py CSX --job_labels name=esm2_t12_35m --params configs/params_esm2_t12_35M_UR50D_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
--->
-
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_esm2_t12_35M_UR50D_modified.yaml`. 
 
 Sample output for the end of a training run:
@@ -291,10 +274,6 @@ export MODEL_DIR=model_dir_vit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cszoo fit configs/params_vit_base_patch_16_imagenet_1k.yaml --job_labels name=vision_transformer --model_dir $MODEL_DIR |& tee mytest.log
 ```
-<!--
-Formerly,
-python run.py CSX --job_labels name=vision_transformer --params configs/params_vit_base_patch_16_imagenet_1k.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/$(whoami)/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --compile_dir /$(whoami) |& tee mytest.log
--->
 
 Note: the validation has been commented out of the yaml to decrease the run time of this sample. To run validation, uncomment the validation sections at the end of `configs/params_vit_base_patch_16_imagenet_1k.yaml`. 
 
@@ -356,10 +335,6 @@ export MODEL_DIR=model_dir_dit
 if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cszoo fit configs/params_dit_2B_patchsize_2x2_modified.yaml --job_labels name=DiT --model_dir $MODEL_DIR |& tee mytest.log
 ```
-<!---
-Formerly:
-python run.py CSX --job_labels name=DiT --mode train --params configs/params_dit_2B_patchsize_2x2_modified.yaml --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --model_dir ${MODEL_DIR} |& tee mytest.log
---->
 
 ???+ example "Example output:"
     ``` { .output .no-copy }
