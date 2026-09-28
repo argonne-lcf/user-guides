@@ -67,6 +67,11 @@ GitHub Actions are used to automatically validate all changes in pull requests b
 make build-docs
 ```
 
+### Writing math
+
+LaTeX math renders via MathJax: inline `$...$` or `\(...\)`, blocks `$$...$$` or `\[...\]`.
+Keep shell commands in backticks or code fences. A prose line with two bare `$` (e.g. `$MODEL_DIR ... /home/$(whoami)`) can be misparsed as math; escape with `\$` if needed.
+
 ### Working on documentation
 
 * All commits must have a commit message
