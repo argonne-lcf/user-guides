@@ -176,3 +176,60 @@ Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`
 Note that **every rank profiles unless `--rank-zero-only` is passed**. Full
 details, including how to shrink large traces, are in the
 [ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
+
+#### From Python
+
+The same wrapper is callable directly, for profiling your own training loop
+rather than one of the examples. `get_profiling_context` is the higher-level
+entry point -- it builds the schedule and a trace handler that writes a
+Chrome trace and logs a key-averages table:
+
+```python linenums="1" title="profile_with_ezpz.py"
+from ezpz.profile import get_profiling_context
+
+with get_profiling_context(
+    profiler_type="torch",
+    wait=1, warmup=2, active=3, repeat=1,
+    rank_zero_only=True,  # (1)!
+    outdir="./traces",
+) as prof:
+    for step, batch in enumerate(dataloader):
+        train_step(batch)
+        if prof is not None:  # (2)!
+            prof.step()
+```
+
+1. With `rank_zero_only=True`, every rank other than 0 receives a
+   `contextlib.nullcontext`, so only rank 0 writes traces.
+2. Required, not stylistic: on the non-profiling ranks `prof` **is**
+   `None`, so calling `.step()` unguarded raises `AttributeError` on every
+   rank but one.
+
+For full control over activities and the trace handler, `get_torch_profiler`
+is the thinner wrapper -- it selects `ProfilerActivity.XPU` / `CUDA` / `CPU`
+for you and applies the same rank gating, then passes everything else
+through to `torch.profiler.profile`:
+
+```python linenums="1" title="profile_with_ezpz_lowlevel.py"
+import torch
+import ezpz
+from ezpz.profile import get_torch_profiler
+
+def trace_handler(p):
+    p.export_chrome_trace(f"trace-step{p.step_num}.json")
+
+with get_torch_profiler(
+    rank=ezpz.get_rank(),
+    schedule=torch.profiler.schedule(wait=1, warmup=2, active=3, repeat=1),
+    on_trace_ready=trace_handler,
+    rank_zero_only=True,
+    with_stack=True,
+) as prof:
+    for step, batch in enumerate(dataloader):
+        train_step(batch)
+        if prof is not None:
+            prof.step()
+```
+
+Both are documented in the
+[`ezpz.profile` API reference](https://saforem2.github.io/ezpz/python/Code-Reference/profile/).
