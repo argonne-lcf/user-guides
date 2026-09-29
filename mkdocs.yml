@@ -256,7 +256,7 @@ nav:
           - Jupyter: aurora/data-science/jupyter.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
-            - Frameworks: aurora/data-science/frameworks/frameworks.md
+            - Frameworks: aurora/data-science/frameworks/index.md
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
             - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
             - PyTorch: aurora/data-science/frameworks/pytorch.md
