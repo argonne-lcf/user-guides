@@ -56,8 +56,7 @@ make
 
 ## Device Introspection
 
-Similarly to PyTorch, LibTorch provides APIs to perform introspection on the devices available on the system. The simple code below shows how to check if XPU devices are available, how many are present, and how to loop through them to discover some properties.
-The code can be compiled with the sample `CMakeLists.txt` and `cmake` command shown above.
+Similarly to PyTorch, LibTorch provides APIs to perform introspection on the devices available on the system. The simple code below shows how to check if XPU devices are available, how many are present, and how to loop through them to discover some properties. The code can be compiled with the sample `CMakeLists.txt` and `cmake` command shown above.
 
 ```cpp
 #include <torch/torch.h>

@@ -17,11 +17,7 @@ Then, you can import `vllm` as follows
 ```
 
 ## Known Issue on Aurora
-`CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which
-leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it 
-appears that `vllm` recovers, and performance is not affected. Cleanest is to
-set this variable either to `none` or `torchrun`. Based on our tests, we have 
-found setting this to be **optional**.
+`CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
 !!! tip
     Do not forget to set the proxies from the compute node, if performing direct download on the job.
@@ -133,5 +129,4 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
 
 ## Scaling vLLM Workflows
 
-To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup.
-These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
+To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup. These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.

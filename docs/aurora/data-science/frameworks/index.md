@@ -1,7 +1,5 @@
 # The `frameworks` module
-In this module we provide pre-installed packages for various AI/ML frameworks
-like `pytorch` and `vllm` through a `conda` environment as a part of the 
-compute image on Aurora.
+In this module we provide pre-installed packages for various AI/ML frameworks like `pytorch` and `vllm` through a `conda` environment as a part of the compute image on Aurora.
 
 ```bash
 module add frameworks
@@ -69,47 +67,29 @@ family("frameworks")
 ## Global Changes in `frameworks/2026.1.0`
 The following are the global changes that we have introduced in this iteration
 
-- `CCL_OP_SYNC=0`. Frameworks module **does not** set `CCL_OP_SYNC` to `1` any more
-  (see [Hangs with `CCL_OP_SYNC=0`](#hangs-with-ccl_op_sync0)).
-- `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the 
-`oneapi/release/2026.1.0`. The module **does not** set it any more.
+- `CCL_OP_SYNC=0`. Frameworks module **does not** set `CCL_OP_SYNC` to `1` any more (see [Hangs with `CCL_OP_SYNC=0`](#hangs-with-ccl_op_sync0)).
+- `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the `oneapi/release/2026.1.0`. The module **does not** set it any more.
 
 ## Known issues
 
 ### `MPI_Init` error with `CCL_KVS_MODE=mpi`
-To scale out beyond 1024 nodes on Aurora, you may need to set
-`export CCL_KVS_MODE=mpi`. Because of a change in how `oneCCL` interacts with
-`MPI`, a distributed application may then fail with an error about using `mpi`
-before it is initialized. We are investigating the issue further.
+To scale out beyond 1024 nodes on Aurora, you may need to set `export CCL_KVS_MODE=mpi`. Because of a change in how `oneCCL` interacts with `MPI`, a distributed application may then fail with an error about using `mpi` before it is initialized. We are investigating the issue further.
 
 #### Workaround
-Initialize `MPI` manually. From a `python`/`PyTorch` standpoint,
-`import mpi4py` performs the `MPI_Init`. The application does not need to use
-`mpi4py`; only the `import` is needed.
+Initialize `MPI` manually. From a `python`/`PyTorch` standpoint, `import mpi4py` performs the `MPI_Init`. The application does not need to use `mpi4py`; only the `import` is needed.
 
 ### Hangs with `CCL_OP_SYNC=0`
-Historically, the `frameworks` module set `CCL_OP_SYNC=1`, so collectives ran in
-a synchronized fashion. It no longer does, because of an issue with `XPUGraph`
-capturing, a new feature in this iteration. As a side effect, multi-node
-distributed jobs may hang.
+Historically, the `frameworks` module set `CCL_OP_SYNC=1`, so collectives ran in a synchronized fashion. It no longer does, because of an issue with `XPUGraph` capturing, a new feature in this iteration. As a side effect, multi-node distributed jobs may hang.
 
 #### Workaround
-If a job hangs, restore the legacy behavior with `export CCL_OP_SYNC=1`. You may
-also set `export CCL_ATL_SYNC_COLL=1`.
+If a job hangs, restore the legacy behavior with `export CCL_OP_SYNC=1`. You may also set `export CCL_ATL_SYNC_COLL=1`.
 
 ## Tracking changes
 This section is an attempt to keep track of high-level changes to the module
 
 ### Major changes in the `frameworks/2025.3.1`
-- The `torch_ccl` module has been removed. 
-`import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
-- When initializing `torch.distributed`, the `backend` must be changed to 
-`xccl` from `ccl`.
-- `import intel_extension_for_pytorch as ipex` is now deprecated. The vendor is 
-upstreaming all of the functionality from IPEX to the mainline PyTorch 
-distribution. If you experience performance variations after removing the import, 
-please switch back to importing it.
+- The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
+- When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
+- `import intel_extension_for_pytorch as ipex` is now deprecated. The vendor is upstreaming all of the functionality from IPEX to the mainline PyTorch distribution. If you experience performance variations after removing the import, please switch back to importing it.
 - `horovod` support for PyTorch has been removed.
-- `ONEAPI_DEVICE_SELECTOR` has been set to `"opencl:gpu;level_zero:gpu"`, if 
-this causes any issues, please revert to Level Zero only with 
-`export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
+- `ONEAPI_DEVICE_SELECTOR` has been set to `"opencl:gpu;level_zero:gpu"`, if this causes any issues, please revert to Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`

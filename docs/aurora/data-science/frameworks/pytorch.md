@@ -1,9 +1,6 @@
 # PyTorch on Aurora
 
-PyTorch is a popular, open-source deep learning framework developed and 
-released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
-information about PyTorch, which you can refer to. For troubleshooting on 
-Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+PyTorch is a popular, open-source deep learning framework developed and released by Facebook. The [PyTorch home page](https://pytorch.org/), has more information about PyTorch, which you can refer to. For troubleshooting on Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Major changes in the frameworks module of Fall 2026 (`frameworks/2026.1.0`)
 
@@ -21,8 +18,7 @@ Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Provided Installation
 
-PyTorch is already installed on Aurora with GPU support and available through the [frameworks module](../python.md). 
-To use it from a compute node, please load the following modules:
+PyTorch is already installed on Aurora with GPU support and available through the [frameworks module](../python.md). To use it from a compute node, please load the following modules:
 
 ```bash
 module load frameworks
@@ -64,8 +60,7 @@ print(f'Device properties = {torch.xpu.get_device_properties()}')
 
 ??? info "Using the entire PVC GPU as PyTorch devices"
 
-    By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. 
-    To map a PyTorch device to an entire PVC GPU out of the 6 available on a compute node, set
+    By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. To map a PyTorch device to an entire PVC GPU out of the 6 available on a compute node, set
     
     ```bash
     export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
@@ -200,17 +195,9 @@ for epoch in range(10):
 
 ## PyTorch Best Practices on Aurora
 
-When running PyTorch applications, we have found the following practices to be 
-generally, if not universally, useful and encourage you to try some of these 
-techniques to boost performance of your own applications.
+When running PyTorch applications, we have found the following practices to be generally, if not universally, useful and encourage you to try some of these techniques to boost performance of your own applications.
 
-1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and 
-is supported with PyTorch operations. In general, the way to do this is via the 
-PyTorch Automatic Mixed Precision package (AMP), as described in the 
-[mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In 
-PyTorch, users generally need to manage casting and loss scaling manually, 
-though context managers and function decorators can provide easy tools to do 
-this.
+1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and is supported with PyTorch operations. In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as described in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In PyTorch, users generally need to manage casting and loss scaling manually, though context managers and function decorators can provide easy tools to do this.
 
 2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools. See [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
 
@@ -225,8 +212,7 @@ this.
 
 ## Distributed Training on multiple GPUs
 
-Distributed training with PyTorch on Aurora is facilitated through both [Distributed Data Parallel (DDP)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html).
-Horovod is no longer supported in recent `frameworks` modules.
+Distributed training with PyTorch on Aurora is facilitated through both [Distributed Data Parallel (DDP)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html). Horovod is no longer supported in recent `frameworks` modules.
 
 
 ### Distributed Data Parallel (DDP)
@@ -308,8 +294,7 @@ torch.distributed.destroy_process_group()
 
 !!! info "CPU bindings for best performance on Aurora"
 
-    For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec.
-    When using all 12 PVC tiles on each of the nodes, the following setting is recommended
+    For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec. When using all 12 PVC tiles on each of the nodes, the following setting is recommended
     
     ```bash
     export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
@@ -321,8 +306,7 @@ torch.distributed.destroy_process_group()
 <!---
 !!! warning "Settings for training beyond 16 nodes"
 
-    At larger scales, the following oneCCL 
-    environment variable settings:
+    At larger scales, the following oneCCL environment variable settings:
 
     ```bash
     ## Option 1
@@ -332,43 +316,21 @@ torch.distributed.destroy_process_group()
     unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
     ```
 
-    When running 12 ranks per node with these settings the `framework`s use 4 cores, 
-    with Horovod tightly coupled with the `framework`s using one of the 4 cores, and 
-    oneCCL using a separate core for better performance, e.g. with rank 0 the 
-    `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would 
-    use core 42.
+    When running 12 ranks per node with these settings the `framework`s use 4 cores, with Horovod tightly coupled with the `framework`s using one of the 4 cores, and oneCCL using a separate core for better performance, e.g. with rank 0 the `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would use core 42.
 
-    In the provided CPU binding list we have provided two options. First one is
-    based on one CPU core per rank. In the second option, we assign 4 CPU cores per
-    rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
-    rank. Notice that, these cores are picked out from the last 12 cores of each
-    socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs
-    to the first socket, and 94-99 belongs to the second socket. We leave a few
-    cores free, in case, the user may want to use other services like copper and
-    DAOS along with their application. The second oneCCL option is to delegate
-    task of picking cores to the system. In this case, the user should not declare
-    or export the `CCL_WORKER_AFFINITY` variable.
+    In the provided CPU binding list we have provided two options. First one is based on one CPU core per rank. In the second option, we assign 4 CPU cores per rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per rank. Notice that, these cores are picked out from the last 12 cores of each socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs to the first socket, and 94-99 belongs to the second socket. We leave a few cores free, in case, the user may want to use other services like copper and DAOS along with their application. The second oneCCL option is to delegate task of picking cores to the system. In this case, the user should not declare or export the `CCL_WORKER_AFFINITY` variable.
 
-    Each workload may perform better with different settings. 
-    The criteria for choosing the cpu bindings are:
+    Each workload may perform better with different settings. The criteria for choosing the cpu bindings are:
     
-    - Binding for GPU and NIC affinity – To bind the ranks to cores on the proper 
-        socket or NUMA nodes.
-    - Binding for cache access – This is the part that will change per application 
-        and some experimentation is needed.
+    - Binding for GPU and NIC affinity – To bind the ranks to cores on the proper socket or NUMA nodes.
+    - Binding for cache access – This is the part that will change per application and some experimentation is needed.
     
-    __Important__: This setup is a work in progress, and based on observed 
-    performance. The recommended settings are likely to changed with new `framework`
-    releases.
+    __Important__: This setup is a work in progress, and based on observed performance. The recommended settings are likely to changed with new `framework` releases.
 --->
 
 ### Distributed Training with Multiple CCSs
 
-The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. 
-These pools can then be accessed by separate processes thereby enabling distributed training with multiple MPI processes per tile. 
-This feature on PVC is similar to MPS on NVIDIA GPUs 
-and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile.
-For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
+The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. These pools can then be accessed by separate processes thereby enabling distributed training with multiple MPI processes per tile. This feature on PVC is similar to MPS on NVIDIA GPUs and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile. For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
 
 For DDP distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
 
@@ -392,8 +354,7 @@ if torch.xpu.is_available():
 
 1. PVC GPU allow the use of 1, 2 or 4 CCSs on each tile
 
-and then adding the proper environment variables and `mpiexec` settings in the run script. 
-For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
+and then adding the proper environment variables and `mpiexec` settings in the run script. For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
 
 ```bash linenums="1"
 export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4

@@ -19,10 +19,7 @@ deepspeed.__version__
 However, if a user needs an updated version, it should be installed outside the `frameworks` module, e.g. in a virtual environment. Further instructions for working with the base environment can be found [here](../python.md).
 
 <!---
-!Below copied from Polaris guide but needs changes for Aurora!
-A batch submission script for the following example is available
-[here](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/DeepSpeed).
--->
+!Below copied from Polaris guide but needs changes for Aurora! A batch submission script for the following example is available [here](https://github.com/argonne-lcf/GettingStarted/tree/master/DataScience/DeepSpeed). -->
 
 We describe below the steps needed to get started with DeepSpeed on Aurora.
 

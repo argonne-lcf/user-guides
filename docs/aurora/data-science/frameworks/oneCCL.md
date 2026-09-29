@@ -21,16 +21,14 @@ drwxr-xr-x 27 root root 652 Sep 23 22:07 ..
 drwxr-xr-x  8 root root 117 Sep 23 21:59 2022.1
 lrwxrwxrwx  1 root root   6 Sep 23 21:59 latest -> 2022.1
 ```
-`2022.1` is the current version of oneCCL that is available to users 
-through the Aurora compute image.
+`2022.1` is the current version of oneCCL that is available to users through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
 We have identified a set of environment settings that typically provide better performance or address potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. Users are encouraged to check this page regularly.
 
-Among them, there is a minimal list, which are essential for functionality
-for training workloads, and we have tested up to 1024 nodes.
+Among them, there is a minimal list, which are essential for functionality for training workloads, and we have tested up to 1024 nodes.
 
 **Minimal set**
 
@@ -43,14 +41,11 @@ To scale out beyond 1024 nodes, users may need to set
 ```bash
 export CCL_KVS_MODE=mpi
 ```
-With `CCL_KVS_MODE=mpi`, you may need to initialize `MPI` manually; see
-[`MPI_Init` error with `CCL_KVS_MODE=mpi`](index.md#mpi_init-error-with-ccl_kvs_modempi).
+With `CCL_KVS_MODE=mpi`, you may need to initialize `MPI` manually; see [`MPI_Init` error with `CCL_KVS_MODE=mpi`](index.md#mpi_init-error-with-ccl_kvs_modempi).
 
-The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see
-[Hangs with `CCL_OP_SYNC=0`](index.md#hangs-with-ccl_op_sync0).
+The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see [Hangs with `CCL_OP_SYNC=0`](index.md#hangs-with-ccl_op_sync0).
 
-A user using oneCCL without `module load frameworks` may need to set 
-`export CCL_PROCESS_LAUNCHER=pmix` manually.
+A user using oneCCL without `module load frameworks` may need to set `export CCL_PROCESS_LAUNCHER=pmix` manually.
 
 Beyond that an application should tune based on the list below. This list is not exhaustive.
 
@@ -192,16 +187,7 @@ done
 ```
 For more information on oneCCL benchmark, please refer to: [oneCCL Benchmark User Guide](https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html)
 
-In the provided CPU binding list we have provided two options. First one is 
-based on one CPU core per rank. In the second option, we assign 4 CPU cores per
-rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
-rank. Notice that, these cores are picked out from the last 12 cores of each 
-socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs 
-to the first socket, and 94-99 belongs to the second socket. We leave a few 
-cores free, in case, the user may want to use other services like copper and
-DAOS along with their application. The second oneCCL option is to delegate 
-task of picking cores to the system. In this case, the user should not declare
-or export the `CCL_WORKER_AFFINITY` variable. 
+In the provided CPU binding list we have provided two options. First one is based on one CPU core per rank. In the second option, we assign 4 CPU cores per rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per rank. Notice that, these cores are picked out from the last 12 cores of each socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs to the first socket, and 94-99 belongs to the second socket. We leave a few cores free, in case, the user may want to use other services like copper and DAOS along with their application. The second oneCCL option is to delegate task of picking cores to the system. In this case, the user should not declare or export the `CCL_WORKER_AFFINITY` variable. 
 
 ## PyTorch DDP
 
