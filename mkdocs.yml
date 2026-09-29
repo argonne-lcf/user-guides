@@ -51,7 +51,7 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.instant.prefetch
-    - navigation.instant.preview
+    - navigation.instant.preview  # previews every internal link; see material.extensions.preview below
     - navigation.path
     #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
@@ -136,8 +136,9 @@ markdown_extensions:
   - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
-  # Instant previews: hover cards for links to these reference pages.
-  # Requires the navigation.instant.preview theme feature; a no-op without targets.
+  # Instant previews: hover cards only for links to these reference pages.
+  # Don't enable the navigation.instant.preview theme feature: it previews
+  # every internal link, regardless of these targets.
   - material.extensions.preview:
       targets:
         include:
