@@ -7,7 +7,7 @@ install-dev:
 
 .PHONY: install-uv
 install-uv:
-	uv venv
+	uv venv --clear
 	uv pip install -r requirements.txt
 
 
