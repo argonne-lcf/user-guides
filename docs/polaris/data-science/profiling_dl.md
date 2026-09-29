@@ -88,7 +88,7 @@ NSYS_WRAPPER=${WORK_DIR}/nsys_wrapper.sh
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=4
 
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
+NRANKS=$((NNODES * NRANKS_PER_NODE))
 
 module use /soft/modulefiles/
 module load conda

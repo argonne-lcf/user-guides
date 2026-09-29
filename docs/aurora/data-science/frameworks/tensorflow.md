@@ -292,7 +292,7 @@ Below is a simple job script:
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=12
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
+NRANKS=$((NNODES * NRANKS_PER_NODE))
 
 # This is a fix for running over 16 nodes:
 export FI_CXI_DEFAULT_CQ_SIZE=131072
