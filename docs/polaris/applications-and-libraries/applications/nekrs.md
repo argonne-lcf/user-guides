@@ -69,9 +69,12 @@ Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `sou
 An example submission script for running a 2-node nekRS job is shown below as an example. Additional information on nekRS input files and application setup options is described [here](https://github.com/Nek5000/nekRS/blob/master/doc/parHelp.txt).
 The correct options to execute the script are as follows:
 
-> NEKRS_HOME= *</path/to/nekrs/install>* PROJ_ID=*<Your_Project_ID>* QUEUE=*<queue_to_submit>* ./run.sh *<casename>* *<number_of_nodes_requested>* *<walltime(hh:mm:ss)>*
+```bash
+NEKRS_HOME=</path/to/nekrs/install> PROJ_ID=<project_id> QUEUE=<queue> ./run.sh <casename> <number_of_nodes> <walltime_hh:mm:ss>
+```
 
-Users can copy the script below into a file `run.sh` and execute it using the command above.
+Users can copy the script below into a file `run.sh`, make it executable with `chmod +x run.sh`, and execute it using the command above.
+
 ```bash linenums="1" title="run.sh"
 #!/bin/bash
 : ${PROJ_ID:=""}
