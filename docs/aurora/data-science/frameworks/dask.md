@@ -106,8 +106,8 @@ Paste the following Python script into a file called `pi_dask_gpu.py`. Here is a
 
 1. It connects to the Dask cluster (that you should start beforehand) and prints some information including the number of workers and available memory.
 2. It divides the total number of points to sample between the workers, and each worker uses its GPU to
-   - generate random points uniformly inside the unit square
-   - return the number of points that are inside the unit circle
+    - generate random points uniformly inside the unit square
+    - return the number of points that are inside the unit circle
 3. When the results from the workers are ready, they are aggregated to compute Pi.
 4. A total of 5 Pi calculations are performed and timed (the very first iterations will incur initialization and warmup costs).
 5. At the end, the Dask cluster is shut down.

@@ -244,13 +244,21 @@
     color: var(--neutral_med);
   }
 
-  .md-tooltip2__inner {
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
+  .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
-  .md-tooltip2:before {
-    background-color: var(--neutral_med-light);
+  /* The tail is drawn with a border; a background-color paints a square. */
+  .md-tooltip2--top[role=tooltip]:before {
+    border-top-color: var(--neutral_med-light);
+  }
+
+  .md-tooltip2--bottom[role=tooltip]:before {
+    border-bottom-color: var(--neutral_med-light);
   }
 
   .md-typeset code {
@@ -658,13 +666,21 @@
     color: var(--neutral_med);
   }
 
-  .md-tooltip2__inner {
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
+  .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
-  .md-tooltip2:before {
-    background-color: var(--neutral_med-light);
+  /* The tail is drawn with a border; a background-color paints a square. */
+  .md-tooltip2--top[role=tooltip]:before {
+    border-top-color: var(--neutral_med-light);
+  }
+
+  .md-tooltip2--bottom[role=tooltip]:before {
+    border-bottom-color: var(--neutral_med-light);
   }
 
   .md-typeset code {

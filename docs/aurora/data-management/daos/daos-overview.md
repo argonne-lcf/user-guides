@@ -415,9 +415,11 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 | 1024 |    100%    |  30 TB/s  |
 
 The size of your current DAOS cluster can be found using the following formula:
-```text
-daos_cluster_size = ntarget / targets_per_node
-```
+
+$$
+\text{DAOS cluster size} = \frac{\texttt{ntarget}}{\texttt{targets_per_node}}
+$$
+
 The value of `ntarget` comes from the output of:
 ```bash linenums="1"
 daos pool query ${DAOS_POOL}
@@ -430,10 +432,10 @@ An example:
 Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
 ```
 So the DAOS cluster size is:
-```text
-4096 targets / 32 targets per node 
- = 128 daos servers
-```
+
+$$
+\frac{4096\ \text{targets}}{32\ \text{targets per node}} = 128\ \text{DAOS servers}
+$$
 
 
 ## DAOS Hardware and Aurora Architecture
@@ -657,7 +659,7 @@ More information: <https://docs.daos.io/v2.6/user/container/#ownership>
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
-daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
+daos cont update-acl -e "A::pkcoff@:rwta" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
 groups                                                        # to check if the users are in the same group name
