@@ -8,7 +8,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 | Date | Update |
 | --- | --- |
-| 2026-09-01 → 2026-10 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
+| 2026-09-01 → 2026-09-28 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
 | 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-2026-02) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
@@ -28,12 +28,21 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
     - **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
     - **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
     - **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
+    - **PBS scheduler:** Updated to 2026.1.0
     - **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Rolled out to all nodes:** expected 2026-10, after about a month of testing in `next-eval`
+    - **Rolled out to all nodes:** On 2026-09-28
+
+### 2026-09-28: Rolled out to all Aurora nodes
+
+The compute image with updates to Aurora's OS, GPU drivers, and programming environment, which is available in the `next-eval` queue, will be rolled out to all of the nodes across Aurora.
+
+The changelog is in the [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entry below.
+
+In addition to the updates listed below, Aurora's **PBS scheduler will be updated to 2026.1.0.**
 
 ### 2026-09-01: Available in the `next-eval` test queue
 
-We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026. Image was updated on 9/21, see change log below for details.
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026. Image was updated on 9/21, and on 9/24. See change log below for details.
 
 **This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
 
@@ -59,8 +68,12 @@ Details of the full changelog are below (**`next-eval` test queue only**):
 #### PE 26.181.0
 
 - Unset FI_LOG_* variables (**9/21**)
-- Updated mpich - mpich/prd/5.0.0.aurora_test.b76b754 (**9/21**)
-  - Set MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE = 1024  
+- Updated mpich - mpich/prd/5.0.0.aurora_test.87e2045 (**9/24**)
+  - Set MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE = 1024
+- Added the following (**9/24**):
+  - mpich/prd/5.0.0.aurora_test.51a9474, latest version from the upstream aurora_test branch,  available for testing.
+  - mpich/opt/5.0.0.aurora_test.3c70a61, the (older) current production version on Aurora for comparison.
+- Intel VTune update to 2026.4 (**9/24**)
 - oneAPI Toolkit 2026.1
 - Standalone oneDAL 2026.1
 - Standalone advisor 2026.0
