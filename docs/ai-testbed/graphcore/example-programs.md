@@ -357,7 +357,16 @@ The command for the GPT2 model is as follows is as follows.
 ```
 It runs a `gpt2` model that fits on 4 IPUS indicated by `--ipus-per-replica`. The `--replication-factor` indicates how many times the model is replicated in a data parallel manner (4 in the above example). Hence the total number of IPUs used in this example is 16.
 
-The effective global batch size in this example is (micro)batch-size * gradient-accumulation * replication-factor = 1 x 2048 x 4 = 8192.  The device iterations indicates the total number samples loaded in 1 training step = global batch size * device iterations = 8192*8 = 65536. To learn more about these parameters and in general batching of IPUs refer [IPU batching](https://docs.graphcore.ai/projects/tutorials/en/latest/pytorch/efficient_data_loading/README.html?highlight=device%20iterations#understanding-batching-with-ipu) .
+The effective global batch size in this example is
+
+$$
+\begin{aligned}
+\text{global batch size} &= \text{micro-batch size} \times \text{gradient accumulation} \times \text{replication factor} \\
+&= 1 \times 2048 \times 4 = 8192
+\end{aligned}
+$$
+
+The device iterations parameter sets how many global batches are loaded per training step, so each step loads $8192 \times 8 = 65{,}536$ samples. To learn more about these parameters and in general batching of IPUs refer [IPU batching](https://docs.graphcore.ai/projects/tutorials/en/latest/pytorch/efficient_data_loading/README.html?highlight=device%20iterations#understanding-batching-with-ipu) .
 
 The above example is running with `generated` or `synthetic data`. To use the same example with a real world dataset, refer to [data setup](https://github.com/graphcore/examples/tree/master/nlp/gpt2/pytorch#dataset-setup).
 
