@@ -43,14 +43,11 @@ To scale out beyond 1024 nodes, users may need to set
 ```bash
 export CCL_KVS_MODE=mpi
 ```
-While using `CCL_KVS_MODE=mpi` a user might need to initialize `mpi` manually.
-From a `python`/`PyTorch` standpoint, `import mpi4py` is needed, as it performs
-the `MPI_Init`. The application **does not** need to use `mpi4py` explicitly.
+With `CCL_KVS_MODE=mpi`, you may need to initialize `MPI` manually; see
+[`MPI_Init` error with `CCL_KVS_MODE=mpi`](index.md#mpi_init-error-with-ccl_kvs_modempi).
 
-Globally, we have set `CCL_OP_SYNC=0`. Historically,
-we have been using `1` for `CCL_OP_SYNC` through the `frameowrks` module. 
-If users see change in behavior from their applications, setting this to `1` 
-should restore the legacy behavior.
+The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see
+[Hangs with `CCL_OP_SYNC=0`](index.md#hangs-with-ccl_op_sync0).
 
 A user using oneCCL without `module load frameworks` may need to set 
 `export CCL_PROCESS_LAUNCHER=pmix` manually.

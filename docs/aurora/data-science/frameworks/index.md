@@ -69,40 +69,33 @@ family("frameworks")
 ## Global Changes in `frameworks/2026.1.0`
 The following are the global changes that we have introduced in this iteration
 
-- `CCL_OP_SYNC=0`. Frameworks module **does not** set `CCL_OP_SYNC` to `1` any more.
+- `CCL_OP_SYNC=0`. Frameworks module **does not** set `CCL_OP_SYNC` to `1` any more
+  (see [Hangs with `CCL_OP_SYNC=0`](#hangs-with-ccl_op_sync0)).
 - `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the 
 `oneapi/release/2026.1.0`. The module **does not** set it any more.
 
 ## Known issues
 
-### An `MPI_Init` issue
-Users might experience an issue/error for a distributed case, where the 
-application complains about using `mpi` without initialization. Based on our 
-tests `import mpi4py` resolves this.
-Based on our tests, to scale out beyond 1024 nodes on Aurora, we may need to
-set `export CCL_KVS_MODE=mpi`, and this leads to an `MPI` initialization 
-issue because of change in how `oneCCL` interacts with `MPI`. We are 
-investigating the issue further.
+### `MPI_Init` error with `CCL_KVS_MODE=mpi`
+To scale out beyond 1024 nodes on Aurora, you may need to set
+`export CCL_KVS_MODE=mpi`. Because of a change in how `oneCCL` interacts with
+`MPI`, a distributed application may then fail with an error about using `mpi`
+before it is initialized. We are investigating the issue further.
 
 #### Workaround
-The user needs to initialize `MPI` manually. From a `python`/`PyTorch` 
-standpoint `import mpi4py` performs this `MPI_Init`, and that resolves the 
-issue. The application does not need to use `mpi4py`, just an `import` is 
-needed.
+Initialize `MPI` manually. From a `python`/`PyTorch` standpoint,
+`import mpi4py` performs the `MPI_Init`. The application does not need to use
+`mpi4py`; only the `import` is needed.
 
-### `CCL_OP_SYNC=0`
-Historically, we have been using `CCL_OP_SYNC=1` and perform
-collectives in a synchronized fashion. The `frameworks` module used to set 
-this. We have globally turned `CCL_OP_SYNC` off, because of an issue related to the 
-`XPUGraph` capturing, a new feature in this iteration.
-
-#### Side-effects
-Users might experience hangs in multi-node distributed cases.
+### Hangs with `CCL_OP_SYNC=0`
+Historically, the `frameworks` module set `CCL_OP_SYNC=1`, so collectives ran in
+a synchronized fashion. It no longer does, because of an issue with `XPUGraph`
+capturing, a new feature in this iteration. As a side effect, multi-node
+distributed jobs may hang.
 
 #### Workaround
-In cases of hangs, the current recommendation is to set this variables to `1`
-and the legacy behavior should restore. Users may also set 
-`export CCL_ATL_SYNC_COLL=1`.
+If a job hangs, restore the legacy behavior with `export CCL_OP_SYNC=1`. You may
+also set `export CCL_ATL_SYNC_COLL=1`.
 
 ## Tracking changes
 This section is an attempt to keep track of high-level changes to the module
