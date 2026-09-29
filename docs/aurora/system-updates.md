@@ -34,9 +34,9 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 ### 2026-09-28: Rolled out to all Aurora nodes
 
-The compute image with updates to Aurora's OS, GPU drivers, and programming environment, which is available in the `next-eval` queue, will be rolled out to all of the nodes across Aurora.
+The compute image with updates to Aurora's OS, GPU drivers, and programming environment, which was previously available in the `next-eval` queue, has been rolled out to all of the nodes across Aurora. As of 9/28/26, there are no nodes assigned to the `next-eval`, so jobs in this queue must be moved to another queue. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-The changelog is in the [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entry below.
+The changelog is in the [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entry below. 
 
 In addition to the updates listed below, Aurora's **PBS scheduler will be updated to 2026.1.0.**
 
