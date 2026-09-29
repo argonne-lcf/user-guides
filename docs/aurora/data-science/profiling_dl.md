@@ -72,7 +72,7 @@ UNITRACE_WRAPPER=${WORK_DIR}/unitrace_wrapper.sh
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=12
 
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
+NRANKS=$((NNODES * NRANKS_PER_NODE))
 
 module load frameworks
 

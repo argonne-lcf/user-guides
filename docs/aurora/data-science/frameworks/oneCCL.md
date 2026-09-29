@@ -39,11 +39,11 @@ Along with `module load frameworks`, which also sets `CCL_PROCESS_LAUNCHER=pmix`
 ```bash linenums="1"
 export FI_MR_CACHE_MONITOR=userfaultfd
 ```
-To scale out beyond 1024 node, users may need to set 
+To scale out beyond 1024 nodes, users may need to set 
 ```bash
 export CCL_KVS_MODE=mpi
 ```
-While using `CCL_KVS_MODE=mpi` an user might need to initialize `mpi` manually.
+While using `CCL_KVS_MODE=mpi` a user might need to initialize `mpi` manually.
 From a `python`/`PyTorch` standpoint, `import mpi4py` is needed, as it performs
 the `MPI_Init`. The application **does not** need to use `mpi4py` explicitly.
 

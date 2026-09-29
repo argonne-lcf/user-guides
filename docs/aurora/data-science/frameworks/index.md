@@ -79,7 +79,7 @@ The following are the global changes that we have introduced in this iteration
 Users might experience an issue/error for a distributed case, where the 
 application complains about using `mpi` without initialization. Based on our 
 tests `import mpi4py` resolves this.
-Based on our tests, to scale out beyond 1024 Nodes on Aurora, we may need to
+Based on our tests, to scale out beyond 1024 nodes on Aurora, we may need to
 set `export CCL_KVS_MODE=mpi`, and this leads to an `MPI` initialization 
 issue because of change in how `oneCCL` interacts with `MPI`. We are 
 investigating the issue further.
@@ -92,7 +92,7 @@ needed.
 
 ## `CCL_OP_SYNC=0`
 Historically, we have been using `CCL_OP_SYNC=1` and perform
-collectives in a synchronized fashion. The `frameowrks` module used to set 
+collectives in a synchronized fashion. The `frameworks` module used to set 
 this. We have globally turned `CCL_OP_SYNC` off, because of an issue related to the 
 `XPUGraph` capturing, a new feature in this iteration.
 
