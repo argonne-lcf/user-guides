@@ -5,13 +5,12 @@ released by Facebook. The [PyTorch home page](https://pytorch.org/), has more
 information about PyTorch, which you can refer to. For troubleshooting on 
 Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Major changes in the frameworks module of Spring 2026 (`frameworks/2025.3.1`)
+## Major changes in the frameworks module of Fall 2026 (`frameworks/2026.1.0`)
 
 - The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
 - When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
 - `import intel_extension_for_pytorch as ipex` is now deprecated. The vendor is upstreaming all of the functionality from IPEX to the mainline PyTorch distribution. If you experience performance variations after removing the import, please switch back to importing it.
 - `horovod` support for PyTorch has been removed.
-- `ONEAPI_DEVICE_SELECTOR` has been set to `"opencl:gpu;level_zero:gpu"`, if this causes any issues, please revert to Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
 
 ## Provided Installation
 
@@ -22,11 +21,11 @@ To use it from a compute node, please load the following modules:
 module load frameworks
 ```
 
-Then, you can import PyTorch in Python as usual (below showing results from the `frameworks/2025.3.1`  module):
+Then, you can import PyTorch in Python as usual (below showing results from the `frameworks/2026.1.0`  module):
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
-'2.10.0a0+git449b176'
+'2.13.0a0+gitcf30153'
 ```
 
 A simple but useful check could be to use PyTorch to get device information on a compute node. You can do this the following way:
@@ -48,8 +47,8 @@ print(f'Device properties = {torch.xpu.get_device_properties()}')
 	GPU availability: True
     Number of tiles = 12
     Current tile = 0
-    Current device ID = <torch.xpu.device object at 0x154c8fad4d40>
-    Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=d20ebf0c-4ca0-6be7-0000-000000000001, driver_version='1.6.33578+42', total_memory=65520MB, max_compute_units=448, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+    Current device ID = <torch.xpu.device object at 0x14fa94808f20>
+    Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=ff8859e9-2f1d-a7a2-0000-000000000001, driver_version='1.6.33578+77', total_memory=65520MB, local_mem_size=128KB, last_level_cache_size=196608KB, max_compute_units=448, memory_clock_rate=3200MHz, memory_bus_width=64-bit, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1, is_integrated_gpu=0)
 	```
 
 !!! info "Tile-as-device setting for AI/ML worklaods"
