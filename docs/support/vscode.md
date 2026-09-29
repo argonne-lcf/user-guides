@@ -23,8 +23,8 @@ If you have an issue with VS Code that is not covered below, then we suggest rea
 1. Run the downloaded installer (`VSCodeUserSetup-{version}.exe`).
 2. Accept the license agreement and keep the default install location unless you have a specific requirement.
 3. In the setup options, it is recommended to enable:
-   - “Add to PATH” so you can run `code .` from a terminal.
-   - “Register Code as an editor for supported file types”.
+    - “Add to PATH” so you can run `code .` from a terminal.
+    - “Register Code as an editor for supported file types”.
 4. Click **Install**, then **Finish** to launch VS Code.
 
 By default, VS Code is installed under:
@@ -70,8 +70,8 @@ VS Code can guide you through creating or updating the SSH configuration file. F
 1. Open the **Command Palette** (`Ctrl+Shift+P`).
 2. Run **Remote-SSH: Add New SSH Host...**.
 3. When prompted, enter either:
-   - `user@aurora.alcf.anl.gov`
-   - The full `ssh` command you normally run (for example, `ssh user@aurora.alcf.anl.gov`).
+    - `user@aurora.alcf.anl.gov`
+    - The full `ssh` command you normally run (for example, `ssh user@aurora.alcf.anl.gov`).
 4. VS Code will then ask which SSH config file to update. Choose the default (usually `~/.ssh/config` or the Windows equivalent).
 5. VS Code writes the appropriate entry to the chosen config file.
 
@@ -157,8 +157,8 @@ To configure the compilers on the remote host:
    ```
 3. **Open your C++ project folder** on the remote host in VS Code.
 4. Use **Terminal > Run Build Task...** or `Ctrl+Shift+B`. The C/C++ extension can:
-   - Detect `CC` or `mpicxx` in your environment.
-   - Offer to create a default `tasks.json` that compiles the active file.
+    - Detect `CC` or `mpicxx` in your environment.
+    - Offer to create a default `tasks.json` that compiles the active file.
 
 A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both module-provided GCC and a system GCC):
 
@@ -249,8 +249,8 @@ Environment Modules ensure these commands point to the compiler version selected
 
 1. Make sure `helloworld.cpp` is the active editor tab.
 2. Run the default build task:
-   - Press `Ctrl+Shift+B`, or
-   - Use **Terminal > Run Build Task...** and select the `C/C++: ... build active file` task.
+    - Press `Ctrl+Shift+B`, or
+    - Use **Terminal > Run Build Task...** and select the `C/C++: ... build active file` task.
 3. VS Code will invoke `g++` or `clang++` (provided by the loaded module) and produce an executable named `helloworld` in the same folder.
 4. Build output and any compiler errors appear in the integrated terminal.
 
@@ -303,5 +303,4 @@ Then you can delete those processes with the following:
 
 `kill -9 <PID>`
 
-###
 

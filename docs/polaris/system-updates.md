@@ -1,5 +1,39 @@
 # Polaris System Updates
 
+<!-- ## 2026-MM-DD: `conda/2026-10-01` becomes the default module -->
+
+<!-- `conda/2026-10-01` is now the default module loaded by `module load conda` on Polaris. The previous default, `conda/2025-09-25`, remains available via `module load conda/2025-09-25`. The old module may be removed entirely in the future (advance notice will be given). Virtual environments created on top of `conda/2025-09-25` should be recreated with the new module. -->
+
+## 2026-09-24: New `conda/2026-10-01` module available
+
+Following the system upgrade in August 2026, the new `conda/2026-10-01` module is now available to users on Polaris. It is recommended that all users of `conda/2025-09-25` test their workflows with the new module now. While `conda/2025-09-25` remains the default if `module load conda` is used, the default will change in a few weeks.
+
+The new module is built from source for PE 26.03 and the CUDA 13.0 driver, and updates the following major libraries and package versions:
+
+- Python 3.13
+- PyTorch 2.14
+- TensorFlow 2.21.0
+- JAX 0.11.1
+- vLLM 0.29.0
+- DeepSpeed 0.19.7
+- TransformerEngine 2.19
+- CUDA 13.0.3
+- cuDNN 9.26.0
+- NCCL 2.30.7
+- cuSPARSELt 0.9.1.1
+- TensorRT 10.16.1
+
+Some highlights of changes relative to `conda/2025-09-25`:
+
+- FlashInfer, mamba-ssm, flash-attention, megatron-core, verl, and ezpz updated to current releases
+- `globus-compute-endpoint` and `parsl` versions match the ALCF-managed Globus Compute endpoints on Polaris
+- SGLang, xformers, onnx-tf, tensorflow-probability, and falkon are no longer included
+- `torch_scatter` and `torch_sparse` are discontinued upstream; PyTorch Geometric is provided with `pyg_lib` only
+
+!!! note "Updates to older conda modules"
+
+    `conda/2025-09-25` and `conda/2025-09-28` have been updated to run on the upgraded system software. Users who encountered library-loading or MPI errors with these modules since August 19 should try again. Conda modules older than `conda/2025-09-25`, including `conda/2024-04-29`, are incompatible with the upgraded system and have been removed.
+
 ## 2026-08-19; HPCM, PE, NVIDIA driver updates
 Polaris and Eagle to be upgraded between Aug 17 - Aug 19, 2026.
 
