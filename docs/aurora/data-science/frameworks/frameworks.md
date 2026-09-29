@@ -70,6 +70,11 @@ The following are the global changes that we have introduced in this iteration
 
 # Known issues
 
+## An `MPI_Init` issue
+Users might experience an issue/error for a distributed case, where the 
+application complains about using `mpi` without initialization. Based on our 
+tests `import mpi4py` resolves this. More details are in the next issue.
+
 ## `CCL_KVS_MODE=mpi`
 Based on our tests, to scale out beyond 1024 Nodes on Aurora, we may need to
 set this environmental variable, and this leads to an `MPI` initialization 
