@@ -21,10 +21,10 @@ FNAME="${FNAME_EXT%%.*}"
 NNODES=`wc -l < $PBS_NODEFILE`
 
 WORK_DIR=/path/to/the/Python/program
-UNITRACE_DIR=/opt/aurora/26.26.0/support/tools/pti-gpu/0.16.0-rc1/ # (1)!
+UNITRACE_EXE=$(command -v unitrace) # (1)!
+UNITRACE_BIN=$(dirname ${UNITRACE_EXE})
+UNITRACE_DIR=$(dirname ${UNITRACE_BIN})
 UNITRACE_LIB=${UNITRACE_DIR}/lib64
-UNITRACE_BIN=${UNITRACE_DIR}/bin
-UNITRACE_EXE=${UNITRACE_BIN}/unitrace
 DTAG=$(date +%F_%H%M%S)
 UNITRACE_OUTDIR=${WORK_DIR}/logs/unitrace_profiles/name_of_choice_json_n${NNODES}_${DTAG}/${FNAME}_n${NNODES}_${DTAG}
 mkdir -p ${UNITRACE_OUTDIR}
@@ -47,7 +47,7 @@ else
 fi
 ```
 
-1. `UNITRACE_DIR`: This is the main `unitrace` directory, which may change after an update to the programming environment.
+1. `UNITRACE_EXE`: The `unitrace` on your `PATH`, provided by the `pti-gpu` module that `module load frameworks` loads. The other `UNITRACE_*` paths are derived from it, so they follow programming environment updates. To use a different build, set `UNITRACE_EXE` to its full path.
 2. `UNITRACE_OPTS`: These are the options that `unitrace` uses to trace data at different levels. Based on the number of options, the sizes of the output profiles will vary. Usually, enabling more options leads to a larger profile (in terms of storage in MB).
 3. `PROFRANK`: As implemented, this variable is set by the user to trace the rank of choice. For example, this wrapper will trace rank 0 on each node.
 4. `RANKCUTOFF`: This variable is Aurora-specific. As we can run as many as 12 ranks per node (without using CCS), the first 4 nodes of a job will have 48 ranks running. This provides the upper cutoff of the label (in number) of ranks, beyond which `unitrace` will not trace any rank. A user can change the number according to the number of maximum ranks running per node to set up how many ranks to be traced. `unitrace` will produce a profile (`json` file, by default) per traced rank. This profile can be viewed using the [Perfetto trace viewer](https://ui.perfetto.dev/).

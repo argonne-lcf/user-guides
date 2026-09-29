@@ -26,7 +26,7 @@ found setting this to be **optional**.
 !!! tip
     Do not forget to set the proxies from the compute node, if performing direct download on the job.
 
-[Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
+[Set the Proxies](../../getting-started-on-aurora.md#proxy)
 
 ## Access Model Weights
 

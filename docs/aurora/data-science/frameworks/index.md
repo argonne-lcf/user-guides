@@ -6,12 +6,15 @@ compute image on Aurora.
 ```bash
 module add frameworks
 echo $CONDA_PREFIX
+```
+``` { .text .no-copy }
 /opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0
+```
 
+```bash
 module show frameworks
--------------------------------------------------------------------------------
-   /opt/aurora/26.181.0/modulefiles/frameworks/2026.1.0.lua:
--------------------------------------------------------------------------------
+```
+``` { .text .no-copy title="/opt/aurora/26.181.0/modulefiles/frameworks/2026.1.0.lua" }
 help([[The Frameworks Intelpython environment.
 Includes installations of PyTorch with extensions from Intel
 

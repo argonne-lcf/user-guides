@@ -13,7 +13,7 @@ The easiest way to use LibTorch on Aurora involves loading the ML frameworks mod
 module load frameworks
 ```
 
-This will also load the consistent oneAPI SDK (version 2025.3.1) and `cmake`.
+This will also load the consistent oneAPI SDK (version 2026.1.0) and `cmake`.
 
 ## Torch libraries
 
