@@ -66,16 +66,16 @@ execute{cmd="conda activate /opt/aurora/26.181.0/frameworks/aurora_frameworks-20
 family("frameworks")
 ```
 
-# Global Changes in `frameworks/2026.1.0`
+## Global Changes in `frameworks/2026.1.0`
 The following are the global changes that we have introduced in this iteration
 
 - `CCL_OP_SYNC=0`. Frameworks module **does not** set `CCL_OP_SYNC` to `1` any more.
 - `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the 
 `oneapi/release/2026.1.0`. The module **does not** set it any more.
 
-# Known issues
+## Known issues
 
-## An `MPI_Init` issue
+### An `MPI_Init` issue
 Users might experience an issue/error for a distributed case, where the 
 application complains about using `mpi` without initialization. Based on our 
 tests `import mpi4py` resolves this.
@@ -84,30 +84,30 @@ set `export CCL_KVS_MODE=mpi`, and this leads to an `MPI` initialization
 issue because of change in how `oneCCL` interacts with `MPI`. We are 
 investigating the issue further.
 
-### Workaround
+#### Workaround
 The user needs to initialize `MPI` manually. From a `python`/`PyTorch` 
 standpoint `import mpi4py` performs this `MPI_Init`, and that resolves the 
 issue. The application does not need to use `mpi4py`, just an `import` is 
 needed.
 
-## `CCL_OP_SYNC=0`
+### `CCL_OP_SYNC=0`
 Historically, we have been using `CCL_OP_SYNC=1` and perform
 collectives in a synchronized fashion. The `frameworks` module used to set 
 this. We have globally turned `CCL_OP_SYNC` off, because of an issue related to the 
 `XPUGraph` capturing, a new feature in this iteration.
 
-### Side-effects
+#### Side-effects
 Users might experience hangs in multi-node distributed cases.
 
-### Workaround
+#### Workaround
 In cases of hangs, the current recommendation is to set this variables to `1`
 and the legacy behavior should restore. Users may also set 
 `export CCL_ATL_SYNC_COLL=1`.
 
-# Tracking changes
+## Tracking changes
 This section is an attempt to keep track of high-level changes to the module
 
-## Major changes in the `frameworks/2025.3.1`
+### Major changes in the `frameworks/2025.3.1`
 - The `torch_ccl` module has been removed. 
 `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
 - When initializing `torch.distributed`, the `backend` must be changed to 
