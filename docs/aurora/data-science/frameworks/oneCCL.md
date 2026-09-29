@@ -11,17 +11,17 @@ oneCCL can be used through:
 ## Aurora oneCCL environment
 
 ```bash linenums="1"
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> echo $CCL_ROOT
-/opt/aurora/26.26.0/oneapi/ccl/latest
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> cd /opt/aurora/26.26.0/oneapi/ccl/
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:/opt/aurora/26.26.0/oneapi/ccl> ls -lah
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:~> echo $CCL_ROOT
+/opt/aurora/26.181.0/oneapi/ccl/latest
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:~> cd /opt/aurora/26.181.0/oneapi/ccl/
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:/opt/aurora/26.181.0/oneapi/ccl> ls -lah
 total 0
-drwxr-xr-x  3 root root  44 Feb 18 04:17 .
-drwxr-xr-x 31 root root 742 Feb 18 04:23 ..
-drwxr-xr-x  8 root root 117 Feb 18 04:17 2021.17
-lrwxrwxrwx  1 root root   7 Feb 18 04:17 latest -> 2021.17
+drwxr-xr-x  3 root root  43 Sep 23 21:59 .
+drwxr-xr-x 27 root root 652 Sep 23 22:07 ..
+drwxr-xr-x  8 root root 117 Sep 23 21:59 2022.1
+lrwxrwxrwx  1 root root   6 Sep 23 21:59 latest -> 2022.1
 ```
-`2021.17` is the current version of oneCCL that is available to users 
+`2022.1` is the current version of oneCCL that is available to users 
 through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
@@ -35,11 +35,19 @@ for training workloads, and we have tested up to 1024 nodes.
 **Minimal set**
 
 ```bash linenums="1"
-export CCL_PROCESS_LAUNCHER=pmix
-export CCL_ATL_TRANSPORT=mpi
 export FI_MR_CACHE_MONITOR=userfaultfd
+```
+To scale out beyond 1024 node, users may need to set 
+```bash
 export CCL_KVS_MODE=mpi
 ```
+While using `CCL_KVS_MODE=mpi` an user might need to initialize `mpi` manually.
+From a `python`/`PyTorch` standpoint, `import mpi4py` is needed, as it performs
+the `MPI_Init`. The application **does not** need to use `mpi4py` explicitly.
+
+Globally, we have set `CCL_OP_SYNC=0` and `CCL_ATL_SYNC_COLL=0`. Historically,
+we have been using `1`. If users see change in behavior from their applications,
+setting them to `1` should restore the legacy behavior.
 
 Beyond that an application should tune based on the list below. This list is not exhaustive.
 
