@@ -4,35 +4,20 @@ JAX is another popular Python package for accelerated computing. JAX is built on
 
 ## JAX on Polaris
 
-JAX is installed on Polaris via the `jax` module, available with:
+JAX is installed on Polaris in the `conda` module. To use it from a compute node, please do:
 ```bash
-module use /soft/modulefiles; module load jax
+module use /soft/modulefiles
+module load conda
+conda activate
 ```
 
-Then, you can load JAX in `python` as usual (below showing results from the `conda/2024-04-29` module):
+Then, you can load JAX in `python` as usual (below showing results from the `conda/2026-10-01` module):
 
 ```python
 >>> import jax
 >>> jax.__version__
-'0.4.26'
+'0.11.1'
 >>>
-```
-
-## Notes on JAX 0.4.26
-
-On Polaris, due to a bug, an environment variable must be set to use JAX on GPUs. The following code will crash:
-```python
-import jax.numpy as numpy
-a = numpy.zeros(1000)
-```
-outputting an error that looks like:
-```python
-jaxlib.xla_extension.XlaRuntimeError: UNKNOWN: no kernel image is available for execution on the device
-```
-
-You can fix this by setting an environment variable:
-```bash
-export XLA_FLAGS="--xla_gpu_force_compilation_parallelism=1"
 ```
 
 ## Scaling JAX to multiple GPUs and multiple Nodes
@@ -72,9 +57,9 @@ def foo(arr):
 
 with jax.default_device(target_device):
     a = jnp.zeros((3, 3))
-    print(f"Rank {rank}, local rank {local_rank}, a.device is {a.device()}")
+    print(f"Rank {rank}, local rank {local_rank}, a.device is {a.device}")
     result = foo(a)
-    print(f"Rank {rank}, local rank {local_rank}, result.device is {result.device()}")
+    print(f"Rank {rank}, local rank {local_rank}, result.device is {result.device}")
 
     import time
     print("Sleeping for 5 seconds if you want to look at nvidia-smi ... ")

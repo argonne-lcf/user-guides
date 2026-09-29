@@ -28,7 +28,7 @@ You can re-synchronize your token using the following procedure:
 
 1. Have your physical token ready.
 2. Obtain a challenge sequence:
-   - Initiate an SSH session to a host that allows token authentication (such as `polaris.alcf.anl.gov`). At the password prompt, just hit “Enter”. This will cause the physical token to produce a challenge string consisting of 8 numbers.
+    - Initiate an SSH session to a host that allows token authentication (such as `polaris.alcf.anl.gov`). At the password prompt, just hit “Enter”. This will cause the physical token to produce a challenge string consisting of 8 numbers.
 3. Hold down the button on your token for a few seconds until the display says "Init," then let go.
 4. The token will scroll through a series of menu options. When it displays "ReSync," hit the button again.
 5. The display will say “Resync?0”

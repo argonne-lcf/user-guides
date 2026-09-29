@@ -41,13 +41,13 @@ module load cudatoolkit-standalone/12.4.0
 ```
 
 5. Proceed with building Amber binaries by first modifying `run_cmake` and setting the following:
-   * `-DMPI=TRUE`
-   * `-DCUDA=TRUE`
-   * `-DCOMPILER=MANUAL`
-   * `-DDISABLE_TOOLS=FEW`
-   * `-DCMAKE_C_COMPILER=gcc-12`
-   * `-DCMAKE_CXX_COMPILER=g++-12`
-   * `-DCMAKE_Fortran_COMPILER=gfortran-12`
+    * `-DMPI=TRUE`
+    * `-DCUDA=TRUE`
+    * `-DCOMPILER=MANUAL`
+    * `-DDISABLE_TOOLS=FEW`
+    * `-DCMAKE_C_COMPILER=gcc-12`
+    * `-DCMAKE_CXX_COMPILER=g++-12`
+    * `-DCMAKE_Fortran_COMPILER=gfortran-12`
 
 ```bash
 cd build
