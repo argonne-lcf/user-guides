@@ -11,20 +11,20 @@ module load conda
 conda activate
 ```
 
-Then, you can load TensorFlow in `python` as usual (below showing results from the `conda/2024-04-29` module):
+Then, you can load TensorFlow in `python` as usual (below showing results from the `conda/2026-10-01` module):
 
 ```python
 >>> import tensorflow as tf
 >>> tf.__version__
-'2.16.1'
+'2.21.0'
 >>>
 ```
 
-This installation of TensorFlow was built from source, and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2024-04-29` module):
+This installation of TensorFlow was built from source, and the CUDA libraries it uses are found via the `CUDA_HOME` environment variable (below showing results from the `conda/2026-10-01` module):
 
 ```bash
 $ echo $CUDA_HOME
-/soft/compilers/cudatoolkit/cuda-12.4.1/
+/soft/compilers/cudatoolkit/cuda-13.0.3/
 ```
 
 If you need to build applications that use this version of TensorFlow and CUDA, we recommend using these CUDA libraries to ensure compatibility. We periodically update the TensorFlow release, though updates will come in the form of new versions of the `conda` module.
