@@ -71,7 +71,7 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
    ssh -L 9999:127.0.0.1:9999 <your-username>@<login_node_hostname>
    ```
    where `<login_node_hostname>` is the specific login node address noted in step 1.
-   - Replace `9999` with another port if it is unavailable.
+    - Replace `9999` with another port if it is unavailable.
 
 4. **Access JupyterLab**:
    Open your browser and navigate to the address copied above:

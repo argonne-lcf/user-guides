@@ -23,15 +23,15 @@ This is a collection of known issues that have been encountered on Polaris. Docu
 
 1. You should be able to `ssh` freely (without needing a password) between your assigned compute nodes on Polaris. If you are running into `ssh` issues, check for the following causes:
 
-   1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 /home/<username>`).
-   2. Confirm the following files exist in your `.ssh` directory and the permissions are set to the following:
-      1. `-rw-------  (600)  authorized_keys`
-      2. `-rw-r--r--  (644)  config`
-      3. `-rw-------  (600)  id_rsa`
-      4. `-rw-r--r--  (644)  id_rsa.pub`
-   3. If you do not have the files mentioned above, you will need to create them.
-      1. You can generate an `id_rsa` file with the following command: `ssh-keygen -t rsa`
-   4. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
+    1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 /home/<username>`).
+    2. Confirm the following files exist in your `.ssh` directory and the permissions are set to the following:
+        1. `-rw-------  (600)  authorized_keys`
+        2. `-rw-r--r--  (644)  config`
+        3. `-rw-------  (600)  id_rsa`
+        4. `-rw-r--r--  (644)  id_rsa.pub`
+    3. If you do not have the files mentioned above, you will need to create them.
+        1. You can generate an `id_rsa` file with the following command: `ssh-keygen -t rsa`
+    4. Copy the contents of your `.ssh/id_rsa.pub` file to `.ssh/authorized_keys`.
 
 ## Set `TMPDIR` to avoid `AF_UNIX path too long` error
 
