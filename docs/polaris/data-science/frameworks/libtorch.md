@@ -1,16 +1,16 @@
 # LibTorch C++ Library
 
-LibTorch is a C++ library for Torch, with many of the APIs that are available in PyTorch. Users can find more information in the [PyTorch documentation](https://pytorch.org/cppdocs/installing.html). This is useful for integrating the Torch ML framework into traditional HPC simulation codes and therefore enables training and inference of ML models. During compilation, Intel optimizations will be activated automatically once the IPEX dynamic library is linked.
+LibTorch is a C++ library for Torch, with many of the APIs that are available in PyTorch. Users can find more information in the [PyTorch documentation](https://pytorch.org/cppdocs/installing.html). This is useful for integrating the Torch ML framework into traditional HPC simulation codes and therefore enables training and inference of ML models.
 
 ## Environment Setup
 
 To use LibTorch on Polaris, load the ML frameworks module:
 ```bash
 module use /soft/modulefiles
-module load conda/2024-04-29
+module load conda
 conda activate
 ```
-This will also load `PrgEnv-gnu/8.5.0` and `cmake`.
+This will also load `PrgEnv-gnu`, and `cmake` is available in the conda environment.
 
 ## Torch Libraries
 
@@ -36,7 +36,7 @@ set(TORCH_LIBS ${TORCH_LIBRARIES})
 add_executable(exe main.cpp)
 target_link_libraries(exe ${TORCH_LIBS})
 
-set_property(TARGET exe PROPERTY CXX_STANDARD 17)
+set_property(TARGET exe PROPERTY CXX_STANDARD 20)
 ```
 
 and configuring the build with:

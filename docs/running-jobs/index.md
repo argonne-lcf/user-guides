@@ -261,7 +261,7 @@ mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTH
 
 Users should add `-M <email address>` if they want notifications as a best practice.
 
-**Note:** For users with '<username>@alcf.anl.gov' email addresses, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add `#PBS -m n` to your script.
+**Note:** For users with `<username>@alcf.anl.gov` email addresses, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add `#PBS -m n` to your script.
 
 #### Specifying Filesystems
 

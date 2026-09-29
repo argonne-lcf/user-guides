@@ -5,12 +5,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [Support Tickets](support/ticket.md)
-- [ALCF User Slack](support/get-help/alcf-users-slack.md)
-- [MyALCF](account-project-management/MyALCF.md)
-- [Upcoming Events](https://www.alcf.anl.gov/events)
-- [Inference](services/inference-endpoints.md)
-- [Training Videos](https://www.alcf.anl.gov/support-center/training)
+- [:material-face-agent:<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
+- [:material-slack:<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
+- [:material-view-quilt-outline:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
+- [:material-calendar-clock-outline:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
+- [:material-auto-fix:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [:material-play-box-multiple-outline:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
 
