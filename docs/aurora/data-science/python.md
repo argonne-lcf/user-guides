@@ -1,12 +1,8 @@
 # Python on Aurora
 
-!!! warning "Changes to device selector"
-
-    The latest `frameworks` module for PyTorch sets the environment variable `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"` to enable Triton-XPU, vLLM, Ray, and dpctl functionality. If you encounter issues, you can revert to `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`.
-
 !!! warning "Importing Python modules at scale"
 
-	We have system-installed frameworks modules, which contain common AI/ML packages such as PyTorch and TensorFlow. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
+	We have system-installed frameworks modules, which contain common AI/ML packages such as PyTorch and vllm. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
 
 	!!! info
 	
@@ -21,18 +17,11 @@ For PyTorch users, we recommend
 module load frameworks
 ```
 
-and for TensorFlow users we provide a separate module accessible with
-
-```bash
-module load tensorflow
-module load mpich/opt/develop-git.6037a7a
-```
-
 Please note that:
 
-- Both modules automatically load a `conda` environment with GPU-supported builds of the respective framework libraries along with other popular Python and ML packages. 
-- The `frameworks` and `tensorflow`  modules may load a different oneAPI compiler SDK than the default module.
-- The `frameworks` and `tensorflow` modules are updated approximately every quarter.
+- The modules automatically load a `conda` environment with GPU-supported builds of the respective framework libraries along with other popular Python and ML packages. 
+- The `frameworks` module may load a different oneAPI compiler SDK and additional libraries than the default module.
+- The `frameworks` module are updated approximately every quarter.
 
 For more information on PyTorch and TensorFlow on Aurora, please see the respective pages: 
 
@@ -80,13 +69,12 @@ pip install --user ...
 ```
 which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`.
 Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`.
-Cloning the Anaconda environment provided with the `frameworks` or `tensorflow` modules, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
+Cloning the Anaconda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
 
 ## Intel's Data Parallel Extensions for Python (DPEP)
 
 !!! warning "Managing GPU and CPU devices on Aurora"
 	On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable. 
-	The latest `frameworks` module sets `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"`, meaning that only the GPU are visible, however both through Level Zero and OpenCL. This will trick `dpctl` and `dpnp` into seeing 24 visible devices. Users can fix this by setting `export ONEAPI_DEVICE_SELECTOR=level_zero:gpu`.
 
 	Additionally, by default the CPU is not exposed as a device (e.g., `dpctl.has_cpu_devices()` returns `False`). This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it.
 	To access the CPU as a SYCL device, set `export ONEAPI_DEVICE_SELECTOR=opencl:cpu`, or to access both GPU and CPU set `export ONEAPI_DEVICE_SELECTOR="opencl:cpu;level_zero:gpu"`.

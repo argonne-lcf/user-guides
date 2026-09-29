@@ -7,10 +7,17 @@ Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Major changes in the frameworks module of Fall 2026 (`frameworks/2026.1.0`)
 
+- When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
+- `export CCL_OP_SYNC=1` is **not** set any more.
+- `ONEAPI_DEVICE_SELECTOR` is **not** set by the module any more. Defaults to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the `oneapi/release/2026.1.0`.
+
+## Major changes in the frameworks module of Spring 2026 (`frameworks/2025.3.1`)
+
 - The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
 - When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
 - `import intel_extension_for_pytorch as ipex` is now deprecated. The vendor is upstreaming all of the functionality from IPEX to the mainline PyTorch distribution. If you experience performance variations after removing the import, please switch back to importing it.
 - `horovod` support for PyTorch has been removed.
+- `ONEAPI_DEVICE_SELECTOR` has been set to `"opencl:gpu;level_zero:gpu"`, if this causes any issues, please revert to Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
 
 ## Provided Installation
 

@@ -34,6 +34,8 @@ for training workloads, and we have tested up to 1024 nodes.
 
 **Minimal set**
 
+Along with `module load frameworks`, which also sets `CCL_PROCESS_LAUNCHER=pmix`
+
 ```bash linenums="1"
 export FI_MR_CACHE_MONITOR=userfaultfd
 ```
@@ -45,21 +47,22 @@ While using `CCL_KVS_MODE=mpi` an user might need to initialize `mpi` manually.
 From a `python`/`PyTorch` standpoint, `import mpi4py` is needed, as it performs
 the `MPI_Init`. The application **does not** need to use `mpi4py` explicitly.
 
-Globally, we have set `CCL_OP_SYNC=0` and `CCL_ATL_SYNC_COLL=0`. Historically,
-we have been using `1`. If users see change in behavior from their applications,
-setting them to `1` should restore the legacy behavior.
+Globally, we have set `CCL_OP_SYNC=0`. Historically,
+we have been using `1` for `CCL_OP_SYNC` through the `frameowrks` module. 
+If users see change in behavior from their applications, setting this to `1` 
+should restore the legacy behavior.
+
+A user using oneCCL without `module load frameworks` may need to set 
+`export CCL_PROCESS_LAUNCHER=pmix` manually.
 
 Beyond that an application should tune based on the list below. This list is not exhaustive.
 
 Users of `vLLM` and other inference services should rely on the variables set by the `frameworks` module.
 
 ```bash linenums="1"
-export CCL_PROCESS_LAUNCHER=pmix  
-export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE_SCALEOUT="direct:0-1048576;rabenseifner:1048577-max"  # currently best allreduce algorithm at large scale
 export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
 
-export CCL_KVS_MODE=mpi
 export CCL_CONFIGURATION_PATH=""
 export CCL_CONFIGURATION=cpu_gpu_dpcpp
 export CCL_KVS_CONNECTION_TIMEOUT=600 
@@ -202,47 +205,6 @@ cores free, in case, the user may want to use other services like copper and
 DAOS along with their application. The second oneCCL option is to delegate 
 task of picking cores to the system. In this case, the user should not declare
 or export the `CCL_WORKER_AFFINITY` variable. 
-
-## Horovod
-
-TensorFlow Horovod example:
-
-```python linenums="1"
-import datetime
-from time import perf_counter_ns
-import sys
-
-import tensorflow as tf
-import horovod.tensorflow as hvd
-import intel_extension_for_tensorflow as itex
-print(itex.__version__)
-hvd.init()
-
-hvd_local_rank = hvd.local_rank()
-hvd_size = hvd.size()
-print("hvd_local_rank = %d  hvd_size = %d" % (hvd_local_rank, hvd_size))
-
-xpus = tf.config.experimental.list_physical_devices('XPU')
-logical_gpus = tf.config.experimental.set_visible_devices(xpus[hvd.local_rank()], 'XPU')
-print(xpus)
-tf.debugging.set_log_device_placement(True)
-
-dim_size = int(int(sys.argv[1]) / 4)
-elapsed1 = []
-
-for _ in range(5):
-    with tf.device(f"XPU:{hvd_local_rank % 12}"):
-        x = tf.ones([1, dim_size], dtype=tf.float32)
-        # print(x)
-        t5 = perf_counter_ns() 
-        y = hvd.allreduce(x, average=False)
-        t6 = perf_counter_ns()
-        elapsed1.append(t6 - t5)
-
-if hvd.rank() == 0:
-    for e in elapsed1:
-        print(e)
-```
 
 ## PyTorch DDP
 
