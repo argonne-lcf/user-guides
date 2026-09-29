@@ -21,7 +21,7 @@ cd nekRS_alcf
 git checkout v26
 ```
 
-Users who need a different version of nekRS can contact <support@alcf.anl.gov> for assistance.
+We encourage users to run their simulations with the `v26` branch on both Polaris and Aurora. If you have difficulty using it or need a different version of nekRS, contact <support@alcf.anl.gov>.
 
 ## Building on Polaris
 
