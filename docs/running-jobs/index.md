@@ -395,7 +395,7 @@ Occasionally, the job will still show up in `qstat` after you try and `qdel` it.
 
 [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 
-This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) were allocated, and if the node is shared or not (sharing).
+This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus), and if the node is shared or not (sharing).
 
 `pbsnodes <node name>`: Everything there is to know about a node
 
