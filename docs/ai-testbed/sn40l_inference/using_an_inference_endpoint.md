@@ -28,47 +28,80 @@ In the model selection dropdown, you can see the status of each model:
 
 For programmatic access, you can use the API endpoints directly.
 
+!!! tip "Preferred: alcf-ai"
+    The [`alcf-ai`](../../services/inference-endpoints.md#alcf-ai-cli-and-sdk) CLI and Python SDK support Metis directly. Authenticate with [`alcf-tokens`](https://pypi.org/project/alcf-tokens/), then use `alcf-ai` for inference:
+
+    ```bash
+    alcf-tokens login
+    alcf-ai ls-jobs metis
+    alcf-ai chat --cluster metis --model gpt-oss-120b "Explain quantum computing in simple terms."
+    ```
+
 #### 1. Setup Your Environment
 
 You can run the following setup from any internet-connected machine (e.g. your local machine or an ALCF node).
 
-```bash
-# Create a new Conda environment
-conda create -n globus_env python==3.11.9 --y
-conda activate globus_env
+=== "alcf-tokens"
 
-# Install necessary packages
-pip install openai globus_sdk
-```
+    With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), the CLI commands below run directly with `uvx` and nothing needs to be installed. For the Python examples, start Python with the required packages:
 
-Note: A Python virtual environment may be used as well:
-```bash
-virtualenv -p python3.10 globus_env
-source globus_env/bin/activate
-pip install openai globus_sdk
-```
+    ```bash
+    uv run --with openai --with alcf-tokens python
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    # Create and activate a virtual environment
+    python -m venv .venv
+    source .venv/bin/activate
+
+    # Install necessary packages
+    pip install openai globus-sdk
+
+    # Download the deprecated authentication helper script
+    wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/heads/main/inference_auth_token.py
+    # If `wget` is unavailable on your system, try `curl -O` instead.
+    ```
 
 #### 2. Authenticate
 
 To access the endpoints, you need an authentication token.
 
-```bash
-# Download the authentication helper script
-wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/heads/main/inference_auth_token.py
+=== "alcf-tokens"
 
-# Authenticate with your Globus account
-python inference_auth_token.py authenticate
-```
+    ```bash
+    alcf-tokens login
+    ```
 
-This will generate and store access and refresh tokens in your home directory. To see how much time you have left before your access token expires, type the following command (`units` can be seconds, minutes, or hours):
+=== "Auth script (Deprecated)"
 
-```bash
-python inference_auth_token.py get_time_until_token_expiration --units seconds
-```
+    ```bash
+    python inference_auth_token.py authenticate
+    ```
+
+!!! warning "Separate token caches"
+    `alcf-tokens`/`alcf-ai` and the `inference_auth_token.py` helper use **different** Globus token caches, so authenticating with one does not authenticate the other.
+
+To verify your token, print it to the command line, or check how much time you have before it expires (`units` can be seconds, minutes, or hours):
+
+=== "alcf-tokens"
+
+    ```bash
+    alcf-tokens test-token inference
+    alcf-tokens get-token inference
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    python inference_auth_token.py get_time_until_token_expiration --units seconds
+    python inference_auth_token.py get_access_token
+    ```
 
 !!! warning "Token Validity"
-    - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
-    - An internal policy requires re-authentication every 7 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
+    - Access tokens are valid for 48 hours. Both `alcf-tokens get-token inference` and `python inference_auth_token.py get_access_token` will automatically refresh your token if it has expired.
+    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login` (or `alcf-tokens login inference` to refresh only the inference token).
 
 #### 3. Make a Test Call
 
@@ -80,7 +113,7 @@ Once authenticated, you can make a test call using cURL or Python.
     #!/bin/bash
 
     # Get your access token
-    access_token=$(python inference_auth_token.py get_access_token)
+    access_token=$(alcf-tokens get-token inference)
 
     curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
          -H "Authorization: Bearer ${access_token}" \
@@ -95,10 +128,10 @@ Once authenticated, you can make a test call using cURL or Python.
 
     ```python
     from openai import OpenAI
-    from inference_auth_token import get_access_token
+    from alcf_tokens.auth import get_access_token
 
     # Get your access token
-    access_token = get_access_token()
+    access_token = get_access_token("inference")
 
     client = OpenAI(
         api_key=access_token,
@@ -122,7 +155,7 @@ The list of currently supported chat-completion models on Metis can be found in 
 You can programmatically query all available models and endpoints:
 
 ```bash
-    access_token=$(python inference_auth_token.py get_access_token)
+    access_token=$(alcf-tokens get-token inference)
     curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}" | jq -C '.clusters.metis'
 ```

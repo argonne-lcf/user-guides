@@ -72,28 +72,42 @@ See [Python Environments](python-environments.md) for the other supported packag
 
 To access the endpoints, you need an authentication token.
 
-```bash
-# Download the authentication helper script
-wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/heads/main/inference_auth_token.py
+=== "alcf-tokens"
 
-# Authenticate with your Globus account
-python inference_auth_token.py authenticate
-```
+    ```bash
+    alcf-tokens login
+    ```
 
-This will generate and store access and refresh tokens in your home directory. To see how much time you have left before your access token expires, type the following command (`units` can be seconds, minutes, or hours):
+    A single login authorizes all supported ALCF services. If you plan to stage data for batch inference, authorize your Globus collections in the same login with `--authorize-transfer`. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for details.
 
-```bash
-python inference_auth_token.py get_time_until_token_expiration --units seconds
-```
+=== "Auth script (Deprecated)"
 
-To print your token to the command line, this command can be used:
-```bash
-python inference_auth_token.py get_access_token
-```
+    ```bash
+    python inference_auth_token.py authenticate
+    ```
+
+!!! warning "Separate token caches"
+    `alcf-tokens`/`alcf-ai` and the `inference_auth_token.py` helper use **different** Globus token caches, so authenticating with one does not authenticate the other.
+
+To verify your token, print it to the command line, or check how much time you have before it expires (`units` can be seconds, minutes, or hours):
+
+=== "alcf-tokens"
+
+    ```bash
+    alcf-tokens test-token inference
+    alcf-tokens get-token inference
+    ```
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    python inference_auth_token.py get_time_until_token_expiration --units seconds
+    python inference_auth_token.py get_access_token
+    ```
 
 !!! warning "Token Validity"
-    - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
-    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `python inference_auth_token.py authenticate --force`.
+    - Access tokens are valid for 48 hours. Both `alcf-tokens get-token inference` and `python inference_auth_token.py get_access_token` will automatically refresh your token if it has expired.
+    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login` (or `alcf-tokens login inference` to refresh only the inference token).
 
 #### 3. Make a Test Call
 
@@ -105,7 +119,7 @@ Once authenticated, you can make a test call using cURL or Python.
     #!/bin/bash
 
     # Get your access token
-    access_token=$(python inference_auth_token.py get_access_token)
+    access_token=$(alcf-tokens get-token inference)
 
     curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
          -H "Authorization: Bearer ${access_token}" \
@@ -120,10 +134,10 @@ Once authenticated, you can make a test call using cURL or Python.
 
     ```python
     from openai import OpenAI
-    from inference_auth_token import get_access_token
+    from alcf_tokens.auth import get_access_token
 
     # Get your access token
-    access_token = get_access_token()
+    access_token = get_access_token("inference")
 
     client = OpenAI(
         api_key=access_token,
@@ -154,7 +168,7 @@ Three clusters are currently active, with additional systems coming soon:
 !!! tip "Discovering Available Models"
     You can programmatically query all available models and endpoints:
     ```bash
-    access_token=$(python inference_auth_token.py get_access_token)
+    access_token=$(alcf-tokens get-token inference)
     curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}"
     ```
@@ -173,7 +187,7 @@ Three clusters are currently active, with additional systems coming soon:
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         # Check Sophia cluster status
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/jobs" \
@@ -197,7 +211,7 @@ Three clusters are currently active, with additional systems coming soon:
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
          -H "Authorization: Bearer ${access_token}"
@@ -213,7 +227,7 @@ Three clusters are currently active, with additional systems coming soon:
 
         ```bash
         #!/bin/bash
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
         
         # Sophia cluster example
         curl -X POST "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/chat/completions" \
@@ -253,9 +267,9 @@ Three clusters are currently active, with additional systems coming soon:
 
         ```python
         from openai import OpenAI
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
         
         # Sophia cluster
         client = OpenAI(
@@ -312,9 +326,9 @@ Three clusters are currently active, with additional systems coming soon:
         ```python
         from openai import OpenAI
         import base64
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
         client = OpenAI(
             api_key=access_token,
             base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
@@ -353,9 +367,9 @@ Three clusters are currently active, with additional systems coming soon:
 
         ```python
         from openai import OpenAI
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
         client = OpenAI(
             api_key=access_token,
             base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1"
@@ -665,11 +679,11 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 }
 ```
 
-Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
+Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-tokens`.
 
 ```sh
-alcf-ai auth login # follow interactive instructions to login
-export ALCF_AI_TOKEN="$(alcf-ai auth get-access-token)" # pull a token and store
+alcf-tokens login # follow interactive instructions to login
+export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)" # pull a token and store
 
 opencode
 ```
@@ -685,7 +699,7 @@ Add the following provider to your `~/.pi/agent/models.json`.
         "alcf-minerva": {
             "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
                 "api": "openai-completions",
-                "apiKey": "!alcf-ai auth get-access-token",
+                "apiKey": "!alcf-tokens get-token inference",
                 "compat": {
                     "supportsDeveloperRole": false,
                     "supportsReasoningEffort": false
@@ -998,7 +1012,7 @@ When available, model serving configuration details can be viewed for each clust
 #!/bin/bash
 
 # Get your access token
-access_token=$(python inference_auth_token.py get_access_token)
+access_token=$(alcf-tokens get-token inference)
 
 # Check serving configuration for all Sophia models
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
@@ -1033,7 +1047,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         # Define the base URL
         base_url="https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1/batches"
@@ -1062,10 +1076,10 @@ For large-scale inference, the batch processing service allows you to submit a f
         ```python
         import requests
         import json
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Get your access token
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
 
         # Define headers and URL
         headers = {
@@ -1094,7 +1108,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         # Get results of specific batch
         batch_id="your-batch-id"
@@ -1105,10 +1119,10 @@ For large-scale inference, the batch processing service allows you to submit a f
     === "Python"
         ```python
         import requests
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Get your access token
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
 
         # Define headers and URL
         headers = {
@@ -1146,7 +1160,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         # List all batches
         curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches" \
@@ -1160,10 +1174,10 @@ For large-scale inference, the batch processing service allows you to submit a f
     === "Python"
         ```python
         import requests
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Get your access token
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
 
         # Define headers and URL
         headers = {
@@ -1211,7 +1225,7 @@ For large-scale inference, the batch processing service allows you to submit a f
         #!/bin/bash
 
         # Get your access token
-        access_token=$(python inference_auth_token.py get_access_token)
+        access_token=$(alcf-tokens get-token inference)
 
         # Get status of specific batch
         batch_id="your-batch-id"
@@ -1222,10 +1236,10 @@ For large-scale inference, the batch processing service allows you to submit a f
     === "Python"
         ```python
         import requests
-        from inference_auth_token import get_access_token
+        from alcf_tokens.auth import get_access_token
 
         # Get your access token
-        access_token = get_access_token()
+        access_token = get_access_token("inference")
 
         # Define headers and URL
         headers = {
@@ -1268,9 +1282,9 @@ On Sophia, from the 10 nodes reserved for inference, 5 nodes are dedicated to se
 ## Troubleshooting
 
 - **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](#querying-endpoint-status) for an example.
-- **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate using the `--force` flag.
+- **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate. With `alcf-tokens`/`alcf-ai`, re-run `alcf-tokens login` (optionally `alcf-tokens login inference` to refresh only the inference token). With the `inference_auth_token.py` helper, re-run `python inference_auth_token.py authenticate --force`.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`. It is currently internal only to ALCF and will be made public in the future.
-- **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`), delete it, and restart the authentication process.
+- **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Delete the cached tokens file and restart the authentication process. The file depends on which client you use: the `inference_auth_token.py` helper stores tokens at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`, while `alcf-tokens` and `alcf-ai` store them at `~/.globus/app/7f3e61f5-e0de-4e8f-9150-0a62c65dda63/alcf_tokens/tokens.json` (or run `alcf-tokens clear-tokens`).
 
 ## Notifications
 
