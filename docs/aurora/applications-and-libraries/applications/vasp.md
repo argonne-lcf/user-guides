@@ -201,7 +201,7 @@ export I_MPI_OFFLOAD=1 #enable GPU to GPU comm
 export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
 export AFFINITY=$(which gpu_tile_compact.sh)
 
-bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
+bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
 
