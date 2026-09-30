@@ -13,27 +13,16 @@ Then, you can import `vllm` as follows
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
-'0.15.0'
+'0.26.1.dev0+g568afb3a1.d20260803'
 ```
 
 ## Known Issue on Aurora
-There is a known issue related to populating the `modelinfos` in the 
-`VLLM_CACHE_ROOT` directory to run a model for the first time, which manifests
-as a `validation error for ModelConfig`. The workaround
-for this issue is to pre-populate the configs by direct downloading them. 
-We provide a script to do so here:
-
-[vLLM Workaround](https://github.com/argonne-lcf/frameworks-sdk/blob/main/tests/single_node/functionality/vllm/xpu-model-inspection-hidden-sigsegv/WA/vllm_build_all_modelinfo_caches.py#L16C1-L21C54)
+`CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
 !!! tip
-    Do not forget to set the proxies from the compute node before the prepopulation step.
+    Do not forget to set the proxies from the compute node, if performing direct download on the job.
 
-[Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
-
-Each time we choose to change the location of the `VLLM_CACHE_ROOT` 
-(by default, `~/.cache/vllm`), we need to do the re-population step, otherwise,
-based on our testing, it is persistent. This is a temporary measure, we expect
-to provide a fix in the next module update.
+[Set the Proxies](../../getting-started-on-aurora.md#proxy)
 
 ## Access Model Weights
 
@@ -129,10 +118,15 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
     * Setting `--max-model-len` can be important in order to fit the model on the GPUs.
     * Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. On Aurora, setting `TP` size equal to the number of GPUs on the node (12 PVC tiles per node) is usually not the preferred approach; `TP=4,8` are preferred instead. 
     * Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. Usually, `PP` is set to the number of nodes used, which was 2 in the case above.
-    * The product `TP x PP` indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16`, `(num. billion paramemers x 2) / GPU GB mem` gives the number of GPUs needed. 
+    * The product $\text{TP} \times \text{PP}$ indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16` (2 bytes per parameter), the minimum number of GPUs needed to hold the model weights is
+
+        $$
+        N_\text{GPU} \geq \frac{2 \times \text{parameters (billions)}}{\text{GPU memory (GB)}}
+        $$
+
+        For example, `Llama-3.1-405B-Instruct` on 64 GB PVC tiles needs $2 \times 405 / 64 \approx 12.7$, so at least 13 GPUs. The command above uses $\text{TP} \times \text{PP} = 8 \times 2 = 16$, which leaves room for the KV cache.
 
 
 ## Scaling vLLM Workflows
 
-To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup.
-These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
+To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup. These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
