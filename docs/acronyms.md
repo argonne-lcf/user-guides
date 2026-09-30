@@ -48,6 +48,7 @@ plugin replacement: https://github.com/squidfunk/mkdocs-material/issues/6704-->
 | LDAP    | Lightweight Directory Access Protocol |
 | LLM     | Large Language Model |
 | MFA     | Multi-Factor Authentication |
+| MIG     | Multi-Instance GPU (NVIDIA) |
 | MKL     | Math Kernel Library |
 | MPI     | Message Passing Interface |
 | MPS     | Multi-Process Service (NVIDIA) |
