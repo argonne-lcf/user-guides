@@ -32,7 +32,6 @@ For programmatic access, you can use the API endpoints directly.
     The [`alcf-ai`](../../services/inference-endpoints.md#alcf-ai-cli-and-sdk) CLI and Python SDK support Metis directly. Authenticate with [`alcf-tokens`](https://pypi.org/project/alcf-tokens/), then use `alcf-ai` for inference:
 
     ```bash
-    alcf-tokens login
     alcf-ai ls-jobs metis
     alcf-ai chat --cluster metis --model gpt-oss-120b "Explain quantum computing in simple terms."
     ```

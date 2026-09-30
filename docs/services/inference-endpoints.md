@@ -74,36 +74,22 @@ To access the endpoints, you need an authentication token.
 
 === "alcf-tokens"
 
-    ```bash
-    alcf-tokens login
-    ```
-
-    A single login authorizes all supported ALCF services. If you plan to stage data for batch inference, authorize your Globus collections in the same login with `--authorize-transfer`. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for details.
+    See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for the login, token verification, and `--authorize-transfer` commands.
 
 === "Auth script (Deprecated)"
 
     ```bash
+    # Authenticate with your Globus account
     python inference_auth_token.py authenticate
+
+    # Retrieve a token, or check how long it is valid for
+    # (`units` can be seconds, minutes, or hours)
+    python inference_auth_token.py get_time_until_token_expiration --units seconds
+    python inference_auth_token.py get_access_token
     ```
 
 !!! warning "Separate token caches"
     `alcf-tokens`/`alcf-ai` and the `inference_auth_token.py` helper use **different** Globus token caches, so authenticating with one does not authenticate the other.
-
-To verify your token, print it to the command line, or check how much time you have before it expires (`units` can be seconds, minutes, or hours):
-
-=== "alcf-tokens"
-
-    ```bash
-    alcf-tokens test-token inference
-    alcf-tokens get-token inference
-    ```
-
-=== "Auth script (Deprecated)"
-
-    ```bash
-    python inference_auth_token.py get_time_until_token_expiration --units seconds
-    python inference_auth_token.py get_access_token
-    ```
 
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. Both `alcf-tokens get-token inference` and `python inference_auth_token.py get_access_token` will automatically refresh your token if it has expired.
@@ -163,15 +149,6 @@ Three clusters are currently active, with additional systems coming soon:
 | **[NVIDIA A100 (Sophia)](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings`<br>`/batches` |
 | **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | SambaNova API | `/resource_server/metis/api/v1` | `/chat/completions` |
 | **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | API | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions` |
-
-
-!!! tip "Discovering Available Models"
-    You can programmatically query all available models and endpoints:
-    ```bash
-    access_token=$(alcf-tokens get-token inference)
-    curl -X GET "https://inference-api.alcf.anl.gov/resource_server/list-endpoints" \
-         -H "Authorization: Bearer ${access_token}"
-    ```
 
 ## API Usage Examples
 
@@ -590,22 +567,6 @@ The CLI and SDK default to the production base URL, `https://inference-api.alcf.
 alcf-ai --base-url https://example.anl.gov/resource_server ls-endpoints
 ```
 
-### Configuring Agents
-
-`alcf-ai` can quick-configure agent harnesses to use the Inference Service and handle authentication:
-
-```bash
-alcf-ai agent configure <agent>   # agent: opencode, pi, codex, or claude
-```
-
-| Option | Description |
-| ------ | ----------- |
-| `--include-experimental` | Also configure non-whitelisted (experimental) models. |
-| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `inkling-bf16`. |
-| `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
-
-See [Agents](#agents) for the generated configuration and agent-specific setup.
-
 ## Agents
 
 If your agent harness supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
@@ -633,7 +594,6 @@ Alternatively, you can also install via your system package manager (i.e. `brew`
 You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (installable with `pip install alcf-ai`). This also handles authentication and pulling an API key from the service. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for installation details and additional options.
 
 ```sh
-curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
 alcf-ai agent configure <agent>
 ```
 
@@ -643,6 +603,12 @@ Supported `agent`s include:
 - `pi`
 - `codex`
 - `claude`
+
+| Option | Description |
+| ------ | ----------- |
+| `--include-experimental` | Also configure non-whitelisted (experimental) models. |
+| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `inkling-bf16`. |
+| `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
 
 !!! tip "Refreshing API Keys"
     `alcf-ai agent configure <agent>` is *idempotent*, so you can re-run it to reconfigure an agent at any time. When a token helper (`alcf-tokens` or `alcf-ai`) is on your `PATH`, the generated configuration refreshes access tokens automatically. Otherwise, `alcf-ai` embeds the current access token and warns you to re-run the command when it expires.
@@ -967,23 +933,9 @@ Models are organized by cluster and marked with the following capabilities:
     - dinov3
 
     !!! info "Promptable Image Segmentation Models"
-        The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
-        package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for the full CLI and SDK reference, including batch and DINOv3 segmentation.
+        The [SAM 3](https://huggingface.co/facebook/sam3) and [DINOv3](https://github.com/facebookresearch/dinov3) models are deployed on Sophia. Install the [alcf-ai](https://pypi.org/project/alcf-ai/) package for the command line and Python toolkit. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for worked examples, including batch and DINOv3 segmentation.
 
-        With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this is all you need to begin using SAM 3:
-
-        ```bash
-        # SEM image of pollen grains:
-        curl https://upload.wikimedia.org/wikipedia/commons/a/a4/Misc_pollen.jpg > Misc_pollen.jpg
-
-        # Identify 'spiky spheres'
-        alcf-ai sam3 submit-image Misc_pollen.jpg "Spiky sphere" --save-preview pollen-grains.png
-
-        # Preview results:
-        open pollen-grains.png
-        ```
-
-        If this your first time accessing the inference service via `alcf-ai`, you will be prompted to log in interactively.
+        If this is your first time using `alcf-ai`, run `alcf-tokens login` first. Without a valid token, `alcf-ai` exits with an authentication error naming that command.
 
 
 ### Metis Cluster (SambaNova)
