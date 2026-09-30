@@ -35,7 +35,12 @@ theme:
         name: Switch to system preference
 
   font:
-    text: proxima-nova   # removed in #545. remove again?
+    # Sets --md-text-font, the only thing applying Proxima Nova (no CSS
+    # font-family); the font itself comes from the Adobe Fonts kit in
+    # overrides/main.html. Material also adds this name to its Google Fonts
+    # request, but Google has no such family, so only the code font (Roboto
+    # Mono) is fetched. Removing this falls back to Roboto.
+    text: proxima-nova
 
   features:
     - content.action.edit
@@ -92,6 +97,11 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          # Google Material Symbols, vendored; not bundled with the theme,
+          # whose `material` namespace is Pictogrammers MDI. See the README there.
+          - overrides/.icons
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.caret
@@ -182,6 +192,9 @@ plugins:
         # MathJax loads font/component files relative to its own script path;
         # vendoring only the bundle would 404 on output/chtml/fonts/*.
         - cdn.jsdelivr.net/npm/mathjax@3/*
+        # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
+        - use.typekit.net/*
+        - p.typekit.net/*
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
   - group:
       enabled: !ENV [CI, false]
@@ -256,6 +269,7 @@ nav:
           - Jupyter: aurora/data-science/jupyter.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
+            - Frameworks: aurora/data-science/frameworks/index.md
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
             - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
             - PyTorch: aurora/data-science/frameworks/pytorch.md
