@@ -187,6 +187,9 @@ plugins:
         # MathJax loads font/component files relative to its own script path;
         # vendoring only the bundle would 404 on output/chtml/fonts/*.
         - cdn.jsdelivr.net/npm/mathjax@3/*
+        # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
+        - use.typekit.net/*
+        - p.typekit.net/*
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
   - group:
       enabled: !ENV [CI, false]
@@ -261,6 +264,7 @@ nav:
           - Jupyter: aurora/data-science/jupyter.md
           - Profiling: aurora/data-science/profiling_dl.md
           - Frameworks:
+            - Frameworks: aurora/data-science/frameworks/index.md
             - DeepSpeed: aurora/data-science/frameworks/deepspeed.md
             - Megatron-DeepSpeed: aurora/data-science/frameworks/megatron-deepspeed.md
             - PyTorch: aurora/data-science/frameworks/pytorch.md

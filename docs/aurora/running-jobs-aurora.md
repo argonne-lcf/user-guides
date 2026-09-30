@@ -293,7 +293,7 @@ A visual representation of node in Aurora is shown below. Each socket is represe
 Simplified representation of Aurora node
 ///
 
-For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For i from 0 to 51, logical processors i and i+104 share a physical core.
+For the two CPUs, the numbers inside the boxes identify the specific logical processors in the core. That is, logical processor 0 and 104 are the 2 logical processors on the first physical core. Logical processors 1 and 105 are the 2 logical processors that share the second physical core. Since there are 208 logical processors, the numbers run from 0 to 207. For $i$ from 0 to 103, logical processors $i$ and $i + 104$ share a physical core: socket 0 holds cores 0–51 (with 104–155) and socket 1 holds cores 52–103 (with 156–207).
 
 For the six GPUs, the GPU number identifies the GPU, and the tile numbers identify the tile in the GPU, with tiles from 0 to 5 with each GPU have two tiles each $gpu.0 and $gpu.1.
 
