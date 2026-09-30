@@ -51,7 +51,7 @@ The image in the `next-eval` queue has been updated with the following changes.
 
 - Revert default MPICH to `mpich/prd/5.0.0.aurora_test.87e2045` (removes `mpich/prd/5.0.0.aurora_test.b76b754`, the default since 2026-09-21)
     - `MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE=1024` is no longer set by default
-- Add `mpich/prd/5.0.0.aurora_test.51a9474`, the latest version from the upstream `aurora_test` branch, for testing
+- Add `mpich/prd/5.0.0.aurora_test.51a9474`, the latest version from the upstream `aurora_test` branch with a fix for `b76b754`, for testing
 - Add `mpich/opt/5.0.0.aurora_test.3c70a61`, the current production version on Aurora prior to this rollout, for comparison
 - Intel VTune 2026.4
 
