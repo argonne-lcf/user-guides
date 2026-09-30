@@ -328,21 +328,10 @@ Follow these notes to install your own Darshan tool under your user space [here]
 
 ### 1. Darshan
 
-On Aurora, Darshan has been built in the programming environment in `/soft`.
-
-To get the Darshan parser utilities loaded into your programming environment, execute the following:
+On Aurora, Darshan has been modularized in the programming environment.  In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, and must precede any DAOS interception library. So this specification would be:
 
 ```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-```
-
-In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
-
-```bash linenums="1"
-LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:\
-            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:\
-            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:\
+LD_PRELOAD=/opt/aurora/26.181.0/spack/unified/1.1.1/install/linux-x86_64/darshan-runtime-3.5.0-tfnhlei/lib/libdarshan.so:\
             /usr/lib64/libpil4dfs.so
 ```
 
@@ -356,13 +345,13 @@ Run your application normally with `mpiexec` or `mpirun`.
 
 This generates a binary log file which has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.
 
-By default, the binary log file is stored here:
+By default, the binary log file is stored using a timestamp in the file name in your `$HOME` directory.  To specify another directory in which to store the binary log file set this environment variable at run time:
 
-```bash linenums="1"
-/lus/flare/logs/darshan/aurora/YYYY/M/D
+```bash
+export DARSHAN_LOG_DIR_PATH=<full path to binary file directory>
 ```
 
-where the last 3 directories are the date the file is generated, with your user ID, job ID, and timestamp in the file name. Alternatively, at run time, you can specify the file name and save it in a different location with the following environment variable:
+Alternatively, you can specify the exact file name with the following environment variable:
 
 ```bash
 export DARSHAN_LOGFILE=<full path to binary file name>
@@ -392,12 +381,11 @@ source bin/activate
 
 ### `darshan-parser` utility
 
-`darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`:
+`darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`.  To get the Darshan parser utility loaded into your programming environment and run it, execute the following:
 
 ```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt
+module load darshan-util
+darshan-parser <binary log file name> > out.txt
 ```
 
 ## Cluster Size
@@ -415,9 +403,11 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 | 1024 |    100%    |  30 TB/s  |
 
 The size of your current DAOS cluster can be found using the following formula:
-```text
-daos_cluster_size = ntarget / targets_per_node
-```
+
+$$
+\text{DAOS cluster size} = \frac{\texttt{ntarget}}{\texttt{targets_per_node}}
+$$
+
 The value of `ntarget` comes from the output of:
 ```bash linenums="1"
 daos pool query ${DAOS_POOL}
@@ -430,10 +420,10 @@ An example:
 Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
 ```
 So the DAOS cluster size is:
-```text
-4096 targets / 32 targets per node 
- = 128 daos servers
-```
+
+$$
+\frac{4096\ \text{targets}}{32\ \text{targets per node}} = 128\ \text{DAOS servers}
+$$
 
 
 ## DAOS Hardware and Aurora Architecture
@@ -657,7 +647,7 @@ More information: <https://docs.daos.io/v2.6/user/container/#ownership>
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
-daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
+daos cont update-acl -e "A::pkcoff@:rwta" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
 groups                                                        # to check if the users are in the same group name

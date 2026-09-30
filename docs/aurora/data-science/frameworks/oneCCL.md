@@ -11,47 +11,50 @@ oneCCL can be used through:
 ## Aurora oneCCL environment
 
 ```bash linenums="1"
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> echo $CCL_ROOT
-/opt/aurora/26.26.0/oneapi/ccl/latest
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:~> cd /opt/aurora/26.26.0/oneapi/ccl/
-(/opt/aurora/26.26.0/frameworks/aurora_frameworks-2025.3.1) hossainm@x4117c4s5b0n0:/opt/aurora/26.26.0/oneapi/ccl> ls -lah
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:~> echo $CCL_ROOT
+/opt/aurora/26.181.0/oneapi/ccl/latest
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:~> cd /opt/aurora/26.181.0/oneapi/ccl/
+(/opt/aurora/26.181.0/frameworks/aurora_frameworks-2026.1.0) hossainm@x4514c2s3b0n0:/opt/aurora/26.181.0/oneapi/ccl> ls -lah
 total 0
-drwxr-xr-x  3 root root  44 Feb 18 04:17 .
-drwxr-xr-x 31 root root 742 Feb 18 04:23 ..
-drwxr-xr-x  8 root root 117 Feb 18 04:17 2021.17
-lrwxrwxrwx  1 root root   7 Feb 18 04:17 latest -> 2021.17
+drwxr-xr-x  3 root root  43 Sep 23 21:59 .
+drwxr-xr-x 27 root root 652 Sep 23 22:07 ..
+drwxr-xr-x  8 root root 117 Sep 23 21:59 2022.1
+lrwxrwxrwx  1 root root   6 Sep 23 21:59 latest -> 2022.1
 ```
-`2021.17` is the current version of oneCCL that is available to users 
-through the Aurora compute image.
+`2022.1` is the current version of oneCCL that is available to users through the Aurora compute image.
 
 <!-- --8<-- [start:onecclenv] -->
 **oneCCL environment variables**
 
 We have identified a set of environment settings that typically provide better performance or address potential application hangs and crashes at large scale. This particular setup is still **experimental**, and it might change as the environment variable settings are refined. Users are encouraged to check this page regularly.
 
-Among them, there is a minimal list, which are essential for functionality
-for training workloads, and we have tested up to 1024 nodes.
+Among them, there is a minimal list, which are essential for functionality for training workloads, and we have tested up to 1024 nodes.
 
 **Minimal set**
 
+Along with `module load frameworks`, which also sets `CCL_PROCESS_LAUNCHER=pmix`
+
 ```bash linenums="1"
-export CCL_PROCESS_LAUNCHER=pmix
-export CCL_ATL_TRANSPORT=mpi
 export FI_MR_CACHE_MONITOR=userfaultfd
+```
+To scale out beyond 1024 nodes, users may need to set 
+```bash
 export CCL_KVS_MODE=mpi
 ```
+With `CCL_KVS_MODE=mpi`, you may need to initialize `MPI` manually; see [`MPI_Init` error with `CCL_KVS_MODE=mpi`](index.md#mpi_init-error-with-ccl_kvs_modempi).
+
+The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see [Hangs with `CCL_OP_SYNC=0`](index.md#hangs-with-ccl_op_sync0).
+
+A user using oneCCL without `module load frameworks` may need to set `export CCL_PROCESS_LAUNCHER=pmix` manually.
 
 Beyond that an application should tune based on the list below. This list is not exhaustive.
 
 Users of `vLLM` and other inference services should rely on the variables set by the `frameworks` module.
 
 ```bash linenums="1"
-export CCL_PROCESS_LAUNCHER=pmix  
-export CCL_ATL_TRANSPORT=mpi
 export CCL_ALLREDUCE_SCALEOUT="direct:0-1048576;rabenseifner:1048577-max"  # currently best allreduce algorithm at large scale
 export CCL_BCAST=double_tree # currently best bcast algorithm at large scale
 
-export CCL_KVS_MODE=mpi
 export CCL_CONFIGURATION_PATH=""
 export CCL_CONFIGURATION=cpu_gpu_dpcpp
 export CCL_KVS_CONNECTION_TIMEOUT=600 
@@ -184,57 +187,7 @@ done
 ```
 For more information on oneCCL benchmark, please refer to: [oneCCL Benchmark User Guide](https://www.intel.com/content/www/us/en/docs/oneccl/benchmark-user-guide/2021-12/overview.html)
 
-In the provided CPU binding list we have provided two options. First one is 
-based on one CPU core per rank. In the second option, we assign 4 CPU cores per
-rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per
-rank. Notice that, these cores are picked out from the last 12 cores of each 
-socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs 
-to the first socket, and 94-99 belongs to the second socket. We leave a few 
-cores free, in case, the user may want to use other services like copper and
-DAOS along with their application. The second oneCCL option is to delegate 
-task of picking cores to the system. In this case, the user should not declare
-or export the `CCL_WORKER_AFFINITY` variable. 
-
-## Horovod
-
-TensorFlow Horovod example:
-
-```python linenums="1"
-import datetime
-from time import perf_counter_ns
-import sys
-
-import tensorflow as tf
-import horovod.tensorflow as hvd
-import intel_extension_for_tensorflow as itex
-print(itex.__version__)
-hvd.init()
-
-hvd_local_rank = hvd.local_rank()
-hvd_size = hvd.size()
-print("hvd_local_rank = %d  hvd_size = %d" % (hvd_local_rank, hvd_size))
-
-xpus = tf.config.experimental.list_physical_devices('XPU')
-logical_gpus = tf.config.experimental.set_visible_devices(xpus[hvd.local_rank()], 'XPU')
-print(xpus)
-tf.debugging.set_log_device_placement(True)
-
-dim_size = int(int(sys.argv[1]) / 4)
-elapsed1 = []
-
-for _ in range(5):
-    with tf.device(f"XPU:{hvd_local_rank % 12}"):
-        x = tf.ones([1, dim_size], dtype=tf.float32)
-        # print(x)
-        t5 = perf_counter_ns() 
-        y = hvd.allreduce(x, average=False)
-        t6 = perf_counter_ns()
-        elapsed1.append(t6 - t5)
-
-if hvd.rank() == 0:
-    for e in elapsed1:
-        print(e)
-```
+In the provided CPU binding list we have provided two options. First one is based on one CPU core per rank. In the second option, we assign 4 CPU cores per rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per rank. Notice that, these cores are picked out from the last 12 cores of each socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs to the first socket, and 94-99 belongs to the second socket. We leave a few cores free, in case, the user may want to use other services like copper and DAOS along with their application. The second oneCCL option is to delegate task of picking cores to the system. In this case, the user should not declare or export the `CCL_WORKER_AFFINITY` variable. 
 
 ## PyTorch DDP
 

@@ -5,12 +5,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- <a href="support/ticket.md" class="alcf-tile-link"><img src="images/support_agent_80.png" alt="" class="alcf-tile-image"><span>Support Tickets</span></a>
-- <a href="support/get-help/alcf-users-slack.md" class="alcf-tile-link"><img src="images/SLA-Slack.png" alt="" class="alcf-tile-image"><span>ALCF User Slack</span></a>
-- <a href="account-project-management/MyALCF.md" class="alcf-tile-link"><img src="images/myalcf-portal.png" alt="" class="alcf-tile-image"><span>MyALCF</span></a>
-- <a href="https://www.alcf.anl.gov/events" class="alcf-tile-link"><img src="images/event.png" alt="" class="alcf-tile-image"><span>Upcoming Events</span></a>
-- <a href="services/inference-endpoints.md" class="alcf-tile-link"><img src="images/inference.png" alt="" class="alcf-tile-image"><span>Inference</span></a>
-- <a href="https://www.alcf.anl.gov/support-center/training" class="alcf-tile-link"><img src="images/video_library.png" alt="" class="alcf-tile-image"><span>Training Videos</span></a>
+- [:symbols-support_agent:<span>Support Tickets</span>](support/ticket.md){ .alcf-tile-link }
+- [:material-slack:<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
+- [:symbols-web:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
+- [:symbols-calendar_clock:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
+- [:symbols-wand_stars:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [:symbols-video_library:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
 
@@ -18,12 +18,12 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 
 <div class="alcf-tile-grid" markdown>
 
-- [Onboarding](https://www.alcf.anl.gov/onboarding-your-project)
-- [Account and Project Management](account-project-management/index.md)
-- [Machines](machines/index.md)
-- [Running Jobs](running-jobs/index.md)
-- [Data Management](data-management/index.md)
-- [Services](services/index.md)
+- [:symbols-tour:<span>Onboarding</span>](https://www.alcf.anl.gov/onboarding-your-project){ .alcf-tile-link }
+- [:symbols-monitoring:<span>Account and Project Management</span>](account-project-management/index.md){ .alcf-tile-link }
+- [:symbols-hard_drive:<span>Machines</span>](machines/index.md){ .alcf-tile-link }
+- [:symbols-input:<span>Running Jobs</span>](running-jobs/index.md){ .alcf-tile-link }
+- [:symbols-folder_data:<span>Data Management</span>](data-management/index.md){ .alcf-tile-link }
+- [:symbols-design_services:<span>Services</span>](services/index.md){ .alcf-tile-link }
 
 </div>
 
