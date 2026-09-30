@@ -206,6 +206,7 @@ plugins:
         'aurora/services/gitlab-ci.md': 'services/ci/gitlab-ci.md'
         'support/ai-guidance.md': 'dev-environment/ai-guidance.md'
         'support/vscode.md': 'dev-environment/vscode.md'
+        'ai-testbed/sn40l_inference/using_an_inference_endpoint.md': 'services/inference-endpoints/index.md'
         # 'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
@@ -357,7 +358,6 @@ nav:
         - Examples: ai-testbed/groq/examples.md
       - SambaNova Metis (SN40L):
         - ai-testbed/sn40l_inference/index.md
-        - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
@@ -490,7 +490,13 @@ nav:
 
   - Services:
     - services/index.md
-    - Inference Endpoints: services/inference-endpoints.md
+    - Inference Endpoints:
+      - services/inference-endpoints/index.md
+      - API Usage: services/inference-endpoints/api.md
+      - alcf-ai CLI and SDK: services/inference-endpoints/alcf-ai.md
+      - Agents: services/inference-endpoints/agents.md
+      - Available Models: services/inference-endpoints/models.md
+      - Batch Processing: services/inference-endpoints/batch.md
     - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:

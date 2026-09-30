@@ -10,3 +10,7 @@ Below are some of the links to SambaNova documentation:
 - [SambaRack information](https://sambanova.ai/products/sambarack)
 - [Reconfigurable Dataflow Units (RDUs) — purpose-built for AI](https://sambanova.ai/products/sn40l-rdu-ai-chip)
 - [Accelerated Computing with a Reconfigurable Dataflow Architecture (PDF)](https://sambanova.ai/hubfs/23945802/SambaNova_Accelerated-Computing-with-a-Reconfigurable-Dataflow-Architecture_Whitepaper_English-1.pdf)
+
+## Using Metis
+
+Models running on this cluster are served through the ALCF Inference Service. See [Inference Endpoints](../../services/inference-endpoints/index.md) for the endpoint URL, available models, and usage examples.
