@@ -129,7 +129,7 @@
 **/services/gitlab-ci.md            @peterupton
 **/services/globus-compute.md       @cms21
 **/services/iri-api.md              @bcote-anl
-**/services/inference-endpoints.md  @bcote-anl @vksastry
+**/services/inference-endpoints/**  @bcote-anl @vksastry @masalim2 @lowpolyneko
 **/dev-environment/python-environments.md  @bcote-anl @masalim2 @lowpolyneko
 
 # Workflows
