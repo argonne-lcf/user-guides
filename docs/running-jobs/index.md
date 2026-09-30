@@ -66,7 +66,7 @@ Our documentation is organized in two sections aligned with the two steps descri
 :   Number of resources available to execute a program. In ALCF, given the way we configure PBS, this equates to a hardware thread. For example, a single socket node with a 32 core CPU, each with two hardware threads would report that as ncpus=64.
 
 `ngpus`
-:   The number of allocable GPUs on the vnode. For an NVIDIA A100, this could be one, however, if we enable _Multi Instance GPU (MIG)_ mode and use cgroups it could be as high as 7.
+:   The number of allocable GPUs on the vnode.
 
 `job`
 :   A job equates to a qsub. A set of resources allocated to you for a period of time. You will execute one or more `tasks` on those resources during your job.
@@ -395,7 +395,7 @@ Occasionally, the job will still show up in `qstat` after you try and `qdel` it.
 
 [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 
-This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus) which with some GPUs like NVIDIA A100s can change depending on the MIG mode, and if the node is shared or not (sharing).
+This is more for admins, but it can tell you what nodes are free (state), how many "CPUs" which is actually the number of threads (ncpus), how many GPUs (ngpus), and if the node is shared or not (sharing).
 
 `pbsnodes <node name>`: Everything there is to know about a node
 
