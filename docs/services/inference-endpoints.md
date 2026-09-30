@@ -32,18 +32,41 @@ In the model selection dropdown, you can see the status of each model:
 
 For programmatic access, you can use the API endpoints directly.
 
+!!! tip "Using the alcf-ai CLI or SDK"
+    The [`alcf-ai`](https://pypi.org/project/alcf-ai/) package provides a CLI and an OpenAI-compatible Python client for the Inference Service, and uses the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI for authentication. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for details.
+
 #### 1. Setup Your Environment
 
 You can run the following setup from anywhere (your local machine, or an ALCF machine).
 
-```bash
-# Create a new Conda environment
-conda create -n globus_env python==3.11.9 --y
-conda activate globus_env
+--8<-- "includes/alcf-ai-install.md"
 
-# Install necessary packages
-pip install openai globus_sdk
-```
+See [Python Environments](python-environments.md) for the other supported package managers.
+
+=== "alcf-tokens"
+
+    Install `alcf-ai` and `alcf-tokens` as above. For the Python examples on this page, install the OpenAI SDK in the environment where you run Python:
+
+    ```bash
+    pip install openai
+    ```
+
+    With `uv`, `uv run --with openai --with alcf-tokens python` starts Python with both packages in a throwaway environment instead.
+
+=== "Auth script (Deprecated)"
+
+    ```bash
+    # Create and activate a virtual environment
+    python -m venv .venv
+    source .venv/bin/activate
+
+    # Install necessary packages
+    pip install openai globus-sdk
+
+    # Download the deprecated authentication helper script
+    wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/heads/main/inference_auth_token.py
+    # If `wget` is unavailable on your system, try `curl -O` instead.
+    ```
 
 #### 2. Authenticate
 
@@ -348,6 +371,227 @@ Three clusters are currently active, with additional systems coming soon:
 
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).
 
+## alcf-ai CLI and SDK
+
+[`alcf-ai`](https://pypi.org/project/alcf-ai/) is the ALCF AI Inference Services SDK. It provides a command line interface for authentication, chat, endpoint discovery, image segmentation, and agent configuration, plus a Python client (`alcf_ai.InferenceClient`) that talks to the same endpoints using the same cached credentials.
+
+### Installation
+
+`alcf-ai` requires Python 3.10+ and is published on [PyPI](https://pypi.org/project/alcf-ai/). Install both CLIs with any Python package manager, so that the `alcf-ai` and `alcf-tokens` commands on this page work as written:
+
+```bash
+uv tool install alcf-ai          # uv: one package per command, linked into ~/.local/bin
+uv tool install alcf-tokens
+pipx install alcf-ai alcf-tokens # pipx: both at once
+pip install alcf-ai alcf-tokens  # pip: in your activated environment
+```
+
+To run the CLI without installing it, prefix the commands on this page with `uvx` or `pipx run` instead:
+
+```bash
+uvx alcf-ai version          # uv: run the latest release
+pipx run alcf-ai version     # pipx
+uvx alcf-ai@latest version   # bypass the uv cache to force the latest version
+```
+
+See [Python Environments](python-environments.md) for the full comparison of package managers, and for using the [Python SDK](#python-sdk) in your own project.
+
+### Authentication
+
+`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI. A single login covers all supported ALCF services, and access tokens are refreshed automatically when they expire:
+
+```bash
+alcf-tokens login
+
+# Verify that the inference token is accepted:
+alcf-tokens test-token inference
+
+# Print an access token for use with curl or another client:
+token=$(alcf-tokens get-token inference)
+```
+
+Use `alcf-tokens list-services` to see the other services covered by the same login (`globus-transfer`, `globus-compute`, `globus-flows`, and `iri`), and `alcf-tokens clear-tokens` to remove the cached tokens.
+
+If you plan to stage data in or out for batch inference, authorize your Globus collections in the *same* login with `--authorize-transfer`. The flag accepts a collection UUID or a known alias (`home`, `eagle`, `flare`). Append `:data_access` for collections that require that scope for Transfer, or `:https` for direct HTTPS reads and writes:
+
+```bash
+alcf-tokens login \
+    --authorize-transfer eagle \
+    --authorize-transfer 96c7390b-a3e8-4dd4-a327-1af7d143283e:https
+```
+
+!!! note "Re-running login"
+    Re-running `alcf-tokens login` with a different set of `--authorize-transfer` collections re-consents with the wider set, so pass every collection you want authorized in the same command.
+
+!!! note "alcf-ai and alcf-tokens"
+    `alcf-tokens` is the shared ALCF token CLI. The same commands are available as `alcf-ai auth <command>` and read the same token cache.
+
+### Discovering Models and Endpoints
+
+| Command | Description |
+| ------- | ----------- |
+| `alcf-ai ls-endpoints` | List all endpoints available across clusters (raw API response). |
+| `alcf-ai ls-models <cluster>` | List the models available on a cluster (raw API response). |
+| `alcf-ai ls-jobs <cluster>` | List the ongoing jobs (running and queued models) for a cluster. |
+
+```bash
+alcf-ai ls-endpoints
+alcf-ai ls-models sophia
+alcf-ai ls-jobs sophia
+```
+
+These mirror the REST calls in [Querying Endpoint Status](#querying-endpoint-status) and [Model Serving Configuration](#model-serving-configuration).
+
+### Chat from the Command Line
+
+```bash
+alcf-ai chat "How do I know Pi is irrational? Be concise."
+```
+
+| Option | Description |
+| ------ | ----------- |
+| `-m`, `--model` | Model to use. Default: `meta-llama/Llama-4-Scout-17B-16E-Instruct`. |
+| `-c`, `--cluster` | Cluster serving the model. Default: `sophia`. |
+| `-s`, `--system` | System prompt to apply to the input. |
+| `--stream` / `--no-stream` | Stream the response as it is generated. Default: `--no-stream`. |
+| `-t`, `--temp` | Sampling temperature. |
+| `-n`, `--max-tokens` | Maximum number of tokens to generate. |
+| `-i`, `--input-file` | Read additional user input from this file. |
+
+The user message is built by joining, in order: piped stdin (if any), the contents of `--input-file` (if any), and the positional prompt:
+
+```bash
+cat report.md | alcf-ai chat \
+    --model openai/gpt-oss-120b \
+    --cluster sophia \
+    "Summarize this report in three bullets."
+```
+
+!!! note "Cluster Selection"
+    The cluster selected with `--cluster` must serve the requested model. See [Available Models](#available-models).
+
+### Image Segmentation
+
+`alcf-ai` drives the SAM 3 and DINOv3 image segmentation services on Sophia.
+
+#### SAM 3
+
+Segment a single image by passing an image URI (or a local path) and a text prompt, optionally rendering a preview PNG of the results:
+
+```bash
+alcf-ai sam3 submit-image \
+    https://raw.githubusercontent.com/masalim2/sam3-service/refs/heads/main/examples/images/groceries.jpg \
+    "Baguette" \
+    --save-preview ~/test-baguettes.png
+```
+
+For high-throughput workloads, bundle images and prompts into [WebDataset](https://github.com/webdataset/webdataset) tar archives and submit them for batch inference:
+
+```bash
+# Bundle the .tiff images in a directory with three prompts, 100 images per tar:
+alcf-ai sam3 create-webdataset \
+    /path/to/tiff-stack \
+    .tiff \
+    "Phloem Fibers" "Hydrated Xylem vessels" "Air-based Pith cells" \
+    --output-dir test-wds --shard-size 100 --num-workers 4
+
+# Submit a shard for inference:
+alcf-ai sam3 submit-batch test-wds/shard-00000.tar \
+    --from-collection-id "$SOURCE_COLLECTION"
+
+# Preview the results against the input shard:
+alcf-ai sam3 preview-batch-results \
+    test-wds/shard-00000.tar \
+    test-wds/shard-00000.results.tar
+```
+
+!!! note "Data staging"
+    `--from-collection-id` stages the dataset in with Globus Transfer and requires that collection to be authorized with `--authorize-transfer` at login. `--weights-dir-override` overrides the server's default weights directory.
+
+#### DINOv3
+
+DINOv3 segments a whole folder at once: the GPU dataloader batches over every image in the folder, and a results folder (semantic masks, plus color overlays with `--save-overlay`) is written back. One folder is the unit of parallelism, so shard a large dataset into subfolders and submit the shards concurrently for higher throughput.
+
+Folder transfers use Globus Transfer (the HTTPS path handles only single files), so `--origin-collection-id` is required:
+
+```bash
+alcf-ai dinov3 submit \
+    /path/to/image-folder \
+    --origin-collection-id "$SOURCE_COLLECTION" \
+    --output-dir ./results \
+    --save-overlay
+```
+
+### Python SDK
+
+The same functionality is available from Python through `alcf_ai.InferenceClient`, which reuses the tokens cached by `alcf-tokens login` and resolves the correct URL for each cluster:
+
+```python
+from alcf_ai import InferenceClient
+
+client = InferenceClient()
+
+# Discover endpoints and models:
+print(client.list_endpoints()["clusters"]["sophia"])
+print(client.list_models("sophia"))
+
+# Get an OpenAI client for a cluster:
+oai = client.clusters("sophia").openai
+print(
+    oai.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[{"role": "user", "content": "Hello there!"}],
+    )
+)
+```
+
+The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("sophia").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
+
+```python
+from pathlib import Path
+
+from alcf_ai import InferenceClient
+from alcf_ai.transfer import STAGING_COLLECTION_ROOT
+
+client = InferenceClient()
+collection_id = "your-globus-collection-uuid"
+dataset = Path("/path/to/my-dataset.tar")
+
+# Stage the dataset into your private staging area:
+stagein = client.stage_in(dataset, Path(dataset.name), from_collection_id=collection_id)
+
+# Submit SAM 3 batch inference on the staged copy:
+resp = client.sam3.submit_batch(STAGING_COLLECTION_ROOT + str(stagein.destination_path))
+result = client.sam3.poll_task_result(resp.task_id)
+
+# Copy the results back to your collection:
+client.stage_out(collection_id, Path(result.result_path).name, dataset.with_suffix(".results.tar"))
+```
+
+### Alternate Service URL
+
+The CLI and SDK default to the production base URL, `https://inference-api.alcf.anl.gov/resource_server/`. To target a different deployment, export the `inference_base_url` environment variable, pass `--base-url` to the CLI, or pass `base_url=` to `InferenceClient`:
+
+```bash
+alcf-ai --base-url https://example.anl.gov/resource_server ls-endpoints
+```
+
+### Configuring Agents
+
+`alcf-ai` can quick-configure agent harnesses to use the Inference Service and handle authentication:
+
+```bash
+alcf-ai agent configure <agent>   # agent: opencode, pi, codex, or claude
+```
+
+| Option | Description |
+| ------ | ----------- |
+| `--include-experimental` | Also configure non-whitelisted (experimental) models. |
+| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `inkling-bf16`. |
+| `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
+
+See [Agents](#agents) for the generated configuration and agent-specific setup.
+
 ## Agents
 
 If your agent harness supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.
@@ -372,11 +616,11 @@ Alternatively, you can also install via your system package manager (i.e. `brew`
 
 ### Automatic Configuration w/ alcf-ai
 
-You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (which can be installed with ```pip install alcf-ai```. This also handles authentication and pulling an API key from the service.
+You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (installable with `pip install alcf-ai`). This also handles authentication and pulling an API key from the service. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for installation details and additional options.
 
 ```sh
 curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
-uvx alcf-ai agent configure <agent>
+alcf-ai agent configure <agent>
 ```
 
 Supported `agent`s include:
@@ -387,7 +631,7 @@ Supported `agent`s include:
 - `claude`
 
 !!! tip "Refreshing API Keys"
-    `alcf-ai agent configure <agent>` is *idempotent*, meaning you can re-run this command to embed a fresh token into your agent config!
+    `alcf-ai agent configure <agent>` is *idempotent*, so you can re-run it to reconfigure an agent at any time. When a token helper (`alcf-tokens` or `alcf-ai`) is on your `PATH`, the generated configuration refreshes access tokens automatically. Otherwise, `alcf-ai` embeds the current access token and warns you to re-run the command when it expires.
 
 ### Manual Configuration
 
@@ -424,8 +668,8 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](#api-access)) or utilize `alcf-ai`.
 
 ```sh
-uvx alcf-ai auth login # follow interactive instructions to login
-export ALCF_AI_TOKEN="$(uvx alcf-ai auth get-access-token)" # pull a token and store
+alcf-ai auth login # follow interactive instructions to login
+export ALCF_AI_TOKEN="$(alcf-ai auth get-access-token)" # pull a token and store
 
 opencode
 ```
@@ -441,7 +685,7 @@ Add the following provider to your `~/.pi/agent/models.json`.
         "alcf-minerva": {
             "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
                 "api": "openai-completions",
-                "apiKey": "!uvx alcf-ai auth get-access-token",
+                "apiKey": "!alcf-ai auth get-access-token",
                 "compat": {
                     "supportsDeveloperRole": false,
                     "supportsReasoningEffort": false
@@ -709,7 +953,7 @@ Models are organized by cluster and marked with the following capabilities:
 
     !!! info "Promptable Image Segmentation Models"
         The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
-        package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF.
+        package, which provides a command line and Python toolkit for using SAM 3 and other models at ALCF. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk) for the full CLI and SDK reference, including batch and DINOv3 segmentation.
 
         With [uv installed](https://docs.astral.sh/uv/getting-started/installation/), this is all you need to begin using SAM 3:
 
@@ -718,7 +962,7 @@ Models are organized by cluster and marked with the following capabilities:
         curl https://upload.wikimedia.org/wikipedia/commons/a/a4/Misc_pollen.jpg > Misc_pollen.jpg
 
         # Identify 'spiky spheres'
-        uvx alcf-ai sam3 submit-image Misc_pollen.jpg "Spiky sphere" --save-preview pollen-grains.png
+        alcf-ai sam3 submit-image Misc_pollen.jpg "Spiky sphere" --save-preview pollen-grains.png
 
         # Preview results:
         open pollen-grains.png
