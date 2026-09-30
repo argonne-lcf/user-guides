@@ -21,6 +21,31 @@
   --warm_orange:       rgb(237,  98,  84);
 }
 
+/* `primary: custom` / `accent: custom` in mkdocs.yml: without these, Material
+   falls back to indigo for the mobile drawer title and repo row (primary) and
+   for hover/focus states such as the code copy button (accent). */
+[data-md-color-scheme="alcf"][data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--blue_med);
+  --md-primary-fg-color--light: var(--blue_pale);
+  --md-primary-fg-color--dark:  var(--blue_dark);
+}
+
+[data-md-color-scheme="alcf"][data-md-color-accent="custom"] {
+  --md-accent-fg-color:              var(--green_med);
+  --md-accent-fg-color--transparent: rgba(0, 123, 112, 0.1);
+}
+
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--neutral_med-dark);
+  --md-primary-fg-color--light: var(--neutral_med);
+  --md-primary-fg-color--dark:  var(--neutral_dark);
+}
+
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
+  --md-accent-fg-color:              var(--green_med-light);
+  --md-accent-fg-color--transparent: rgba(24, 185, 180, 0.1);
+}
+
 
 
 /* Light theme color rules */
@@ -64,7 +89,7 @@
 
   .md-typeset a:focus,
   .md-typeset a:hover {
-    color: var(--green_dark);
+    color: var(--green_med-dark);
     text-decoration: none;
   } 
 
