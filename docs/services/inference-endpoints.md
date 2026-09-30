@@ -937,7 +937,6 @@ Models are organized by cluster and marked with the following capabilities:
 
     - arcee-ai/Trinity-Large-Thinking-W4A16^RT^
     - nvidia/nemotron-3-super-120b^RT^
-    - mgoin/Nemotron-4-340B-Instruct-hf
     - AstroMLab/AstroSage-70B-20251009
 
 ??? "Vision Language Models (vLLM)"
@@ -947,6 +946,7 @@ Models are organized by cluster and marked with the following capabilities:
 ??? "Embedding Models (vLLM)"
 
     - mistralai/Mistral-7B-Instruct-v0.3-embed
+    - google/embeddinggemma-300m
     - Salesforce/SFR-Embedding-Mistral
     - genslm-test/genslm-esmc-300M-aminoacid
     - genslm-test/genslm-esmc-300M-codon
@@ -963,7 +963,8 @@ Models are organized by cluster and marked with the following capabilities:
 
 ??? "Image Segmentation"
 
-    - facebook/sam3
+    - sam3
+    - dinov3
 
     !!! info "Promptable Image Segmentation Models"
         The [SAM 3](https://huggingface.co/facebook/sam3) model for promptable image segmentation is deployed on Sophia.  Install the [alcf-ai](https://pypi.org/project/alcf-ai/) 
@@ -994,8 +995,9 @@ Models are organized by cluster and marked with the following capabilities:
     - gemma-4-31B-it^H^
 
     !!! note "Metis Limitations"
-        - Batch processing and Tool Calling is not currently supported on the Metis cluster
-        - Only chat completions endpoint is available
+        - Batch processing is not currently supported on the Metis cluster.
+        - The chat completions and responses endpoints are available.
+        - Tool calling is advertised by the API, but SambaNova's sanitization of tool calls has a known issue. See the Metis Tool Calling warning under [Shims/Proxies](#shimsproxies).
 
 ### Minerva Cluster (NVIDIA)
 
@@ -1003,6 +1005,7 @@ Models are organized by cluster and marked with the following capabilities:
 
     - nemotron-3-ultra^H^
     - inkling-bf16^H^
+    - gpt-oss-120b
 
 ### Model Serving Configuration
 
