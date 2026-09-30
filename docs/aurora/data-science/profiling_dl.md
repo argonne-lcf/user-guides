@@ -21,10 +21,10 @@ FNAME="${FNAME_EXT%%.*}"
 NNODES=`wc -l < $PBS_NODEFILE`
 
 WORK_DIR=/path/to/the/Python/program
-UNITRACE_DIR=/opt/aurora/26.26.0/support/tools/pti-gpu/0.16.0-rc1/ # (1)!
+UNITRACE_EXE=$(command -v unitrace) # (1)!
+UNITRACE_BIN=$(dirname ${UNITRACE_EXE})
+UNITRACE_DIR=$(dirname ${UNITRACE_BIN})
 UNITRACE_LIB=${UNITRACE_DIR}/lib64
-UNITRACE_BIN=${UNITRACE_DIR}/bin
-UNITRACE_EXE=${UNITRACE_BIN}/unitrace
 DTAG=$(date +%F_%H%M%S)
 UNITRACE_OUTDIR=${WORK_DIR}/logs/unitrace_profiles/name_of_choice_json_n${NNODES}_${DTAG}/${FNAME}_n${NNODES}_${DTAG}
 mkdir -p ${UNITRACE_OUTDIR}
@@ -47,7 +47,7 @@ else
 fi
 ```
 
-1. `UNITRACE_DIR`: This is the main `unitrace` directory, which may change after an update to the programming environment.
+1. `UNITRACE_EXE`: The `unitrace` on your `PATH`, provided by the `pti-gpu` module that `module load frameworks` loads. The other `UNITRACE_*` paths are derived from it, so they follow programming environment updates. To use a different build, set `UNITRACE_EXE` to its full path.
 2. `UNITRACE_OPTS`: These are the options that `unitrace` uses to trace data at different levels. Based on the number of options, the sizes of the output profiles will vary. Usually, enabling more options leads to a larger profile (in terms of storage in MB).
 3. `PROFRANK`: As implemented, this variable is set by the user to trace the rank of choice. For example, this wrapper will trace rank 0 on each node.
 4. `RANKCUTOFF`: This variable is Aurora-specific. As we can run as many as 12 ranks per node (without using CCS), the first 4 nodes of a job will have 48 ranks running. This provides the upper cutoff of the label (in number) of ranks, beyond which `unitrace` will not trace any rank. A user can change the number according to the number of maximum ranks running per node to set up how many ranks to be traced. `unitrace` will produce a profile (`json` file, by default) per traced rank. This profile can be viewed using the [Perfetto trace viewer](https://ui.perfetto.dev/).
@@ -72,7 +72,7 @@ UNITRACE_WRAPPER=${WORK_DIR}/unitrace_wrapper.sh
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=12
 
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
+NRANKS=$((NNODES * NRANKS_PER_NODE))
 
 module load frameworks
 
@@ -81,14 +81,9 @@ ${UNITRACE_WRAPPER} python ${WORK_DIR}/application.py
 ```
 ## PyTorch Profiler
 
-`unitrace` traces at the Level Zero / oneCCL layer. When the question is
-"which PyTorch operator is slow" rather than "which SYCL kernel is slow",
-`torch.profiler` attributes time to operators and Python frames instead. It
-is common to use `torch.profiler` to find the expensive operator, then
-`unitrace` to see what the device is doing underneath it.
+`unitrace` traces at the Level Zero / oneCCL layer. When the question is "which PyTorch operator is slow" rather than "which SYCL kernel is slow", `torch.profiler` attributes time to operators and Python frames instead. It is common to use `torch.profiler` to find the expensive operator, then `unitrace` to see what the device is doing underneath it.
 
-On Aurora, `torch.profiler` needs `ProfilerActivity.XPU` in its activity
-list:
+On Aurora, `torch.profiler` needs `ProfilerActivity.XPU` in its activity list:
 
 ```python linenums="1" title="profile_snippet.py"
 import contextlib
@@ -125,28 +120,16 @@ with ctx as prof:
             prof.step()  # (4)!
 ```
 
-1. `ProfilerActivity.XPU` is what captures device-side activity on Aurora's
-   Intel GPUs. Without it the trace contains only CPU events, which is a
-   common cause of "the profiler ran but shows no GPU work".
-2. Profile one rank. Each rank writes its own trace file, and with 12 ranks
-   per node those add up to gigabytes quickly.
-3. The schedule skips `wait` steps, runs `warmup` steps to let the profiler
-   settle, then records `active` steps. The first trace therefore appears
-   only after `wait + warmup + active` steps -- six with these values. A
-   loop shorter than that produces **no output at all**.
-4. `prof.step()` advances the schedule. If it is never called the profiler
-   stays in `wait` indefinitely and writes nothing, **without raising an
-   error** -- the most common reason a profiled run produces no trace.
+1. `ProfilerActivity.XPU` is what captures device-side activity on Aurora's Intel GPUs. Without it the trace contains only CPU events, which is a common cause of "the profiler ran but shows no GPU work".
+2. Profile one rank. Each rank writes its own trace file, and with 12 ranks per node those add up to gigabytes quickly.
+3. The schedule skips `wait` steps, runs `warmup` steps to let the profiler settle, then records `active` steps. The first trace therefore appears only after `wait + warmup + active` steps -- six with these values. A loop shorter than that produces **no output at all**.
+4. `prof.step()` advances the schedule. If it is never called the profiler stays in `wait` indefinitely and writes nothing, **without raising an error** -- the most common reason a profiled run produces no trace.
 
-The resulting JSON files load in the
-[Perfetto trace viewer](https://ui.perfetto.dev/), `chrome://tracing`, or
-TensorBoard -- the same viewer used for `unitrace` output above.
+The resulting JSON files load in the [Perfetto trace viewer](https://ui.perfetto.dev/), `chrome://tracing`, or TensorBoard -- the same viewer used for `unitrace` output above.
 
 ### Using ezpz
 
-[`ezpz`](https://github.com/saforem2/ezpz) wraps the above, including the
-device detection and rank gating, so the same command profiles on Aurora,
-Sunspot, Polaris, and Perlmutter:
+[`ezpz`](https://github.com/saforem2/ezpz) wraps the above, including the device detection and rank gating, so the same command profiles on Aurora, Sunspot, Polaris, and Perlmutter:
 
 ```bash
 module load frameworks
@@ -155,15 +138,9 @@ pip install "git+https://github.com/saforem2/ezpz"  # (1)!
 ezpz launch python3 -m ezpz.examples.profiler --profile --rank-zero-only
 ```
 
-1. Install from the repository, not PyPI: the name `ezpz` on PyPI belongs to
-   an unrelated package.
+1. Install from the repository, not PyPI: the name `ezpz` on PyPI belongs to an unrelated package.
 
-That runs a small distributed training loop, writes a Chrome trace per
-completed profiling cycle, and logs a key-averages table.
-[`get_torch_profiler()`](https://saforem2.github.io/ezpz/python/Code-Reference/profile/)
-selects the activity set from what is available -- `XPU` on Aurora and
-Sunspot, `CUDA` on Polaris and Perlmutter -- so no Aurora-specific branch is
-needed in user code.
+That runs a small distributed training loop, writes a Chrome trace per completed profiling cycle, and logs a key-averages table. [`get_torch_profiler()`](https://saforem2.github.io/ezpz/python/Code-Reference/profile/) selects the activity set from what is available -- `XPU` on Aurora and Sunspot, `CUDA` on Polaris and Perlmutter -- so no Aurora-specific branch is needed in user code.
 
 The same `--profile` flag works on the full training examples:
 
@@ -172,17 +149,11 @@ ezpz launch python3 -m ezpz.examples.fsdp    --model small --profile --rank-zero
 ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --rank-zero-only
 ```
 
-Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`.
-Note that **every rank profiles unless `--rank-zero-only` is passed**. Full
-details, including how to shrink large traces, are in the
-[ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
+Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`. Note that **every rank profiles unless `--rank-zero-only` is passed**. Full details, including how to shrink large traces, are in the [ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
 
 #### From Python
 
-The same wrapper is callable directly, for profiling your own training loop
-rather than one of the examples. `get_profiling_context` is the higher-level
-entry point -- it builds the schedule and a trace handler that writes a
-Chrome trace and logs a key-averages table:
+The same wrapper is callable directly, for profiling your own training loop rather than one of the examples. `get_profiling_context` is the higher-level entry point -- it builds the schedule and a trace handler that writes a Chrome trace and logs a key-averages table:
 
 ```python linenums="1" title="profile_with_ezpz.py"
 from ezpz.profile import get_profiling_context
@@ -199,16 +170,10 @@ with get_profiling_context(
             prof.step()
 ```
 
-1. With `rank_zero_only=True`, every rank other than 0 receives a
-   `contextlib.nullcontext`, so only rank 0 writes traces.
-2. Required, not stylistic: on the non-profiling ranks `prof` **is**
-   `None`, so calling `.step()` unguarded raises `AttributeError` on every
-   rank but one.
+1. With `rank_zero_only=True`, every rank other than 0 receives a `contextlib.nullcontext`, so only rank 0 writes traces.
+2. Required, not stylistic: on the non-profiling ranks `prof` **is** `None`, so calling `.step()` unguarded raises `AttributeError` on every rank but one.
 
-For full control over activities and the trace handler, `get_torch_profiler`
-is the thinner wrapper -- it selects `ProfilerActivity.XPU` / `CUDA` / `CPU`
-for you and applies the same rank gating, then passes everything else
-through to `torch.profiler.profile`:
+For full control over activities and the trace handler, `get_torch_profiler` is the thinner wrapper -- it selects `ProfilerActivity.XPU` / `CUDA` / `CPU` for you and applies the same rank gating, then passes everything else through to `torch.profiler.profile`:
 
 ```python linenums="1" title="profile_with_ezpz_lowlevel.py"
 import torch
@@ -231,5 +196,4 @@ with get_torch_profiler(
             prof.step()
 ```
 
-Both are documented in the
-[`ezpz.profile` API reference](https://saforem2.github.io/ezpz/python/Code-Reference/profile/).
+Both are documented in the [`ezpz.profile` API reference](https://saforem2.github.io/ezpz/python/Code-Reference/profile/).

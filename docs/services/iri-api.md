@@ -180,12 +180,15 @@ This section provides simple examples on how to interface with the API as a star
 
 !!! info "Currently Supported Compute Resources"
 
+    - Aurora
     - Polaris
     - Crux
 
 ??? "2.1. Submit a Job"
 
     Submits a new job to the scheduler on the target compute resource.
+
+    !!! info "For Aurora, use `"custom_attributes": {"filesystems": "flare"}`"
 
     === "cURL"
 

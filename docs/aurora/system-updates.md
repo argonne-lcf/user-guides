@@ -17,7 +17,7 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 | 2025-06-13 | [Lower memory limit on compute nodes](#2025-06-13-lower-memory-limit-on-compute-nodes-effective-2025-06-23) |
 | 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-2025-04) |
 
-## Major update: Agama 1146.78 drivers and oneAPI 2026.1.0 (Sep-Oct 2026) { #major-update-2026-09 }
+## Major update: Agama 1146.78 drivers and oneAPI 2026.1.0 (Sep 2026) { #major-update-2026-09 }
 
 !!! warning "Recompile required"
 
@@ -28,21 +28,52 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
     - **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
     - **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
     - **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
-    - **PBS scheduler:** Updated to 2026.1.0
+    - **PBS scheduler:** 2026.1.0, updated at rollout
     - **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Rolled out to all nodes:** On 2026-09-28
+    - **Revised:** [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) and [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), in `next-eval`
+    - **Rolled out to all nodes:** [2026-09-28](#2026-09-28-rolled-out-to-all-aurora-nodes), during scheduled maintenance
 
 ### 2026-09-28: Rolled out to all Aurora nodes
 
-The compute image with updates to Aurora's OS, GPU drivers, and programming environment, which is available in the `next-eval` queue, will be rolled out to all of the nodes across Aurora.
+The compute image with updates to Aurora's OS, GPU drivers (Agama 1146.78 / LTS release 2523.78), and programming environment (oneAPI 2026.1.0), which was previously available in the `next-eval` queue, is rolled out to all of the compute nodes and UANs across Aurora. The deployed image is the `next-eval` image as of its 2026-09-24 update, and includes the [`frameworks/2026.1.0` module](data-science/frameworks/index.md) with PyTorch 2.13 and vLLM 0.26.1.
 
-The changelog is in the [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entry below.
+With testing concluded, the `next-eval` queue is no longer active. Move any remaining `next-eval` jobs to a production queue if you want them to run. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-In addition to the updates listed below, Aurora's **PBS scheduler will be updated to 2026.1.0.**
+Aurora's PBS scheduler is also updated to 2026.1.0 as part of this rollout.
+
+The full changelog is in the [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes), and [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entries below.
+
+### 2026-09-24: `next-eval` MPICH and VTune updates
+
+The image in the `next-eval` queue has been updated with the following changes.
+
+#### PE 26.181.0
+
+- Revert default MPICH to `mpich/prd/5.0.0.aurora_test.87e2045` (removes `mpich/prd/5.0.0.aurora_test.b76b754`, the default since 2026-09-21)
+    - `MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE=1024` is no longer set by default
+- Add `mpich/prd/5.0.0.aurora_test.51a9474`, the latest version from the upstream `aurora_test` branch with a fix for `b76b754`, for testing
+- Add `mpich/opt/5.0.0.aurora_test.3c70a61`, the current production version on Aurora prior to this rollout, for comparison
+- Intel VTune 2026.4
+
+### 2026-09-21: `next-eval` OS image and PE fixes
+
+The image in the `next-eval` queue, and UANs `aurora-uan-0007` and `aurora-uan-0008`, have been updated with the following changes.
+
+#### OS image: compute_aurora_test_20260917T004318_c650c572
+
+- Kernel 6.4.0-150700.53.78-default
+- Fixed path in `/etc/ld.so.conf.d/libfabric.conf`
+
+#### PE 26.181.0
+
+- Default MPICH updated to `mpich/prd/5.0.0.aurora_test.b76b754`
+    - Sets `MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE=1024`
+- `frameworks` module no longer requires the `LD_LIBRARY_PATH` workaround
+- Unset `FI_LOG_*` variables
 
 ### 2026-09-01: Available in the `next-eval` test queue
 
-We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 9/1/2026. Image was updated on 9/21, and on 9/24. See change log below for details.
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 2026-09-01.
 
 **This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
 
@@ -52,10 +83,10 @@ Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image
 
-- SLES 15 SP7 with kernel 6.4.0-150700.53.78-default
+- SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
 - HPE's Slingshot Host Software 14.0.1
 - Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
-- libfabric 2.3.1. Fixed path in /etc/ld.so.conf.d/libfabric.conf
+- libfabric 2.3.1
 - Default log levels were increased to the following environment variable settings:
 
     ```bash
@@ -63,17 +94,10 @@ Details of the full changelog are below (**`next-eval` test queue only**):
     FI_LOG_PROV=cxi
     ```
 
-    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`.
+    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`. These variables are unset by default since the [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) update.
 
 #### PE 26.181.0
 
-- Unset FI_LOG_* variables (**9/21**)
-- Updated mpich - mpich/prd/5.0.0.aurora_test.87e2045 (**9/24**)
-  - Set MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE = 1024
-- Added the following (**9/24**):
-  - mpich/prd/5.0.0.aurora_test.51a9474, latest version from the upstream aurora_test branch,  available for testing.
-  - mpich/opt/5.0.0.aurora_test.3c70a61, the (older) current production version on Aurora for comparison.
-- Intel VTune update to 2026.4 (**9/24**)
 - oneAPI Toolkit 2026.1
 - Standalone oneDAL 2026.1
 - Standalone advisor 2026.0
@@ -103,7 +127,7 @@ Details of the full changelog are below (**`next-eval` test queue only**):
     - scikit-learn 1.9.0
     - scikit-learn-intelex 20260728.214749
     - Known Issues
-        - Frameworks module no longer requires LD_LIBRARY_PATH workaround (fixed on **9/21**)
+        - `frameworks` module load required an `LD_LIBRARY_PATH` workaround; fixed in the [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) update
         - For vLLM XPUGraph capturing to work, in your job script:
 
             ```bash
@@ -129,7 +153,6 @@ Largely matches current deployed PE on Aurora, but recompiled for SLES 15 SP7 an
 - adios: 2.11.0 → 2.12.1
 - UMD: AICOE: 2026.06.19 release
 - UMD: debuginfo for 1146.78
-
 
 ## 2026-05-21: OS image and firmware update
 

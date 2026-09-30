@@ -32,13 +32,16 @@ uv venv                                  # creates ./.venv, downloading Python i
 source .venv/bin/activate
 uv pip install -r requirements.txt
 ```
-Equivalently, `make install-uv` runs the last two steps for you.
+Equivalently, `make install-uv` runs the `uv venv` and `uv pip install` steps for you.
+To rebuild the environment from scratch (for example, to drop packages no longer in
+`requirements.txt`), run `uv venv --clear` and reinstall.
 
 Alternatively, skip the virtual environment entirely and prefix each command with
 [`uv run`](https://docs.astral.sh/uv/guides/scripts/), which resolves the dependencies on the fly:
 ```bash
-uv run --with-requirements requirements.txt mkdocs serve
+uv run --with-requirements requirements.txt make serve
 ```
+These temporary environments live in uv's cache, not the repo; `uv cache prune` removes unused ones.
 
 #### Option 2: `venv` + `pip`
 
