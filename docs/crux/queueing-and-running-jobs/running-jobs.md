@@ -9,7 +9,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
 | debug         | 1        | 4        | 5 min    | 2 hr     | Max 1 job running and 1 job queued per user; at most 8 nodes in use across all debug jobs
-| workq-route   | 1        | 184      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below for its execution queue
+| workq-route   | 1        | 176      | 5 min    | 24 hrs   | Routing queue; 100 jobs max per project; See below for its execution queue
 | *preemptable*   | 1        | 10       | 5 min    | 72 hrs   | ***Please be aware that jobs in the preemptable queue can be killed at any time if jobs are submitted to the demand queue.*** Max 20 jobs running/accruing/queued **per-project**; see **Note** below                              |
 | *demand*        | 1        | 64       | 5 min    | 1 hr     | ***By request only (email support@alcf.anl.gov) to submit a request***              |
 
@@ -26,7 +26,7 @@ To make your job rerunnable, add the following PBS directive: `#PBS -r y`. This 
 
 | Queue Name      | Node Min | Node Max | Time Min | Time Max | Notes                                  |
 |-----------------|----------|----------|----------|----------|----------------------------------------|
-| workq           | 1        | 184      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project |
+| workq           | 1        | 176      | 5 min    | 24 hrs   | 20 jobs queue or running/10 jobs running per project |
 
 ## Running MPI+OpenMP Applications
 

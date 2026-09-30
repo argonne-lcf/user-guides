@@ -13,11 +13,37 @@
   --green_med-dark:    rgb(  0,  58,  65);
 
   --blue_pale:         rgb(186, 222, 245);
+  --blue_tint:         rgb(231, 246, 253);
   --blue_med:          rgb( 0, 97, 175); 
   --blue_dark:         rgb( 29,  22,  81);
 
   --warm_red:          rgb(209,  59,  80);
   --warm_orange:       rgb(237,  98,  84);
+}
+
+/* `primary: custom` / `accent: custom` in mkdocs.yml: without these, Material
+   falls back to indigo for the mobile drawer title and repo row (primary) and
+   for hover/focus states such as the code copy button (accent). */
+[data-md-color-scheme="alcf"][data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--blue_med);
+  --md-primary-fg-color--light: var(--blue_pale);
+  --md-primary-fg-color--dark:  var(--blue_dark);
+}
+
+[data-md-color-scheme="alcf"][data-md-color-accent="custom"] {
+  --md-accent-fg-color:              var(--green_med);
+  --md-accent-fg-color--transparent: rgba(0, 123, 112, 0.1);
+}
+
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--neutral_med-dark);
+  --md-primary-fg-color--light: var(--neutral_med);
+  --md-primary-fg-color--dark:  var(--neutral_dark);
+}
+
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
+  --md-accent-fg-color:              var(--green_med-light);
+  --md-accent-fg-color--transparent: rgba(24, 185, 180, 0.1);
 }
 
 
@@ -63,7 +89,7 @@
 
   .md-typeset a:focus,
   .md-typeset a:hover {
-    color: var(--green_dark);
+    color: var(--green_med-dark);
     text-decoration: none;
   } 
 
@@ -243,13 +269,21 @@
     color: var(--neutral_med);
   }
 
-  .md-tooltip2__inner {
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
+  .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
-  .md-tooltip2:before {
-    background-color: var(--neutral_med-light);
+  /* The tail is drawn with a border; a background-color paints a square. */
+  .md-tooltip2--top[role=tooltip]:before {
+    border-top-color: var(--neutral_med-light);
+  }
+
+  .md-tooltip2--bottom[role=tooltip]:before {
+    border-bottom-color: var(--neutral_med-light);
   }
 
   .md-typeset code {
@@ -657,13 +691,21 @@
     color: var(--neutral_med);
   }
 
-  .md-tooltip2__inner {
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
+  .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
-  .md-tooltip2:before {
-    background-color: var(--neutral_med-light);
+  /* The tail is drawn with a border; a background-color paints a square. */
+  .md-tooltip2--top[role=tooltip]:before {
+    border-top-color: var(--neutral_med-light);
+  }
+
+  .md-tooltip2--bottom[role=tooltip]:before {
+    border-bottom-color: var(--neutral_med-light);
   }
 
   .md-typeset code {
@@ -873,7 +915,7 @@
 
 .md-typeset h3 {
   margin-block: 0.25rem;
-  font-weight: 500;
+  font-weight: 600;
   /*letter-spacing: -0.25px;*/
 }
 
@@ -1943,6 +1985,11 @@ pre .normal a {
      - [Label](path/to/page.md)
      </div>
 
+   Tiles may carry an icon shortcode, which renders as inline SVG and inherits
+   the tile's colour. Add class="alcf-tile-link" for the large stacked variant:
+
+     - <a href="..." class="alcf-tile-link">:material-face-agent:<span>Label</span></a>
+
    Renders a responsive grid: 3 columns, collapsing to 2 then 1.
    --------------------------------------------------------------------------- */
 /* Specificity note: Material sets `.md-typeset ul:not([hidden]) { display: flow-root }`
@@ -1991,11 +2038,19 @@ pre .normal a {
 }
 
 .md-typeset .alcf-tile-grid ul li > a:hover {
-  border-color: #0061AF;
-  background-color: #E7F6FD;
-  color: #0061AF;
+  border-color: var(--blue_med);
+  background-color: var(--blue_tint);
+  color: var(--blue_med);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
+}
+
+/* The light hover tint is unreadable on the dark background, so invert the
+   relationship: keep the brand blue as the accent, lighten the text. */
+[data-md-color-scheme="slate"] .md-typeset .alcf-tile-grid ul li > a:hover {
+  border-color: var(--blue_pale);
+  background-color: color-mix(in srgb, var(--blue_med) 35%, transparent);
+  color: var(--blue_pale);
 }
 
 .md-typeset .alcf-tile-grid ul li > a:focus-visible {
@@ -2004,9 +2059,6 @@ pre .normal a {
   color: var(--md-accent-fg-color);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
-}
-
-.md-typeset .alcf-tile-grid ul li > a:focus-visible {
   outline: 2px solid var(--md-accent-fg-color);
   outline-offset: 2px;
 }
@@ -2022,15 +2074,31 @@ pre .normal a {
 
 .md-typeset .alcf-tile-grid ul li > a.alcf-tile-link {
   flex-direction: column;
-  gap: 15px;
+  gap: 0.9rem;
 }
 
-.md-typeset .alcf-tile-grid ul li > a .alcf-tile-image {
+/* Hero icons: override the 1.4em default above. pymdownx.emoji wraps the
+   <svg> in <span class="twemoji">, so both need the size. */
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link .twemoji,
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link .twemoji svg {
   width: 80px;
   height: 80px;
   margin: 0;
-  border: 0;
-  object-fit: contain;
+}
+
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link .twemoji svg {
+  fill: var(--blue_med);
+  transition: fill 125ms;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .alcf-tile-grid ul li > a.alcf-tile-link .twemoji svg {
+  fill: var(--blue_pale);
+}
+
+/* On hover the icon tracks the label colour set above. */
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link:hover .twemoji svg,
+.md-typeset .alcf-tile-grid ul li > a.alcf-tile-link:focus-visible .twemoji svg {
+  fill: currentColor;
 }
 
 /* Hide the external-link glyph Material appends, so tiles stay uniform */

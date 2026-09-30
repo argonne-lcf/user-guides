@@ -5,6 +5,11 @@ install-dev:
 	python -m pip install --upgrade wheel pip
 	pip install -r requirements.txt
 
+.PHONY: install-uv
+install-uv:
+	uv venv --clear
+	uv pip install -r requirements.txt
+
 
 .PHONY: generate-inbound-links
 generate-inbound-links:
