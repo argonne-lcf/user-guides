@@ -39,7 +39,7 @@ The compute image with updates to Aurora's OS, GPU drivers (Agama 1146.78 / LTS 
 
 With testing concluded, the `next-eval` queue is no longer active. Move any remaining `next-eval` jobs to a production queue if you want them to run. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
 
-Aurora's **PBS scheduler is also updated to 2026.1.0** as part of this rollout.
+Aurora's PBS scheduler is also updated to 2026.1.0 as part of this rollout.
 
 The full changelog is in the [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes), and [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entries below.
 
