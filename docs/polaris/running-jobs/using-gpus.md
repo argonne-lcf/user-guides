@@ -61,7 +61,7 @@ wait
 
 ## Running Multiple Processes per GPU
 
-There are 2 approaches to launching multiple concurrent processes on a single Nvidia GPU: using the Multi-Process Service (MPS) which will run multiple logical threads per device and using MIG Mode which physically partitions the GPU for thread execution.
+Multi-Process Service (MPS) is the supported for launching multiple concurrent processes on a single NVIDIA GPU by running multiple logical threads per device.
 
 ### Using MPS on the GPUs
 
