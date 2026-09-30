@@ -422,7 +422,7 @@ alcf-tokens login \
 | Command | Description |
 | ------- | ----------- |
 | `alcf-ai ls-endpoints` | List all endpoints available across clusters (raw API response). |
-| `alcf-ai ls-models <cluster>` | List the models available on a cluster (raw API response). |
+| `alcf-ai ls-models <cluster>` | List the models available on a cluster, with [capabilities](#model-capabilities) (raw API response). |
 | `alcf-ai ls-jobs <cluster>` | List the ongoing jobs (running and queued models) for a cluster. |
 
 ```bash
@@ -976,6 +976,42 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?model_id=openai/gpt-oss-120b" \
     -H "Authorization: Bearer ${access_token}"
 ```
+
+#### Model Capabilities
+
+Each model includes a versioned `capabilities` object describing what the deployment supports. The current schema is version 1:
+
+| Field | Description |
+| ----- | ----------- |
+| `schema_version` | Version of the capability object. |
+| `api_protocols` | API protocols the model accepts. |
+| `context_window_tokens` | Maximum context window, in tokens. |
+| `input_modalities` | Accepted input types. |
+| `streaming` | Whether streaming responses are supported. |
+| `reasoning.supported` | Whether the model supports reasoning. |
+| `reasoning.effort_levels` | Accepted reasoning effort values. |
+| `reasoning.default_effort` | Effort applied when a request omits one. |
+| `reasoning.separate_output` | Whether reasoning is returned separately as `reasoning_content` instead of inline. |
+| `tool_calling.supported` | Whether the model supports tool calling. |
+
+Optional fields are omitted when they do not apply, so clients should fall back to conservative defaults. Models served by vLLM also report `max_model_len`, `max_num_seqs`, `tool_call_parser`, and `enable_auto_tool_choice` alongside `capabilities`.
+
+##### Possible Values
+
+| Field | Values |
+| ----- | ------ |
+| `schema_version` | `1` |
+| `api_protocols` | `chat_completions`, `responses`, `messages` |
+| `context_window_tokens` | Any positive integer |
+| `input_modalities` | `text`, `image`, `video` |
+| `streaming` | `true`, `false` |
+| `reasoning.supported` | `true`, `false` |
+| `reasoning.effort_levels` | `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max` |
+| `reasoning.default_effort` | One of the model's `reasoning.effort_levels` |
+| `reasoning.separate_output` | `true`, `false` |
+| `tool_calling.supported` | `true`, `false` |
+
+`alcf-ai ls-models <cluster>` returns the same objects and uses them to configure agent harnesses. See [alcf-ai CLI and SDK](#alcf-ai-cli-and-sdk).
 
 !!! note "Want to add a model?"
     To request a new model, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Inference%20Endpoint%20Model%20Request).
