@@ -94,7 +94,7 @@ Details of the full changelog are below (**`next-eval` test queue only**):
     FI_LOG_PROV=cxi
     ```
 
-    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`.
+    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`. These variables are unset by default since the [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) update.
 
 #### PE 26.181.0
 
