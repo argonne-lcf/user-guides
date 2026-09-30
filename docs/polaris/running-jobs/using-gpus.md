@@ -61,7 +61,7 @@ wait
 
 ## Running Multiple Processes per GPU
 
-Multi-Process Service (MPS) is the supported for launching multiple concurrent processes on a single NVIDIA GPU by running multiple logical threads per device.
+The NVIDIA Multi-Process Service (MPS) is the supported way to run multiple concurrent processes on a single GPU.
 
 ### Using MPS on the GPUs
 
