@@ -35,7 +35,12 @@ theme:
         name: Switch to system preference
 
   font:
-    text: proxima-nova   # removed in #545. remove again?
+    # Sets --md-text-font, the only thing applying Proxima Nova (no CSS
+    # font-family); the font itself comes from the Adobe Fonts kit in
+    # overrides/main.html. Material also adds this name to its Google Fonts
+    # request, but Google has no such family, so only the code font (Roboto
+    # Mono) is fetched. Removing this falls back to Roboto.
+    text: proxima-nova
 
   features:
     - content.action.edit
