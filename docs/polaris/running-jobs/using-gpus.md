@@ -178,3 +178,4 @@ mpiexec -n ${NNODES} --ppn 1 ./disable_mps_polaris.sh
 
 ### Multi-Instance GPU (MIG) mode
 
+!!! note "MIG mode is current disabled, if users are interested having ALCF introduce support for this feature again, reach out to support@alcf.anl.gov"
