@@ -66,7 +66,7 @@ Our documentation is organized in two sections aligned with the two steps descri
 :   Number of resources available to execute a program. In ALCF, given the way we configure PBS, this equates to a hardware thread. For example, a single socket node with a 32 core CPU, each with two hardware threads would report that as ncpus=64.
 
 `ngpus`
-:   The number of allocable GPUs on the vnode. For an NVIDIA A100, this could be one, however, if we enable _Multi Instance GPU (MIG)_ mode and use cgroups it could be as high as 7.
+:   The number of allocable GPUs on the vnode. For an NVIDIA A100, this could be one or more.
 
 `job`
 :   A job equates to a qsub. A set of resources allocated to you for a period of time. You will execute one or more `tasks` on those resources during your job.
