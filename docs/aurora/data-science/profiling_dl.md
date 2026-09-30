@@ -146,10 +146,42 @@ The same `--profile` flag works on the full training examples:
 
 ```bash
 ezpz launch python3 -m ezpz.examples.fsdp    --model small --profile --rank-zero-only
-ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --rank-zero-only
+ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --rank-zero-only --no-with-stack  # (1)!
 ```
 
+1. `--no-with-stack` is **required on Aurora** for `fsdp_tp`. With Python
+   stacks enabled, `key_averages()` walks them recursively in torch's
+   `profiler_util.py`, and FSDP2 + TP call stacks exceed Python's
+   1000-frame recursion limit:
+
+    ```
+    RecursionError: maximum recursion depth exceeded
+    ```
+
+    The run exits 143 having written **zero** traces. Measured on 2 nodes
+    (24 ranks): with stacks, 0 traces; with `--no-with-stack`, 5 traces.
+    Raising `sys.setrecursionlimit()` does not help — it replaces the
+    crash with a hang. See
+    [saforem2/ezpz#275](https://github.com/saforem2/ezpz/issues/275).
+
 Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`. Note that **every rank profiles unless `--rank-zero-only` is passed**. Full details, including how to shrink large traces, are in the [ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
+
+!!! warning "Profiling `fsdp_tp` is not portable today"
+
+    The small `ezpz.examples.profiler` loop profiles cleanly everywhere,
+    but `fsdp_tp` at `--tp 2` does not:
+
+    | system | `--profile` on `fsdp_tp --tp 2` |
+    |---|---|
+    | Polaris | works |
+    | **Aurora** | needs `--no-with-stack` (see above) |
+    | **Perlmutter** | **hangs**, killed at timeout, zero traces |
+
+    On Perlmutter the profiler alone is sufficient to wedge the run — a
+    controlled 2×2 shows both profiled arms timing out and both
+    unprofiled arms completing, on either NCCL transport. No flag avoids
+    it today. Tracked in
+    [saforem2/ezpz#275](https://github.com/saforem2/ezpz/issues/275).
 
 #### From Python
 
