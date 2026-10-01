@@ -67,7 +67,7 @@ From here, you should be able to control starting and stopping processes, ranks,
 
 ## Offline debugging
 
-To run your application with DDT wihtout intervention, you can use offline debugging features such as tracepoints and memory debugging enabled, and produces a report at the end of the execution.
+To run your application with DDT without intervention, you can use offline debugging features such as tracepoints and memory debugging enabled, and produces a report at the end of the execution.
 
 ```bash
 ddt --offline mpirun -n 8 --ppn 4 --cpu-bind depth ./set_affinity_gpu_polaris.sh ./a.out
