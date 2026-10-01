@@ -372,7 +372,7 @@ Alternatively, you can also install via your system package manager (i.e. `brew`
 
 ### Automatic Configuration w/ alcf-ai
 
-You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai`. This also handles authentication and pulling an API key from the service.
+You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (which can be installed with ```pip install alcf-ai```. This also handles authentication and pulling an API key from the service.
 
 ```sh
 curl -LsSf https://astral.sh/uv/install.sh | sh # install uv (if needed)
