@@ -177,7 +177,6 @@ A typical submission script looks like this:
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}
 
-
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=12 # Number of MPI ranks to spawn per node
 NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
@@ -215,24 +214,26 @@ chmod +x script.sh
 qsub script.sh
 ```
 
-### Known Issues
+## Known issues
 
-In VASP version 6.6.1, the compilation fails with Intel OneAPI 2026, showing the following error: 
+### VASP 6.6.1 internal compiler error with oneAPI 2026
 
-```
+Compiling VASP 6.6.1 with Intel oneAPI 2026 fails with the following internal compiler error:
+
+```output
 david_full.F(2014): error #5623: **Internal compiler error: internal abort** Please report this error along with the circumstances in which it occurred in a Software Problem Report. Note: File and line given may not be explicit cause of this error.
 !$OMP TEAMS WORKDISTRIBUTE IF(OFFLOAD_ON)
 --------^
 ```
 
-This can be fixed changing the line #2015  in `src/david_full.F`:
-From
-```
+To work around it, edit line 2015 of `src/david_full.F` (the statement following the `!$OMP TEAMS WORKDISTRIBUTE` directive) and remove the explicit array section on the right-hand side. Change
+
+```fortran title="src/david_full.F" linenums="2015"
                     CPROJ(1:NPRO,N) = GCIJP(1:NPRO)
 ```
-to 
-```
+
+to
+
+```fortran title="src/david_full.F" linenums="2015"
                     CPROJ(1:NPRO,N) = GCIJP
 ```
-
-
