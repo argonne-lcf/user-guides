@@ -1,8 +1,12 @@
 # Python Environments
 
-ALCF systems provide Python, and the packages used in these guides are published on PyPI, so you can use whichever package manager you prefer. This page covers creating environments, comparing package managers, and running tools without installing them.
+ALCF systems provide Python, and the packages used in these guides are published on PyPI, so you can use whichever package manager you prefer. This page covers best practices for creating [Python environments](#creating-environments) and for [running Python command-line tools](#running-and-installing-tools) without managing an environment for them.
 
-For machine-specific setup, such as module loads, the system Python and Conda installations, and Jupyter kernels, see [Python on Aurora](../aurora/data-science/python.md), [Python on Polaris](../polaris/data-science/python.md), [Python on Sophia](../sophia/data-science/python.md), or [Python on Crux](../crux/data-science/python.md).
+Installing everything with `pip install --user` puts every project's packages into one shared location, so projects eventually collide: upgrading a library for one code breaks another, and a tool installed months ago can impact behavior in subtle, hard-to-trace ways. Packages in `~/.local` are also visible from Conda environments and from virtual environments created with `--system-site-packages`, so a `--user` install can leak into environments that you meant to keep separate.
+
+A virtual environment solves this by giving each project its own lightweight, isolated Python environment. The packages you install live in one self-contained folder, separate from the system libraries and from your other work. That isolation enhances reproducibility (you can `pip freeze` library versions from one environment and rebuild it later). It also keeps experiments from interfering with each other, and makes mistakes cheaper to undo.
+
+ALCF provides curated `conda` environments with useful packages installed out of the box on [Aurora](../aurora/data-science/python.md), [Polaris](../polaris/data-science/python.md), and [Sophia](../sophia/data-science/python.md). [Python on Crux](../crux/data-science/python.md) details how to manage your own environments on Crux.
 
 ## Creating Environments
 
@@ -104,16 +108,29 @@ All of these install into your own directories. None of them needs `sudo`, and n
 | `pip` + `venv` | `pip install <pkg>` in an activated virtual environment | `python -m venv .venv`, then `pip install <pkg>` | Available everywhere. Requires activating the environment first. |
 | `conda` | `pip install <pkg>` in an activated environment | `conda create -n <env> python`, then `pip install <pkg>` | Use Conda for the environment and `pip` for packages that are only on PyPI. |
 
-## Running a Tool Without Installing It
+## Running and Installing Tools
 
-`uvx` (short for `uv tool run`) and `pipx run` download a package into a cached, disposable environment and run its command, so nothing is added to your `PATH`:
+`uvx` (short for `uv tool run`) and `pipx run` download a package into a cached, disposable environment and run its command. Nothing is added to your `PATH`, and the tool doesn't impact any of your existing environments:
 
 ```bash
 uvx <package> --help          # same as: uv tool run <package> --help
+
+# Alternative:
 pipx run <package> --help
 ```
 
-These are convenient for one-off commands, and they always run the latest release. If `uv` uses a stale cached version, `uvx <pkg>@latest` bypasses the cache.
+These are convenient for one-off commands, and they default to running the latest release. If `uv` uses a stale cached version, `uvx <pkg>@latest` bypasses the cache.
+
+If you wish to install the tool persistently, so that its command is always available, while keeping the benefits of automatic tool-scoped environment isolation, use:
+
+```bash
+uv tool install <pkg>
+
+# Alternative:
+pipx install <pkg>
+```
+
+Both link the command into `~/.local/bin`. If that directory is not on your `PATH`, run `uv tool update-shell` or `pipx ensurepath` and start a new shell.
 
 ## Upgrading
 
