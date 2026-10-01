@@ -154,7 +154,7 @@ ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --ra
    `profiler_util.py`, and FSDP2 + TP call stacks exceed Python's
    1000-frame recursion limit:
 
-    ```
+    ```output
     RecursionError: maximum recursion depth exceeded
     ```
 
