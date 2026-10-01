@@ -177,7 +177,6 @@ A typical submission script looks like this:
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}
 
-module load oneapi/release/2025.3.1
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=12 # Number of MPI ranks to spawn per node
