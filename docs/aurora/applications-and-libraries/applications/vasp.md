@@ -214,3 +214,25 @@ Submission scripts should have executable attributes to be used with `qsub` scri
 chmod +x script.sh
 qsub script.sh
 ```
+
+### Known Issues
+
+In VASP version 6.6.1, the compilation fails with Intel OneAPI 2026, showing the following error: 
+
+```
+david_full.F(2014): error #5623: **Internal compiler error: internal abort** Please report this error along with the circumstances in which it occurred in a Software Problem Report. Note: File and line given may not be explicit cause of this error.
+!$OMP TEAMS WORKDISTRIBUTE IF(OFFLOAD_ON)
+--------^
+```
+
+This can be fixed changing the line #2015  in `src/david_full.F`:
+From
+```
+                    CPROJ(1:NPRO,N) = GCIJP(1:NPRO)
+```
+to 
+```
+                    CPROJ(1:NPRO,N) = GCIJP
+```
+
+
