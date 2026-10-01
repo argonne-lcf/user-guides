@@ -201,7 +201,7 @@ export I_MPI_OFFLOAD=1 #enable GPU to GPU comm
 export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
 export AFFINITY=$(which gpu_tile_compact.sh)
 
-bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
+bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
 
@@ -212,4 +212,28 @@ Submission scripts should have executable attributes to be used with `qsub` scri
 ```bash linenums="1"
 chmod +x script.sh
 qsub script.sh
+```
+
+## Known issues
+
+### VASP 6.6.1 internal compiler error with oneAPI 2026
+
+Compiling VASP 6.6.1 with Intel oneAPI 2026 fails with the following internal compiler error:
+
+```output
+david_full.F(2014): error #5623: **Internal compiler error: internal abort** Please report this error along with the circumstances in which it occurred in a Software Problem Report. Note: File and line given may not be explicit cause of this error.
+!$OMP TEAMS WORKDISTRIBUTE IF(OFFLOAD_ON)
+--------^
+```
+
+To work around it, edit line 2015 of `src/david_full.F` (the statement following the `!$OMP TEAMS WORKDISTRIBUTE` directive) and remove the explicit array section on the right-hand side. Change
+
+```fortran title="src/david_full.F" linenums="2015"
+                    CPROJ(1:NPRO,N) = GCIJP(1:NPRO)
+```
+
+to
+
+```fortran title="src/david_full.F" linenums="2015"
+                    CPROJ(1:NPRO,N) = GCIJP
 ```
