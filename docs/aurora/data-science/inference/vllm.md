@@ -143,7 +143,10 @@ This memory can be controlled with a number of parameters which can be passed to
 
 The main knob to control how much memory vLLM uses is `--gpu-memory-utilization`. In most cases, a value of 0.9 (i.e., 90% of the total GPU memory) is sufficient to leave enough spare memory for the runtime and other overhead (usually only a few GB).
 
-The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. For `bfloat16`, the memory used by the weights in GB is estimated as `num. billion parameters x 2`. 
+The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. 
+For `bfloat16`, which is the recommended data type on Aurora, the memory used by the weights in GB is estimated as 
+
+`weights_memory = num. billion parameters x 2 GB`. 
 
 The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
 
@@ -151,11 +154,17 @@ The memory used by the KV cache is estimated by first measuring the amount of me
 
 where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. 
 
-Refactor below to give memory per sequence, and then get concurrency from remaining memory.. max_concurrent_seqs ≈ kv_cache_available / (per_token_bytes × typical_seq_len)
+Then, the total KV cache memory needed for a full sequence is 
 
-*Then, the total cache size scales the per-token bytes by the total context length (`--max-model-len`) and the concurrency (--max-num-seqs); namely `KV cache memory = (per_token_bytes × max_model_len × max_concurrent_sequences) / 1e9 GB`.*
+`kv_memory_per_seq = per_token_bytes x sequence_length / 1e9 GB`
 
-Based on the model parameters, the data type and desired context length, the total amount of memory needed to serve the model can be estimated. 
+where the sequence length is controlled with `--max-model-len`, and the maximum number of concurrent sequences that can be served is determined by 
+
+`max_concurrent_seqs = total_kv_memory_available / kv_memory_per_seq`
+
+In many cases, it is desirable use the maximum context window allowed by the model as the sequence length. 
+However, if your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
+
 
 !!! info "Supported data types on Intel Max 1550 GPU"
 	Note that `fp8` is not supported on Aurora's Intel GPU, so `bfloat16` is the recommended setting for the data type and `--kv-cache-dtype` cannot be used to easily reduce the size of the KV cache. Use the memory parameters `--gpu-memory-utilization` and `--kv-cache-memory-bytes` to directly limit the KV cache size or use `--max-model-len` to reduce the context window.
