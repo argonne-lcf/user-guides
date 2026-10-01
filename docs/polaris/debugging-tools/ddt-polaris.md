@@ -39,7 +39,7 @@ To run DDT interactively from Polaris, start up an interactive PBS job. You'll n
 module load forge
 ```
 
-To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to Polaris you created as shown above. On the Polaris compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 2 nodes, with 8 MPI ranks per node:
+To start the DDT server and connect to your client, make sure your client is running and you have selected the remote connection to Polaris you created as shown above. On the Polaris compute node shell prompt, issue the command to debug your binary like this example, which starts up DDT on 2 nodes, with 4 MPI ranks per node:
 
 ```bash
 ddt --np=8 --connect --mpi="Cray PALS" --mpiargs="-l --ppn 4 --cpu-bind depth -envall" ./a.out
