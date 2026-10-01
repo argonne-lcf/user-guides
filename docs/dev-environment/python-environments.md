@@ -1,72 +1,124 @@
-# Python Virtual Environments
+# Python Environments
 
-This section provides options on how to create and work with python environments.
+ALCF systems provide Python, and the packages used in these guides are published on PyPI, so you can use whichever package manager you prefer. This page covers creating environments, comparing package managers, and running tools without installing them.
+
+For machine-specific setup, such as module loads, the system Python and Conda installations, and Jupyter kernels, see [Python on Aurora](../aurora/data-science/python.md), [Python on Polaris](../polaris/data-science/python.md), [Python on Sophia](../sophia/data-science/python.md), or [Python on Crux](../crux/data-science/python.md).
 
 ## Creating Environments
 
-??? "uv"
+=== "uv"
 
     Verify that `uv` is installed:
+
     ```bash
     uv --version
     ```
 
     If not, install `uv`:
+
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
     ```
 
-    Create and activate your environment, using a specific python version:
+    Create and activate your environment, using a specific Python version:
+
     ```bash
     uv venv --python 3.13 .venv
     source .venv/bin/activate
     ```
 
-    Install packages with `uv pip install` instead of `pip install`.
+    Install packages with `uv pip install` instead of `pip install`:
 
-??? "venv"
+    ```bash
+    uv pip install <package>
+    ```
+
+    `uv run --with <package> python` starts Python with that package in a throwaway environment instead, with no environment to activate.
+
+=== "venv"
 
     Verify that `venv` is installed:
+
     ```bash
     python -m venv --help
     ```
 
-    If not, install `venv`:
-    ```bash
-    sudo apt update
-    sudo apt install python3-venv
-    ```
-
     Create and activate your environment:
+
     ```bash
-    python -m venv venv
-    source venv/bin/activate
+    python -m venv .venv
+    source .venv/bin/activate
     ```
 
-    The environment will inherit the python version tied to your `python` CLI:
+    The environment inherits the Python version of your `python` command:
+
     ```bash
     python --version
     ```
 
-??? "conda"
+    On ALCF systems, `python` is whichever module you have loaded, so load a Python module first if the version is not what you expect. The per-machine pages linked at the top of this page show the recommended pattern on each system. They build the `venv` on top of the module's Conda environment with `--system-site-packages`, which keeps that environment's packages importable.
+
+    Install packages into the activated environment with `pip install`:
+
+    ```bash
+    pip install <package>
+    ```
+
+=== "conda"
 
     Verify that `conda` is installed:
+
     ```bash
     conda --version
     ```
 
     Check which conda installation you are using:
+
     ```bash
     conda info | grep "base environment"
     ```
 
-    If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge).
+    If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide Conda through module files. The per-machine pages linked at the top of this page cover `module load conda` and cloning the base environment.
 
-    Create and activate your environment, using a specific python version:
+    Create and activate your environment, using a specific Python version:
+
     ```bash
     conda create -n my-env python=3.13 -y
     conda activate my-env
     ```
 
+    Install packages into the activated environment with `pip install`:
 
-## Using Tools
+    ```bash
+    pip install <package>
+    ```
+
+All of these install into your own directories. None of them needs `sudo`, and none writes to the system Python. Prefer an activated environment over `pip install --user`, since it keeps each project's packages separate and avoids conflicts with the system and Spack Python installations. Activate the environment, or use `uv run`, in every new shell, including inside job scripts.
+
+## Comparing Package Managers
+
+| Manager | Install a CLI tool | Install a library | Notes |
+| ------- | ------------------ | ----------------- | ----- |
+| [`uv`](https://docs.astral.sh/uv/) | `uv tool install <pkg>` | `uv venv`, then `uv pip install <pkg>` | Fast. Creates environments and runs tools without activating anything. |
+| [`pipx`](https://pipx.pypa.io/) | `pipx install <pkg>` | n/a | One isolated environment per tool, linked into `~/.local/bin`. |
+| `pip` + `venv` | `pip install <pkg>` in an activated virtual environment | `python -m venv .venv`, then `pip install <pkg>` | Available everywhere. Requires activating the environment first. |
+| `conda` | `pip install <pkg>` in an activated environment | `conda create -n <env> python`, then `pip install <pkg>` | Use Conda for the environment and `pip` for packages that are only on PyPI. |
+
+## Running a Tool Without Installing It
+
+`uvx` (short for `uv tool run`) and `pipx run` download a package into a cached, disposable environment and run its command, so nothing is added to your `PATH`:
+
+```bash
+uvx <package> --help          # same as: uv tool run <package> --help
+pipx run <package> --help
+```
+
+These are convenient for one-off commands, and they always run the latest release. If `uv` uses a stale cached version, `uvx <pkg>@latest` bypasses the cache.
+
+## Upgrading
+
+| Manager | Upgrade a tool | Upgrade a library |
+| ------- | --------------- | ------------------ |
+| `uv` | `uv tool upgrade <pkg>` | `uv pip install --upgrade <pkg>` |
+| `pipx` | `pipx upgrade <pkg>` | n/a |
+| `pip` / `conda` | `pip install --upgrade <pkg>` in the activated environment | `pip install --upgrade <pkg>` |

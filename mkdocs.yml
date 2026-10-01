@@ -484,6 +484,7 @@ nav:
 
   - Development Environment & AI:
     - dev-environment/index.md
+    - Python Environments: dev-environment/python-environments.md
     - AI Guidance: dev-environment/ai-guidance.md
     - VS Code (Remote SSH): dev-environment/vscode.md
 
