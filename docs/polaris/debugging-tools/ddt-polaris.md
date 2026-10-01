@@ -76,9 +76,6 @@ ddt --offline mpirun -n 8 --ppn 4 --cpu-bind depth ./set_affinity_gpu_polaris.sh
 ```
 
 
-As mentioned above, this is not meant to be full documentation on how to use DDT. A good place to start with that is to open the User Guide from the Help menu in the client application.
-
-
 ## Running a local version on Polaris
 
 You may want to install and run a local version of Forge from the [Linaro website](https://www.linaroforge.com/download-documentation/) on Polaris. Once you install it, you can use the following license file to run the local version with the Forge license on Polaris:
