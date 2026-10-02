@@ -29,11 +29,11 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 
 ## Virtual environments via `venv`
 
-While the Anaconda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many of the most commonly used Python packages for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
+While the conda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many of the most commonly used Python packages for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
 
 !!! warning
 	
-	There are several alternative approaches for extending or modifying the base Anaconda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
+	There are several alternative approaches for extending or modifying the base conda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
 
 Creating and activating a new virtual environment (`venv`) is straightforward. After loading the above module, execute:
 
@@ -56,7 +56,7 @@ An alternative, although not recommended, approach to creating a `venv` is to in
 ```bash
 pip install --user ...
 ```
-which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`. Cloning the Anaconda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
+which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`. Cloning the conda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
 
 ## Intel's Data Parallel Extensions for Python (DPEP)
 
@@ -104,7 +104,7 @@ module load frameworks
 
 However, `numba-dpex` is not available in the `frameworks` module, thus using this package requires additional installation steps. The easiest way to get all three DPEP packages is to create a new `conda` environment and install the DPEP packages with the following recipe:
 
-```bash linenums="1" title="Install numba-dpex, dpctl, and dpnp in fresh Anaconda environment"
+```bash linenums="1" title="Install numba-dpex, dpctl, and dpnp in fresh conda environment"
 module load frameworks
 module load cmake
 conda create -y --prefix /path/to/dpep_env python=3.12 pip
