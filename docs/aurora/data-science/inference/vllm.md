@@ -141,30 +141,34 @@ $$
 \text{weights memory (GB)} = \text{parameters (billions)} \times 2 
 $$
 
-$$
-N_\text{GPU} \geq \frac{2 \times \text{parameters (billions)}}{\text{GPU memory (GB)}}
-$$
-
 The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
 
-`per_token_bytes = num_layers × (2 × num_kv_heads × head_dim × bytes_per_element)`, 
+$$
+\text{bytes per token} = \text{num layers} \times (2 \times \text{num kv heads} \times \text{head dim} \times \text{bytes per element})
+$$
 
-where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. 
+where $\text{num layers}$, $\text{num kv heads}$ and $\text{head_dim}$ are properties of the model, and $\text{bytes per element}$ is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. 
 
 <br>
 
 Then, the total KV cache memory needed for a full sequence is 
 
-`kv_memory_per_seq = per_token_bytes x sequence_length / 1e9 GB`
+$$
+\text{kv memory per seq (GB)} = \text{bytes per token} \times \text{sequence length} \times 10^{-9}
+$$
 
 where the sequence length is controlled with `--max-model-len`.
 The memory left for the KV cache is whatever remains of the GPU memory budget once the weights are loaded and the forward pass is profiled (a few GB for activations),
 
-`total_kv_memory_available = num_gpus x memory_per_gpu x gpu_memory_utilization - weights_memory - activations`
+$$
+\text{total kv memory available (GB)} = \text{num GPUs} \times \text{memory per GPU} \times \text{GPU memory utilization} - \text{weights memory} - \text{activation memory}
+$$
 
 so the number of concurrent sequences that fit in the KV cache is
 
-`max_concurrent_seqs = floor( total_kv_memory_available / kv_memory_per_seq )`
+$$
+\text{max concurrent seqs} = floor( \frac{\text{total kv memory available}}{\text{kv memory per seq}})
+$$
 
 With `kv_memory_per_seq` is computed using the maximum context length of the model, this gives a worst-case estimate since it assumes every request fills the entire context
 window. 
@@ -186,9 +190,9 @@ If your workflow does not need the model's full context window, it is recommende
 
 To help support the significant memory requirements of LLMs, the models can be parallelized across multiple GPUs and nodes along two main dimensions:
 
-* Tensor parallelism (TP) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. The KV cache is also sharded across GPUs in a TP group. To avoid duplicating the KV heads across GPUs, it is best to ensure that the TP size also divides the KV heads equally. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads and 8 KV heads, so valid TP values are 1, 2, 4, 8. On Aurora, using all 12 PVC tiles per node is not the preferred approach since it usually does not evenly divide the number of attention heads; `TP=2,4,8` are preferred instead. 
-* Pipeline parallelism (`PP`) is the second dimension, and it is sized to divide the number of layers in the model. The KV cache is partitioned in this case too. For load balance, even division with the number of layers in the model is preferred. Usually, `PP` is set to the number of nodes used to serve the model.
-* The product `TP x PP` is the total number of GPUs used to serve the model.
+* Tensor parallelism (TP) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. The KV cache is also sharded across GPUs in a TP group. To avoid duplicating the KV heads across GPUs, it is best to ensure that the TP size also divides the KV heads equally. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads and 8 KV heads, so valid TP values are 1, 2, 4, 8. On Aurora, using all 12 PVC tiles per node is not the preferred approach since it usually does not evenly divide the number of attention heads; $\text{TP}=2,4,8$ are preferred instead. 
+* Pipeline parallelism (PP) is the second dimension, and it is sized to divide the number of layers in the model. The KV cache is partitioned in this case too. For load balance, even division with the number of layers in the model is preferred. Usually, PP is set to the number of nodes used to serve the model.
+* The product $\text{TP} \times \text{PP}$ is the total number of GPUs used to serve the model.
 * For performance, it is recommended to scale TP groups *within* a node to take advantage of faster intra-node collectives. If a model requires more than 8 PVC tiles, scale the model on 2 (or more nodes) with PP>1.
 
 To configure vLLM assuming the maximum context window is desired, we recommend the following steps using the [Llama-3.1-405B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct) model as an example.
@@ -199,16 +203,16 @@ To configure vLLM assuming the maximum context window is desired, we recommend t
     - Number of hidden layers: 126
     - Number of attention heads: 128
     - Number of KV heads: 8
-    - Head dimension (if not explicitly set, derive as `hidden size / num. attention heads`): 128 
+    - Head dimension (if not explicitly set, derive as $\text{hidden size} / \text{num. attention heads}$): 128 
     - Tensor type: BF16
 2. Estimate the memory requirements using bfloat16 precision.
-    - `weights_memory = 406 x 2 = 812 GB`
-    - `kv_memory_per_seq = 126 × (2 × 8 × 128 × 2) x 131072 / 1e9 = 67.6 GB`
-    - The minimum memory required to serve the model with full context length is `812 + 68 = 880 GB`
+    - $\text{weights memory} = 406 \times 2 = 812$ GB
+    - $\text{kv memory per seq} = 126 \times (2 \times 8 \times 128 \times 2) x 131072 \times 10^{-9} = 67.6$ GB`
+    - The minimum memory required to serve the model with full context length is $812 + 68 = 880$ GB
 3. Obtain the number of GPUs needed to serve the model. 
     - On Aurora, we recommend the use of [tile-as-device](../python.md), meaning each PVC tile with 68.7 GB (64 GiB) of memory is considered a GPU.
-    - Set `gpu-memory-utilization=0.9` to leave enough overhead for the runtime.
-    - The number of PVC tiles needed is: `ceil( 880 / (0.9 x 68.7) ) = 15`
+    - Set `--gpu-memory-utilization` to 0.9 to leave enough overhead for the runtime.
+    - The number of PVC tiles needed is: $ceil( \frac{880}{0.9 \times 68.7}) = 15$
     - A minimum of 15 PVC tiles are needed to serve the Llama 3.1 405B model with full context length.
 4. Determining the appropriate TP and PP sizes.
     - Since 15 PVC tiles are needed, we set TP and PP values to the next valid product. On Aurora, this results in TP=8 and PP=2 for a total of 16 tiles.
