@@ -143,16 +143,22 @@ This memory can be controlled with a number of parameters which can be passed to
 
 The main knob to control how much memory vLLM uses is `--gpu-memory-utilization`. In most cases, a value of 0.9 (i.e., 90% of the total GPU memory) is sufficient to leave enough spare memory for the runtime and other overhead (usually only a few GB).
 
+<br>
+
 The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. 
 For `bfloat16`, which is the recommended data type on Aurora, the memory used by the weights in GB is estimated as 
 
 `weights_memory = num. billion parameters x 2 GB`. 
+
+<br>
 
 The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
 
 `per_token_bytes = num_layers × (2 × num_kv_heads × head_dim × bytes_per_element)`, 
 
 where `num_layers`, `num_kv_heads` and `head_dim` are properties of the model, and `bytes_per_element` is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. 
+
+<br>
 
 Then, the total KV cache memory needed for a full sequence is 
 
@@ -172,6 +178,8 @@ window.
 In practice, vLLM allocates KV cache blocks on demand as sequences grow, so many
 more short requests can be served concurrently. Concurrency can be capped by `--max-num-seqs` regardless of how much KV cache memory is free.
 
+<br>
+
 If your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
 
 !!! info "Supported data types on Intel Max 1550 GPU"
@@ -181,7 +189,7 @@ If your workflow does not need the model's full context window, it is recommende
 	While the weight memory estimate holds for all model types, the KV cache estimates above assume a dense model using standard multi-head or grouped-query attention (MHA/GQA) or a Mixture of Experts (MoE) model. For Multi-head Latent Attention (MLA) models or those with interleved local-global attention, the KV cache formula does not apply and will overestimate the memory required. 
 
 
-### Determining the number of GPUs to serve a model on
+### Determining the number of GPUs 
 
 To help support the significant memory requirements of LLMs, the models can be parallelized across multiple GPUs and nodes along two main dimensions:
 
