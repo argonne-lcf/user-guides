@@ -131,7 +131,7 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size
 
 ### Estimating the memory requirements
 When serving a model, the GPU memory has to hold the model weights, the KV cache and any additional runtime overhead. 
-The memory for the model weights and the KV cache is managed by vLLM, which pre-allocates the entire memory block at initialization. 
+The memory for the model weights and the KV cache is managed by vLLM. During initialization, vLLM first loads the weights into memory, then profiles the forward pass and pre-allocates the remaining available memory for the KV cache. 
 This memory can be controlled with a number of parameters which can be passed to `vllm serve`. Some of the main ones to consider are:
 
 * `--gpu-memory-utilization`: The fraction of GPU memory to be used for the model executor, ranges from 0 to 1.
@@ -158,33 +158,62 @@ Then, the total KV cache memory needed for a full sequence is
 
 `kv_memory_per_seq = per_token_bytes x sequence_length / 1e9 GB`
 
-where the sequence length is controlled with `--max-model-len`, and the maximum number of concurrent sequences that can be served is determined by 
+where the sequence length is controlled with `--max-model-len`.
+The memory left for the KV cache is whatever remains of the GPU memory budget once the weights are loaded and the forward pass is profiled (a few GB for activations),
 
-`max_concurrent_seqs = total_kv_memory_available / kv_memory_per_seq`
+`total_kv_memory_available = num_gpus x memory_per_gpu x gpu_memory_utilization - weights_memory - activations`
 
-In many cases, it is desirable use the maximum context window allowed by the model as the sequence length. 
-However, if your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
+so the number of concurrent sequences that fit in the KV cache is
 
+`max_concurrent_seqs = floor( total_kv_memory_available / kv_memory_per_seq )`
+
+With `kv_memory_per_seq` is computed using the maximum context length of the model, this gives a worst-case estimate since it assumes every request fills the entire context
+window. 
+In practice, vLLM allocates KV cache blocks on demand as sequences grow, so many
+more short requests can be served concurrently. Concurrency can be capped by `--max-num-seqs` regardless of how much KV cache memory is free.
+
+If your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
 
 !!! info "Supported data types on Intel Max 1550 GPU"
 	Note that `fp8` is not supported on Aurora's Intel GPU, so `bfloat16` is the recommended setting for the data type and `--kv-cache-dtype` cannot be used to easily reduce the size of the KV cache. Use the memory parameters `--gpu-memory-utilization` and `--kv-cache-memory-bytes` to directly limit the KV cache size or use `--max-model-len` to reduce the context window.
 
+!!! info "Applicability to MoE and MLA models"
+	While the weight memory estimate holds for all model types, the KV cache estimates above assume a dense model using standard multi-head or grouped-query attention (MHA/GQA) or a Mixture of Experts (MoE) model. For Multi-head Latent Attention (MLA) models or those with interleved local-global attention, the KV cache formula does not apply and will overestimate the memory required. 
+
+
 ### Determining the number of GPUs to serve a model on
 
 To help support the significant memory requirements of LLMs, the models can be parallelized across multiple GPUs and nodes along two main dimensions:
-* Tensor parallelism (TP) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. The KV cache is also sharded across GPUs in a TP group. To avoid duplication the KV heads across GPU, it is best to ensure that the TP size also divides the KV heads equally. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads and 8 KV heads, so valid TP values are 2, 4, 8. On Aurora, using all 12 PVC tiles per node is not the preferred approach; `TP=2,4,8` are preferred instead. 
+
+* Tensor parallelism (TP) is the first dimension to consider, and it is sized to evenly divide the number of attention heads of the model. The KV cache is also sharded across GPUs in a TP group. To avoid duplicating the KV heads across GPUs, it is best to ensure that the TP size also divides the KV heads equally. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads and 8 KV heads, so valid TP values are 1, 2, 4, 8. On Aurora, using all 12 PVC tiles per node is not the preferred approach since it usually does not evenly divide the number of attention heads; `TP=2,4,8` are preferred instead. 
 * Pipeline parallelism (`PP`) is the second dimension, and it is sized to divide the number of layers in the model. The KV cache is partitioned in this case too. For load balance, even division with the number of layers in the model is preferred. Usually, `PP` is set to the number of nodes used to serve the model.
 * The product `TP x PP` is the total number of GPUs used to serve the model.
 * For performance, it is recommended to scale TP groups *within* a node to take advantage of faster intra-node collectives. If a model requires more than 8 PVC tiles, scale the model on 2 (or more nodes) with PP>1.
 
-To configure vLLM, users can follow the steps below:
+To configure vLLM assuming the maximum context window is desired, we recommend the following steps using the [Llama-3.1-405B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct) model as an example.
 
-1. Estimate the memory requirements of vLLM as `total vLLM memory = weight memory + KV cache memory`. To use the maximum context length allowed by the model, set ...
-2. Obtain the number of GPUs needed as `num. GPU = ceil(total memory / memory per GPU)`
-3. Determining the appropriate TP size (usually 2, 4 or 8)
-4. Increasing the PP size as needed to match or exceed the number of GPUs needed.
+1. Obtain the model information from the Hugging Face config file.
+    - Number of parameters: 406B
+    - Maximum context length: 131072
+    - Number of hidden layers: 126
+    - Number of attention heads: 128
+    - Number of KV heads: 8
+    - Head dimension (if not explicitly set, derive as `hidden size / num. attention heads`): 128 
+    - Tensor type: BF16
+2. Estimate the memory requirements using bfloat16 precision.
+    - `weights_memory = 406 x 2 = 812 GB`
+    - `kv_memory_per_seq = 126 × (2 × 8 × 128 × 2) x 131072 / 1e9 = 67.6 GB`
+    - The minimum memory required to serve the model with full context length is `812 + 68 = 880 GB`
+3. Obtain the number of GPUs needed to serve the model. 
+    - On Aurora, we recommend the use of [tile-as-device](../python.md), meaning each PVC tile with 68.7 GB (64 GiB) of memory is considered a GPU.
+    - Set `gpu-memory-utilization=0.9` to leave enough overhead for the runtime.
+    - The number of PVC tiles needed is: `ceil( 880 / (0.9 x 68.7) ) = 15`
+    - A minimum of 15 PVC tiles are needed to serve the Llama 3.1 405B model with full context length.
+4. Determining the appropriate TP and PP sizes.
+    - Since 15 PVC tiles are needed, we set TP and PP values to the next valid product. On Aurora, this results in TP=8 and PP=2 for a total of 16 tiles.
+    - At 16 tiles, roughly 177 GB remains for the KV cache after the weights, enough for about 2 concurrent full-context requests.
+    - For increased concurrency, you can increase TP and/or PP beyond the minimum number required. In this case, using 24 tiles with PP=3.
 
-For example, to serve the `Llama-3.1-405B-Instruct` model with full model context length on Aurora, X PVC tiles are needed with TP=Y and PP=Z.
 
 ## Scaling vLLM Workflows
 
