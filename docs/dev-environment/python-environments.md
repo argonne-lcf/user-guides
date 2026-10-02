@@ -82,6 +82,11 @@ ALCF provides curated `conda` environments with useful packages installed out of
 
     If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide conda through module files.
 
+    !!! warning "Package channels"
+
+        ALCF's shared environments use [Miniforge](https://github.com/conda-forge/miniforge) and the `conda-forge` channel.
+        Use `conda-forge` for your own environments, and avoid re-adding the `defaults` channel, which is subject to commercial licensing terms.
+
     Create and activate your environment, using a specific Python version:
 
     ```bash
