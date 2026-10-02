@@ -280,6 +280,7 @@ nav:
             - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
+            - ezpz: aurora/data-science/frameworks/ezpz.md
           - AI Inference:
             - LibTorch: aurora/data-science/inference/libtorch.md
             - OpenVINO: aurora/data-science/inference/openvino.md
