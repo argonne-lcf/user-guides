@@ -122,7 +122,7 @@ Every node has a PBS resource called `tier0` with a rack identifier and `tier1` 
     * s stands for slot, but in this case is the RU in the rack and values are {1,7,13,19,25,31,37}
     * b is BMC controller and is 0 or 1 (each node has its own BMC)
     * n is node, but is always 0 since there is only one node per BMC
-* So, 16+12+12 = 40 racks * 14 nodes per rack = 560 nodes.
+* So, $(16 + 12 + 12)\ \text{racks} \times 14\ \text{nodes per rack} = 560\ \text{nodes}$.
 * Note that in production group 9 (the last 4 racks) will be the designated on-demand racks
 * The management racks are x3000 and X3100 and are dragonfly group 10
 * The TDS rack is x3200 and is dragonfly group 11

@@ -13,27 +13,16 @@ Then, you can import `vllm` as follows
 ``` { .python .no-copy }
 >>> import vllm
 >>> print(vllm.__version__)
-'0.15.0'
+'0.26.1.dev0+g568afb3a1.d20260803'
 ```
 
 ## Known Issue on Aurora
-There is a known issue related to populating the `modelinfos` in the 
-`VLLM_CACHE_ROOT` directory to run a model for the first time, which manifests
-as a `validation error for ModelConfig`. The workaround
-for this issue is to pre-populate the configs by direct downloading them. 
-We provide a script to do so here:
-
-[vLLM Workaround](https://github.com/argonne-lcf/frameworks-sdk/blob/main/tests/single_node/functionality/vllm/xpu-model-inspection-hidden-sigsegv/WA/vllm_build_all_modelinfo_caches.py#L16C1-L21C54)
+`CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
 !!! tip
-    Do not forget to set the proxies from the compute node before the prepopulation step.
+    Do not forget to set the proxies from the compute node, if performing direct download on the job.
 
-[Set the Proxies](https://docs.alcf.anl.gov/aurora/getting-started-on-aurora/?h=https+proxy#proxy)
-
-Each time we choose to change the location of the `VLLM_CACHE_ROOT` 
-(by default, `~/.cache/vllm`), we need to do the re-population step, otherwise,
-based on our testing, it is persistent. This is a temporary measure, we expect
-to provide a fix in the next module update.
+[Set the Proxies](../../getting-started-on-aurora.md#proxy)
 
 ## Access Model Weights
 
@@ -148,10 +137,13 @@ The main knob to control how much memory vLLM uses is `--gpu-memory-utilization`
 The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. 
 For `bfloat16`, which is the recommended data type on Aurora, the memory used by the weights in GB is estimated as 
 
-    $$
-    \text{weights memory (GB)} = \text{parameters (billions)} \times 2 
-    $$
+$$
+\text{weights memory (GB)} = \text{parameters (billions)} \times 2 
+$$
 
+$$
+N_\text{GPU} \geq \frac{2 \times \text{parameters (billions)}}{\text{GPU memory (GB)}}
+$$
 
 The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
 
@@ -226,5 +218,4 @@ To configure vLLM assuming the maximum context window is desired, we recommend t
 
 ## Scaling vLLM Workflows
 
-To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup.
-These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.
+To scale vLLM workflows on ALCF system there are a few recommended approaches depending on the user's needs and setup. These approaches are described in detail in the [GettingStarted](https://github.com/argonne-lcf/GettingStarted/tree/master/AI_ML/LLM_Inference) repository along with example scripts for each.

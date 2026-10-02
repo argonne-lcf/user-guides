@@ -18,7 +18,7 @@ ssh alcfusername@polaris.alcf.anl.gov
 
 ## 2. Load Modules
 
-Load the Anaconda environment module, which contains a PyTorch installation, since GPyTorch has PyTorch as a dependency:
+Load the conda environment module, which contains a PyTorch installation, since GPyTorch has PyTorch as a dependency:
 ```
 module use /soft/modulefiles
 module load conda
