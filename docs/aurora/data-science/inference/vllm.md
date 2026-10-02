@@ -148,9 +148,10 @@ The main knob to control how much memory vLLM uses is `--gpu-memory-utilization`
 The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. 
 For `bfloat16`, which is the recommended data type on Aurora, the memory used by the weights in GB is estimated as 
 
-`weights_memory = num. billion parameters x 2 GB`. 
+    $$
+    \text{weights memory (GB)} = \text{parameters (billions)} \times 2 
+    $$
 
-<br>
 
 The memory used by the KV cache is estimated by first measuring the amount of memory needed per token. A simple formula which depends on the model details and the data type is 
 
