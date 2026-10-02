@@ -129,6 +129,10 @@ aurora/aurora-pe.md                @koysean
 ###**/support/                @alcf-haritha @jfrancis-anl
 *support*                @alcf-haritha @jfrancis-anl
 
+# Development Environment documentation (self-managed tools)
+**/dev-environment/ai-guidance.md  @jfrancis-anl
+**/dev-environment/vscode.md       @jfrancis-anl
+
 # Core configuration files
 /mkdocs.yml                         @felker @saforem2
 /requirements.txt                   @felker

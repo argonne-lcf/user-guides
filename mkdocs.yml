@@ -204,6 +204,8 @@ plugins:
       redirect_maps:
         'support/technical-support.md': 'support/ticket.md'
         'aurora/services/gitlab-ci.md': 'services/ci/gitlab-ci.md'
+        'support/ai-guidance.md': 'dev-environment/ai-guidance.md'
+        'support/vscode.md': 'dev-environment/vscode.md'
         # 'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
@@ -215,9 +217,6 @@ nav:
   - User Support:
     - support/index.md
     - Submit a Ticket: support/ticket.md
-    - AI and Editor Guidance:
-        - support/ai-guidance.md
-        - VS Code Example: support/vscode.md
     - Get Help & Connect:
         - support/get-help/index.md
         - Mailing Lists: support/get-help/mailing-lists.md
@@ -482,6 +481,11 @@ nav:
       - Using Globus: data-management/data-transfer/using-globus.md
       - ALCF Community Data Co-Op: data-management/acdc/acdc.md
       - Sharing on Eagle Using Globus: data-management/acdc/eagle-data-sharing.md
+
+  - Development Environment & AI:
+    - dev-environment/index.md
+    - AI Guidance: dev-environment/ai-guidance.md
+    - VS Code (Remote SSH): dev-environment/vscode.md
 
   - Services:
     - services/index.md
