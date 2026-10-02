@@ -3,9 +3,9 @@
 ## Install conda 
 If conda is not already installed:
 ```bash
-rm Miniconda3-latest-Linux-x86_64.sh*
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
+rm Miniforge3-Linux-x86_64.sh*
+wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+bash Miniforge3-Linux-x86_64.sh
 # answer y/yes to all prompts
 # exit ssh session, then start a new ssh session
 exit
