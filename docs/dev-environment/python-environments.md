@@ -103,9 +103,9 @@ All of these install into your own directories. None of them needs `sudo`, and n
 
 | Manager | Install a CLI tool | Install a library | Notes |
 | ------- | ------------------ | ----------------- | ----- |
-| [`uv`](https://docs.astral.sh/uv/) | `uv tool install <pkg>` | `uv venv`, then `uv pip install <pkg>` | Fast. Creates environments and runs tools without activating anything. |
+| [`uv`](https://docs.astral.sh/uv/) | `uv tool install <pkg>` | `uv venv`, then `uv pip install <pkg>` | Fast. Creates [environments](https://docs.astral.sh/uv/pip/environments/) with pip interface. Can run [tools](https://docs.astral.sh/uv/guides/tools/) or [scripts](https://docs.astral.sh/uv/guides/scripts/#declaring-script-dependencies) without activating anything.  Not tied to a Python version. [Installs Python](https://docs.astral.sh/uv/guides/install-python/) itself. [Manages projects](https://docs.astral.sh/uv/guides/projects/) via `pyproject.toml`.  |
 | [`pipx`](https://pipx.pypa.io/) | `pipx install <pkg>` | n/a | One isolated environment per tool, linked into `~/.local/bin`. |
-| `pip` + `venv` | `pip install <pkg>` in an activated virtual environment | `python -m venv .venv`, then `pip install <pkg>` | Available everywhere. Requires activating the environment first. |
+| `pip` + `venv` | `pip install <pkg>` in an activated virtual environment | `python -m venv .venv`, then `pip install <pkg>` | Available everywhere. Requires activating the environment first. Tied to the base installation of a specific Python version. |
 | `conda` | `pip install <pkg>` in an activated environment | `conda create -n <env> python`, then `pip install <pkg>` | Use Conda for the environment and `pip` for packages that are only on PyPI. |
 
 ## Running and Installing Tools
