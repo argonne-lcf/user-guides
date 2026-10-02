@@ -215,9 +215,9 @@ To configure vLLM assuming the maximum context window is desired, we recommend t
     - The number of PVC tiles needed is: $ceil( \frac{880}{0.9 \times 68.7}) = 15$
     - A minimum of 15 PVC tiles are needed to serve the Llama 3.1 405B model with full context length.
 4. Determining the appropriate TP and PP sizes.
-    - Since 15 PVC tiles are needed, we set TP and PP values to the next valid product. On Aurora, this results in TP=8 and PP=2 for a total of 16 tiles.
+    - Since 15 PVC tiles are needed, we set TP and PP values to the next valid product. On Aurora, this results in $\text{TP}=8$ and $\text{PP}=2$ for a total of 16 tiles.
     - At 16 tiles, roughly 177 GB remains for the KV cache after the weights, enough for about 2 concurrent full-context requests.
-    - For increased concurrency, you can increase TP and/or PP beyond the minimum number required. In this case, using 24 tiles with PP=3.
+    - For increased concurrency, you can increase TP and/or PP beyond the minimum number required. In this case, using 24 tiles with $\text{PP}=3$.
 
 
 ## Scaling vLLM Workflows
