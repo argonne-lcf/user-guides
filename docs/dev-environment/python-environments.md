@@ -1,6 +1,6 @@
 # Python Environments
 
-ALCF systems provide Python, and the packages used in these guides are published on PyPI, so you can use whichever package manager you prefer. This page covers best practices for creating [Python environments](#creating-environments) and for [running Python command-line tools](#running-and-installing-tools) without managing an environment for them.
+This page covers best practices for creating [Python environments](#creating-environments) and for [running Python command-line tools](#running-and-installing-tools) without managing an environment for them. You can use whichever package manager you prefer.
 
 Installing everything with `pip install --user` puts every project's packages into one shared location, so projects eventually collide: upgrading a library for one code breaks another, and a tool installed months ago can impact behavior in subtle, hard-to-trace ways. Packages in `~/.local` are also visible from Conda environments and from virtual environments created with `--system-site-packages`, so a `--user` install can leak into environments that you meant to keep separate.
 
@@ -37,7 +37,7 @@ ALCF provides curated `conda` environments with useful packages installed out of
     uv pip install <package>
     ```
 
-    `uv run --with <package> python` starts Python with that package in a throwaway environment instead, with no environment to activate.
+    Optionally, if you would rather not create an environment at all, `uv run --with <package> python` starts Python with that package in a throwaway environment.
 
 === "venv"
 
@@ -60,8 +60,6 @@ ALCF provides curated `conda` environments with useful packages installed out of
     python --version
     ```
 
-    On ALCF systems, `python` is whichever module you have loaded, so load a Python module first if the version is not what you expect. The per-machine pages linked at the top of this page show the recommended pattern on each system. They build the `venv` on top of the module's Conda environment with `--system-site-packages`, which keeps that environment's packages importable.
-
     Install packages into the activated environment with `pip install`:
 
     ```bash
@@ -82,7 +80,7 @@ ALCF provides curated `conda` environments with useful packages installed out of
     conda info | grep "base environment"
     ```
 
-    If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide Conda through module files. The per-machine pages linked at the top of this page cover `module load conda` and cloning the base environment.
+    If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide conda through module files.
 
     Create and activate your environment, using a specific Python version:
 
