@@ -87,21 +87,6 @@ Be sure to remove this location from `$PATH` if you deactivate the base Anaconda
 
 Cloning the Anaconda environment or using `venv` are both more flexible and transparent when compared to `--user` installs.
 
-## Existing issue and solution
-
-There is an issue with the current conda environment. One may encounter the following error message:
-
-```bash
-aborting job:
-MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
-```
-
-To address this, please add the following line at the very beginning of your Python script.
-
-```python
-from mpi4py import MPI
-```
-
 ## Creating a Jupyter Kernel
 
 If you need to use your Python `venv` on JupyterHub, you will need to create a [custom Jupyter kernel](../../services/jupyter-hub.md#custom-ipython-kernels) for it.
