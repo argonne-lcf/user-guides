@@ -34,6 +34,11 @@
 /docs/aurora/compiling-and-linking/    @TApplencourt @colleeneb
 # /docs/aurora/aurora-pe.md              (no current owner)
 
+# Aurora system pages
+/docs/aurora/system-updates.md          @alcf-haritha
+/docs/aurora/running-jobs-aurora.md     @alcf-haritha
+/docs/aurora/known-issues.md            @colleeneb
+
 # Programming models
 **/programming-models/kokkos-*.md   @zippylab  # @masterleinad
 **/programming-models/sycl-*.md     @TApplencourt @colleeneb
@@ -73,15 +78,16 @@
 **/data-science/**/jupyter*			         @keceli
 
 # Julia documentation
-#**/julia.md                         @michel2323
+**/programming-models/julia.md      @michel2323
 
 # Inference documentation
 **/data-science/**/inference/            @rickybalin
 **/data-science/**/inference/vllm.md     @FilippoSimini @khossain4337
+/docs/polaris/data-science/frameworks/vllm.md  @rickybalin
 
 # Profiling documentation
 **/data-science/**/profiling_dl.md  @zhenghh04 @khossain4337
-**/performance-tools/vtune.md       @jkwack
+**/performance-tools/              @jkwack
 
 # Libraries documentation
 **/libraries/nccl.md                @kaushikvelusamy @khossain4337
@@ -96,6 +102,7 @@
 **/data-management/**/lustre/       @kaushikvelusamy @zhenghh04 @kevin-harms
 **/data-management/**/copper/       @kaushikvelusamy @kevin-harms
 **/filesystem-and-storage/          @kevin-harms
+**/moving_data_to_aurora/           @kaushikvelusamy
 
 # All container documentation
 #### **/containers/                      @bcote-anl  # ?
@@ -105,10 +112,13 @@
 
 # Account & Project Management documentation
 #####/account-project-management/	    @mantrala-ops @???
+/docs/account-project-management/allocation-management/   @alcf-haritha
+/docs/account-project-management/accounts-and-access/     @rtaub-anl
 
 # Running Jobs documentation
 #/running-jobs*                      @????
 **/queueing-and-running-jobs/       @pmrich @cjknight
+/docs/polaris/running-jobs/          @alcf-haritha
 **/pbs-*.md                         @pmrich
 
 # Policies documentation
@@ -117,6 +127,8 @@
 # Services documentation
 ###**/services/                          @???
 **/services/gitlab-ci.md            @peterupton
+**/services/globus-compute.md       @cms21
+**/services/iri-api.md              @bcote-anl
 **/services/inference-endpoints.md  @bcote-anl @vksastry
 **/dev-environment/python-environments.md  @bcote-anl @masalim2 @lowpolyneko
 
