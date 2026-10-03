@@ -89,7 +89,7 @@ aurora/aurora-pe.md                @koysean
 **/visualization/**                 @srizzi88
 
 # Data management across all machines
-**/daos*.md                         @kaushikvelusamy @zhenghh04 @kevin-harms
+**/daos*.md                         @kaushikvelusamy @zhenghh04 @kevin-harms @pkcoff
 **/data-management/**/lustre/       @kaushikvelusamy @zhenghh04 @kevin-harms
 **/data-management/**/copper/       @kaushikvelusamy @kevin-harms
 **/filesystem-and-storage/          @kevin-harms
