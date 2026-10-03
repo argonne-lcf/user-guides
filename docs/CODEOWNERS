@@ -49,8 +49,7 @@
 **/applications/vasp.md             @alvarovm
 
 # Example programs and makefiles
-**/example-program-makefile.md      @cjknight
-**/example-program*.md              @cjknight
+**/*example-program-makefile.md     @cjknight @TApplencourt @colleeneb
 
 # Data Science frameworks and applications across all machines
 **/data-science/**/pytorch.md            @khossain4337 @FilippoSimini @saforem2
