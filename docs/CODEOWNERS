@@ -49,7 +49,8 @@
 **/applications/vasp.md             @alvarovm
 
 # Example programs and makefiles
-**/*example-program-makefile.md     @cjknight @TApplencourt @colleeneb
+/docs/aurora/compiling-and-linking/aurora-example-program-makefile.md     @cjknight @TApplencourt @colleeneb
+/docs/polaris/compiling-and-linking/polaris-example-program-makefile.md   @cjknight
 
 # Data Science frameworks and applications across all machines
 **/data-science/**/pytorch.md            @khossain4337 @FilippoSimini @saforem2
