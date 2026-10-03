@@ -32,7 +32,7 @@
 
 # Aurora compilers, PE documentation
 /docs/aurora/compiling-and-linking/    @TApplencourt @colleeneb
-/docs/aurora/aurora-pe.md              @koysean
+# /docs/aurora/aurora-pe.md              (no current owner)
 
 # Programming models
 **/programming-models/kokkos-*.md   @zippylab  # @masterleinad
@@ -55,16 +55,16 @@
 # Data Science frameworks and applications across all machines
 **/data-science/**/pytorch.md            @khossain4337 @FilippoSimini @saforem2
 **/data-science/**/tensorflow.md         @zhenghh04 @khossain4337
-**/data-science/**/deepspeed.md          @saforem2 @hatanp
-**/data-science/**/megatron-deepspeed.md @saforem2 @hatanp
-**/data-science/**/gpt-neox.md           @saforem2 @hatanp
+**/data-science/**/deepspeed.md          @saforem2
+**/data-science/**/megatron-deepspeed.md @saforem2
+**/data-science/**/gpt-neox.md           @saforem2
 **/data-science/**/jax.md                @khossain4337
 **/data-science/**/scikit-learn.md       @BethanyL
 **onedal.md                              @BethanyL
-**/data-science/**/dask.md               @okaforn @FilippoSimini
+**/data-science/**/dask.md               @FilippoSimini
 **/data-science/**/pyg.md                @FilippoSimini
 **/data-science/**/gpytorch.md           @FilippoSimini
-**/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337 @hatanp
+**/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337
 **/data-science/**/libtorch.md           @rickybalin
 **/data-science/**/fine-tune-LLM-with-Autotrain.md  @saforem2
 
@@ -84,9 +84,9 @@
 **/performance-tools/vtune.md       @jkwack
 
 # Libraries documentation
-**/libraries/nccl.md                @kaushikvelusamy @khossain4337 @hatanp
+**/libraries/nccl.md                @kaushikvelusamy @khossain4337
 **/libraries/cabana-*.md            @zippylab
-**/libraries/spack-pe.md            @koysean
+# **/libraries/spack-pe.md            (no current owner)
 
 # Visualization documentation
 **/visualization/**                 @srizzi88
@@ -116,7 +116,7 @@
 
 # Services documentation
 ###**/services/                          @???
-**/services/gitlab-ci.md            @peterupton @thilinarmtb
+**/services/gitlab-ci.md            @peterupton
 **/services/inference-endpoints.md  @bcote-anl @vksastry
 **/dev-environment/python-environments.md  @bcote-anl @masalim2 @lowpolyneko
 
