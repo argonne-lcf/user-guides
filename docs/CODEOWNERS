@@ -32,7 +32,7 @@
 
 # Aurora compilers, PE documentation
 /docs/aurora/compiling-and-linking/    @TApplencourt @colleeneb
-# /docs/aurora/aurora-pe.md              (no current owner)
+/docs/aurora/aurora-pe.md              @servesh # @bsallen-argonne
 
 # Aurora system pages
 /docs/aurora/system-updates.md          @alcf-haritha
@@ -92,7 +92,7 @@
 # Libraries documentation
 **/libraries/nccl.md                @kaushikvelusamy @khossain4337
 **/libraries/cabana-*.md            @zippylab
-# **/libraries/spack-pe.md            (no current owner)
+**/libraries/spack-pe.md            @servesh
 
 # Visualization documentation
 **/visualization/**                 @srizzi88
