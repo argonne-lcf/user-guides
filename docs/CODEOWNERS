@@ -115,6 +115,7 @@ aurora/aurora-pe.md                @koysean
 ###**/services/                          @???
 **/services/gitlab-ci.md            @peterupton @thilinarmtb
 **/services/inference-endpoints.md  @bcote-anl @vksastry
+**/dev-environment/python-environments.md  @bcote-anl @masalim2 @lowpolyneko
 
 # Workflows
 ####**/workflows/                       @???
@@ -128,6 +129,10 @@ aurora/aurora-pe.md                @koysean
 # User Support documentation
 ###**/support/                @alcf-haritha @jfrancis-anl
 *support*                @alcf-haritha @jfrancis-anl
+
+# Development Environment documentation (self-managed tools)
+**/dev-environment/ai-guidance.md  @jfrancis-anl
+**/dev-environment/vscode.md       @jfrancis-anl
 
 # Core configuration files
 /mkdocs.yml                         @felker @saforem2

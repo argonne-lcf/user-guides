@@ -1,5 +1,7 @@
 # Virtual Environments
 
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
+
 ## Install conda 
 If conda is not already installed:
 ```bash
@@ -50,4 +52,4 @@ conda activate groqflow
 ```
 Note: Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into `~/.local` and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
 
-Note: The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; with a groqflow conda environment activated, redo just the pip install steps, including the removal of the egg-info directories.
+Note: The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps, including the removal of the egg-info directories.

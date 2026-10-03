@@ -31,7 +31,7 @@ cd groqflow
 Create a groqflow conda environment, and activate it.
 Follow the instructions in the [Virtual Environments](virtual-environments.md) <br> section.
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
-The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; with a groqflow conda environment activated, redo just the pip install steps.
+The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps.
 
 ### Running a groqflow sample
 Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.

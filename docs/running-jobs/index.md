@@ -35,7 +35,7 @@ compute resources for all systems at ALCF.
             ```
         * [PBS Helper Utilities](https://github.com/argonne-lcf/pbs_utils): You may find some of the shell scripts, Python scripts, and Python modules in this repository useful for querying and managing PBS jobs (see `pu_nodeStat` and `pu_qstat`, in particular)
 
-[^uv]: To install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+[^uv]: To install `uv`, which provides `uvx`, see [Python Environments](../dev-environment/python-environments.md).
 ## Introduction
 
 At a high level, getting computational tasks run on an HPC system is a two-step process:
