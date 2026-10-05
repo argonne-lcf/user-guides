@@ -175,7 +175,7 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on a compute node
 
 ## MPI-IO Container Access
 
-MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.0/user/mpi-io/>
+MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.6/user/mpi-io/>
 
 To optimally enable collective buffering, create a file with the following contents:
 

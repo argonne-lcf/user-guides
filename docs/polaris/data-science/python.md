@@ -1,5 +1,7 @@
 # Python
 
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
+
 We provide prebuilt `conda` environments containing GPU-supported builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly-used Python modules.
 
 Users can activate this environment by first loading the `conda` module and then activating the base environment.
