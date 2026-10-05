@@ -151,7 +151,7 @@ To configure the compilers on the remote host:
    ```bash
    module load PrgEnv-gnu
    # or:
-   module load PrgEnv-nvhpc # on Polaris
+   module load PrgEnv-nvidia # on Polaris (default)
    # or:
    module load oneapi # on Aurora
    ```
@@ -222,7 +222,7 @@ Open a terminal in VS Code (this terminal runs on the remote Linux server), then
 # Example: load GCC
 module load PrgEnv-gnu
 # or:
-module load PrgEnv-nvhpc # on Polaris
+module load PrgEnv-nvidia # on Polaris (default)
 # or:
 module load oneapi # on Aurora
 ```
