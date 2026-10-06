@@ -1,4 +1,5 @@
 site_name: ALCF User Guides
+site_description: "How to use the Argonne Leadership Computing Facility's computing resources: accounts, jobs, data, and software."
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
@@ -179,6 +180,10 @@ extra:
     provider: google
     property: G-4M48E2L33R
 
+# Compresses the social plugin's card PNGs (optimize doesn't see them).
+hooks:
+  - hooks/compress_social_cards.py
+
 plugins:
   - search:
       lang: en
@@ -195,6 +200,12 @@ plugins:
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
         - p.typekit.net/*
+  # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
+  # the system Cairo library, so like optimize it runs only in CI (CI=true
+  # there). Card design (logo, colors, font) is in layouts/alcf.yml.
+  - social:
+      enabled: !ENV [CI, false]
+      cards_layout: alcf
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
   - group:
       enabled: !ENV [CI, false]
