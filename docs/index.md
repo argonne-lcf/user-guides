@@ -9,7 +9,7 @@ The ALCF user-facing documentation source material is hosted on GitHub, in order
 - [:material-slack:<span>ALCF User Slack</span>](support/get-help/alcf-users-slack.md){ .alcf-tile-link }
 - [:symbols-web:<span>MyALCF</span>](account-project-management/MyALCF.md){ .alcf-tile-link }
 - [:symbols-calendar_clock:<span>Upcoming Events</span>](https://www.alcf.anl.gov/events){ .alcf-tile-link }
-- [:symbols-wand_stars:<span>Inference</span>](services/inference-endpoints.md){ .alcf-tile-link }
+- [:symbols-wand_stars:<span>Inference</span>](services/inference-endpoints/index.md){ .alcf-tile-link }
 - [:symbols-video_library:<span>Training Videos</span>](https://www.alcf.anl.gov/support-center/training){ .alcf-tile-link }
 
 </div>
