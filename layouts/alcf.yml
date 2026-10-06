@@ -1,9 +1,12 @@
 # Social card layout for the ALCF User Guides, used by the `social` plugin
 # (`cards_layout: alcf` in mkdocs.yml). Based on Material for MkDocs'
-# templates/default.yml, with two changes:
+# templates/default.yml, with these changes:
 #   - the site-name text is replaced by the wide Argonne | ALCF logo used in
 #     the site header (overrides/partials/header.html), at its own aspect
 #     ratio; the default layout squeezes the logo into a 144x144 square;
+#   - the page's nav section path (e.g. "Aurora › Data Science › AI Inference")
+#     is shown above the title and added to og:title/twitter:title, since many
+#     nav titles repeat across systems ("Getting Started", "Python", "vLLM");
 #   - colors and font are fixed to ALCF values, because the theme palette is
 #     `custom` and the text font (Proxima Nova) is an Adobe Fonts kit that the
 #     plugin can't download from Google Fonts.
@@ -61,10 +64,21 @@ definitions:
       {{ page.meta.get("title", page.title) }}
     {%- endif -%}
 
-  # Page title with site name
+  # Nav section path, outermost first, without the top-level "Machines"
+  # section that only groups the systems
+  - &page_section >-
+    {{ page.ancestors | reverse | map(attribute="title")
+         | reject("equalto", "Machines") | join(" › ") }}
+
+  # Page title with up to two levels of section path and site name, e.g.
+  # "vLLM - Aurora › Data Science - ALCF User Guides"
   - &page_title_with_site_name >-
     {%- if not page.is_homepage -%}
-      {{ page.meta.get("title", page.title) }} - {{ config.site_name }}
+      {%- set section = page.ancestors | reverse | map(attribute="title")
+            | reject("equalto", "Machines") | list -%}
+      {{ page.meta.get("title", page.title) }}
+      {%- if section %} - {{ section[:2] | join(" › ") }}{% endif %}
+      {{- " - " ~ config.site_name }}
     {%- else -%}
       {{ config.site_name }}
     {%- endif -%}
@@ -82,6 +96,7 @@ tags:
 
   # Open Graph
   og:type: website
+  og:site_name: "{{ config.site_name }}"
   og:title: *page_title_with_site_name
   og:description: *page_description
   og:image: "{{ image.url }}"
@@ -116,9 +131,23 @@ layers:
     background:
       image: *logo
 
+  # Section path
+  - size: { width: 1072, height: 34 }
+    offset: { x: 64, y: 148 }
+    typography:
+      content: *page_section
+      align: start
+      color: *color
+      line:
+        amount: 1
+        height: 1.25
+      font:
+        family: *font_family
+        style: Regular
+
   # Page title
-  - size: { width: 832, height: 310 }
-    offset: { x: 62, y: 160 }
+  - size: { width: 832, height: 290 }
+    offset: { x: 62, y: 200 }
     typography:
       content: *page_title
       align: start

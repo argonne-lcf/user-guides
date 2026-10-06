@@ -190,6 +190,10 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+      # Keep attribute quotes: some link-preview crawlers (e.g. WhatsApp)
+      # ignore unquoted og:image meta tags from the social plugin.
+      htmlmin_opts:
+        remove_optional_attribute_quotes: false
   # Vendors external assets (e.g. the unpkg tablesort scripts) at build time so
   # pages make no third-party requests at runtime.
   - privacy:
