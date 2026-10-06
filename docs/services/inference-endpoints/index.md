@@ -77,7 +77,13 @@ To access the endpoints, you need an authentication token.
 
 === "alcf-tokens"
 
-    See [alcf-ai CLI and SDK](alcf-ai.md) for the login, token verification, and `--authorize-transfer` commands.
+    Use this command to login to the inference service:
+
+    ```bash
+    alcf-tokens login inference
+    ```
+
+    This requests the inference scopes only, so you are not asked to authorize IRI, Globus Compute, or Globus Flows. See [alcf-ai CLI and SDK](alcf-ai.md) for token verification, and for the `--authorize-transfer` collections that batch processing and data staging require.
 
 === "Auth script (Deprecated)"
 
@@ -96,7 +102,7 @@ To access the endpoints, you need an authentication token.
 
 !!! warning "Token Validity"
     - Access tokens are valid for 48 hours. Both `alcf-tokens get-token inference` and `python inference_auth_token.py get_access_token` will automatically refresh your token if it has expired.
-    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login` (or `alcf-tokens login inference` to refresh only the inference token).
+    - An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login inference` (or `alcf-tokens login` to authorize all services).
 
 #### 3. Make a Test Call
 
@@ -160,7 +166,7 @@ Three clusters are currently active, with additional systems coming soon:
 ## Troubleshooting
 
 - **Connection Timeout:** The model you are requesting may be queued as the cluster has too many pending jobs. You can check model status by querying the `/jobs` endpoint. See [Querying Endpoint Status](api.md#querying-endpoint-status) for an example.
-- **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate. With `alcf-tokens`/`alcf-ai`, re-run `alcf-tokens login` (optionally `alcf-tokens login inference` to refresh only the inference token). With the `inference_auth_token.py` helper, re-run `python inference_auth_token.py authenticate --force`.
+- **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate. With `alcf-tokens`/`alcf-ai`, re-run `alcf-tokens login inference` (or `alcf-tokens login` to authorize all services). With the `inference_auth_token.py` helper, re-run `python inference_auth_token.py authenticate --force`.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`. It is currently internal only to ALCF and will be made public in the future.
 - **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Delete the cached tokens file and restart the authentication process. The file depends on which client you use: the `inference_auth_token.py` helper stores tokens at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`, while `alcf-tokens` and `alcf-ai` store them at `~/.globus/app/7f3e61f5-e0de-4e8f-9150-0a62c65dda63/alcf_tokens/tokens.json` (or run `alcf-tokens clear-tokens`).
 

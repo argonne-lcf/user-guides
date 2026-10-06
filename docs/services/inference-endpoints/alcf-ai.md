@@ -25,10 +25,10 @@ See [Python Environments](../../dev-environment/python-environments.md) for the 
 
 ## Authentication
 
-`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI. A single login covers all supported ALCF services, and access tokens are refreshed automatically when they expire:
+`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI. Use this command to login to the inference service:
 
 ```bash
-alcf-tokens login
+alcf-tokens login inference
 
 # Verify that the inference token is accepted:
 alcf-tokens test-token inference
@@ -37,15 +37,22 @@ alcf-tokens test-token inference
 token=$(alcf-tokens get-token inference)
 ```
 
-Use `alcf-tokens list-services` to see the other services covered by the same login (`globus-transfer`, `globus-compute`, `globus-flows`, and `iri`), and `alcf-tokens clear-tokens` to remove the cached tokens.
+`alcf-tokens login inference` requests the inference scopes only, so it does not ask you to authorize IRI, Globus Compute, or Globus Flows. Access tokens are refreshed automatically when they expire.
 
-If you plan to stage data in or out for batch inference, authorize your Globus collections in the *same* login with `--authorize-transfer`. The flag accepts a collection UUID or a known alias (`home`, `eagle`, `flare`). Append `:data_access` for collections that require that scope for Transfer, or `:https` for direct HTTPS reads and writes:
+Running `alcf-tokens login` without a service name authorizes all supported ALCF services instead. `alcf-tokens list-services` lists them (`globus-transfer`, `globus-compute`, `globus-flows`, and `iri`), and `alcf-tokens clear-tokens` removes the cached tokens.
+
+### Authorizing ALCF Data Transfer
+
+Batch inference and the image segmentation models that stage data in or out read and write ALCF filesystems on your behalf, so they need your Globus collections authorized in the *same* login with `--authorize-transfer`. The flag accepts a collection UUID or a known alias (`home`, `eagle`, `flare`). Append `:data_access` for collections that require that scope for Transfer, or `:https` for direct HTTPS reads and writes:
 
 ```bash
-alcf-tokens login \
+alcf-tokens login inference \
     --authorize-transfer eagle \
     --authorize-transfer 96c7390b-a3e8-4dd4-a327-1af7d143283e:https
 ```
+
+!!! warning "Collection access requires an ALCF account"
+    Globus maps these transfers to your ALCF account, so an active ALCF account must be linked to your Globus identity. Globus prompts you to link it, or to re-authenticate if you have not recently, when you consent to the transfer scopes.
 
 !!! note "Re-running login"
     Re-running `alcf-tokens login` with a different set of `--authorize-transfer` collections re-consents with the wider set, so pass every collection you want authorized in the same command.
@@ -133,7 +140,7 @@ alcf-ai sam3 preview-batch-results \
 ```
 
 !!! note "Data staging"
-    `--from-collection-id` stages the dataset in with Globus Transfer and requires that collection to be authorized with `--authorize-transfer` at login. `--weights-dir-override` overrides the server's default weights directory.
+    `--from-collection-id` stages the dataset in with Globus Transfer and requires that collection to be authorized with `--authorize-transfer` at login (see [Authorizing ALCF Data Transfer](#authorizing-alcf-data-transfer)). `--weights-dir-override` overrides the server's default weights directory.
 
 ### DINOv3
 
@@ -151,7 +158,7 @@ alcf-ai dinov3 submit \
 
 ## Python SDK
 
-The same functionality is available from Python through `alcf_ai.InferenceClient`, which reuses the tokens cached by `alcf-tokens login` and resolves the correct URL for each cluster:
+The same functionality is available from Python through `alcf_ai.InferenceClient`, which reuses the tokens cached by `alcf-tokens login inference` and resolves the correct URL for each cluster:
 
 ```python
 from alcf_ai import InferenceClient

@@ -4,6 +4,7 @@ For large-scale inference, the batch processing service allows you to submit a f
 
 !!! warning "Batch Processing Requirements"
     - You must have an active ALCF allocation.
+    - Authorize the collections that hold your input and output files at login, which requires an ALCF account. See [Authorizing ALCF Data Transfer](alcf-ai.md#authorizing-alcf-data-transfer).
     - Input files and output folders must be located within the `/eagle/argonne_tpc` project space or a world-readable directory.
     - Each line in the input file must be a complete [JSON request object (JSON Lines format)](https://platform.openai.com/docs/guides/batch#1-prepare-your-batch-file).
     - Only models marked with **B** support batch processing.

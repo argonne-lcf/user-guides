@@ -80,7 +80,7 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](index.md#api-access)) or utilize `alcf-tokens`.
 
 ```sh
-alcf-tokens login # follow interactive instructions to login
+alcf-tokens login inference # follow interactive instructions to login
 export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)" # pull a token and store
 
 opencode

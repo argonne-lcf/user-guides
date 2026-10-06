@@ -81,7 +81,7 @@ Models are organized by cluster and marked with the following capabilities:
     !!! info "Promptable Image Segmentation Models"
         The [SAM 3](https://huggingface.co/facebook/sam3) and [DINOv3](https://github.com/facebookresearch/dinov3) models are deployed on Sophia. Install the [alcf-ai](https://pypi.org/project/alcf-ai/) package for the command line and Python toolkit. See [alcf-ai CLI and SDK](alcf-ai.md) for worked examples, including batch and DINOv3 segmentation.
 
-        If this is your first time using `alcf-ai`, run `alcf-tokens login` first. Without a valid token, `alcf-ai` exits with an authentication error naming that command.
+        If this is your first time using `alcf-ai`, run `alcf-tokens login inference` first. Without a valid token, `alcf-ai` exits with an authentication error naming that command.
 
 ## Metis Cluster (SambaNova)
 

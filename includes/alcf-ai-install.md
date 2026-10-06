@@ -7,4 +7,4 @@
     pipx install alcf-ai alcf-tokens  # pipx: both at once, into ~/.local/bin
     ```
 
-    With `pip` or `conda`, create or activate an environment, then run `pip install alcf-ai alcf-tokens`. To run a command without installing it, prefix it with `uvx` or `pipx run`, for example `uvx alcf-tokens login`.
+    With `pip` or `conda`, create or activate an environment, then run `pip install alcf-ai alcf-tokens`. To run a command without installing it, prefix it with `uvx` or `pipx run`, for example `uvx alcf-tokens login inference`.
