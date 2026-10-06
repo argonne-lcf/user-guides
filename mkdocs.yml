@@ -83,8 +83,8 @@ extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.filesize.min.js
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.dotsep.min.js
   - javascripts/tablesort.js
+  # Loads the MathJax bundle itself, only on pages with math.
   - javascripts/mathjax.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 markdown_extensions:
   - footnotes
@@ -190,7 +190,9 @@ plugins:
   - privacy:
       assets_exclude:
         # MathJax loads font/component files relative to its own script path;
-        # vendoring only the bundle would 404 on output/chtml/fonts/*.
+        # vendoring only the bundle would 404 on output/chtml/fonts/*. The
+        # bundle URL is now only in javascripts/mathjax.js, which privacy
+        # doesn't rewrite; this guards against it being re-added here.
         - cdn.jsdelivr.net/npm/mathjax@3/*
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
