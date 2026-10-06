@@ -1,5 +1,14 @@
 # API Usage Examples
 
+## Interactive API Reference
+
+The service publishes the schema for its own API, which is the authoritative reference for request and response fields:
+
+- **Swagger UI:** [https://inference-api.alcf.anl.gov/resource_server/docs](https://inference-api.alcf.anl.gov/resource_server/docs)
+- **OpenAPI schema:** [https://inference-api.alcf.anl.gov/resource_server/openapi.json](https://inference-api.alcf.anl.gov/resource_server/openapi.json)
+
+Both are publicly readable. Most endpoints shown here require a bearer token. The public status endpoints, `/resource_server/health` and `/resource_server/status`, do not. Because the schema is generated from the running service, it also lists a few endpoints that are internal to the service and not intended for direct use.
+
 ## Querying Endpoint Status
 
 ??? "Querying Endpoint Status"

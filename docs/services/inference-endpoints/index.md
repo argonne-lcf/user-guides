@@ -32,6 +32,9 @@ In the model selection dropdown, you can see the status of each model:
 
 For programmatic access, you can use the API endpoints directly.
 
+!!! note "Interactive API Documentation"
+    The service publishes a [Swagger UI](https://inference-api.alcf.anl.gov/resource_server/docs) generated from its OpenAPI schema. See [Interactive API Reference](api.md#interactive-api-reference).
+
 !!! tip "Using the alcf-ai CLI or SDK"
     The [`alcf-ai`](https://pypi.org/project/alcf-ai/) package provides a CLI and an OpenAI-compatible Python client for the Inference Service, and uses the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI for authentication. See [alcf-ai CLI and SDK](alcf-ai.md) for details.
 
