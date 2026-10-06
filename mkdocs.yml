@@ -84,8 +84,8 @@ extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.filesize.min.js
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.dotsep.min.js
   - javascripts/tablesort.js
+  # Loads the MathJax bundle itself, only on pages with math.
   - javascripts/mathjax.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 markdown_extensions:
   - footnotes
@@ -199,7 +199,9 @@ plugins:
   - privacy:
       assets_exclude:
         # MathJax loads font/component files relative to its own script path;
-        # vendoring only the bundle would 404 on output/chtml/fonts/*.
+        # vendoring only the bundle would 404 on output/chtml/fonts/*. The
+        # bundle URL is now only in javascripts/mathjax.js, which privacy
+        # doesn't rewrite; this guards against it being re-added here.
         - cdn.jsdelivr.net/npm/mathjax@3/*
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
@@ -221,6 +223,7 @@ plugins:
         'aurora/services/gitlab-ci.md': 'services/ci/gitlab-ci.md'
         'support/ai-guidance.md': 'dev-environment/ai-guidance.md'
         'support/vscode.md': 'dev-environment/vscode.md'
+        'ai-testbed/sn40l_inference/using_an_inference_endpoint.md': 'services/inference-endpoints/index.md'
         # 'data-management/filesystem-and-storage/file-systems.md': 'data-management/filesystem-and-storage/index.md'
 
 nav:
@@ -372,7 +375,6 @@ nav:
         - Examples: ai-testbed/groq/examples.md
       - SambaNova Metis (SN40L):
         - ai-testbed/sn40l_inference/index.md
-        - Using an Inference Endpoint: ai-testbed/sn40l_inference/using_an_inference_endpoint.md
       - Data Management: ai-testbed/data-management/data-management-overview.md
 
     - Crux:
@@ -505,7 +507,13 @@ nav:
 
   - Services:
     - services/index.md
-    - Inference Endpoints: services/inference-endpoints.md
+    - Inference Endpoints:
+      - services/inference-endpoints/index.md
+      - API Usage: services/inference-endpoints/api.md
+      - alcf-ai CLI and SDK: services/inference-endpoints/alcf-ai.md
+      - Agents: services/inference-endpoints/agents.md
+      - Available Models: services/inference-endpoints/models.md
+      - Batch Processing: services/inference-endpoints/batch.md
     - IRI API: services/iri-api.md
     - JupyterHub: services/jupyter-hub.md
     - Continuous Integration:
