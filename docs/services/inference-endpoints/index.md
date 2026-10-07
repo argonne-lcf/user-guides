@@ -10,14 +10,14 @@ This guide will walk you through the fastest ways to start using the ALCF Infere
 
 To access the ALCF Inference Endpoints via the Web UI or API, you can log in using credentials from any of these institutional identity providers:
 
+/// html | div
+    attrs: {class: no-sort}
+
 | alcf.anl.gov | ameslab.gov | anl.gov | bnl.gov | fnal.gov | hpc-dtn-auth.lanl.gov | idmscdtn.emsl.pnnl.gov |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | **inl.gov** | **jlab.org** | **lbl.gov** | **llnl.gov** | **nersc.gov** | **netl.doe.gov** | **nrel.gov** |
 | **nlr.gov** | **ornl.gov** | **pppl.gov** | **pnnl.gov** | **sandia.gov** | **slac.stanford.edu** |   |
 
-/// caption | <
-    attrs: {class: no-sort}
-Identity Providers
 ///
 
 ### Web UI
