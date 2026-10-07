@@ -1,0 +1,174 @@
+# Social card layout for the ALCF User Guides, used by the `social` plugin
+# (`cards_layout: alcf` in mkdocs.yml). Based on Material for MkDocs'
+# templates/default.yml, with these changes:
+#   - the site-name text is replaced by the wide Argonne | ALCF logo used in
+#     the site header (overrides/partials/header.html), at its own aspect
+#     ratio; the default layout squeezes the logo into a 144x144 square;
+#   - the page's nav section path (e.g. "Aurora › Data Science › AI Inference")
+#     is shown above the title and added to og:title/twitter:title, since many
+#     nav titles repeat across systems ("Getting Started", "Python", "vLLM");
+#   - colors and font are fixed to ALCF values, because the theme palette is
+#     `custom` and the text font (Proxima Nova) is an Adobe Fonts kit that the
+#     plugin can't download from Google Fonts.
+# Values can still be overridden via `cards_layout_options` in mkdocs.yml or
+# per page under `social:` in front matter.
+#
+# Copyright (c) 2016-2025 Martin Donath <martin.donath@squidfunk.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+# -----------------------------------------------------------------------------
+# Configuration
+# -----------------------------------------------------------------------------
+
+definitions:
+
+  # Background color (default: --blue_med, the site header color)
+  - &background_color >-
+    {{ layout.background_color or "#0061AF" }}
+
+  # Text color
+  - &color >-
+    {{ layout.color or "#FFFFFF" }}
+
+  # Font family, from Google Fonts (default: Montserrat, a free stand-in for
+  # Proxima Nova)
+  - &font_family >-
+    {{ layout.font_family or "Montserrat" }}
+
+  # Logo: white Argonne | ALCF lockup, 195.62 x 29.73 viewBox (ratio ~6.58)
+  - &logo >-
+    {{ layout.logo or config.docs_dir ~ "/images/ANL_ALCF-white.svg" }}
+
+  # Page title
+  - &page_title >-
+    {%- if layout.title -%}
+      {{ layout.title }}
+    {%- else -%}
+      {{ page.meta.get("title", page.title) }}
+    {%- endif -%}
+
+  # Nav section path, outermost first, without the top-level "Machines"
+  # section that only groups the systems
+  - &page_section >-
+    {{ page.ancestors | reverse | map(attribute="title")
+         | reject("equalto", "Machines") | join(" › ") }}
+
+  # Page title with up to two levels of section path and site name, e.g.
+  # "vLLM - Aurora › Data Science - ALCF User Guides"
+  - &page_title_with_site_name >-
+    {%- if not page.is_homepage -%}
+      {%- set section = page.ancestors | reverse | map(attribute="title")
+            | reject("equalto", "Machines") | list -%}
+      {{ page.meta.get("title", page.title) }}
+      {%- if section %} - {{ section[:2] | join(" › ") }}{% endif %}
+      {{- " - " ~ config.site_name }}
+    {%- else -%}
+      {{ config.site_name }}
+    {%- endif -%}
+
+  # Page description
+  - &page_description >-
+    {%- if layout.description -%}
+      {{ layout.description }}
+    {%- else -%}
+      {{ page.meta.get("description", config.site_description) | x }}
+    {%- endif -%}
+
+# Meta tags
+tags:
+
+  # Open Graph
+  og:type: website
+  og:site_name: "{{ config.site_name }}"
+  og:title: *page_title_with_site_name
+  og:description: *page_description
+  og:image: "{{ image.url }}"
+  og:image:type: "{{ image.type }}"
+  og:image:width: "{{ image.width }}"
+  og:image:height: "{{ image.height }}"
+  og:url: "{{ page.canonical_url }}"
+
+  # Twitter
+  twitter:card: summary_large_image
+  twitter:title: *page_title_with_site_name
+  twitter:description: *page_description
+  twitter:image: "{{ image.url }}"
+
+# -----------------------------------------------------------------------------
+# Specification
+# -----------------------------------------------------------------------------
+
+# Card size and layers
+size: { width: 1200, height: 630 }
+layers:
+
+  # Background
+  - background:
+      color: *background_color
+
+  # Logo, in place of the default layout's site-name text. The plugin renders
+  # SVGs at the layer width and then scales to cover the layer, so the layer
+  # must match the logo's aspect ratio (395 / 60 ~ 6.58) or it gets cropped.
+  - size: { width: 395, height: 60 }
+    offset: { x: 64, y: 56 }
+    background:
+      image: *logo
+
+  # Section path
+  - size: { width: 1072, height: 34 }
+    offset: { x: 64, y: 148 }
+    typography:
+      content: *page_section
+      align: start
+      color: *color
+      line:
+        amount: 1
+        height: 1.25
+      font:
+        family: *font_family
+        style: Regular
+
+  # Page title
+  - size: { width: 832, height: 290 }
+    offset: { x: 62, y: 200 }
+    typography:
+      content: *page_title
+      align: start
+      color: *color
+      line:
+        amount: 3
+        height: 1.25
+      font:
+        family: *font_family
+        style: Bold
+
+  # Page description
+  - size: { width: 832, height: 64 }
+    offset: { x: 64, y: 512 }
+    typography:
+      content: *page_description
+      align: start
+      color: *color
+      line:
+        amount: 2
+        height: 1.5
+      font:
+        family: *font_family
+        style: Regular

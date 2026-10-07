@@ -1,4 +1,5 @@
 site_name: ALCF User Guides
+site_description: "How to use the Argonne Leadership Computing Facility's computing resources: accounts, jobs, data, and software."
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
@@ -179,12 +180,20 @@ extra:
     provider: google
     property: G-4M48E2L33R
 
+# Compresses the social plugin's card PNGs (optimize doesn't see them).
+hooks:
+  - hooks/compress_social_cards.py
+
 plugins:
   - search:
       lang: en
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+      # Keep attribute quotes: some link-preview crawlers (e.g. WhatsApp)
+      # ignore unquoted og:image meta tags from the social plugin.
+      htmlmin_opts:
+        remove_optional_attribute_quotes: false
   # Vendors external assets (e.g. the unpkg tablesort scripts) at build time so
   # pages make no third-party requests at runtime.
   - privacy:
@@ -197,6 +206,12 @@ plugins:
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
         - p.typekit.net/*
+  # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
+  # the system Cairo library, so like optimize it runs only in CI (CI=true
+  # there). Card design (logo, colors, font) is in layouts/alcf.yml.
+  - social:
+      enabled: !ENV [CI, false]
+      cards_layout: alcf
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
   - group:
       enabled: !ENV [CI, false]
