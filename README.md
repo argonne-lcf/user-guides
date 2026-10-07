@@ -103,6 +103,20 @@ git push origin YOURBRANCH         # push the changes from local branch up to yo
 ```
 * Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
 
+### Using AI tools
+
+[`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: build commands, how `nav` and snippets work, Markdown pitfalls, page front matter, and contributing rules. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
+
+If you use an AI tool to edit these docs:
+
+* Review the full diff yourself before committing; you're responsible for every change.
+* Check facts about ALCF systems (queue limits, hostnames, module names, paths, versions) against the live system or the staff who own it, not the tool's output or another system's page. Say in the PR how you checked them.
+* Keep each PR to one topic. Don't run sweeping "consistency" or typo passes across many pages.
+* Keep commit messages and PR descriptions concise, and edit any generated text before submitting.
+* Run `make build-docs` before opening a PR.
+
+When a convention changes, update `AGENTS.md` in the same PR, and `REVIEW.md` too if reviewers should flag it.
+
 ## Inbound Links Validation
 External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
 
