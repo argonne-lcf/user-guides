@@ -17,7 +17,7 @@ Director's Discretionary and NAIRR awardees will receive account creation inform
 
 ## Allocation Resources
 Depending on the allocation program, users can choose from some or all of the following resources when requesting an allocation:
-<br><br>
+
 **Compute:**
 
 - *HPC Systems*
