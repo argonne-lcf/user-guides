@@ -24,9 +24,7 @@ Then, you can import `vllm` as follows
 `CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
 !!! tip
-    Do not forget to set the proxies from the compute node, if performing direct download on the job.
-
-[Set the Proxies](../../getting-started-on-aurora.md#proxy)
+    Do not forget to [set the proxies](../../getting-started-on-aurora.md#proxy) on the compute node if you download directly from the job.
 
 ## Access Model Weights
 
