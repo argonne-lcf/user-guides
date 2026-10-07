@@ -5,8 +5,16 @@ on:
       - main
   workflow_dispatch:  # Allow manual triggering
 
+permissions:
+  contents: read
+
+# One deploy at a time. Let an in-progress deploy finish rather than cancel it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -28,4 +36,23 @@ jobs:
           path: .cache/plugin
           key: mkdocs-plugins-${{ hashFiles('mkdocs.yml') }}
           restore-keys: mkdocs-plugins-
-      - run: mkdocs gh-deploy --force --strict
+      - name: Build docs with --strict
+        run: make build-docs
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
