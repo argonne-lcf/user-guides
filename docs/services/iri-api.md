@@ -53,21 +53,15 @@ If your token is authorized to use the IRI API, you should see `"ready": true`. 
 
 You can programmatically retrieve your access token either from your terminal or from Python.
 
-=== "Shell"
+=== "alcf-tokens"
 
     ```bash
-    alcf-tokens get-token iri
-    ```
-
-=== "Environment Variable"
-
-    ```bash
+    # Shell
     access_token=$(alcf-tokens get-token iri)
     ```
 
-=== "Python"
-
     ```python
+    # Python
     from alcf_tokens.auth import get_access_token
     access_token = get_access_token("iri")
     ```
@@ -428,12 +422,13 @@ This section provides simple examples on how to interface with the API as a star
 ### 3. Filesystem
 
 !!! info "Restricted Access (temporary)"
-    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
+    Access to filesystem operations is currently restricted to Sophia and Aurora users. We are working on broadening the access to all ALCF users.
 
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
 
 !!! info "Currently Supported Filesystems"
+    - Flare (All paths must start with `/flare` or `/lus/flare/projects`) 
     - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
     - Home (All paths must start with `/home`)
 
