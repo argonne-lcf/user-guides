@@ -9,7 +9,7 @@ If your issue is not on this page, please contact [support@alcf.anl.gov](mailto:
 ## Troubleshooting Your Mobile Token
 
 - **Forgotten PIN:** If you enter a PIN for your mobile token and you get an invalid PIN, you will be asked to re-enter your PIN. After 6 failed attempts, your token will be deleted. If your token is deleted, call or send an email to [ALCF support](mailto:support@alcf.anl.gov) to have a new mobile token provisioned.
-- **Account Lockout:** If you fail to enter the correct password 6 times, you will get a permission denied error on the SSH screen. If you fail to enter the correct password 4 more times, your IP will be blocked. You will need to email or call [ALCF support](mailto:support@alcf.anl.gov) and submit a ticket to have the IP unblocked.
+- **Account Lockout:** If you fail to enter the correct passcode 6 times, you will get a permission denied error on the SSH screen. If you fail to enter the correct passcode 4 more times, your IP will be blocked. You will need to email or call [ALCF support](mailto:support@alcf.anl.gov) and submit a ticket to have the IP unblocked.
 - **PIN Change:** While logged in to the mobile token, click on token settings, then tap change PIN. Enter the current PIN followed by the new PIN and confirm.
 - **Re-Sync:** If you are unable to log in to a resource after entering the correct PIN and passcode, your token may be out of sync with the server. Please email the ALCF Service Desk at [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) for assistance.
 - **New Mobile Device:** If you have a new mobile device, please email the ALCF Service Desk at [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to have a new mobile token provisioned.
@@ -17,7 +17,7 @@ If your issue is not on this page, please contact [support@alcf.anl.gov](mailto:
 ## Troubleshooting Your Physical Token
 
 - **The token says "locked":** The physical token may be locked due to too many failed attempts. Please contact the ALCF Help Desk to return the defective token so a replacement can be sent.
-- **You forgot your PIN:** Once a PIN has been set for your physical token, you will need to prepend your PIN to the token password. Otherwise, you will not be able to log in. If you do not remember your PIN, please email us so we can verify your identity and reset your initial PIN.
+- **You forgot your PIN:** Once a PIN has been set for your physical token, you will need to prepend your PIN to the token passcode. Otherwise, you will not be able to log in. If you do not remember your PIN, please email us so we can verify your identity and reset your initial PIN.
 - **The physical token does not say "locked" but still does not work:** It is likely that your token has fallen out of sync with the server. If you have pushed the button on your physical token more than 10 times without successfully logging in, it will fail to authenticate because it has lost synchronization with the server. Please try connecting to the system first. If it still fails, please follow the re-sync instructions below.
 
 ### Re-Sync
@@ -36,7 +36,7 @@ You can re-synchronize your token using the following procedure:
 7. Look at the numbers in your challenge string. When the number displayed on your token changes to the first number of the challenge string, press the button. The display will now show this number, and the second digit will start cycling.
 8. Enter each of the numbers from your challenge string in the same manner, until the display on your token matches the entire challenge string. Choose the "<" to backspace and re-enter the previous number if necessary.
 9. Once you've entered all 8 digits, re-check to make sure they're accurate. Then, while all 8 digits are displayed on the token, press the button to generate a new password.
-10. Enter your PIN followed by the new password, and hit 'Enter'. If successful, you will be logged in to the resource. You're now back in sync with the authentication server.
+10. Enter your PIN followed by the new passcode, and hit 'Enter'. If successful, you will be logged in to the resource. You're now back in sync with the authentication server.
 
 If you are unsuccessful, you will be presented with another challenge string. At this point, you may need to perform the re-sync instructions again.
 

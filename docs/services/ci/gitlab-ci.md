@@ -9,7 +9,7 @@ Additional information, technical and user documentation, and community support 
 
 Also see [GitLab's CI/CD YAML syntax reference](https://docs.gitlab.com/ci/yaml/) for the full list of keywords supported by GitLab CI/CD.
 
-ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and cryptocard token password).
+ALCF's GitLab-CI environment can be accessed by logging into the [ALCF GitLab-CI web portal](https://gitlab-ci.alcf.anl.gov) using your ALCF credentials (ALCF username and the passcode from your MobilePASS+ or physical hardware token).
 
 ## Quickstart
 1. A user emails [ALCF Support](mailto:support@alcf.anl.gov) requesting access for their ALCF Project for [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) (see [On-Boarding with CI/CD](#on-boarding-with-cicd) for what to include in the request).
@@ -102,7 +102,7 @@ GitLab-CI jobs run as the triggering user on relevant systems. The triggering us
 The triggering user is defined as the user account who caused the CI/CD pipeline to execute, via scheduling a recurring job, pushing commits up to the server, creating a merge request, and/or merging a branch. When the CI/CD jobs run, they will run as that user on the relevant systems. For a job to succeed, the `triggering user` must have appropriate permissions and access to all relevant systems and files.
 
 ### Initial Login and Profile Setup of GitLab-CI
-1. Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your username and Cryptocard token.
+1. Log in to [gitlab-ci.alcf.anl.gov](https://gitlab-ci.alcf.anl.gov) using your ALCF username and token passcode.
 
 2. Once logged in, add your public key you already have or created earlier so that it can be associated with your account.
 
