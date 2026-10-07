@@ -6,6 +6,47 @@ Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). Th
 
 This guide will walk you through the fastest ways to start using the ALCF Inference Endpoints.
 
+### Supported Identity Providers
+
+To access the ALCF Inference Endpoints via the Web UI or API, you can log in using credentials from any of these institutional identity providers:
+
+<table>
+<thead>
+<tr>
+<th colspan="7" style="text-align: center;"><strong>Identity Providers</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">alcf.anl.gov</td>
+<td style="text-align: center;">ameslab.gov</td>
+<td style="text-align: center;">anl.gov</td>
+<td style="text-align: center;">bnl.gov</td>
+<td style="text-align: center;">fnal.gov</td>
+<td style="text-align: center;">hpc-dtn-auth.lanl.gov</td>
+<td style="text-align: center;">idmscdtn.emsl.pnnl.gov</td>
+</tr>
+<tr>
+<td style="text-align: center;">inl.gov</td>
+<td style="text-align: center;">jlab.org</td>
+<td style="text-align: center;">lbl.gov</td>
+<td style="text-align: center;">llnl.gov</td>
+<td style="text-align: center;">nersc.gov</td>
+<td style="text-align: center;">netl.doe.gov</td>
+<td style="text-align: center;">nrel.gov</td>
+</tr>
+<tr>
+<td style="text-align: center;">nlr.gov</td>
+<td style="text-align: center;">ornl.gov</td>
+<td style="text-align: center;">pppl.gov</td>
+<td style="text-align: center;">pnnl.gov</td>
+<td style="text-align: center;">sandia.gov</td>
+<td style="text-align: center;">slac.stanford.edu</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### Web UI
 
 The easiest way to get started is through the web interface, accessible at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/)
