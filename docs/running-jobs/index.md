@@ -171,18 +171,21 @@ You also have to tell PBS how you want the chunks distributed across the physica
     - `scatter` means take only one chunk from any given host.
     - `vscatter` means take only one chunk from any given vnode. If a host has multiple vnodes, you could end up with more than one chunk on the host.
   - sharing is one of `excl | shared | exclhost` where
-    - NOTE: Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
     - `excl` means this job gets the entire vnode
     - `shared` means the vnode could be shared with another job from another user.
     - `exclhost` means this job gets the entire host, even if it has multiple vnodes.
   - group=`<resource name>`
     - As an example, for machines that use a dragonfly network topology, we provide a PBS resource named `tier1` indicating which dragonfly group a node is in. If you wanted to ensure that all the chunks came from a single dragonfly group, you could specify `place=group=tier1` as part of your qsub. `tier0` is rack granularity, so `group=tier0` would ensure your nodes all came from one rack. Note that if you requested more nodes than were available in a rack your job would never run and you would see something like `Not Running: Insufficient amount of resource: tier0`.
 
+!!! note "Sharing mode"
+
+    Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
+
 We have defined _placement sets_ for the tier0 and tier1 resources. As a result, if you don't specify a grouping PBS will _preferentially_ group your nodes in a placement set, but it won't drain or delay your job start to do so. For example, if you request 10 nodes and don't specify a grouping, if 10 nodes are available in the same rack, all your nodes will be in one rack. If not, but there are 10 nodes in a single dragonfly group, all your nodes will be in one dragonfly group. If you wish to specify a specific rack or dragonfly group, that is accomplished via the select syntax. For instance, `qsub ... -l select=10:tier1=g0` would force your 10 nodes to be in dragonfly group 0.
 
 Here is a heavily commented sample PBS submission script that shows some more of the options, but remember that the PBS manuals referenced at the top of this page are the ultimate resource.
 
-```bash
+```bash linenums="1"
 #!/bin/bash -l
 # UG Section 2.5, page UG-24 Job Submission Options
 # Add another # at the beginning of the line to comment out a line
