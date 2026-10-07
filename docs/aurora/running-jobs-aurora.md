@@ -1,7 +1,7 @@
 
 # Running Jobs on Aurora
 
-## <a name="Aurora-Queues"></a>Queues
+## Queues
 
 There are four production queues you can target in your qsub (`-q <queue name>`):
 
@@ -22,9 +22,9 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 | large           | 2000     | 10,624[^1] | 5 min    | 24 hrs   |                                                                                                                                                                                                                                                                       |
 | backfill-small  | 256      | 1024       | 5 min    | 12 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
 | backfill-medium | 1025     | 1999       | 5 min    | 18 hrs   | Low priority, negative project balance.                                                                                                                                                                                                                               |
-| backfill-large  | 2000     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
+| backfill-large  | 2000     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
 
-[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md/#pbsnodes-get-information-about-the-current-state-of-nodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
+[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
 
 !!! warning
 
@@ -102,7 +102,7 @@ It is important to note that all nodes marked as faulty by PBS will not be used 
 
 See below section for more details on node [Placement](#placement).
 
-## <a name="Aurora-MPICH"></a>Aurora MPICH
+## Aurora MPICH
 
 The standard version of the MPI (Message Passing Interface) library on Aurora is *Aurora MPICH*. This resulted from a collaboration between Intel and the Argonne MPICH developer team. The `mpiexec` and `mpirun` commands used to launch multi-rank jobs come from the Cray PALS (Parallel Application Launch Service) system.
 
@@ -114,7 +114,7 @@ $MPI_ROOT/share/doc/mpich/README.envvar
 
 This includes, for example, settings to select different optional sub-algorithms used in MPI collective operations.
 
-## <a name="Running-MPI+OpenMP+SYCL-Applications"></a>Running MPI+OpenMP+SYCL Applications
+## Running MPI+OpenMP+SYCL Applications
 
 A simple MPI+OpenMP+SYCL code snippet (hello_affinity_aurora.out) will be used to clarify the mappings between MPI ranks, CPU logical processors, OpenMP threads, GPU visiblity and GPU-affinity mappings.
 
@@ -271,7 +271,7 @@ mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env O
 
       In some cases of network or node failures, `mpiexec` will return a non-zero value. If there are multiple `mpiexec` commands in the submission script, it is highly recommended to check that each `mpiexec` either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent `mpiexec` commands. 
 
-## <a name="Running-GPU-enabled-Applications"></a>Running GPU-enabled Applications
+## Running GPU-enabled Applications
 
 GPU-enabled applications will similarly run on the compute nodes using the above templated PBS job-script.
 
@@ -299,7 +299,7 @@ For the six GPUs, the GPU number identifies the GPU, and the tile numbers identi
 
 ### Binding MPI ranks and threads to cores
 
-Using the `--cpu-bind` argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to `mpiexec`, see [Running MPI+OpenMP+SYCL Applications](#Running-MPI+OpenMP+SYCL-Applications). Four examples of using `mpiexec` are given below to show how the `cpu-bind=depth`, `cpu-bind=list`, `--depth` arguments affect where MPI ranks and OpenMP threads are mapped. The sample output provides the range of logical processors (or hardware threads) a given MPI rank is bound to via `HWT` and the logical processor ID which the thread is running on via `(Running on: )`.
+Using the `--cpu-bind` argument to mpiexec, MPI ranks and threads can be assigned to run on specific logical processors on the CPUs. For more information about the flags to `mpiexec`, see [Running MPI+OpenMP+SYCL Applications](#running-mpiopenmpsycl-applications). Four examples of using `mpiexec` are given below to show how the `cpu-bind=depth`, `cpu-bind=list`, `--depth` arguments affect where MPI ranks and OpenMP threads are mapped. The sample output provides the range of logical processors (or hardware threads) a given MPI rank is bound to via `HWT` and the logical processor ID which the thread is running on via `(Running on: )`.
 
 Note: In this section, we intentionally do not bind GPUs to specific MPI ranks. GPU binding logic is deferred to the next section. As a result, each MPI rank will have visibility to all GPUs available on the node as can be seen from the output of `hello_affinity_aurora.out` executable from the above code snippet `hello_affinity_aurora.cpp`. `RT_GPU_ID` refers to runtime GPU ID as seen by the MPI rank and/or OpenMP thread and/or SYCL runtime. `GPU_ID` refers to the GPU ID as recognized by `ZE_AFFINITY_MASK`.
 
@@ -462,7 +462,7 @@ Example 4 Mapping Which Splits a MPI Rank Across Sockets
 
     For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation.
 
-### <a name="Binding-MPI-ranks-to-GPUs"></a>Binding MPI ranks to GPUs
+### Binding MPI ranks to GPUs
 In this section, the above mentioned MPI+OpenMP+SYCL affinity code will be used to show how to map MPI processes with GPUs.
 The CPU mapping part of this example is very similar to the examples used above, so the focus here will be on the GPU mapping part.
 
@@ -608,7 +608,7 @@ $ mpiexec -n 12 -ppn 12 ${CPU_BIND_SCHEME} ${GPU_BIND_SCHEME} ./hello_affinity_a
 launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 ```
 
-## <a name="Interactive-Jobs-on-Compute-Nodes"></a>Interactive Jobs on Compute Nodes
+## Interactive Jobs on Compute Nodes
 
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
@@ -622,7 +622,7 @@ This command requests 1 node for a period of 1 hour in the `debug` queue. After 
 
 	If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
 
-## <a name="Running-with-Multiple-CCS"></a>Running with Multiple Compute Command Streamers (CCSs)
+## Running with Multiple Compute Command Streamers (CCSs)
 
 The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools.
 These pools can then be accessed by separate processes thereby allowing users to bind multiple processes to a single tile and enabling applications to run up to 48 MPI processes per node on the 6 PVC available.
@@ -644,7 +644,7 @@ export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4
 More information can be found on Intel's [documentation](https://www.intel.com/content/www/us/en/docs/oneapi/optimization-guide-gpu/2024-1/multi-tile-advanced-topics.html) and [GitHub](https://github.com/intel/compute-runtime/blob/master/level_zero/doc/experimental_extensions/MULTI_CCS_MODES.md) pages.
 
 
-## <a name="Running-Multiple-MPI-Applications-on-a-node"></a>Running Multiple MPI Applications on a node
+## Running Multiple MPI Applications on a node
 
 Multiple applications can be run simultaneously on a node by launching several `mpiexec` commands and backgrounding them. For performance, it will likely be necessary to ensure that each application runs on a distinct set of CPU resources and/or targets specific GPUs and tiles. One can provide a list of CPUs using the `--cpu-bind` option, which when combined with `ZE_AFFINITY_MASK` provides a user with specifying exactly which CPU and GPU resources to run each application on. In the simple example below, twelve instances of the application are simultaneously running on a single node. In the first instance, the application is spawning MPI ranks 0-3 on CPU cores 0-3 and using GPU 0 tile 0.
 
@@ -731,7 +731,7 @@ To allocate memory for rank 0 in NUMA node 2 (HBM) and rank 1 in NUMA node 3 (HB
 mpirun -n 2 --cpu-bind=list:1-51:53-103 --mem-bind=list:2:3
 ```
 
-## <a name="Compute-Node-Access-to-the-Internet"></a>Compute Node Access to the Internet
+## Compute Node Access to the Internet
 
 Currently, the only access to the internet is via a proxy.  Here are the proxy environment variables for Aurora:
 
@@ -743,13 +743,13 @@ export ftp_proxy="http://proxy.alcf.anl.gov:3128"
 
 In the future, though we don't have a timeline on this because it depends on future features in slingshot and internal software development, we intend to have public IP addresses be a schedulable resource.  For instance, if only your head node needed public access your select statement might looks something like: `-l select=1:pubnet=True+63`.
 
-## <a name="Controlling-Where-Your-Job-Runs"></a>Controlling Where Your Job Runs
+## Controlling Where Your Job Runs
 If you wish to have your job run on specific nodes form your select like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>...` . Obviously, that gets tedious for large jobs.
 
 If you want to control the location of a few nodes, for example 2 out of 64, but the rest don't matter, you can do something like this: `-l select=1:vnode=<node name1>+1:vnode=<node name2>+62:system=foo`.
 
 <!--
-## <a name="Rack-and-Dragonfly-Group-Mappings"></a>Network: Rack and Dragonfly Group Mappings
+## Network: Rack and Dragonfly Group Mappings
 Content coming soon.
 -->
 

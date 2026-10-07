@@ -54,7 +54,7 @@ Our documentation is organized in two sections aligned with the two steps descri
 
 ## Obtaining and managing compute resources at ALCF
 
-### <a name="Definitions-and-Notes"></a>Definitions and Notes
+### Definitions and Notes {#Definitions-and-Notes}
 
 `chunk`
 :    A set of resources allocated as a unit to a job. Specified inside a selection directive. All parts of a chunk come from the same host. In a typical MPI (Message-Passing Interface) job, there is one chunk per MPI process.
@@ -74,7 +74,7 @@ Our documentation is organized in two sections aligned with the two steps descri
 `task`
 :   A single execution on the resources of your job, often an `mpiexec` invocation launched by PALS or PMIx. You may run one task or many tasks during your job. You may run tasks sequentially or divide your resources up and run several tasks concurrently. Also sometimes referred to as _job steps_.
 
-## <a name="Quick-Start"></a>Quick Start
+## Quick Start {#Quick-Start}
 
 Here are the "Big Four" commands you will use:
 
@@ -102,7 +102,7 @@ Here are the "Big Four" commands you will use:
 
     The page numbers in the PBS guides are unique. If you search for the specified page number it will take you directly to the relevant page.
 
-## <a name="qsub"></a>`qsub`: submit a job to run
+## `qsub`: submit a job to run {#qsub}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf), Chapter 2, page UG-11 and [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Chapter 2, section 2.57, page RG-216
 
@@ -171,18 +171,21 @@ You also have to tell PBS how you want the chunks distributed across the physica
     - `scatter` means take only one chunk from any given host.
     - `vscatter` means take only one chunk from any given vnode. If a host has multiple vnodes, you could end up with more than one chunk on the host.
   - sharing is one of `excl | shared | exclhost` where
-    - NOTE: Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
     - `excl` means this job gets the entire vnode
     - `shared` means the vnode could be shared with another job from another user.
     - `exclhost` means this job gets the entire host, even if it has multiple vnodes.
   - group=`<resource name>`
     - As an example, for machines that use a dragonfly network topology, we provide a PBS resource named `tier1` indicating which dragonfly group a node is in. If you wanted to ensure that all the chunks came from a single dragonfly group, you could specify `place=group=tier1` as part of your qsub. `tier0` is rack granularity, so `group=tier0` would ensure your nodes all came from one rack. Note that if you requested more nodes than were available in a rack your job would never run and you would see something like `Not Running: Insufficient amount of resource: tier0`.
 
+!!! note "Sharing mode"
+
+    Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
+
 We have defined _placement sets_ for the tier0 and tier1 resources. As a result, if you don't specify a grouping PBS will _preferentially_ group your nodes in a placement set, but it won't drain or delay your job start to do so. For example, if you request 10 nodes and don't specify a grouping, if 10 nodes are available in the same rack, all your nodes will be in one rack. If not, but there are 10 nodes in a single dragonfly group, all your nodes will be in one dragonfly group. If you wish to specify a specific rack or dragonfly group, that is accomplished via the select syntax. For instance, `qsub ... -l select=10:tier1=g0` would force your 10 nodes to be in dragonfly group 0.
 
 Here is a heavily commented sample PBS submission script that shows some more of the options, but remember that the PBS manuals referenced at the top of this page are the ultimate resource.
 
-```bash
+```bash linenums="1"
 #!/bin/bash -l
 # UG Section 2.5, page UG-24 Job Submission Options
 # Add another # at the beginning of the line to comment out a line
@@ -290,7 +293,7 @@ To update the filesystems list for your job, use `qalter`.
 - `qsub -A my_allocation -l place=scatter  -l filesystems=home:eagle -l select=32:ncpus=32 -q prod -l walltime=30:00 mpi_mm_64.sh`
   - 32 chunks on any system that meets the requirements. Each chunk must have 32 HW threads; `place=scatter` means use a different vnode for each chunk, even if you could fit more than one on a vnode. Use the queue named `prod`.
 
-## <a name="qstat"></a>`qstat`: Query the status of jobs/queues
+## `qstat`: Query the status of jobs/queues {#qstat}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.2, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.55, page RG-200
 
@@ -343,14 +346,14 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 
 `qstat -Q` Will show you the names of all the queues and tell you their status. If they are enabled (Ena column), you can queue jobs into them. If they are started (Str column) then the scheduler will try and run jobs from it. There is a `-f` (full) option but that is mostly for admins, though you can find the min and max node count `(resources_[min|max].nodect)` and min and max walltime `(resources_[min|max]walltime)` from the output. Those values are also available in this documentation.
 
-## <a name="qalter"></a>`qalter`: Alter a queued job
+## `qalter`: Alter a queued job {#qalter}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
 Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project_name> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 The new value overwrites any previous value.
 
-## <a name="qdel"></a>`qdel`: Delete a queued or running job
+## `qdel`: Delete a queued or running job {#qdel}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.3, page UG-170; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.41, page RG-143
 
@@ -358,40 +361,40 @@ The new value overwrites any previous value.
 
 Occasionally, the job will still show up in `qstat` after you try and `qdel` it. When this happens you can try `qdel -W force <jobid>`. If it still won't go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you. DO NOT just default to using `-W force`. The force does not do all of the clean up and can cause problems of its own.
 
-## <a name="qmove"></a>`qmove`: Move a job to a different queue
+## `qmove`: Move a job to a different queue {#qmove}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
 
 - `qmove <new queue> <jobid> [<jobid> <jobid>...]`
 - Only works before a job starts running
 
-## <a name="qhold,qrls"></a>`qhold,qrls`: Place / release a user hold on a job
+## `qhold,qrls`: Place / release a user hold on a job {#qhold,qrls}
 
 [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.44, page RG-150 and Sec 2.50, page RG-183
 
 - `[qhold | qrls] <jobid> [<jobid> <jobid>...]`
 
-## <a name="qselect"></a>`qselect`: Query jobids for use in commands
+## `qselect`: Query jobids for use in commands {#qselect}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 10.1, page UG-175; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.52, page RG-189
 
 - `qdel qselect -N test1` will delete all the jobs that had the job name set to `test1`.
 
-## <a name="qmsg"></a>`qmsg` Write a message into a job's output file
+## `qmsg` Write a message into a job's output file {#qmsg}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.4, page UG-171; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.47, page RG-177
 
 - `qmsg -E -O "This is the message" <jobid> [<jobid> <jobid>...]`
 - `-E` writes it to standard error, `-O` writes it to standard out
 
-## <a name="qsig"></a>`qsig` Send a signal to a job
+## `qsig` Send a signal to a job {#qsig}
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.5, page UG-172; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.53, page RG-195
 
 - `qsig -s <signal> <jobid> [<jobid> <jobid>...]`
 - If you don't specify a signal, `SIGTERM` is sent.
 
-## <a name="pbsnodes"></a>`pbsnodes` Get information about the current state of nodes
+## `pbsnodes` Get information about the current state of nodes {#pbsnodes}
 
 [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec 2.7 page RG-36
 
@@ -480,7 +483,7 @@ In PBS it is not easy to see a priority order for which jobs will run next. The 
 3. the type of project (e.g. INCITE, ALCC, or discretionary)
 4. job duration: shorter duration jobs will accumulate priority more quickly, so it is best to specify the job run time as accurately as possible
 
-## <a name="Troubleshooting-Common-Errors"></a>Troubleshooting / Common Errors
+## Troubleshooting / Common Errors
 
 If you receive a `qsub: Job rejected by all possible destinations` error, then check your submission parameters. The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues. Please see the table above for limits on production queue job sizes.
 
@@ -488,7 +491,7 @@ If you receive a `qsub: Job rejected by all possible destinations` error, then c
 
     If you receive a job ID but you cannot find your job with `qstat`, then this may be a submission parameter issue. This can happen for batch submission because the job is being accepted into the routing (`prod`) queue. The routing/`prod` queue's parameters are more broad since it needs to accommodate for all three production queues (`small`, `medium`, & `large`). The prod routing queue accepts the job, generating a job ID. Depending on what is going on with the system, the routing may or may not occur before the `qsub` returns (i.e., if the queues are backed-up the routing queue can't route the job before the `qsub` returns). If the routing is delayed then a job ID is returned, and routing is completed later. Since the `qsub` has ended then there isn't a way to inform the user that this has been rejected by all routing destinations. If you run a `qstat` on the `jobid`, it will return `qstat: Unknown Job Id <jobid>`.
 
-## <a name="Using-Fakeroot-with-Singularity"></a>Using Fakeroot with Singularity
+## Using Fakeroot with Singularity {#Using-Fakeroot-with-Singularity}
 
 The fakeroot feature (commonly referred to as rootless mode) allows an unprivileged user to run a container as a “fake root” user by leveraging user namespace UID/GID mapping. To request this feature be enabled on your job add the following to your `qsub` command line:
 
