@@ -32,7 +32,7 @@ aurora-uan-0011> which ddt
 aurora-uan-0011>
 ```
 
-You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time password:
+You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time passcode:
 
 ![Example DDT remote connection login prompt](images/ddt_login_prompt.png "Example DDT remote connection login prompt")
 

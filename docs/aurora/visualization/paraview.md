@@ -84,7 +84,7 @@ Now you can press OK to establish the connection with a ParaView server on Auror
 
 An SSH connection will be established with a Aurora login node, and a password will be requested in a terminal, similar to the process you normally use to connect and work on the system.
 
-After you enter your password, a job will be queued, and you will see a window like this:
+After you enter your passcode, a job will be queued, and you will see a window like this:
 
 ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
 

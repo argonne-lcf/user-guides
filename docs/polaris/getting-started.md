@@ -6,7 +6,7 @@ To log into Polaris:
 ```bash
 ssh <username>@polaris.alcf.anl.gov
 ```
-Then, type in the password from your CRYPTOCard/MobilePASS+ token.
+Then, type in the passcode from your MobilePASS+ or physical hardware token.
 
 ## Hardware Overview
 

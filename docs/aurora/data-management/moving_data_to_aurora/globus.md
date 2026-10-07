@@ -14,7 +14,7 @@ Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is
 
 2. Paste the link provided by the above command into a browser and follow the instructions to set up a personal endpoint:
 
-    - When requested, input your ALCF username and one-time password from your CRYPTOCard/MobilePASS+ token.
+    - When requested, input your ALCF username and one-time passcode from your MobilePASS+ or physical hardware token.
     - Select the Allow button.
     - Enter the authentication code generated back into the terminal.
     - Enter a name for the endpoint (e.g., `aurora_login_uan11`).
