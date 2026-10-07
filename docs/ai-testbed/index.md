@@ -1,3 +1,7 @@
+---
+description: "The ALCF AI Testbed's Cerebras, Graphcore, Groq, and SambaNova accelerators, and how to request access."
+---
+
 # ALCF AI Testbed
 
 ![Cerebras and SambaNova detail photos](files/home-cerebras-sambanova.png){ width="700" }

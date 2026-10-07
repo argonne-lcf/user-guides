@@ -1,5 +1,6 @@
 site_name: ALCF User Guides
 site_description: "How to use the Argonne Leadership Computing Facility's computing resources: accounts, jobs, data, and software."
+site_author: Argonne Leadership Computing Facility
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'

@@ -1,3 +1,7 @@
+---
+description: "First steps on Crux: logging in, compiling, additional software, running jobs, Lustre striping, and proxy settings."
+---
+
 # Getting Started on Crux
 
 ## Logging Into Crux

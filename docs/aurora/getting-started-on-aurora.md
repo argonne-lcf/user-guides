@@ -1,3 +1,7 @@
+---
+description: "First steps on Aurora: logging in, compiling, running jobs, Python, file systems and DAOS, proxy settings, and help."
+---
+
 # Getting Started on Aurora
 
 ## Logging Into Aurora:
