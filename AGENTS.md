@@ -2,79 +2,111 @@
 
 Guidance for AI coding agents (Codex, Copilot, Cursor, Claude Code, and others) and for human contributors working in this repository. `CLAUDE.md` imports this file. `REVIEW.md` is a short list of review rules for code-review tools (Copilot code review reads it), kept under about 4,000 characters; update it when a rule here changes what reviewers should flag.
 
-Source for the ALCF User Guides (https://docs.alcf.anl.gov/), an MkDocs site using the Material theme. Content is Markdown under `docs/`; site configuration is in `mkdocs.yml`.
+Source for the ALCF User Guides (https://docs.alcf.anl.gov/), an MkDocs site using the Material theme. Content is Markdown under `docs/`; the sidebar and site configuration are in `mkdocs.yml`.
+
+## Scope
+
+Most work here is content: editing pages, adding pages, updating stale information, improving formatting, and occasionally moving pages. For that work, change only:
+
+- Markdown and images under `docs/`
+- the `nav:` block of `mkdocs.yml` (and `not_in_nav`/`redirects` entries when adding or moving pages)
+- `includes/abbreviations.md` and `docs/acronyms.md`, for new acronyms
+
+Leave plugins, `markdown_extensions`, CSS, JavaScript, `overrides/` (theme templates), `layouts/`, `hooks/`, `.github/workflows/`, `requirements.txt`, and the `Makefile` alone unless the task is explicitly about the site build or theme; see "Site maintenance" at the end.
 
 ## Commands
 
 ```bash
 git submodule init; git submodule update   # required: pages include content from submodules
 uv venv && source .venv/bin/activate && uv pip install -r requirements.txt   # or: make install-uv
-make serve        # generate inbound links, then mkdocs serve on the first free port from 8000
-make build-docs   # what CI runs: mkdocs build --strict, then scripts/validate_inbound_links.py
-make clean        # remove site/ and generated docs/inbound-links.md
+make serve        # live preview at the first free port from 8000
+make build-docs   # what CI runs: mkdocs build --strict, then the inbound-link check
 ```
 
-There are no unit tests. Validation is `make build-docs`: `--strict` promotes every MkDocs warning (broken relative links, missing anchors, pages missing from `nav`, missing snippet files, unreachable external assets) to a build failure. Always run it after changes, and before opening a PR.
-
-`CI=true` also enables the `optimize` plugin (image compression) and the `social` plugin (link-preview cards), both skipped locally by default. They need `pngquant` and Cairo (`brew install pngquant cairo`). On Apple Silicon, CairoSVG only finds Cairo with `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib`, and macOS strips `DYLD_*` variables when running `make`, so call mkdocs directly: `CI=true DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib mkdocs build --strict`.
+Preview with `make serve`, not a Markdown preview in an editor or on GitHub: this site uses Python-Markdown with many extensions, which renders differently from GitHub-flavored Markdown. There are no unit tests. `make build-docs` fails on broken relative links, missing anchors, pages missing from `nav`, and missing snippet files; run it after changes and before opening a PR.
 
 ## Contributing rules
 
-- **Facts about ALCF systems must be verifiable.** Queue limits, hostnames, module names, paths, and versions come from the live system or the owning staff, not from a model's memory or another system's page. Say in the PR how each factual change was checked. Copy-paste drift between systems is a recurring problem (#1323 found Cobalt syntax and another system's core counts on the Crux pages).
-- **Keep PRs scoped:** one topic per PR. Avoid sweeping "consistency" or typo passes across many pages with different owners in `docs/CODEOWNERS`; past passes of 50+ files and 1,600+ changed lines were hard to review line by line.
-- **Don't move, rename, or delete pages listed in `includes/validate-inbound-URLs.txt`** (see "Inbound link protection" below). Add new pages to `nav`.
-- **Submodules** (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) are edited upstream. Don't commit a submodule pointer change by accident: run `git submodule update` after pulling, or set `git config submodule.recurse true`.
+- **Facts about ALCF systems must be verifiable.** Queue names and limits, hostnames, module names, paths, versions, and core/GPU counts come from the live system or the staff who own it, not from a model's memory or another system's page. Say in the PR how each factual change was checked. Copy-paste drift between systems is a recurring problem: Cobalt syntax (Theta's scheduler; all current systems use PBS), another system's hardware counts, or "Polaris" left on an Aurora page.
+- **Change only what's needed.** Don't re-wrap lines, reindent, or change whitespace that doesn't change the rendered page; it buries the real change in the diff. Don't delete HTML comments (authors leave context in them) or `--8<--` snippet lines, and don't add horizontal rules.
+- **Keep PRs scoped:** one topic per PR. Avoid sweeping "consistency" or typo passes across many pages with different owners in `docs/CODEOWNERS`. Fixing a typo or adding a link on someone else's page is fine.
+- **Discuss reorganizations first.** Moving many pages, reorganizing the sidebar, or adding a top-level section needs an issue or a discussion with the page owners before a PR.
+- **Leave legacy content alone** unless the task is about it: pages under `not_in_nav/`, and `docs/unused/` and `docs/old/` (not built).
+- **Submodules** (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) are edited in their own repositories. Don't commit a submodule pointer change by accident: run `git submodule update` after pulling, or set `git config submodule.recurse true`.
 - **Don't edit generated files:** `docs/inbound-links.md`, `site/`.
-- **Examples use placeholders** (`<project>`, `$USER`) in backticks, not the author's own projects, usernames, or paths.
-- **`docs/CODEOWNERS`** paths are relative to the repo root even though the file lives in `docs/`, and owners need write access (check with `gh api repos/argonne-lcf/user-guides/codeowners/errors`).
-- **Commit messages and PR descriptions** are concise and reviewed by a human before submission, without LLM boilerplate (e.g. numbered lists of trivial edits, or "the page reads great, no changes required").
+- **Commit messages and PR descriptions** are concise and reviewed by a human before submission, without LLM boilerplate (e.g. numbered lists of trivial edits, or "the page reads great, no changes required"). If AI tools were used, check the "AI tools were used" box in the PR template and say which tools and how facts were checked.
 
-## How the site is assembled
+## Writing and style
 
-- **`nav` in `mkdocs.yml` is authoritative.** A new page must be added to `nav`, or listed under `not_in_nav`/`exclude_docs`/`draft_docs`, or `--strict` fails.
-  - `not_in_nav`: built but reachable only via links.
-  - `exclude_docs`: never built (`unused/`, `old/`, `todo.md`, …).
-  - `draft_docs`: built by `serve` but not `build`.
-  - Trailing inline comments inside these block scalars break MkDocs parsing.
-- **Snippets** (`pymdownx.snippets`) use `base_path: ["."]`, so include paths are relative to the **repo root**, not the page. Examples: `--8<-- "./docs/polaris/..."` and `---8<--- "AuroraBugTracking/bugs.md:3"`. `check_paths: True` means a missing include fails the build.
-  - `includes/abbreviations.md` is auto-appended to every page, providing hover definitions via the `abbr` extension.
-- **Submodules:** `GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`. The Aurora bug table (`docs/aurora/bugs-table.md`, `known-issues.md`) is a snippet of `AuroraBugTracking/bugs.md`. It is refreshed nightly by `.github/workflows/update-submodules.yml`, which commits submodule bumps directly. `scripts/aurora-bug-table-sync.sh` triggers that chain on demand.
-- **Inbound link protection:** `includes/validate-inbound-URLs.txt` lists external URLs (e.g. from the main ALCF site) that point into these docs. `scripts/validate_inbound_links.py` fails the build if any stops resolving to a page in `site/`, so don't move, rename, or delete those pages. `docs/inbound-links.md` is generated and gitignored.
-- **Theme overrides** live in `overrides/`. `partials/header.html` and `partials/footer.html` fully replace Material's header and footer, so Material features that render into the footer (e.g. `navigation.footer`) have no effect. Custom JS is in `docs/javascripts/`. Scripts must re-initialize via `document$.subscribe(...)` because `navigation.instant` swaps page content without a full reload (see `tablesort.js`, `mathjax.js`).
+- **Commands to copy** go in a fenced block with a language, without a `$ ` prompt, which the copy button would include. Use `bash` for shell commands (not `shell` or `sh`), `python` for Python.
+- **Sample output** goes in a separate block that can't be copied: `` ``` { .output .no-copy } ``. Keep commands and their output in separate blocks rather than one `console` block.
+- **Full scripts** (job scripts, source files) get line numbers and, when useful, a file name: `` ```bash linenums="1" title="job.sh" ``.
+- **Placeholders:** use `<username>`, `<project>`, `<jobid>`, `<queue>`, and `<path>`, always inside backticks or code blocks. Prefer an environment variable that already has the right value where the command runs: `$USER` and `$HOME` in commands run on ALCF systems. Keep `<username>` in commands run on the reader's own machine (`ssh <username>@aurora.alcf.anl.gov`), where `$USER` is their local name. Explain in prose what a `<path>` should point to, rather than inventing a longer placeholder. Never use a real person's project, username, or home path.
+- **Use the Material/pymdownx features the site already uses**, not raw HTML:
+    - admonitions: `!!! note`, `!!! warning`, `!!! tip`, `!!! danger`, with an optional quoted title (`!!! warning "Known issue"`); `!!! note inline end` for a short side note;
+    - collapsible blocks: `??? example "Title"` (`???+` starts open), not `<details>`;
+    - tabs: `=== "Polaris"` for per-system or per-language alternatives;
+    - figure captions: `/// caption` after the image;
+    - keys: `++ctrl+c++`.
+- **Headings:** exactly one `# H1` per page, matching its purpose; don't skip levels (`##` then `####`), or the table of contents breaks. A system's overview page (its `index.md`) is titled "`<System>` Machine Overview".
+- **Names:** write product and system names as their owners do: Aurora, Polaris, PBS, TensorFlow, PyTorch, oneAPI, conda/Miniforge (don't recommend Anaconda). Sidebar labels in `nav` use Title Case.
+- **Links:** link to other pages with relative paths to the `.md` file (`../running-jobs/index.md#section`), not `docs.alcf.anl.gov` URLs; MkDocs checks relative links at build time. Use descriptive link text, not "here".
+- **Images:** Markdown `![alt text](path)` with meaningful alt text, stored in the nearest existing `images/` folder (e.g. `docs/aurora/images/`, `docs/images/`) or next to the page.
+- **Acronyms:** add new ones to `docs/acronyms.md`. `includes/abbreviations.md` adds hover definitions on every page; many entries are commented out because they were too noisy, so check the comments before re-enabling one.
+- **Line wrapping** in new text is up to you (soft wrap, or one sentence per line); there's no enforced style yet (#330). Don't re-wrap existing text.
 
-## Markdown conventions and pitfalls
+## Markdown pitfalls
 
-- **Nested list items need 4-space indentation.** 2–3 spaces get flattened into the parent list and misnumbered.
+The site uses Python-Markdown, which differs from GitHub-flavored Markdown:
+
+- **Indent nested content 4 spaces**, with spaces only (no tabs): nested list items, and the body of admonitions, `???` blocks, and `===` tabs. 2–3 spaces get flattened into the parent list or end the block.
 - Numbered steps separated by a column-0 code fence restart the list. `fancylists` preserves the author's number via `start=`.
-- `saneheaders` is on: headings need a space after `#`, and a bare `###` renders as literal text.
-- **Math** (`arithmatex` + MathJax): `$...$`/`\(...\)` inline, `$$...$$`/`\[...\]` blocks. A prose line with two bare `$` can be misparsed as math, e.g. `$MODEL_DIR ... /home/$(whoami)`. Keep shell commands in backticks or fences; `\$` escapes (`escapeall` is on).
-  - `docs/javascripts/mathjax.js` loads the MathJax bundle only on pages with `.arithmatex` output, including after instant navigation (#1334). Don't add the bundle back to `extra_javascript`.
+- Headings need a space after the `#` marks; a bare `###` renders as literal text.
 - Unescaped `<placeholder>` text in prose is parsed as an HTML tag and disappears. Put it in backticks.
-- `magiclink` autolinks bare URLs and emails. Its `#N`/`@user` shorthands are deliberately off because prose like "see note #1" produced bogus GitHub links.
-- `blocks.admonition/details/tab` must not be enabled alongside the legacy `admonition`/`details`/`tabbed` extensions currently in use. Migration is tracked in issue #609.
-- HTML comments are not inert to `superfences`: fenced code inside `<!-- -->` is still processed and consumes code-block IDs.
+- **Math:** `$...$`/`\(...\)` inline and `$$...$$`/`\[...\]` blocks render with MathJax. A prose line with two bare `$` can be misparsed as math, e.g. `$MODEL_DIR ... /home/$(whoami)`. Keep shell variables and commands in backticks or code blocks; `\$` escapes a dollar sign.
+- Bare URLs and email addresses become links automatically. `#123` and `@user` don't.
+- HTML comments aren't inert: fenced code inside `<!-- -->` is still processed.
+
+## Adding, moving, and renaming pages
+
+- **`nav` in `mkdocs.yml` is authoritative.** Add every new page to `nav`, or to `not_in_nav` if it should be reachable only by links, or the build fails. Don't put trailing comments inside the `not_in_nav`/`exclude_docs`/`draft_docs` blocks; they break parsing.
+- **Don't move, rename, or delete pages listed in `includes/validate-inbound-URLs.txt`.** Other sites (e.g. the main ALCF website) link to them, and the build fails if they stop resolving. Other pages can move if you add an old-path-to-new-path entry under `redirect_maps` (the `redirects` plugin) in `mkdocs.yml`.
+- Moving a page breaks relative links to and from it, and snippet includes that point at it; `make build-docs` reports most of these.
+- **Snippets** (`--8<--`) include text from another file. Paths are relative to the repo root, not the page: `--8<-- "./docs/polaris/..."`. To include part of a Markdown file, mark the section with `<!-- --8<-- [start:name] -->` and `<!-- --8<-- [end:name] -->`. Text shared between pages should use absolute URLs rather than relative links, and keep system-specific commands out of the shared part.
+- The Aurora known-issues table comes from the `AuroraBugTracking` submodule and is updated automatically; edit it in that repository.
 
 ## Page front matter
 
 Front matter is a `---` YAML block at the very top of the page. Most pages have none yet; #1335 tracks adding it across the site.
 
-- **`description:`** Add one to every new page, and to existing pages when you substantially edit them. One plain sentence of about 120 characters or less, saying what the reader can do on the page and naming the system if the page is system-specific, e.g. "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes." It fills `<meta name="description">`, `og:description`, and the social card's two description lines, which cut off with "..." at about 124 characters. Without it, the page falls back to `site_description` in `mkdocs.yml`.
-- **`title:`** Only needed when a page should be titled differently from its nav label. The nav label is used in the nav sidebar and breadcrumbs. `title:` front matter, if set, is used first for `<title>`, `og:title`, and the social card title. The card and `og:title` already add the nav section path (e.g. "Aurora › Data Science › AI Inference"), so short nav labels like "vLLM" are usually fine there; the browser tab title is still only the label.
-- **`tags:`** Don't add tags until the `tags` plugin and an allowed vocabulary (`tags_allowed`) land per #1335. The search plugin indexes `tags:` front matter even without the tags plugin, with a boost of 1e6 (vs. 1e3 for titles), so ad hoc tags distort search ranking.
-- **`author:`** Don't add per-page authors. The plan in #1335 is a site-wide `site_author` (ALCF) for `<meta name="author">`, plus an `owner:` field for who verifies the page, tied to the "Last Verified" date in #1139.
-- **Section defaults:** once the `meta` plugin is enabled (#1335), defaults for a whole folder (e.g. system tags) go in that folder's `.meta.yml`, not in each page.
+- **`description:`** Add one to every new page, and to existing pages when you substantially edit them. One plain sentence of about 120 characters or less, saying what the reader can do on the page and naming the system if the page is system-specific, e.g. "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes." It's used for search-engine snippets and link previews, which cut off at about 124 characters. Without it, the page falls back to the site-wide `site_description`.
+- **`title:`** Only needed when a page should be titled differently from its nav label. The nav label is used in the sidebar and breadcrumbs; `title:` is used for the browser tab, `og:title`, and the link-preview card.
+- **`tags:`** Don't add tags until the `tags` plugin and an allowed vocabulary land per #1335. Search indexes `tags:` front matter even now, with a very high weight, so ad hoc tags distort search results.
+- **`author:`** Don't add per-page authors. The plan in #1335 is a site-wide author plus an `owner:` field for who verifies the page, tied to the "Last Verified" date in #1139.
 - **`search:`** `search: {exclude: true}` drops a page from search; `search: {boost: 2}` ranks it higher. Use sparingly.
-- **Commits:** put metadata-only sweeps across many pages in their own commits, separate from content changes, so they can be listed in an `ignored_commits_file` and don't reset every page's git-based "Last Updated" date (#1139).
+- **Commits:** put metadata-only changes across many pages in their own commits, separate from content changes, so they don't reset every page's "Last Updated" date (#1139).
 
-## Build plugins and CI specifics
+## Site maintenance
 
+Only relevant when changing the build, theme, plugins, or CI. Content edits don't need any of this.
+
+- `CI=true` also enables the `optimize` plugin (image compression) and the `social` plugin (link-preview cards), both skipped locally by default. They need `pngquant` and Cairo (`brew install pngquant cairo`). On Apple Silicon, CairoSVG only finds Cairo with `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib`, and macOS strips `DYLD_*` variables when running `make`, so call mkdocs directly: `CI=true DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib mkdocs build --strict`.
+- `make clean` removes `site/` and the generated `docs/inbound-links.md`.
+- **Snippets** use `base_path: ["."]` and `check_paths: True`. `includes/abbreviations.md` is auto-appended to every page via the `abbr` extension.
+- **Submodules:** `.github/workflows/update-submodules.yml` commits submodule bumps nightly; `scripts/aurora-bug-table-sync.sh` triggers that chain on demand. The Aurora bug table (`docs/aurora/bugs-table.md`, `known-issues.md`) is a snippet of `AuroraBugTracking/bugs.md`.
+- **Inbound link protection:** `scripts/validate_inbound_links.py` checks each URL in `includes/validate-inbound-URLs.txt` against `site/`. `docs/inbound-links.md` is generated and gitignored.
+- **Theme overrides** live in `overrides/`. `partials/header.html` and `partials/footer.html` fully replace Material's header and footer, so Material features that render into the footer (e.g. `navigation.footer`) have no effect. Custom JS is in `docs/javascripts/`. Scripts must re-initialize via `document$.subscribe(...)` because `navigation.instant` swaps page content without a full reload (see `tablesort.js`, `mathjax.js`).
+- `docs/javascripts/mathjax.js` loads the MathJax bundle only on pages with `.arithmatex` output, including after instant navigation. Don't add the bundle back to `extra_javascript`.
+- `blocks.admonition/details/tab` must not be enabled alongside the legacy `admonition`/`details`/`tabbed` extensions currently in use. Migration is tracked in #609.
+- `magiclink`'s `#N`/`@user` shorthands are deliberately off because prose like "see note #1" produced bogus GitHub links.
 - `privacy` downloads external JS/CSS at build time and serves it locally, so `--strict` fails on a dead CDN URL. MathJax is excluded via `assets_exclude`, because its fonts load relative to its script path. Downloads cache to `.cache/` (gitignored, and cached in CI).
 - `optimize` runs only under the `group` plugin with `enabled: !ENV [CI, false]`.
 - `social` (#1333) also runs only when `CI=true`. It generates a 1200x630 PNG per page in `site/assets/images/social/` and inserts `og:*`/`twitter:*` meta tags before `</head>`.
-  - The card design is the custom layout `layouts/alcf.yml` (logo, colors, Montserrat font, nav section path), not `cards_layout_options`. The default layout crops the wide Argonne | ALCF logo, and the plugin can't download Proxima Nova (an Adobe Fonts kit).
-  - `optimize` never sees the cards, because they're written straight to `site/`. `hooks/compress_social_cards.py` runs pngquant on them with `optimize`'s flags. Lower pngquant quality settings visibly shift the logo colors.
-  - The CI plugin cache key hashes `mkdocs.yml` and `layouts/**`. Cards cache in `.cache/plugin/social`.
-  - To check unfurls before deploy, build with `site_url` pointed at a public preview, e.g. `sed "s|^site_url:.*|site_url: '<tunnel URL>'|" mkdocs.yml | CI=true mkdocs build -f - -d <dir>`, served through `cloudflared tunnel --url`. Argonne's Teams and Outlook don't render link previews, so test in Slack, iMessage, or opengraph.xyz.
+    - The card design is the custom layout `layouts/alcf.yml` (logo, colors, Montserrat font, nav section path), not `cards_layout_options`. The default layout crops the wide Argonne | ALCF logo, and the plugin can't download Proxima Nova (an Adobe Fonts kit).
+    - `optimize` never sees the cards, because they're written straight to `site/`. `hooks/compress_social_cards.py` runs pngquant on them with `optimize`'s flags. Lower pngquant quality settings visibly shift the logo colors.
+    - The CI plugin cache key hashes `mkdocs.yml` and `layouts/**`. Cards cache in `.cache/plugin/social`.
+    - To check link previews before deploy, build with `site_url` pointed at a public preview, e.g. `sed "s|^site_url:.*|site_url: '<tunnel URL>'|" mkdocs.yml | CI=true mkdocs build -f - -d <dir>`, served through `cloudflared tunnel --url`. Argonne's Teams and Outlook don't render link previews, so test in Slack, iMessage, or opengraph.xyz.
 - `minify` keeps attribute quotes (`htmlmin_opts: remove_optional_attribute_quotes: false`). htmlmin otherwise strips them from the social meta tags, and WhatsApp ignores an unquoted `og:image`.
 - `mkdocs-redirects` is pinned to `==1.2.2`. 1.2.3 moved to the ProperDocs fork and only adds a `properdocs` dependency that prints a banner. Don't unpin it.
 - `.github/workflows/mkdocs-build.yml` builds PRs to `main`, and `update-livesite.yml` deploys on push to `main` via `mkdocs gh-deploy`. Both use `astral-sh/setup-uv` pinned to an exact tag (no floating major tag exists past v7) with Python 3.13.
+- `docs/CODEOWNERS` paths are relative to the repo root even though the file lives in `docs/`, and owners need write access (check with `gh api repos/argonne-lcf/user-guides/codeowners/errors`).

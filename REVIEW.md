@@ -5,23 +5,27 @@ Review rules for pull requests to the ALCF User Guides (MkDocs, Material theme).
 ## Flag these
 
 1. System facts that look copied from another system or can't be verified from the diff: hostnames, queue names and limits, module names, paths, versions, core/GPU counts. Cobalt syntax (`qsub -A ... -t`, `-n`) is wrong on PBS systems. Ask how the change was checked.
-2. A new Markdown page under `docs/` that isn't added to `nav`, `not_in_nav`, `exclude_docs`, or `draft_docs` in `mkdocs.yml`.
-3. A moved, renamed, or deleted page whose URL is listed in `includes/validate-inbound-URLs.txt`.
-4. Changes to submodule pointers (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) in a PR that isn't about them.
-5. Edits to generated files: `docs/inbound-links.md`, anything under `site/`.
-6. Nested list items indented 2 or 3 spaces; they need 4, or they're flattened into the parent list.
-7. `<placeholder>` text outside backticks or code blocks; it's parsed as an HTML tag and disappears.
-8. Prose lines with two bare `$` (e.g. `$HOME ... $USER`), which can render as math. Shell variables belong in backticks or code blocks.
-9. Snippet includes (`--8<--`) with page-relative paths; they're relative to the repo root.
-10. Examples that use a real person's project, username, or home path instead of placeholders like `<project>` or `$USER`.
-11. Headings without a space after the `#` marks.
-12. New pages without `description:` front matter, or descriptions over about 120 characters.
-13. `tags:` or `author:` front matter on pages; neither is in use yet.
-14. Unrelated changes bundled together, or the same wording edit applied across many pages owned by different people in `docs/CODEOWNERS`. Suggest splitting the PR.
+2. Changes that don't change the rendered page: re-wrapped lines, reindented text, whitespace-only edits. Also deleted HTML comments or `--8<--` snippet lines, and added horizontal rules.
+3. Content PRs that also touch plugins, `markdown_extensions`, CSS, JavaScript, `overrides/`, workflows, or `requirements.txt`.
+4. A new Markdown page under `docs/` that isn't added to `nav` or `not_in_nav` in `mkdocs.yml`.
+5. A moved, renamed, or deleted page whose URL is listed in `includes/validate-inbound-URLs.txt`, or a moved page without a `redirect_maps` entry.
+6. Changes to submodule pointers (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) in a PR that isn't about them. Edits to `docs/inbound-links.md` or `site/`.
+7. Code blocks with a `$ ` prompt on commands meant to be copied, `shell`/`sh` instead of `bash`, no language, or sample output in the same block as the commands (output goes in `{ .output .no-copy }`).
+8. Nested content indented 2–3 spaces or with tabs: list items, and admonition, `???`, and `===` bodies need 4 spaces.
+9. `<placeholder>` text outside backticks or code blocks; it disappears. Prose with two bare `$` (e.g. `$HOME ... $USER`), which can render as math.
+10. Pages with more than one `# H1`, skipped heading levels, or headings without a space after `#`.
+11. Raw HTML where the site has a feature for it: `<details>` instead of `???`, HTML admonitions instead of `!!!`.
+12. Links to other pages as `docs.alcf.anl.gov` URLs instead of relative `.md` paths; link text like "here".
+13. Examples with a real person's project, username, or home path. Placeholders other than `<username>`, `<project>`, `<jobid>`, `<queue>`, `<path>` (e.g. `<project_name>`, `MYPROJECT`, `<job_id>`), or `<username>` in commands run on ALCF systems where `$USER` works.
+14. Snippet includes (`--8<--`) with page-relative paths; they're relative to the repo root.
+15. Misspelled product names (Tensorflow, Pytorch, OneAPI), or recommending Anaconda instead of conda/Miniforge.
+16. New pages without `description:` front matter, or descriptions over about 120 characters. `tags:` or `author:` front matter (neither is in use yet).
+17. Unrelated changes bundled together, the same edit applied across many pages with different owners in `docs/CODEOWNERS`, or sidebar reorganizations without a linked discussion. Suggest splitting the PR.
 
 ## Don't flag
 
-- Legacy `!!! note` admonitions, `???` details, and `===` tabs. They're the current syntax; migration is tracked separately.
+- Legacy `!!! note` admonitions, `???` details, and `===` tabs. They're the current syntax.
+- Line wrapping style in new text, as long as existing lines aren't re-wrapped.
 - Wording or style preferences in otherwise correct text.
-- Line wrapping or Markdown line length.
 - Content inside the submodule directories; it's edited upstream.
+- Pages under `not_in_nav/`, `docs/unused/`, or `docs/old/` that the PR doesn't touch.

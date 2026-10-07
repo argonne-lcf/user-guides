@@ -105,7 +105,7 @@ git push origin YOURBRANCH         # push the changes from local branch up to yo
 
 ### Using AI tools
 
-[`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: build commands, how `nav` and snippets work, Markdown pitfalls, page front matter, and contributing rules. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
+[`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: what content edits may touch, the site's writing and formatting conventions, Markdown pitfalls, how to add or move pages, page front matter, and contributing rules. Build and theme details are in a separate section at the end. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
 
 If you use an AI tool to edit these docs:
 
@@ -114,6 +114,7 @@ If you use an AI tool to edit these docs:
 * Keep each PR to one topic. Don't run sweeping "consistency" or typo passes across many pages.
 * Keep commit messages and PR descriptions concise, and edit any generated text before submitting.
 * Run `make build-docs` before opening a PR.
+* Check the "AI tools were used" box in the pull request template, and name the tools in the description.
 
 When a convention changes, update `AGENTS.md` in the same PR, and `REVIEW.md` too if reviewers should flag it.
 
