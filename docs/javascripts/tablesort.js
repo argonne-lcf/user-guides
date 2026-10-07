@@ -1,5 +1,5 @@
 function applyTablesort() {
-  var tables = document.querySelectorAll("article table:not([class])");
+  var tables = document.querySelectorAll("article table:not([class]):not(figure.no-sort table)");
 
   tables.forEach(function(table) {
     if (table.dataset.tablesortInitialized) return; // skip if already set
