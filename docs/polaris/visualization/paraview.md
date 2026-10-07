@@ -95,7 +95,7 @@ Now you can press OK to establish the connection with a ParaView server on Polar
 
 An SSH connection will be established with a Polaris login node, and a password will be requested in a terminal, similar to the process you normally use to connect and work on the system.
 
-After you enter your password, a job will be queued, and you will see a window like this:
+After you enter your passcode, a job will be queued, and you will see a window like this:
 
 ![Waiting for server](images/ParaviewWaitForServer.png){ width="700" }
 /// caption

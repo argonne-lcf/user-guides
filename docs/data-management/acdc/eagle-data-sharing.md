@@ -12,7 +12,7 @@ Globus is a service that provides research data management, including managed tr
 
 ## Logging into Globus with your ALCF Login
 
-ALCF researchers can use their ALCF Login username and password to access Globus. Go to the [Globus website](https://www.globus.org/) and click on Log In in the upper right corner of the page.
+ALCF researchers can use their ALCF Login username and passcode to access Globus. Go to the [Globus website](https://www.globus.org/) and click on Log In in the upper right corner of the page.
 
 ![Logging into Globus](files/login-screen.png){ width="700" }
 /// caption
@@ -26,7 +26,7 @@ Type or scroll down to "Argonne LCF" in the "Use your existing organizational lo
 Select Organization Argonne LCF
 ///
 
-You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and password.
+You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and passcode.
 
 ## Accessing your Eagle Project Directory
 
