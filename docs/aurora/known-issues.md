@@ -1,6 +1,6 @@
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-09-05_
+_Last Updated: 2026-10-07_
 
 ## Early User Notes
 
@@ -25,11 +25,9 @@ This is the primary and most stable storage filesystem for now. It is still poss
 
 #### DAOS (Object Store)
 
-DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
+DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md).  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
-The initial configuration of DAOS has a smaller number of nodes, resulting in smaller project allocations. We expect DAOS to grow over the year, and when that happens, changes will be announced/posted in user docs. Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need the allocation size to be increased.
-
-The performance of DAOS has been impressive, but we continue to experience crashes with large jobs, including loss of data. Projects may use it, but should not consider it stable or safe for long-term storage.
+DAOS is currently in its production configuration with 800 out of 1024 servers in use with ~200 Petabytes of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
 
 #### Grand/Eagle
 
