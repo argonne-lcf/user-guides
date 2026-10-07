@@ -13,10 +13,10 @@ To access the ALCF Inference Endpoints via the Web UI or API, you can log in usi
 /// html | div
     attrs: {class: no-sort}
 
-| alcf.anl.gov | ameslab.gov | anl.gov | bnl.gov | fnal.gov | hpc-dtn-auth.lanl.gov | idmscdtn.emsl.pnnl.gov |
+| alcf.anl.gov | ameslab.gov | anl.gov | bnl.gov | fnal.gov | hpc-dtn-auth.lanl.gov | inl.gov |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| **inl.gov** | **jlab.org** | **lbl.gov** | **llnl.gov** | **nersc.gov** | **netl.doe.gov** | **nrel.gov** |
-| **nlr.gov** | **ornl.gov** | **pppl.gov** | **pnnl.gov** | **sandia.gov** | **slac.stanford.edu** |   |
+| **jlab.org** | **lbl.gov** | **llnl.gov** | **nersc.gov** | **netl.doe.gov** | **nrel.gov** | **nlr.gov** |
+| **ornl.gov** | **pppl.gov** | **pnnl.gov** | **sandia.gov** | **slac.stanford.edu** |   |   |
 
 ///
 
