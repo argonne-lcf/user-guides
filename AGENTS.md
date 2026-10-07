@@ -48,6 +48,7 @@ Preview with `make serve`, not a Markdown preview in an editor or on GitHub: thi
     - tabs: `=== "Polaris"` for per-system or per-language alternatives;
     - figure captions: `/// caption` after the image;
     - keys: `++ctrl+c++`.
+- **Raw HTML** only where Markdown has no equivalent, such as a `<br>` inside a table cell or an `<iframe>` embed. Use a blank line instead of `<br>` and `**bold**` instead of `<strong>`. Don't add `<a name>` anchors: link to the automatic heading ID, or if you need a fixed ID, use `## Heading {#id}` (`attr_list`). Note that `{#id}` replaces the automatic ID, so existing links to it break.
 - **Headings:** exactly one `# H1` per page, matching its purpose; don't skip levels (`##` then `####`), or the table of contents breaks. A system's overview page (its `index.md`) is titled "`<System>` Machine Overview".
 - **Names:** write product and system names as their owners do: Aurora, Polaris, PBS, TensorFlow, PyTorch, oneAPI, conda/Miniforge (don't recommend Anaconda). Sidebar labels in `nav` use Title Case.
 - **Links:** link to other pages with relative paths to the `.md` file (`../running-jobs/index.md#section`), not `docs.alcf.anl.gov` URLs; MkDocs checks relative links at build time. Use descriptive link text, not "here".
