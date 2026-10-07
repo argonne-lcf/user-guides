@@ -8,7 +8,7 @@ What ALCF does provide and support is the software stack on each system. For the
 
 The system login nodes have a hard per-user task limit that cannot be raised.
 
-`cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit.
+`cat /sys/fs/cgroup/users/$USER/pids.max` returns the current limit.
 When a user reaches `pids.max`, the kernel rejects creation of new tasks.
 Existing tasks are not killed, but attempts to create additional processes or threads will fail.
 Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
@@ -17,8 +17,8 @@ Process and thread-heavy workloads belong on the compute nodes.
 Limit parallelism of compilation on login nodes, for example via `make -j [jobs]`.
 Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
 
-A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
-The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
+A user can query their current usage PID via `cat /sys/fs/cgroup/users/$USER/pids.current`.
+The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/$USER/pids.events`.
 
 ## Pages
 

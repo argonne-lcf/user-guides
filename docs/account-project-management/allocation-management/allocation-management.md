@@ -67,7 +67,7 @@ sbank new sub <allocationid> --name <nameofsuballoc>
 #### PI adds users to suballocations
 
 ```bash linenums="1"
-sbank e sub <projectname>::<nameofsuballoc> --add-user="<username1> <username2> ..."
+sbank e sub <project>::<nameofsuballoc> --add-user="<username1> <username2> ..."
 ```
 
 #### PI can change the name of a suballocation
@@ -103,7 +103,7 @@ sbank e sub <suballocationID> -S <start_date> -E <end_date>
 #### PI adds hours to a suballocation:
 
 ```bash linenums="1"
-sbank e sub <projectname>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <projectname>::<nameOfDestSuballoc>
+sbank e sub <project>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <project>::<nameOfDestSuballoc>
 ```
 
 !!! note
@@ -128,7 +128,7 @@ or
 
 ```bash linenums="1"
 # Specify suballocation name
-qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<suballocationName> -q demand test.sh
+qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <project>::<suballocationName> -q demand test.sh
 ```
 
 ### Useful commands:
@@ -136,7 +136,7 @@ qsub -l select=10,walltime=30:00,filesystems=eagle:home -A <projectname>::<subal
 List all suballocations for a project that shows the number of jobs run, charges, allocation balance, suballocation name, and list of users:
 
 ```bash linenums="1"
-sbank-list-allocations -r polaris -p <projectname> -f "+subname users_list"
+sbank-list-allocations -r polaris -p <project> -f "+subname users_list"
 ```
 
 !!! tip

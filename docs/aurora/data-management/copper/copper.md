@@ -76,7 +76,7 @@ If your packages live in a custom directory, prepend only that `PYTHONPATH` entr
 module load copper
 launch_copper.sh
 
-CUSTOM_PKG_DIR=/lus/flare/projects/${PROJECT_NAME}/${USER}/lus_custom_pip_env
+CUSTOM_PKG_DIR=/lus/flare/projects/<project>/${USER}/lus_custom_pip_env
 
 time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
   --cpu-bind=list:4:56:9:61:14:66:19:71:20:74:25:79 --genvall \
@@ -91,7 +91,7 @@ stop_copper.sh
 For a Python virtual environment or custom package directory, prepending Copper only to the relevant `PYTHONPATH` entry is usually sufficient.
 
 ```bash
-CUSTOM_VENV_PATH=/lus/flare/projects/${PROJECT_NAME}/${USER}/myenv
+CUSTOM_VENV_PATH=/lus/flare/projects/<project>/${USER}/myenv
 source ${CUSTOM_VENV_PATH}/bin/activate
 
 module load copper
@@ -113,7 +113,7 @@ When using a personal Conda environment, prepending Copper only to the path pass
 module load copper
 launch_copper.sh
 
-CONDA_ENV=/lus/flare/projects/${PROJECT_NAME}/${USER}/conda_env
+CONDA_ENV=/lus/flare/projects/<project>/${USER}/conda_env
 conda activate /tmp/${USER}/copper/${CONDA_ENV}
 
 time mpirun --np ${NRANKS} --ppn ${RANKS_PER_NODE} \
@@ -131,7 +131,7 @@ If only specific input files should flow through Copper, prepend Copper only to 
 module load copper
 launch_copper.sh
 
-APP_BASE=/lus/flare/projects/${PROJECT_NAME}/${USER}/thunder/svm_mpi
+APP_BASE=/lus/flare/projects/<project>/${USER}/thunder/svm_mpi
 
 time mpiexec -np ${NRANKS} -ppn ${RANKS_PER_NODE} \
   --cpu-bind list:4:9:14:19:20:25:56:61:66:71:74:79 --genvall \
@@ -173,7 +173,7 @@ launch_copper.sh
 Example:
 
 ```bash
-launch_copper.sh -d /lus/flare/projects/${PROJECT_NAME}/${USER}/copper-logs -v /tmp/${USER}/copper_mount
+launch_copper.sh -d /lus/flare/projects/<project>/${USER}/copper-logs -v /tmp/${USER}/copper_mount
 ```
 
 ## Address-book modes

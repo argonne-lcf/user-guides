@@ -8,7 +8,7 @@ What you will get is determined by the queue you submit to (see Queues section b
 
 ## <a name="Sophia-Queues"></a>Queues
 
-There are three production queues you can target in your `qsub` command (`-q <queue name>`):
+There are three production queues you can target in your `qsub` command (`-q <queue>`):
 
 | Queue Name | Node/GPU Min | Node/GPU Max | Time Min | Time Max | Notes                                            |
 |------------|--------------|--------------|----------|----------|--------------------------------------------------|
@@ -45,4 +45,4 @@ Two of the nodes have 80GB of RAM per GPU, while the other 22 have 40GB of RAM p
 Use this queue to access the 2 nodes with more memory by specifying `-q bigmem` in your `qsub`. 
 A max of 1 node (`-l select=1`) can be requested in this queue.
 
-[^1]: The default queue is where your job will be submitted if you don't have `-q <queue name>` in your `qsub`.
+[^1]: The default queue is where your job will be submitted if you don't have `-q <queue>` in your `qsub`.

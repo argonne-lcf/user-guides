@@ -186,10 +186,10 @@ mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 
 ### Submitting Jobs
 
-Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
+Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <jobid> | grep comment`. Some example comments follow.
 
 ```output
-comment = Job held by <USER> on Tue Feb 6 05:20:00 2024 and terminated
+comment = Job held by <username> on Tue Feb 6 05:20:00 2024 and terminated
 ```
 
 The user has placed the job on hold; the user can `qrls` the job when ready for it to be queued again.
@@ -217,7 +217,7 @@ In the event of a node going down during a job, users may encounter messages suc
 Use of the `qsub -V` flag (note: upper-case) is discouraged, as it can lead to startup failures. The following message (found via `pbsnodes -l`):
 
 ```output
-failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
+failed to acquire job resources; job startup aborted (jobid: <jobid>)
 ```
 
 indicates such a failure. It is recommended to instead use `-v` (note: lower-case) and explicitly export any environment variables that your job may require.

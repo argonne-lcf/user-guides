@@ -70,7 +70,7 @@ An example submission script for running a 2-node nekRS job is shown below as an
 The correct options to execute the script are as follows:
 
 ```bash
-NEKRS_HOME=</path/to/nekrs/install> PROJ_ID=<project_id> QUEUE=<queue> ./run.sh <casename> <number_of_nodes> <walltime_hh:mm:ss>
+NEKRS_HOME=<path> PROJ_ID=<project> QUEUE=<queue> ./run.sh <casename> <number_of_nodes> <walltime_hh:mm:ss>
 ```
 
 Users can copy the script below into a file `run.sh`, make it executable with `chmod +x run.sh`, and execute it using the command above.

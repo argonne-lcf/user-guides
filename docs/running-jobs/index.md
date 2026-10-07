@@ -189,7 +189,7 @@ Here is a heavily commented sample PBS submission script that shows some more of
 # NOTE: adding a switch to the command line will override values in this file.
 
 # These options are MANDATORY at ALCF; Your qsub will fail if you don't provide them.
-#PBS -A <short project name>
+#PBS -A <project>
 #PBS -l walltime=HH:MM:SS
 #file systems used by the job
 #PBS -l filesystems=home:eagle
@@ -200,7 +200,7 @@ Here is a heavily commented sample PBS submission script that shows some more of
 #PBS -N <name>
 
 # If you need a queue other than the default, which is prod (uncomment to use)
-##PBS -q <queue name>
+##PBS -q <queue>
 
 # Controlling the output of your application
 # UG Sec 3.3 page UG-42 Managing Output and Error Files
@@ -209,8 +209,8 @@ Here is a heavily commented sample PBS submission script that shows some more of
 # it is highly recommended that you use the -k option to write directly to the destination
 # the doe stands for direct, output, error
 #PBS -k doe
-#PBS -o <path for stdout>
-#PBS -e <path for stderr>
+#PBS -o <path>
+#PBS -e <path>
 
 # If you want to merge stdout and stderr, use the -j option
 # oe=merge stdout/stderr to stdout, eo=merge stderr/stdout to stderr, n=don't merge
@@ -347,7 +347,7 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
-Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project_name> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
+Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 The new value overwrites any previous value.
 
 ## <a name="qdel"></a>`qdel`: Delete a queued or running job
@@ -362,7 +362,7 @@ Occasionally, the job will still show up in `qstat` after you try and `qdel` it.
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
 
-- `qmove <new queue> <jobid> [<jobid> <jobid>...]`
+- `qmove <queue> <jobid> [<jobid> <jobid>...]`
 - Only works before a job starts running
 
 ## <a name="qhold,qrls"></a>`qhold,qrls`: Place / release a user hold on a job

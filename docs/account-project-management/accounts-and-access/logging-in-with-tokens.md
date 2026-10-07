@@ -12,7 +12,7 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
     Then initiate an SSH session and type the following:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
     For example, <johnsmith@aurora.alcf.anl.gov>
@@ -49,7 +49,7 @@ numbers.
 1. Initiate an SSH session using:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
 2. A password prompt will be received.  

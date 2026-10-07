@@ -31,7 +31,7 @@ Step 1: Setting the environments
 
 ```bash
 $ module load oneapi
-$ export PRJ=<your_project_dir>
+$ export PRJ=<path>  # your project directory
 ```
 
 Step 2-a: Collecting the GPU Roofline data on a single GPU (Survey analysis and Trip Count with FLOP analysis)

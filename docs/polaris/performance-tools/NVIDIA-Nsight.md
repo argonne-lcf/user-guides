@@ -15,7 +15,7 @@ In addition, the baseline feature of this tool allows users to compare results w
 ### Common part on Polaris
 Build your application for Polaris, and then submit your job script to Polaris or start an interactive job mode on Polaris as follows:
 ```
-$ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:eagle -q debug -A <project-name>
+$ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:eagle -q debug -A <project>
 
 $ module li
 

@@ -4,7 +4,7 @@
 
 *******
 
-There are five production queues you can target in your qsub (`-q <queue name>`):
+There are five production queues you can target in your qsub (`-q <queue>`):
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
@@ -21,7 +21,7 @@ There are five production queues you can target in your qsub (`-q <queue name>`)
 Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
 Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
-Please use the following command to view details of a queue: `qstat -Qf <queuename>`
+Please use the following command to view details of a queue: `qstat -Qf <queue>`
 
 To make your job rerunnable, add the following PBS directive: `#PBS -r y`. This will ensure your job will restart once the demand job is complete. 
 
@@ -48,7 +48,7 @@ If there are free nodes in production, then debug jobs can take another 16 nodes
 
 Here is how to submit an interactive job to, for example, edit/build/test an application on Polaris compute nodes:
 ```bash
-qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
+qsub -I -l select=1 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project>
 ```
 
 This command requests 1 node for a period of 1 hour in the debug queue, requiring access to the `/home` and `/eagle` filesystems. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing GPU affinity scripts on the compute node.
