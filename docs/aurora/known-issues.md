@@ -25,7 +25,7 @@ This is the primary and most stable storage filesystem for now. It is still poss
 
 #### DAOS (Object Store)
 
-DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as flare.  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
+DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md).  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
 DAOS is currently in its production configuration with 800 out of 1024 servers in use with ~200 Petabytes of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
 
