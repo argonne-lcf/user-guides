@@ -10,42 +10,15 @@ This guide will walk you through the fastest ways to start using the ALCF Infere
 
 To access the ALCF Inference Endpoints via the Web UI or API, you can log in using credentials from any of these institutional identity providers:
 
-<table>
-<thead>
-<tr>
-<th colspan="7" style="text-align: center;"><strong>Identity Providers</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">alcf.anl.gov</td>
-<td style="text-align: center;">ameslab.gov</td>
-<td style="text-align: center;">anl.gov</td>
-<td style="text-align: center;">bnl.gov</td>
-<td style="text-align: center;">fnal.gov</td>
-<td style="text-align: center;">hpc-dtn-auth.lanl.gov</td>
-<td style="text-align: center;">idmscdtn.emsl.pnnl.gov</td>
-</tr>
-<tr>
-<td style="text-align: center;">inl.gov</td>
-<td style="text-align: center;">jlab.org</td>
-<td style="text-align: center;">lbl.gov</td>
-<td style="text-align: center;">llnl.gov</td>
-<td style="text-align: center;">nersc.gov</td>
-<td style="text-align: center;">netl.doe.gov</td>
-<td style="text-align: center;">nrel.gov</td>
-</tr>
-<tr>
-<td style="text-align: center;">nlr.gov</td>
-<td style="text-align: center;">ornl.gov</td>
-<td style="text-align: center;">pppl.gov</td>
-<td style="text-align: center;">pnnl.gov</td>
-<td style="text-align: center;">sandia.gov</td>
-<td style="text-align: center;">slac.stanford.edu</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+|   |   |   |   |   |   |   |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| alcf.anl.gov | ameslab.gov | anl.gov | bnl.gov | fnal.gov | hpc-dtn-auth.lanl.gov | idmscdtn.emsl.pnnl.gov |
+| inl.gov | jlab.org | lbl.gov | llnl.gov | nersc.gov | netl.doe.gov | nrel.gov |
+| nlr.gov | ornl.gov | pppl.gov | pnnl.gov | sandia.gov | slac.stanford.edu |   |
+
+/// caption | <
+Identity Providers
+///
 
 ### Web UI
 
