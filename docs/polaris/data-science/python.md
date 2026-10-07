@@ -1,5 +1,7 @@
 # Python
 
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
+
 We provide prebuilt `conda` environments containing GPU-supported builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly-used Python modules.
 
 Users can activate this environment by first loading the `conda` module and then activating the base environment.
@@ -26,7 +28,7 @@ To install additional packages that are missing from the `base` environment, we 
 
     If you need a package that is **not** already installed in the `base` environment, this is generally the recommended approach.
 
-    We can create a `venv` on top of the base Anaconda environment (with `--system-site-packages` to inherit the `base` packages):
+    We can create a `venv` on top of the base conda environment (with `--system-site-packages` to inherit the `base` packages):
 
     ```bash
     module use /soft/modulefiles; module load conda; conda activate base
@@ -47,7 +49,7 @@ python3 -m pip install --ignore-installed <package> # or -I
 
 The shared base environment is not writable, so it is impossible to remove or uninstall packages from it. The packages installed with the above `pip` command should shadow those installed in the base environment.
 
-## Cloning the base Anaconda environment
+## Cloning the base conda environment
 
 !!! warning
 
@@ -55,7 +57,7 @@ The shared base environment is not writable, so it is impossible to remove or un
 
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via `conda install <module>` or `pip install <module>`.
 
-Unlike the `venv` approach, using a cloned Anaconda environment requires you to copy the entirety of the base environment, which can use significant storage space.
+Unlike the `venv` approach, using a cloned conda environment requires you to copy the entirety of the base environment, which can use significant storage space.
 
 To clone the `base` environment:
 
@@ -83,24 +85,9 @@ Note, Python modules installed this way that contain command line binaries will 
 export PATH="$PYTHONUSERBASE/bin:$PATH"
 ```
 
-Be sure to remove this location from `$PATH` if you deactivate the base Anaconda environment or unload the module.
+Be sure to remove this location from `$PATH` if you deactivate the base conda environment or unload the module.
 
-Cloning the Anaconda environment or using `venv` are both more flexible and transparent when compared to `--user` installs.
-
-## Existing issue and solution
-
-There is an issue with the current conda environment. One may encounter the following error message:
-
-```bash
-aborting job:
-MPIDI_CRAY_init: GPU_SUPPORT_ENABLED is requested, but GTL library is not linked
-```
-
-To address this, please add the following line at the very beginning of your Python script.
-
-```python
-from mpi4py import MPI
-```
+Cloning the conda environment or using `venv` are both more flexible and transparent when compared to `--user` installs.
 
 ## Creating a Jupyter Kernel
 

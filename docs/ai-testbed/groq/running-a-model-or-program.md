@@ -31,7 +31,7 @@ cd groqflow
 Create a groqflow conda environment, and activate it.
 Follow the instructions in the [Virtual Environments](virtual-environments.md) <br> section.
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
-The conda enviroment should be reinstalled whenever new groqflow code is pulled from the groqflow github; with a groqflow conda environment activated, redo just the pip install steps.
+The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps.
 
 ### Running a groqflow sample
 Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
@@ -49,14 +49,14 @@ Create a script `run_minilmv2.sh` with the following contents. It assumes that c
 #!/bin/bash
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(${HOME}'/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$(${HOME}'/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "${HOME}/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="${HOME}/miniconda3/bin:$PATH"
+        export PATH="${HOME}/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
