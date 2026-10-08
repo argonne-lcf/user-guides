@@ -254,6 +254,8 @@ plugins:
         - Authentication
         - Kokkos
         - Molecular Dynamics
+        - Classical ML
+        - Known Issues
   # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
   # the system Cairo library, so like optimize it runs only in CI (CI=true
   # there). Card design (logo, colors, font) is in layouts/alcf.yml.

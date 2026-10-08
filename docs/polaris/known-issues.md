@@ -1,3 +1,8 @@
+---
+tags:
+  - Known Issues
+---
+
 # Known Issues
 
 This is a collection of known issues that have been encountered on Polaris. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.

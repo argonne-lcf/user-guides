@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # The `frameworks` module
 In this module we provide pre-installed packages for various AI/ML frameworks like `pytorch` and `vllm` through a `conda` environment as a part of the compute image on Aurora.
 

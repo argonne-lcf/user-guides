@@ -1,3 +1,8 @@
+---
+tags:
+  - Known Issues
+---
+
 # Early User Notes and Known Issues
 
 _Last Updated: 2026-10-07_

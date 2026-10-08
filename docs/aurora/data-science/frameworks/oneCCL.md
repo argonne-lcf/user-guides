@@ -1,5 +1,6 @@
 ---
 tags:
+  - PyTorch
   - Distributed Training
 ---
 

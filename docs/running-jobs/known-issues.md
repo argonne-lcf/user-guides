@@ -1,3 +1,8 @@
+---
+tags:
+  - Known Issues
+---
+
 # Common PBS Issues & Troubleshooting
 
 This page contains common PBS errors and issues that users may find useful in determining why their job is not yet running or has failed. 

@@ -1,3 +1,8 @@
+---
+tags:
+  - Classical ML
+---
+
 # Dask
 
 [Dask](https://www.dask.org/) is a Python library for parallel and distributed computing. A Dask cluster is composed of one scheduler that coordinates the job of many workers, which can have access to CPU or GPU resources. 
