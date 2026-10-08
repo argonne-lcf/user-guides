@@ -78,13 +78,14 @@ The site uses Python-Markdown, which differs from GitHub-flavored Markdown:
 
 ## Page front matter
 
-Front matter is a `---` YAML block at the very top of the page. Most pages have none yet; #1335 tracks adding it across the site.
+Front matter is a `---` YAML block at the very top of the page. A folder's `.meta.yml` applies to every page in that folder and below (the `meta` plugin); e.g. `docs/aurora/.meta.yml` adds the `Aurora` tag. Tags from `.meta.yml` and the page are combined; for single values like `description:`, the page's own value wins.
 
-- **`description:`** Add one to every new page, and to existing pages when you substantially edit them. One plain sentence of about 120 characters or less, saying what the reader can do on the page and naming the system if the page is system-specific, e.g. "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes." It's used for search-engine snippets and link previews, which cut off at about 124 characters. Without it, the page falls back to the site-wide `site_description`.
+- **`description:`** Add one to every new page, and to existing pages when you substantially edit them. One plain sentence of about 120 characters or less, saying what the reader can do on the page and naming the system if the page is system-specific, e.g. "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes." It's used for search-engine snippets and link previews, which cut off at about 124 characters. Without it, the page falls back to the site-wide `site_description`. `make check-descriptions` lists pages without one.
 - **`title:`** Only needed when a page should be titled differently from its nav label. The nav label is used in the sidebar and breadcrumbs; `title:` is used for the browser tab, `og:title`, and the link-preview card.
-- **`tags:`** Don't add tags until the `tags` plugin and an allowed vocabulary land per #1335. Search indexes `tags:` front matter even now, with a very high weight, so ad hoc tags distort search results.
-- **`author:`** Don't add per-page authors. The plan in #1335 is a site-wide author plus an `owner:` field for who verifies the page, tied to the "Last Verified" date in #1139.
-- **`search:`** `search: {exclude: true}` drops a page from search; `search: {boost: 2}` ranks it higher. Use sparingly.
+- **`tags:`** Only topics the page is mainly about, and only tags listed under `tags_allowed` in `mkdocs.yml` (the build fails otherwise). Add a new tag there only when it groups several pages. Don't repeat a system or section tag the page already gets from `.meta.yml`. Search weights a tag match like a title match, so a stray tag pulls the page into unrelated searches.
+- **`keywords:`** A list of search terms readers use that the page doesn't contain, e.g. `MFA`, `vscode`, `walltime`. Not shown on the page. `hooks/search_tuning.py` indexes them with the description, weighted below titles and tags.
+- **`author:`** Don't add per-page authors; every page gets `site_author`.
+- **`search:`** `search: {exclude: true}` drops a page from search; `search: {boost: 2}` ranks it higher. Use sparingly. To check ranking, run `node scripts/search_test.js "query"` against `make serve`.
 - **Commits:** put metadata-only changes across many pages in their own commits, separate from content changes, so they don't reset every page's "Last Updated" date (#1139).
 
 ## Site maintenance
@@ -102,11 +103,15 @@ Only relevant when changing the build, theme, plugins, or CI. Content edits don'
 - `magiclink`'s `#N`/`@user` shorthands are deliberately off because prose like "see note #1" produced bogus GitHub links.
 - `privacy` downloads external JS/CSS at build time and serves it locally, so `--strict` fails on a dead CDN URL. MathJax is excluded via `assets_exclude`, because its fonts load relative to its script path. Downloads cache to `.cache/` (gitignored, and cached in CI).
 - `optimize` runs only under the `group` plugin with `enabled: !ENV [CI, false]`.
-- `social` (#1333) also runs only when `CI=true`. It generates a 1200x630 PNG per page in `site/assets/images/social/` and inserts `og:*`/`twitter:*` meta tags before `</head>`.
+- `social` also runs only when `CI=true`. It generates a 1200x630 PNG per page in `site/assets/images/social/` and inserts `og:*`/`twitter:*` meta tags before `</head>`.
     - The card design is the custom layout `layouts/alcf.yml` (logo, colors, Montserrat font, nav section path), not `cards_layout_options`. The default layout crops the wide Argonne | ALCF logo, and the plugin can't download Proxima Nova (an Adobe Fonts kit).
     - `optimize` never sees the cards, because they're written straight to `site/`. `hooks/compress_social_cards.py` runs pngquant on them with `optimize`'s flags. Lower pngquant quality settings visibly shift the logo colors.
     - The CI plugin cache key hashes `mkdocs.yml` and `layouts/**`. Cards cache in `.cache/plugin/social`.
     - To check link previews before deploy, build with `site_url` pointed at a public preview, e.g. `sed "s|^site_url:.*|site_url: '<tunnel URL>'|" mkdocs.yml | CI=true mkdocs build -f - -d <dir>`, served through `cloudflared tunnel --url`. Argonne's Teams and Outlook don't render link previews, so test in Slack, iMessage, or opengraph.xyz.
+    - System sections set a card background in their `.meta.yml` (`social: cards_layout_options: background_image: aurora.jpg`), from `layouts/backgrounds/`, tinted ALCF blue.
+- `hooks/search_tuning.py` rewrites `site/search/search_index.json` after the build: tag weight 1000 (Material's default is 1e6), a `keywords` field (weight 300) from `description:` and `keywords:`, and a patch to the search worker that drops stop words, trims plural "s", and treats a leading `-` as part of a command-line flag. `hooks/tag_order.py` lists system tags first.
+- `overrides/fragments/tags/default/listing.html` shows each page's sidebar section on the Tags page, since titles repeat across systems.
+- Instant previews are opt-in: `navigation.instant.preview` stays off (it previews every internal link), and `material.extensions.preview` lists the target pages.
 - `minify` keeps attribute quotes (`htmlmin_opts: remove_optional_attribute_quotes: false`). htmlmin otherwise strips them from the social meta tags, and WhatsApp ignores an unquoted `og:image`.
 - `mkdocs-redirects` is pinned to `==1.2.2`. 1.2.3 moved to the ProperDocs fork and only adds a `properdocs` dependency that prints a banner. Don't unpin it.
 - `.github/workflows/mkdocs-build.yml` builds PRs to `main`, and `update-livesite.yml` deploys on push to `main` by running `make build-docs`, then `actions/upload-pages-artifact` and `actions/deploy-pages` (Pages source is "GitHub Actions"; there is no `gh-pages` branch). Both use `astral-sh/setup-uv` pinned to an exact tag (no floating major tag exists past v7) with Python 3.13.
