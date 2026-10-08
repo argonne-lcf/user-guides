@@ -38,7 +38,10 @@ import os
 from mkdocs.plugins import event_priority
 
 TAG_BOOST = 1000.0      # same as a title match (Material's default is 1e6)
-KEYWORDS_BOOST = 100.0  # below a title match, well above body text (1)
+# Below a title match, well above body text (1). At 1000, keywords beat page
+# titles and broke general queries ("gpu", "token"); 100 was too weak for a
+# page whose keywords match the whole query ("hours left", "stripe count").
+KEYWORDS_BOOST = 300.0
 
 # Appended to the search worker. Material calls index.search() with every word
 # already suffixed with "*" (and maybe prefixed with + or -).
