@@ -83,13 +83,13 @@ A page can start with a YAML front-matter block:
 
 ```yaml
 ---
-description: "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes."
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
 tags:
   - LLMs
 ---
 ```
 
-* `description:` one sentence of at most 120 characters. It becomes the page's `<meta name="description">`, the text in link previews and search-engine results, and the subtitle on its social card. Pages without one fall back to `site_description` in `mkdocs.yml`.
+* `description:` one sentence of at most 120 characters. It becomes the page's `<meta name="description">`, the text in link previews and search-engine results, and the subtitle on its social card. Pages without one fall back to `site_description` in `mkdocs.yml`. `make check-descriptions` lists pages that are missing one or are over the limit (CI reports this as a warning).
 * `tags:` topics the page is primarily *about*, not ones it only mentions. Every tag must be listed under `tags_allowed` (the `tags` plugin in `mkdocs.yml`), or the build fails. Add a new tag there only when it groups several pages. Search ranks tag matches far above body text, so a stray tag pulls a page to the top of unrelated searches. Tags show as links above the page title and are listed on the [Tags](docs/tags.md) page.
 * `.meta.yml` files: the `meta` plugin applies a folder's `.meta.yml` to every page in that folder and its subfolders. System and section tags live there (e.g. `docs/aurora/.meta.yml` adds `Aurora`). Tags from `.meta.yml` files and the page are combined; for single values like `description:`, the page's own value wins.
 * Don't add `author:`. Every page gets `site_author`; who verifies a page will be tracked with the "Last Verified" date (#1139).
