@@ -1,5 +1,7 @@
 ---
 description: "Run LLM inference with vLLM on Polaris: the provided installation, model weights, and single-GPU to multi-node serving."
+tags:
+  - LLMs
 ---
 
 # Inference with vLLM on Polaris

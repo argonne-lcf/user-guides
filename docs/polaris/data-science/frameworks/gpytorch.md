@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # GPyTorch on Polaris
 
 ## 1. Login and queue a job

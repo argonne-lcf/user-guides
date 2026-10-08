@@ -1,5 +1,7 @@
 ---
 description: "Log in to the Cerebras CS-3 cluster on the ALCF AI Testbed and connect to its user nodes."
+tags:
+  - Getting Started
 ---
 
 <!---# Connecting to a CS-3 node--->

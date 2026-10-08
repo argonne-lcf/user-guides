@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # GPyTorch on Aurora
 
 ## 1. Login and Queue a Job

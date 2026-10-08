@@ -1,3 +1,8 @@
+---
+tags:
+  - File Systems
+---
+
 # Copper
 
 Copper is a read-only cooperative caching layer for scalable metadata and data reuse on large HPC systems. Developed at Argonne Leadership Computing Facility, it supports scalable parallel data movement on exascale supercomputers. On Aurora, its primary production use is reducing redundant startup-time I/O, especially Python imports and shared-library loading at large node counts.

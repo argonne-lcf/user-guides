@@ -1,3 +1,8 @@
+---
+tags:
+  - Python
+---
+
 # Python on Aurora
 
 For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).

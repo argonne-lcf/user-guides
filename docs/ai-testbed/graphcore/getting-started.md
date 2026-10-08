@@ -1,5 +1,7 @@
 ---
 description: "Log in to the Graphcore login node and then to a Graphcore node on the ALCF AI Testbed."
+tags:
+  - Getting Started
 ---
 
 # Getting Started

@@ -1,3 +1,8 @@
+---
+tags:
+  - Globus
+---
+
 # Sharing Data on Eagle Using Globus Guest Collections
 
 ## Overview

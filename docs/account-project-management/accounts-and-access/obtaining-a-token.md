@@ -1,3 +1,8 @@
+---
+tags:
+  - Authentication
+---
+
 # How To Obtain a Token
 
 Users need to acquire a token to log in to ALCF systems.

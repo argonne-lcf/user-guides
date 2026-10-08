@@ -1,3 +1,8 @@
+---
+tags:
+  - OpenMP
+---
+
 # OpenMP
 
 ## Overview

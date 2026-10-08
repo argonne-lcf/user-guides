@@ -1,3 +1,8 @@
+---
+tags:
+  - Authentication
+---
+
 # Troubleshooting Tokens
 
 This page offers guidance on common issues users have with their tokens.

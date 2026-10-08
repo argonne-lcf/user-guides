@@ -1,3 +1,8 @@
+---
+tags:
+  - Globus
+---
+
 # Globus Compute
 
 The [Globus Compute platform](https://www.globus.org/compute) allows users to execute workloads remotely by submitting functions to endpoints on ALCF systems.

@@ -1,3 +1,8 @@
+---
+tags:
+  - Globus
+---
+
 # Transferring Files through Globus
 
 ## Flare filesystem

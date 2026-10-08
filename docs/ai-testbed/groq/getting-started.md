@@ -1,5 +1,7 @@
 ---
 description: "Allocations, accounts, and logging in to the GroqRack login and compute nodes on the ALCF AI Testbed."
+tags:
+  - Getting Started
 ---
 
 # Getting Started

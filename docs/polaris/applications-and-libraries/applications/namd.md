@@ -1,3 +1,8 @@
+---
+tags:
+  - Molecular Dynamics
+---
+
 # NAMD on Polaris
 
 ## What is NAMD?

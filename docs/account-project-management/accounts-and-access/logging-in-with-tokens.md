@@ -1,3 +1,8 @@
+---
+tags:
+  - Authentication
+---
+
 # Logging In with a Token
 
 Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 

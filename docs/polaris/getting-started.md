@@ -1,5 +1,7 @@
 ---
 description: "First steps on Polaris: logging in, compiling, additional software, running jobs, Lustre striping, and proxy settings."
+tags:
+  - Getting Started
 ---
 
 # Getting Started on Polaris

@@ -1,3 +1,8 @@
+---
+tags:
+  - Distributed Training
+---
+
 # oneCCL
 
 oneAPI Collective Communications Library (oneCCL) provides an efficient implementation of communication patterns used in deep learning. oneCCL is governed by the UXL Foundation and is an implementation of the oneAPI specification.
