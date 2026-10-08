@@ -31,7 +31,7 @@ module load oneapi/release/2025.3.1
 module load cmake
 ```
 
-To build with a different oneAPI release, set `ONEAPI_SDK` when running the script, e.g. `ONEAPI_SDK=oneapi/release/<version> ./BuildMe.Aurora`, and load the same module in the job script.
+Since the [September 2026 system update](../../system-updates.md#major-update-2026-09), the default oneAPI module on Aurora is `oneapi/release/2026.1.0`; loading `oneapi/release/2025.3.1` swaps to the previous programming environment, which was rebuilt for the new OS image. nekRS builds and runs with either release. To build with a different oneAPI release, set `ONEAPI_SDK` when running the script, e.g. `ONEAPI_SDK=oneapi/release/2026.1.0 ./BuildMe.Aurora`, and set the same value of `ONEAPI_SDK` when running the job script below.
 
 If the configuration step was successful, the `Summary` section of the CMake output shows the MPICH compiler wrappers (`mpicc`, `mpic++`, `mpif77`) and `Default backend : DPCPP`. After installation, set up the environment:
 
@@ -40,7 +40,34 @@ If the configuration step was successful, the `Summary` section of the CMake out
 !!! warning "Rebuild after system software upgrades"
 
     --8<-- "./docs/polaris/applications-and-libraries/applications/nekrs.md:conf"
-    If the oneAPI module used for the build is updated or removed, rebuild nekRS from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+    Installations built before the [September 2026 system update](../../system-updates.md#major-update-2026-09) (new GPU drivers and programming environment) must be rebuilt from a clean build directory, as must any installation whose oneAPI module is later updated or removed. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+
+!!! bug "Multi-rank runs crash during multigrid setup"
+
+    With the GPU drivers installed in the September 2026 update, the current `v26` branch of `nekRS_alcf` aborts during the pressure multigrid setup of any run with more than one MPI rank, right after `BUILDING pMG` is printed:
+
+    ```output
+    Segmentation fault from GPU at 0x84000, ctx_id: 1 (CCS) type: 0 (NotPresent), level: 3 (PML4), access: 0 (Read), banned: 1, aborting.
+    ```
+
+    The Schwarz smoother is timed before its weights are allocated, so a kernel reads from a null device pointer. Until this is fixed in the repository, apply the following change to `src/core/elliptic/MG/ellipticMultiGridSchwarz.cpp` before building (or rebuild afterward), moving `generateSchwarzWeights()` ahead of `autoOverlap()` near the end of `pMGLevel::setupSmootherSchwarz`:
+
+    ```diff
+    -  autoOverlap();
+    -
+    -  free(maskedGlobalIdsExt);
+    -  meshFree(extendedMesh);
+    -
+    -  generateSchwarzWeights();
+    +  // weights (o_wts) are used by smoothSchwarz, which autoOverlap calls
+    +  generateSchwarzWeights();
+    +
+    +  autoOverlap();
+    +
+    +  free(maskedGlobalIdsExt);
+    +  meshFree(extendedMesh);
+     }
+    ```
 
 ## Running Jobs on Aurora
 
@@ -142,6 +169,7 @@ echo "export FI_CXI_RX_MATCH_MODE=hybrid" >> $SFILE
 
 # bind each rank to one GPU tile
 CMD=.lhelper
+rm -f $CMD # avoid "Text file busy" if a previous job still has it open
 echo "#!/bin/bash" >$CMD
 echo "gpu_id=\$(((PALS_LOCAL_RANKID / ${tiles_per_gpu}) % ${gpus_per_node}))" >>$CMD
 echo "tile_id=\$((PALS_LOCAL_RANKID % ${tiles_per_gpu}))" >>$CMD
