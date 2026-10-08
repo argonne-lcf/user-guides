@@ -1,3 +1,8 @@
+---
+tags:
+  - Allocations
+---
+
 # Managing Your Allocations
 
 Allocations require management. This can include balance checks, resource allocation, requesting more time, or other actions. Your allocation information is available via the [MyALCF user portal](https://my.alcf.anl.gov) or through the command line interface.

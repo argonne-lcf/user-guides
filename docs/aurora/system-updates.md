@@ -1,3 +1,8 @@
+---
+tags:
+  - System Updates
+---
+
 # Aurora System Updates
 
 This page is a reverse-chronological log of changes to Aurora's system software, firmware, and programming environment.
