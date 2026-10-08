@@ -7,17 +7,22 @@ tags:
 
 ## Overview
 
+<!-- --8<-- [start:overview] -->
 nekRS is a fast and scalable computational fluid dynamics (CFD) software package targeting massively parallel computers. It is based on the high-order spectral element method and is capable of solving incompressible and low Mach-number fluid flow problems. 
 nekRS uses the [OCCA](https://github.com/libocca/occa) portability layer for offloading compute kernels to GPU devices.
+<!-- --8<-- [end:overview] -->
 
-For details about the code and its usage, see the [nekRS](https://github.com/Nek5000/nekRS/blob/master/README.md) home page. This page provides information specific to running on Polaris at the ALCF.
+For details about the code and its usage, see the [nekRS](https://github.com/Nek5000/nekRS/blob/master/README.md) home page. This page provides information specific to running on Polaris at the ALCF. For Aurora, see [nekRS on Aurora](../../../aurora/applications-and-libraries/applications/nekrs.md).
 
 ## Using nekRS at ALCF
 
+<!-- --8<-- [start:using] -->
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). For questions, contact us at <support@alcf.anl.gov>.
+<!-- --8<-- [end:using] -->
 
 ## How to Obtain the Code
 
+<!-- --8<-- [start:obtain] -->
 nekRS is an open-source code developed in the [Nek5000/nekRS](https://github.com/Nek5000/nekRS) GitHub repository. ALCF maintains a version of nekRS with build scripts for ALCF systems in the [argonne-cps/nekRS_alcf](https://github.com/argonne-cps/nekRS_alcf) repository, and the instructions on this page are based on the `v26` branch of that repository:
 
 ```bash linenums="1"
@@ -27,6 +32,7 @@ git checkout v26
 ```
 
 We encourage users to run their simulations with the `v26` branch on both Polaris and Aurora. If you have difficulty using it or need a different version of nekRS, contact <support@alcf.anl.gov>.
+<!-- --8<-- [end:obtain] -->
 
 ## Building on Polaris
 
@@ -36,11 +42,13 @@ nekRS uses CMake to build and install the software package. The `BuildMe.Polaris
 ./BuildMe.Polaris
 ```
 
+<!-- --8<-- [start:build] -->
 The script builds in a directory named `RBK_built.on.<date>` inside the repository (with a symbolic link `current` pointing to it) and installs nekRS to `.local/nekrs` in the directory **one level above** the repository. For example, if the repository was cloned into `$HOME/nekRS_alcf`, nekRS is installed in `$HOME/.local/nekrs`. Edit `NEKRS_HOME` in the script to install elsewhere.
 
 !!! tip "Build on a compute node"
 
     The build (hypre, OCCA, Nek5000, and nekRS) is sizable. The per-user limits on the login nodes can cause the build to fail or run slowly, so we recommend building within an interactive job on a compute node, for example in the `debug` queue.
+<!-- --8<-- [end:build] -->
 
 The script uses the following modules, which must also be loaded when running nekRS (see the job script below):
 
@@ -58,16 +66,21 @@ The `cuda/13.0` module must be loaded before `craype-accel-nvidia80`; the latter
 
 If the configuration step was successful, the `Summary` section of the CMake output shows the Cray compiler wrappers and `Default backend : CUDA`. After installation, set up the environment:
 
+<!-- --8<-- [start:env] -->
 ```bash linenums="1"
 export NEKRS_HOME=/path/to/installation/directory
 export PATH=$NEKRS_HOME/bin:$PATH
 ```
 
 Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `source $HOME/.bashrc` in the current terminal window.
+<!-- --8<-- [end:env] -->
 
 !!! warning "Rebuild after system software upgrades"
 
-    nekRS records the compilers and flags used at build time in `$NEKRS_HOME/nekrs.conf` and reuses them to compile kernels and case files at run time. Installations built before the August 2026 Polaris upgrade (which removed `gcc-native/13.2` and older Cray PE releases) will not work and must be rebuilt from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+    <!-- --8<-- [start:conf] -->
+    nekRS records the compilers and flags used at build time in `$NEKRS_HOME/nekrs.conf` and reuses them to compile kernels and case files at run time.
+    <!-- --8<-- [end:conf] -->
+    Installations built before the August 2026 Polaris upgrade (which removed `gcc-native/13.2` and older Cray PE releases) will not work and must be rebuilt from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
 
 ## Running Jobs on Polaris
 
@@ -212,9 +225,13 @@ qsub -q $QUEUE $SFILE
 ```
 
 ## Just-in-time (JIT) compilation
+<!-- --8<-- [start:jit] -->
 nekRS uses the OCCA library to translate, compile, and run GPU-targeted functions and kernels. Some useful notes on the cached object files can be found [here](https://nekrsdoc.readthedocs.io/en/latest/just_in_time_compilation.html).
 
 The compiled kernels and case (`.udf`, `.usr`) objects are cached in the `.cache` directory of the case directory by default. After rebuilding or reinstalling nekRS, delete `.cache` so that stale objects built with the previous installation are not reused.
+<!-- --8<-- [end:jit] -->
 
 ## Discussion Group
+<!-- --8<-- [start:discussion] -->
 Users can visit the [GitHub Discussions](https://github.com/Nek5000/nekRS/discussions) page to seek help, find solutions, share ideas, and follow discussions on several application-specific topics.
+<!-- --8<-- [end:discussion] -->
