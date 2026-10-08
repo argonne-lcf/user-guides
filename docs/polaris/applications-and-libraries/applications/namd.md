@@ -1,3 +1,8 @@
+---
+tags:
+  - Molecular Dynamics
+---
+
 # NAMD on Polaris
 
 ## What is NAMD?
@@ -14,7 +19,7 @@ Prebuilt releases of NAMD binaries can be found in the directory `/soft/applicat
 
 * `Linux-x86_64-netlrts-smp-CUDA` supports GPU-resident runs. 
 * `Linux-x86_64-ofi-smp-CUDA` supports general GPU-offload runs.
-* `Linux-x86_64-ofi-smp-CUDA-memopt` supports memory-optimized input files and parallel I/O for the largest simulations (~100 million atoms or more).
+* `Linux-x86_64-ofi-smp-CUDA-memopt` supports memory-optimized input files and parallel I/O for the largest simulations (approximately 100 million atoms or more).
 
 NAMD supports two types of parallelized simulations: single instance strong-scaling and multiple-copy weak-scaling (i.e., replica exchange). For more functionality details, please visit the NAMD [website](https://tcbg.illinois.edu/Research/namd).
 
@@ -38,7 +43,7 @@ cd ${PBS_O_WORKDIR}
 mpiexec -n 1 --ppn 1 --depth=16 --cpu-bind=depth $EXE +p 15 +devices 3,2,1,0 stmv.namd > stmv.output
 ```
 
-Measured performance for a ~1,000,000 atom system generated with the above submission script run under NPT conditions and a timestep of 2 fs was `16 CPUs 0.00381933 s/step 45.2435 ns/day`.
+Measured performance for an approximately 1,000,000 atom system generated with the above submission script run under NPT conditions and a timestep of 2 fs was `16 CPUs 0.00381933 s/step 45.2435 ns/day`.
 
 Note, the GPU-resident version only runs on a single node currently, and some important functions remain to be implemented with it. A user is strongly encouraged to ensure the updated GPU-resident version fully supports the planned simulation in advance.
 
@@ -85,7 +90,7 @@ cd ${PBS_O_WORKDIR}
 aprun -N 4 -n 256 --cc core --cpus-per-pe 8 $EXE +p 6 +setcpuaffinity +devices 3,2,1,0 stmv.namd > stmv_64nodes.output
 ```
 
-Measured performance for a ~1,000,000 atom system generated with the above submission script run under NPT conditions and a timestep of 2 fs was `1536 CPUs 0.00151797 s/step 113.724 ns/day`.
+Measured performance for an approximately 1,000,000 atom system generated with the above submission script run under NPT conditions and a timestep of 2 fs was `1536 CPUs 0.00151797 s/step 113.724 ns/day`.
 
 ### Multiple-copy GPU-offload run
 

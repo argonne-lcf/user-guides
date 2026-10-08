@@ -1,3 +1,7 @@
+---
+description: "Tools you install and run yourself on ALCF systems: Python environments, AI agents, and VS Code, plus login node limits."
+---
+
 # Development Environment & AI
 
 The tools on these pages are ones you install and run yourself, in your own space, on ALCF systems. ALCF provides best-practice guidance for them, but cannot provide support: if you have trouble setting up or running one of these tools, ALCF Support cannot assist.

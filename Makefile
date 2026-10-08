@@ -29,6 +29,12 @@ build-docs:
 	@echo "Validating inbound links..."
 	python3 scripts/validate_inbound_links.py
 
+# Report pages without a description: front matter, or with one over 120
+# characters. Warning only; run the script with --list-missing to list the pages.
+.PHONY: check-descriptions
+check-descriptions:
+	python3 scripts/check_descriptions.py
+
 .PHONY: clean
 clean:
 	@echo "Cleaning up generated files..."

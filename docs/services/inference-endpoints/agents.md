@@ -1,3 +1,8 @@
+---
+tags:
+  - AI Agents
+---
+
 # Agents
 
 If your agent harness supports *external endpoint providers*, you can configure your agent to utilize the ALCF Inference Service endpoints as a backend.

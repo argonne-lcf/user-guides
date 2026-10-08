@@ -1,6 +1,6 @@
 # Running Jobs on Crux
 
-## Queues
+## Queues: debug, workq-route, preemptable, demand {#queues}
 
 *******
 

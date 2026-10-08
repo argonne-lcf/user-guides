@@ -1,3 +1,20 @@
+---
+tags:
+  - Known Issues
+keywords:
+  - why is my job not running
+  - job not running
+  - job failed
+  - job pending
+  - job queued
+  - job stuck
+  - job held
+  - job disappeared
+  - job array never runs
+search:
+  boost: 3
+---
+
 # Common PBS Issues & Troubleshooting
 
 This page contains common PBS errors and issues that users may find useful in determining why their job is not yet running or has failed. 

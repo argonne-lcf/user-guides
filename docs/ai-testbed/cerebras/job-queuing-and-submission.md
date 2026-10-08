@@ -1,6 +1,11 @@
-# Job Queuing and Submission
+---
+tags:
+  - Job Submission
+---
 
-The CS-3 cluster has its own **Kubernetes-based** system for job submission and queuing.<br>
+# Job Submission with csctl
+
+The CS-3 cluster has its own **Kubernetes-based** system for job submission and queuing.
 
 Jobs are started automatically through the **Python** framework in modelzoo.common.pytorch.run_utils
 Continuous job status for a job is output to stdout/stderr; redirect the output, or consider using a persistent session started with **screen**, or **tmux**, or both.
@@ -53,7 +58,8 @@ Some state details for each node in the cluster can be listed as shown:
 csctl get cluster
 ```
 
-See `csctl -h` for more options.<br>
+See `csctl -h` for more options.
+
 Add `-h` to a command for help for that command, e.g. `csctl get -h` or `csctl cancel -h`. 
 
 ```console

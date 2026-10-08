@@ -1,5 +1,7 @@
 ---
-description: "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes."
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
+tags:
+  - LLMs
 ---
 
 # Inference with vLLM on Aurora
@@ -24,9 +26,7 @@ Then, you can import `vllm` as follows
 `CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
 !!! tip
-    Do not forget to set the proxies from the compute node, if performing direct download on the job.
-
-[Set the Proxies](../../getting-started-on-aurora.md#proxy)
+    Do not forget to [set the proxies](../../getting-started-on-aurora.md#proxy) on the compute node if you download directly from the job.
 
 ## Access Model Weights
 
@@ -136,8 +136,6 @@ This memory can be controlled with a number of parameters which can be passed to
 
 The main knob to control how much memory vLLM uses is `--gpu-memory-utilization`. In most cases, a value of 0.9 (i.e., 90% of the total GPU memory) is sufficient to leave enough spare memory for the runtime and other overhead (usually only a few GB).
 
-<br>
-
 The memory used by the weights can be estimated simply by multiplying the number of parameters of the model by the number of bytes used by the data type selected. 
 For `bfloat16`, which is the recommended data type on Aurora, the memory used by the weights in GB is estimated as 
 
@@ -152,8 +150,6 @@ $$
 $$
 
 where $\text{num layers}$, $\text{num kv heads}$ and $\text{head_dim}$ are properties of the model, and $\text{bytes per element}$ is determined by setting `--dtype` or `--kv-cache-dtype` to control the KV cache data type specifically. 
-
-<br>
 
 Then, the total KV cache memory needed for a full sequence is 
 
@@ -178,8 +174,6 @@ With `kv_memory_per_seq` is computed using the maximum context length of the mod
 window. 
 In practice, vLLM allocates KV cache blocks on demand as sequences grow, so many
 more short requests can be served concurrently. Concurrency can be capped by `--max-num-seqs` regardless of how much KV cache memory is free.
-
-<br>
 
 If your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
 

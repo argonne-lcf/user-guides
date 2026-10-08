@@ -1,3 +1,7 @@
+---
+description: "ALCF services: inference endpoints, the IRI API, JupyterHub, continuous integration, and Globus Compute."
+---
+
 # ALCF Services
 
 Below is a list of some of the services ALCF offers.

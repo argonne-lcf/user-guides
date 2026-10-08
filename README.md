@@ -72,10 +72,33 @@ make build-docs
 
 The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
 
+To test search changes, run `node scripts/search_test.js "query"` against a running `mkdocs serve`.
+
 ### Writing math
 
 LaTeX math renders via MathJax: inline `$...$` or `\(...\)`, blocks `$$...$$` or `\[...\]`.
 Keep shell commands in backticks or code fences. A prose line with two bare `$` (e.g. `$MODEL_DIR ... /home/$(whoami)`) can be misparsed as math; escape with `\$` if needed.
+
+### Page metadata (front matter)
+
+A page can start with a YAML front-matter block:
+
+```yaml
+---
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
+tags:
+  - LLMs
+keywords:
+  - huggingface
+---
+```
+
+* `description:` one sentence, 120 characters max. Shown in link previews and search results. `make check-descriptions` lists pages without one.
+* `tags:` only topics the page is about. Must be listed in `tags_allowed` in `mkdocs.yml`. Search weights tags heavily, so don't over-tag.
+* `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page.
+* `search:` with `boost: 2` to rank a page higher, or `exclude: true` to hide it from search.
+* Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
+* Commit front-matter-only changes separately from content edits, so they can be excluded from each page's "Last Updated" date later (#1139).
 
 ### Working on documentation
 

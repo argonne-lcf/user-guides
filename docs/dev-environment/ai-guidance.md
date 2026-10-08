@@ -1,3 +1,8 @@
+---
+tags:
+  - AI Agents
+---
+
 # AI Guidance
 
 ## AI Agents are allowed, but ALCF cannot provide support

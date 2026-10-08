@@ -25,7 +25,7 @@ Create a configuration named "Polaris", and set it up like this example, replaci
 ![Configuration example for polaris](images/ddt_configure_polaris.png "Configuration example for polaris")
 
 
-You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time password:
+You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time passcode:
 
 ![Example DDT remote connection login prompt](images/ddt_login_prompt.png "Example DDT remote connection login prompt")
 

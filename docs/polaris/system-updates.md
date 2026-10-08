@@ -1,3 +1,12 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Polaris System Updates
 
 <!-- ## 2026-MM-DD: `conda/2026-10-01` becomes the default module -->

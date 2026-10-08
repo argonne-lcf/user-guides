@@ -32,3 +32,5 @@ jobs:
           restore-keys: mkdocs-plugins-
       - name: Build docs with --strict
         run: make build-docs
+      - name: Report page descriptions (warning only)
+        run: make check-descriptions

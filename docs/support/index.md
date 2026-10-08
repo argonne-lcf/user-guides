@@ -1,3 +1,7 @@
+---
+description: "How to get help from ALCF: support tickets, mailing lists, office hours, the ALCF Users Slack, and software requests."
+---
+
 # User Support
 
 The ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays. 

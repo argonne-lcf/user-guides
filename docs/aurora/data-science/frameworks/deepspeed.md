@@ -1,3 +1,9 @@
+---
+tags:
+  - PyTorch
+  - Distributed Training
+---
+
 # DeepSpeed
 
 ## Environment Setup

@@ -1,3 +1,8 @@
+---
+tags:
+  - Classical ML
+---
+
 # scikit-learn on Aurora
 
 [scikit-learn](https://scikit-learn.org/stable/) is a popular open-source Python library for machine learning. It has wide coverage of machine learning algorithms (other than neural networks), such as k-means clustering and random forests.

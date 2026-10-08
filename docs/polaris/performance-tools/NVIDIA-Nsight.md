@@ -1,3 +1,12 @@
+---
+keywords:
+  - nsys
+  - ncu
+  - nsight systems
+  - nsight compute
+  - nvidia profiler
+---
+
 # NVIDIA Nsight tools
 
 ## References

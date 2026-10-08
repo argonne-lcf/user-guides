@@ -1,6 +1,11 @@
+---
+search:
+  boost: 2
+---
+
 # Running Jobs on Polaris
 
-## Queues
+## Queues: debug, debug-scaling, prod, preemptable, demand, capacity {#queues}
 
 *******
 

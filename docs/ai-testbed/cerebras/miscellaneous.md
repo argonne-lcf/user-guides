@@ -2,12 +2,14 @@
 
 ## Porting applications to the CS-3
 
-Cerebras documentation for porting code to run on a Cerebras CS-3 system:<br>
+Cerebras documentation for porting code to run on a Cerebras CS-3 system:
+
 [Port Pytorch Models to Cerebras](https://training-docs.cerebras.ai/rel-2.10.0/model-zoo/migration/porting-pytorch-models-to-cerebras#port-pytorch-models-to-cerebras)
 
 ## Finetuning a model using CS-3s
 
-The Cerebras tutorial for finetuning a model:<br>
+The Cerebras tutorial for finetuning a model:
+
 [Fine-Tune Your First Model](https://training-docs.cerebras.ai/rel-2.10.0/getting-started/fine-tune-your-first-model)
 
 The tutorial covers how to: 

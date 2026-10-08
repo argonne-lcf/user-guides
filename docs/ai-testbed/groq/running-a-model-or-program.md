@@ -1,6 +1,7 @@
 # Running a Model/Program
 
-Jobs are launched from any GroqRack node. <br>
+Jobs are launched from any GroqRack node.
+
 If you expect a loss of an internet connection for any reason, for long-running jobs we suggest logging into a specific node and using either **screen** or **tmux** to create persistent command line sessions.  For details use:
 
 ```bash
@@ -29,8 +30,9 @@ cd groqflow
 ### GroqFlow conda environments
 
 Create a groqflow conda environment, and activate it.
-Follow the instructions in the [Virtual Environments](virtual-environments.md) <br> section.
-Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)<br>
+Follow the instructions in the [Virtual Environments](virtual-environments.md) section.
+Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)
+
 The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps.
 
 ### Running a groqflow sample

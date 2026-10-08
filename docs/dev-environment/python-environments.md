@@ -1,3 +1,8 @@
+---
+tags:
+  - Python
+---
+
 # Python Environments
 
 This page covers best practices for creating [Python environments](#creating-environments) and for [running Python command-line tools](#running-and-installing-tools) without managing an environment for them. You can use whichever package manager you prefer.

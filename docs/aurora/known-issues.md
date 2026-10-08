@@ -1,6 +1,11 @@
+---
+tags:
+  - Known Issues
+---
+
 # Early User Notes and Known Issues
 
-_Last Updated: 2025-09-05_
+_Last Updated: 2026-10-07_
 
 ## Early User Notes
 
@@ -25,11 +30,9 @@ This is the primary and most stable storage filesystem for now. It is still poss
 
 #### DAOS (Object Store)
 
-DAOS is a scratch file system. Please note that data may be removed or unavailable at any time.
+DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md).  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
-The initial configuration of DAOS has a smaller number of nodes, resulting in smaller project allocations. We expect DAOS to grow over the year, and when that happens, changes will be announced/posted in user docs. Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need the allocation size to be increased.
-
-The performance of DAOS has been impressive, but we continue to experience crashes with large jobs, including loss of data. Projects may use it, but should not consider it stable or safe for long-term storage.
+DAOS is currently in its production configuration with 800 out of 1024 servers in use with approximately 200 PB of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
 
 #### Grand/Eagle
 
@@ -230,6 +233,19 @@ To increase the chances that a large job does not terminate due to a node failur
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
 
+
+### Known Issues on Other Pages
+
+Some pages keep known issues for a specific tool or library in their own section:
+
+- [The `frameworks` module](data-science/frameworks/index.md#known-issues)
+- [DAOS](data-management/daos/daos-overview.md#known-issues-and-workarounds)
+- [Intel Sanitizer](debugging/Intel_sanitizer.md#known-issues-and-workarounds)
+- [Parsl](workflows/parsl.md#known-issues)
+- [VASP](applications-and-libraries/applications/vasp.md#known-issues)
+- [VTune](performance-tools/vtune.md#known-issues-and-workarounds)
+- [JupyterHub](../services/jupyter-hub.md#known-issues)
+- [Visual Studio Code with Remote SSH](../dev-environment/vscode.md#known-issues)
 
 ## Aurora Bug Tracking repository and table
 
