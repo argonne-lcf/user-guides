@@ -64,8 +64,8 @@
 **/data-science/**/megatron-deepspeed.md @saforem2
 **/data-science/**/gpt-neox.md           @saforem2
 **/data-science/**/jax.md                @khossain4337
-**/data-science/**/scikit-learn.md       @BethanyL
-**onedal.md                              @BethanyL
+**/data-science/**/scikit-learn.md       @BethanyL @felker
+**onedal.md                              @BethanyL @felker
 **/data-science/**/dask.md               @FilippoSimini
 **/data-science/**/pyg.md                @FilippoSimini
 **/data-science/**/gpytorch.md           @FilippoSimini
