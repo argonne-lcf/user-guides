@@ -42,7 +42,7 @@ DAOS_POOL=<YOUR_PROJECT_NAME>
 daos pool query ${DAOS_POOL}
 ```
 
-```output title="Example output:"
+``` { .output .no-copy title="Example output:" }
 daos pool query alcf-ci-cd-tests
 Pool 383810e7-28b3-490d-8363-b5866908e8bb, ntarget=25600, disabled=0, leader=425, version=545, state=Ready
 Pool health info:
@@ -388,6 +388,45 @@ source bin/activate
 module load darshan-util
 darshan-parser <binary log file name> > out.txt
 ```
+
+<!--
+## Cluster Size
+
+DAOS cluster size is the number of available DAOS servers. While we are working toward bringing up all 1024 DAOS servers for users, different numbers of DAOS nodes may be up at any given time. Please check with support or run an IOR test to estimate the current number of DAOS servers available. The bandwidth in the last column below is theoretical peak bandwidth.
+
+**Expected Bandwidth** Expected number of DAOS servers and its approximate expected bandwidth
+
+| Nodes | Percentage | Throughput |
+| :---: | :--------: | :--------: |
+|  20  |     2%     |   1 TB/s   |
+|  128  |   12.50%   |   5 TB/s   |
+|  600  |    60%    |  10 TB/s  |
+|  800  |    78%    |  20 TB/s  |
+| 1024 |    100%    |  30 TB/s  |
+
+The size of your current DAOS cluster can be found using the following formula:
+
+$$
+\text{DAOS cluster size} = \frac{\texttt{ntarget}}{\texttt{targets_per_node}}
+$$
+
+The value of `ntarget` comes from the output of:
+```bash linenums="1"
+daos pool query ${DAOS_POOL}
+```
+and the value of `targets_per_node=32` is fixed given the node hardware configuration of our filesystem.
+
+An example:
+```console
+> daos pool query hacc
+Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
+```
+So the DAOS cluster size is:
+
+$$
+\frac{4096\ \text{targets}}{32\ \text{targets per node}} = 128\ \text{DAOS servers}
+$$
+-->
 
 ## DAOS Hardware and Aurora Architecture
 
