@@ -147,14 +147,28 @@ markdown_extensions:
   - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
-  # Instant previews: hover cards only for links to these reference pages.
-  # Don't enable the navigation.instant.preview theme feature: it previews
-  # every internal link, regardless of these targets.
+  # Instant previews: hover cards only for links to these reference pages
+  # (short pages, or pages usually linked at a section such as the queue
+  # tables). Patterns are globs; "*" also matches "/". Don't enable the
+  # navigation.instant.preview theme feature: it previews every internal
+  # link, regardless of these targets.
   - material.extensions.preview:
+      sources:
+        exclude:
+          - index.md  # no previews on the home page tiles
       targets:
         include:
           - acronyms.md
           - support/ticket.md
+          - support/get-help/*.md
+          - policies/*
+          - dev-environment/python-environments.md
+          - data-management/filesystem-and-storage/index.md
+          - data-management/data-transfer/using-globus.md
+          - aurora/data-management/lustre/flare.md
+          - account-project-management/MyALCF.md
+          - aurora/running-jobs-aurora.md
+          - polaris/running-jobs/index.md
 
   - toc:
       permalink: true
