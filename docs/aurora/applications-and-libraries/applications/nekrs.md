@@ -1,3 +1,9 @@
+---
+description: "Build the nekRS spectral element CFD code with its SYCL backend on Aurora and run it with one MPI rank per GPU tile."
+tags:
+  - CFD
+---
+
 # nekRS
 
 ## Overview
