@@ -207,6 +207,53 @@ plugins:
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
         - p.typekit.net/*
+  # Applies each folder's .meta.yml front matter to every page in that folder
+  # and below (lists are appended, page values win for scalars). Runs before
+  # social and tags, which read the merged front matter.
+  - meta
+  # Tags come mostly from folder .meta.yml files. tags_allowed fails the build on
+  # any other tag (typos, ad hoc tags); search weights tags very heavily, so keep
+  # the vocabulary small and add to it deliberately.
+  - tags:
+      tags_allowed:
+        - Aurora
+        - Polaris
+        - Sophia
+        - Crux
+        - AI Testbed
+        - Cerebras
+        - Graphcore
+        - Groq
+        - SambaNova
+        - Compiling
+        - Containers
+        - Data Science
+        - Debugging
+        - Inference
+        - Performance
+        - Programming Models
+        - Visualization
+        - Workflows
+        - Data Management
+        - Job Submission
+        - Accounts
+        - Policies
+        - Services
+        - Support
+        - Python
+        - PyTorch
+        - TensorFlow
+        - OpenMP
+        - SYCL
+        - Getting Started
+        - LLMs
+        - Distributed Training
+        - File Systems
+        - Globus
+        - File Transfer
+        - Authentication
+        - Kokkos
+        - Molecular Dynamics
   # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
   # the system Cairo library, so like optimize it runs only in CI (CI=true
   # there). Card design (logo, colors, font) is in layouts/alcf.yml.
