@@ -3,6 +3,8 @@ description: "Install VS Code and the Remote - SSH extension, connect to ALCF sy
 tags:
   - Compiling
   - Debugging
+keywords:
+  - vscode
 ---
 
 # Using Visual Studio Code with Remote SSH
