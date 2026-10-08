@@ -1,3 +1,8 @@
+---
+tags:
+  - Getting Started
+---
+
 # Starting Your ALCF Award
 
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
@@ -126,7 +131,7 @@ We have an allocation management tool called sbank, and below are a few helpful 
 You can use the following command to check your project balance on Polaris:
 
 ```bash
-sbank-list-allocations -p <Project Shortname> -r <system name>
+sbank-list-allocations -p <project> -r <system name>
 ```
 
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).

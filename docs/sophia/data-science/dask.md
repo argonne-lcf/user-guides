@@ -1,3 +1,8 @@
+---
+tags:
+  - Classical ML
+---
+
 # Dask
 
 [Dask](https://www.dask.org/) is a Python library for parallel and distributed computing. A Dask cluster is composed of one scheduler that coordinates the job of many workers, which can have access to CPU or GPU resources. 
@@ -18,7 +23,7 @@ Here we show how to install RAPIDS and Dask in a conda environment on Sophia and
 1. Start an interactive session. Follow the instructions specified [here](https://docs.alcf.anl.gov/sophia/queueing-and-running-jobs/running-jobs/) to start an interactive job on Sophia. 
 In the example command below we request 2 GPUs:
    ```bash
-   qsub -I -l select=2 -l walltime=HH:MM:SS -q by-gpu -A <myProjectName> -l filesystems=home:eagle
+   qsub -I -l select=2 -l walltime=HH:MM:SS -q by-gpu -A <project> -l filesystems=home:eagle
    ```
 
 1. Load modules

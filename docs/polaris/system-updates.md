@@ -1,3 +1,12 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Polaris System Updates
 
 <!-- ## 2026-MM-DD: `conda/2026-10-01` becomes the default module -->
@@ -165,9 +174,9 @@ In addition to the system upgrades, several changes have been made to the user s
 
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the upgraded system stack and are no longer available for use.
 
-#### Datascience Anaconda Module Updates
+#### Datascience conda Module Updates
 
-We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
+We have updated the datascience conda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
 
 To use the new environment, type:
 ```bash linenums="1"

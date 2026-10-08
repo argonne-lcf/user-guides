@@ -16,7 +16,7 @@ For more resources on SmartSim, follow the links below:
 * [Documentation](https://www.craylabs.org/docs/overview.html)
 * [Zoo of examples](https://github.com/CrayLabs/SmartSim-Zoo)
 * [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
-* [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
+* [nekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
 
 ## Installation
 

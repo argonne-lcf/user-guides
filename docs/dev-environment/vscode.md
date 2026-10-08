@@ -1,13 +1,22 @@
+---
+description: "Install VS Code and the Remote - SSH extension, connect to ALCF systems, and build and debug code on the remote host."
+tags:
+  - Compiling
+  - Debugging
+keywords:
+  - vscode
+---
+
 # Using Visual Studio Code with Remote SSH
 
 ## Overview
 
 This document explains how to install Visual Studio Code (VS Code) on your local machine, add the Remote - SSH extension, configure SSH for Windows, macOS, and Linux, and compile a simple `helloworld.cpp` program on a **remote ALCF server**. The compilation and execution happen on the remote Linux system; your local machine is only used to run [VS Code and initiate the SSH connection](https://code.visualstudio.com/docs/remote/ssh).
 
-## VS Code is allowed, but ALCF cannot provide support
+## Support
 
-This document is to provide guidance when using VS Code. 
-If you have an issue with VS Code that is not covered below, then we suggest reaching out to VS Code support.
+ALCF cannot provide support for VS Code, and this page is guidance only.
+If you have an issue that is not covered below, reach out to [VS Code support](https://code.visualstudio.com/support).
 
 ## Installing Visual Studio Code (local context)
 
@@ -30,7 +39,7 @@ If you have an issue with VS Code that is not covered below, then we suggest rea
 By default, VS Code is installed under:
 
 ```text
-C:\Users\<Username>\AppData\Local\Programs\Microsoft VS Code
+C:\Users\<username>\AppData\Local\Programs\Microsoft VS Code
 ```
 
 on [Windows](https://code.visualstudio.com/docs/setup/windows).
@@ -81,7 +90,7 @@ You can later edit this file manually if you need to change options.
 
 Here is a minimalist example entry for both `Polaris` and `Aurora`:
 
-```bash
+```bash linenums="1" title="~/.ssh/config"
 Host *
     ControlMaster auto
     ControlPath ~/.ssh/master-%r@%h:%p
@@ -151,7 +160,7 @@ To configure the compilers on the remote host:
    ```bash
    module load PrgEnv-gnu
    # or:
-   module load PrgEnv-nvhpc # on Polaris
+   module load PrgEnv-nvidia # on Polaris (default)
    # or:
    module load oneapi # on Aurora
    ```
@@ -162,7 +171,7 @@ To configure the compilers on the remote host:
 
 A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both module-provided GCC and a system GCC):
 
-```json linenums="1"
+```json linenums="1" title=".vscode/tasks.json"
 {
   "version": "2.0.0",
   "tasks": [
@@ -205,7 +214,7 @@ The following example assumes that you have already connected to a remote ALCF m
 
 In the Explorer (remote window), create a new file named `helloworld.cpp` with:
 
-```cpp
+```cpp linenums="1" title="helloworld.cpp"
 #include <iostream>
 
 int main() {
@@ -222,7 +231,7 @@ Open a terminal in VS Code (this terminal runs on the remote Linux server), then
 # Example: load GCC
 module load PrgEnv-gnu
 # or:
-module load PrgEnv-nvhpc # on Polaris
+module load PrgEnv-nvidia # on Polaris (default)
 # or:
 module load oneapi # on Aurora
 ```

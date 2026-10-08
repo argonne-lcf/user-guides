@@ -1,3 +1,8 @@
+---
+tags:
+  - Getting Started
+---
+
 # Getting Started with Cerebras CSL
 
 Cerebras CSL (Cerebras System Language) is a low-level kernel programming language designed for the Cerebras system. It enables users to write code that runs on individual Processing Elements (PEs) and to define the placement of programs and the routing of data on the Wafer-Scale Engine (WSE).
@@ -89,7 +94,7 @@ Example script to forward port 8000 to localhost 8008:
 ```bash
 export SDK_PORT=8000
 export LOCAL_PORT=8008
-export ALCFUserID=<your alcf username>
+export ALCFUserID=<username>
 ssh -L $LOCAL_PORT:localhost:$LOCAL_PORT $ALCFUserID@cerebras.alcf.anl.gov -t ssh -L $LOCAL_PORT:localhost:$SDK_PORT -N cer-anl-net001-us-sr01
 ```
 

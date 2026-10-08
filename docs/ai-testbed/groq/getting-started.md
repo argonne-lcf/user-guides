@@ -1,3 +1,9 @@
+---
+description: "Allocations, accounts, and logging in to the GroqRack login and compute nodes on the ALCF AI Testbed."
+tags:
+  - Getting Started
+---
+
 # Getting Started
 
 ## Allocations
@@ -20,7 +26,7 @@ The second, optional step is to ssh from a login node to a GroqRack node. Jobs m
 
 ### Log in to a login node
 
-Connect to a groq login node, editing this command line to use your ALCF user id. You will be prompted for a password; use the 8-digit code provided by  MobilePASS+. 
+Connect to a groq login node, editing this command line to use your ALCF user id. You will be prompted for a password; use the 8-digit passcode provided by MobilePASS+. 
 ```bash
 ssh ALCFUserID@groq.ai.alcf.anl.gov
 ```

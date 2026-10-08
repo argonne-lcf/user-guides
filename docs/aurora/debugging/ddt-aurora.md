@@ -32,7 +32,7 @@ aurora-uan-0011> which ddt
 aurora-uan-0011>
 ```
 
-You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time password:
+You may want to test the configuration. To do that, click the Test Remote Launch button. If you see a login prompt like the following example, use your usual ALCF one-time passcode:
 
 ![Example DDT remote connection login prompt](images/ddt_login_prompt.png "Example DDT remote connection login prompt")
 
@@ -113,5 +113,5 @@ From here, you should be able to control starting and stopping processes, ranks,
 You may want to install and run a local version of Forge from the [Linaro website](https://www.linaroforge.com/download-documentation/) on Aurora. Once you install it, you can use the following license file to run the local version with the Forge license on Aurora:
 
 ```bash 
-FORGE_LICENSE_FILE=/pe/licenses/arm_forge/Licence <path_to_the_local_version>/ddt --connect <other DDT parameters> 
+FORGE_LICENSE_FILE=/pe/licenses/arm_forge/Licence <path>/ddt --connect <other DDT parameters> 
 ```

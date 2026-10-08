@@ -1,3 +1,9 @@
+---
+keywords:
+  - job array
+  - job arrays
+---
+
 # Example Job Scripts
 
 This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./index.md).
@@ -6,7 +12,7 @@ A simple example using a similar script on Polaris is available in the [Getting 
 
 !!! warning "Comments in PBS scripts"
 
-    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue_name>  #comment`).
+    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue>  #comment`).
 
 ## CPU MPI-OpenMP Examples
 
@@ -45,12 +51,12 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 5. `NTHREADS=2`: This is a helper variable to set the number of OpenMP threads per MPI rank.
 6. `NTOTRANKS=$(( NNODES * NRANKS_PER_NODE))`: This is a helper variable calculating the total number of MPI ranks spanning all nodes in the job.
 
-The following function in the `hello_affinity` source code is essential for uniquely identifying the CUDA device even when Multi-Instance GPU (MIG) is enabled, as each physical device will be partitioned into multiple virtual devices, each with unique UUIDs differentiated by the last few characters:
+The following function in the `hello_affinity` source code prints the UUID of each CUDA device, which uniquely identifies the GPU regardless of how `CUDA_VISIBLE_DEVICES` renumbers the devices:
 
 <!-- Snippets paths are relative to base location, by default the current working directory (relative to mkdocs.yml?). You can specify a new base location by setting the base_path. base_path is a list of paths. When evaluating paths, they are done in the order specified. The specified snippet will be evaluated against each base path and the first base path that yields a valid snippet will be returned. -->
 
 <!-- note: "===" is from older pymdownx.tabbed feature. TODO: consider replacing with code block title or pymdownx.blocks.tab -->
-=== "Identifying physical or virtual GPU by UUID"
+=== "Identifying GPU by UUID"
 ```c++ linenums="1"
 ---8<---
 GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25

@@ -107,7 +107,8 @@ through
 or
 [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 
-More information on creating custom Python environments can be found in our
+More information on creating custom Python environments can be found in
+[Python Environments](../dev-environment/python-environments.md) and the machine-specific
 documentation for [Polaris](../polaris/data-science/python.md).
 
 After activating the custom environment, the `ipykernel` package needs to be

@@ -1,3 +1,9 @@
+---
+description: "Log in to the Graphcore login node and then to a Graphcore node on the ALCF AI Testbed."
+tags:
+  - Getting Started
+---
+
 # Getting Started
 
 Connection to a Graphcore node is a two-step process.
@@ -10,7 +16,7 @@ The second step is to log in to a Graphcore node from the login node.
 
 ## Log in to Login Node
 
-Login to the Graphcore login node from your local machine using the below command. This uses the ALCF account ID that uses the password generated from the MobilePASS+.
+Login to the Graphcore login node from your local machine using the below command. This uses the ALCF account ID that uses the passcode generated from the MobilePASS+.
 
 > **Note**:  In the examples below, replace ALCFUserID with your ALCF user id.
 

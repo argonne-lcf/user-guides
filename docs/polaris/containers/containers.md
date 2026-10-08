@@ -1,3 +1,9 @@
+---
+keywords:
+  - Apptainer
+  - Singularity
+---
+
 # Containers on Polaris
 
 Polaris, equipped with NVIDIA A100 GPUs, leverages container-based workloads for seamless compatibility across NVIDIA systems. This guide provides detailed instructions on using containers on Polaris, including setup, container creation, large-scale execution, and troubleshooting common issues.
@@ -7,7 +13,7 @@ Polaris, equipped with NVIDIA A100 GPUs, leverages container-based workloads for
 Polaris uses Apptainer (formerly Singularity) for container management. Request a compute node as follows:
 
 ```bash
-qsub -I -A <PROJECT_NAME> -q debug -l select=1 -l walltime=01:00:00 -l filesystems=home:grand:eagle -l singularity_fakeroot=true # Debug queue for 1 hour
+qsub -I -A <project> -q debug -l select=1 -l walltime=01:00:00 -l filesystems=home:grand:eagle -l singularity_fakeroot=true # Debug queue for 1 hour
 ```
 
 After connecting to the compute node, load Apptainer and necessary modules:
@@ -63,7 +69,7 @@ Use the submission script detailed [here](https://github.com/argonne-lcf/contain
 #PBS -l place=scatter
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=home:eagle
-#PBS -A <project_name>
+#PBS -A <project>
 cd ${PBS_O_WORKDIR}
 
 ml use /soft/modulefiles

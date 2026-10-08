@@ -371,7 +371,7 @@ mpiexec ${MPI_ARGS} ${JULIA_EXE_PATH} --project pi.jl
     If every rank fails this way, the job is almost certainly running against the wrong depot. Look for this line in the module's output:
 
     ```
-    JULIA_DEPOT_PATH not set. Using default: /home/<user>/.julia
+    JULIA_DEPOT_PATH not set. Using default: /home/<username>/.julia
     ```
 
     Exporting `JULIA_DEPOT_PATH` in the submission script, as above, is the fix. Setting it only in `~/.bashrc` is not enough, because a batch job does not necessarily source it.

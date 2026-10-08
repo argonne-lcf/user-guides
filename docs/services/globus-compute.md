@@ -1,3 +1,8 @@
+---
+tags:
+  - Globus
+---
+
 # Globus Compute
 
 The [Globus Compute platform](https://www.globus.org/compute) allows users to execute workloads remotely by submitting functions to endpoints on ALCF systems.
@@ -25,7 +30,7 @@ To submit a simple function to these endpoints from a remote system install `glo
 ```bash
 pip install "globus-compute-sdk>=4.0"
 ```
-And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
+And then execute one of these example Python scripts (paste your project name in the account setting `<project>` before execution):
 
 === "Polaris"
 
@@ -39,7 +44,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -57,7 +62,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -128,7 +133,7 @@ f"{worker_init}; export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent
 ```
 The setting of `TMPDIR` is to fix a known issue with `parsl` running single-node jobs with the `MpiExecLauncher` on ALCF systems.
 
-If your `worker_init` activates a Python environment (e.g. with Conda, `venv`, `uv`), it is recommended you install your own copy of `globus-compute-endpoint` and `parsl` in your environment to avoid conflicts. 
+If your `worker_init` activates a Python environment, see [Python Environments](../dev-environment/python-environments.md). Install your own copy of `globus-compute-endpoint` and `parsl` in that environment to avoid conflicts.
 In your environment on the target machine (Polaris, Crux, etc.) install these python packages:
 ```bash
 pip install globus-compute-endpoint parsl==2026.02.23
@@ -174,7 +179,7 @@ Paste your project name in the account setting before execution.
     endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
@@ -201,7 +206,7 @@ Paste your project name in the account setting before execution.
     endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
@@ -299,7 +304,7 @@ def host_sleep_wrapper(sleeptime):
 
 # Paste endpoint id and project name
 endpoint_id = '<selected endpoint id>'
-account = '<your project name>'
+account = '<project>'
 
 serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 gce = Executor(endpoint_id=endpoint_id,
@@ -328,7 +333,7 @@ def query_host():
     return f"Hello from node {socket.gethostname()}"
 
 endpoint_id = "<selected endpoint id>"
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",
@@ -358,7 +363,7 @@ Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in
 
 ```python
 endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris endpoint
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",
@@ -370,7 +375,7 @@ user_endpoint_config = {"account": account,
                         "nodes_per_block": num_nodes,
                         }
 ```
-This `user_endpoing_config` process 4 functions concurrently per node, pinning each to a unique GPU and includes the optimal CPU-to-GPU binding on Polaris nodes.
+This `user_endpoint_config` process 4 functions concurrently per node, pinning each to a unique GPU and includes the optimal CPU-to-GPU binding on Polaris nodes.
 
 ## Troubleshooting
 
