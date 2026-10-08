@@ -1,3 +1,8 @@
+---
+tags:
+  - Job Submission
+---
+
 # Job Queuing and Submission
 
 The CS-3 cluster has its own **Kubernetes-based** system for job submission and queuing.
