@@ -184,6 +184,7 @@ extra:
 # Compresses the social plugin's card PNGs (optimize doesn't see them).
 hooks:
   - hooks/compress_social_cards.py
+  - hooks/tag_order.py
 
 plugins:
   - search:
