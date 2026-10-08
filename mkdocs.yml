@@ -185,6 +185,7 @@ extra:
 hooks:
   - hooks/compress_social_cards.py
   - hooks/tag_order.py
+  - hooks/search_tuning.py
 
 plugins:
   - search:
