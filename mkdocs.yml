@@ -410,7 +410,7 @@ nav:
         - Getting Started: ai-testbed/cerebras/getting-started.md
         - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
         - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-        - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
+        - Job Submission with csctl: ai-testbed/cerebras/job-queuing-and-submission.md
         - Example Programs: ai-testbed/cerebras/example-programs.md
         #- Performance Tools: ai-testbed/cerebras/performance-tools.md
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
@@ -422,7 +422,7 @@ nav:
         - Getting Started: ai-testbed/graphcore/getting-started.md
         - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
         - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
-        - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+        - Job Submission with Slurm: ai-testbed/graphcore/job-queuing-and-submission.md
         - Example Programs: ai-testbed/graphcore/example-programs.md
         - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
         - Documentation: ai-testbed/graphcore/documentation.md
@@ -432,7 +432,7 @@ nav:
         - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
         #- Example Programs: ai-testbed/groq/example-programs.md
         - Virtual Environments: ai-testbed/groq/virtual-environments.md
-        - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+        - Job Submission with PBS: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
         - Examples: ai-testbed/groq/examples.md
       - SambaNova Metis (SN40L):

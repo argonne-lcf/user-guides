@@ -3,7 +3,7 @@ tags:
   - Job Submission
 ---
 
-# Job Queueing and Submission
+# Job Submission with Slurm
 
 ## Introduction
 
