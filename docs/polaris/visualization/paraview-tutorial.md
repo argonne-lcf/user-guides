@@ -29,7 +29,7 @@ The data used for this tutorial is:
 - Generated using an integrated Nektar/LAMMPS simulation code
 - Courtesy of George Karniadakis and Leopold Grinberg of Brown University
 
-The data is available for download here (~27MB compressed, ~39MB uncompressed):  
+The data is available for download here (approximately 27MB compressed, 39MB uncompressed):  
 [Data set for ParaView Red Blood Cell Tutorial](https://web.cels.anl.gov/projects/alcf_vis_internal/MISC/BLOODFLOW_TUTORIAL_DATA.tar.gz)
 
 ## 1. Load Multi-component Dataset
@@ -196,11 +196,11 @@ Animations
 
 Glyphs are another way of visually representing data where the attributes of a graphical element are dictated by attributes of the data.
 
-All of the particles are displayed as red points in the graphics window. There are ~39K particles in this particular data set, which makes the display a bit cluttered. In order to both filter some of these out, and create 3D representations for them, let's apply a glyph filter to this data.
+All of the particles are displayed as red points in the graphics window. There are approximately 39K particles in this particular data set, which makes the display a bit cluttered. In order to both filter some of these out, and create 3D representations for them, let's apply a glyph filter to this data.
 
 Now let's add some of our other data back into the scene. Let's start with the particle data.
 
-All of the particles are displayed as red points in the graphics window. There are ~39K particles in this particular data set, which makes the display rather cluttered. In order to both filter some of these out, and create 3D representations for them, we will apply the glyph filter to this data.
+All of the particles are displayed as red points in the graphics window. There are approximately 39K particles in this particular data set, which makes the display rather cluttered. In order to both filter some of these out, and create 3D representations for them, we will apply the glyph filter to this data.
 
 **Note:** that the particles.000* is still visible.
 
