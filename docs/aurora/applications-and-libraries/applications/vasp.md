@@ -221,7 +221,7 @@ qsub script.sh
 ### Slow GPU-aware MPI with the default MPICH (October 2026)
 
 Since the September 2026 rollout, GPU runs with the default
-`mpich/prd/5.0.0.aurora_test.87e2045` are ~20-25x slower per SCF iteration
+`mpich/prd/5.0.0.aurora_test.87e2045` are approximately 20-25x slower per SCF iteration
 (`EDDAV`, MPI collectives dominating). Workaround (2026-10-08):
 `module swap mpich mpich/prd/5.0.0.aurora_test.51a9474` (upstream ZE IPC
 fix, no rebuild needed). See
