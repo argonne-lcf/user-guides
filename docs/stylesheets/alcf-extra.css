@@ -2155,7 +2155,8 @@ pre .normal a {
   margin-left: 0.5em;
   color: var(--md-default-fg-color--light);
   font-size: 0.8em;
-||||||| e597fa20
+}
+
 /* Links with instant previews (material.extensions.preview targets): one
    dotted underline instead of our solid underline plus Material's dotted
    border-bottom, so they still look different from other links. */
