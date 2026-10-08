@@ -1,6 +1,8 @@
 ---
 tags:
   - Job Submission
+search:
+  boost: 2
 ---
 
 
