@@ -189,7 +189,10 @@ hooks:
 plugins:
   - search:
       lang: en
-      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      # No camelCase split (Material's suggested (?!\b)(?=[A-Z][a-z])): it indexed
+      # "PyTorch" as "Py" + "Torch", so lowercase queries like "pytorch",
+      # "tensorflow", "jupyterhub", or "sambanova" missed those pages.
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;'
   - minify:
       minify_html: true
       # Keep attribute quotes: some link-preview crawlers (e.g. WhatsApp)
