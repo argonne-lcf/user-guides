@@ -188,7 +188,6 @@ cd ${PBS_O_WORKDIR}
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=12 # Number of MPI ranks to spawn per node
-NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
 NTHREADS=4 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
 
 NTOTRANKS=$(( NNODES * NRANKS ))
@@ -206,7 +205,7 @@ export AFFINITY=$(which gpu_tile_compact.sh)
 
 bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} ${CPU_BIND_SCHEME} --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
 
 ```
 
