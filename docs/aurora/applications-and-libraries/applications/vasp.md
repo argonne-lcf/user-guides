@@ -201,11 +201,11 @@ export OMP_STACKSIZE=1G
 
 
 export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-export AFFINITY=$(which gpu_tile_compact.sh)
+export GPU_BIND_SCHEME=$(which gpu_tile_compact.sh)
 
 bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} ${CPU_BIND_SCHEME} --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} ${CPU_BIND_SCHEME} --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G ${GPU_BIND_SCHEME} $bin
 
 ```
 
