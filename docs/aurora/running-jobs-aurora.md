@@ -10,7 +10,7 @@ search:
 
 ## Queues: debug, debug-scaling, prod, capacity, visualization {#queues}
 
-There are four production queues you can target in your qsub (`-q <queue name>`):
+There are four production queues you can target in your qsub (`-q <queue>`):
 
 | Queue Name    | Node Min | Node Max   | Time Min | Time Max         | Notes                                                                                                               |
 |---------------|----------|------------|----------|------------------|---------------------------------------------------------------------------------------------------------------------|
@@ -46,10 +46,10 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
-For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
+For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<project>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <your_ProjectName> -q debug -I
+qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <project> -q debug -I
 ```
 
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
@@ -62,13 +62,13 @@ Recommended PBSPro options follow.
 
 ```bash linenums="1"
 #!/bin/bash -l
-#PBS -A <your_ProjectName>
+#PBS -A <project>
 #PBS -N <your_JobName>
 #PBS -l walltime=<requested_walltime_value>
 #PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
-#PBS -q <requested_Queue>
+#PBS -q <queue>
 ```
 
 More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
@@ -257,7 +257,7 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l walltime=0:10:00
 #PBS -l filesystems=<fs1:fs2>
 #PBS -q debug-scaling
-#PBS -A <MYPROJECT>
+#PBS -A <project>
 
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}
@@ -620,7 +620,7 @@ launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <MYPROJECT> -q debug
+qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <project> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `debug` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.

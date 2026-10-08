@@ -113,5 +113,5 @@ From here, you should be able to control starting and stopping processes, ranks,
 You may want to install and run a local version of Forge from the [Linaro website](https://www.linaroforge.com/download-documentation/) on Aurora. Once you install it, you can use the following license file to run the local version with the Forge license on Aurora:
 
 ```bash 
-FORGE_LICENSE_FILE=/pe/licenses/arm_forge/Licence <path_to_the_local_version>/ddt --connect <other DDT parameters> 
+FORGE_LICENSE_FILE=/pe/licenses/arm_forge/Licence <path>/ddt --connect <other DDT parameters> 
 ```

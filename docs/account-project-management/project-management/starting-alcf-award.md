@@ -131,7 +131,7 @@ We have an allocation management tool called sbank, and below are a few helpful 
 You can use the following command to check your project balance on Polaris:
 
 ```bash
-sbank-list-allocations -p <Project Shortname> -r <system name>
+sbank-list-allocations -p <project> -r <system name>
 ```
 
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).

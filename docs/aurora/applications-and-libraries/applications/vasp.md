@@ -186,7 +186,7 @@ A typical submission script looks like this:
 #PBS -l walltime=0:10:00
 #PBS -l filesystems=<fs1:fs2>
 #PBS -q debug-scaling
-#PBS -A <MYPROJECT>
+#PBS -A <project>
 
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}

@@ -39,7 +39,7 @@ If you have an issue that is not covered below, reach out to [VS Code support](h
 By default, VS Code is installed under:
 
 ```text
-C:\Users\<Username>\AppData\Local\Programs\Microsoft VS Code
+C:\Users\<username>\AppData\Local\Programs\Microsoft VS Code
 ```
 
 on [Windows](https://code.visualstudio.com/docs/setup/windows).

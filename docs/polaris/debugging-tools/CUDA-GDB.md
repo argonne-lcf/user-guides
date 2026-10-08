@@ -17,7 +17,7 @@ Using this line to compile the CUDA application `foo.cu`:
 ### Running CUDA-GDB on Polaris compute nodes
 Start an interactive job mode on Polaris with the following command:
 ```console
-$ qsub -A <account> -q debug -I -l select=1,walltime=0:60:00,filesystems=swift
+$ qsub -A <project> -q debug -I -l select=1,walltime=0:60:00,filesystems=swift
 
 $ cuda-gdb --version
 exec: /opt/nvidia/hpc_sdk/Linux_x86_64/25.5/cuda/12.9/bin/cuda-gdb-minimal --version
@@ -38,7 +38,7 @@ This example uses the CUDA STREAM benchmark in the [BabelStream](https://github.
 ```console title="Clone repository and start interactive job"
 user@polaris-login-02:~> git clone https://github.com/UoB-HPC/BabelStream.git
 
-user@polaris-login-02:~> qsub -A <account> -q debug -I -l select=1,walltime=0:60:00,filesystems=swift
+user@polaris-login-02:~> qsub -A <project> -q debug -I -l select=1,walltime=0:60:00,filesystems=swift
 qsub: waiting for job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov to start
 qsub: job 308834.polaris-pbs-01.hsn.cm.polaris.alcf.anl.gov ready
 

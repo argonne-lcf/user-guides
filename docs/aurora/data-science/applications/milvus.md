@@ -59,10 +59,10 @@ export PYTHONPATH=/milvus-install:/opt/aurora/25.190.0/oneapi/advisor/latest/pyt
 A multi-node Milvus deployment requires at least two compute nodes: one to host the Milvus server and one to act as the client. Request an interactive session with two nodes using PBS:
 
 ```bash
-qsub -l select=2 -l walltime=60:00 -l filesystems=flare -A <project_name> -q debug -I
+qsub -l select=2 -l walltime=60:00 -l filesystems=flare -A <project> -q debug -I
 ```
 
-Replace `<project_name>` with your ALCF project allocation name.
+Replace `<project>` with your ALCF project allocation name.
 
 ### Launching the Milvus Server
 

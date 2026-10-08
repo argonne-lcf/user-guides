@@ -189,8 +189,8 @@ This section provides simple examples on how to interface with the API as a star
                    },
                    "attributes": {
                        "duration": 300,
-                       "queue_name": "<system-queue-name>",
-                       "account": "<your-project>",
+                       "queue_name": "<queue>",
+                       "account": "<project>",
                        "custom_attributes": {"filesystems": "home:eagle"}
                    }
                  }'
@@ -228,8 +228,8 @@ This section provides simple examples on how to interface with the API as a star
                 },
                 "attributes": {
                     "duration": 300,
-                    "queue_name": "<system-queue-name>",
-                    "account": "<your-project>",
+                    "queue_name": "<queue>",
+                    "account": "<project>",
                     "custom_attributes": {"filesystems": "home:eagle"}
                 }
             },
@@ -317,13 +317,13 @@ This section provides simple examples on how to interface with the API as a star
     - **states**: List of job states (new, queued, held, active, completed, failed, canceled)
         - Example: `{"states": ["active", "completed"]}`
     - **owner**: ALCF username
-        - Example: `{"owner": "<my-alcf-username>"}`
+        - Example: `{"owner": "<username>"}`
     - **jobIds**: List of job IDs
         - Example: `{"jobIds": ["12345", "12346", "12347"]}` 
     - **queue**: Name of the PBS queue
         - Example: `{"queue": "debug"}`
     - **accountingId**: Name of the compute allocation
-        - Example: `{"accountingId": "<my-polaris-allocation>"}`
+        - Example: `{"accountingId": "<project>"}`
 
     !!! info "Combining Filters"
         More than one filter can be added to the same request body:
@@ -342,7 +342,7 @@ This section provides simple examples on how to interface with the API as a star
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
-        job_id="<job_id>"
+        job_id="<jobid>"
 
         curl -X GET "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}/${job_id}?historical=true" \
              -H "Authorization: Bearer ${access_token}"
@@ -363,7 +363,7 @@ This section provides simple examples on how to interface with the API as a star
 
         # Polaris
         resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
-        job_id = "<job_id>"
+        job_id = "<jobid>"
 
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}/{job_id}",
@@ -387,7 +387,7 @@ This section provides simple examples on how to interface with the API as a star
 
         # Polaris
         resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
-        job_id="<job_id>"
+        job_id="<jobid>"
 
         curl -X DELETE "https://api.alcf.anl.gov/api/v1/compute/cancel/${resource_id}/${job_id}" \
              -H "Authorization: Bearer ${access_token}"
@@ -408,7 +408,7 @@ This section provides simple examples on how to interface with the API as a star
 
         # Polaris
         resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
-        job_id = "<job_id>"
+        job_id = "<jobid>"
 
         response = requests.delete(
             f"https://api.alcf.anl.gov/api/v1/compute/cancel/{resource_id}/{job_id}",
@@ -445,7 +445,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/ls/${resource_id}?path=/eagle/<your-project>" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/ls/${resource_id}?path=/eagle/<project>" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -467,7 +467,7 @@ This section provides simple examples on how to interface with the API as a star
 
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/ls/{resource_id}",
-            params={"path": "/eagle/<your-project>"},
+            params={"path": "/eagle/<project>"},
             headers=headers
         )
 
@@ -491,7 +491,7 @@ This section provides simple examples on how to interface with the API as a star
         curl -X POST "https://api.alcf.anl.gov/api/v1/filesystem/mkdir/${resource_id}" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
-             -d '{"path": "/eagle/<your-project>/my_new_dir", "parent": false}'
+             -d '{"path": "/eagle/<project>/my_new_dir", "parent": false}'
         ```
 
     === "Python"
@@ -513,7 +513,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.post(
             f"https://api.alcf.anl.gov/api/v1/filesystem/mkdir/{resource_id}",
             json={
-                "path": "/eagle/<your-project>/my_new_dir",
+                "path": "/eagle/<project>/my_new_dir",
                 "parent": False
             },
             headers=headers
@@ -536,7 +536,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/view/${resource_id}?path=/eagle/<your-project>/file.txt&size=10&offset=0" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/view/${resource_id}?path=/eagle/<project>/file.txt&size=10&offset=0" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -559,7 +559,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/view/{resource_id}",
             params={
-                "path": "/eagle/<your-project>/file.txt",
+                "path": "/eagle/<project>/file.txt",
                 "size": 10,
                 "offset": 0
             },
@@ -583,7 +583,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/head/${resource_id}?path=/eagle/<your-project>/file.txt&lines=3" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/head/${resource_id}?path=/eagle/<project>/file.txt&lines=3" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -606,7 +606,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/head/{resource_id}",
             params={
-                "path": "/eagle/<your-project>/file.txt",
+                "path": "/eagle/<project>/file.txt",
                 "lines": 3
             },
             headers=headers
@@ -629,7 +629,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/tail/${resource_id}?path=/eagle/<your-project>/file.txt&lines=3" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/tail/${resource_id}?path=/eagle/<project>/file.txt&lines=3" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -652,7 +652,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/tail/{resource_id}",
             params={
-                "path": "/eagle/<your-project>/file.txt",
+                "path": "/eagle/<project>/file.txt",
                 "lines": 3
             },
             headers=headers
@@ -675,7 +675,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/checksum/${resource_id}?path=/eagle/<your-project>/file.txt" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/checksum/${resource_id}?path=/eagle/<project>/file.txt" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -697,7 +697,7 @@ This section provides simple examples on how to interface with the API as a star
 
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/checksum/{resource_id}",
-            params={"path": "/eagle/<your-project>/file.txt"},
+            params={"path": "/eagle/<project>/file.txt"},
             headers=headers
         )
 
@@ -718,7 +718,7 @@ This section provides simple examples on how to interface with the API as a star
         # Eagle
         resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/file/${resource_id}?path=/eagle/<your-project>/file.txt" \
+        curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/file/${resource_id}?path=/eagle/<project>/file.txt" \
              -H "Authorization: Bearer ${access_token}"
         ```
 
@@ -740,7 +740,7 @@ This section provides simple examples on how to interface with the API as a star
 
         response = requests.get(
             f"https://api.alcf.anl.gov/api/v1/filesystem/file/{resource_id}",
-            params={"path": "/eagle/<your-project>/file.txt"},
+            params={"path": "/eagle/<project>/file.txt"},
             headers=headers
         )
 
@@ -764,7 +764,7 @@ This section provides simple examples on how to interface with the API as a star
         curl -X PUT "https://api.alcf.anl.gov/api/v1/filesystem/chown/${resource_id}" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
-             -d '{"path": "/eagle/<your-project>/file.txt", "owner": "<username>", "group": "<group>"}'
+             -d '{"path": "/eagle/<project>/file.txt", "owner": "<username>", "group": "<group>"}'
         ```
 
     === "Python"
@@ -786,7 +786,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.put(
             f"https://api.alcf.anl.gov/api/v1/filesystem/chown/{resource_id}",
             json={
-                "path": "/eagle/<your-project>/file.txt",
+                "path": "/eagle/<project>/file.txt",
                 "owner": "<username>",
                 "group": "<group>"
             },
@@ -813,7 +813,7 @@ This section provides simple examples on how to interface with the API as a star
         curl -X PUT "https://api.alcf.anl.gov/api/v1/filesystem/chmod/${resource_id}" \
              -H "Authorization: Bearer ${access_token}" \
              -H "Content-Type: application/json" \
-             -d '{"path": "/eagle/<your-project>/file.txt", "mode": "700"}'
+             -d '{"path": "/eagle/<project>/file.txt", "mode": "700"}'
         ```
 
     === "Python"
@@ -835,7 +835,7 @@ This section provides simple examples on how to interface with the API as a star
         response = requests.put(
             f"https://api.alcf.anl.gov/api/v1/filesystem/chmod/{resource_id}",
             json={
-                "path": "/eagle/<your-project>/file.txt",
+                "path": "/eagle/<project>/file.txt",
                 "mode": "700"
             },
             headers=headers

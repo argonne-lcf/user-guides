@@ -11,7 +11,7 @@ This is a collection of known issues that have been encountered on Polaris. Docu
 
 1. For batch job submissions, if the parameters within your submission script do not meet the parameters of any of the execution queues (`small`, ..., `backfill-large`), you might not receive the "Job submission" error on the command line at all, and the job will never appear in the history `qstat -xu <username>` (current bug in PBS). For example, if a user submits a script to the `prod` routing queue requesting 10 nodes for 24 hours, exceeding the "Time Max" of 6 hours of the `small` execution queue (which handles jobs with 10-24 nodes), then it may behave as if the job was never submitted.
 
-2. Job scripts are copied to temporary locations after `qsub`, and any changes to the original script while the job is queued will not be reflected in the copied script. Furthermore, `qalter` requires `-A <allocation name>` when changing job properties. Currently, there is a request for a `qalter`-like command to trigger a re-copy of the original script to the temporary location.
+2. Job scripts are copied to temporary locations after `qsub`, and any changes to the original script while the job is queued will not be reflected in the copied script. Furthermore, `qalter` requires `-A <project>` when changing job properties. Currently, there is a request for a `qalter`-like command to trigger a re-copy of the original script to the temporary location.
 
 ## Compiling & Running Applications
 
@@ -28,7 +28,7 @@ This is a collection of known issues that have been encountered on Polaris. Docu
 
 1. You should be able to `ssh` freely (without needing a password) between your assigned compute nodes on Polaris. If you are running into `ssh` issues, check for the following causes:
 
-    1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 /home/<username>`).
+    1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 $HOME`).
     2. Confirm the following files exist in your `.ssh` directory and the permissions are set to the following:
         1. `-rw-------  (600)  authorized_keys`
         2. `-rw-r--r--  (644)  config`

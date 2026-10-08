@@ -30,7 +30,7 @@ To submit a simple function to these endpoints from a remote system install `glo
 ```bash
 pip install "globus-compute-sdk>=4.0"
 ```
-And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
+And then execute one of these example Python scripts (paste your project name in the account setting `<project>` before execution):
 
 === "Polaris"
 
@@ -44,7 +44,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -62,7 +62,7 @@ And then execute one of these example Python scripts (paste your project name in
     serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
     gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
                    serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                          "queue": "debug",})
     future = gce.submit(hello)
     print(future.result())
@@ -179,7 +179,7 @@ Paste your project name in the account setting before execution.
     endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
@@ -206,7 +206,7 @@ Paste your project name in the account setting before execution.
     endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
 
     gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
+                   user_endpoint_config={"account": "<project>", 
                                         "queue": "debug",})
     future = gce.submit(hello_affinity)
     print(future.result())
@@ -304,7 +304,7 @@ def host_sleep_wrapper(sleeptime):
 
 # Paste endpoint id and project name
 endpoint_id = '<selected endpoint id>'
-account = '<your project name>'
+account = '<project>'
 
 serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 gce = Executor(endpoint_id=endpoint_id,
@@ -333,7 +333,7 @@ def query_host():
     return f"Hello from node {socket.gethostname()}"
 
 endpoint_id = "<selected endpoint id>"
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",
@@ -363,7 +363,7 @@ Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in
 
 ```python
 endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris endpoint
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",

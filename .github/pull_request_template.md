@@ -29,3 +29,4 @@
 <!-- Please check the items that apply to this PR using "x". -->
 - [ ] I have run `make serve` or `make build-docs` locally and verified that my changes render correctly
 - [ ] I have added at least one Label to this PR
+- [ ] AI tools were used to write or edit this PR. I reviewed the full diff, and the description says which tools and how system-specific facts were checked.

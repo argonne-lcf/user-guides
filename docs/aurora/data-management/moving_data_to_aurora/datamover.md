@@ -158,7 +158,7 @@ For convenience, scripts exist to run MPIFileUtils `dcp`/`drm` against DAOS with
 #### Copy one DAOS container to another (same or different pool)
 
 ```bash
-qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
+qsub -lselect=<n> -q <queue> -A <project> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
      -v src_pool=<source pool>,src_cont=<source cont>,dst_pool=<destination pool>,dst_cont=<destination cont> \
     /soft/daos/tools/scripts/dcp-cont2cont.pbs
 ```
@@ -166,7 +166,7 @@ qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_use
 #### Copy a directory (Lustre/home) into DAOS container
 
 ```bash
-qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
+qsub -lselect=<n> -q <queue> -A <project> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
     -v src_dir=<source directory>,dst_pool=<destination pool>,dst_cont=<destination cont> \
         /soft/daos/tools/scripts/dcp-dir2cont.pbs
 ```
@@ -174,7 +174,7 @@ qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_use
 #### Copy a DAOS container into Lustre/home directory
 
 ```bash
-qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
+qsub -lselect=<n> -q <queue> -A <project> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
     -v src_pool=<source pool>,src_cont=<source cont>,dst_dir=<destination directory> \
     /soft/daos/tools/scripts/dcp-cont2dir.pbs
 ```
@@ -182,7 +182,7 @@ qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_use
 #### Remove all data in DAOS container
 
 ```bash
-qsub -lselect=<n> -q <queue name> -A <account name> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
+qsub -lselect=<n> -q <queue> -A <project> -lfilesystems=flare:daos_user_fs -lwalltime=59:00 \
     -v src_pool=<source pool>,src_cont=<source cont> \
     /soft/daos/tools/scripts/drm-cont.pbs
 ```

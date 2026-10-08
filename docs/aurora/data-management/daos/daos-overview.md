@@ -43,7 +43,7 @@ module load daos
 A pool is a dedicated space allocated to your project. Once your pool has been allocated for your project space, confirm that you are able to query the pool:
 
 ```bash linenums="1"
-DAOS_POOL=<YOUR_PROJECT_NAME>
+DAOS_POOL=<project>
 daos pool query ${DAOS_POOL}
 ```
 
@@ -129,8 +129,8 @@ daos cont list ${DAOS_POOL}
 The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
 
 ```bash linenums="1"
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
+qsub -l select=1 -l walltime=01:00:00 -A <project> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
+qsub -l select=1 -l walltime=01:00:00 -A <project> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
 ```
 
 ## Interception Library for POSIX Containers
@@ -148,11 +148,11 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 
 ```bash linenums="1"
 #!/bin/bash -x
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <project> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh
 # or: qsub -I ...
 #PBS -l select=512
 #PBS -l walltime=01:00:00
-#PBS -A <ProjectName>
+#PBS -A <project>
 #PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user_fs
@@ -201,7 +201,7 @@ striping_unit 2097152
 
 Then set the following environment variables at runtime to point to the file:
 ```bash linenums="1"
-export ROMIO_HINTS=<path to hints file>
+export ROMIO_HINTS=<path>
 export ROMIO_PRINT_HINTS=1 # If you want to verify the settings
 ```
 

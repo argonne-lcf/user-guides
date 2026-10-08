@@ -63,7 +63,7 @@ The wrapper above can be deployed using the following PBS job script:
 #PBS -l walltime=00:10:00
 #PBS -q debug-scaling
 #PBS -l filesystems=<fs1:fs2>
-#PBS -A <ProjectName>
+#PBS -A <project>
 
 WORK_DIR=/path/to/the/Python/program
 UNITRACE_WRAPPER=${WORK_DIR}/unitrace_wrapper.sh

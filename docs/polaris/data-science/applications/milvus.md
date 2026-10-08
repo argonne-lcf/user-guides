@@ -48,10 +48,10 @@ python -m pip install -U "pymilvus[milvus-lite]"
 A multi-node Milvus deployment requires at least two compute nodes: one to host the Milvus server and one to act as the client. Request an interactive session with two nodes using PBS:
 
 ```bash
-qsub -I -l select=2 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
+qsub -I -l select=2 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project>
 ```
 
-Replace `<project_name>` with your ALCF project allocation name.
+Replace `<project>` with your ALCF project allocation name.
 
 ### Launching the Milvus Server
 
