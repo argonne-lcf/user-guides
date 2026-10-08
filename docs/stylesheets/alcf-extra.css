@@ -2148,3 +2148,11 @@ pre .normal a {
   background-color: var(--blue_pale);
   color: var(--neutral_dark);
 }
+
+/* Sidebar sections shown after each page title on the Tags page
+   (overrides/fragments/tags/default/listing.html). */
+.md-typeset .alcf-tag-listing-path {
+  margin-left: 0.5em;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8em;
+}
