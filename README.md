@@ -71,6 +71,18 @@ make build-docs
 ```
 
 The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
+### Using `serve_pages.sh`
+
+If you created the venv specified in Option 1 above, you can start a new MkDocs instance with `./serve_pages.sh start` and use the repo environment. If there are multiple instances of MkDocs running, `serve_pages.sh stop` will let you selectively choose one to end.
+
+```
+user@local ~/Documents/user-guides ]$ ./serve_pages.sh stop
+   PID   Port            Started
+1) 21565 127.0.0.1:8000  4:28PM
+2) 21582 127.0.0.1:8001  4:30PM
+Select MkDocs instance to close: 2
+>> 127.0.0.1:8001 started @ 4:30PM - Confirm (y or n) y
+```
 
 ### Writing math
 
