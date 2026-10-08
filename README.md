@@ -72,6 +72,8 @@ make build-docs
 
 The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
 
+To check how a change affects site search, query a running `mkdocs serve` from the command line with `node scripts/search_test.js "query" ...`. It uses the site's own search code, so results match the search box (see the script for options).
+
 ### Writing math
 
 LaTeX math renders via MathJax: inline `$...$` or `\(...\)`, blocks `$$...$$` or `\[...\]`.
