@@ -8,7 +8,7 @@ search:
 
 # Running Jobs on Aurora
 
-## Queues
+## Queues: debug, debug-scaling, prod, capacity, visualization {#queues}
 
 There are four production queues you can target in your qsub (`-q <queue name>`):
 
