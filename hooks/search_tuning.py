@@ -18,7 +18,9 @@ rewrites search/search_index.json after the build to:
   the "Staying in Touch" title for "unable to ssh", and "llms" didn't match
   pages that say "LLM". The patch, appended to the search worker, drops stop
   words from the query and trims a plural "s" (so "llms*" becomes "llm*",
-  which still matches "llms"). It wraps lunr's public Index.search.
+  which still matches "llms"). For one-word queries it also adds a weighted
+  exact-match copy of the word, since every word is otherwise a prefix match
+  ("code" matched the "Codee" title). It wraps lunr's public Index.search.
 - keep typed punctuation from breaking search. A leading "-" means "exclude"
   to lunr, so "--nv" (as in "singularity exec --nv") was two operators in a
   row and raised a parse error with no results, and "-q" excluded "q". On an
@@ -50,6 +52,7 @@ STOP_WORDS_JS = """
   var l = self.lunr;
   if (!l || !l.Index || l.__queryRewrite) return;
   l.__queryRewrite = true;
+  var EXACT_BOOST = 10;
   var search = l.Index.prototype.search;
   l.Index.prototype.search = function (query) {
     var terms = String(query).split(/\\s+/).filter(Boolean);
@@ -61,6 +64,15 @@ STOP_WORDS_JS = """
       if (/^[a-z]{4,}s$/i.test(word) && !/ss$/i.test(word)) word = word.slice(0, -1);
       kept.push(m[1] + word + m[3]);
     });
+    // For a one-word query, also search the exact word, weighted up, so
+    // "code" ranks pages that say "code" above ones that only match the
+    // prefix ("Codee"). Not for longer queries: there a title matching one
+    // word exactly ("PyTorch on Aurora") beat pages matching every word
+    // ("pytorch cerebras").
+    if (kept.length === 1) {
+      var only = /^([+-]?)(.*?)(\\*?)$/.exec(kept[0]);
+      if (!only[1] && only[3] && only[2].length >= 3) kept.unshift(only[2] + "^" + EXACT_BOOST);
+    }
     return search.call(this, kept.length ? kept.join(" ") : query);
   };
 
