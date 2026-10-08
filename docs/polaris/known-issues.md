@@ -53,3 +53,13 @@ Alternatively, it can be set with the `mpiexec` command, e.g.
 ```bash
 mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 ```
+
+## Known Issues on Other Pages
+
+Some pages keep known issues for a specific tool or library in their own section:
+
+- [Containers](containers/containers.md#troubleshooting-common-issues)
+- [NVIDIA Compilers](compiling-and-linking/nvidia-compiler-polaris.md#known-issues-and-workarounds)
+- [Parsl](workflows/parsl.md#known-issues)
+- [JupyterHub](../services/jupyter-hub.md#known-issues)
+- [Visual Studio Code with Remote SSH](../dev-environment/vscode.md#known-issues)
