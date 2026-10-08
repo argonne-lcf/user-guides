@@ -603,6 +603,7 @@ nav:
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
   - Acronyms: acronyms.md
+  - Tags: tags.md
 
 # Pages that are not in navigation but still built
 # These always end up in the generated site (both mkdocs "build" and "serve")
