@@ -6,6 +6,10 @@ keywords:
   - remaining hours
   - balance
   - "node-hours"
+  - qsub -A
+  - charge project
+  - time left
+  - node hours
 ---
 
 # Managing Your Allocations

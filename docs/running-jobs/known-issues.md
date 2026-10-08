@@ -11,6 +11,8 @@ keywords:
   - job held
   - job disappeared
   - job array never runs
+search:
+  boost: 3
 ---
 
 # Common PBS Issues & Troubleshooting
