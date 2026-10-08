@@ -19,6 +19,13 @@ rewrites search/search_index.json after the build to:
   pages that say "LLM". The patch, appended to the search worker, drops stop
   words from the query and trims a plural "s" (so "llms*" becomes "llm*",
   which still matches "llms"). It wraps lunr's public Index.search.
+- keep typed punctuation from breaking search. A leading "-" means "exclude"
+  to lunr, so "--nv" (as in "singularity exec --nv") was two operators in a
+  row and raised a parse error with no results, and "-q" excluded "q". On an
+  HPC site a leading "-" is almost always a command-line flag, so the patch
+  also wraps lunr's QueryParser to drop leading "-" (keeping the wildcard),
+  collapse doubled "+", and remove lone operators and ^ or ~ that aren't
+  followed by a number.
 
 The search worker indexes every field listed in the index config, so the new
 field needs no JavaScript changes.
@@ -53,6 +60,27 @@ STOP_WORDS_JS = """
     });
     return search.call(this, kept.length ? kept.join(" ") : query);
   };
+
+  // Material parses the query too (for highlighting), so sanitize in the parser
+  var Parser = l.QueryParser;
+  var sanitize = function (str) {
+    var out = String(str).split(/\\s+/).map(function (t) {
+      // Leading "-" is part of a command-line flag here (-A, --nv), not
+      // lunr's "exclude"; drop it, and add back the wildcard Material skipped
+      // for words of 3+ letters (a wildcard on "-l" would match every "l*")
+      if (/^-+[^\\s*]/.test(t)) {
+        t = t.replace(/^-+/, "");
+        if (/^[^*]{3,}$/.test(t)) t += "*";
+      }
+      t = t.replace(/^\\+{2,}/, "+").replace(/[~^](?!\\d)/g, "");
+      return /^[+\\-*:~^]*$/.test(t) ? "" : t;
+    }).filter(Boolean).join(" ");
+    return out || String(str).replace(/[+\\-*:~^]/g, " ");
+  };
+  var Wrapped = function (str, query) { Parser.call(this, sanitize(str), query); };
+  Wrapped.prototype = Parser.prototype;
+  for (var key in Parser) Wrapped[key] = Parser[key];
+  l.QueryParser = Wrapped;
 })();
 """
 
