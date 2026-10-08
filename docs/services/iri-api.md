@@ -9,30 +9,12 @@ The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and
 
 ### 1. Setup Your Environment
 
-Create a Python (>=3.10) virtual environment and install [alcf-tokens](https://pypi.org/project/alcf-tokens/).
+=== "alcf-tokens"
 
-=== "Python"
+    Create a Python (>=3.10) environment with `uv`, `venv`, or `conda`. See [Python Environments](../dev-environment/python-environments.md) for the options. Then install [alcf-tokens](https://pypi.org/project/alcf-tokens/):
 
     ```bash
-    python3 -m venv venv
-    source venv/bin/activate
     pip install alcf-tokens
-    ```
-
-=== "Anaconda or Miniconda"
-
-    ```bash
-    conda create -n alcf-tokens python=3.12 -y
-    conda activate alcf-tokens
-    pip install alcf-tokens
-    ```
-
-=== "Uv"
-
-    ```bash
-    uv venv --python 3.12 .venv
-    source .venv/bin/activate
-    uv pip install alcf-tokens
     ```
 
 === "Auth script (Deprecated)"
@@ -69,23 +51,17 @@ If your token is authorized to use the IRI API, you should see `"ready": true`. 
 
 ### 3. Retrieve Your Access Token
 
-You can programatically retrieve your access token either from your terminal or from Python.
+You can programmatically retrieve your access token either from your terminal or from Python.
 
-=== "Shell"
-
-    ```bash
-    alcf-tokens get-token iri
-    ```
-
-=== "Environment Variable"
+=== "alcf-tokens"
 
     ```bash
+    # Shell
     access_token=$(alcf-tokens get-token iri)
     ```
 
-=== "Python"
-
     ```python
+    # Python
     from alcf_tokens.auth import get_access_token
     access_token = get_access_token("iri")
     ```
@@ -446,12 +422,13 @@ This section provides simple examples on how to interface with the API as a star
 ### 3. Filesystem
 
 !!! info "Restricted Access (temporary)"
-    Access to filesystem operations is currently restricted to Sophia users. We are working on broadening the access to all ALCF users.
+    Access to filesystem operations is currently restricted to Sophia and Aurora users. We are working on broadening the access to all ALCF users.
 
 !!! info "Asynchronous Operations"
     All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
 
 !!! info "Currently Supported Filesystems"
+    - Flare (All paths must start with `/flare` or `/lus/flare/projects`) 
     - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
     - Home (All paths must start with `/home`)
 

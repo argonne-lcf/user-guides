@@ -6,7 +6,7 @@ To log into Sophia:
 ```bash
 ssh <username>@sophia.alcf.anl.gov
 ```
-Then, type in the password from your CRYPTOCard/MobilePASS+ token. Once logged in, you land on one of the Sophia login nodes (sophia-login-01, sophia-login-02).
+Then, type in the passcode from your MobilePASS+ or physical hardware token. Once logged in, you land on one of the Sophia login nodes (sophia-login-01, sophia-login-02).
 
 ## Hardware Overview
 

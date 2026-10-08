@@ -1,6 +1,6 @@
 # DAOS
 
-DAOS is a major file system on Aurora, with 230 PB and up to >30 TB/s from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.
+DAOS is a major file system on Aurora, with an aggregate of 230 PB and over 30 TB/s write bandwidth (read bandwidth is slightly higher) from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.  DAOS is currently in a stability testing pre-production period but in its production configuration with 800 out of the total 1024 nodes with approximately 200 PB of storage available to users at a peak write bandwidth of over 24 TB/s.  Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](../../data-management/lustre/flare.md). There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
 This guide covers:
 
@@ -24,8 +24,6 @@ Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request a DAOS pool
 - Justification
 - Preferred pool name
 
-This is an initial test DAOS configuration, and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system. Warning will be given before the system is wiped to allow time for users to move any important data off.
-
 ## Modules
 
 Load the `daos` module when using DAOS. This can be done on the login node (UAN) or in the compute node job script:
@@ -44,19 +42,26 @@ DAOS_POOL=<YOUR_PROJECT_NAME>
 daos pool query ${DAOS_POOL}
 ```
 
-```output title="Example output:"
-daos pool query hacc
-Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
+``` { .output .no-copy title="Example output:" }
+daos pool query alcf-ci-cd-tests
+Pool 383810e7-28b3-490d-8363-b5866908e8bb, ntarget=25600, disabled=0, leader=425, version=545, state=Ready
+Pool health info:
+- Rebuild done, 134 objs, 0 recs
 Pool space info:
-- Target(VOS) count:640
+- Target(VOS) count:25600
 - Storage tier 0 (SCM):
-Total size: 6.0 TB
-  Free: 4.4 TB, min:6.5 GB, max:7.0 GB, mean:6.9 GB
+  Total size: 173 TB
+  Free: 152 TB, min:5.9 GB, max:6.1 GB, mean:5.9 GB
 - Storage tier 1 (NVMe):
-  Total size: 200 TB
-  Free: 194 TB, min:244 GB, max:308 GB, mean:303 GB
-Rebuild done, 4 objs, 0 recs
+  Total size: 5.6 PB
+  Free: 5.6 PB, min:217 GB, max:218 GB, mean:218 GB
 ```
+
+Here are some notes on the output from the pool query.  There are 2 targets on each of 16 SSDs on a node, which makes 32 targets per node, the `Target(VOS) count` and `ntarget` is the total number of targets your pool is striped across, divided by 32 to get the number of nodes - the above example pool is a test pool striped across all 800 nodes, but your actual user pool will be a subset of the 800 nodes loosely correlated with the size.  The `Total size` for the SCM (persistent memory DIMMs which store metadata and small I/O) and NVMe storage tiers is the storage aggregate spread evenly across the targets.  `Free` is the amount of storage aggregate across the targets that is unallocated, but the `min`, `max`, and `mean` is relative to individual targets - ideally these 3 metrics should be relatively close, major deviations indicate imbalance that could result in `out of space` type errors in which case you should email support.  `Rebuild` is the current status of the rebuild, which is a process of redistributing data within the pool for redundancy usually as a result of the loss of an NVMe - `done` indicates no rebuild is currently running, `busy` indicates a rebuild is currently running and your performance will be severely degraded until the rebuild finishes.
+
+## Realized Write Bandwidth
+
+The actual write bandwidth your application will realize is directly related to the number of DAOS servers in your pool, running on an adequate number of compute nodes to drive the storage traffic, the redundancy factor (RF) of your container and any other concurrent storage traffic.  The peak write bandwidth of 24 TB/s is for a pool spanning all 800 servers and a container with RF0 with no other storage traffic, which is roughly 30 GB/s per server.  The recommended redundancy factor for a container is RF3 (described later in this guide) which carries significant performance overhead, equating to about 21 GB/s per server.  So for a container at RF3 in a pool spanning say 400 servers your application would only get slightly over 8 TB/s peak write bandwidth assuming no other storage traffic.
 
 ## POSIX Containers
 
@@ -175,7 +180,7 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on a compute node
 
 ## MPI-IO Container Access
 
-MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.0/user/mpi-io/>
+MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.6/user/mpi-io/>
 
 To optimally enable collective buffering, create a file with the following contents:
 
@@ -388,6 +393,7 @@ module load darshan-util
 darshan-parser <binary log file name> > out.txt
 ```
 
+<!--
 ## Cluster Size
 
 DAOS cluster size is the number of available DAOS servers. While we are working toward bringing up all 1024 DAOS servers for users, different numbers of DAOS nodes may be up at any given time. Please check with support or run an IOR test to estimate the current number of DAOS servers available. The bandwidth in the last column below is theoretical peak bandwidth.
@@ -424,7 +430,7 @@ So the DAOS cluster size is:
 $$
 \frac{4096\ \text{targets}}{32\ \text{targets per node}} = 128\ \text{DAOS servers}
 $$
-
+-->
 
 ## DAOS Hardware and Aurora Architecture
 

@@ -66,7 +66,7 @@ pip install tqdm torch==2.1.2
 
 Set the `PYTHONPATH` to include the conda environment:
 ```console
-export PYTHONPATH=/home/$(whoami)/miniconda3/envs/groqflow_for_llama2/lib/python3.10/site-packages
+export PYTHONPATH=/home/$(whoami)/miniforge3/envs/groqflow_for_llama2/lib/python3.10/site-packages
 ```
 
 Reserve the cluster. This will launch a placeholder PBS job that reserves the entire cluster.  It simply runs `sleep 24h` on a node. The following example script reserves the cluster via PBS for 2hrs. Adjust the values as needed.
@@ -78,7 +78,7 @@ Then run Llama2-7b.
 ```console
 cd ~/groq_llama2-7b-kludge/
 ./stage2_build_topology.sh
-export CONDA_PREFIX=/home/$(whoami)/miniconda3/envs/groqflow_for_llama2
+export CONDA_PREFIX=/home/$(whoami)/miniforge3/envs/groqflow_for_llama2
 ./stage3_run_llamma-7b.sh
 ```
 The script can be modified, or pieces run manually:

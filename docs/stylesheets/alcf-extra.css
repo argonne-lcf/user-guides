@@ -922,9 +922,12 @@
 .md-typeset p,
 .md-typeset li {
   font-weight: 400;
-  margin: auto;
   font-size: .9375rem;
   line-height: 1.3333333;
+}
+
+.md-typeset p {
+  margin-block: 0 0.8em;
 }
 
 .md-typeset p + h2 {
@@ -2117,4 +2120,12 @@ pre .normal a {
   .md-typeset .alcf-tile-grid ul:not([hidden]) {
     grid-template-columns: 1fr;
   }
+}
+
+/* Links with instant previews (material.extensions.preview targets): one
+   dotted underline instead of our solid underline plus Material's dotted
+   border-bottom, so they still look different from other links. */
+.md-typeset a[data-preview] {
+  border-bottom: none;
+  text-decoration-style: dotted;
 }

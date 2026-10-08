@@ -17,7 +17,7 @@ change your token preference.
 ## Mobile Token
 
 The SafeNet MobilePass+ Mobile Token allows access to ALCF systems.
-This security mobile token uses one-time passwords combined with your PIN for
+This security mobile token uses one-time passcodes combined with your PIN for
 controlled access to the login systems.
 The mobile token utilizes an app that is keyed to your user account.
 This app is maintained on your Android, iPhone, or Windows mobile device.
@@ -80,7 +80,7 @@ MobilePass+ Token.
 
 The physical token allows access to the ALCF systems.
 
-This security token uses one-time passwords combined with your PIN for
+This security token uses one-time passcodes combined with your PIN for
 controlled access to the login systems.
 The physical token is a tracked asset for which you are responsible and is
 keyed to your use.

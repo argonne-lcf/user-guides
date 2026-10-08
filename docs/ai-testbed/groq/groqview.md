@@ -4,10 +4,14 @@ This section covers how to remotely use the GroqView profiler and visualizer too
 
 ## GroqView sample
 
-Groq compiles produce an accurate and detailed model of the performance of a model's execution on groq cards. There is no need to run a model on groqcards to use GroqView.<br>
-The GroqView example adds the "groqview=True" parameter to the `groqit` call, then calls the `groqview()` method on the model returned by `groqit`.<br>
-This is the relevant code when using GroqFlow. It tries to retrieve the compiled model from the cache, compiles the model on a cache miss, then calls `groqview()`.<br>
-From `groqflow/examples/pytorch/groqview.py`: <br>
+Groq compiles produce an accurate and detailed model of the performance of a model's execution on groq cards. There is no need to run a model on groqcards to use GroqView.
+
+The GroqView example adds the "groqview=True" parameter to the `groqit` call, then calls the `groqview()` method on the model returned by `groqit`.
+
+This is the relevant code when using GroqFlow. It tries to retrieve the compiled model from the cache, compiles the model on a cache miss, then calls `groqview()`.
+
+From `groqflow/examples/pytorch/groqview.py`:
+
 ```{python}
 # Build model
 gmodel = groqit(pytorch_model, inputs, groqview=True)
@@ -16,7 +20,8 @@ gmodel.groqview()
 ```
 
 ## Run the sample
-On a groq node, run the groqview.py sample (or any script that includes similar code). Note the port number chosen by GroqView.<br>
+On a groq node, run the groqview.py sample (or any script that includes similar code). Note the port number chosen by GroqView.
+
 ```console
 conda activate groqflow
 cd ~/groqflow/examples/pytorch
@@ -30,8 +35,10 @@ Open your web browser:
 
 ## Forward the port to your machine with a browser
 
-On your laptop/user machine with a display, set up a 2-hop ssh tunnel.<br>
-Set `$GN_HOSTNAME` to the name of the host where job is running<br>
+On your laptop/user machine with a display, set up a 2-hop ssh tunnel.
+
+Set `$GN_HOSTNAME` to the name of the host where job is running
+
 ```console
 export GN_HOSTNAME=groq-r01-gn-09
 # Modify the port number if GroqView has chosen a different port.

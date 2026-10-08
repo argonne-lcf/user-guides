@@ -12,7 +12,7 @@ Globus is a service that provides research data management, including managed tr
 
 ## Logging into Globus with your ALCF Login
 
-ALCF researchers can use their ALCF Login username and password to access Globus. Go to the [Globus website](https://www.globus.org/) and click on Log In in the upper right corner of the page.
+ALCF researchers can use their ALCF Login username and passcode to access Globus. Go to the [Globus website](https://www.globus.org/) and click on Log In in the upper right corner of the page.
 
 ![Logging into Globus](files/login-screen.png){ width="700" }
 /// caption
@@ -26,7 +26,7 @@ Type or scroll down to "Argonne LCF" in the "Use your existing organizational lo
 Select Organization Argonne LCF
 ///
 
-You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and password.
+You will be taken to a familiar-looking page for ALCF login. Enter your ALCF login username and passcode.
 
 ## Accessing your Eagle Project Directory
 
@@ -36,7 +36,7 @@ You will be taken to a familiar-looking page for ALCF login. Enter your ALCF log
 
 PIs with data and compute allocations will have access to the required compute-system login nodes (along with the Globus Web Interface) to access their project directory.
 
-## <a name="Creating-a-Guest-Collection"></a>Creating a Guest Collection
+## Creating a Guest Collection
 
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections.
 
@@ -117,7 +117,7 @@ List of people that you have shared with
 6. Guest collections are active as long as the project directory is available **and** the PI's ALCF account is active. If the PI's ALCF account goes inactive, the collections become inaccessible to all its collaborators. Access is restored once the PI's account is reactivated, provided it is reactivated within 3 months.
 7. All RW actions are performed as the PI when using Guest Collections. If a PI does not have permissions to read or write a file or a directory, then the Globus guest collection users won't either.
 
-## <a name="Creating-a-group"></a>Creating a group
+## Creating a group {#Creating-a-group}
 
 1. Go to Groups on the left panel
 2. Click on ‘Create a new group’ at the top

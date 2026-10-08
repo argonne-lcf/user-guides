@@ -6,7 +6,7 @@ The majority of the nodes have the 40 GB A100 models, but two nodes contain the 
 You may request resources by node (with 8 GPUs) or by individual GPUs based on your job needs. 
 What you will get is determined by the queue you submit to (see Queues section below).
 
-## <a name="Sophia-Queues"></a>Queues
+## Queues
 
 There are three production queues you can target in your `qsub` command (`-q <queue name>`):
 
@@ -24,7 +24,7 @@ The initial queue policy will be simple First-In-First-Out (FIFO) based on prior
 The `by-queue` and `by-gpu` queues target non-bigmem nodes. 
 The old `single-node` queue is now a routing queue (redirect) to the `by-node`, and the old `single-gpu` queue is now a routing queue (redirect) to the `by-gpu` queue.
 
-## <a name="Sophia-Queues"></a>Queue Descriptions
+## Queue Descriptions
 
 ### `by-gpu`
 

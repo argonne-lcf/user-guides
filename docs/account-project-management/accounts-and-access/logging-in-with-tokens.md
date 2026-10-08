@@ -55,13 +55,13 @@ numbers.
 2. A password prompt will be received.  
    At this point, push the button on the physical token once.
 
-3. An eight-character, one-time password made up of letters and numbers will
+3. An eight-character, one-time passcode made up of letters and numbers will
    appear on the token’s display.
-   This one-time password is case-sensitive.
+   This one-time passcode is case-sensitive.
 
-4. Type your PIN followed immediately by the one-time password at the SSH
+4. Type your PIN followed immediately by the one-time passcode at the SSH
    password prompt.
 
-   For example, if your PIN is 1234 and you received the one-time password
+   For example, if your PIN is 1234 and you received the one-time passcode
    string ABCD9876, you would type 1234ABCD9876 at the password prompt.
 

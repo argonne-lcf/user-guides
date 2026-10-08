@@ -10,7 +10,7 @@ The Bow-2000™ IPU-Machine™ is a 1U compute platform for AI infrastructure an
         5,888 processor cores
         35,000 independent parallel threads
 
-* Up to ~260GB of memory comprised of:
+* Up to approximately 260GB of memory comprised of:
 
         Up to 256GB Streaming Memory™
         3.6GB In-Processor-Memory™

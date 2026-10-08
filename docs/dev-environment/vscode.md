@@ -4,10 +4,10 @@
 
 This document explains how to install Visual Studio Code (VS Code) on your local machine, add the Remote - SSH extension, configure SSH for Windows, macOS, and Linux, and compile a simple `helloworld.cpp` program on a **remote ALCF server**. The compilation and execution happen on the remote Linux system; your local machine is only used to run [VS Code and initiate the SSH connection](https://code.visualstudio.com/docs/remote/ssh).
 
-## VS Code is allowed, but ALCF cannot provide support
+## Support
 
-This document is to provide guidance when using VS Code. 
-If you have an issue with VS Code that is not covered below, then we suggest reaching out to VS Code support.
+ALCF cannot provide support for VS Code, and this page is guidance only.
+If you have an issue that is not covered below, reach out to [VS Code support](https://code.visualstudio.com/support).
 
 ## Installing Visual Studio Code (local context)
 
@@ -151,7 +151,7 @@ To configure the compilers on the remote host:
    ```bash
    module load PrgEnv-gnu
    # or:
-   module load PrgEnv-nvhpc # on Polaris
+   module load PrgEnv-nvidia # on Polaris (default)
    # or:
    module load oneapi # on Aurora
    ```
@@ -222,7 +222,7 @@ Open a terminal in VS Code (this terminal runs on the remote Linux server), then
 # Example: load GCC
 module load PrgEnv-gnu
 # or:
-module load PrgEnv-nvhpc # on Polaris
+module load PrgEnv-nvidia # on Polaris (default)
 # or:
 module load oneapi # on Aurora
 ```

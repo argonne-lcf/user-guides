@@ -1,5 +1,7 @@
 # Python
 
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
+
 At a future date, we will provide prebuilt `conda` environments containing CPU-optimized builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly used Python modules.
 
 In the meantime, users should be able to create their own local environments to begin work on Crux. In this example, `mpi4py` is installed.
