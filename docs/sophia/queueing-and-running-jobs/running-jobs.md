@@ -6,7 +6,7 @@ The majority of the nodes have the 40 GB A100 models, but two nodes contain the 
 You may request resources by node (with 8 GPUs) or by individual GPUs based on your job needs. 
 What you will get is determined by the queue you submit to (see Queues section below).
 
-## Queues
+## Queues: by-gpu, by-node, bigmem {#queues}
 
 There are three production queues you can target in your `qsub` command (`-q <queue name>`):
 

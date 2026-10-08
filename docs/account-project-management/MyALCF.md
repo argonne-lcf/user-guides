@@ -1,3 +1,8 @@
+---
+tags:
+  - Getting Started
+---
+
 # Getting Started on MyALCF
 
 ## Access MyALCF

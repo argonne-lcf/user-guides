@@ -1,6 +1,17 @@
+---
+tags:
+  - Authentication
+keywords:
+  - login
+  - log in
+  - sign in
+  - password
+  - "two-factor"
+---
+
 # Logging In with a Token
 
-Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
+ALCF systems require multi-factor authentication (MFA): you log in with a one-time passcode from a token. Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
 
 You can log in with a [Mobile Token](#logging-in-to-an-alcf-system-using-a-mobile-token) using your mobile device. 
 

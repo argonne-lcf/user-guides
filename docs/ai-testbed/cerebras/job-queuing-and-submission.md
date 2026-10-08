@@ -1,4 +1,9 @@
-# Job Queuing and Submission
+---
+tags:
+  - Job Submission
+---
+
+# Job Submission with csctl
 
 The CS-3 cluster has its own **Kubernetes-based** system for job submission and queuing.
 

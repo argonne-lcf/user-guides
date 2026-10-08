@@ -1,3 +1,9 @@
+---
+description: "Log in to the Graphcore login node and then to a Graphcore node on the ALCF AI Testbed."
+tags:
+  - Getting Started
+---
+
 # Getting Started
 
 Connection to a Graphcore node is a two-step process.

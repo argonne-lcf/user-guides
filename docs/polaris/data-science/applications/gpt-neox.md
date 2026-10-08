@@ -1,3 +1,9 @@
+---
+tags:
+  - LLMs
+  - Distributed Training
+---
+
 # Instructions for `gpt-neox`:
 
 We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://github.com/EleutherAI/gpt-neox) running on Polaris.

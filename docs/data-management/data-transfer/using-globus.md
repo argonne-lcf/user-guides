@@ -1,3 +1,13 @@
+---
+tags:
+  - Globus
+keywords:
+  - transfer
+  - endpoint
+  - collection
+  - DTN
+---
+
 # Using Globus
 
 [Globus](http://www.globus.org/) addresses the challenges faced by researchers in moving, sharing, and archiving large volumes of data among distributed sites. With Globus, you hand off data movement tasks to a hosted service that manages the entire operation. It monitors performance and errors, retries failed transfers, corrects problems automatically whenever possible, and reports status to keep you informed and focused on your research.

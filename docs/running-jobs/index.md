@@ -1,3 +1,9 @@
+---
+description: "Submit, monitor, and manage jobs with PBS on ALCF systems: qsub options, node placement, and job commands."
+search:
+  boost: 2
+---
+
 # Running Jobs using PBS
 
 ## Additional Resources / Documentation

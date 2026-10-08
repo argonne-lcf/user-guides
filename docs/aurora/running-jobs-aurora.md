@@ -1,7 +1,14 @@
+---
+tags:
+  - Job Submission
+search:
+  boost: 2
+---
+
 
 # Running Jobs on Aurora
 
-## Queues
+## Queues: debug, debug-scaling, prod, capacity, visualization {#queues}
 
 There are four production queues you can target in your qsub (`-q <queue name>`):
 

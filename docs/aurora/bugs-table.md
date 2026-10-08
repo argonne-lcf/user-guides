@@ -1,5 +1,7 @@
 ---
 template: standalone.html
+search:
+  exclude: true
 ---
 
 [< Back to Aurora Known Issues page](./known-issues.md)

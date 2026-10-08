@@ -1,3 +1,8 @@
+---
+tags:
+  - Known Issues
+---
+
 # Early User Notes and Known Issues
 
 _Last Updated: 2026-10-07_
@@ -228,6 +233,19 @@ To increase the chances that a large job does not terminate due to a node failur
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
 
+
+### Known Issues on Other Pages
+
+Some pages keep known issues for a specific tool or library in their own section:
+
+- [The `frameworks` module](data-science/frameworks/index.md#known-issues)
+- [DAOS](data-management/daos/daos-overview.md#known-issues-and-workarounds)
+- [Intel Sanitizer](debugging/Intel_sanitizer.md#known-issues-and-workarounds)
+- [Parsl](workflows/parsl.md#known-issues)
+- [VASP](applications-and-libraries/applications/vasp.md#known-issues)
+- [VTune](performance-tools/vtune.md#known-issues-and-workarounds)
+- [JupyterHub](../services/jupyter-hub.md#known-issues)
+- [Visual Studio Code with Remote SSH](../dev-environment/vscode.md#known-issues)
 
 ## Aurora Bug Tracking repository and table
 

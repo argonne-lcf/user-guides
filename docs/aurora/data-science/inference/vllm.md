@@ -1,5 +1,7 @@
 ---
-description: "Run LLM inference with vLLM on Aurora: the provided installation, memory sizing, and serving from one tile to many nodes."
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
+tags:
+  - LLMs
 ---
 
 # Inference with vLLM on Aurora

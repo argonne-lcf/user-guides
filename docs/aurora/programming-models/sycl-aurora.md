@@ -1,3 +1,8 @@
+---
+tags:
+  - SYCL
+---
+
 # SYCL on Aurora
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+tags:
+  - Getting Started
+---
+
 # Starting Your ALCF Award
 
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).

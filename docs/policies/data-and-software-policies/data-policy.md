@@ -1,3 +1,14 @@
+---
+keywords:
+  - purge
+  - purged
+  - purging
+  - retention
+  - data retention
+  - tape
+  - backup
+---
+
 # Data Policy
 
 ## ALCF Data Confidentiality

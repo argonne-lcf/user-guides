@@ -1,3 +1,13 @@
+---
+tags:
+  - Globus
+keywords:
+  - transfer
+  - endpoint
+  - collection
+  - DTN
+---
+
 # Transferring Files through Globus
 
 ## Flare filesystem

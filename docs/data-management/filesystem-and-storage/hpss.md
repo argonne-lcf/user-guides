@@ -1,3 +1,13 @@
+---
+keywords:
+  - archive
+  - archival
+  - tape archive
+  - hsi
+  - htar
+  - backup
+---
+
 # Using HPSS
 ## Overview
 
