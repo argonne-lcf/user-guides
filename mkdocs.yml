@@ -349,7 +349,7 @@ nav:
         - Applications and Libraries:
           - Applications:
             - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
-            - NekRS: aurora/applications-and-libraries/applications/nekrs.md
+            - nekRS: aurora/applications-and-libraries/applications/nekrs.md
             - VASP: aurora/applications-and-libraries/applications/vasp.md
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
@@ -492,7 +492,7 @@ nav:
           - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
           - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
           - NAMD: polaris/applications-and-libraries/applications/namd.md
-          - NekRS: polaris/applications-and-libraries/applications/nekrs.md
+          - nekRS: polaris/applications-and-libraries/applications/nekrs.md
           - OpenMM: polaris/applications-and-libraries/applications/openmm.md
           - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
           - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
