@@ -5,7 +5,7 @@ tags:
 
 # How To Obtain a Token
 
-Users need to acquire a token to log in to ALCF systems.
+Users need to acquire a token to log in to ALCF systems, which require multi-factor authentication (MFA).
 Users can choose between a Mobile or a Physical token.
 
 Note: Please contact [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) to
