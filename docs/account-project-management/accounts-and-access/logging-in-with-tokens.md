@@ -1,6 +1,12 @@
 ---
 tags:
   - Authentication
+keywords:
+  - login
+  - log in
+  - sign in
+  - password
+  - "two-factor"
 ---
 
 # Logging In with a Token

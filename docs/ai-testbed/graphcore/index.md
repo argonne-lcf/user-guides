@@ -1,3 +1,12 @@
+---
+keywords:
+  - ipu
+  - ipu pod
+  - bow
+  - poplar
+  - graphcore ipu
+---
+
 # System Overview
 <!---
 ## Introduction

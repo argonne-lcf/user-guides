@@ -1,3 +1,12 @@
+---
+keywords:
+  - compilers
+  - mpicc
+  - mpicxx
+  - mpifort
+  - icpx
+---
+
 # Compiling and Linking Overview
 
 ## Compiling on Aurora Login and Compute Nodes

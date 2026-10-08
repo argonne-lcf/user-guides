@@ -1,6 +1,16 @@
 ---
 tags:
   - Known Issues
+keywords:
+  - why is my job not running
+  - job not running
+  - job failed
+  - job pending
+  - job queued
+  - job stuck
+  - job held
+  - job disappeared
+  - job array never runs
 ---
 
 # Common PBS Issues & Troubleshooting

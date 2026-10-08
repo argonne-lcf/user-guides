@@ -1,6 +1,11 @@
 ---
 tags:
   - Allocations
+keywords:
+  - hours left
+  - remaining hours
+  - balance
+  - "node-hours"
 ---
 
 # Managing Your Allocations

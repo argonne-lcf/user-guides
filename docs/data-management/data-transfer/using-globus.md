@@ -1,6 +1,11 @@
 ---
 tags:
   - Globus
+keywords:
+  - transfer
+  - endpoint
+  - collection
+  - DTN
 ---
 
 # Using Globus

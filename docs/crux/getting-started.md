@@ -2,6 +2,10 @@
 description: "First steps on Crux: logging in, compiling, additional software, running jobs, Lustre striping, and proxy settings."
 tags:
   - Getting Started
+keywords:
+  - stripe count
+  - lfs setstripe
+  - striping
 ---
 
 # Getting Started on Crux

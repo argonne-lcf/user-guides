@@ -2,6 +2,10 @@
 description: "First steps on Aurora: logging in, compiling, running jobs, Python, file systems and DAOS, proxy settings, and help."
 tags:
   - Getting Started
+keywords:
+  - stripe count
+  - lfs setstripe
+  - striping
 ---
 
 # Getting Started on Aurora

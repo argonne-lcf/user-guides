@@ -1,3 +1,11 @@
+---
+keywords:
+  - model zoo
+  - cerebras model zoo
+  - wafer scale
+  - run a model
+---
+
 
 # Running a Model/Program
 

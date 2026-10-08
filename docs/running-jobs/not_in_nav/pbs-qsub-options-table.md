@@ -1,3 +1,16 @@
+---
+keywords:
+  - qsub options
+  - PBS options
+  - -A account
+  - -l select
+  - -l walltime
+  - -l place
+  - -q queue
+  - walltime
+  - interactive -I
+---
+
 # PBS Pro `qsub` Options
 
 Version 1.2 2021-04-28 

@@ -1,6 +1,10 @@
 ---
 tags:
   - File Systems
+keywords:
+  - stripe count
+  - lfs setstripe
+  - striping
 ---
 
 # Flare Filesystem

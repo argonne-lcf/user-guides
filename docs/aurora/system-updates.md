@@ -1,6 +1,10 @@
 ---
 tags:
   - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
 ---
 
 # Aurora System Updates
