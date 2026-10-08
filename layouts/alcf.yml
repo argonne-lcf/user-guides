@@ -39,6 +39,15 @@
 
 definitions:
 
+  # Background image (default: none), a file name in layouts/backgrounds/.
+  # The plugin crops it to cover the card, then paints background_color over
+  # it, so give that color an alpha channel (e.g. "#1D1651BF") to let the
+  # image show through, or "transparent" for an image that is already tinted.
+  - &background_image >-
+    {%- if layout.background_image -%}
+      {{ config.docs_dir ~ "/../layouts/backgrounds/" ~ layout.background_image }}
+    {%- endif -%}
+
   # Background color (default: --blue_med, the site header color)
   - &background_color >-
     {{ layout.background_color or "#0061AF" }}
@@ -121,6 +130,7 @@ layers:
 
   # Background
   - background:
+      image: *background_image
       color: *background_color
 
   # Logo, in place of the default layout's site-name text. The plugin renders

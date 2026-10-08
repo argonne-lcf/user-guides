@@ -1,2 +1,6 @@
 tags:
   - Aurora
+social:
+  cards_layout_options:
+    background_image: aurora.jpg
+    background_color: "#0061AFBF"  # --blue_med at 75%, over the photo

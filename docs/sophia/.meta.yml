@@ -1,2 +1,6 @@
 tags:
   - Sophia
+social:
+  cards_layout_options:
+    background_image: sophia.jpg
+    background_color: "#0061AFBF"  # --blue_med at 75%, over the photo

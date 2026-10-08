@@ -1,2 +1,6 @@
 tags:
   - Crux
+social:
+  cards_layout_options:
+    background_image: crux.jpg
+    background_color: "#0061AFBF"  # --blue_med at 75%, over the photo
