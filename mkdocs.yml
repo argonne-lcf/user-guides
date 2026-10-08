@@ -257,6 +257,12 @@ plugins:
         - Molecular Dynamics
         - Classical ML
         - Known Issues
+        - System Updates
+        - Electronic Structure
+        - Allocations
+        - AI Agents
+        - CFD
+        - Continuous Integration
   # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
   # the system Cairo library, so like optimize it runs only in CI (CI=true
   # there). Card design (logo, colors, font) is in layouts/alcf.yml.
