@@ -40,12 +40,13 @@ then you've reached the limit for the max number of jobs you can have both runni
 Please see [Aurora Queues](../aurora/running-jobs-aurora.md#queues), [Polaris Queues](../polaris/running-jobs/index.md#queues), or [Sophia Queues](../sophia/queueing-and-running-jobs/running-jobs.md#queues) 
 for details on the available queues and their individual per-user or per-job running+queued maximums.
 
-!!! warning "If you DO NOT have any running or queued jobs"
+/// warning | If you DO NOT have any running or queued jobs
 
-    If you are receiving this error message when attempting to submit to one of the debug queues and DO NOT have any 
-    actively running or queued jobs in the queue you are attempting to submit to, please email ALCF Support at 
-    support@alcf.anl.gov and include your ALCF user ID, what system you are on, and what queue you are attempting to 
-    submit to.
+If you are receiving this error message when attempting to submit to one of the debug queues and DO NOT have any 
+actively running or queued jobs in the queue you are attempting to submit to, please email ALCF Support at 
+support@alcf.anl.gov and include your ALCF user ID, what system you are on, and what queue you are attempting to 
+submit to.
+///
 
 ## Error: ```No active allocation found for project```...
 
@@ -54,10 +55,11 @@ then your project allocation has expired. You can submit an allocation renewal [
 
 ## Common PBS Comments and their Meanings
 
-!!! tip "Viewing PBS job comments"
+/// tip | Viewing PBS job comments
 
-    You can view the PBS comment assocated with your job ID with the following command: 
-    qstat -was1 <jobid>
+You can view the PBS comment assocated with your job ID with the following command: 
+qstat -was1 <jobid>
+///
 
 ### Comment: ```job held, too many failed attempts to run```
 
@@ -79,11 +81,12 @@ This is usually caused by the following:
 The ```Not Running: Not enough free nodes available``` comment is the most common comment to see when a job is still in the queued state. 
 This means that the resources you requested for your job are not yet available (i.e, if you requested 400 nodes, then there are not 400 nodes free yet due to other running jobs).
 
-!!! warning "PBS ncpu and ngpu Flag Values"
+/// warning | PBS ncpu and ngpu Flag Values
 
-    On Polaris and Aurora, the PBS 'ncpus' and 'ngpus' values are PER-NODE, not total for the job. 
-    If you request an ncpu value that's greater than the total number of CPUs per compute node (i.e., ncpus=256) 
-    your job will never run, as the resource(s) you are requesting doesn't exist.
+On Polaris and Aurora, the PBS 'ncpus' and 'ngpus' values are PER-NODE, not total for the job. 
+If you request an ncpu value that's greater than the total number of CPUs per compute node (i.e., ncpus=256) 
+your job will never run, as the resource(s) you are requesting doesn't exist.
+///
 
 ### Comment: ```Not Running: Job is requesting an exclusive node and node is in use```
 

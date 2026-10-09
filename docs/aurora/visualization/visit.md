@@ -28,17 +28,20 @@ Additional information for using VisIt in client/server mode is available [here]
 
   ![Open File](images/Visit-options.png)
 
-!!! warning
+/// warning
 
-    Don't change the contents of the "Machine file" field (it should be `$PBS_NODEFILE`).
+Don't change the contents of the "Machine file" field (it should be `$PBS_NODEFILE`).
+///
     
-!!! tip 
+/// tip
 
-    The default Launch Profile is set to serial. We recommend leaving this setting in its default value, but using the parallel method to launch jobs on Aurora.
+The default Launch Profile is set to serial. We recommend leaving this setting in its default value, but using the parallel method to launch jobs on Aurora.
+///
 
-!!! warning
-    
-    Don't change the contents of "launchMethod". It must be `qsub/aprun` even though Aurora does not use `aprun`.
+/// warning
+
+Don't change the contents of "launchMethod". It must be `qsub/aprun` even though Aurora does not use `aprun`.
+///
 
 
   - The Aurora host profile linked above contains an empty user name. Make sure to update with your user name.

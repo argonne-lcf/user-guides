@@ -15,95 +15,99 @@ ALCF provides curated `conda` environments with useful packages installed out of
 
 ## Creating Environments
 
-=== "uv"
+/// tab | uv
 
-    Verify that `uv` is installed:
+Verify that `uv` is installed:
 
-    ```bash
-    uv --version
-    ```
+```bash
+uv --version
+```
 
-    If not, install `uv`:
+If not, install `uv`:
 
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    ```
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-    Create and activate your environment, using a specific Python version:
+Create and activate your environment, using a specific Python version:
 
-    ```bash
-    uv venv --python 3.13 .venv
-    source .venv/bin/activate
-    ```
+```bash
+uv venv --python 3.13 .venv
+source .venv/bin/activate
+```
 
-    Install packages with `uv pip install` instead of `pip install`:
+Install packages with `uv pip install` instead of `pip install`:
 
-    ```bash
-    uv pip install <package>
-    ```
+```bash
+uv pip install <package>
+```
 
-    Optionally, if you would rather not create an environment at all, `uv run --with <package> python` starts Python with that package in a throwaway environment.
+Optionally, if you would rather not create an environment at all, `uv run --with <package> python` starts Python with that package in a throwaway environment.
+///
 
-=== "venv"
+/// tab | venv
 
-    Verify that `venv` is installed:
+Verify that `venv` is installed:
 
-    ```bash
-    python -m venv --help
-    ```
+```bash
+python -m venv --help
+```
 
-    Create and activate your environment:
+Create and activate your environment:
 
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate
-    ```
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-    The environment inherits the Python version of your `python` command:
+The environment inherits the Python version of your `python` command:
 
-    ```bash
-    python --version
-    ```
+```bash
+python --version
+```
 
-    Install packages into the activated environment with `pip install`:
+Install packages into the activated environment with `pip install`:
 
-    ```bash
-    pip install <package>
-    ```
+```bash
+pip install <package>
+```
+///
 
-=== "conda"
+/// tab | conda
 
-    Verify that `conda` is installed:
+Verify that `conda` is installed:
 
-    ```bash
-    conda --version
-    ```
+```bash
+conda --version
+```
 
-    Check which conda installation you are using:
+Check which conda installation you are using:
 
-    ```bash
-    conda info | grep "base environment"
-    ```
+```bash
+conda info | grep "base environment"
+```
 
-    If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide conda through module files.
+If you need to install conda, use [Miniforge](https://github.com/conda-forge/miniforge). ALCF systems also provide conda through module files.
 
-    !!! warning "Package channels"
+//// warning | Package channels
 
-        ALCF's shared environments use [Miniforge](https://github.com/conda-forge/miniforge) and the `conda-forge` channel.
-        Use `conda-forge` for your own environments, and avoid re-adding the `defaults` channel, which is subject to commercial licensing terms.
+ALCF's shared environments use [Miniforge](https://github.com/conda-forge/miniforge) and the `conda-forge` channel.
+Use `conda-forge` for your own environments, and avoid re-adding the `defaults` channel, which is subject to commercial licensing terms.
+////
 
-    Create and activate your environment, using a specific Python version:
+Create and activate your environment, using a specific Python version:
 
-    ```bash
-    conda create -n my-env python=3.13 -y
-    conda activate my-env
-    ```
+```bash
+conda create -n my-env python=3.13 -y
+conda activate my-env
+```
 
-    Install packages into the activated environment with `pip install`:
+Install packages into the activated environment with `pip install`:
 
-    ```bash
-    pip install <package>
-    ```
+```bash
+pip install <package>
+```
+///
 
 All of these install into your own directories. None of them needs `sudo`, and none writes to the system Python. Prefer an activated environment over `pip install --user`, since it keeps each project's packages separate and avoids conflicts with the system and Spack Python installations. Activate the environment, or use `uv run`, in every new shell, including inside job scripts.
 

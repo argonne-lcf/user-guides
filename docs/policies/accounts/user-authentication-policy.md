@@ -17,13 +17,14 @@ ALCF provides every user of the production resources a physical or mobile token.
 
 At the end of your account or project lifecycle, the physical token must be returned to ALCF Support:
 
-!!! abstract "Mailing Address"
+/// abstract | Mailing Address
 
-	ALCF Service Desk<br>
-	Argonne National Laboratory<br>
-	9700 South Cass Avenue<br>
-	Building 240, Room 2129<br>
-	Lemont, IL 60439<br>
+ALCF Service Desk<br>
+Argonne National Laboratory<br>
+9700 South Cass Avenue<br>
+Building 240, Room 2129<br>
+Lemont, IL 60439<br>
+///
 
 ## Protecting Your Passcode Token
 

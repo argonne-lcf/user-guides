@@ -11,7 +11,8 @@ A Parsl workflow contains two parts:
 
 Here we sketch out some possible configurations for executing workflows on Aurora.  
 
-!!! info "These docs were written for Parsl 2025.1.13."
+/// info | These docs were written for Parsl 2025.1.13.
+///
 
 ## Installation and Setup
 Parsl is a Python library and can be installed with `pip`.  For example, in a Python virtual environment:
@@ -22,8 +23,9 @@ source $HOME/_env/bin/activate
 pip install parsl
 ```
 
-!!! info "Python on Aurora"
-	To get Python on Aurora, users can either load the AI frameworks module with `module load frameworks` or the basic Python module with `module load python/3.10.14` (or `module load python/3.12.12`, the default)
+/// info | Python on Aurora
+To get Python on Aurora, users can either load the AI frameworks module with `module load frameworks` or the basic Python module with `module load python/3.10.14` (or `module load python/3.12.12`, the default)
+///
 
 When using Parsl to distribute work over many PBS Jobs (first two examples below), your workflow script will be executed on a login node and will not return until all tasks are completed.  In this situation, it is advisable to run your script in a [screen](https://linuxize.com/post/how-to-use-linux-screen/) session on the login node.
 
@@ -343,7 +345,8 @@ Note that if the workflow does not complete before the end of the PBS job, outst
 
 ## Known Issues
 
-!!! warning
+/// warning
 
-	Starting in October 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` when using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+Starting in October 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` when using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+///
 	

@@ -19,9 +19,10 @@ Data is not encrypted at rest. Data transferred via SSH (i.e., scp) is encrypted
 
 The basic level of protection provided is UNIX file level permissions; it is the user's responsibility to ensure that file permissions and umasks are set to match their needs.
 
-!!! warning
+/// warning
 
-	The default permissions and umasks are group and world readable. For help determining or setting file permissions or umasks, or creating a UNIX group, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+The default permissions and umasks are group and world readable. For help determining or setting file permissions or umasks, or creating a UNIX group, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+///
 
 ## ALCF Staff with Root Privileges
 
@@ -72,9 +73,10 @@ The team project file system is intended primarily for results output from your 
 
 All options are explained below.
 
-!!! warning "Pullback Policy"
+/// warning | Pullback Policy
 
-    Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+///
 
 #### AI Testbed Projects File System
 
@@ -85,20 +87,22 @@ The team project file system `/projects` mounted on AI Testbed's login and compu
 These Lustre global parallel file systems have community sharing abilities and are useful for providing access to the project data with the broader research community via Globus. Unlike Team Project storage, this space does **not** have built-in redundancy in the servers or storage, and is so large that replication, snapshots, and backups are not practical.
 Default storage quota is 1 TB and the default period is 2 years. <!-- unlike 1 year default for Team Project -->
 
-!!! warning "Data Pullback Policy"
+/// warning | Data Pullback Policy
 
-    Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+Projects that do not use a minimum of 50% of their allocated space after 6 months will be subject to a quota limit reduction.
+///
 
-!!! warning "Access Termination Policy"
+/// warning | Access Termination Policy
 
-    Project endpoints that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+Project endpoints that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
-    Activity is defined as, but not limited to:
+Activity is defined as, but not limited to:
 
-    - Creation of the Globus endpoint
-    - Globus transfers to and from the endpoint
-    - `atime` (access timestamp) audits of data files
-    - Other factors may include DOIs and citations referring to the project
+- Creation of the Globus endpoint
+- Globus transfers to and from the endpoint
+- `atime` (access timestamp) audits of data files
+- Other factors may include DOIs and citations referring to the project
+///
 
 ### Archive Space
 

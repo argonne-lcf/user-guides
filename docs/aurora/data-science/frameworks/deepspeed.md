@@ -29,16 +29,17 @@ However, if a user needs an updated version, it should be installed outside the 
 
 We describe below the steps needed to get started with DeepSpeed on Aurora.
 
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `uan-00xx`):
-    ```bash
-    qsub -A <project> -q debug -l filesystems=<fs1:fs2> -l select=1 -l walltime=01:00:00 -I
-    ```
+Explicitly, to request an interactive job (from `uan-00xx`):
+```bash
+qsub -A <project> -q debug -l filesystems=<fs1:fs2> -l select=1 -l walltime=01:00:00 -I
+```
 
-    Refer to [job scheduling and execution](../../running-jobs-aurora.md) for additional information.
+Refer to [job scheduling and execution](../../running-jobs-aurora.md) for additional information.
+///
 
 1. Load `frameworks` module:
 
@@ -70,84 +71,90 @@ git clone https://github.com/microsoft/DeepSpeedExamples.git
 cd DeepSpeedExamples/training/cifar
 ```
 
-!!! example "Launching DeepSpeed"
-    In both examples, the `train_batch_size` variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
+/// example | Launching DeepSpeed
+In both examples, the `train_batch_size` variable needs to be modified from 16 to 12 in the DeepSpeed config embedded in the function `get_ds_config()` from the Python file `cifar10_deepspeed.py`. This is because the default of 16 is not compatible with the 12 ranks per node we are launching with. DeepSpeed features can be further modified in the DeepSpeed config, and the full feature set is described in the [DeepSpeed documentation](https://deepspeed.readthedocs.io/en/latest/).
 
-    === "Launching with MPICH"
+//// tab | Launching with MPICH
 
-        1. Get the total number of available GPUs:
-            1. Count the number of lines in `$PBS_NODEFILE` (1 host per line)
-            2. Count the number of GPUs available on the current host
-            3. `NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"`
-        ```bash
-        NHOSTS=$(wc -l < "${PBS_NODEFILE}")
-        NGPU_PER_HOST=12
-        NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"
-        ```
+1. Get the total number of available GPUs:
+    1. Count the number of lines in `$PBS_NODEFILE` (1 host per line)
+    2. Count the number of GPUs available on the current host
+    3. `NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"`
+```bash
+NHOSTS=$(wc -l < "${PBS_NODEFILE}")
+NGPU_PER_HOST=12
+NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"
+```
 
-        2. Launch with `mpiexec`:
-        ```bash
-        mpiexec \
-          --verbose \
-          --envall \
-          -n "${NGPUS}" \
-          --ppn "${NGPU_PER_HOST}" \
-          --hostfile="${PBS_NODEFILE}" \
-          python3 \
-            cifar10_deepspeed.py
-        ```
+2. Launch with `mpiexec`:
+```bash
+mpiexec \
+  --verbose \
+  --envall \
+  -n "${NGPUS}" \
+  --ppn "${NGPU_PER_HOST}" \
+  --hostfile="${PBS_NODEFILE}" \
+  python3 \
+    cifar10_deepspeed.py
+```
+////
 
-    === "Launching with DeepSpeed"
+//// tab | Launching with DeepSpeed
 
-        1. Create a DeepSpeed compliant `hostfile`, specifying the `hostname` and number of GPUs (`slots`) for each of our available workers (more info [here](https://www.deepspeed.ai/getting-started/#resource-configuration-multi-node)):
-        ```bash
-        cat $PBS_NODEFILE > hostfile
-        sed -e 's/$/ slots=12/' -i hostfile
-        ```
+1. Create a DeepSpeed compliant `hostfile`, specifying the `hostname` and number of GPUs (`slots`) for each of our available workers (more info [here](https://www.deepspeed.ai/getting-started/#resource-configuration-multi-node)):
+```bash
+cat $PBS_NODEFILE > hostfile
+sed -e 's/$/ slots=12/' -i hostfile
+```
 
-        2. Create a `.deepspeed_env` (more info [here](https://www.deepspeed.ai/getting-started/#multi-node-environment-variables)) containing the environment variables our workers will need access to:
-        ```bash
-        echo "PATH=${PATH}" >> .deepspeed_env
-        echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> .deepspeed_env
-        echo "http_proxy=${http_proxy}" >> .deepspeed_env
-        echo "https_proxy=${https_proxy}" >> .deepspeed_env
-        ```
+2. Create a `.deepspeed_env` (more info [here](https://www.deepspeed.ai/getting-started/#multi-node-environment-variables)) containing the environment variables our workers will need access to:
+```bash
+echo "PATH=${PATH}" >> .deepspeed_env
+echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> .deepspeed_env
+echo "http_proxy=${http_proxy}" >> .deepspeed_env
+echo "https_proxy=${https_proxy}" >> .deepspeed_env
+```
 
-        !!! warning
+///// warning
 
-            The `.deepspeed_env` file expects each line to be of the form `KEY=VALUE`. Each of these will then be set as environment variables on each available worker specified in our `hostfile`.
+The `.deepspeed_env` file expects each line to be of the form `KEY=VALUE`. Each of these will then be set as environment variables on each available worker specified in our `hostfile`.
+/////
 
-        We can then run the `cifar10_deepspeed.py` module using DeepSpeed:
-        ```bash
-        deepspeed --hostfile=hostfile cifar10_deepspeed.py \
-            --deepspeed 
-        ```
+We can then run the `cifar10_deepspeed.py` module using DeepSpeed:
+```bash
+deepspeed --hostfile=hostfile cifar10_deepspeed.py \
+    --deepspeed 
+```
+////
+///
 
-???- bug "`AssertionError: Micro batch size per gpu: 0 has to be greater than 0`"
+/// details | `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`
+    type: bug
 
-    Depending on the details of your specific job, it may be necessary to modify the provided `ds_config.json`.
+Depending on the details of your specific job, it may be necessary to modify the provided `ds_config.json`.
 
-    If you encounter an error:
-    ```
-    x3202c0s31b0n0: AssertionError: Micro batch size per gpu: 0 has to be greater than 0
-    ```
-    you can modify the `#!json "train_batch_size": 16` variable in the provided `ds_config.json` to the (total) number of available GPUs, and explicitly set `#!json "gradient_accumulation_steps": 1`, as shown below.
-    ```bash
-    $ export NHOSTS=$(wc -l < "${PBS_NODEFILE}")
-    $ export NGPU_PER_HOST=$(nvidia-smi -L | wc -l)
-    $ export NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"
-    $ echo $NHOSTS $NGPU_PER_HOST $NGPUS
-    24 4 96
-    $ # replace "train_batch_size" with $NGPUS in ds_config.json
-    $ # and write to `ds_config-polaris.json`
-    $ sed \
-        "s/$(cat ds_config.json| grep batch | cut -d ':' -f 2)/ ${NGPUS},/" \
-        ds_config.json \
-        > ds_config-polaris.json
-    $ cat ds_config-polaris.json
-    {
-        "train_batch_size": 96,
-        "gradient_accumulation_steps": 1,
-        ...
-    }
-    ```
+If you encounter an error:
+```
+x3202c0s31b0n0: AssertionError: Micro batch size per gpu: 0 has to be greater than 0
+```
+you can modify the `#!json "train_batch_size": 16` variable in the provided `ds_config.json` to the (total) number of available GPUs, and explicitly set `#!json "gradient_accumulation_steps": 1`, as shown below.
+```bash
+$ export NHOSTS=$(wc -l < "${PBS_NODEFILE}")
+$ export NGPU_PER_HOST=$(nvidia-smi -L | wc -l)
+$ export NGPUS="$((${NHOSTS}*${NGPU_PER_HOST}))"
+$ echo $NHOSTS $NGPU_PER_HOST $NGPUS
+24 4 96
+$ # replace "train_batch_size" with $NGPUS in ds_config.json
+$ # and write to `ds_config-polaris.json`
+$ sed \
+    "s/$(cat ds_config.json| grep batch | cut -d ':' -f 2)/ ${NGPUS},/" \
+    ds_config.json \
+    > ds_config-polaris.json
+$ cat ds_config-polaris.json
+{
+    "train_batch_size": 96,
+    "gradient_accumulation_steps": 1,
+    ...
+}
+```
+///

@@ -39,8 +39,9 @@ The first time you want to run a server on Sophia and have it connect to your lo
 
 Kitware, the developers of ParaView, maintain a database of server configurations which you can retrieve through the ParaView client.
 
-!!! note "NOTE"
-    At this time, there are no specific files for Sophia available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac](serverfiles/sophia.pvsc) [Windows](serverfiles/windowsToSophia.pvsc)
+/// note | NOTE
+At this time, there are no specific files for Sophia available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac](serverfiles/sophia.pvsc) [Windows](serverfiles/windowsToSophia.pvsc)
+///
 
 <!--
 ![Load servers](images/ParaviewFetchServers.png){ width="700" }

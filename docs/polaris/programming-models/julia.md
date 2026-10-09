@@ -1,16 +1,18 @@
 # Julia
-!!! example "Experimental support"
+/// example | Experimental support
 
-    Support for the Julia programming language on Polaris is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+Support for the Julia programming language on Polaris is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+///
 
 ## Introduction
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
 This guide details how to configure and run Julia on the Polaris supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
 
-!!! example "Contributing"
+/// example | Contributing
 
-    This guide is a first draft of the Julia documentation for Polaris. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+This guide is a first draft of the Julia documentation for Polaris. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+///
 
 All the source files used in this documentation are located at [https://github.com/anlsys/julia_alcf](https://github.com/anlsys/julia_alcf). Feel free to open PRs!
 

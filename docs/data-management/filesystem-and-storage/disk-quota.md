@@ -21,8 +21,9 @@ userX                         User     /lus/agile         44.13G          50.00G
 ```
 
 
-!!! note
-    To view the sizes of your files & subdirectories (including hidden files & directories) within your home directory from largest to smallest, you should use the following command: `du -chs * .[^.]* | sort -hr`
+/// note
+To view the sizes of your files & subdirectories (including hidden files & directories) within your home directory from largest to smallest, you should use the following command: `du -chs * .[^.]* | sort -hr`
+///
 
 
 ## Project Directory Quotas

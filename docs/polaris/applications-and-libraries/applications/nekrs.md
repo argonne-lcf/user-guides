@@ -45,9 +45,10 @@ nekRS uses CMake to build and install the software package. The `BuildMe.Polaris
 <!-- --8<-- [start:build] -->
 The script builds in a directory named `RBK_built.on.<date>` inside the repository (with a symbolic link `current` pointing to it) and installs nekRS to `.local/nekrs` in the directory **one level above** the repository. For example, if the repository was cloned into `$HOME/nekRS_alcf`, nekRS is installed in `$HOME/.local/nekrs`. Edit `NEKRS_HOME` in the script to install elsewhere.
 
-!!! tip "Build on a compute node"
+/// tip | Build on a compute node
 
-    The build (hypre, OCCA, Nek5000, and nekRS) is sizable. The per-user limits on the login nodes can cause the build to fail or run slowly, so we recommend building within an interactive job on a compute node, for example in the `debug` queue.
+The build (hypre, OCCA, Nek5000, and nekRS) is sizable. The per-user limits on the login nodes can cause the build to fail or run slowly, so we recommend building within an interactive job on a compute node, for example in the `debug` queue.
+///
 <!-- --8<-- [end:build] -->
 
 The script uses the following modules, which must also be loaded when running nekRS (see the job script below):
@@ -75,12 +76,13 @@ export PATH=$NEKRS_HOME/bin:$PATH
 Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `source $HOME/.bashrc` in the current terminal window.
 <!-- --8<-- [end:env] -->
 
-!!! warning "Rebuild after system software upgrades"
+/// warning | Rebuild after system software upgrades
 
-    <!-- --8<-- [start:conf] -->
-    nekRS records the compilers and flags used at build time in `$NEKRS_HOME/nekrs.conf` and reuses them to compile kernels and case files at run time.
-    <!-- --8<-- [end:conf] -->
-    Installations built before the August 2026 Polaris upgrade (which removed `gcc-native/13.2` and older Cray PE releases) will not work and must be rebuilt from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+<!-- --8<-- [start:conf] -->
+nekRS records the compilers and flags used at build time in `$NEKRS_HOME/nekrs.conf` and reuses them to compile kernels and case files at run time.
+<!-- --8<-- [end:conf] -->
+Installations built before the August 2026 Polaris upgrade (which removed `gcc-native/13.2` and older Cray PE releases) will not work and must be rebuilt from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+///
 
 ## Running Jobs on Polaris
 

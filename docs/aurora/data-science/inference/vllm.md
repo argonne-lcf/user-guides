@@ -25,8 +25,9 @@ Then, you can import `vllm` as follows
 ## Known Issue on Aurora
 `CCL_PROCESS_LAUNCHER` is set to `pmix` through the `frameworks` module, which leads to a warning `|CCL_WARN| PMIx_Init failed: PMIX_ERR_UNREACH`, but it appears that `vllm` recovers, and performance is not affected. Cleanest is to set this variable either to `none` or `torchrun`. Based on our tests, we have found setting this to be **optional**.
 
-!!! tip
-    Do not forget to [set the proxies](../../getting-started-on-aurora.md#proxy) on the compute node if you download directly from the job.
+/// tip
+Do not forget to [set the proxies](../../getting-started-on-aurora.md#proxy) on the compute node if you download directly from the job.
+///
 
 ## Access Model Weights
 
@@ -102,11 +103,13 @@ vllm serve meta-llama/Llama-3.3-70B-Instruct --port 8000 --tensor-parallel-size 
 
 To serve models across multiple nodes, vLLM uses Ray to launch processes across nodes. We suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
 
-??? example "Setup script"
+/// details | Setup script
+    type: example
 
-	```bash linenums="1" title="setup_ray_cluster.sh"
-    --8<-- "./docs/aurora/data-science/inference/setup_ray_cluster.sh"
-	```
+```bash linenums="1" title="setup_ray_cluster.sh"
+--8<-- "./docs/aurora/data-science/inference/setup_ray_cluster.sh"
+```
+///
 
 The following example serves `meta-llama/Llama-3.1-405B-Instruct` model using 2 nodes. It sets tensor parallelism `TP=8` for intra-node communications and pipeline parallelism `PP=2` for inter-node communication, for a total of 16 shards. 
 
@@ -117,8 +120,9 @@ ray status # should show 2 active nodes and 16 GPUs total
 vllm serve meta-llama/Llama-3.1-405B-Instruct --port 8000 --tensor-parallel-size 8 --pipeline-parallel-size 2 --distributed-executor-backend ray --dtype bfloat16 --trust-remote-code --max-model-len 8192 --enforce-eager
 ```
 
-!!! info "Additional Notes on Ray"
-    * By default, `setup_ray_cluster.sh` launches a ray cluster with 8 raylets per node by specifing `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:0,1,2,3,4,5,6,7"` and `--num-gpus=8`. This matches the `vllm serve` command with `TP=8`. This is the recommended setup, however if users want to change the TP size, remember to also change the number of GPUs in the Ray setup script. 
+/// info | Additional Notes on Ray
+* By default, `setup_ray_cluster.sh` launches a ray cluster with 8 raylets per node by specifing `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:0,1,2,3,4,5,6,7"` and `--num-gpus=8`. This matches the `vllm serve` command with `TP=8`. This is the recommended setup, however if users want to change the TP size, remember to also change the number of GPUs in the Ray setup script. 
+///
 
 ## Guidelines for vLLM Model Serving
 
@@ -177,11 +181,13 @@ more short requests can be served concurrently. Concurrency can be capped by `--
 
 If your workflow does not need the model's full context window, it is recommended to set `--max-model-len` to a smaller value to increase the concurrency of requests that can be served.
 
-!!! info "Supported data types on Intel Max 1550 GPU"
-	Note that `fp8` is not supported on Aurora's Intel GPU, so `bfloat16` is the recommended setting for the data type and `--kv-cache-dtype` cannot be used to easily reduce the size of the KV cache. Use the memory parameters `--gpu-memory-utilization` and `--kv-cache-memory-bytes` to directly limit the KV cache size or use `--max-model-len` to reduce the context window.
+/// info | Supported data types on Intel Max 1550 GPU
+Note that `fp8` is not supported on Aurora's Intel GPU, so `bfloat16` is the recommended setting for the data type and `--kv-cache-dtype` cannot be used to easily reduce the size of the KV cache. Use the memory parameters `--gpu-memory-utilization` and `--kv-cache-memory-bytes` to directly limit the KV cache size or use `--max-model-len` to reduce the context window.
+///
 
-!!! info "Applicability to MoE and MLA models"
-	While the weight memory estimate holds for all model types, the KV cache estimates above assume a dense model using standard multi-head or grouped-query attention (MHA/GQA) or a Mixture of Experts (MoE) model. For Multi-head Latent Attention (MLA) models or those with interleved local-global attention, the KV cache formula does not apply and will overestimate the memory required. 
+/// info | Applicability to MoE and MLA models
+While the weight memory estimate holds for all model types, the KV cache estimates above assume a dense model using standard multi-head or grouped-query attention (MHA/GQA) or a Mixture of Experts (MoE) model. For Multi-head Latent Attention (MLA) models or those with interleved local-global attention, the KV cache formula does not apply and will overestimate the memory required. 
+///
 
 
 ### Determining the number of GPUs 
