@@ -11,10 +11,10 @@ Review rules for pull requests to the ALCF User Guides (MkDocs, Material theme).
 5. A moved, renamed, or deleted page whose URL is listed in `includes/validate-inbound-URLs.txt`, or a moved page without a `redirect_maps` entry.
 6. Changes to submodule pointers (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) in a PR that isn't about them. Edits to `docs/inbound-links.md` or `site/`.
 7. Code blocks with a `$ ` prompt on commands meant to be copied, `shell`/`sh` instead of `bash`, no language, or sample output in the same block as the commands (output goes in `{ .output .no-copy }`).
-8. Nested content indented 2–3 spaces or with tabs: list items, and admonition, `???`, and `===` bodies need 4 spaces.
+8. Nested content indented 2–3 spaces or with tabs: nested list items, and `///` blocks inside list items, need 4 spaces. Legacy `!!!`, `???`, or `===` blocks, which render as plain text; indented `///` block bodies, which render as code; a nested `///` block with the same number of slashes as the block around it.
 9. `<placeholder>` text outside backticks or code blocks; it disappears. Prose with two bare `$` (e.g. `$HOME ... $USER`), which can render as math.
 10. Pages with more than one `# H1`, skipped heading levels, or headings without a space after `#`.
-11. Raw HTML where the site has a feature for it: `<details>` instead of `???`, HTML admonitions instead of `!!!`.
+11. Raw HTML where the site has a feature for it: `<details>` instead of `/// details`, HTML admonitions instead of `/// note`.
 12. Links to other pages as `docs.alcf.anl.gov` URLs instead of relative `.md` paths; link text like "here".
 13. Examples with a real person's project, username, or home path. Placeholders other than `<username>`, `<project>`, `<jobid>`, `<queue>`, `<path>` (e.g. `<project_name>`, `MYPROJECT`, `<job_id>`), or `<username>` in commands run on ALCF systems where `$USER` works.
 14. Snippet includes (`--8<--`) with page-relative paths; they're relative to the repo root.
@@ -24,7 +24,6 @@ Review rules for pull requests to the ALCF User Guides (MkDocs, Material theme).
 
 ## Don't flag
 
-- Legacy `!!! note` admonitions, `???` details, and `===` tabs. They're the current syntax.
 - Line wrapping style in new text, as long as existing lines aren't re-wrapped.
 - Wording or style preferences in otherwise correct text.
 - Content inside the submodule directories; it's edited upstream.

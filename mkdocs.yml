@@ -90,7 +90,6 @@ extra_javascript:
 
 markdown_extensions:
   - footnotes
-  - admonition
   - tables
   - attr_list
   - md_in_html
@@ -118,16 +117,12 @@ markdown_extensions:
       auto_append:
         - includes/abbreviations.md
   - pymdownx.superfences
-  - pymdownx.details
   - pymdownx.inlinehilite
   - pymdownx.highlight:
       use_pygments: true
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
-  - pymdownx.tabbed:
-      alternate_style: true
-      combine_header_slug: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.arithmatex:
@@ -145,6 +140,12 @@ markdown_extensions:
   - pymdownx.bracketspan
   # Requires a space after '#' for headings; guards against unfenced '#PBS'/'#!' lines.
   - pymdownx.saneheaders
+  - pymdownx.blocks.admonition:
+      # Material's admonition types; blocks.admonition defaults to a shorter list.
+      types: [note, abstract, info, tip, success, question, warning, failure, danger, bug, example, quote]
+  - pymdownx.blocks.details
+  - pymdownx.blocks.tab:
+      alternate_style: true
   - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption

@@ -29,9 +29,10 @@ This setup can lead to a 2-3x performance improvement for some communication wor
 <!-- env | grep FI -->
 <!-- ``` -->
 
-!!! warning
-    For some applications such as Megatron-DeepSpeed, enabling the AWS plugin will cause a hang or NCCL timeout issue. If so, please disable it by:
-    ```bash
-    unset NCCL_NET_GDR_LEVEL NCCL_CROSS_NIC NCCL_COLLNET_ENABLE NCCL_NET
-    ```
+/// warning
+For some applications such as Megatron-DeepSpeed, enabling the AWS plugin will cause a hang or NCCL timeout issue. If so, please disable it by:
+```bash
+unset NCCL_NET_GDR_LEVEL NCCL_CROSS_NIC NCCL_COLLNET_ENABLE NCCL_NET
+```
+///
 <!-- --8<-- [end:ncclenv] -->

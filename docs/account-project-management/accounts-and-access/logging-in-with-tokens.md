@@ -37,12 +37,13 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
 
     Enter the passcode as the login password for the system within the SSH session.
 
-    !!! info "Note"
+    /// info | Note
 
-        You do NOT have to enter the PIN on the SSH screen when logging into a
-        resource.
-        This only needs to be done to access the passcode within the SafeNet
-        MobilePASS+ app.
+    You do NOT have to enter the PIN on the SSH screen when logging into a
+    resource.
+    This only needs to be done to access the passcode within the SafeNet
+    MobilePASS+ app.
+    ///
 
 1. Each generated passcode is valid on the SafeNet MobilePass+ app window until
    your mobile device screen times out.

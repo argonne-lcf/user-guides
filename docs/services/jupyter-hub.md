@@ -75,11 +75,12 @@ until the predetermined runtime concludes.
 Job queued
 ///
 
-!!! warning
+/// warning
 
-    If you would like to change your selection about where to run the Jupyter
-    instance after the Notebook has started, you need to stop the server to be able
-    to see the drop-down menu again.
+If you would like to change your selection about where to run the Jupyter
+instance after the Notebook has started, you need to stop the server to be able
+to see the drop-down menu again.
+///
 
 ## Known Issues
 

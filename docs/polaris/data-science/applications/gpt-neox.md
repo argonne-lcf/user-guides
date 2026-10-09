@@ -10,16 +10,17 @@ We include below a set of instructions to get [`EleutherAI/gpt-neox`](https://gi
 
 A batch submission script for the following example is available [here](https://github.com/argonne-lcf/GettingStarted/blob/master/DataScience/DeepSpeed/gpt-neox/README.md).
 
-!!! warning "Warning"
+/// warning | Warning
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `polaris-login`):
-    ```shell
-    $ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
-    ```
+Explicitly, to request an interactive job (from `polaris-login`):
+```shell
+$ qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00
+```
 
-    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+///
 
 1. Load and activate the base `conda` environment:
    ```bash
@@ -42,9 +43,10 @@ A batch submission script for the following example is available [here](https://
    cd gpt-neox
    ```
    
-    !!! note 
-   
-        The remaining instructions assume you're inside the `gpt-neox` directory.
+    /// note
+
+    The remaining instructions assume you're inside the `gpt-neox` directory.
+    ///
 
 5. Create a DeepSpeed compliant `hostfile` (each line is formatted as `hostname, slots=N`):
    ```bash
@@ -73,12 +75,13 @@ A batch submission script for the following example is available [here](https://
 
 ---
 
-!!! danger 
+/// danger
 
-    If your training seems to be getting stuck at
+If your training seems to be getting stuck at
 
-    ```bash
-    Using /home/user/.cache/torch_extensions as PyTorch extensions root...
-    ```
+```bash
+Using /home/user/.cache/torch_extensions as PyTorch extensions root...
+```
 
-    there may be a leftover `.lock` file from an aborted build. Cleaning either the whole `.cache` or the extensions' sub-directory should force a clean build on the next attempt.
+there may be a leftover `.lock` file from an aborted build. Cleaning either the whole `.cache` or the extensions' sub-directory should force a clean build on the next attempt.
+///

@@ -12,16 +12,17 @@ ssh <username>@aurora.alcf.anl.gov
 ```
 Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
 
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `aurora-uan`):
-    ```bash
-    qsub -I -q <queue> -l select=1,walltime=60:00 -A <project> -l filesystems=<fs1:fs2>
-    ```
+Explicitly, to request an interactive job (from `aurora-uan`):
+```bash
+qsub -I -q <queue> -l select=1,walltime=60:00 -A <project> -l filesystems=<fs1:fs2>
+```
 
-    Refer to [job scheduling and execution](../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../running-jobs/index.md) for additional information.
+///
 
 ### Loading Apptainer module on a compute node
 ```bash linenums="1"

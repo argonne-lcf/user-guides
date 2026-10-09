@@ -31,9 +31,10 @@ Reservation requests must include information detailed here: [Machine Reservatio
 
 ## How do I apply for a new account?
 
-!!! note
+/// note
 
-    All ALCF accounts must be associated with an allocated project.
+All ALCF accounts must be associated with an allocated project.
+///
 
 Submit an ALCF account requet by filling out this [account request form](https://my.alcf.anl.gov/accounts/#/accountRequest). 
 

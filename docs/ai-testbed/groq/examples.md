@@ -47,8 +47,9 @@ cp /software/groq/examples/llama2-7b-kludge/README.md ~/groq_llama2-7b-kludge/
 cd ~/groq_llama2-7b-kludge/
 ```
 
-!!! note
-     Packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. If you have a `~/.local/lib/python3.10/site-packages/` directory, please remove it or rename it before continuing.
+/// note
+Packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. If you have a `~/.local/lib/python3.10/site-packages/` directory, please remove it or rename it before continuing.
+///
 
 Create and activate a `groqflow_for_llama2`conda environment.
 ```console
@@ -102,9 +103,10 @@ groq-python anl_llama2_7b_launch_helper.py -p 'what are the most popular ice cre
 groq-python anl_llama2_7b_launch_helper.py -p 'what are the most popular ice cream flavors in Japan'
 ```
 
-!!! note
+/// note
 
-    The `-b` (`--bringup`) flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a abnormal state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
+The `-b` (`--bringup`) flag for `groq_llama2_7b.py` brings up the whole rack c2c links between cards.  It can be "fragile".  If another job is running, or if it gets in a abnormal state, the command will fail without any really useful info on why.  If another job is running, you have to wait.  If there is nothing else running, you have to get an admin to reset the cards.
+///
 
 When done, clean up. This resets the card topology, resets card memory, and deletes the all-rack PBS reservation.
 ```console

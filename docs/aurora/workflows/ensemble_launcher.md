@@ -202,8 +202,9 @@ python submit_tasks.py
 el stop
 ```
 
-!!! warning "Background the `el start` command"
-    `el start` does not return in cluster mode -- the orchestrator is spawned as a child process and the CLI waits on it. Put it in the background with `&` so the rest of your job script can run.
+/// warning | Background the `el start` command
+`el start` does not return in cluster mode -- the orchestrator is spawned as a child process and the CLI waits on it. Put it in the background with `&` so the rest of your job script can run.
+///
 
 `el stop` sends `SIGTERM` to the orchestrator (its PID is stored in `.el_launcher.pid` in the working directory) and it exits gracefully.
 

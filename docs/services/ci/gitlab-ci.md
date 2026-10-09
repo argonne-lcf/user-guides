@@ -138,9 +138,10 @@ git clone ssh://git@gitlab-ci-ssh.alcf.anl.gov:2222/<group>/<project>.git
 ### GitLab Projects (repositories)
 GitLab takes a git repository, adds additional functionality, and calls it a `GitLab Project`. This is the most common level you will be interacting with GitLab at. Please do not confuse ALCF Projects with `GitLab Projects` as they are two separate things. ALCF Projects more closely map to the `GitLab Group/SubGroup` concept, which we explain in the next section.
 
-!!! warning "ALCF Projects are not `GitLab Projects`"
+/// warning | ALCF Projects are not `GitLab Projects`
 
-    ALCF Projects map to `GitLab Groups/SubGroups`, not `GitLab Projects`.
+ALCF Projects map to `GitLab Groups/SubGroups`, not `GitLab Projects`.
+///
 
 Once you are assigned access to a `GitLab Group/SubGroup`, you will be able to create arbitrary `GitLab Projects` underneath, configuring CI/CD jobs for each independently.
 
@@ -180,9 +181,10 @@ To create a new `GitLab Project`:
 
 5. Fill in the `Project Name` field. The `Project slug` field will auto-populate based on the `Project Name`; do not change it.
 
-    !!! danger "Uncheck `Initialize repository with a README`"
+    /// danger | Uncheck `Initialize repository with a README`
 
-        If you are pushing an existing repository, you **must** uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
+    If you are pushing an existing repository, you **must** uncheck the default `Initialize repository with a README` option. Failure to uncheck this option will result in a merge conflict that you will need to resolve manually between your existing "local" git repository and the one you just created on the server.
+    ///
 
     ![GitLab Create Blank Project](files/GitlabNewProject2.png){ width="700" }
 
@@ -461,9 +463,10 @@ A job may extend multiple templates by passing a list to `extends`. Templates ar
 ### Console Output
 To see the output of a job, click on it in the GUI, and it will show the STDOUT and STDERR from the job run. If the job did not launch successfully, it will have error messages from gitlab-runner or Jacamar-CI or both.
 
-!!! warning "Job consoles are persistent"
+/// warning | Job consoles are persistent
 
-    Be aware of any sensitive data, such as passwords, that you do not want exported or saved to the output console. Do not output large amounts of data from your jobs to stdout; if your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
+Be aware of any sensitive data, such as passwords, that you do not want exported or saved to the output console. Do not output large amounts of data from your jobs to stdout; if your CI/CD job outputs large amounts of text to STDOUT or STDERR, consider redirecting it into a job log.
+///
 
 ![GitLab CI/CD Job Console](files/GitlabJobConsole.png){ width="700" }
 /// caption
@@ -535,9 +538,10 @@ Terraform/OpenTofu State
 - GitLab can act as an HTTP backend for storing Terraform/OpenTofu state.
 ///
 
-!!! note "GitLab Pages is not enabled"
+/// note | GitLab Pages is not enabled
 
-    GitLab Pages is not available on the ALCF GitLab-CI environment. Job artifacts and the features above cover most publishing needs; contact [ALCF Support](mailto:support@alcf.anl.gov) if you have a use case that requires static site hosting.
+GitLab Pages is not available on the ALCF GitLab-CI environment. Job artifacts and the features above cover most publishing needs; contact [ALCF Support](mailto:support@alcf.anl.gov) if you have a use case that requires static site hosting.
+///
 
 ## Storage Use and Policy
 ### GitLab Project Quota
@@ -550,9 +554,10 @@ It is recommended that if you need more space than your home directory can provi
 
 ## GitLab-CI Access Termination Policy
 
-!!! danger "Inactive projects are deleted"
+/// danger | Inactive projects are deleted
 
-    Projects that have been inactive for at least 6 months will have their access disabled and their repositories deleted. Notification will be sent to the PI 30 days prior to the day of the action.
+Projects that have been inactive for at least 6 months will have their access disabled and their repositories deleted. Notification will be sent to the PI 30 days prior to the day of the action.
+///
 
 Inactivity is defined as, but not limited to:
 
@@ -564,9 +569,10 @@ Inactivity is defined as, but not limited to:
 Some users prefer to host the canonical copy of their project on another Git hosting service, such as GitHub.
 It is possible to still use ALCF's GitLab-CI service to provide CI/CD for such projects via GitLab's [Repository Mirroring](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) feature.
 
-!!! info "Limited support"
+/// info | Limited support
 
-    Limited support is available for this workflow due to the additional complexity. Review the [related GitLab documentation](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) carefully.
+Limited support is available for this workflow due to the additional complexity. Review the [related GitLab documentation](https://docs.gitlab.com/user/project/repository/mirror/#create-a-repository-mirror) carefully.
+///
 
 
 ## GitLab REST API
@@ -579,9 +585,10 @@ Please follow the instructions at
 [GitLab Personal Access Token](https://docs.gitlab.com/user/profile/personal_access_tokens/) documentation to
 create one.
 
-!!! warning "Keep your access token secret"
+/// warning | Keep your access token secret
 
-    The token authenticates as you. Never commit it to a repository or share it with others; store it outside the repository, as the examples below do with `secrets.data`.
+The token authenticates as you. Never commit it to a repository or share it with others; store it outside the repository, as the examples below do with `secrets.data`.
+///
 
 Next, we need to find the project id for the GitLab project.
 In order to find the project ID, navigate to the project homepage in the GitLab web interface and click the

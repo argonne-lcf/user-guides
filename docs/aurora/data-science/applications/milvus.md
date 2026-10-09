@@ -38,19 +38,20 @@ After installation, add the install directory to your Python path so that `pymil
 export PYTHONPATH=/milvus-install:/opt/aurora/25.190.0/oneapi/advisor/latest/pythonapi
 ```
 
-!!! tip "Verify Python version"
+/// tip | Verify Python version
 
-    You can confirm that the correct Python interpreter is active by running:
+You can confirm that the correct Python interpreter is active by running:
 
-    ```bash
-    python --version
-    ```
+```bash
+python --version
+```
 
-    Expected output:
+Expected output:
 
-    ```
-    Python 3.10.14
-    ```
+```
+Python 3.10.14
+```
+///
 
 ## Running Milvus on Aurora
 
@@ -84,11 +85,13 @@ Once the path is configured, launch the Milvus server on the first compute node.
 ```bash
 bash apptainer_deploy.sh
 ```
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    Replaced <ETCD_HOST> with 10.115.31.21 and <MINIO_HOST> with 10.115.31.21 in config/milvus.yaml
-    ```
+```
+Replaced <ETCD_HOST> with 10.115.31.21 and <MINIO_HOST> with 10.115.31.21 in config/milvus.yaml
+```
+///
 
 After the server starts, navigate back to the parent directory and set the correct file permissions on the `multiNode` directory so that the client node can access the shared files:
 
@@ -103,11 +106,13 @@ You can verify the deployment size to confirm all necessary files were generated
 du -sh multiNode
 ```
 
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    124M    multiNode
-    ```
+```
+124M    multiNode
+```
+///
 
 ### Connecting from the Client Node
 
@@ -123,11 +128,13 @@ cat $PBS_NODEFILE
 hostname -I | awk '{print $1}'
 ```
 
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    10.115.31.26
-    ```
+```
+10.115.31.26
+```
+///
 
 Next, open a new terminal window and SSH into the second compute node (the client node):
 
@@ -153,9 +160,10 @@ export PYTHONPATH=/home/$USER/milvus-install:/opt/aurora/25.190.0/oneapi/advisor
 NO_PROXY="" no_proxy="" http_proxy="" https_proxy="" HTTP_PROXY="" HTTPS_PROXY="" python test_cluster.py
 ```
 
-!!! warning "Proxy settings"
+/// warning | Proxy settings
 
-    Aurora compute nodes are configured with HTTP proxy environment variables by default. These must be unset when communicating between compute nodes to avoid routing traffic through the proxy, which would prevent the client from reaching the Milvus server.
+Aurora compute nodes are configured with HTTP proxy environment variables by default. These must be unset when communicating between compute nodes to avoid routing traffic through the proxy, which would prevent the client from reaching the Milvus server.
+///
 
 ### Expected Output
 
@@ -206,17 +214,18 @@ apptainer_deploy.sh: line 118: 159064 Aborted  apptainer exec --fakeroot ...
 
 This typically occurs because `milvus/multiNode/config/milvus.yaml` was modified during a previous failed run and still contains hardcoded IP addresses instead of the expected placeholder values.
 
-!!! note "Fix"
+/// note | Fix
 
-    Open `config/milvus.yaml` and restore the placeholder tokens. Locate the etcd endpoint configuration and reset it:
+Open `config/milvus.yaml` and restore the placeholder tokens. Locate the etcd endpoint configuration and reset it:
 
-    ```yaml
-    endpoints: <ETCD_HOST>:2379
-    ```
+```yaml
+endpoints: <ETCD_HOST>:2379
+```
 
-    Similarly, locate the MinIO address configuration and reset it:
+Similarly, locate the MinIO address configuration and reset it:
 
-    ```yaml
-    address: <MINIO_HOST>:9000
-    ```
+```yaml
+address: <MINIO_HOST>:9000
+```
+///
 

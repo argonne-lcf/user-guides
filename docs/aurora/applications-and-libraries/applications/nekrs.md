@@ -43,37 +43,39 @@ If the configuration step was successful, the `Summary` section of the CMake out
 
 --8<-- "./docs/polaris/applications-and-libraries/applications/nekrs.md:env"
 
-!!! warning "Rebuild after system software upgrades"
+/// warning | Rebuild after system software upgrades
 
-    --8<-- "./docs/polaris/applications-and-libraries/applications/nekrs.md:conf"
-    Installations built before the [September 2026 system update](../../system-updates.md#major-update-2026-09) (new GPU drivers and programming environment) must be rebuilt from a clean build directory, as must any installation whose oneAPI module is later updated or removed. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+--8<-- "./docs/polaris/applications-and-libraries/applications/nekrs.md:conf"
+Installations built before the [September 2026 system update](../../system-updates.md#major-update-2026-09) (new GPU drivers and programming environment) must be rebuilt from a clean build directory, as must any installation whose oneAPI module is later updated or removed. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+///
 
-!!! bug "Multi-rank runs crash during multigrid setup"
+/// bug | Multi-rank runs crash during multigrid setup
 
-    With the GPU drivers installed in the September 2026 update, the current `v26` branch of `nekRS_alcf` aborts during the pressure multigrid setup of any run with more than one MPI rank, right after `BUILDING pMG` is printed:
+With the GPU drivers installed in the September 2026 update, the current `v26` branch of `nekRS_alcf` aborts during the pressure multigrid setup of any run with more than one MPI rank, right after `BUILDING pMG` is printed:
 
-    ```output
-    Segmentation fault from GPU at 0x84000, ctx_id: 1 (CCS) type: 0 (NotPresent), level: 3 (PML4), access: 0 (Read), banned: 1, aborting.
-    ```
+```output
+Segmentation fault from GPU at 0x84000, ctx_id: 1 (CCS) type: 0 (NotPresent), level: 3 (PML4), access: 0 (Read), banned: 1, aborting.
+```
 
-    The Schwarz smoother is timed before its weights are allocated, so a kernel reads from a null device pointer. Until this is fixed in the repository, apply the following change to `src/core/elliptic/MG/ellipticMultiGridSchwarz.cpp` before building (or rebuild afterward), moving `generateSchwarzWeights()` ahead of `autoOverlap()` near the end of `pMGLevel::setupSmootherSchwarz`:
+The Schwarz smoother is timed before its weights are allocated, so a kernel reads from a null device pointer. Until this is fixed in the repository, apply the following change to `src/core/elliptic/MG/ellipticMultiGridSchwarz.cpp` before building (or rebuild afterward), moving `generateSchwarzWeights()` ahead of `autoOverlap()` near the end of `pMGLevel::setupSmootherSchwarz`:
 
-    ```diff
-    -  autoOverlap();
-    -
-    -  free(maskedGlobalIdsExt);
-    -  meshFree(extendedMesh);
-    -
-    -  generateSchwarzWeights();
-    +  // weights (o_wts) are used by smoothSchwarz, which autoOverlap calls
-    +  generateSchwarzWeights();
-    +
-    +  autoOverlap();
-    +
-    +  free(maskedGlobalIdsExt);
-    +  meshFree(extendedMesh);
-     }
-    ```
+```diff
+-  autoOverlap();
+-
+-  free(maskedGlobalIdsExt);
+-  meshFree(extendedMesh);
+-
+-  generateSchwarzWeights();
++  // weights (o_wts) are used by smoothSchwarz, which autoOverlap calls
++  generateSchwarzWeights();
++
++  autoOverlap();
++
++  free(maskedGlobalIdsExt);
++  meshFree(extendedMesh);
+ }
+```
+///
 
 ## Running Jobs on Aurora
 

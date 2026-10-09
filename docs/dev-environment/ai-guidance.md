@@ -17,9 +17,10 @@ Compute nodes are the recommended location to run, as the login nodes are a shar
 
 Argo is currently not directly accessible on the ALCF systems.
 
-!!! warning
-    
-    If you are attempting to use AI on a login node where the agent tries to connect to another Argonne systems, please ensure you're testing the connections before your agent goes into a for loop.
-    If this is not properly tested, this can cause SSH to a login node to be blocked because it's the one trying to connect and failing. 
-    We can get these removed, but that takes someone who can do that being aware of it and available.
+/// warning
+
+If you are attempting to use AI on a login node where the agent tries to connect to another Argonne systems, please ensure you're testing the connections before your agent goes into a for loop.
+If this is not properly tested, this can cause SSH to a login node to be blocked because it's the one trying to connect and failing. 
+We can get these removed, but that takes someone who can do that being aware of it and available.
+///
 

@@ -10,16 +10,17 @@ Login to Polaris
 ```
 ssh alcfusername@polaris.alcf.anl.gov
 ```
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `polaris-login`):
-    ```bash
-    qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00 -I
-    ```
+Explicitly, to request an interactive job (from `polaris-login`):
+```bash
+qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00 -I
+```
 
-    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+///
 
 ## 2. Load Modules
 
