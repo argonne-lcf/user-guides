@@ -1,3 +1,10 @@
+---
+tags:
+  - PyTorch
+  - LLMs
+  - Distributed Training
+---
+
 # Megatron-DeepSpeed
 
 [Megatron-DeepSpeed](https://github.com/argonne-lcf/Megatron-DeepSpeed) is a

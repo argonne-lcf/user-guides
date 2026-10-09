@@ -1,3 +1,20 @@
+---
+tags:
+  - Known Issues
+keywords:
+  - why is my job not running
+  - job not running
+  - job failed
+  - job pending
+  - job queued
+  - job stuck
+  - job held
+  - job disappeared
+  - job array never runs
+search:
+  boost: 3
+---
+
 # Common PBS Issues & Troubleshooting
 
 This page contains common PBS errors and issues that users may find useful in determining why their job is not yet running or has failed. 
@@ -32,7 +49,7 @@ for details on the available queues and their individual per-user or per-job run
 
 ## Error: ```No active allocation found for project```...
 
-If you receive a ```No active allocation found for project <your_project_name> and resource <system_name>``` error when attempting to submit your job,
+If you receive a ```No active allocation found for project <project> and resource <system_name>``` error when attempting to submit your job,
 then your project allocation has expired. You can submit an allocation renewal [here](https://my.alcf.anl.gov/accounts/#/allocationRequests).
 
 ## Common PBS Comments and their Meanings
@@ -40,11 +57,11 @@ then your project allocation has expired. You can submit an allocation renewal [
 !!! tip "Viewing PBS job comments"
 
     You can view the PBS comment assocated with your job ID with the following command: 
-    qstat -was1 <your_job_ID>
+    qstat -was1 <jobid>
 
 ### Comment: ```job held, too many failed attempts to run```
 
-If you see a ```job held, too many failed attempts to run``` error when viewing your job's comment via the ```qstat -was1 <your_job_ID>``` command, then your job is attempting to run, failing, then re-trying.
+If you see a ```job held, too many failed attempts to run``` error when viewing your job's comment via the ```qstat -was1 <jobid>``` command, then your job is attempting to run, failing, then re-trying.
 This is usually caused by the following:
 
   1. One of the nodes you've been assigned is experiencing an issue. 
@@ -109,13 +126,13 @@ Unfortunately, there's always an inherent risk of jobs being killed when using t
 
 Since ```#``` is required prior to each PBS directive, comments should be added *after* ALL directives have been listed in your submission script. 
 If you try to add comments within the directive list, you could experience submission issues due to PBS attempting to read your comment as an additional directive.
-This includes adding comments on the same line as a directive (i.e., ```#PBS -q <queue_name> #comment```).
+This includes adding comments on the same line as a directive (i.e., ```#PBS -q <queue> #comment```).
 
 ## Unable to ```ssh``` to Compute Nodes
 
 You should be able to `ssh` freely (without a password) between your assigned compute nodes. If you are running into `ssh` issues, check for the following causes:
 
-   1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 /home/<username>`).
+   1. Your `/home/<username>` directory permissions should be set to `700` (`chmod 700 $HOME`).
    2. Confirm the following files exist in your `.ssh` directory and the permissions are set to the following:
       1. `-rw-------  (600)  authorized_keys`
       2. `-rw-r--r--  (644)  config`

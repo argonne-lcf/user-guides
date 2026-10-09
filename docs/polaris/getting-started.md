@@ -1,3 +1,13 @@
+---
+description: "First steps on Polaris: logging in, compiling, additional software, running jobs, Lustre striping, and proxy settings."
+tags:
+  - Getting Started
+keywords:
+  - stripe count
+  - lfs setstripe
+  - striping
+---
+
 # Getting Started on Polaris
 
 ## Logging Into Polaris
@@ -6,7 +16,7 @@ To log into Polaris:
 ```bash
 ssh <username>@polaris.alcf.anl.gov
 ```
-Then, type in the password from your CRYPTOCard/MobilePASS+ token.
+Then, type in the passcode from your MobilePASS+ or physical hardware token.
 
 ## Hardware Overview
 

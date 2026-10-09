@@ -1,3 +1,9 @@
+---
+keywords:
+  - job array
+  - job arrays
+---
+
 # Example Job Scripts
 
 This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./index.md).
@@ -6,7 +12,7 @@ A simple example using a similar script on Polaris is available in the [Getting 
 
 !!! warning "Comments in PBS scripts"
 
-    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue_name>  #comment`).
+    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue>  #comment`).
 
 ## CPU MPI-OpenMP Examples
 

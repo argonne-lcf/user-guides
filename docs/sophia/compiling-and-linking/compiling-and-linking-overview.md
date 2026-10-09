@@ -8,7 +8,7 @@ Sophia has AMD processors on the login nodes (`sophia-login-01,02`) and AMD proc
     Until the cross-compiling environment is set up or dedicated build nodes are added, the compute nodes will have to be used for compiling. Do not compile codes on the login nodes. To launch an interactive job and acquire a compute node for compiling, use:
 
 ```bash
-qsub -I -l select=1 -l walltime=HH:MM:SS -q by-gpu -A <myProjectName> -l filesystems=home:eagle
+qsub -I -l select=1 -l walltime=HH:MM:SS -q by-gpu -A <project> -l filesystems=home:eagle
 ```
 
 The default programming environment on the Sophia compute nodes is the GNU compiler tools coupled with NVIDIA’s CUDA toolkit.

@@ -49,7 +49,7 @@ run_dir="/lus/eagle/projects/yourproject/yourrundir/"
 user_opts = {
     "worker_init":      f"source /path/to/your/virtualenv/bin/activate; cd {run_dir}", # load the environment where parsl is installed
     "scheduler_options":"#PBS -l filesystems=home:eagle" , # specify any PBS options here, like filesystems
-    "account":          "YOURPROJECT",
+    "account":          "<project>",
     "queue":            "debug-scaling",
     "walltime":         "1:00:00",
     "nodes_per_block":  3, # think of a block as one job on polaris, so to run on the main queues, set this >= 10

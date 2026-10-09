@@ -54,7 +54,7 @@ A simple example batch script for a libEnsemble use case that runs five workers 
 #PBS -l walltime=00:15:00
 #PBS -l filesystems=home:eagle
 #PBS -q debug
-#PBS -A <myproject>
+#PBS -A <project>
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 cd $PBS_O_WORKDIR
@@ -68,7 +68,7 @@ qsub submit_libe.sh
 
 Or you can run an interactive session with:
 ```bash linenums="1"
-qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
+qsub -A <project> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
 ```
 
 ## Further links

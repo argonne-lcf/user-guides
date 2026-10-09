@@ -1,3 +1,8 @@
+---
+tags:
+  - Allocations
+---
+
 # sbank Allocation Accounting System
 
 sbank is the accounting system used within the ALCF. It tracks project allocations, usage charges, and refunds. sbank allows queries about the balance and expiration of project allocations.

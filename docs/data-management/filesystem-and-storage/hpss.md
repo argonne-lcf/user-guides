@@ -1,3 +1,13 @@
+---
+keywords:
+  - archive
+  - archival
+  - tape archive
+  - hsi
+  - htar
+  - backup
+---
+
 # Using HPSS
 ## Overview
 
@@ -9,7 +19,7 @@ Access to HPSS is provided by various client components. Currently, ALCF support
 
 !!! warning
 
-    In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<userid>`.
+    In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<username>`.
 
 ## HSI General Usage
 HSI can be invoked by simply entering `hsi` at your normal shell prompt. Once authenticated, you will enter the HSI command shell environment:

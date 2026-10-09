@@ -1,3 +1,13 @@
+---
+tags:
+  - Globus
+keywords:
+  - transfer
+  - endpoint
+  - collection
+  - DTN
+---
+
 # Transferring Files through Globus
 
 ## Flare filesystem
@@ -14,7 +24,7 @@ Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is
 
 2. Paste the link provided by the above command into a browser and follow the instructions to set up a personal endpoint:
 
-    - When requested, input your ALCF username and one-time password from your CRYPTOCard/MobilePASS+ token.
+    - When requested, input your ALCF username and one-time passcode from your MobilePASS+ or physical hardware token.
     - Select the Allow button.
     - Enter the authentication code generated back into the terminal.
     - Enter a name for the endpoint (e.g., `aurora_login_uan11`).
@@ -26,7 +36,7 @@ Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is
     ```
 
     - By default, the command only gives access to your home directory.
-    - You can add `-restrict-paths /lus/flare/projects/YOURPROJECT` to access your project directory.
+    - You can add `-restrict-paths /lus/flare/projects/<project>` to access your project directory.
 
 4. Open the [Globus web app](https://app.globus.org/file-manager?destination_id=05d2c76a-e867-4f67-aa57-76edeb0beda0) and search for the endpoint name defined above. You will now see your home directory (and project directory, if requested) on Aurora and can initiate transfers with other endpoints (e.g., the Eagle file system on Polaris at `alcf#dtn_eagle`).
 

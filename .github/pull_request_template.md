@@ -2,10 +2,10 @@
 <!-- Describe your changes in detail -->
 
 ## Screenshots (if applicable)
-<!-- A live preview of your changes is built automatically for every push: a bot
-     posts a single comment on this PR with the preview link
-     (https://docs.alcf.anl.gov/pr-preview/pr-<N>/) and keeps it up to date.
-     Screenshots are only needed when a side-by-side "before" comparison helps
+<!-- For PRs from a branch in this repository (not a fork), a live preview is
+     built on every push: a bot posts a single comment on this PR with the link
+     (https://argonne-lcf.github.io/user-guides-previews/pr-preview/pr-<N>/)
+     and keeps it up to date. Screenshots are only needed when a side-by-side "before" comparison helps
      reviewers, since the preview cannot show the old state. -->
 <details>
 <summary>Before</summary>
@@ -27,3 +27,4 @@
 <!-- Please check the items that apply to this PR using "x". -->
 - [ ] I have run `make serve` or `make build-docs` locally and verified that my changes render correctly
 - [ ] I have added at least one Label to this PR
+- [ ] AI tools were used to write or edit this PR. I reviewed the full diff, and the description says which tools and how system-specific facts were checked.

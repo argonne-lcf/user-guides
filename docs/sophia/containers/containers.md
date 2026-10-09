@@ -21,7 +21,7 @@ Containers on Sophia can be built by writing Dockerfiles on a local machine and 
 Since Docker requires root privileges, which users do not have on Sophia, existing Docker containers must be converted to Apptainer. To build a Docker-based container on Sophia, use the following as an example:
 
 ```bash
-qsub -I -A <Project> -l select=1:ngpus=8:ncpus=256 -l walltime=01:00:00 -l filesystems=home:eagle -l singularity_fakeroot=True -q by-node -k doe
+qsub -I -A <project> -l select=1:ngpus=8:ncpus=256 -l walltime=01:00:00 -l filesystems=home:eagle -l singularity_fakeroot=True -q by-node -k doe
 export HTTP_PROXY=http://proxy.alcf.anl.gov:3128
 export HTTPS_PROXY=http://proxy.alcf.anl.gov:3128
 export http_proxy=http://proxy.alcf.anl.gov:3128

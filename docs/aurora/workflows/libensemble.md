@@ -62,7 +62,7 @@ ensemble.exit_criteria = ExitCriteria(sim_max=nsim_workers*2)
 Now grab an interactive session on two nodes (or use the batch script at `../submission_scripts/submit_pbs_aurora.sh`):
 
 ```bash linenums="1"
-qsub -A <myproject> -l select=2 -l walltime=15:00 -lfilesystems=home:flare -q debug -I
+qsub -A <project> -l select=2 -l walltime=15:00 -lfilesystems=home:flare -q debug -I
 ```
 
 Once in the interactive session, you may need to reactivate your virtual environment:

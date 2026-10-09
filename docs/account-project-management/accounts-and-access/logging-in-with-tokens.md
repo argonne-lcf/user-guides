@@ -1,6 +1,17 @@
+---
+tags:
+  - Authentication
+keywords:
+  - login
+  - log in
+  - sign in
+  - password
+  - "two-factor"
+---
+
 # Logging In with a Token
 
-Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
+ALCF systems require multi-factor authentication (MFA): you log in with a one-time passcode from a token. Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
 
 You can log in with a [Mobile Token](#logging-in-to-an-alcf-system-using-a-mobile-token) using your mobile device. 
 
@@ -12,7 +23,7 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
     Then initiate an SSH session and type the following:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
     For example, <johnsmith@aurora.alcf.anl.gov>
@@ -49,19 +60,19 @@ numbers.
 1. Initiate an SSH session using:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
 2. A password prompt will be received.  
    At this point, push the button on the physical token once.
 
-3. An eight-character, one-time password made up of letters and numbers will
+3. An eight-character, one-time passcode made up of letters and numbers will
    appear on the token’s display.
-   This one-time password is case-sensitive.
+   This one-time passcode is case-sensitive.
 
-4. Type your PIN followed immediately by the one-time password at the SSH
+4. Type your PIN followed immediately by the one-time passcode at the SSH
    password prompt.
 
-   For example, if your PIN is 1234 and you received the one-time password
+   For example, if your PIN is 1234 and you received the one-time passcode
    string ABCD9876, you would type 1234ABCD9876 at the password prompt.
 
