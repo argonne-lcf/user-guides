@@ -51,14 +51,17 @@ alcf-tokens login inference \
     --authorize-transfer 96c7390b-a3e8-4dd4-a327-1af7d143283e:https
 ```
 
-!!! warning "Collection access requires an ALCF account"
-    Globus maps these transfers to your ALCF account, so an active ALCF account must be linked to your Globus identity. Globus prompts you to link it, or to re-authenticate if you have not recently, when you consent to the transfer scopes.
+/// warning | Collection access requires an ALCF account
+Globus maps these transfers to your ALCF account, so an active ALCF account must be linked to your Globus identity. Globus prompts you to link it, or to re-authenticate if you have not recently, when you consent to the transfer scopes.
+///
 
-!!! note "Re-running login"
-    Re-running `alcf-tokens login` with a different set of `--authorize-transfer` collections re-consents with the wider set, so pass every collection you want authorized in the same command.
+/// note | Re-running login
+Re-running `alcf-tokens login` with a different set of `--authorize-transfer` collections re-consents with the wider set, so pass every collection you want authorized in the same command.
+///
 
-!!! note "alcf-ai and alcf-tokens"
-    `alcf-tokens` is the shared ALCF token CLI. The same commands are available as `alcf-ai auth <command>` and read the same token cache.
+/// note | alcf-ai and alcf-tokens
+`alcf-tokens` is the shared ALCF token CLI. The same commands are available as `alcf-ai auth <command>` and read the same token cache.
+///
 
 ## Discovering Models and Endpoints
 
@@ -101,8 +104,9 @@ cat report.md | alcf-ai chat \
     "Summarize this report in three bullets."
 ```
 
-!!! note "Cluster Selection"
-    The cluster selected with `--cluster` must serve the requested model. See [Available Models](models.md).
+/// note | Cluster Selection
+The cluster selected with `--cluster` must serve the requested model. See [Available Models](models.md).
+///
 
 ## Image Segmentation
 
@@ -139,8 +143,9 @@ alcf-ai sam3 preview-batch-results \
     test-wds/shard-00000.results.tar
 ```
 
-!!! note "Data staging"
-    `--from-collection-id` stages the dataset in with Globus Transfer and requires that collection to be authorized with `--authorize-transfer` at login (see [Authorizing ALCF Data Transfer](#authorizing-alcf-data-transfer)). `--weights-dir-override` overrides the server's default weights directory.
+/// note | Data staging
+`--from-collection-id` stages the dataset in with Globus Transfer and requires that collection to be authorized with `--authorize-transfer` at login (see [Authorizing ALCF Data Transfer](#authorizing-alcf-data-transfer)). `--weights-dir-override` overrides the server's default weights directory.
+///
 
 ### DINOv3
 

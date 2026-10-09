@@ -7,13 +7,15 @@ tags:
 
 For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
 
-!!! warning "Importing Python modules at scale"
+/// warning | Importing Python modules at scale
 
-	We have system-installed frameworks modules, which contain common AI/ML packages such as PyTorch and vLLM. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
+We have system-installed frameworks modules, which contain common AI/ML packages such as PyTorch and vLLM. If a custom package or virtual environment is installed in your own home or project directory, it is **highly** recommended to use the [Copper](../data-management/copper/copper.md) package to help reduce I/O overhead when importing Python modules at large node counts. We have seen that beyond 1000 nodes, importing Python modules from a home or Lustre project directory might be significantly slower, or it may even crash the Lustre file system. Please refer to [Copper](../data-management/copper/copper.md) for detailed instructions on loading custom-installed Python packages using Copper.
 
-	!!! info
-	
-		If you only use packages from the system installed framework module, [Copper](../data-management/copper/copper.md) is not needed. 
+//// info
+
+If you only use packages from the system installed framework module, [Copper](../data-management/copper/copper.md) is not needed. 
+////
+///
 
 ## AI/ML Framework Modules
 
@@ -38,9 +40,10 @@ For more information on PyTorch and TensorFlow on Aurora, please see the respect
 
 While the conda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many of the most commonly used Python packages for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
 
-!!! warning
-	
-	There are several alternative approaches for extending or modifying the base conda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
+/// warning
+
+There are several alternative approaches for extending or modifying the base conda environments that are generally not recommended on ALCF machines. On Aurora, there are additional performance and functionality pitfalls with those approaches. More detailed information on the alternatives can be seen on the [Polaris Python documentation](../../polaris/data-science/python.md).
+///
 
 Creating and activating a new virtual environment (`venv`) is straightforward. After loading the above module, execute:
 
@@ -67,12 +70,13 @@ which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. No
 
 ## Intel's Data Parallel Extensions for Python (DPEP)
 
-!!! warning "Managing GPU and CPU devices on Aurora"
-	On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable. 
+/// warning | Managing GPU and CPU devices on Aurora
+On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable. 
 
-	Additionally, by default the CPU is not exposed as a device (e.g., `dpctl.has_cpu_devices()` returns `False`). This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it. To access the CPU as a SYCL device, set `export ONEAPI_DEVICE_SELECTOR=opencl:cpu`, or to access both GPU and CPU set `export ONEAPI_DEVICE_SELECTOR="opencl:cpu;level_zero:gpu"`.
+Additionally, by default the CPU is not exposed as a device (e.g., `dpctl.has_cpu_devices()` returns `False`). This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it. To access the CPU as a SYCL device, set `export ONEAPI_DEVICE_SELECTOR=opencl:cpu`, or to access both GPU and CPU set `export ONEAPI_DEVICE_SELECTOR="opencl:cpu;level_zero:gpu"`.
 
-	In addition, the number of GPU devices visible on each node depends on the `ZE_FLAT_DEVICE_HIERARCHY` environment variable. With `ZE_FLAT_DEVICE_HIERARCHY=FLAT` 12 devices are visible (tile as device mode), whereas with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` 6 devices are visible (GPU as device).
+In addition, the number of GPU devices visible on each node depends on the `ZE_FLAT_DEVICE_HIERARCHY` environment variable. With `ZE_FLAT_DEVICE_HIERARCHY=FLAT` 12 devices are visible (tile as device mode), whereas with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE` 6 devices are visible (GPU as device).
+///
 
 On Aurora, users can access Intel's Python stack comprising of compilers and libraries for programming heterogenous devices, namely the Data Parallel Extensions for Python (DPEP). DPEP is composed of three main packages for programming on CPUs and GPUs:
 
@@ -93,11 +97,14 @@ print(sqx_gpu.device) # (2)!
 1. `dpnp.square()` offloads to the "gpu" device
 2. `sqx_gpu` is created on the "gpu" device
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-	``` { .bash .no-copy }
-	Device(level_zero:gpu:0)
-	```
+``` { .bash .no-copy }
+Device(level_zero:gpu:0)
+```
+///
 
 However, note that operating on arrays created on different devices will raise an exception.
 
@@ -158,27 +165,31 @@ print("Result y is located on the device:", y.device)
 1. `np.asarray()` creates an array on the default SYCL device, which is the Intal Max 1550 GPU on Aurora. The queue associated with this array is now carried with `x`, and the pre-compiled kernel for `np.sum(x)` is submitted to that queue. 
 2. The result `y` is allocated on the device and is associated with the queue of `x`.
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-	``` { .bash .no-copy }
-	Array x allocated on the device: Device(level_zero:gpu:0)
-	Result y is located on the device: Device(level_zero:gpu:0)
-	```
+``` { .bash .no-copy }
+Array x allocated on the device: Device(level_zero:gpu:0)
+Result y is located on the device: Device(level_zero:gpu:0)
+```
+///
 
 All dpnp array creation routines and random number generators have additional optional keyword arguments (device, queue, and usm_type) which users can leverage to explicitly specify on which device or queue they want the data to be created along with the USM memory type to be used.
 
-!!! info "Changes after version 0.15.0"
-	For dpnp version <= 0.15.0, all dpnp kernels are hard-coded to sync with the CPU after completion (i.e., `event.wait()` is inserted before returning). From dpnp version > 0.15.0, all kernels are run asynchronously, with linear ordering of groups of tasks (similar to CuPy). This results in faster runtime and better GPU utilization. To time kernels with dpnp > 0.15.0, insert `.sycl_queue.wait()` before measuring the end time, for example
-	```python linenums="1"
-	import dpnp as np
-	from time import perf_counter
-	
-	x = np.random.randn(1000,1000)
-	tic = perf_counter()
-	y = np.matmul(x,x)
-	y.sycl_queue.wait()
-	print(f"Execution time: {perf_counter() - tic} sec")
-	```
+/// info | Changes after version 0.15.0
+For dpnp version <= 0.15.0, all dpnp kernels are hard-coded to sync with the CPU after completion (i.e., `event.wait()` is inserted before returning). From dpnp version > 0.15.0, all kernels are run asynchronously, with linear ordering of groups of tasks (similar to CuPy). This results in faster runtime and better GPU utilization. To time kernels with dpnp > 0.15.0, insert `.sycl_queue.wait()` before measuring the end time, for example
+```python linenums="1"
+import dpnp as np
+from time import perf_counter
+
+x = np.random.randn(1000,1000)
+tic = perf_counter()
+y = np.matmul(x,x)
+y.sycl_queue.wait()
+print(f"Execution time: {perf_counter() - tic} sec")
+```
+///
 
 ### dpctl 
 
@@ -200,32 +211,37 @@ print("\nFound CPU devices: ", dpctl.has_cpu_devices()) # (3)!
 2. Get the list of GPU devices on the node
 3. Check if CPU devices are available on the node
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-	``` { .bash .no-copy }
-    Intel(R) Level-Zero 1.5
-	Found 12 GPU devices
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03430>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da034f0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da035b0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03530>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03f70>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8d005770>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8b5a3ab0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8d2467b0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da24ef0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03fb0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da240b0>
-		<dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da24130>
-	
-	Found CPU devices:  False
-	```
+``` { .bash .no-copy }
+Intel(R) Level-Zero 1.5
+Found 12 GPU devices
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03430>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da034f0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da035b0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03530>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03f70>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8d005770>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8b5a3ab0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8d2467b0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da24ef0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da03fb0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da240b0>
+    <dpctl.SyclDevice [backend_type.level_zero, device_type.gpu,  Intel(R) Data Center GPU Max 1550] at 0x154e8da24130>
 
-!!! warning "dpctl.tensor deprecation"
-	The `dpctl.tensor` module (a tensor library implemented using DPC++ that follows the Python Array API standard) is deprecated as of dpctl 0.21.1 and will be removed in an upcoming dpctl release alongside oneAPI 2026.0. Users should use `dpnp` arrays as a 1-for-1 replacement of dpctl tensor operations on Intel GPUs.
+Found CPU devices:  False
+```
+///
 
-!!! info "Changes after version 0.17.0"
-	Similarly to dpnp, dpctl version > 0.17.0 runs all kernels asynchronously, therefore `.sycl_queue.wait()` must be used to measure execution time on GPU. 
+/// warning | dpctl.tensor deprecation
+The `dpctl.tensor` module (a tensor library implemented using DPC++ that follows the Python Array API standard) is deprecated as of dpctl 0.21.1 and will be removed in an upcoming dpctl release alongside oneAPI 2026.0. Users should use `dpnp` arrays as a 1-for-1 replacement of dpctl tensor operations on Intel GPUs.
+///
+
+/// info | Changes after version 0.17.0
+Similarly to dpnp, dpctl version > 0.17.0 runs all kernels asynchronously, therefore `.sycl_queue.wait()` must be used to measure execution time on GPU. 
+///
 
 ### numba-dpex
 
@@ -285,19 +301,23 @@ print(f'Original dpnp array: {dp_ary} on device {dp_ary.device}')
 print(f'PyTorch view of dpnp array: {t_ary}')
 ```
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-	``` { .python-console .no-copy }
-	Original PyTorch array: tensor([-2,  1,  2,  3], device='xpu:0')
-	dpnp view of PyTorch array: [-2  1  2  3] on device Device(level_zero:gpu:0)
-	
-	Original dpnp array: [-3  1  2  3] on device Device(level_zero:gpu:0)
-	PyTorch view of dpnp array: tensor([-3,  1,  2,  3], device='xpu:0')
-	```
+``` { .python-console .no-copy }
+Original PyTorch array: tensor([-2,  1,  2,  3], device='xpu:0')
+dpnp view of PyTorch array: [-2  1  2  3] on device Device(level_zero:gpu:0)
 
-!!! info "DLPack notes on Aurora"
-	- `ZE_FLAT_DEVICE_HIERARCHY` must be set to `FLAT`
-	- Zero-copy interoperability is supported between dpnp, dpctl, and PyTorch on CPU and GPU, and between Numpy as well on CPU only
-	- Interoperability between TensorFlow and the other packages is limited on the GPU due to TensorFlow not being compatible with the latest DLPack rules and still requiring the use of `dlcapsules`
-	- Numba-dpex does not directly support DLPack, however numba-dpex kernels take as inputs dpnp and dpctl arrays, thus inperoperability between PyTorch and numba-dpex is available through those packages 
+Original dpnp array: [-3  1  2  3] on device Device(level_zero:gpu:0)
+PyTorch view of dpnp array: tensor([-3,  1,  2,  3], device='xpu:0')
+```
+///
+
+/// info | DLPack notes on Aurora
+- `ZE_FLAT_DEVICE_HIERARCHY` must be set to `FLAT`
+- Zero-copy interoperability is supported between dpnp, dpctl, and PyTorch on CPU and GPU, and between Numpy as well on CPU only
+- Interoperability between TensorFlow and the other packages is limited on the GPU due to TensorFlow not being compatible with the latest DLPack rules and still requiring the use of `dlcapsules`
+- Numba-dpex does not directly support DLPack, however numba-dpex kernels take as inputs dpnp and dpctl arrays, thus inperoperability between PyTorch and numba-dpex is available through those packages 
+///
 

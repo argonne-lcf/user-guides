@@ -45,9 +45,10 @@ You can re-synchronize your token using the following procedure:
 
 If you are unsuccessful, you will be presented with another challenge string. At this point, you may need to perform the re-sync instructions again.
 
-!!! warning "Unsuccessful Re-Sync"
+/// warning | Unsuccessful Re-Sync
 
-    If there are still problems after completing the re-synchronization procedures, please email us at [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) so we can run a test on the physical token to determine if it is defective. If it is found to be defective, we will promptly replace it.
+If there are still problems after completing the re-synchronization procedures, please email us at [accounts@alcf.anl.gov](mailto:accounts@alcf.anl.gov) so we can run a test on the physical token to determine if it is defective. If it is found to be defective, we will promptly replace it.
+///
 
 ### Resetting the Physical Token PIN
 

@@ -2,13 +2,15 @@
 
 **AskALCF is an intelligent AI support assistant designed to enhance user support at the Argonne Leadership Computing Facility (ALCF).**
 
-!!! warning "Disclaimer"
+/// warning | Disclaimer
 
-	AskALCF is an AI-assisted tool designed to help ALCF users quickly access information. Responses are generated using automated methods and may not always be accurate, complete, or current. Users should confirm critical information through official ALCF documentation or by contacting ALCF support.
+AskALCF is an AI-assisted tool designed to help ALCF users quickly access information. Responses are generated using automated methods and may not always be accurate, complete, or current. Users should confirm critical information through official ALCF documentation or by contacting ALCF support.
+///
 
-!!! tip "Feedback"
+/// tip | Feedback
 
-	We value your input to improve AskALCF. If you encounter incorrect or unclear information, please share your feedback to help us enhance the service.
+We value your input to improve AskALCF. If you encounter incorrect or unclear information, please share your feedback to help us enhance the service.
+///
 
 ## Accessing AskALCF
 

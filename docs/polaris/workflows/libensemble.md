@@ -16,24 +16,27 @@ conda activate base
 
 See the docs for more details on using [Python on Polaris](../data-science/python.md)
 
-???+ example "Creating a virtual environment and updating `libEnsemble`"
+/// details | Creating a virtual environment and updating `libEnsemble`
+    type: example
+    open: True
 
-    E.g., to create a virtual environment that allows installation of
-    further packages with pip:
+E.g., to create a virtual environment that allows installation of
+further packages with pip:
 
-    ```bash linenums="1"
-    python -m venv /path/to-venv --system-site-packages
-    . /path/to-venv/bin/activate
-    ```
+```bash linenums="1"
+python -m venv /path/to-venv --system-site-packages
+. /path/to-venv/bin/activate
+```
 
-    Where `/path/to-venv` can be anywhere you have write access.
-    For future uses, just load the conda module and run the activate line.
+Where `/path/to-venv` can be anywhere you have write access.
+For future uses, just load the conda module and run the activate line.
 
-    You can also ensure you are using the latest version of libEnsemble:
+You can also ensure you are using the latest version of libEnsemble:
 
-    ```bash linenums="1"
-    pip install libensemble
-    ```
+```bash linenums="1"
+pip install libensemble
+```
+///
 
 
 ## libEnsemble examples

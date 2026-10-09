@@ -58,15 +58,18 @@ To renew or extend storage allocations, email [support@alcf.anl.gov](mailto:supp
 
 ## Sub-allocations
 
-!!! tip inline end
+/// tip
+    attrs: {class: inline end}
 
-    See `sbank new suballocation -h` for all the options.
+See `sbank new suballocation -h` for all the options.
+///
 
 Suballocations let PIs control who in their team can run jobs, how much they are allowed to consume (allocation amount), and when they are allowed to run jobs (start and end dates).
 
-!!! note
+/// note
 
-    Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID or the suballocationName. You can no longer submit jobs with just the project name.
+Once submanagement is enabled for a project allocation, all job submissions must specify the suballocationID or the suballocationName. You can no longer submit jobs with just the project name.
+///
 
 ### Step 1: Create Suballocations (Project PI):
 
@@ -92,9 +95,10 @@ sbank e sub <suballocationID> --name=<new_name_of_suballocation>
 
 By default, the primary suballocation (which is the default suballocation created when the allocation is created by ALCF) is unrestricted, i.e., enabled for all project members. That means all project members can submit jobs against the primary suballocation by default. All other suballocations are restricted by default, and users have to be added for each of them.
 
-!!! note
+/// note
 
-    Suballocation names must be unique across **all** allocations and resources **within a project**.
+Suballocation names must be unique across **all** allocations and resources **within a project**.
+///
 
 #### To change the default for the primary suballocation to restrict usage, PI must first edit the suballocation:
 
@@ -120,13 +124,16 @@ sbank e sub <suballocationID> -S <start_date> -E <end_date>
 sbank e sub <project>::<nameOfSourceSuballoc> --hours-to-move <hours> --to-suballocation <project>::<nameOfDestSuballoc>
 ```
 
-!!! note
+/// note
 
-    `hours` must be less than or equal to the available balance for the suballocation `nameOfSourceSuballoc`.
+`hours` must be less than or equal to the available balance for the suballocation `nameOfSourceSuballoc`.
+///
 
-!!! tip inline end
+/// tip
+    attrs: {class: inline end}
 
-    See `sbank e suballocation -h` for all the options.
+See `sbank e suballocation -h` for all the options.
+///
 
 ### Step 3: Submit Jobs (Project team):
 
@@ -153,9 +160,10 @@ List all suballocations for a project that shows the number of jobs run, charges
 sbank-list-allocations -r polaris -p <project> -f "+subname users_list"
 ```
 
-!!! tip
+/// tip
 
-    See `sbank l a -h` for all the options and `sbank –f\?` for a list of fields that can be displayed.
+See `sbank l a -h` for all the options and `sbank –f\?` for a list of fields that can be displayed.
+///
 
 ### FAQs
 **subname needs to be unique in a project - across all resources**

@@ -15,9 +15,10 @@ tags:
 module load oneapi/upstream
 ```
 
-!!! note
+/// note
 
-    This module (compilers, libraries) is built periodically from the latest open-source rather than releases. For more details on the release version of the compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective GitHub repositories for the compilers and libraries.
+This module (compilers, libraries) is built periodically from the latest open-source rather than releases. For more details on the release version of the compiler, please find the details [here](../compiling-and-linking/oneapi-compiler.md). As such, these compilers will get new features and updates quickly that may break on occasion. Please submit any issues at the respective GitHub repositories for the compilers and libraries.
+///
 
 ## Components
 - These are the components associated with this module:

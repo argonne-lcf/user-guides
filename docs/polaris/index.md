@@ -41,15 +41,16 @@ Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a sing
 |              |               | mlx5_0 | SYS  | SYS  | SYS  | PHB  | X      | SYS    |
 |              |               | mlx5_1 | SYS  | PHB  | SYS  | SYS  | SYS    | X      |
 
-!!! info "Legend"
+/// info | Legend
 
-    - **X** = Self
-    - **SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
-    - **NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
-    - **PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
-    - **PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
-    - **PIX** = Connection traversing at most a single PCIe bridge
-    - **NV#** = Connection traversing a bonded set of # NVLinks
+- **X** = Self
+- **SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+- **NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+- **PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+- **PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+- **PIX** = Connection traversing at most a single PCIe bridge
+- **NV#** = Connection traversing a bonded set of # NVLinks
+///
 
 Links to detailed NVIDIA A100 documentation:
 
