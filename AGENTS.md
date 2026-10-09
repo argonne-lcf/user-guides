@@ -42,10 +42,10 @@ Preview with `make serve`, not a Markdown preview in an editor or on GitHub: thi
 - **Sample output** goes in a separate block that can't be copied: `` ``` { .output .no-copy } ``. Keep commands and their output in separate blocks rather than one `console` block.
 - **Full scripts** (job scripts, source files) get line numbers and, when useful, a file name: `` ```bash linenums="1" title="job.sh" ``.
 - **Placeholders:** use `<username>`, `<project>`, `<jobid>`, `<queue>`, and `<path>`, always inside backticks or code blocks. Prefer an environment variable that already has the right value where the command runs: `$USER` and `$HOME` in commands run on ALCF systems. Keep `<username>` in commands run on the reader's own machine (`ssh <username>@aurora.alcf.anl.gov`), where `$USER` is their local name. Explain in prose what a `<path>` should point to, rather than inventing a longer placeholder. Never use a real person's project, username, or home path.
-- **Use the Material/pymdownx features the site already uses**, not raw HTML:
-    - admonitions: `!!! note`, `!!! warning`, `!!! tip`, `!!! danger`, with an optional quoted title (`!!! warning "Known issue"`); `!!! note inline end` for a short side note;
-    - collapsible blocks: `??? example "Title"` (`???+` starts open), not `<details>`;
-    - tabs: `=== "Polaris"` for per-system or per-language alternatives;
+- **Use the Material/pymdownx features the site already uses**, not raw HTML. Admonitions, collapsible blocks, tabs, and captions use the pymdownx Blocks syntax: a `/// name | Title` line, the body (not indented), and a closing `///`. Options go on lines indented 4 spaces right after the opening line.
+    - admonitions: `/// note`, `/// warning`, `/// tip`, `/// danger`, with an optional title (`/// warning | Known issue`); the option `attrs: {class: inline end}` makes a short side note;
+    - collapsible blocks: `/// details | Title`, with options `type: example` for the icon and color and `open: True` to start open; not `<details>`;
+    - tabs: consecutive `/// tab | Polaris` blocks form one tab set, for per-system or per-language alternatives;
     - figure captions: `/// caption` after the image;
     - keys: `++ctrl+c++`.
 - **Raw HTML** only where Markdown has no equivalent, such as a `<br>` inside a table cell or an `<iframe>` embed. Use a blank line instead of `<br>` and `**bold**` instead of `<strong>`. Don't add `<a name>` anchors: link to the automatic heading ID, or if you need a fixed ID, use `## Heading {#id}` (`attr_list`). Note that `{#id}` replaces the automatic ID, so existing links to it break.
@@ -60,7 +60,8 @@ Preview with `make serve`, not a Markdown preview in an editor or on GitHub: thi
 
 The site uses Python-Markdown, which differs from GitHub-flavored Markdown:
 
-- **Indent nested content 4 spaces**, with spaces only (no tabs): nested list items, and the body of admonitions, `???` blocks, and `===` tabs. 2–3 spaces get flattened into the parent list or end the block.
+- **Indent nested content 4 spaces**, with spaces only (no tabs): nested list items, and a `///` block inside a list item (its opening line, body, and closing line). 2–3 spaces get flattened into the parent list.
+- **`///` blocks:** don't indent the body; 4 spaces makes it a code block, or, right after the opening line, block options. To nest a block, give it one more slash than the block around it (`////` inside `///`); a closing line with the outer block's slash count ends the outer block instead. The old `!!!`, `???`, and `===` syntax renders as plain text, and the build doesn't catch it.
 - Numbered steps separated by a column-0 code fence restart the list. `fancylists` preserves the author's number via `start=`.
 - Headings need a space after the `#` marks; a bare `###` renders as literal text.
 - Unescaped `<placeholder>` text in prose is parsed as an HTML tag and disappears. Put it in backticks.
@@ -99,7 +100,7 @@ Only relevant when changing the build, theme, plugins, or CI. Content edits don'
 - **Inbound link protection:** `scripts/validate_inbound_links.py` checks each URL in `includes/validate-inbound-URLs.txt` against `site/`. `docs/inbound-links.md` is generated and gitignored.
 - **Theme overrides** live in `overrides/`. `partials/header.html` and `partials/footer.html` fully replace Material's header and footer, so Material features that render into the footer (e.g. `navigation.footer`) have no effect. Custom JS is in `docs/javascripts/`. Scripts must re-initialize via `document$.subscribe(...)` because `navigation.instant` swaps page content without a full reload (see `tablesort.js`, `mathjax.js`).
 - `docs/javascripts/mathjax.js` loads the MathJax bundle only on pages with `.arithmatex` output, including after instant navigation. Don't add the bundle back to `extra_javascript`.
-- `blocks.admonition/details/tab` must not be enabled alongside the legacy `admonition`/`details`/`tabbed` extensions currently in use. Migration is tracked in #609.
+- Admonitions, details, and tabs use `pymdownx.blocks.admonition`/`details`/`tab` (#609); the legacy `admonition`, `pymdownx.details`, and `pymdownx.tabbed` extensions can't be enabled alongside them. `blocks.admonition` lists Material's admonition types under `types`, because its default list lacks `info`, `example`, and others the pages use. Tab IDs are `__tabbed_N_M`; setting `slugify` on `blocks.tab` would give readable tab anchors.
 - `magiclink`'s `#N`/`@user` shorthands are deliberately off because prose like "see note #1" produced bogus GitHub links.
 - `privacy` downloads external JS/CSS at build time and serves it locally, so `--strict` fails on a dead CDN URL. MathJax is excluded via `assets_exclude`, because its fonts load relative to its script path. Downloads cache to `.cache/` (gitignored, and cached in CI).
 - `optimize` runs only under the `group` plugin with `enabled: !ENV [CI, false]`.
