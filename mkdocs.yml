@@ -60,7 +60,7 @@ theme:
     - navigation.instant.prefetch
     #- navigation.instant.preview  # previews every internal link; see material.extensions.preview below
     - navigation.path
-    #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
+    - navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
