@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # LibTorch C++ Library
 
 LibTorch is a C++ library for Torch, with many of the APIs that are available in PyTorch. Users can find more information in the [PyTorch documentation](https://pytorch.org/cppdocs/installing.html). This is useful for integrating the Torch ML framework into traditional HPC simulation codes and therefore enables training and inference of ML models.

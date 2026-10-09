@@ -1,9 +1,16 @@
+---
+tags:
+  - Job Submission
+search:
+  boost: 2
+---
+
 
 # Running Jobs on Aurora
 
-## Queues
+## Queues: debug, debug-scaling, prod, capacity, visualization {#queues}
 
-There are four production queues you can target in your qsub (`-q <queue name>`):
+There are four production queues you can target in your qsub (`-q <queue>`):
 
 | Queue Name    | Node Min | Node Max   | Time Min | Time Max         | Notes                                                                                                               |
 |---------------|----------|------------|----------|------------------|---------------------------------------------------------------------------------------------------------------------|
@@ -26,42 +33,45 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 
 [^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
 
-!!! warning
+/// warning
 
-    You cannot submit to these queues directly; you can only submit to the routing queue `prod`.
+You cannot submit to these queues directly; you can only submit to the routing queue `prod`.
+///
 
-!!! note
+/// note
 
-      All of these queues have a limit of ten (10) jobs running/accruing per-project.
-      All of these queues have a limit of one hundred (100) jobs queued (not accruing score) per-project.
+All of these queues have a limit of ten (10) jobs running/accruing per-project.
+All of these queues have a limit of one hundred (100) jobs queued (not accruing score) per-project.
+///
 
 ### Submitting a job
 
 Note: Jobs should be submitted only from your allocated project directory and not from your home directory or from `/soft/modulefiles`. Submitting an interactive job from `/soft/modulefiles` will result in your job ending abruptly.
 
-For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<your_ProjectName>` is replaced with an appropriate project name.
+For example, a one-node interactive job requiring access to the `/flare` filesystem can be requested for 30 minutes with the following command, where `<project>` is replaced with an appropriate project name.
 
 ```bash
-qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <your_ProjectName> -q debug -I
+qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <project> -q debug -I
 ```
 
 For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
 
-!!! tip
+/// tip
 
-      To view the available filesystem options, execute the `qstat -Bf` command and view the `resources_available.valid_filesystems` entry.
+To view the available filesystem options, execute the `qstat -Bf` command and view the `resources_available.valid_filesystems` entry.
+///
 
 Recommended PBSPro options follow.
 
 ```bash linenums="1"
 #!/bin/bash -l
-#PBS -A <your_ProjectName>
+#PBS -A <project>
 #PBS -N <your_JobName>
 #PBS -l walltime=<requested_walltime_value>
 #PBS -l filesystems=<requested_fs1:requested_fs2>
 #PBS -k doe
 #PBS -l place=scatter
-#PBS -q <requested_Queue>
+#PBS -q <queue>
 ```
 
 More information on the PBS options above, as well as other PBS options, can be found [here](../running-jobs/index.md).
@@ -250,7 +260,7 @@ A sample submission script with directives is below for a 4-node job with 28 MPI
 #PBS -l walltime=0:10:00
 #PBS -l filesystems=<fs1:fs2>
 #PBS -q debug-scaling
-#PBS -A <MYPROJECT>
+#PBS -A <project>
 
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}
@@ -267,9 +277,10 @@ echo "NUM_OF_NODES= ${NNODES} TOTAL_NUM_RANKS= ${NTOTRANKS} RANKS_PER_NODE= ${NR
 mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth -env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores ./hello_affinity_aurora.out
 ```
 
-!!! tip
+/// tip
 
-      In some cases of network or node failures, `mpiexec` will return a non-zero value. If there are multiple `mpiexec` commands in the submission script, it is highly recommended to check that each `mpiexec` either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent `mpiexec` commands. 
+In some cases of network or node failures, `mpiexec` will return a non-zero value. If there are multiple `mpiexec` commands in the submission script, it is highly recommended to check that each `mpiexec` either returns 0 or (if the application is expected to return non-zero) that it returns the exit code the user expects before executing subsequent `mpiexec` commands. 
+///
 
 ## Running GPU-enabled Applications
 
@@ -280,9 +291,10 @@ GPU-enabled applications will similarly run on the compute nodes using the above
 
 ## MPI rank and thread binding to cores and GPUs
 
-!!! warning
+/// warning
 
-    Since March 31, 2025, cores 0 (104) and 52 (156)--the first physical cores on each CPU socket—have been reserved for system services, and are no longer available for user applications.
+Since March 31, 2025, cores 0 (104) and 52 (156)--the first physical cores on each CPU socket—have been reserved for system services, and are no longer available for user applications.
+///
 
 Each node on Aurora has 2 sockets, each with 1 CPU and 3 PVC GPUs. Each CPU has 52 physical cores, with 2 logical processors (provided by Intel hyper threading) per physical core, for a total of 104 physical cores and 208 logical processors on the CPUs per Aurora node. Each GPU has two tiles on it, for a total of 6 GPUs and 12 GPU tiles on the GPUs per Aurora node. When a parallel job is run, the job must have some way of mapping MPI ranks or threads to each of the 208 logical processors and 6 GPUs or 12 GPU tiles. Mapping is typically done by an affinity mask, which assigns hardware resources to each MPI rank or thread to use.
 
@@ -458,9 +470,10 @@ A small misconfiguration of the `--depth` option for instance, using `--depth=8`
 Example 4 Mapping Which Splits a MPI Rank Across Sockets
 ///
 
-!!! info
+/// info
 
-    For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation.
+For a script to help provide cpu-bindings, you can use [get_cpu_bind_aurora](https://github.com/argonne-lcf/pbs_utils/blob/main/get_cpu_bind_aurora). Please see [User Guide for Aurora CPU Binding Script](https://github.com/argonne-lcf/pbs_utils/blob/main/doc/guide-get_cpu_bind_aurora.md) for documentation.
+///
 
 ### Binding MPI ranks to GPUs
 In this section, the above mentioned MPI+OpenMP+SYCL affinity code will be used to show how to map MPI processes with GPUs.
@@ -590,9 +603,10 @@ MPI 011 - OMP 000 - HWT 93-100 (Running on: 100) - Node x4407c6s2b0n0 - RT_GPU_I
 - The `--cpu-bind=list` argument gives the mapping of MPI ranks to cores, as described in [Binding MPI ranks and threads to cores](#binding-mpi-ranks-and-threads-to-cores).
 - The `--gpu-bind=list` argument gives the mapping of MPI ranks to GPU-tiles.
 
-!!! warning
+/// warning
 
-    There are several limitations with using `--gpu-bind=list` namely (a) for implict-scaling via `--gpu-bind=list:0:1:2:3:4:5`, (b) With a different device-discovery hierarchy, `ZE_FLAT_DEVICE_HIERARCHY=FLAT`. This is mode preferred for AI/ML frameworks.
+There are several limitations with using `--gpu-bind=list` namely (a) for implict-scaling via `--gpu-bind=list:0:1:2:3:4:5`, (b) With a different device-discovery hierarchy, `ZE_FLAT_DEVICE_HIERARCHY=FLAT`. This is mode preferred for AI/ML frameworks.
+///
 
 ```bash
 $ export CPU_BIND_SCHEME="--cpu-bind=list:1-16:17-32:33-48:53-68:69-84:85-100"
@@ -613,14 +627,15 @@ launch failed on x4520c2s0b0n0: Failed to parse implicit GPU selection
 Here is how to submit an interactive job to, for example, edit/build/test an application on Aurora compute nodes:
 
 ```bash
-qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <MYPROJECT> -q debug
+qsub -I -l select=1,walltime=1:00:00,place=scatter -l filesystems=<fs1:fs2> -A <project> -q debug
 ```
 
 This command requests 1 node for a period of 1 hour in the `debug` queue. After waiting in the queue for a node to become available, a shell prompt on a compute node will appear. You may then start building applications and testing gpu affinity scripts on the compute node.
 
-!!! warning
+/// warning
 
-	If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
+If you want to `ssh` or `scp` to one of your assigned compute nodes you will need to make sure your `$HOME` directory and your `$HOME/.ssh` directory permissions are both set to `700`.
+///
 
 ## Running with Multiple Compute Command Streamers (CCSs)
 
@@ -634,12 +649,13 @@ For example, to enable 4 CCSs on all 6 PVC, execute
 export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4
 ```
 
-!!! info "Additional notes when running with multiple CCSs"
+/// info | Additional notes when running with multiple CCSs
 
-	- Please be mindful of the device hierarchy selected. When running with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, 6 PVC are exposed to the applications and the above command should be used, noting that `export ZEX_NUMBER_OF_CCS=0:4` exposes 4 CCSs on both tiles of GPU 0. When running with `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, the 12 PVC tiles are exposed to the applications (tile-as-device), thus `export ZEX_NUMBER_OF_CCS=0:4` only refers to tile 0 of GPU 0. To expose multiple CCSs on all tiles, users should use `export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4`.
-	- Users should also be mindful of the CPU binding affinity guidelines described above, ensuring that MPI processes are bound to the correct socket and GPU pairs.
-	- `ZE_AFFINITY_MASK` is read by the Level Zero driver prior to `ZEX_NUMBER_OF_CCS`, thus `ZEX_NUMBER_OF_CCS` should refer to the GPU IDs of the masked devices.
-	- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node.
+- Please be mindful of the device hierarchy selected. When running with `ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE`, 6 PVC are exposed to the applications and the above command should be used, noting that `export ZEX_NUMBER_OF_CCS=0:4` exposes 4 CCSs on both tiles of GPU 0. When running with `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, the 12 PVC tiles are exposed to the applications (tile-as-device), thus `export ZEX_NUMBER_OF_CCS=0:4` only refers to tile 0 of GPU 0. To expose multiple CCSs on all tiles, users should use `export ZEX_NUMBER_OF_CCS=0:4,1:4,2:4,3:4,4:4,5:4,6:4,7:4,8:4,9:4,10:4,11:4`.
+- Users should also be mindful of the CPU binding affinity guidelines described above, ensuring that MPI processes are bound to the correct socket and GPU pairs.
+- `ZE_AFFINITY_MASK` is read by the Level Zero driver prior to `ZEX_NUMBER_OF_CCS`, thus `ZEX_NUMBER_OF_CCS` should refer to the GPU IDs of the masked devices.
+- Users can expose different number of CCSs on the different GPU and tiles, the desired CCS mode does not need to be uniform across the GPUs on a node.
+///
 
 More information can be found on Intel's [documentation](https://www.intel.com/content/www/us/en/docs/oneapi/optimization-guide-gpu/2024-1/multi-tile-advanced-topics.html) and [GitHub](https://github.com/intel/compute-runtime/blob/master/level_zero/doc/experimental_extensions/MULTI_CCS_MODES.md) pages.
 

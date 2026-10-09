@@ -1,3 +1,8 @@
+---
+tags:
+  - Known Issues
+---
+
 # Early User Notes and Known Issues
 
 _Last Updated: 2026-10-07_
@@ -27,7 +32,7 @@ This is the primary and most stable storage filesystem for now. It is still poss
 
 DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md).  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
-DAOS is currently in its production configuration with 800 out of 1024 servers in use with ~200 Petabytes of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
+DAOS is currently in its production configuration with 800 out of 1024 servers in use with approximately 200 PB of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
 
 #### Grand/Eagle
 
@@ -184,10 +189,10 @@ mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 
 ### Submitting Jobs
 
-Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <JOBID> | grep comment`. Some example comments follow.
+Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <jobid> | grep comment`. Some example comments follow.
 
 ```output
-comment = Job held by <USER> on Tue Feb 6 05:20:00 2024 and terminated
+comment = Job held by <username> on Tue Feb 6 05:20:00 2024 and terminated
 ```
 
 The user has placed the job on hold; the user can `qrls` the job when ready for it to be queued again.
@@ -215,7 +220,7 @@ In the event of a node going down during a job, users may encounter messages suc
 Use of the `qsub -V` flag (note: upper-case) is discouraged, as it can lead to startup failures. The following message (found via `pbsnodes -l`):
 
 ```output
-failed to acquire job resources; job startup aborted (jobid: <YOUR JOBID>)
+failed to acquire job resources; job startup aborted (jobid: <jobid>)
 ```
 
 indicates such a failure. It is recommended to instead use `-v` (note: lower-case) and explicitly export any environment variables that your job may require.
@@ -228,6 +233,19 @@ To increase the chances that a large job does not terminate due to a node failur
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
 
+
+### Known Issues on Other Pages
+
+Some pages keep known issues for a specific tool or library in their own section:
+
+- [The `frameworks` module](data-science/frameworks/index.md#known-issues)
+- [DAOS](data-management/daos/daos-overview.md#known-issues-and-workarounds)
+- [Intel Sanitizer](debugging/Intel_sanitizer.md#known-issues-and-workarounds)
+- [Parsl](workflows/parsl.md#known-issues)
+- [VASP](applications-and-libraries/applications/vasp.md#known-issues)
+- [VTune](performance-tools/vtune.md#known-issues-and-workarounds)
+- [JupyterHub](../services/jupyter-hub.md#known-issues)
+- [Visual Studio Code with Remote SSH](../dev-environment/vscode.md#known-issues)
 
 ## Aurora Bug Tracking repository and table
 

@@ -1,3 +1,13 @@
+---
+tags:
+  - Globus
+keywords:
+  - transfer
+  - endpoint
+  - collection
+  - DTN
+---
+
 # Using Globus
 
 [Globus](http://www.globus.org/) addresses the challenges faced by researchers in moving, sharing, and archiving large volumes of data among distributed sites. With Globus, you hand off data movement tasks to a hosted service that manages the entire operation. It monitors performance and errors, retries failed transfers, corrects problems automatically whenever possible, and reports status to keep you informed and focused on your research.
@@ -19,9 +29,9 @@ The Globus endpoint and the path to use depend on where your data resides. If yo
 
 - `/home`, which is where your home directory resides for Polaris, Sophia, and Crux systems: `alcf#dtn_home` for accessing `/home` (i.e., home directories on the agile-home filesystem). Use the path `/<username>`
 - HPSS: `alcf#dtn_hpss`
-- Eagle filesystem: `alcf#dtn_eagle` for accessing `/lus/eagle/projects` or `/eagle` (i.e., project directories on the Eagle filesystem). Use the path `/eagle/<project name>`
-- Grand filesystem: `alcf#dtn_grand` for accessing `/lus/grand/projects` or `/grand` (i.e., project directories on the Grand filesystem). Use the path `/grand/<project name>`
-- Flare filesystem: `alcf#dtn_flare` for accessing `/lus/flare/projects` or `/flare` (i.e., project directories on the Flare filesystem) on Aurora. Use the path `/<project name>`
+- Eagle filesystem: `alcf#dtn_eagle` for accessing `/lus/eagle/projects` or `/eagle` (i.e., project directories on the Eagle filesystem). Use the path `/eagle/<project>`
+- Grand filesystem: `alcf#dtn_grand` for accessing `/lus/grand/projects` or `/grand` (i.e., project directories on the Grand filesystem). Use the path `/grand/<project>`
+- Flare filesystem: `alcf#dtn_flare` for accessing `/lus/flare/projects` or `/flare` (i.e., project directories on the Flare filesystem) on Aurora. Use the path `/<project>`
 
 After [registering](https://app.globus.org/), simply use the appropriate ALCF endpoint, as well as other sources or destinations. Use your ALCF credentials (your one-time passcode from the MobilePASS+ app, or PIN + passcode from your physical hardware token) to activate the ALCF endpoint.
 

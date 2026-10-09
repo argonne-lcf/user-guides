@@ -4,7 +4,7 @@ SmartSim is an open-source tool developed by Hewlett Packard Enterprise (HPE) de
 
 * Infrastructure library (IL)
   * Provides an API to start, stop, and monitor HPC applications from Python
-  * Interfaces with the scheduler to launch jobs (PBSPro on Polaris and Cobalt on Theta/ThetaGPU)
+  * Interfaces with the scheduler to launch jobs (PBSPro on Polaris)
   * Deploys a distributed in-memory database called the Orchestrator
 * SmartRedis client library
   * Provides clients that connect to the Orchestrator from Fortran, C, C++, and Python code
@@ -16,15 +16,16 @@ For more resources on SmartSim, follow the links below:
 * [Documentation](https://www.craylabs.org/docs/overview.html)
 * [Zoo of examples](https://github.com/CrayLabs/SmartSim-Zoo)
 * [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
-* [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
+* [nekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
 
 ## Installation with PyTorch GPU Backend
 
 SmartSim on Polaris can be installed by creating a virtual environment based on the ML conda module.
 
-!!! warning
+/// warning
 
-    These instructions were written for the `conda/2024-04-29` module, which was removed after the August 2026 system upgrade. They have not yet been validated with newer `conda` modules; in particular, the CUDA/cuDNN paths below and the TensorFlow 2.13.1 downgrade are specific to that module.
+These instructions were written for the `conda/2024-04-29` module, which was removed after the August 2026 system upgrade. They have not yet been validated with newer `conda` modules; in particular, the CUDA/cuDNN paths below and the TensorFlow 2.13.1 downgrade are specific to that module.
+///
 
 From a compute node, execute:
 ```
@@ -92,7 +93,7 @@ To use the TensorFlow backend with the SmartSim Orchestrator, the installation s
 
 ## Examples
 
-You can find examples of in situ training and inference of ML models from an ongoing CFD simulation at the [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML) repository. The `smartredis` branch has instructions on how to build and run the examples on Polaris.
+You can find examples of in situ training and inference of ML models from an ongoing CFD simulation at the [nekRS-ML](https://github.com/argonne-lcf/nekRS-ML) repository. The `smartredis` branch has instructions on how to build and run the examples on Polaris.
 
 The [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML) repository also contains information on how to use SmartSim and NekRS-ML on Polaris, but note that some of the instructions are specific to the Fall of 2023.
 

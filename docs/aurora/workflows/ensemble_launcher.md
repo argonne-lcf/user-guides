@@ -78,7 +78,7 @@ Submit the driver script with a standard PBS job script:
 
 ```bash linenums="1" title="submit.sh"
 #!/bin/bash -l
-#PBS -A <myproject>
+#PBS -A <project>
 #PBS -l select=2
 #PBS -l walltime=00:30:00
 #PBS -l filesystems=home:flare
@@ -189,7 +189,7 @@ For cluster mode, set `"cluster": true` in the launcher config:
 {
     "task_executor_name": "async_mpi",
     "cluster": true,
-    "checkpoint_dir": "/lus/flare/projects/<myproject>/ckpt"
+    "checkpoint_dir": "/lus/flare/projects/<project>/ckpt"
 }
 ```
 
@@ -202,8 +202,9 @@ python submit_tasks.py
 el stop
 ```
 
-!!! warning "Background the `el start` command"
-    `el start` does not return in cluster mode -- the orchestrator is spawned as a child process and the CLI waits on it. Put it in the background with `&` so the rest of your job script can run.
+/// warning | Background the `el start` command
+`el start` does not return in cluster mode -- the orchestrator is spawned as a child process and the CLI waits on it. Put it in the background with `&` so the rest of your job script can run.
+///
 
 `el stop` sends `SIGTERM` to the orchestrator (its PID is stored in `.el_launcher.pid` in the working directory) and it exits gracefully.
 

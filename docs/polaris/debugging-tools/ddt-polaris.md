@@ -81,5 +81,5 @@ ddt --offline mpirun -n 8 --ppn 4 --cpu-bind depth ./set_affinity_gpu_polaris.sh
 You may want to install and run a local version of Forge from the [Linaro website](https://www.linaroforge.com/download-documentation/) on Polaris. Once you install it, you can use the following license file to run the local version with the Forge license on Polaris:
 
 ```bash 
-FORGE_LICENSE_FILE=/soft/debuggers/forge-site/licences/License.17399.client <path_to_the_local_version>/ddt --connect <other DDT parameters> 
+FORGE_LICENSE_FILE=/soft/debuggers/forge-site/licences/License.17399.client <path>/ddt --connect <other DDT parameters> 
 ```

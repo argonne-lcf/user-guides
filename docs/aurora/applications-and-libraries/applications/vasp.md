@@ -1,3 +1,8 @@
+---
+tags:
+  - Electronic Structure
+---
+
 # VASP
 
 ## What is VASP?
@@ -146,9 +151,18 @@ The following modules will update the include and library paths used by the Cray
 
 ```bash linenums="1"
 module restore
-module load oneapi/release/2025.3.1
+module load oneapi/release/2026.1.0
+# Recommended (2026-10-08): use the newer aurora_test MPICH for working
+# GPU-aware MPI. The default mpich/prd/5.0.0.aurora_test.87e2045 has a
+# severely degraded GPU IPC path (see Known issues below). This needs no
+# rebuild: all aurora_test builds share the libmpi.so.12 ABI, and the
+# module's LD_LIBRARY_PATH takes precedence over the binary RUNPATH.
+module swap mpich mpich/prd/5.0.0.aurora_test.51a9474
 
 ```
+
+See [Aurora system updates](../../system-updates.md#2026-09-24-next-eval-mpich-and-vtune-updates)
+for the MPICH versions shipped in the September 2026 rollout.
 
 ### Compiling VASP
 
@@ -172,14 +186,13 @@ A typical submission script looks like this:
 #PBS -l walltime=0:10:00
 #PBS -l filesystems=<fs1:fs2>
 #PBS -q debug-scaling
-#PBS -A <MYPROJECT>
+#PBS -A <project>
 
 export TZ='/usr/share/zoneinfo/US/Central'
 cd ${PBS_O_WORKDIR}
 
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS=12 # Number of MPI ranks to spawn per node
-NDEPTH=4 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
 NTHREADS=4 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
 
 NTOTRANKS=$(( NNODES * NRANKS ))
@@ -192,18 +205,12 @@ export OMP_PROC_BIND=close
 export OMP_STACKSIZE=1G
 
 
-# keep both for the test
-export MPIR_CVAR_ENABLE_GPU=1 #enables GPU-aware MPI support 
-export MPICH_GPU_SUPPORT_ENABLED=1
-
-export I_MPI_OFFLOAD=1 #enable GPU to GPU comm
-
 export CPU_BIND_SCHEME="--cpu-bind=list:1-8:9-16:17-24:25-32:33-40:41-48:53-60:61-68:69-76:77-84:85-92:93-100"
-export AFFINITY=$(which gpu_tile_compact.sh)
+export GPU_BIND_SCHEME=$(which gpu_tile_compact.sh)
 
 bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
-mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} --depth=${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G $AFFINITY $bin
+mpiexec -n ${NTOTRANKS} -ppn ${NRANKS} ${CPU_BIND_SCHEME} --env OMP_NUM_THREADS=${NTHREADS} --env OMP_PLACES=cores --env OMP_STACKSIZE=1G ${GPU_BIND_SCHEME} $bin
 
 ```
 
@@ -215,6 +222,15 @@ qsub script.sh
 ```
 
 ## Known issues
+
+### Slow GPU-aware MPI with the default MPICH (October 2026)
+
+Since the September 2026 rollout, GPU runs with the default
+`mpich/prd/5.0.0.aurora_test.87e2045` are approximately 20-25x slower per SCF iteration
+(`EDDAV`, MPI collectives dominating). Workaround (2026-10-08):
+`module swap mpich mpich/prd/5.0.0.aurora_test.51a9474` (upstream ZE IPC
+fix, no rebuild needed). See
+[Aurora system updates](../../system-updates.md#2026-09-24-next-eval-mpich-and-vtune-updates).
 
 ### VASP 6.6.1 internal compiler error with oneAPI 2026
 

@@ -1,3 +1,9 @@
+---
+description: "Submit, monitor, and manage jobs with PBS on ALCF systems: qsub options, node placement, and job commands."
+search:
+  boost: 2
+---
+
 # Running Jobs using PBS
 
 ## Additional Resources / Documentation
@@ -98,9 +104,10 @@ Here are the "Big Four" commands you will use:
     - Occasionally, the job will still show up in `qstat` after you try and `qdel` it. When this happens you can try `qdel -W force <jobid>`. If it still won't go away, please send mail to <support@alcf.anl.gov> and one of the administrators can remove it for you. DO NOT just default to using `-W force`. The force does not do all of the clean up and can cause problems of its own.
     - PBS Documentation: Users Guide Sec. 9.3, page UG-170; Reference Guide Sec. 2.41, page RG-143
 
-!!! note
+/// note
 
-    The page numbers in the PBS guides are unique. If you search for the specified page number it will take you directly to the relevant page.
+The page numbers in the PBS guides are unique. If you search for the specified page number it will take you directly to the relevant page.
+///
 
 ## `qsub`: submit a job to run {#qsub}
 
@@ -177,9 +184,10 @@ You also have to tell PBS how you want the chunks distributed across the physica
   - group=`<resource name>`
     - As an example, for machines that use a dragonfly network topology, we provide a PBS resource named `tier1` indicating which dragonfly group a node is in. If you wanted to ensure that all the chunks came from a single dragonfly group, you could specify `place=group=tier1` as part of your qsub. `tier0` is rack granularity, so `group=tier0` would ensure your nodes all came from one rack. Note that if you requested more nodes than were available in a rack your job would never run and you would see something like `Not Running: Insufficient amount of resource: tier0`.
 
-!!! note "Sharing mode"
+/// note | Sharing mode
 
-    Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
+Node configuration can override your requested sharing mode. For instance, in most cases ALCF sets the nodes to `force_exclhost`, so normally you don't have to specify this.
+///
 
 We have defined _placement sets_ for the tier0 and tier1 resources. As a result, if you don't specify a grouping PBS will _preferentially_ group your nodes in a placement set, but it won't drain or delay your job start to do so. For example, if you request 10 nodes and don't specify a grouping, if 10 nodes are available in the same rack, all your nodes will be in one rack. If not, but there are 10 nodes in a single dragonfly group, all your nodes will be in one dragonfly group. If you wish to specify a specific rack or dragonfly group, that is accomplished via the select syntax. For instance, `qsub ... -l select=10:tier1=g0` would force your 10 nodes to be in dragonfly group 0.
 
@@ -192,7 +200,7 @@ Here is a heavily commented sample PBS submission script that shows some more of
 # NOTE: adding a switch to the command line will override values in this file.
 
 # These options are MANDATORY at ALCF; Your qsub will fail if you don't provide them.
-#PBS -A <short project name>
+#PBS -A <project>
 #PBS -l walltime=HH:MM:SS
 #file systems used by the job
 #PBS -l filesystems=home:eagle
@@ -203,7 +211,7 @@ Here is a heavily commented sample PBS submission script that shows some more of
 #PBS -N <name>
 
 # If you need a queue other than the default, which is prod (uncomment to use)
-##PBS -q <queue name>
+##PBS -q <queue>
 
 # Controlling the output of your application
 # UG Sec 3.3 page UG-42 Managing Output and Error Files
@@ -212,8 +220,8 @@ Here is a heavily commented sample PBS submission script that shows some more of
 # it is highly recommended that you use the -k option to write directly to the destination
 # the doe stands for direct, output, error
 #PBS -k doe
-#PBS -o <path for stdout>
-#PBS -e <path for stderr>
+#PBS -o <path>
+#PBS -e <path>
 
 # If you want to merge stdout and stderr, use the -j option
 # oe=merge stdout/stderr to stdout, eo=merge stderr/stdout to stderr, n=don't merge
@@ -350,7 +358,7 @@ allcock@polaris-login-02:~/.ssh>  qstat -fF JSON | jq '.Jobs | map_values(select
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.2, page UG-168; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.40, page RG-130
 
-Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project_name> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
+Basically takes the same options as `qsub`; Say you typoed and set the walltime to 300 minutes instead of 30 minutes. You could fix it (if the job had not started running) by doing `qalter -A <project> -l walltime=30:00 <jobid> [<jobid> <jobid>...]`
 The new value overwrites any previous value.
 
 ## `qdel`: Delete a queued or running job {#qdel}
@@ -365,7 +373,7 @@ Occasionally, the job will still show up in `qstat` after you try and `qdel` it.
 
 [Users Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSUserGuide2022.1.pdf) Sec. 9.7, page UG-173; [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf) Sec. 2.46, page RG-175
 
-- `qmove <new queue> <jobid> [<jobid> <jobid>...]`
+- `qmove <queue> <jobid> [<jobid> <jobid>...]`
 - Only works before a job starts running
 
 ## `qhold,qrls`: Place / release a user hold on a job {#qhold,qrls}
@@ -487,9 +495,10 @@ In PBS it is not easy to see a priority order for which jobs will run next. The 
 
 If you receive a `qsub: Job rejected by all possible destinations` error, then check your submission parameters. The issue is most likely that your walltime or node count do not fall within the ranges listed above for the production execution queues. Please see the table above for limits on production queue job sizes.
 
-!!! bug "Job missing from queue"
+/// bug | Job missing from queue
 
-    If you receive a job ID but you cannot find your job with `qstat`, then this may be a submission parameter issue. This can happen for batch submission because the job is being accepted into the routing (`prod`) queue. The routing/`prod` queue's parameters are more broad since it needs to accommodate for all three production queues (`small`, `medium`, & `large`). The prod routing queue accepts the job, generating a job ID. Depending on what is going on with the system, the routing may or may not occur before the `qsub` returns (i.e., if the queues are backed-up the routing queue can't route the job before the `qsub` returns). If the routing is delayed then a job ID is returned, and routing is completed later. Since the `qsub` has ended then there isn't a way to inform the user that this has been rejected by all routing destinations. If you run a `qstat` on the `jobid`, it will return `qstat: Unknown Job Id <jobid>`.
+If you receive a job ID but you cannot find your job with `qstat`, then this may be a submission parameter issue. This can happen for batch submission because the job is being accepted into the routing (`prod`) queue. The routing/`prod` queue's parameters are more broad since it needs to accommodate for all three production queues (`small`, `medium`, & `large`). The prod routing queue accepts the job, generating a job ID. Depending on what is going on with the system, the routing may or may not occur before the `qsub` returns (i.e., if the queues are backed-up the routing queue can't route the job before the `qsub` returns). If the routing is delayed then a job ID is returned, and routing is completed later. Since the `qsub` has ended then there isn't a way to inform the user that this has been rejected by all routing destinations. If you run a `qstat` on the `jobid`, it will return `qstat: Unknown Job Id <jobid>`.
+///
 
 ## Using Fakeroot with Singularity {#Using-Fakeroot-with-Singularity}
 

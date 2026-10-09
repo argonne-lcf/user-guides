@@ -1,3 +1,9 @@
+---
+tags:
+  - PyTorch
+  - Distributed Training
+---
+
 # oneCCL
 
 oneAPI Collective Communications Library (oneCCL) provides an efficient implementation of communication patterns used in deep learning. oneCCL is governed by the UXL Foundation and is an implementation of the oneAPI specification.
@@ -121,8 +127,8 @@ To run from a job script:
 
 ```bash linenums="1"
 #!/bin/bash -x
-# qsub -l nodes=2:ncpus=208 -q debug  -l walltime=02:00:00 -l filesystems=home:flare -A <Project Name> ./pbs_job_
-#PBS -A <ProjectName>
+# qsub -l nodes=2:ncpus=208 -q debug  -l walltime=02:00:00 -l filesystems=home:flare -A <project> ./pbs_job_
+#PBS -A <project>
 #PBS -k doe
 
 module load frameworks 

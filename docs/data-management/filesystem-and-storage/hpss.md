@@ -1,3 +1,13 @@
+---
+keywords:
+  - archive
+  - archival
+  - tape archive
+  - hsi
+  - htar
+  - backup
+---
+
 # Using HPSS
 ## Overview
 
@@ -7,9 +17,10 @@ HPSS is currently configured with a disk and tape tier. The disk tier has a capa
 
 Access to HPSS is provided by various client components. Currently, ALCF supports access through two command-line clients: HSI and HTAR. These are installed on the login nodes of Polaris and Aurora. Users can also use [Globus](hpss.md/#globus) to transfer data to/from HPSS.
 
-!!! warning
+/// warning
 
-    In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<userid>`.
+In order for the client to authenticate with HPSS, the user must have a keytab file that should be located in their home directory under the subdirectory `.hpss`. The file name will be in the format `.ktb_<username>`.
+///
 
 ## HSI General Usage
 HSI can be invoked by simply entering `hsi` at your normal shell prompt. Once authenticated, you will enter the HSI command shell environment:
@@ -82,9 +93,10 @@ Example retrieval:
 htar -xf hpssfile.tar localfile2
 ```
 
-!!! info
+/// info
 
-	The current version of HTAR has a 64 GB file size limit as well as a path length limit. The recommended client is HSI.
+The current version of HTAR has a 64 GB file size limit as well as a path length limit. The recommended client is HSI.
+///
 
 ### Globus
 In addition, HPSS is accessible through the Globus endpoint `alcf#dtn_hpss`. As with HSI and HTAR, you must have a keytab file before using this endpoint. For more information on using Globus, please see [Using Globus](../data-transfer/using-globus.md).

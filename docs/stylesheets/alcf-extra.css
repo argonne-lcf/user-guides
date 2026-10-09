@@ -2121,3 +2121,46 @@ pre .normal a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Tag chips above the page title and on the Tags page: brand blue instead of
+   Material's grey, and no underline from the scheme-nested .md-typeset a rules above
+   (a.md-tag matches their specificity; being later in the file, it wins). */
+.md-typeset a.md-tag {
+  background-color: var(--blue_tint);
+  color: var(--blue_dark);
+  text-decoration: none;
+}
+
+.md-typeset a.md-tag[href]:focus,
+.md-typeset a.md-tag[href]:hover {
+  background-color: var(--blue_med);
+  color: var(--neutral_light);
+}
+
+/* Same inversion as the tiles: a light tint is unreadable on dark. */
+[data-md-color-scheme="slate"] .md-typeset a.md-tag {
+  background-color: color-mix(in srgb, var(--blue_med) 35%, transparent);
+  color: var(--blue_pale);
+}
+
+[data-md-color-scheme="slate"] .md-typeset a.md-tag[href]:focus,
+[data-md-color-scheme="slate"] .md-typeset a.md-tag[href]:hover {
+  background-color: var(--blue_pale);
+  color: var(--neutral_dark);
+}
+
+/* Sidebar sections shown after each page title on the Tags page
+   (overrides/fragments/tags/default/listing.html). */
+.md-typeset .alcf-tag-listing-path {
+  margin-left: 0.5em;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8em;
+}
+
+/* Links with instant previews (material.extensions.preview targets): one
+   dotted underline instead of our solid underline plus Material's dotted
+   border-bottom, so they still look different from other links. */
+.md-typeset a[data-preview] {
+  border-bottom: none;
+  text-decoration-style: dotted;
+}

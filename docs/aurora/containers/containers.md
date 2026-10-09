@@ -12,16 +12,17 @@ ssh <username>@aurora.alcf.anl.gov
 ```
 Refer to [Getting Started on Aurora](../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
 
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `aurora-uan`):
-    ```bash
-    qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
-    ```
+Explicitly, to request an interactive job (from `aurora-uan`):
+```bash
+qsub -I -q <queue> -l select=1,walltime=60:00 -A <project> -l filesystems=<fs1:fs2>
+```
 
-    Refer to [job scheduling and execution](../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../running-jobs/index.md) for additional information.
+///
 
 ### Loading Apptainer module on a compute node
 ```bash linenums="1"
@@ -47,7 +48,7 @@ apptainer exec --fakeroot docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from t
 ### Example: Postgres database
 ```bash linenums="1" title="apptainer_aurora_example.sh"
 # qsub from a UAN/login node
-qsub -l select=1 -l walltime=60:00 -A <Projectname> -q <Queue> -l filesystems=<fs1:fs2> -I
+qsub -l select=1 -l walltime=60:00 -A <project> -q <queue> -l filesystems=<fs1:fs2> -I
 
 # Set proxy on compute node
 export HTTP_PROXY="http://proxy.alcf.anl.gov:3128"

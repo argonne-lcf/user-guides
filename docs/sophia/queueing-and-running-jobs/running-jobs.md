@@ -6,9 +6,9 @@ The majority of the nodes have the 40 GB A100 models, but two nodes contain the 
 You may request resources by node (with 8 GPUs) or by individual GPUs based on your job needs. 
 What you will get is determined by the queue you submit to (see Queues section below).
 
-## Queues
+## Queues: by-gpu, by-node, bigmem {#queues}
 
-There are three production queues you can target in your `qsub` command (`-q <queue name>`):
+There are three production queues you can target in your `qsub` command (`-q <queue>`):
 
 | Queue Name | Node/GPU Min | Node/GPU Max | Time Min | Time Max | Notes                                            |
 |------------|--------------|--------------|----------|----------|--------------------------------------------------|
@@ -16,9 +16,10 @@ There are three production queues you can target in your `qsub` command (`-q <qu
 | `by-node`  | 1 Node       | 8 Nodes      | 5 min    | 24 hr    |                                                  |
 | `bigmem`   | 1 Node       | 1 Node       | 5 min    | 12 hrs   | ***bigmem is unavailable until further notice*** |
 
-!!! note
+/// note
 
-    For all Sophia queues, `MaxQueued` will be 20 queued or running jobs (per project) and `MaxRunning` will be 5 concurrent jobs (per project)
+For all Sophia queues, `MaxQueued` will be 20 queued or running jobs (per project) and `MaxRunning` will be 5 concurrent jobs (per project)
+///
 
 The initial queue policy will be simple First-In-First-Out (FIFO) based on priority with EASY backfill. 
 The `by-queue` and `by-gpu` queues target non-bigmem nodes. 
@@ -45,4 +46,4 @@ Two of the nodes have 80GB of RAM per GPU, while the other 22 have 40GB of RAM p
 Use this queue to access the 2 nodes with more memory by specifying `-q bigmem` in your `qsub`. 
 A max of 1 node (`-l select=1`) can be requested in this queue.
 
-[^1]: The default queue is where your job will be submitted if you don't have `-q <queue name>` in your `qsub`.
+[^1]: The default queue is where your job will be submitted if you don't have `-q <queue>` in your `qsub`.

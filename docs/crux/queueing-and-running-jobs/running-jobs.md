@@ -1,10 +1,10 @@
 # Running Jobs on Crux
 
-## Queues
+## Queues: debug, workq-route, preemptable, demand {#queues}
 
 *******
 
-There are four production queues you can target in your qsub (`-q <queue name>`):
+There are four production queues you can target in your qsub (`-q <queue>`):
 
 | Queue Name    | Node Min | Node Max | Time Min | Time Max | Notes                                                                                                |
 |---------------|----------|----------|----------|----------|------------------------------------------------------------------------------------------------------|
@@ -18,7 +18,7 @@ There are four production queues you can target in your qsub (`-q <queue name>`)
 Jobs in the demand queue take priority over jobs in the preemptable queue.
 This means jobs in the preemptable queue may be preempted (killed without any warning) if there are jobs in the demand queue.
 Unfortunately, there's always an inherent risk of jobs being killed when using the preemptable queue. 
-Please use the following command to view details of a queue: `qstat -Qf <queuename>`
+Please use the following command to view details of a queue: `qstat -Qf <queue>`
 
 To make your job rerunnable, add the following PBS directive: `#PBS -r y`. This will ensure your job will restart once the demand job is complete. 
 

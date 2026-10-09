@@ -1,6 +1,17 @@
+---
+tags:
+  - Authentication
+keywords:
+  - login
+  - log in
+  - sign in
+  - password
+  - "two-factor"
+---
+
 # Logging In with a Token
 
-Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
+ALCF systems require multi-factor authentication (MFA): you log in with a one-time passcode from a token. Once you have [obtained a token](obtaining-a-token.md), you can use it to log in to ALCF systems. 
 
 You can log in with a [Mobile Token](#logging-in-to-an-alcf-system-using-a-mobile-token) using your mobile device. 
 
@@ -12,7 +23,7 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
     Then initiate an SSH session and type the following:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
     For example, <johnsmith@aurora.alcf.anl.gov>
@@ -26,12 +37,13 @@ You can log in with a [Physical Token](#logging-in-to-an-alcf-system-using-a-phy
 
     Enter the passcode as the login password for the system within the SSH session.
 
-    !!! info "Note"
+    /// info | Note
 
-        You do NOT have to enter the PIN on the SSH screen when logging into a
-        resource.
-        This only needs to be done to access the passcode within the SafeNet
-        MobilePASS+ app.
+    You do NOT have to enter the PIN on the SSH screen when logging into a
+    resource.
+    This only needs to be done to access the passcode within the SafeNet
+    MobilePASS+ app.
+    ///
 
 1. Each generated passcode is valid on the SafeNet MobilePass+ app window until
    your mobile device screen times out.
@@ -49,7 +61,7 @@ numbers.
 1. Initiate an SSH session using:
 
     ```bash
-    ssh <ALCF username>@<system_name>.alcf.anl.gov
+    ssh <username>@<system_name>.alcf.anl.gov
     ```
 
 2. A password prompt will be received.  

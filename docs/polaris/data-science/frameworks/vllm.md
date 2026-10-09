@@ -1,5 +1,8 @@
 ---
 description: "Run LLM inference with vLLM on Polaris: the provided installation, model weights, and single-GPU to multi-node serving."
+tags:
+  - Inference
+  - LLMs
 ---
 
 # Inference with vLLM on Polaris
@@ -90,11 +93,13 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct --port 8000 --tensor-parallel-size 
 
 To serve models across multiple nodes, we suggest users take advantage of the provided `setup_ray_cluster.sh` script to setup a Ray cluster across nodes before running `vllm serve`.
 
-??? example "Setup script"
+/// details | Setup script
+    type: example
 
-	```bash linenums="1" title="setup_ray_cluster.sh"
-    --8<-- "./docs/polaris/data-science/frameworks/setup_ray_cluster.sh"
-	```
+```bash linenums="1" title="setup_ray_cluster.sh"
+--8<-- "./docs/polaris/data-science/frameworks/setup_ray_cluster.sh"
+```
+///
 
 The following example serves `meta-llama/Llama-3.1-70B-Instruct` model using 2 nodes. It sets tensor parallelism `TP=4` for intra-node communications and pipeline parallelism `PP=2` for inter-node communication, for a total of 16 shards. 
 
@@ -107,17 +112,18 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct --port 8000 --tensor-parallel-size 
 
 General guidelines to keep in mind when serving models across nodes:
 
-!!! info "Guidelines for vLLM Model Serving"
-    * Setting `--max-model-len` can be important in order to fit the model on the GPUs.
-    * Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. However, setting `TP` size equal to the number of GPUs on the node (4 for Polaris) is preferred to utilize intra-node communications for this parallism dimension. 
-    * Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. In this case `PP` is set to the number of nodes used.
-    * The product $\text{TP} \times \text{PP}$ indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16` (2 bytes per parameter), the minimum number of GPUs needed to hold the model weights is
+/// info | Guidelines for vLLM Model Serving
+* Setting `--max-model-len` can be important in order to fit the model on the GPUs.
+* Tensor parallelism size must evenly divide the number of attention heads of the model. For example, the `Llama-3.1-70B-Instruct` model has 64 attention heads, so valid `TP` values are 1, 2, 4, 8. However, setting `TP` size equal to the number of GPUs on the node (4 for Polaris) is preferred to utilize intra-node communications for this parallism dimension. 
+* Pipeline parallelism size must evenly divide the number of hidden layers in the model. For example, the `Llama-3.1-70B-Instruct` model has 80 layers, so `PP` values of 1, 2, 4, 5, etc. are valid. In this case `PP` is set to the number of nodes used.
+* The product $\text{TP} \times \text{PP}$ indicates the total number of GPUs used to serve the model, which is usually defined by the number of parameters in the model and the memory of the individual GPUs. As a back of the envelope calculation, when using half precision such as `bfloat16` (2 bytes per parameter), the minimum number of GPUs needed to hold the model weights is
 
-        $$
-        N_\text{GPU} \geq \frac{2 \times \text{parameters (billions)}}{\text{GPU memory (GB)}}
-        $$
+    $$
+    N_\text{GPU} \geq \frac{2 \times \text{parameters (billions)}}{\text{GPU memory (GB)}}
+    $$
 
-        For example, `Llama-3.1-70B-Instruct` on 40 GB A100 GPUs needs $2 \times 70 / 40 = 3.5$, so at least 4 GPUs. The command above uses $\text{TP} \times \text{PP} = 4 \times 2 = 8$, which leaves room for the KV cache.
+    For example, `Llama-3.1-70B-Instruct` on 40 GB A100 GPUs needs $2 \times 70 / 40 = 3.5$, so at least 4 GPUs. The command above uses $\text{TP} \times \text{PP} = 4 \times 2 = 8$, which leaves room for the KV cache.
+///
 
 ## Scaling vLLM Workflows
 

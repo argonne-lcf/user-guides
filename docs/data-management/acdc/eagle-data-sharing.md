@@ -1,12 +1,18 @@
+---
+tags:
+  - Globus
+---
+
 # Sharing Data on Eagle Using Globus Guest Collections
 
 ## Overview
 
 Collaborators throughout the scientific community have the ability to write data to and read scientific data from the Eagle filesystem using Globus sharing capability. This capability provides PIs with a natural and convenient storage space for collaborative work.
 
-!!! note
+/// note
 
-	The project PI needs to have an **active** ALCF account to set up Globus guest collections on Eagle and set permissions for collaborators to access data. If the PI does not have an account or has an inactive account, they will not be able to create a Globus guest collection. If a PI's account goes inactive after the Globus guest collection was created and shared, the collection will become inaccessible. It is possible for the collection to become accessible once again, provided the PI's account is reactivated within 3 months. Only the project PI has the ability to create a collection; project proxies cannot create a collection.
+The project PI needs to have an **active** ALCF account to set up Globus guest collections on Eagle and set permissions for collaborators to access data. If the PI does not have an account or has an inactive account, they will not be able to create a Globus guest collection. If a PI's account goes inactive after the Globus guest collection was created and shared, the collection will become inaccessible. It is possible for the collection to become accessible once again, provided the PI's account is reactivated within 3 months. Only the project PI has the ability to create a collection; project proxies cannot create a collection.
+///
 
 Globus is a service that provides research data management, including managed transfer and sharing. It makes it easy to move, sync, and share large amounts of data. Globus will manage file transfers, monitor performance, retry failures, recover from faults automatically when possible, and report the status of your data transfer. Globus supports GridFTP for bulk and high-performance file transfer, and direct HTTPS for download. The service allows the user to submit a data transfer request and performs the transfer asynchronously in the background. For more information, see Globus data transfer and Globus data sharing.
 
@@ -30,9 +36,10 @@ You will be taken to a familiar-looking page for ALCF login. Enter your ALCF log
 
 ## Accessing your Eagle Project Directory
 
-!!! note
+/// note
 
-    Specifically for PIs with Eagle 'Data-Only' projects (no compute allocations), logging in through Globus is the only way to access the project directory.
+Specifically for PIs with Eagle 'Data-Only' projects (no compute allocations), logging in through Globus is the only way to access the project directory.
+///
 
 PIs with data and compute allocations will have access to the required compute-system login nodes (along with the Globus Web Interface) to access their project directory.
 
@@ -40,13 +47,15 @@ PIs with data and compute allocations will have access to the required compute-s
 
 A project PI needs to have an 'active' ALCF account in place to create and share guest collections with collaborators. Please note that ONLY a PI has the ability to create guest collections.
 
-!!! info 
+/// info
 
-    PIs with an "Inactive" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate). Note that if the PI's account has been inactive for more than 3 months, the PI should email to support@alcf.anl.gov to have their sharing policy re-enabled after their account is reactivated. Once the sharing policy is set up, they will need to recreate the guest collections.
+PIs with an "Inactive" ALCF account should submit a reactivation request by filling out this form: [Re-activation Form](https://my.alcf.anl.gov/accounts/#/accountReactivate). Note that if the PI's account has been inactive for more than 3 months, the PI should email to support@alcf.anl.gov to have their sharing policy re-enabled after their account is reactivated. Once the sharing policy is set up, they will need to recreate the guest collections.
+///
 
-!!! info
+/// info
 
-    PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)
+PIs without an ALCF account should submit an ALCF account request by filling out this form: [Account Request Form](https://my.alcf.anl.gov/accounts/#/accountRequest)
+///
 
 ### Navigate to the Collections tab
 
@@ -229,9 +238,10 @@ Encrypting the transfer
 
 Alternatively, you can encrypt the files before transfer using any method on your local system, then transfer them using Globus, then unencrypt on the other end.
 
-!!! danger
+/// danger
 
-	Encryption and verification will slow down the data transfer.
+Encryption and verification will slow down the data transfer.
+///
 
 ## FAQs
 

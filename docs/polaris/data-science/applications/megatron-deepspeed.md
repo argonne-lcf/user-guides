@@ -1,13 +1,21 @@
+---
+tags:
+  - PyTorch
+  - LLMs
+  - Distributed Training
+---
+
 # Megatron-DeepSpeed
 
 We describe below the instructions for launching distributed training with Microsoft's Megatron-DeepSpeed and briefly describe some parallelism strategies and various optimizations that are supported.
 
-!!! note
+/// note
 
-    We maintain a forked version at
-    [`argonne-lcf/Megatron-DeepSpeed`](https://github.com/argonne-lcf/Megatron-DeepSpeed)
-    that has some [helper scripts](#helper-scripts) for launching and setting
-    various training options.
+We maintain a forked version at
+[`argonne-lcf/Megatron-DeepSpeed`](https://github.com/argonne-lcf/Megatron-DeepSpeed)
+that has some [helper scripts](#helper-scripts) for launching and setting
+various training options.
+///
 
 ## Setup
 

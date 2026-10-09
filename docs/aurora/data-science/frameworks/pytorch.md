@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # PyTorch on Aurora
 
 PyTorch is a popular, open-source deep learning framework developed and released by Facebook. The [PyTorch home page](https://pytorch.org/), has more information about PyTorch, which you can refer to. For troubleshooting on Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
@@ -44,59 +49,68 @@ print(f'Current device ID = {torch.xpu.device(current_tile)}')
 print(f'Device properties = {torch.xpu.get_device_properties()}')
 ```
 
-???+ example "Example output:"
+/// details | Example output:
+    type: example
+    open: True
 
-    ``` { .python-console .no-copy }
-	GPU availability: True
-    Number of tiles = 12
-    Current tile = 0
-    Current device ID = <torch.xpu.device object at 0x14fa94808f20>
-    Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=ff8859e9-2f1d-a7a2-0000-000000000001, driver_version='1.6.33578+77', total_memory=65520MB, local_mem_size=128KB, last_level_cache_size=196608KB, max_compute_units=448, memory_clock_rate=3200MHz, memory_bus_width=64-bit, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1, is_integrated_gpu=0)
-	```
+``` { .python-console .no-copy }
+GPU availability: True
+Number of tiles = 12
+Current tile = 0
+Current device ID = <torch.xpu.device object at 0x14fa94808f20>
+Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=ff8859e9-2f1d-a7a2-0000-000000000001, driver_version='1.6.33578+77', total_memory=65520MB, local_mem_size=128KB, last_level_cache_size=196608KB, max_compute_units=448, memory_clock_rate=3200MHz, memory_bus_width=64-bit, gpu_eu_count=448, gpu_subslice_count=56, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1, is_integrated_gpu=0)
+```
+///
 
-!!! info "Tile-as-device setting for AI/ML worklaods"
-    Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, the `frameworks` module sets `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, meaning that the 12 PVC tiles are exposed as devices (see more details on the [Python](../python.md) page). This is the recommended setting for AI/ML workloads. 
+/// info | Tile-as-device setting for AI/ML worklaods
+Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, the `frameworks` module sets `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, meaning that the 12 PVC tiles are exposed as devices (see more details on the [Python](../python.md) page). This is the recommended setting for AI/ML workloads. 
+///
 
 
-??? info "Using the entire PVC GPU as PyTorch devices"
+/// details | Using the entire PVC GPU as PyTorch devices
+    type: info
 
-    By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. To map a PyTorch device to an entire PVC GPU out of the 6 available on a compute node, set
-    
-    ```bash
-    export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
-    ```
+By default, each tile is mapped to one PyTorch device, giving a total of 12 devices per node, as seen above. To map a PyTorch device to an entire PVC GPU out of the 6 available on a compute node, set
 
-    and mask the devices with
+```bash
+export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
+```
 
-    ```bash
-    # To mask entire PVC GPUs
-    export ZE_AFFINITY_MASK=0,1
+and mask the devices with
 
-    # or to mask particular tiles only (use syntax `Device.Sub-device`)
-    export ZE_AFFINITY_MASK=0.0,1.0
-    ```
+```bash
+# To mask entire PVC GPUs
+export ZE_AFFINITY_MASK=0,1
 
-    You can check that each PyTorch device is now mapped to one GPU with:
+# or to mask particular tiles only (use syntax `Device.Sub-device`)
+export ZE_AFFINITY_MASK=0.0,1.0
+```
 
-    ```bash
-    module load frameworks
-    ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE ZE_AFFINITY_MASK=0 python test_affinity.py
-    ```
+You can check that each PyTorch device is now mapped to one GPU with:
 
-    ```python linenums="1" title="test_affinity.py"
-    import torch
-    print(torch.xpu.device_count())
-    print(torch.xpu.get_device_properties())
-    ```
-    
-    ???+ example "Example output"
-    
-        ``` { .bash .no-copy }
-    	1
-    	_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=d20ebf0c-4ca0-6be7-0000-000000000000, driver_version='1.6.33578+42', total_memory=131040MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
-    	```
-    	
-    More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+```bash
+module load frameworks
+ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE ZE_AFFINITY_MASK=0 python test_affinity.py
+```
+
+```python linenums="1" title="test_affinity.py"
+import torch
+print(torch.xpu.device_count())
+print(torch.xpu.get_device_properties())
+```
+
+//// details | Example output
+    type: example
+    open: True
+
+``` { .bash .no-copy }
+1
+_XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='Intel(R) oneAPI Unified Runtime over Level-Zero', type='gpu', device_id=0xBD6, uuid=d20ebf0c-4ca0-6be7-0000-000000000000, driver_version='1.6.33578+42', total_memory=131040MB, max_compute_units=896, gpu_eu_count=896, gpu_subslice_count=112, max_work_group_size=1024, max_num_sub_groups=64, sub_group_sizes=[16 32], has_fp16=1, has_fp64=1, has_atomic64=1)
+```
+////
+
+More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
+///
 
 
 
@@ -115,18 +129,19 @@ Here we list some common changes that you may need to do to your PyTorch code in
    + model = model.to("xpu")
    ```
 
-!!! tip
-    
-    A more portable solution to select the appropriate device is the following:
-    ```python
-    if torch.cuda.is_available():
-        device = torch.device('cuda')
-    elif torch.xpu.is_available():
-        device = torch.device('xpu')
-    else: 
-        device = torch.device('cpu')
-    model = model.to(device)
-    ```
+/// tip
+
+A more portable solution to select the appropriate device is the following:
+```python
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+elif torch.xpu.is_available():
+    device = torch.device('xpu')
+else: 
+    device = torch.device('cpu')
+model = model.to(device)
+```
+///
 
 
 ## Example: training a PyTorch model on a single GPU tile
@@ -292,40 +307,42 @@ for epoch in range(10):
 torch.distributed.destroy_process_group()
 ```
 
-!!! info "CPU bindings for best performance on Aurora"
+/// info | CPU bindings for best performance on Aurora
 
-    For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec. When using all 12 PVC tiles on each of the nodes, the following setting is recommended
-    
-    ```bash
-    export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
-    mpiexec ... --cpu-bind=${CPU_BIND} python pytorch_ddp.py
-    ```
-    
-    1. 12 processes per node, evenly split across the 2 CPU sockets, with each rank having 4 cores available
+For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec. When using all 12 PVC tiles on each of the nodes, the following setting is recommended
+
+```bash
+export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
+mpiexec ... --cpu-bind=${CPU_BIND} python pytorch_ddp.py
+```
+
+1. 12 processes per node, evenly split across the 2 CPU sockets, with each rank having 4 cores available
+///
 
 <!---
-!!! warning "Settings for training beyond 16 nodes"
+/// warning | Settings for training beyond 16 nodes
 
-    At larger scales, the following oneCCL environment variable settings:
+At larger scales, the following oneCCL environment variable settings:
 
-    ```bash
-    ## Option 1
-    CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
+```bash
+## Option 1
+CCL_WORKER_AFFINITY="42,43,44,45,46,47,94,95,96,97,98,99"
 
-    ## Option 2
-    unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
-    ```
+## Option 2
+unset CCL_WORKER_AFFINITY  # Default will pick up from the last 24 cores even if you didn't specify these in the binding.
+```
 
-    When running 12 ranks per node with these settings the `framework`s use 4 cores, with Horovod tightly coupled with the `framework`s using one of the 4 cores, and oneCCL using a separate core for better performance, e.g. with rank 0 the `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would use core 42.
+When running 12 ranks per node with these settings the `framework`s use 4 cores, with Horovod tightly coupled with the `framework`s using one of the 4 cores, and oneCCL using a separate core for better performance, e.g. with rank 0 the `framework`s would use cores 4-7, Horovod would use core 4, and oneCCL would use core 42.
 
-    In the provided CPU binding list we have provided two options. First one is based on one CPU core per rank. In the second option, we assign 4 CPU cores per rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per rank. Notice that, these cores are picked out from the last 12 cores of each socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs to the first socket, and 94-99 belongs to the second socket. We leave a few cores free, in case, the user may want to use other services like copper and DAOS along with their application. The second oneCCL option is to delegate task of picking cores to the system. In this case, the user should not declare or export the `CCL_WORKER_AFFINITY` variable.
+In the provided CPU binding list we have provided two options. First one is based on one CPU core per rank. In the second option, we assign 4 CPU cores per rank. In the first oneCCL worker affinity option we pick 12 CPU cores, one per rank. Notice that, these cores are picked out from the last 12 cores of each socket (CPU), aligned with oneCCL default core picking strategy. 42-47 belongs to the first socket, and 94-99 belongs to the second socket. We leave a few cores free, in case, the user may want to use other services like copper and DAOS along with their application. The second oneCCL option is to delegate task of picking cores to the system. In this case, the user should not declare or export the `CCL_WORKER_AFFINITY` variable.
 
-    Each workload may perform better with different settings. The criteria for choosing the cpu bindings are:
-    
-    - Binding for GPU and NIC affinity – To bind the ranks to cores on the proper socket or NUMA nodes.
-    - Binding for cache access – This is the part that will change per application and some experimentation is needed.
-    
-    __Important__: This setup is a work in progress, and based on observed performance. The recommended settings are likely to changed with new `framework` releases.
+Each workload may perform better with different settings. The criteria for choosing the cpu bindings are:
+
+- Binding for GPU and NIC affinity – To bind the ranks to cores on the proper socket or NUMA nodes.
+- Binding for cache access – This is the part that will change per application and some experimentation is needed.
+
+__Important__: This setup is a work in progress, and based on observed performance. The recommended settings are likely to changed with new `framework` releases.
+///
 --->
 
 ### Distributed Training with Multiple CCSs
@@ -378,27 +395,29 @@ exec "$@"
 
 1. Note that the script takes the number of CCSs exposed as a command line argument
 
-!!! info "Checking PVC usage with `xpu-smi`"
-	Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
-	```bash
-	module load xpu-smi
-	watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
-    ```
+/// info | Checking PVC usage with `xpu-smi`
+Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
+```bash
+module load xpu-smi
+watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
+```
 
-	1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
+1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
 
-	and checking the GPU and memory utilization of both tiles.
+and checking the GPU and memory utilization of both tiles.
 
-    Alternatively, execute
+Alternatively, execute
 
-    ```bash
-    /soft/tools/igt-gpu-tools/master-2022.05.26/bin/intel_gpu_top -d drm:/dev/dri/card0 # (1)!
-    ```
+```bash
+/soft/tools/igt-gpu-tools/master-2022.05.26/bin/intel_gpu_top -d drm:/dev/dri/card0 # (1)!
+```
 
-    1. `card0` refers to GPU 0, `card1` for GPU 1, etc.
+1. `card0` refers to GPU 0, `card1` for GPU 1, etc.
 
-    and press `1` on the keybord to see the utilization of the CCS on the selected GPU. 
+and press `1` on the keybord to see the utilization of the CCS on the selected GPU. 
+///
 
-!!! warning "Multiple CCSs and oneCCL"
-	- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
-	- When using PyTorch DDP, the model must be offloaded to the XPU device after calling the `DDP()` wrapper on the model to avoid hangs.
+/// warning | Multiple CCSs and oneCCL
+- When performing distributed training exposing multiple CCSs, the collective communications with the oneCCL backend are delegated to the CPU. This is done in the background by oneCCL, so no change to the users' code is required to move data between host and device, however it may impact the performance of the collectives at scale.
+- When using PyTorch DDP, the model must be offloaded to the XPU device after calling the `DDP()` wrapper on the model to avoid hangs.
+///

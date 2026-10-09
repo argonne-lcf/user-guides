@@ -1,3 +1,8 @@
+---
+tags:
+  - Getting Started
+---
+
 # Starting Your ALCF Award
 
 The following guide is for PIs and Proxies to get insight into managing projects and teams for ALCF awards. Please submit questions or trouble tickets to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
@@ -70,9 +75,10 @@ The PI or a proxy must approve each team member to access ALCF resources and run
 
 PI/proxies with active ALCF accounts can also approve new account requests, project membership requests, account reactivation requests, and add existing active ALCF users to the project by logging into the ALCF Account and Project Management application.
 
-!!! note
-	
-	If PI/proxies need to request an ALCF account, see the section below for instructions on "how to apply" for an account.
+/// note
+
+If PI/proxies need to request an ALCF account, see the section below for instructions on "how to apply" for an account.
+///
 
 ### Accounts and Access for your Project Members
 All project members will need an ALCF user account to access project data and to run jobs on ALCF systems.
@@ -95,9 +101,10 @@ Look for an email from us with the subject line: ALCF [ALLOCATION PROGRAM] Proje
 
 ## Reporting Requirements for INCITE, ALCC, and ADSP
 
-!!! note
+/// note
 
-    PIs that are awarded a Director's Discretionary allocation are not required to submit project reports.
+PIs that are awarded a Director's Discretionary allocation are not required to submit project reports.
+///
 
 If you received an INCITE, ALCC, or ADSP allocation award, quarterly reporting is required to keep DOE informed of progress related to your allocation.
 
@@ -126,7 +133,7 @@ We have an allocation management tool called sbank, and below are a few helpful 
 You can use the following command to check your project balance on Polaris:
 
 ```bash
-sbank-list-allocations -p <Project Shortname> -r <system name>
+sbank-list-allocations -p <project> -r <system name>
 ```
 
 For more command examples and details, see [sbank](../allocation-management/sbank-allocation-accounting-system.md).

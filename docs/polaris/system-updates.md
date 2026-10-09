@@ -1,3 +1,12 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Polaris System Updates
 
 <!-- ## 2026-MM-DD: `conda/2026-10-01` becomes the default module -->
@@ -30,9 +39,10 @@ Some highlights of changes relative to `conda/2025-09-25`:
 - SGLang, xformers, onnx-tf, tensorflow-probability, and falkon are no longer included
 - `torch_scatter` and `torch_sparse` are discontinued upstream; PyTorch Geometric is provided with `pyg_lib` only
 
-!!! note "Updates to older conda modules"
+/// note | Updates to older conda modules
 
-    `conda/2025-09-25` and `conda/2025-09-28` have been updated to run on the upgraded system software. Users who encountered library-loading or MPI errors with these modules since August 19 should try again. Conda modules older than `conda/2025-09-25`, including `conda/2024-04-29`, are incompatible with the upgraded system and have been removed.
+`conda/2025-09-25` and `conda/2025-09-28` have been updated to run on the upgraded system software. Users who encountered library-loading or MPI errors with these modules since August 19 should try again. Conda modules older than `conda/2025-09-25`, including `conda/2024-04-29`, are incompatible with the upgraded system and have been removed.
+///
 
 ## 2026-08-19; HPCM, PE, NVIDIA driver updates
 Polaris and Eagle to be upgraded between Aug 17 - Aug 19, 2026.
@@ -63,14 +73,15 @@ Eagle:
 
 - Network Element Operating System (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
-!!! danger "cgroups PID limit on login nodes"
+/// danger | cgroups PID limit on login nodes
 
-    The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
+The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
 
-    Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
+Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
 
-    A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
-    The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
+A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
+The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
+///
 
 ## 2025-10-24: `conda/2025-09-25` becomes the default module
 
@@ -98,9 +109,10 @@ Some highlights of changes relative to previous versions of this module:
 - vLLM, verl, mamba-ssm, megatron-core, SGLang, uv, FlashInfer, and other packages added
 - Improved PyTorch compatibility with mpi4py and Cray MPICH
 
-!!! note
+/// note
 
-    The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
+The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
+///
 
 ## 2025-08-29: HPCM upgrade to SUSE 15 SP6
 
@@ -115,9 +127,10 @@ Polaris HPCM upgrade involves the following key version software changes:
 - USS 1.3.1 / PALS updates to 1.6.1
 - PBS update to 2025.2.0
 
-!!! warning "Recompile recommended"
+/// warning | Recompile recommended
 
-    The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.
+The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.
+///
 
 ## 2024-09-09: XALT enabled
 

@@ -63,7 +63,7 @@ The wrapper above can be deployed using the following PBS job script:
 #PBS -l walltime=00:10:00
 #PBS -q debug-scaling
 #PBS -l filesystems=<fs1:fs2>
-#PBS -A <ProjectName>
+#PBS -A <project>
 
 WORK_DIR=/path/to/the/Python/program
 UNITRACE_WRAPPER=${WORK_DIR}/unitrace_wrapper.sh
@@ -166,22 +166,23 @@ ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --ra
 
 Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`. Note that **every rank profiles unless `--rank-zero-only` is passed**. Full details, including how to shrink large traces, are in the [ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
 
-!!! warning "Profiling `fsdp_tp` is not portable today"
+/// warning | Profiling `fsdp_tp` is not portable today
 
-    The small `ezpz.examples.profiler` loop profiles cleanly everywhere,
-    but `fsdp_tp` at `--tp 2` does not:
+The small `ezpz.examples.profiler` loop profiles cleanly everywhere,
+but `fsdp_tp` at `--tp 2` does not:
 
-    | system | `--profile` on `fsdp_tp --tp 2` |
-    |---|---|
-    | Polaris | works |
-    | **Aurora** | needs `--no-with-stack` (see above) |
-    | **Perlmutter** | **hangs**, killed at timeout, zero traces |
+| system | `--profile` on `fsdp_tp --tp 2` |
+|---|---|
+| Polaris | works |
+| **Aurora** | needs `--no-with-stack` (see above) |
+| **Perlmutter** | **hangs**, killed at timeout, zero traces |
 
-    On Perlmutter the profiler alone is sufficient to wedge the run — a
-    controlled 2×2 shows both profiled arms timing out and both
-    unprofiled arms completing, on either NCCL transport. No flag avoids
-    it today. Tracked in
-    [saforem2/ezpz#275](https://github.com/saforem2/ezpz/issues/275).
+On Perlmutter the profiler alone is sufficient to wedge the run — a
+controlled 2×2 shows both profiled arms timing out and both
+unprofiled arms completing, on either NCCL transport. No flag avoids
+it today. Tracked in
+[saforem2/ezpz#275](https://github.com/saforem2/ezpz/issues/275).
+///
 
 #### From Python
 

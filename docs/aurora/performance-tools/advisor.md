@@ -31,7 +31,7 @@ Step 1: Setting the environments
 
 ```bash
 $ module load oneapi
-$ export PRJ=<your_project_dir>
+$ export PRJ=<path>  # your project directory
 ```
 
 Step 2-a: Collecting the GPU Roofline data on a single GPU (Survey analysis and Trip Count with FLOP analysis)
@@ -69,7 +69,9 @@ $ advisor --report=all --project-dir=Advisor_results --report-output=Advisor_res
 
 ![Advisor GPU roofline regions](images/Advisor-02.png "Advisor GPU roofline regions")
 
-[Advisor HTML report with AMR-Wind application](./results/advisor-report_amr-wind.html)
+<!-- Removed from the repo to reduce site size; restore the link once the report
+     is hosted externally (e.g., on alcf.anl.gov):
+[Advisor HTML report with AMR-Wind application](./results/advisor-report_amr-wind.html) -->
 
 ## References  
 [Intel Advisor User Guide](https://www.intel.com/content/www/us/en/docs/advisor/user-guide/current/overview.html)

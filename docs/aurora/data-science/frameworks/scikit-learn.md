@@ -1,3 +1,8 @@
+---
+tags:
+  - Classical ML
+---
+
 # scikit-learn on Aurora
 
 [scikit-learn](https://scikit-learn.org/stable/) is a popular open-source Python library for machine learning. It has wide coverage of machine learning algorithms (other than neural networks), such as k-means clustering and random forests.
@@ -57,8 +62,9 @@ Patching (described above) can be helpful in the case of functionality that alre
 
 To distribute an `sklearnex` algorithm across multiple GPUs, we need several ingredients demonstrated in an example below. We recommend using the MPI backend rather than the CCL backend since it is tested more thoroughly on Aurora.
 
-!!! warning "Multi-GPU scaling performance"
-    The current version of Extension to scikit-learn does not scale well to multiple GPUs. The cause is that scikit-learn includes some array checks before starting an algorithm, and Intel has not implemented performing those checks on the GPU. For now, the data gets copied to the host to perform these checks, which can be a significant bottleneck. However, you can use a parameter to bypass those checks. Either run a function within a `with sklearnex.config_context(use_raw_input=True)` block or run `sklearnex.set_config(use_raw_input=True).` Alternatively, you could use [the oneDAL C++ API](../../applications-and-libraries/libraries/onedal.md) directly.
+/// warning | Multi-GPU scaling performance
+The current version of Extension to scikit-learn does not scale well to multiple GPUs. The cause is that scikit-learn includes some array checks before starting an algorithm, and Intel has not implemented performing those checks on the GPU. For now, the data gets copied to the host to perform these checks, which can be a significant bottleneck. However, you can use a parameter to bypass those checks. Either run a function within a `with sklearnex.config_context(use_raw_input=True)` block or run `sklearnex.set_config(use_raw_input=True).` Alternatively, you could use [the oneDAL C++ API](../../applications-and-libraries/libraries/onedal.md) directly.
+///
 
 1. Use dpctl to create a SYCL queue (connection to the GPU devices you choose).
 2. Using dpnp and your queue, move your data to the GPU devices.
@@ -215,11 +221,13 @@ More examples about how to compute [covariance](https://github.com/uxlfoundation
 
 Extension for Scikit-learn previously supported executing algorithms on the GPU via `dpctl.tensor.usm_ndarray` from the [dpctl](https://intelpython.github.io/dpctl/latest/index.html) package. 
 
-!!! warning "dpctl tensor deprecation"
-    `dpctl.tensor` arrays are deprecated as of dpctl 0.21.1, and scikit-learn-intelex support for dpctl tensors was deprecated as of the 2025.10.0 release. Both will be removed in the 2026.0 oneAPI release. The recommended alternative is [dpnp arrays](https://intelpython.github.io/dpnp/), which can be used as a 1-for-1 replacement with identical performance. As seen in the examples on this page, usage is almost the exact same.
+/// warning | dpctl tensor deprecation
+`dpctl.tensor` arrays are deprecated as of dpctl 0.21.1, and scikit-learn-intelex support for dpctl tensors was deprecated as of the 2025.10.0 release. Both will be removed in the 2026.0 oneAPI release. The recommended alternative is [dpnp arrays](https://intelpython.github.io/dpnp/), which can be used as a 1-for-1 replacement with identical performance. As seen in the examples on this page, usage is almost the exact same.
+///
 
-!!! note "EmpiricalCovariance limitation"
-    As of scikit-learn-intelex 2025.9.0, `EmpiricalCovariance` does not support dpctl tensor usage. However, it does work with dpnp arrays.
+/// note | EmpiricalCovariance limitation
+As of scikit-learn-intelex 2025.9.0, `EmpiricalCovariance` does not support dpctl tensor usage. However, it does work with dpnp arrays.
+///
 
 
 ### An Example Python Script (dpctl tensors - deprecated)

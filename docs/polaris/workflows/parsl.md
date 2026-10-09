@@ -49,7 +49,7 @@ run_dir="/lus/eagle/projects/yourproject/yourrundir/"
 user_opts = {
     "worker_init":      f"source /path/to/your/virtualenv/bin/activate; cd {run_dir}", # load the environment where parsl is installed
     "scheduler_options":"#PBS -l filesystems=home:eagle" , # specify any PBS options here, like filesystems
-    "account":          "YOURPROJECT",
+    "account":          "<project>",
     "queue":            "debug-scaling",
     "walltime":         "1:00:00",
     "nodes_per_block":  3, # think of a block as one job on polaris, so to run on the main queues, set this >= 10
@@ -101,6 +101,7 @@ config = Config(
 
 ## Known Issues
 
-!!! warning
+/// warning
 
-    Starting in September 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` for cases using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+Starting in September 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` for cases using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+///

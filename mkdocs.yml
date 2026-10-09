@@ -1,5 +1,6 @@
 site_name: ALCF User Guides
 site_description: "How to use the Argonne Leadership Computing Facility's computing resources: accounts, jobs, data, and software."
+site_author: Argonne Leadership Computing Facility
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
 site_url: 'https://docs.alcf.anl.gov/'
@@ -57,9 +58,9 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.instant.prefetch
-    - navigation.instant.preview  # previews every internal link; see material.extensions.preview below
+    #- navigation.instant.preview  # previews every internal link; see material.extensions.preview below
     - navigation.path
-    #- navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
+    - navigation.prune # for sites with 100s or 1k pages; only render visible navbar items (i.e. clicking on collapsed sections will navigate to the first page in that section, since it isnt rendered)
     #- navigation.tabs  #  for non-mobile browsers, move top-level sections from left nav sidebar to top under header
     - navigation.top
     - navigation.tracking
@@ -89,7 +90,6 @@ extra_javascript:
 
 markdown_extensions:
   - footnotes
-  - admonition
   - tables
   - attr_list
   - md_in_html
@@ -117,16 +117,12 @@ markdown_extensions:
       auto_append:
         - includes/abbreviations.md
   - pymdownx.superfences
-  - pymdownx.details
   - pymdownx.inlinehilite
   - pymdownx.highlight:
       use_pygments: true
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
-  - pymdownx.tabbed:
-      alternate_style: true
-      combine_header_slug: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.arithmatex:
@@ -144,17 +140,37 @@ markdown_extensions:
   - pymdownx.bracketspan
   # Requires a space after '#' for headings; guards against unfenced '#PBS'/'#!' lines.
   - pymdownx.saneheaders
+  - pymdownx.blocks.admonition:
+      # Material's admonition types; blocks.admonition defaults to a shorter list.
+      types: [note, abstract, info, tip, success, question, warning, failure, danger, bug, example, quote]
+  - pymdownx.blocks.details
+  - pymdownx.blocks.tab:
+      alternate_style: true
   - pymdownx.blocks.html
   - pymdownx.blocks.definition
   - pymdownx.blocks.caption
-  # Instant previews: hover cards only for links to these reference pages.
-  # Don't enable the navigation.instant.preview theme feature: it previews
-  # every internal link, regardless of these targets.
+  # Instant previews: hover cards only for links to these reference pages
+  # (short pages, or pages usually linked at a section such as the queue
+  # tables). Patterns are globs; "*" also matches "/". Don't enable the
+  # navigation.instant.preview theme feature: it previews every internal
+  # link, regardless of these targets.
   - material.extensions.preview:
+      sources:
+        exclude:
+          - index.md  # no previews on the home page tiles
       targets:
         include:
           - acronyms.md
           - support/ticket.md
+          - support/get-help/*.md
+          - policies/*
+          - dev-environment/python-environments.md
+          - data-management/filesystem-and-storage/index.md
+          - data-management/data-transfer/using-globus.md
+          - aurora/data-management/lustre/flare.md
+          - account-project-management/MyALCF.md
+          - aurora/running-jobs-aurora.md
+          - polaris/running-jobs/index.md
 
   - toc:
       permalink: true
@@ -180,14 +196,20 @@ extra:
     provider: google
     property: G-4M48E2L33R
 
-# Compresses the social plugin's card PNGs (optimize doesn't see them).
+# Build hooks; each file's docstring says what it does.
 hooks:
+  - hooks/optimize_race_fix.py
   - hooks/compress_social_cards.py
+  - hooks/tag_order.py
+  - hooks/search_tuning.py
 
 plugins:
   - search:
       lang: en
-      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      # No camelCase split (Material's suggested (?!\b)(?=[A-Z][a-z])): it indexed
+      # "PyTorch" as "Py" + "Torch", so lowercase queries like "pytorch",
+      # "tensorflow", "jupyterhub", or "sambanova" missed those pages.
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;'
   - minify:
       minify_html: true
       # Keep attribute quotes: some link-preview crawlers (e.g. WhatsApp)
@@ -206,6 +228,62 @@ plugins:
         # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
         - use.typekit.net/*
         - p.typekit.net/*
+  # Applies each folder's .meta.yml front matter to every page in that folder
+  # and below (lists are appended, page values win for scalars). Runs before
+  # social and tags, which read the merged front matter.
+  - meta
+  # Tags come mostly from folder .meta.yml files. tags_allowed fails the build on
+  # any other tag (typos, ad hoc tags); search weights tags very heavily, so keep
+  # the vocabulary small and add to it deliberately.
+  - tags:
+      tags_allowed:
+        - Aurora
+        - Polaris
+        - Sophia
+        - Crux
+        - AI Testbed
+        - Cerebras
+        - Graphcore
+        - Groq
+        - SambaNova
+        - Compiling
+        - Containers
+        - Data Science
+        - Debugging
+        - Inference
+        - Performance
+        - Programming Models
+        - Visualization
+        - Workflows
+        - Data Management
+        - Job Submission
+        - Accounts
+        - Policies
+        - Services
+        - Support
+        - Development Environment
+        - Python
+        - PyTorch
+        - TensorFlow
+        - OpenMP
+        - SYCL
+        - Getting Started
+        - LLMs
+        - Distributed Training
+        - File Systems
+        - Globus
+        - File Transfer
+        - Authentication
+        - Kokkos
+        - Molecular Dynamics
+        - Classical ML
+        - Known Issues
+        - System Updates
+        - Electronic Structure
+        - Allocations
+        - AI Agents
+        - CFD
+        - Continuous Integration
   # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
   # the system Cairo library, so like optimize it runs only in CI (CI=true
   # there). Card design (logo, colors, font) is in layouts/alcf.yml.
@@ -272,6 +350,7 @@ nav:
         - Applications and Libraries:
           - Applications:
             - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
+            - nekRS: aurora/applications-and-libraries/applications/nekrs.md
             - VASP: aurora/applications-and-libraries/applications/vasp.md
           - Libraries:
             - Cabana: aurora/applications-and-libraries/libraries/cabana-aurora.md
@@ -348,7 +427,7 @@ nav:
         - Getting Started: ai-testbed/cerebras/getting-started.md
         - Running a Model/Program: ai-testbed/cerebras/running-a-model-or-program.md
         - Customizing Environments: ai-testbed/cerebras/customizing-environment.md
-        - Job Queuing and Submission: ai-testbed/cerebras/job-queuing-and-submission.md
+        - Job Submission with csctl: ai-testbed/cerebras/job-queuing-and-submission.md
         - Example Programs: ai-testbed/cerebras/example-programs.md
         #- Performance Tools: ai-testbed/cerebras/performance-tools.md
         - Tunneling and Forwarding Ports: ai-testbed/cerebras/tunneling-and-forwarding-ports.md
@@ -360,7 +439,7 @@ nav:
         - Getting Started: ai-testbed/graphcore/getting-started.md
         - Virtual Environment: ai-testbed/graphcore/virtual-environments.md
         - Running a Model/Program: ai-testbed/graphcore/running-a-model-or-program.md
-        - Job Queuing and Submission: ai-testbed/graphcore/job-queuing-and-submission.md
+        - Job Submission with Slurm: ai-testbed/graphcore/job-queuing-and-submission.md
         - Example Programs: ai-testbed/graphcore/example-programs.md
         - Miscellaneous: ai-testbed/graphcore/miscellaneous.md
         - Documentation: ai-testbed/graphcore/documentation.md
@@ -370,7 +449,7 @@ nav:
         - Running a Model/Program: ai-testbed/groq/running-a-model-or-program.md
         #- Example Programs: ai-testbed/groq/example-programs.md
         - Virtual Environments: ai-testbed/groq/virtual-environments.md
-        - Job Queueing and Submission: ai-testbed/groq/job-queuing-and-submission.md
+        - Job Submission with PBS: ai-testbed/groq/job-queuing-and-submission.md
         - Profiling with GroqView: ai-testbed/groq/groqview.md
         - Examples: ai-testbed/groq/examples.md
       - SambaNova Metis (SN40L):
@@ -414,7 +493,7 @@ nav:
           - GROMACS: polaris/applications-and-libraries/applications/gromacs.md
           - LAMMPS: polaris/applications-and-libraries/applications/lammps.md
           - NAMD: polaris/applications-and-libraries/applications/namd.md
-          - NekRS: polaris/applications-and-libraries/applications/nekrs.md
+          - nekRS: polaris/applications-and-libraries/applications/nekrs.md
           - OpenMM: polaris/applications-and-libraries/applications/openmm.md
           - QMCPACK: polaris/applications-and-libraries/applications/QMCPACK.md
           - Quantum ESPRESSO: polaris/applications-and-libraries/applications/QuantumESPRESSO.md
@@ -555,6 +634,7 @@ nav:
       - Software Policy: policies/data-and-software-policies/software-policy.md
 
   - Acronyms: acronyms.md
+  - Tags: tags.md
 
 # Pages that are not in navigation but still built
 # These always end up in the generated site (both mkdocs "build" and "serve")

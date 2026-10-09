@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # GPyTorch on Polaris
 
 ## 1. Login and queue a job
@@ -5,16 +10,17 @@ Login to Polaris
 ```
 ssh alcfusername@polaris.alcf.anl.gov
 ```
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `polaris-login`):
-    ```bash
-    qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00 -I
-    ```
+Explicitly, to request an interactive job (from `polaris-login`):
+```bash
+qsub -A <project> -q debug-scaling -l select=2 -l walltime=01:00:00 -I
+```
 
-    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+///
 
 ## 2. Load Modules
 
@@ -59,7 +65,7 @@ Here is the guide:
 module use /soft/modulefiles
 module load conda
 conda activate
-source <path_to_previously_created_python_venv>/bin/activate
+source <path>/bin/activate  # the venv created above
 python -m ipykernel install --user --name python_venv
 ```
 Note: Depending on the system and environment, you might need to install the "ipykernel" package first. The `python_venv` that I just created has the `ipykernel` module.
@@ -82,7 +88,7 @@ You should see a line like `http://localhost:XXXX/`, where `XXXX` is the port nu
 2. Then, on a **new, local terminal**, do:
 ```
 export PORT_NUM=8889
-ssh -L $PORT_NUM:localhost:8888 <yourusername@polaris.alcf.anl.gov>
+ssh -L $PORT_NUM:localhost:8888 <username>@polaris.alcf.anl.gov
 ssh -L 8888:localhost:8888 your_compute_node
 navigate to localhost:8889 in your browser
 ``` 
@@ -98,7 +104,7 @@ Click "New" and open a **terminal**, and run:
 module use /soft/modulefiles
 module load conda
 conda activate
-source <path_to_previously_created_python_venv>/bin/activate
+source <path>/bin/activate  # the venv created above
 python -m ipykernel install --user --name python_venv
 ```
 Note: Depending on the system and environment, you might need to install the "ipykernel" package first. The `python_venv` that I just created has the `ipykernel` module.

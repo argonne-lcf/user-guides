@@ -1,3 +1,7 @@
+---
+description: "Polaris hardware: 560 HPE Apollo nodes, each with one AMD EPYC Milan CPU and four NVIDIA A100 GPUs connected by NVLink."
+---
+
 # Polaris Machine Overview
 Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a single 2.8 GHz AMD EPYC Milan 7543P 32-core CPU with 512 GB of DDR4 RAM, four NVIDIA A100 GPUs connected via NVLink, a pair of local 1.6TB SSDs in RAID0 for user use, and a pair of Slingshot 11 network adapters. There are two nodes per chassis, seven chassis per rack, and 40 racks for a total of 560 nodes. More detailed specifications are as follows:
 
@@ -37,15 +41,16 @@ Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a sing
 |              |               | mlx5_0 | SYS  | SYS  | SYS  | PHB  | X      | SYS    |
 |              |               | mlx5_1 | SYS  | PHB  | SYS  | SYS  | SYS    | X      |
 
-!!! info "Legend"
+/// info | Legend
 
-    - **X** = Self
-    - **SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
-    - **NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
-    - **PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
-    - **PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
-    - **PIX** = Connection traversing at most a single PCIe bridge
-    - **NV#** = Connection traversing a bonded set of # NVLinks
+- **X** = Self
+- **SYS** = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+- **NODE** = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+- **PHB** = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+- **PXB** = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+- **PIX** = Connection traversing at most a single PCIe bridge
+- **NV#** = Connection traversing a bonded set of # NVLinks
+///
 
 Links to detailed NVIDIA A100 documentation:
 
