@@ -101,6 +101,18 @@ definitions:
       {{ config.site_name }}
     {%- endif -%}
 
+  # Alt text for the card: the text drawn on it except the description, which
+  # previews already show next to the image, e.g.
+  # "ALCF User Guides: vLLM (Aurora › Data Science › AI Inference)"
+  - &image_alt >-
+    {%- set section = page.ancestors | reverse | map(attribute="title")
+          | reject("equalto", "Machines") | list -%}
+    {{ config.site_name }}
+    {%- if not page.is_homepage -%}
+      : {{ layout.title or page.meta.get("title", page.title) }}
+      {%- if section %} ({{ section | join(" › ") }}){% endif %}
+    {%- endif -%}
+
   # Page description
   - &page_description >-
     {%- if layout.description -%}
@@ -121,6 +133,7 @@ tags:
   og:image:type: "{{ image.type }}"
   og:image:width: "{{ image.width }}"
   og:image:height: "{{ image.height }}"
+  og:image:alt: *image_alt
   og:url: "{{ page.canonical_url }}"
 
   # Twitter
@@ -128,6 +141,7 @@ tags:
   twitter:title: *page_title_with_site_name
   twitter:description: *page_description
   twitter:image: "{{ image.url }}"
+  twitter:image:alt: *image_alt
 
 # -----------------------------------------------------------------------------
 # Specification
