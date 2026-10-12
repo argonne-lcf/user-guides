@@ -11,6 +11,8 @@ keywords:
 
 # ezpz
 
+<!-- --8<-- [start:intro] -->
+
 [`ezpz`](https://github.com/saforem2/ezpz) is a thin layer over PyTorch
 distributed that removes the per-machine boilerplate: rank and topology
 detection, backend selection, hostfile parsing, and launcher invocation.
@@ -32,12 +34,14 @@ the model:
 | Accelerator | Intel XPU | NVIDIA | NVIDIA |
 | Backend | `xccl` | `nccl` | `nccl` |
 | Hostfile | `$PBS_NODEFILE` | `$PBS_NODEFILE` | `$SLURM_NODELIST` |
-| Local rank var | `PALS_LOCAL_RANKID` | `PMI_LOCAL_RANK` | `SLURM_LOCAL_ID` |
+| Local rank var | `PALS_LOCAL_RANKID` | `PMI_LOCAL_RANK` | `SLURM_LOCALID` |
 
 `ezpz` detects all of it at runtime. The
 [Supported Systems](https://ezpz.cool/notes/systems/) page lists the full
 matrix, including the hostname prefixes used for detection (`x4*` for
 Aurora, `x1*` for Sunspot, and so on).
+
+<!-- --8<-- [end:intro] -->
 
 It also sets the Aurora-specific environment that is easy to get wrong:
 
@@ -58,6 +62,8 @@ pip install "git+https://github.com/saforem2/ezpz"  # (1)!
 1. Install from the repository. The name `ezpz` on PyPI belongs to an
    unrelated package.
 
+<!-- --8<-- [start:setup] -->
+
 Then, inside a job script or an interactive allocation:
 
 ```bash
@@ -66,15 +72,19 @@ ezpz_setup_env
 ```
 
 `ezpz_setup_env` loads the right modules for the current machine,
-activates the Python environment, and exports the environment variables
-above. Verify with:
+activates the Python environment, and exports the machine-specific
+environment variables. Verify with:
 
 ```bash
 ezpz doctor   # environment and dependency check
 ezpz test     # distributed PyTorch smoke test
 ```
 
+<!-- --8<-- [end:setup] -->
+
 ## Launching
+
+<!-- --8<-- [start:launch] -->
 
 `ezpz launch` wraps the scheduler's launcher. It reads the hostfile,
 computes ranks-per-node from the detected accelerator count, and applies
@@ -83,6 +93,8 @@ CPU binding:
 ```bash
 ezpz launch python3 -m ezpz.examples.test
 ```
+
+<!-- --8<-- [end:launch] -->
 
 That command is unchanged across every supported machine; on Aurora it
 becomes a 12-rank-per-node `mpiexec --pmi=pmix`, on Perlmutter an `srun`.
@@ -96,7 +108,7 @@ See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
 #PBS -l select=2
 #PBS -l walltime=00:30:00
 #PBS -q debug
-#PBS -A <ProjectName>
+#PBS -A <project>
 #PBS -l filesystems=home:flare
 
 cd "${PBS_O_WORKDIR}"
@@ -107,6 +119,8 @@ ezpz launch python3 -m ezpz.examples.test --model small
 ```
 
 ///
+
+<!-- --8<-- [start:api] -->
 
 ## Using it in your own script
 
@@ -149,6 +163,8 @@ for the full API.
 Each example takes a `--model` size from `debug` (laptop-runnable) through
 `xxxl` (~10B), so the same command scales from a smoke test to a real job:
 
+<!-- --8<-- [end:api] -->
+
 ```bash
 ezpz launch python3 -m ezpz.examples.test    --model small
 ezpz launch python3 -m ezpz.examples.fsdp    --model large
@@ -159,18 +175,26 @@ ezpz launch python3 -m ezpz.examples.fsdp_tp --model large --tp 2   # (1)!
    `ezpz_setup_env` sets; see
    [AuroraBugTracking#174](https://github.com/argonne-lcf/AuroraBugTracking/issues/174).
 
+<!-- --8<-- [start:examples-more] -->
+
 The full set is listed under [Examples](https://ezpz.cool/examples/), and
 [`ezpz benchmark`](https://ezpz.cool/examples/) runs them in sequence with a
 summary report.
 
+<!-- --8<-- [end:examples-more] -->
+
 ## Other systems
 
-The same workflow applies on Polaris and Sophia (PBS, `nccl`) and on
+The same workflow applies on [Polaris](../../../polaris/data-science/frameworks/ezpz.md) and Sophia (PBS, `nccl`) and on
 Perlmutter (SLURM, `srun`); the NERSC specifics are in the
 [Perlmutter guide](https://ezpz.cool/guides/perlmutter/).
+
+<!-- --8<-- [start:help] -->
 
 ## Getting help
 
 Issues and questions: [saforem2/ezpz](https://github.com/saforem2/ezpz/issues).
 Common failure modes are collected in
 [Troubleshooting](https://ezpz.cool/troubleshooting/).
+
+<!-- --8<-- [end:help] -->
