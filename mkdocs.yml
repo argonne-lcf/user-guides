@@ -286,9 +286,10 @@ plugins:
         - Continuous Integration
   # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
   # the system Cairo library, so like optimize it runs only in CI (CI=true
-  # there). Card design (logo, colors, font) is in layouts/alcf.yml.
+  # there). SOCIAL_CARDS=false turns it off in CI too (PR previews). Card
+  # design (logo, colors, font) is in layouts/alcf.yml.
   - social:
-      enabled: !ENV [CI, false]
+      enabled: !ENV [SOCIAL_CARDS, CI, false]
       cards_layout: alcf
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
   - group:
