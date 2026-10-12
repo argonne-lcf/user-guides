@@ -5,11 +5,12 @@ on:
 
 # Queue (not cancel) per-PR so an in-flight teardown is never killed. Key on
 # the PR number: on a merged 'closed' event github.ref is the base branch.
-# Events that do nothing (pushes to a draft, other labels, labels on a closed
-# PR, anything but adding no-preview to a PR that has it) get their own group:
-# GitHub keeps one pending run per group, and a no-op run would otherwise
-# replace a pending deploy or removal.
-concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.state != 'open' || github.event.pull_request.draft || (contains(github.event.pull_request.labels.*.name, 'no-preview') && !(github.event.action == 'labeled' && github.event.label.name == 'no-preview')) || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards' && github.event.label.name != 'no-preview')) && '-noop' || '' }}
+# Events that do nothing get their own group: GitHub keeps one pending run per
+# group, and a no-op run would otherwise replace a pending deploy or removal.
+# No-ops are labels on a closed PR and, except adding no-preview (which also
+# removes the preview a PR keeps when converted back to draft), pushes to a
+# draft, other labels, and anything on a PR with no-preview.
+concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.state != 'open' || (!(github.event.action == 'labeled' && github.event.label.name == 'no-preview') && (github.event.pull_request.draft || contains(github.event.pull_request.labels.*.name, 'no-preview') || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards' && github.event.label.name != 'no-preview')))) && '-noop' || '' }}
 
 # This repo's Pages site serves only the production artifact (update-livesite),
 # so previews are pushed to the gh-pages branch of a separate repo. Only the
@@ -44,16 +45,19 @@ jobs:
         run: |
           # Same-repo branch PRs only (fork PRs get no secrets); drafts get a
           # preview once marked ready; the no-preview label skips previews,
-          # and adding it removes an existing one; of label changes, only
+          # and adding it removes an existing one (also from a PR converted
+          # back to draft, which keeps its preview); of label changes, only
           # preview-social-cards and no-preview rebuild, and not on a closed PR.
           build=false remove=false
           if [ "$SAME_REPO" = true ]; then
             if [ "$EVENT" = closed ]; then
               remove=true
-            elif [ "$STATE" != open ] || [ "$DRAFT" = true ]; then
+            elif [ "$STATE" != open ]; then
               :
             elif [ "$NO_PREVIEW" = true ]; then
               [ "$EVENT" = labeled ] && [ "$LABEL" = no-preview ] && remove=true
+            elif [ "$DRAFT" = true ]; then
+              :
             elif [ "$EVENT" = labeled ] || [ "$EVENT" = unlabeled ]; then
               case "$LABEL" in preview-social-cards|no-preview) build=true ;; esac
             else
