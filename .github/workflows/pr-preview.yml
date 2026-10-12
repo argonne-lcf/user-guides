@@ -5,10 +5,10 @@ on:
 
 # Queue (not cancel) per-PR so an in-flight teardown is never killed. Key on
 # the PR number: on a merged 'closed' event github.ref is the base branch.
-# Events that do nothing (pushes to a draft, other labels) get their own
-# group: GitHub keeps one pending run per group, and a no-op run would
-# otherwise replace a pending deploy.
-concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.draft || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards')) && '-noop' || '' }}
+# Events that do nothing (pushes to a draft, other labels, labels on a closed
+# PR) get their own group: GitHub keeps one pending run per group, and a no-op
+# run would otherwise replace a pending deploy.
+concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.state != 'open' || github.event.pull_request.draft || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards')) && '-noop' || '' }}
 
 # This repo's Pages site serves only the production artifact (update-livesite),
 # so previews are pushed to the gh-pages branch of a separate repo. Only the
@@ -35,18 +35,19 @@ jobs:
         env:
           SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
           EVENT: ${{ github.event.action }}
+          STATE: ${{ github.event.pull_request.state }}
           DRAFT: ${{ github.event.pull_request.draft }}
           LABEL: ${{ github.event.label.name }}
           CARDS: ${{ contains(github.event.pull_request.labels.*.name, 'preview-social-cards') }}
         run: |
           # Same-repo branch PRs only (fork PRs get no secrets); drafts get a
           # preview once marked ready; of label changes, only
-          # preview-social-cards rebuilds.
+          # preview-social-cards rebuilds, and not on a closed PR.
           build=false remove=false
           if [ "$SAME_REPO" = true ]; then
             if [ "$EVENT" = closed ]; then
               remove=true
-            elif [ "$DRAFT" = true ]; then
+            elif [ "$STATE" != open ] || [ "$DRAFT" = true ]; then
               :
             elif [ "$EVENT" = labeled ] || [ "$EVENT" = unlabeled ]; then
               [ "$LABEL" = preview-social-cards ] && build=true
