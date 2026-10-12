@@ -3,8 +3,9 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
-# Queue (not cancel) per-PR so an in-flight teardown is never killed
-concurrency: preview-${{ github.ref }}
+# Queue (not cancel) per-PR so an in-flight teardown is never killed. Key on
+# the PR number: on a merged 'closed' event github.ref is the base branch.
+concurrency: preview-${{ github.event.pull_request.number }}
 
 # This repo's Pages site serves only the production artifact (update-livesite),
 # so previews are pushed to the gh-pages branch of a separate repo, using the
