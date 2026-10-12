@@ -7,15 +7,15 @@
   --neutral_med-light: rgb(225, 225, 235);
   --neutral_med-dark:  rgb( 30,  31,  39);
 
-  --green_pale:        rgb(184, 226, 222);
-  --green_med-light:   rgb( 24, 185, 180);
-  --green_med:         rgb(  0, 123, 112);
-  --green_med-dark:    rgb(  0,  58,  65);
+  --green_pale:        rgb(255, 214, 170);
+  --green_med-light:   rgb(255, 152,  40);
+  --green_med:         rgb(232, 106,   0);
+  --green_med-dark:    rgb(120,  50,   0);
 
-  --blue_pale:         rgb(186, 222, 245);
-  --blue_tint:         rgb(231, 246, 253);
-  --blue_med:          rgb( 0, 97, 175); 
-  --blue_dark:         rgb( 29,  22,  81);
+  --blue_pale:         rgb(255, 190, 225);
+  --blue_tint:         rgb(255, 236, 246);
+  --blue_med:          rgb(230,  30, 140); 
+  --blue_dark:         rgb(120,   0,  70);
 
   --warm_red:          rgb(209,  59,  80);
   --warm_orange:       rgb(237,  98,  84);
@@ -32,7 +32,7 @@
 
 [data-md-color-scheme="alcf"][data-md-color-accent="custom"] {
   --md-accent-fg-color:              var(--green_med);
-  --md-accent-fg-color--transparent: rgba(0, 123, 112, 0.1);
+  --md-accent-fg-color--transparent: rgba(232, 106, 0, 0.1);
 }
 
 [data-md-color-scheme="slate"][data-md-color-primary="custom"] {
@@ -43,7 +43,7 @@
 
 [data-md-color-scheme="slate"][data-md-color-accent="custom"] {
   --md-accent-fg-color:              var(--green_med-light);
-  --md-accent-fg-color--transparent: rgba(24, 185, 180, 0.1);
+  --md-accent-fg-color--transparent: rgba(255, 152, 40, 0.1);
 }
 
 
