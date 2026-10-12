@@ -100,6 +100,7 @@ keywords:
 * Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
 * `authors:` the people who wrote the page (a list of names); everyone else who changed it is listed from git as "Edited by".
 * `last_verified:` the date (`YYYY-MM-DD`) you last checked the whole page against the system.
+* `exclude_contributors:` names to leave out of the page's contributors, e.g. someone credited only for merging `main` into a PR branch.
 * Front-matter-only and whitespace-only changes don't change a page's "Last Updated" date. Put other mechanical changes across many pages in their own commits, and list them in `.git-blame-ignore-revs` (#1139).
 
 ### Working on documentation
