@@ -94,7 +94,7 @@ jobs:
           path: .cache/plugin
           # Own key prefix: this build usually has no social cards, so
           # mkdocs-build (docs-strict) must not restore its cache.
-          key: preview-mkdocs-plugins-${{ hashFiles('mkdocs.yml', 'layouts/**') }}
+          key: preview-mkdocs-plugins-${{ hashFiles('zensical.toml', 'layouts/**') }}
           restore-keys: |
             preview-mkdocs-plugins-
             mkdocs-plugins-

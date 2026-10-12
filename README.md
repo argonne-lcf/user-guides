@@ -12,10 +12,11 @@ cd user-guides
 git submodule init; git submodule update
 ```
 
-### Python environment and MkDocs
+### Python environment and Zensical
 
-To build the documentation locally, you need a Python 3.10+ environment with `mkdocs` and the
-plugins listed in [requirements.txt](requirements.txt) installed. Use either of the two options
+The site is built with [Zensical](https://zensical.org/), configured in `zensical.toml`. To build
+the documentation locally, you need a Python 3.11+ environment with the packages listed in
+[requirements.txt](requirements.txt) installed. Use either of the two options
 below.
 
 #### Option 1: `uv` (recommended)
@@ -45,11 +46,11 @@ These temporary environments live in uv's cache, not the repo; `uv cache prune` 
 
 #### Option 2: `venv` + `pip`
 
-Check that Python 3.10+ is installed:
+Check that Python 3.11+ is installed:
 ```bash
 python --version
 ```
-e.g. `Python 3.13.5`. Then create a new virtual env to isolate the `mkdocs` installation, and
+e.g. `Python 3.13.5`. Then create a new virtual env to isolate the Zensical installation, and
 install the dependencies into it:
 ```bash
 cd user-guides
@@ -60,19 +61,17 @@ make install-dev
 
 ### Preview the docs locally and test for errors
 
-Run `mkdocs serve` or `make serve` to auto-build and serve the docs for preview in your web browser:
+Run `zensical serve` or `make serve` to auto-build and serve the docs for preview in your web browser:
 ```bash
 make serve
 ```
 
-GitHub Actions are used to automatically validate all changes in pull requests before they are merged, by executing `mkdocs build --strict`. The [`--strict`](https://www.mkdocs.org/user-guide/configuration/#validation) flag will print out warnings and return a nonzero code if any of a number of checks fail (e.g. broken relative links, orphaned Markdown pages that are missing from the navigation sidebar, etc.). To see if your changes will pass these tests, run the following command locally:
+GitHub Actions are used to automatically validate all changes in pull requests before they are merged, by executing `zensical build --strict`. The [`--strict`](https://zensical.org/docs/setup/validation/#strict-mode) flag will print out warnings and return a nonzero code if any of a number of checks fail (e.g. broken relative links or anchors). It doesn't catch Markdown pages missing from the navigation sidebar (`nav` in `zensical.toml`), so check that yourself. To see if your changes will pass these tests, run the following command locally:
 ```
 make build-docs
 ```
 
-The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
-
-To test search changes, run `node scripts/search_test.js "query"` against a running `mkdocs serve`.
+Every build also generates link-preview cards (`site/assets/images/social/`), which makes the first build slower; later builds reuse the cards cached in `.cache/`.
 
 ### Writing math
 
@@ -94,9 +93,9 @@ keywords:
 ```
 
 * `description:` one sentence, 120 characters max. Shown in link previews and search results. `make check-descriptions` lists pages without one.
-* `tags:` only topics the page is about. Must be listed in `tags_allowed` in `mkdocs.yml`. Search weights tags heavily, so don't over-tag.
-* `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page.
-* `search:` with `boost: 2` to rank a page higher, or `exclude: true` to hide it from search.
+* `tags:` only topics the page is about. Must be listed in `tags_allowed` in `zensical.toml`. Search weights tags heavily, so don't over-tag.
+* `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page, and not indexed by Zensical's search yet.
+* `search:` with `exclude: true` to hide the page from search.
 * Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
 * Commit front-matter-only changes separately from content edits, so they can be excluded from each page's "Last Updated" date later (#1139).
 
@@ -147,5 +146,5 @@ When a convention changes, update `AGENTS.md` in the same PR, and `REVIEW.md` to
 External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
 
 There are two Python `scripts/` that perform this function:
-1. (works with `mkdocs build` and `serve`): Translate URLs to relative path links to their matching source `.md` files; write these links to `docs/inbound-links.md`. Use MkDocs' built-in validation (adding `--strict` flag when running `mkdocs build`, in order to return an error code if they are invalid).
-2. (works with `mkdocs build`, only): Use a lightweight post-build validation on generated `site/` directory HTML contents.
+1. (works with `zensical build` and `serve`): Translate URLs to relative path links to their matching source `.md` files; write these links to `docs/inbound-links.md`. Use Zensical's built-in validation (adding `--strict` flag when running `zensical build`, in order to return an error code if they are invalid).
+2. (works with `zensical build`, only): Use a lightweight post-build validation on generated `site/` directory HTML contents.
