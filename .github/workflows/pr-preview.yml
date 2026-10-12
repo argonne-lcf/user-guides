@@ -75,8 +75,11 @@ jobs:
           name: site
           path: site
       - name: Initialize an empty git repo
-        # The deploy action configures git in the workspace.
-        run: git init -q
+        # The deploy action configures git in the workspace and adds a
+        # worktree from HEAD, so HEAD needs a commit.
+        run: |
+          git init -q
+          git -c user.name=pr-preview -c user.email=pr-preview@localhost commit -q --allow-empty -m init
       - name: Push the preview to the previews repo
         uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
@@ -111,6 +114,7 @@ jobs:
       - name: Initialize an empty git repo and an empty folder
         run: |
           git init -q
+          git -c user.name=pr-preview -c user.email=pr-preview@localhost commit -q --allow-empty -m init
           mkdir "$RUNNER_TEMP/empty"
       - name: Remove the preview from the previews repo
         uses: JamesIves/github-pages-deploy-action@v4.9.0
