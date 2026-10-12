@@ -222,8 +222,8 @@ plugins:
       enable_creation_date: true
       enable_git_follow: false  # see hooks/creation_dates.py
       exclude:
-        - index.md
-        - inbound-links.md
+        - index.md  # only the home page (section index pages get dates): its tiles link elsewhere
+        - inbound-links.md  # generated
       #strict: false  # default is true; might need to change to false for builds where git is not avail
   - minify:
       minify_html: true

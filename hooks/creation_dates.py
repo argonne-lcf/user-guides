@@ -23,7 +23,7 @@ oldest = {}  # abs_src_path -> (commit hash, unix timestamp)
 
 def oldest_commit(path):
     log = subprocess.run(
-        ["git", "log", "--follow", "-M90%", "--format=%H %at", "--", path.name],
+        ["git", "log", "--follow", "-M90%", "--no-show-signature", "--format=%H %at", "--", path.name],
         cwd=path.parent, capture_output=True, text=True, check=True,
     ).stdout.split()
     if len(log) < 2:
