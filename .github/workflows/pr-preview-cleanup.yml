@@ -1,0 +1,69 @@
+name: pr-preview-cleanup
+on:
+  schedule:
+    - cron: '0 9 * * 0'  # Sundays 09:00 UTC (4 AM CDT, 3 AM CST)
+  workflow_dispatch:  # Allow manual triggering
+
+# Removes previews (from pr-preview.yml) of PRs that are no longer open, e.g.
+# closed by the stale bot, whose GITHUB_TOKEN events don't start workflows.
+# Then replaces the gh-pages history of the previews repo with one commit,
+# since every deploy adds a commit and removing a preview doesn't shrink it.
+# Rewriting the history races with pr-preview both ways: a deploy that
+# pushes first makes this push fail (--force-with-lease), and a deploy that
+# cloned before this push can't push after it (its retry fetch rejects the
+# rewritten branch). So this waits until no pr-preview run is active.
+permissions:
+  pull-requests: read  # list open PRs
+  actions: read  # list active pr-preview runs
+
+env:
+  PREVIEW_REPO: argonne-lcf/user-guides-previews
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove stale previews and squash gh-pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TOKEN: ${{ secrets.PREVIEW_DEPLOY_TOKEN }}
+          GIT_AUTHOR_NAME: pr-preview
+          GIT_AUTHOR_EMAIL: pr-preview@localhost
+          GIT_COMMITTER_NAME: pr-preview
+          GIT_COMMITTER_EMAIL: pr-preview@localhost
+        run: |
+          # Wait before cloning, so a deploy that finishes meanwhile is kept.
+          for i in $(seq 21); do
+            active=$(gh run list -R "$GITHUB_REPOSITORY" -w pr-preview.yml -L 50 --json status --jq 'map(select(.status != "completed")) | length')
+            [ "$active" = 0 ] && break
+            if [ "$i" = 21 ]; then
+              echo "::warning::$active pr-preview runs still active after 10 minutes; skipping cleanup until next week."
+              exit 0
+            fi
+            sleep 30
+          done
+          open=$(gh pr list -R "$GITHUB_REPOSITORY" --state open --limit 1000 --json number --jq '.[].number')
+          git clone -q --depth 2 --branch gh-pages "https://x-access-token:$TOKEN@github.com/$PREVIEW_REPO.git" previews
+          cd previews
+          head=$(git rev-parse HEAD)
+          removed=""
+          for dir in pr-preview/pr-*/; do
+            [ -d "$dir" ] || continue
+            n=${dir#pr-preview/pr-}
+            n=${n%/}
+            if ! grep -qx "$n" <<< "$open"; then
+              git rm -rq "$dir"
+              removed="$removed $n"  # not "#n", which links to the previews repo's own issues
+            fi
+          done
+          # Nothing to do if no folders were removed and the branch is
+          # already a single commit (a shallow clone of depth 2 shows 1).
+          if [ -z "$removed" ] && [ "$(git rev-list --count HEAD)" = 1 ]; then
+            echo "No stale previews; history already squashed."
+            exit 0
+          fi
+          commit=$(git commit-tree "$(git write-tree)" -m "Squash preview history; removed previews of closed PRs:${removed:- none}")
+          # --force-with-lease: if a deploy pushed since the clone, fail
+          # instead of discarding it; the next run tries again.
+          git push -q --force-with-lease="gh-pages:$head" origin "$commit:gh-pages"
+          echo "Squashed gh-pages to $commit; removed previews of PRs:${removed:- none}"
