@@ -2,6 +2,10 @@
 <!-- Describe your changes in detail -->
 
 ## Screenshots (if applicable)
+<!-- For PRs from a branch in this repository (not a fork), a live preview is
+     built on every push: a bot posts a single comment on this PR with the link
+     (https://argonne-lcf.github.io/user-guides-previews/pr-preview/pr-<N>/)
+     and keeps it up to date. Add the no-preview label to skip it. -->
 <details>
 <summary>Before</summary>
 
