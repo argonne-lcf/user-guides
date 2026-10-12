@@ -1,4 +1,9 @@
-# Job Queueing and Submission
+---
+tags:
+  - Job Submission
+---
+
+# Job Submission with Slurm
 
 ## Introduction
 

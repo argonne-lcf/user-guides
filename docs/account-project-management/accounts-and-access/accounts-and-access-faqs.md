@@ -3,7 +3,7 @@
 ## I am unable to sign in to the MyALCF portal. What do I do?
 Only users with active ALCF accounts can sign in to the MyALCF user portal. If you have an active account, verify that you are using the correct ALCF username. Note that the username is case-sensitive. If you forgot your username, contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov). 
 
-For passcode, this is your ALCF Cryptocard (PIN+passcode string displayed) or Mobilepass+ token (passcode from the app). For passcode token issues, please review the troubleshooting information on this page: [Troubleshooting Tokens](./troubleshooting-tokens.md). 
+For passcode, this is your ALCF physical hardware token (PIN + passcode string displayed) or MobilePASS+ token (passcode from the app). For passcode token issues, please review the troubleshooting information on this page: [Troubleshooting Tokens](./troubleshooting-tokens.md). 
 
 If your account is inactive, please submit a reactivation request [here](https://my.alcf.anl.gov/accounts/#/accountReactivate).
 
@@ -31,9 +31,10 @@ Reservation requests must include information detailed here: [Machine Reservatio
 
 ## How do I apply for a new account?
 
-!!! note
+/// note
 
-    All ALCF accounts must be associated with an allocated project.
+All ALCF accounts must be associated with an allocated project.
+///
 
 Submit an ALCF account requet by filling out this [account request form](https://my.alcf.anl.gov/accounts/#/accountRequest). 
 

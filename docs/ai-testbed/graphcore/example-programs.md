@@ -270,7 +270,8 @@ mkdir -p ~/graphcore/tmp/pt_cache/
 export PYTORCH_CACHE_DIR=~/graphcore/tmp/pt_cache/
 ```
 To run 4 replicas (a total for 4 IPUs) of the ResNet50 model:
-Make a script with the following contents, called poprun_unet.sh<br>
+Make a script with the following contents, called poprun_unet.sh
+
 This script tells poprun to use the partition id of the partition created for the slurm job used to run the script.
 ```console
 #!/bin/bash

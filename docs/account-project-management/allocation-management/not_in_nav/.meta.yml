@@ -1,0 +1,4 @@
+# Manpages linked from the Allocations pages; their option text otherwise
+# outranks real answers for generic searches like "job failed".
+search:
+  exclude: true

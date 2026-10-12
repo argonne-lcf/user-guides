@@ -17,8 +17,9 @@ https://mailman.cels.anl.gov/mailman3/lists/<list-name>-notify.lists.alcf.anl.go
 ```
 and follow the instructions. 
 
-!!! warning
+/// warning
 
-    You must replace `<list-name>` with an appropriate compute system you have access to (such as `polaris`, `crux`, `aurora`, `sophia`, etc.).
+You must replace `<list-name>` with an appropriate compute system you have access to (such as `polaris`, `crux`, `aurora`, `sophia`, etc.).
+///
 
 

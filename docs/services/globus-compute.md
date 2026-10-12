@@ -1,3 +1,8 @@
+---
+tags:
+  - Globus
+---
+
 # Globus Compute
 
 The [Globus Compute platform](https://www.globus.org/compute) allows users to execute workloads remotely by submitting functions to endpoints on ALCF systems.
@@ -25,43 +30,45 @@ To submit a simple function to these endpoints from a remote system install `glo
 ```bash
 pip install "globus-compute-sdk>=4.0"
 ```
-And then execute one of these example Python scripts (paste your project name in the account setting `<your project name>` before execution):
+And then execute one of these example Python scripts (paste your project name in the account setting `<project>` before execution):
 
-=== "Polaris"
+/// tab | Polaris
 
-    ```python linenums="1"
-    from globus_compute_sdk import Executor
-    from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
+```python linenums="1"
+from globus_compute_sdk import Executor
+from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
-    def hello():
-        return "hello from polaris"
+def hello():
+    return "hello from polaris"
 
-    serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
-    gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
-                   serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
-                                         "queue": "debug",})
-    future = gce.submit(hello)
-    print(future.result())
-    ```
+serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
+gce = Executor(endpoint_id="9a947ba5-f537-4681-acf3-cc66485aadec",
+               serializer=serializer,
+               user_endpoint_config={"account": "<project>", 
+                                     "queue": "debug",})
+future = gce.submit(hello)
+print(future.result())
+```
+///
 
-=== "Crux"
+/// tab | Crux
 
-    ```python linenums="1"
-    from globus_compute_sdk import Executor
-    from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
+```python linenums="1"
+from globus_compute_sdk import Executor
+from globus_compute_sdk.serialize import ComputeSerializer, AllCodeStrategies
 
-    def hello():
-        return "hello from crux"
+def hello():
+    return "hello from crux"
 
-    serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
-    gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
-                   serializer=serializer,
-                   user_endpoint_config={"account": "<your project name>", 
-                                         "queue": "debug",})
-    future = gce.submit(hello)
-    print(future.result())
-    ```
+serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
+gce = Executor(endpoint_id="fd8b54bb-9452-411d-8e3a-09408156a886",
+               serializer=serializer,
+               user_endpoint_config={"account": "<project>", 
+                                     "queue": "debug",})
+future = gce.submit(hello)
+print(future.result())
+```
+///
 
 These scripts create a Globus Compute `Executor`.  The `Executor` requires the `endpoint_id` and the user's configuration options contained in `user_endpoint_config`.  The user's configuration options will be passed to the MEP to configure and create the user's endpoint or UEP that will submit jobs and execute work under the user's account.
 
@@ -71,54 +78,56 @@ The first time this script is executed, a request to authenticate with the Globu
 
 The following configuration options are available on the MEPs.  When users create Globus Compute executors, they can include any of the following options. Note that `queue` and `account` are required options and must always be specified:
 
-=== "Polaris"
+/// tab | Polaris
 
-    | Key | Default | Description |
-    |---|---|---|
-    | `queue` | required option; no default | queue to submit PBS jobs to |
-    | `account` | required option; no default | project account to charge PBS jobs to |
-    | `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
-    | `nodes_per_block` | `1` | number of nodes per PBS job |
-    | `max_workers_per_node` | `100` | concurrent function executions per node |
-    | `cores_per_worker` | `1` | CPU threads per worker |
-    | `available_accelerators` | not set | GPU threads per node |
-    | `cpu_affinity` | `"alternating"` | binding strategy of CPU threads to workers |
-    | `max_idletime` | `240` | seconds before an idle PBS job shuts down |
-    | `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
-    | `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
-    | `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
-    | `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
-    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
-    | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
-    | `select_options` | `"system=polaris"` | PBS select line options |
-    | `allowed_functions` | not set (all work will be accepted) | list of UUIDs of registered functions that are allowed to run |
-    | `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
-    | `drain_period` | not set | number of seconds after start of PBS job when workers will begin to drain and then exit |
-    | `container_type` | not set | container type, e.g. `"apptainer"` |
-    | `container_uri` | not set | container URI or file path to `sif` file |
-    | `container_cmd_options` | not set | custom commands to pass to the container launch command |
+| Key | Default | Description |
+|---|---|---|
+| `queue` | required option; no default | queue to submit PBS jobs to |
+| `account` | required option; no default | project account to charge PBS jobs to |
+| `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
+| `nodes_per_block` | `1` | number of nodes per PBS job |
+| `max_workers_per_node` | `100` | concurrent function executions per node |
+| `cores_per_worker` | `1` | CPU threads per worker |
+| `available_accelerators` | not set | GPU threads per node |
+| `cpu_affinity` | `"alternating"` | binding strategy of CPU threads to workers |
+| `max_idletime` | `240` | seconds before an idle PBS job shuts down |
+| `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
+| `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
+| `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
+| `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
+| `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
+| `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
+| `select_options` | `"system=polaris"` | PBS select line options |
+| `allowed_functions` | not set (all work will be accepted) | list of UUIDs of registered functions that are allowed to run |
+| `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
+| `drain_period` | not set | number of seconds after start of PBS job when workers will begin to drain and then exit |
+| `container_type` | not set | container type, e.g. `"apptainer"` |
+| `container_uri` | not set | container URI or file path to `sif` file |
+| `container_cmd_options` | not set | custom commands to pass to the container launch command |
+///
 
 
 
-=== "Crux"
+/// tab | Crux
 
-    | Key | Default | Description |
-    |---|---|---|
-    | `queue` | required option; no default | queue to submit PBS jobs to |
-    | `account` | required option; no default | project account to charge PBS jobs to |
-    | `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
-    | `nodes_per_block` | `1` | number of nodes per PBS job |
-    | `max_workers_per_node` | `100` | concurrent function executions per node |
-    | `cores_per_worker` | `1` | CPU threads per worker |
-    | `max_idletime` | `240` | seconds before an idle PBS job shuts down |
-    | `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
-    | `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
-    | `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
-    | `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
-    | `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
-    | `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
-    | `select_options` | `"system=crux"` | PBS select line options |
-    | `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
+| Key | Default | Description |
+|---|---|---|
+| `queue` | required option; no default | queue to submit PBS jobs to |
+| `account` | required option; no default | project account to charge PBS jobs to |
+| `walltime` | `"1:00:00"` | walltime limit for PBS jobs submitted by the endpoint in the form of a string `"HH:MM:SS"` |
+| `nodes_per_block` | `1` | number of nodes per PBS job |
+| `max_workers_per_node` | `100` | concurrent function executions per node |
+| `cores_per_worker` | `1` | CPU threads per worker |
+| `max_idletime` | `240` | seconds before an idle PBS job shuts down |
+| `init_blocks` | `0` | initial number of PBS jobs queued at the start of the workload |
+| `min_blocks` |  `0` | minimum number of PBS jobs queued/running during the workload  |
+| `max_blocks` | `1` | maximum number of PBS jobs queued/running during the workload |
+| `launcher_type` | `"SimpleLauncher"` | Parsl launcher used to create workers; swap to `"MpiExecLauncher"` for multi-node PBS jobs |
+| `worker_init` | `"export TMPDIR=/tmp; export PATH=$PATH:/opt/globus-compute-agent/venv-py313/bin/"` | activation commands at start of PBS jobs; default commands appended to user passed commands |
+| `scheduler_options` | `"#PBS -l filesystems=home"` | PBS options, full override REPLACES default — re-include `filesystems=` |
+| `select_options` | `"system=crux"` | PBS select line options |
+| `max_retries_on_system_failure` | `0` | number of times a failed function call will be retried |
+///
 
 ### Setting your own environment with `worker_init`
 
@@ -135,8 +144,9 @@ pip install globus-compute-endpoint parsl==2026.02.23
 ```
 The `parsl` package is a dependency of `globus-compute-endpoint`.  When using the MEPs it is necessary to match the exact `parsl` version that is used by the MEPs, which is currently version `2026.02.23`.
 
-!!! warning
-    Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the Globus Compute `pid` file](#runaway-job-submission) and update your environment or `worker_init` before resubmitting functions. 
+/// warning
+Environment conflicts with the endpoint environment can give rise to a loop of PBS job failures. If this happens, the endpoint will continue to submit jobs in a failure loop and your client process that submitted the requests to the endpoint will continue to wait.    [To stop this, delete the Globus Compute `pid` file](#runaway-job-submission) and update your environment or `worker_init` before resubmitting functions. 
+///
 
 ## Single User Endpoints
 
@@ -152,60 +162,62 @@ Here is a simple example that will return information on the endpoint environmen
 
 Paste your project name in the account setting before execution.
 
-=== "Polaris"
+/// tab | Polaris
 
-    ```python
-    from globus_compute_sdk import Executor
+```python
+from globus_compute_sdk import Executor
 
-    def hello_affinity():
-        import sys
-        import parsl
-        import socket
-        import os
-        import globus_compute_endpoint
-        return f""" hostname: {socket.gethostname()}\n \
-                    CUDA_VISIBLE_DEVICES: {os.environ.get('CUDA_VISIBLE_DEVICES')}\n \
-                    remote environment: {sys.executable}\n \
-                    python version: {sys.version}\n \
-                    parsl version: {parsl.__version__}\n \
-                    GCE version: {globus_compute_endpoint.__version__}
-                """
+def hello_affinity():
+    import sys
+    import parsl
+    import socket
+    import os
+    import globus_compute_endpoint
+    return f""" hostname: {socket.gethostname()}\n \
+                CUDA_VISIBLE_DEVICES: {os.environ.get('CUDA_VISIBLE_DEVICES')}\n \
+                remote environment: {sys.executable}\n \
+                python version: {sys.version}\n \
+                parsl version: {parsl.__version__}\n \
+                GCE version: {globus_compute_endpoint.__version__}
+            """
 
-    endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
+endpoint_id = '9a947ba5-f537-4681-acf3-cc66485aadec'
 
-    gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
-                                        "queue": "debug",})
-    future = gce.submit(hello_affinity)
-    print(future.result())
-    ```
+gce = Executor(endpoint_id=endpoint_id,
+               user_endpoint_config={"account": "<project>", 
+                                    "queue": "debug",})
+future = gce.submit(hello_affinity)
+print(future.result())
+```
+///
 
-=== "Crux"
+/// tab | Crux
 
-    ```python
-    from globus_compute_sdk import Executor
+```python
+from globus_compute_sdk import Executor
 
-    def hello_affinity():
-        import sys
-        import parsl
-        import socket
-        import os
-        import globus_compute_endpoint
-        return f""" hostname: {socket.gethostname()}\n \
-                    remote environment: {sys.executable}\n \
-                    python version: {sys.version}\n \
-                    parsl version: {parsl.__version__}\n \
-                    GCE version: {globus_compute_endpoint.__version__}
-                """
+def hello_affinity():
+    import sys
+    import parsl
+    import socket
+    import os
+    import globus_compute_endpoint
+    return f""" hostname: {socket.gethostname()}\n \
+                remote environment: {sys.executable}\n \
+                python version: {sys.version}\n \
+                parsl version: {parsl.__version__}\n \
+                GCE version: {globus_compute_endpoint.__version__}
+            """
 
-    endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
+endpoint_id = 'fd8b54bb-9452-411d-8e3a-09408156a886'
 
-    gce = Executor(endpoint_id=endpoint_id,
-                   user_endpoint_config={"account": "<your project name>", 
-                                        "queue": "debug",})
-    future = gce.submit(hello_affinity)
-    print(future.result())
-    ```    
+gce = Executor(endpoint_id=endpoint_id,
+               user_endpoint_config={"account": "<project>", 
+                                    "queue": "debug",})
+future = gce.submit(hello_affinity)
+print(future.result())
+```    
+///
 
 ### Register Function
 
@@ -299,7 +311,7 @@ def host_sleep_wrapper(sleeptime):
 
 # Paste endpoint id and project name
 endpoint_id = '<selected endpoint id>'
-account = '<your project name>'
+account = '<project>'
 
 serializer = ComputeSerializer(strategy_code=AllCodeStrategies())
 gce = Executor(endpoint_id=endpoint_id,
@@ -328,7 +340,7 @@ def query_host():
     return f"Hello from node {socket.gethostname()}"
 
 endpoint_id = "<selected endpoint id>"
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",
@@ -358,7 +370,7 @@ Polaris has 4 Nvidia A100 GPUs per node.  To distribute functions across GPUs in
 
 ```python
 endpoint_id = "9a947ba5-f537-4681-acf3-cc66485aadec" # Polaris endpoint
-account = "<your project name>"
+account = "<project>"
 num_nodes = 2
 user_endpoint_config = {"account": account, 
                         "queue": "debug",

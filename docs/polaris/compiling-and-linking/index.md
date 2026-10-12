@@ -10,13 +10,14 @@ It is helpful to realize that there is a single `HOME` filesystem for users that
 
 ## Cray Programming Environment
 
-!!! info
+/// info
 
-    Beginning in CPE 24.11, the NVHPC modules (`PrgEnv-nvhpc`, `nvhpc`, `nvhpc-mixed`) are no longer offered. The NVIDIA modules (`PrgEnv-nvidia`, `nvidia`, `nvidia-mixed`) are now the sole option for modules regarding the NVIDIA programming environment. The move to the NVIDIA modules is to complete the alignment of CPE module flows. The module flow for all environments is as follows:
+Beginning in CPE 24.11, the NVHPC modules (`PrgEnv-nvhpc`, `nvhpc`, `nvhpc-mixed`) are no longer offered. The NVIDIA modules (`PrgEnv-nvidia`, `nvidia`, `nvidia-mixed`) are now the sole option for modules regarding the NVIDIA programming environment. The move to the NVIDIA modules is to complete the alignment of CPE module flows. The module flow for all environments is as follows:
 
-    - Load an environment meta module (e.g. `PrgEnv-nvidia`)
-    - Environment meta module loads a compiler (e.g. `nvidia`)
-    - User can choose to load a toolkit (`cuda`, `cudatoolkit`)
+- Load an environment meta module (e.g. `PrgEnv-nvidia`)
+- Environment meta module loads a compiler (e.g. `nvidia`)
+- User can choose to load a toolkit (`cuda`, `cudatoolkit`)
+///
 
 
 The Cray Programming Environment (PE) uses three compiler wrappers for building software. These compiler wrappers should be used when building MPI-enabled applications.

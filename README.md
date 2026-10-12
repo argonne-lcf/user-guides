@@ -70,10 +70,35 @@ GitHub Actions are used to automatically validate all changes in pull requests b
 make build-docs
 ```
 
+The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
+
+To test search changes, run `node scripts/search_test.js "query"` against a running `mkdocs serve`.
+
 ### Writing math
 
 LaTeX math renders via MathJax: inline `$...$` or `\(...\)`, blocks `$$...$$` or `\[...\]`.
 Keep shell commands in backticks or code fences. A prose line with two bare `$` (e.g. `$MODEL_DIR ... /home/$(whoami)`) can be misparsed as math; escape with `\$` if needed.
+
+### Page metadata (front matter)
+
+A page can start with a YAML front-matter block:
+
+```yaml
+---
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
+tags:
+  - LLMs
+keywords:
+  - huggingface
+---
+```
+
+* `description:` one sentence, 120 characters max. Shown in link previews and search results. `make check-descriptions` lists pages without one.
+* `tags:` only topics the page is about. Must be listed in `tags_allowed` in `mkdocs.yml`. Search weights tags heavily, so don't over-tag.
+* `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page.
+* `search:` with `boost: 2` to rank a page higher, or `exclude: true` to hide it from search.
+* Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
+* Commit front-matter-only changes separately from content edits, so they can be excluded from each page's "Last Updated" date later (#1139).
 
 ### Working on documentation
 
@@ -102,6 +127,21 @@ git merge main                     # merge the local develop into **YOURBRANCH**
 git push origin YOURBRANCH         # push the changes from local branch up to your remote branch
 ```
 * Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
+
+### Using AI tools
+
+[`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: what content edits may touch, the site's writing and formatting conventions, Markdown pitfalls, how to add or move pages, page front matter, and contributing rules. Build and theme details are in a separate section at the end. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
+
+If you use an AI tool to edit these docs:
+
+* Review the full diff yourself before committing; you're responsible for every change.
+* Check facts about ALCF systems (queue limits, hostnames, module names, paths, versions) against the live system or the staff who own it, not the tool's output or another system's page. Say in the PR how you checked them.
+* Keep each PR to one topic. Don't run sweeping "consistency" or typo passes across many pages.
+* Keep commit messages and PR descriptions concise, and edit any generated text before submitting.
+* Run `make build-docs` before opening a PR.
+* Check the "AI tools were used" box in the pull request template, and name the tools in the description.
+
+When a convention changes, update `AGENTS.md` in the same PR, and `REVIEW.md` too if reviewers should flag it.
 
 ## Inbound Links Validation
 External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.

@@ -1,4 +1,9 @@
-# Job Queueing and Submission
+---
+tags:
+  - Job Submission
+---
+
+# Job Submission with PBS
 
 Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler. Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System).
 For additional information, see [Running Jobs using PBS](../../running-jobs/index.md)

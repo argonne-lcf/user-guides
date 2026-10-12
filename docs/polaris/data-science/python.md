@@ -1,3 +1,8 @@
+---
+tags:
+  - Python
+---
+
 # Python
 
 For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
@@ -14,9 +19,10 @@ module use /soft/modulefiles; module load conda; conda activate base
 
 This will load and activate the base environment.
 
-!!! tip
+/// tip
 
-    We encourage users to use the pre-installed conda environment. Any custom environments are supported on a best-effort basis only.
+We encourage users to use the pre-installed conda environment. Any custom environments are supported on a best-effort basis only.
+///
 
 For Python issues or questions, please see the [Technical Support](../../support/ticket.md) page.
 
@@ -24,20 +30,21 @@ For Python issues or questions, please see the [Technical Support](../../support
 
 To install additional packages that are missing from the `base` environment, we can build a `venv` on top of it.
 
-!!! success "Conda `base` environment + `venv`"
+/// success | Conda `base` environment + `venv`
 
-    If you need a package that is **not** already installed in the `base` environment, this is generally the recommended approach.
+If you need a package that is **not** already installed in the `base` environment, this is generally the recommended approach.
 
-    We can create a `venv` on top of the base conda environment (with `--system-site-packages` to inherit the `base` packages):
+We can create a `venv` on top of the base conda environment (with `--system-site-packages` to inherit the `base` packages):
 
-    ```bash
-    module use /soft/modulefiles; module load conda; conda activate base
-    CONDA_NAME=$(echo ${CONDA_PREFIX} | tr '\/' '\t' | sed -E 's/mconda3|\/base//g' | awk '{print $NF}')
-    VENV_DIR="$(pwd)/venvs/${CONDA_NAME}"
-    mkdir -p "${VENV_DIR}"
-    python -m venv "${VENV_DIR}" --system-site-packages
-    source "${VENV_DIR}/bin/activate"
-    ```
+```bash
+module use /soft/modulefiles; module load conda; conda activate base
+CONDA_NAME=$(echo ${CONDA_PREFIX} | tr '\/' '\t' | sed -E 's/mconda3|\/base//g' | awk '{print $NF}')
+VENV_DIR="$(pwd)/venvs/${CONDA_NAME}"
+mkdir -p "${VENV_DIR}"
+python -m venv "${VENV_DIR}" --system-site-packages
+source "${VENV_DIR}/bin/activate"
+```
+///
 
 You can always retroactively change the `--system-site-packages` flag state for this virtual environment by editing `${VENV_DIR}/pyvenv.cfg` and changing the value of the line `include-system-site-packages=false`.
 
@@ -51,9 +58,10 @@ The shared base environment is not writable, so it is impossible to remove or un
 
 ## Cloning the base conda environment
 
-!!! warning
+/// warning
 
-    This approach is generally not recommended as it can be quite slow and can use significant storage space.
+This approach is generally not recommended as it can be quite slow and can use significant storage space.
+///
 
 If you need more flexibility, you can clone the conda environment into a custom path, which would then allow for root-like installations via `conda install <module>` or `pip install <module>`.
 
@@ -71,9 +79,10 @@ where `/path/to/envs/base-clone` should be replaced by a suitable path. The clon
 
 ## Using `pip install --user`
 
-!!! danger
+/// danger
 
-    This is typically _not_ recommended.
+This is typically _not_ recommended.
+///
 
 With the conda environment setup, one can install common Python modules using `python3 -m pip install --user '<module-name>'`, which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`.
 

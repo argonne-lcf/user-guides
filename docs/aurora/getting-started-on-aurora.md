@@ -1,3 +1,13 @@
+---
+description: "First steps on Aurora: logging in, compiling, running jobs, Python, file systems and DAOS, proxy settings, and help."
+tags:
+  - Getting Started
+keywords:
+  - stripe count
+  - lfs setstripe
+  - striping
+---
+
 # Getting Started on Aurora
 
 ## Logging Into Aurora:
@@ -6,7 +16,7 @@ To log into Aurora:
 ```bash linenums="1"
 ssh <username>@aurora.alcf.anl.gov
 ```
-Then, type in the password from your CRYPTOCard/MobilePASS+ token.
+Then, type in the passcode from your MobilePASS+ or physical hardware token.
 
 ## Hardware Overview
 

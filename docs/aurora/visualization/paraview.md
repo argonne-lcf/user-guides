@@ -32,8 +32,9 @@ The first time you want to run a server on Aurora and have it connect to your lo
 
 Kitware, the developers of ParaView, maintain a database of server configurations that you can retrieve through the ParaView client.
 
-!!! note "NOTE"
-    At this time, there are no specific files for Aurora available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac/Linux](serverfiles/aurora.pvsc)  |  [Windows](serverfiles/windowsToAurora.pvsc)
+/// note | NOTE
+At this time, there are no specific files for Aurora available from Kitware. We will update this page when the files are available. In the meantime, you can download configuration files here and import them with the `Load Servers` option. Please use the `Save link as` option in your browser. [Mac/Linux](serverfiles/aurora.pvsc)  |  [Windows](serverfiles/windowsToAurora.pvsc)
+///
 
 #### 3. Use ParaView
 
@@ -84,7 +85,7 @@ Now you can press OK to establish the connection with a ParaView server on Auror
 
 An SSH connection will be established with a Aurora login node, and a password will be requested in a terminal, similar to the process you normally use to connect and work on the system.
 
-After you enter your password, a job will be queued, and you will see a window like this:
+After you enter your passcode, a job will be queued, and you will see a window like this:
 
 ![Load servers](images/ParaviewWaitForServer.png){ width="700" }
 

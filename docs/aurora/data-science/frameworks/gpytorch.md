@@ -1,3 +1,8 @@
+---
+tags:
+  - PyTorch
+---
+
 # GPyTorch on Aurora
 
 ## 1. Login and Queue a Job
@@ -10,17 +15,18 @@ ssh <username>@aurora.alcf.anl.gov
 
 Refer to [Getting Started on Aurora](../../getting-started-on-aurora.md) for additional information. In particular, you need to set the environment variables that provide access to the proxy host.
 
-!!! note
+/// note
 
-    The instructions below should be **run directly from a compute node**.
+The instructions below should be **run directly from a compute node**.
 
-    Explicitly, to request an interactive job (from `aurora-uan`):
+Explicitly, to request an interactive job (from `aurora-uan`):
 
-    ```bash
-    qsub -I -q <your_Queue> -l select=1,walltime=60:00 -A <your_ProjectName> -l filesystems=<fs1:fs2>
-    ```
+```bash
+qsub -I -q <queue> -l select=1,walltime=60:00 -A <project> -l filesystems=<fs1:fs2>
+```
 
-    Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+Refer to [job scheduling and execution](../../../running-jobs/index.md) for additional information.
+///
 
 ## 2. Once on a Compute Node, Load Modules
 
@@ -121,17 +127,20 @@ with torch.no_grad(), gpytorch.settings.fast_pred_var():
     print(f"\nPrediction complete. Mean of first 5 points: {mean[:5]}")
 ```
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-    ``` { .bash .no-copy }
-    Using device: xpu
-    Starting training...
-    Iter 10/50 - Loss: 0.506
-    Iter 20/50 - Loss: 0.093
-    Iter 30/50 - Loss: -0.333
-    Iter 40/50 - Loss: -0.633
-    Iter 50/50 - Loss: -0.717
-    
-    Prediction complete. Mean of first 5 points: tensor([-0.0422,  0.1018,  0.2422,  0.3766,  0.5027])
-    ```
+``` { .bash .no-copy }
+Using device: xpu
+Starting training...
+Iter 10/50 - Loss: 0.506
+Iter 20/50 - Loss: 0.093
+Iter 30/50 - Loss: -0.333
+Iter 40/50 - Loss: -0.633
+Iter 50/50 - Loss: -0.717
+
+Prediction complete. Mean of first 5 points: tensor([-0.0422,  0.1018,  0.2422,  0.3766,  0.5027])
+```
+///
     

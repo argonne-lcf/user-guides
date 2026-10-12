@@ -1,3 +1,12 @@
+---
+description: "Install VS Code and the Remote - SSH extension, connect to ALCF systems, and build and debug code on the remote host."
+tags:
+  - Compiling
+  - Debugging
+keywords:
+  - vscode
+---
+
 # Using Visual Studio Code with Remote SSH
 
 ## Overview
@@ -30,7 +39,7 @@ If you have an issue that is not covered below, reach out to [VS Code support](h
 By default, VS Code is installed under:
 
 ```text
-C:\Users\<Username>\AppData\Local\Programs\Microsoft VS Code
+C:\Users\<username>\AppData\Local\Programs\Microsoft VS Code
 ```
 
 on [Windows](https://code.visualstudio.com/docs/setup/windows).
@@ -81,7 +90,7 @@ You can later edit this file manually if you need to change options.
 
 Here is a minimalist example entry for both `Polaris` and `Aurora`:
 
-```bash
+```bash linenums="1" title="~/.ssh/config"
 Host *
     ControlMaster auto
     ControlPath ~/.ssh/master-%r@%h:%p
@@ -162,7 +171,7 @@ To configure the compilers on the remote host:
 
 A typical GCC-based task in `.vscode/tasks.json` looks like this (works for both module-provided GCC and a system GCC):
 
-```json linenums="1"
+```json linenums="1" title=".vscode/tasks.json"
 {
   "version": "2.0.0",
   "tasks": [
@@ -205,7 +214,7 @@ The following example assumes that you have already connected to a remote ALCF m
 
 In the Explorer (remote window), create a new file named `helloworld.cpp` with:
 
-```cpp
+```cpp linenums="1" title="helloworld.cpp"
 #include <iostream>
 
 int main() {
