@@ -1,13 +1,13 @@
 # REVIEW.md
 
-Review rules for pull requests to the ALCF User Guides (MkDocs, Material theme). `AGENTS.md` has the full background.
+Review rules for pull requests to the ALCF User Guides (Zensical, `classic` theme). `AGENTS.md` has the full background.
 
 ## Flag these
 
 1. System facts that look copied from another system or can't be verified from the diff: hostnames, queue names and limits, module names, paths, versions, core/GPU counts. Cobalt syntax (`qsub -A ... -t`, `-n`) is wrong on PBS systems. Ask how the change was checked.
 2. Changes that don't change the rendered page: re-wrapped lines, reindented text, whitespace-only edits. Also deleted HTML comments or `--8<--` snippet lines, and added horizontal rules.
 3. Content PRs that also touch plugins, `markdown_extensions`, CSS, JavaScript, `overrides/`, workflows, or `requirements.txt`.
-4. A new Markdown page under `docs/` that isn't added to `nav` or `not_in_nav` in `mkdocs.yml`.
+4. A new Markdown page under `docs/` that isn't added to `nav` or `not_in_nav` in `zensical.toml`. The build doesn't catch this.
 5. A moved, renamed, or deleted page whose URL is listed in `includes/validate-inbound-URLs.txt`, or a moved page without a `redirect_maps` entry.
 6. Changes to submodule pointers (`GettingStarted`, `ALCFBeginnersGuide`, `AuroraBugTracking`) in a PR that isn't about them. Edits to `docs/inbound-links.md` or `site/`.
 7. Code blocks with a `$ ` prompt on commands meant to be copied, `shell`/`sh` instead of `bash`, no language, or sample output in the same block as the commands (output goes in `{ .output .no-copy }`).
