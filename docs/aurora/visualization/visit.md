@@ -19,31 +19,34 @@ Additional information for using VisIt in client/server mode is available [here]
 - Start up VisIt on your local machine.
 - Click File -> Open File and choose "ANL Aurora" from the "Host" dropdown.
 
-  ![Open File](images/Visit-ANL-Aurora.png)
+    ![Open File](images/Visit-ANL-Aurora.png)
 
 - You'll be prompted for your password; enter your ALCF authenticator app response.
 - When you open a selected file, it will launch a job on Aurora.
-  - You will need to specify the "Bank" (Project) to use when VisIt submits jobs to the queue on Aurora. Specify a project in the Options box.
-  - If your environment doesn't get sourced correctly with non-interactive SSH, you can set the default project to use under Options -> Host profiles.
+    - You will need to specify the "Bank" (Project) to use when VisIt submits jobs to the queue on Aurora. Specify a project in the Options box.
+    - If your environment doesn't get sourced correctly with non-interactive SSH, you can set the default project to use under Options -> Host profiles.
 
-  ![Open File](images/Visit-options.png)
+    ![Open File](images/Visit-options.png)
 
-!!! warning
+    /// warning
 
     Don't change the contents of the "Machine file" field (it should be `$PBS_NODEFILE`).
-    
-!!! tip 
+    ///
+
+    /// tip
 
     The default Launch Profile is set to serial. We recommend leaving this setting in its default value, but using the parallel method to launch jobs on Aurora.
+    ///
 
-!!! warning
-    
+    /// warning
+
     Don't change the contents of "launchMethod". It must be `qsub/aprun` even though Aurora does not use `aprun`.
+    ///
 
 
-  - The Aurora host profile linked above contains an empty user name. Make sure to update with your user name.
-  - If you'd like to change other job parameters (like the number of processes, nodes, and walltime), you can do so. Please enter time in the format required by the PBS scheduler (i.e., 1:00:00 for one hour).
-  - If you'd like these changes to be used as your default, be sure to save them using Save Settings under the Options menu.
+    - The Aurora host profile linked above contains an empty user name. Make sure to update with your user name.
+    - If you'd like to change other job parameters (like the number of processes, nodes, and walltime), you can do so. Please enter time in the format required by the PBS scheduler (i.e., 1:00:00 for one hour).
+    - If you'd like these changes to be used as your default, be sure to save them using Save Settings under the Options menu.
 
 ## Additional Information
 

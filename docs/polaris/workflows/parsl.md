@@ -4,11 +4,11 @@
 > 
 > -- <cite>Parsl Documentation</cite>
 
-For many applications, managing an ensemble of jobs into a workflow is a critical step that can easily become a performance bottleneck. Many tools exist to address this, of which `parsl` is just one. On this page, we'll highlight some of the key pieces of information about `parsl` that are relevant to Polaris. `Parsl` is also [extensively documented](https://parsl.readthedocs.io/en/stable/), has a dedicated Slack channel, and a large community of users and developers beyond ALCF. We encourage you to engage with the `parsl` community for support with `parsl`-specific questions, and for Polaris-specific questions or problems, please contact support@alcf.anl.gov.
+For many applications, managing an ensemble of jobs into a workflow is a critical step that can easily become a performance bottleneck. Many tools exist to address this, of which `parsl` is just one. On this page, we'll highlight some of the key pieces of information about `parsl` that are relevant to Polaris. Parsl is also [extensively documented](https://parsl.readthedocs.io/en/stable/), has a dedicated Slack channel, and a large community of users and developers beyond ALCF. We encourage you to engage with the `parsl` community for support with `parsl`-specific questions, and for Polaris-specific questions or problems, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Getting Parsl on Polaris
 
-You can install parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the ``conda`` module to include parsl, but here is an example way to do it:
+You can install Parsl by building off of the ``conda`` modules. You have some flexibility in how you want to extend the `conda` module to include Parsl, but here is an example way to do it:
 
 ```bash linenums="1"
 # Load the Conda Module (needed every time you use parsl)
@@ -25,7 +25,6 @@ source /path/to/your/virtualenv/bin/activate
 
 # Install parsl (only once)
 pip install parsl
-
 ```
 
 ## Using Parsl on Polaris
@@ -50,7 +49,7 @@ run_dir="/lus/eagle/projects/yourproject/yourrundir/"
 user_opts = {
     "worker_init":      f"source /path/to/your/virtualenv/bin/activate; cd {run_dir}", # load the environment where parsl is installed
     "scheduler_options":"#PBS -l filesystems=home:eagle" , # specify any PBS options here, like filesystems
-    "account":          "YOURPROJECT",
+    "account":          "<project>",
     "queue":            "debug-scaling",
     "walltime":         "1:00:00",
     "nodes_per_block":  3, # think of a block as one job on polaris, so to run on the main queues, set this >= 10
@@ -102,6 +101,7 @@ config = Config(
 
 ## Known Issues
 
-!!! warning
+/// warning
 
-    Starting in September 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` for cases using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+Starting in September 2025, users testing parsl in single node jobs may encounter an error that makes reference to `OSError: AF_UNIX path too long`.  To fix this, include in the `worker_init` for cases using the `PBSProProvider` or in the job script for cases using the `LocalProvider` this environment variable setting: `export TMPDIR=/tmp`
+///

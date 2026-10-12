@@ -45,6 +45,7 @@ filter on name or id, DO NOT MIX, enter 'all' to get all, wild cards '*' is allo
 - OPER1 is 'lt' for single date entry, OPER1 and OPER2 are 'ge' and 'lt', respectively, for range date entry. 
 
 **Date Parsing Precedence:** 
+
   - YEAR then MONTH then DAY, i.e., 121101 is parsed as YYMMDD, hence Nov. 1, 2012
 
 #### **-H, --human-readable**

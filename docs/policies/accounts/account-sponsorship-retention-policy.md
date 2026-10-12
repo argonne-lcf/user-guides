@@ -20,6 +20,7 @@ You are also responsible for approving account renewal requests. When an account
 You are also responsible for approving ANL 593 renewal requests. When an account’s 593 is about to expire, we send a warning notification to the account holder. Among other things, the account holder is asked to contact the approver (the PI of any of the active projects the account holder is associated with) if they wish to renew their 593. We cannot and will not extend someone's 593 without an approval. An important aspect of this process to note is that inaction will result in the account becoming deactivated at the expiration date.
 
 The Project PI/proxy is responsible for the oversight and management of all users associated with the project and for ensuring that such users comply with applicable policies, agreements, and project requirements. Facility policies are listed here: [https://docs.alcf.anl.gov/policies/](https://docs.alcf.anl.gov/policies/)
+
   - Consistent with this responsibility, Project PI/proxy must approve and maintain project user accounts, including renewals and foreign national documentation.
  
 

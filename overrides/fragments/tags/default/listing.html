@@ -1,0 +1,31 @@
+{#-
+  Override of Material's tag listing (fragments/tags/default/listing.html).
+  Sidebar titles omit the system ("vLLM", "OpenMP") because the sidebar
+  section already shows it, so the same title can appear twice under one tag.
+  Show each page's sidebar sections after its title to tell them apart,
+  dropping the outermost one ("Machines", "Data Management") when there are
+  several, since it adds length without distinguishing anything.
+-#}
+{% macro render(listing) %}
+  {{ listing.content }}
+  <ul>
+    {% for mapping in listing.mappings %}
+      {% set sections = mapping.item.ancestors | reverse | map(attribute = "title") | list %}
+      {% if sections | length > 1 %}
+        {% set sections = sections[1:] %}
+      {% endif %}
+      <li>
+        <a href="{{ mapping.item.url | url }}">
+          {{ mapping.item.title }}
+        </a>
+        {% if sections %}
+          <span class="alcf-tag-listing-path">{{ sections | join(" › ") }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+    {% for child in listing %}
+      <li style="list-style-type:none">{{ render(child) }}</li>
+    {% endfor %}
+  </ul>
+{% endmacro %}
+{{ render(listing) }}

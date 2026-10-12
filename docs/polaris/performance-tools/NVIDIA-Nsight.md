@@ -1,3 +1,12 @@
+---
+keywords:
+  - nsys
+  - ncu
+  - nsight systems
+  - nsight compute
+  - nvidia profiler
+---
+
 # NVIDIA Nsight tools
 
 ## References
@@ -15,7 +24,7 @@ In addition, the baseline feature of this tool allows users to compare results w
 ### Common part on Polaris
 Build your application for Polaris, and then submit your job script to Polaris or start an interactive job mode on Polaris as follows:
 ```
-$ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:eagle -q debug -A <project-name>
+$ qsub -I -l select=1 -l walltime=1:00:00 -l filesystems=home:eagle -q debug -A <project>
 
 $ module li
 
@@ -63,6 +72,7 @@ $ ncu -i {output_filename}.ncu-rep
 #### Post-processing on your local system via GUI
 * Install NVIDIA Nsight Systems and NVIDIA Nsight Compute after downloading both of them from the  [NVIDIA Developer Zone](https://developer.nvidia.com/).
 Remark: Local client version should be the same as or newer than NVIDIA Nsight tools on Polaris.
+
 * Download nsys output files (i.e., ending with .qdrep and . sqlite) to your local system, and then open them with NVIDIA Nsight Systems on your local system.
 * Download ncu output files (i.e., ending with .ncu-rep) to your local system, and then open them with NVIDIA Nsight Compute on your local system.
 

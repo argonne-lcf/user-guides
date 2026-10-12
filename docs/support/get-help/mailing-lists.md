@@ -13,12 +13,13 @@ You will need to re-subscribe if you either:
 
 To manually subscribe or unsubscribe from an arbitrary `list-name`, go to:
 ```text
-https://lists.alcf.anl.gov/mailman/listinfo/<list-name>-notify 
+https://mailman.cels.anl.gov/mailman3/lists/<list-name>-notify.lists.alcf.anl.gov/
 ```
 and follow the instructions. 
 
-!!! warning
+/// warning
 
-    You must replace `<list-name>` with an appropriate compute system you have access to (such as `polaris`, `crux`, `aurora`, `sophia`, etc.).
+You must replace `<list-name>` with an appropriate compute system you have access to (such as `polaris`, `crux`, `aurora`, `sophia`, etc.).
+///
 
 

@@ -1,3 +1,8 @@
+---
+tags:
+  - OpenMP
+---
+
 # OpenMP on Aurora
 
 ## Overview
@@ -54,7 +59,7 @@ $ cat submit.sh
 #PBS -l walltime=0:30:00
 #PBS -l filesystems=<fs1:fs2>
 #PBS -q <queue> 
-#PBS -A <ProjectName>
+#PBS -A <project>
 
 cd ${PBS_O_WORKDIR}
 mpiexec -n 1 ./executable

@@ -84,8 +84,8 @@ int main(int argc, char *argv[]) {
   fft_c2c_batch_onemkl(&desc_1d, size, howmany_1d, "Single-precision FFT C2C 1D");
 
   descriptor_t desc_2d({size, size});
-  std::int64_t rstrides[3] = {0, size, 1};
-  std::int64_t cstrides[3] = {0, size, 1};
+  std::vector<std::int64_t> rstrides = {0, size, 1};
+  std::vector<std::int64_t> cstrides = {0, size, 1};
 
   desc_2d.set_value(oneapi::mkl::dft::config_param::NUMBER_OF_TRANSFORMS, howmany_2d);
   desc_2d.set_value(oneapi::mkl::dft::config_param::FWD_DISTANCE, size * size);

@@ -14,9 +14,9 @@ mpirun -n 12 -- ./gpu_tile_compact.sh ./triad
 
 # PCIe Bandwidth
 mpicxx -fsycl pci.cpp -o pci
-mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- ./gpu_tile_compact.sh ./pci
-mpirun -n 2 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- ./gpu_tile_compact.sh ./pci
-mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,52,53,54,55,56,57 -- ./gpu_tile_compact.sh ./pci
+mpirun -n 1 --cpu-bind list:1,2,3,4,5,6,53,54,55,56,57,58 -- ./gpu_tile_compact.sh ./pci
+mpirun -n 2 --cpu-bind list:1,2,3,4,5,6,53,54,55,56,57,58 -- ./gpu_tile_compact.sh ./pci
+mpirun -n 12 --cpu-bind list:1,2,3,4,5,6,53,54,55,56,57,58 -- ./gpu_tile_compact.sh ./pci
 
 export MPIR_CVAR_CH4_IPC_GPU_ENGINE_TYPE=copy_high_bandwidth
 mpicxx -fsycl peer2peer.cpp -o peer2peer

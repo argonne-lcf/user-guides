@@ -2,9 +2,10 @@
 
 The Intel oneAPI compiler and Codeplay plugins for Nvidia GPUs are available on Polaris. The oneAPI compilers are not enabled under the Cray Programming Environment system but can be used separately. Two oneAPI variants are provided, the first being a "release" version based on Intel's officially released oneAPI toolkit. [Intel Release Notes](https://www.intel.com/content/www/us/en/developer/articles/release-notes/intel-oneapi-toolkit-release-notes.html)
 
-!!! note
+/// note
 
-    The 2023.2.1 release of the oneAPI Toolkit does not yet support oneDPL on Nvidia devices, though oneMKL is now added from the 2023.2.1 release onwards.
+The 2023.2.1 release of the oneAPI Toolkit does not yet support oneDPL on Nvidia devices, though oneMKL is now added from the 2023.2.1 release onwards.
+///
 
 ## Components
 

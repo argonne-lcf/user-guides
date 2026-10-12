@@ -2,8 +2,9 @@
 
 ALCF manages user support issues through an email support ticketing system. To submit a trouble ticket, please email ALCF Support at [support@alcf.anl.gov](mailto:support@alcf.anl.gov). You can also send questions, requests, and feedback to ALCF Support as well. 
 
-!!! note
-    Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday-Friday, except on holidays.
+/// note
+Our ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday-Friday, except on holidays.
+///
 
 ## Best Practices for Submitting Tickets
 
@@ -35,9 +36,10 @@ If you are having issues running your job, or your job is failing, please includ
 * The `*.e` (error) and `*.o` (output) files from at least one of your job failures
 * Any errors displayed on the command line
 
-!!! info
+/// info
 
-    Support does not have access to your home directory or your project directory. Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
+Support does not have access to your home directory or your project directory. Please do not include directory paths as a means for Support to access your submission script. It must be attached to the ticket.
+///
 
 ### Python Issues
 
@@ -52,9 +54,10 @@ If you need to open a ticket related to Python, please be sure to include the fo
 
 By including the above information, this will help ALCF Support staff quickly route your ticket to the correct subject-matter expert (SME), resulting in a quicker resolution.
 
-!!! tip 
+/// tip
 
-    We encourage the use of the pre-installed `conda` environment. Any custom environments are supported on a best-effort basis only.
+We encourage the use of the pre-installed `conda` environment. Any custom environments are supported on a best-effort basis only.
+///
 
 ### Installation & Compiling Issues
 

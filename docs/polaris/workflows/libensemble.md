@@ -16,24 +16,27 @@ conda activate base
 
 See the docs for more details on using [Python on Polaris](../data-science/python.md)
 
-???+ example "Creating a virtual environment and updating `libEnsemble`"
+/// details | Creating a virtual environment and updating `libEnsemble`
+    type: example
+    open: True
 
-    E.g., to create a virtual environment that allows installation of
-    further packages with pip:
+E.g., to create a virtual environment that allows installation of
+further packages with pip:
 
-    ```bash linenums="1"
-    python -m venv /path/to-venv --system-site-packages
-    . /path/to-venv/bin/activate
-    ```
+```bash linenums="1"
+python -m venv /path/to-venv --system-site-packages
+. /path/to-venv/bin/activate
+```
 
-    Where `/path/to-venv` can be anywhere you have write access.
-    For future uses, just load the conda module and run the activate line.
+Where `/path/to-venv` can be anywhere you have write access.
+For future uses, just load the conda module and run the activate line.
 
-    You can also ensure you are using the latest version of libEnsemble:
+You can also ensure you are using the latest version of libEnsemble:
 
-    ```bash linenums="1"
-    pip install libensemble
-    ```
+```bash linenums="1"
+pip install libensemble
+```
+///
 
 
 ## libEnsemble examples
@@ -54,7 +57,7 @@ A simple example batch script for a libEnsemble use case that runs five workers 
 #PBS -l walltime=00:15:00
 #PBS -l filesystems=home:eagle
 #PBS -q debug
-#PBS -A <myproject>
+#PBS -A <project>
 
 export MPICH_GPU_SUPPORT_ENABLED=1
 cd $PBS_O_WORKDIR
@@ -68,7 +71,7 @@ qsub submit_libe.sh
 
 Or you can run an interactive session with:
 ```bash linenums="1"
-qsub -A <myproject> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
+qsub -A <project> -l select=1 -l walltime=15:00 -lfilesystems=home:eagle -qdebug -I
 ```
 
 ## Further links

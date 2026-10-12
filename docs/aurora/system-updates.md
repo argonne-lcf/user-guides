@@ -1,20 +1,169 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Aurora System Updates
 
 This page is a reverse-chronological log of changes to Aurora's system software, firmware, and programming environment.
 
-Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full change log under the stage that introduced it. **Major updates typically require recompiling applications.**
+Aurora's largest changes are applied together as a **major update**: new Intel GPU drivers (Agama KMD/UMD), a new compute OS image, and a new programming environment (PE) release. A major update reaches users in stages over several weeks. It first appears in the `next-eval` test queue on a subset of nodes and UANs, is revised in response to user testing, and is finally rolled out to the full machine. Because those dated events are all part of one change, they are grouped below under a single `Major update` heading, newest stage first, with the full changelog under the stage that introduced it. **Major updates typically require recompiling applications.**
 
 Everything else appears as a standalone dated entry: firmware refreshes, fabric and storage updates, and policy changes.
 
 | Date | Update |
 | --- | --- |
+| 2026-09-01 → 2026-09-28 | **Major update:** [Agama 1146.78 drivers and oneAPI 2026.1.0](#major-update-2026-09) |
 | 2026-05-21 | [OS image and firmware update](#2026-05-21-os-image-and-firmware-update) |
-| 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-agama-114640-drivers-and-oneapi-202531-feb-mar-2026) |
+| 2026-02-23 → 2026-03-10 | **Major update:** [Agama 1146.40 drivers and oneAPI 2025.3.1](#major-update-2026-02) |
 | 2026-02-02 | [Flare upgrade and NEO 7.2-021 software update](#2026-02-02-flare-upgrade-and-neo-72-021-software-update) |
 | 2025-10-27 | [Slingshot fabric manager and DAOS updates](#2025-10-27-slingshot-fabric-manager-and-daos-updates) |
-| 2025-09-08 → 2025-10-13 | **Major update:** [Agama 1146.12 drivers and oneAPI 2025.2.0](#major-update-agama-114612-drivers-and-oneapi-202520-sep-oct-2025) |
+| 2025-09-08 → 2025-10-13 | **Major update:** [Agama 1146.12 drivers and oneAPI 2025.2.0](#major-update-2025-09) |
 | 2025-06-13 | [Lower memory limit on compute nodes](#2025-06-13-lower-memory-limit-on-compute-nodes-effective-2025-06-23) |
-| 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-agama-109912-drivers-and-oneapi-202505-2025-04-28) |
+| 2025-04-28 | **Major update:** [Agama 1099.12 drivers and oneAPI 2025.0.5](#major-update-2025-04) |
+
+## Major update: Agama 1146.78 drivers and oneAPI 2026.1.0 (Sep 2026) { #major-update-2026-09 }
+
+/// warning | Recompile required
+
+Due to the updates to Aurora's OS, GPU drivers, and programming environment, users will need to recompile applications.
+///
+
+/// abstract | At a glance
+
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
+- **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
+- **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
+- **PBS scheduler:** 2026.1.0, updated at rollout
+- **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Revised:** [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) and [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), in `next-eval`
+- **Rolled out to all nodes:** [2026-09-28](#2026-09-28-rolled-out-to-all-aurora-nodes), during scheduled maintenance
+///
+
+### 2026-09-28: Rolled out to all Aurora nodes
+
+The compute image with updates to Aurora's OS, GPU drivers (Agama 1146.78 / LTS release 2523.78), and programming environment (oneAPI 2026.1.0), which was previously available in the `next-eval` queue, is rolled out to all of the compute nodes and UANs across Aurora. The deployed image is the `next-eval` image as of its 2026-09-24 update, and includes the [`frameworks/2026.1.0` module](data-science/frameworks/index.md) with PyTorch 2.13 and vLLM 0.26.1.
+
+With testing concluded, the `next-eval` queue is no longer active. Move any remaining `next-eval` jobs to a production queue if you want them to run. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
+
+Aurora's PBS scheduler is also updated to 2026.1.0 as part of this rollout.
+
+The full changelog is in the [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes), and [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue) entries below.
+
+### 2026-09-24: `next-eval` MPICH and VTune updates
+
+The image in the `next-eval` queue has been updated with the following changes.
+
+#### PE 26.181.0
+
+- Revert default MPICH to `mpich/prd/5.0.0.aurora_test.87e2045` (removes `mpich/prd/5.0.0.aurora_test.b76b754`, the default since 2026-09-21)
+    - `MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE=1024` is no longer set by default
+- Add `mpich/prd/5.0.0.aurora_test.51a9474`, the latest version from the upstream `aurora_test` branch with a fix for `b76b754`, for testing
+- Add `mpich/opt/5.0.0.aurora_test.3c70a61`, the current production version on Aurora prior to this rollout, for comparison
+- Intel VTune 2026.4
+
+### 2026-09-21: `next-eval` OS image and PE fixes
+
+The image in the `next-eval` queue, and UANs `aurora-uan-0007` and `aurora-uan-0008`, have been updated with the following changes.
+
+#### OS image: compute_aurora_test_20260917T004318_c650c572
+
+- Kernel 6.4.0-150700.53.78-default
+- Fixed path in `/etc/ld.so.conf.d/libfabric.conf`
+
+#### PE 26.181.0
+
+- Default MPICH updated to `mpich/prd/5.0.0.aurora_test.b76b754`
+    - Sets `MPIR_CVAR_CH4_IPC_GPU_CACHE_SIZE=1024`
+- `frameworks` module no longer requires the `LD_LIBRARY_PATH` workaround
+- Unset `FI_LOG_*` variables
+
+### 2026-09-01: Available in the `next-eval` test queue
+
+We have created a temporary test queue `next-eval` (open to all users) with up to 2,112 nodes that are using a new compute image. UANs `aurora-uan-0007` and `aurora-uan-0008` also have the new software image and can be used for compiling. The queue is available starting 2026-09-01.
+
+**This is a significant update with a larger than normal chance for issues. Testing during this period is greatly appreciated.**
+
+See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies.
+
+Details of the full changelog are below (**`next-eval` test queue only**):
+
+#### OS image
+
+- SLES 15 SP7 with kernel 6.4.0-150700.53.73-default
+- HPE's Slingshot Host Software 14.0.1
+- Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.78 / LTS release 2523.78)
+- libfabric 2.3.1
+- Default log levels were increased to the following environment variable settings:
+
+    ```bash
+    FI_LOG_LEVEL=warn
+    FI_LOG_PROV=cxi
+    ```
+
+    If the log output is too high (specifically with lines starting with `libfabric`), unset `FI_LOG_LEVEL`. These variables are unset by default since the [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) update.
+
+#### PE 26.181.0
+
+- oneAPI Toolkit 2026.1
+- Standalone oneDAL 2026.1
+- Standalone advisor 2026.0
+- Standalone shmem 1.5.0
+- coregen: 2026.1.0.0
+- Drops DPCT, replaced with syclomatic, available as a module
+- Drop Kokkos 4.x
+- hypre: 3.1.0 → 3.1.1.abaebcc
+- ginkgo: patch for SYCL API deprecations
+- MPICH: 5.0.0.aurora_test.87e2045
+- UMD: AICOE: 2026.06.19 release
+- UMD: debuginfo for 1146.78
+- `frameworks/2026.1.0` module
+    - torch 2.13.0a0+gitcf30153
+    - torchao 0.17.0+git02105d46c
+    - torchcodec 0.15.0
+    - torchcomms 0.3.1
+    - torchdata 0.11.0+377e64c
+    - torchvision 0.28.0+8fb8771
+    - triton-xpu 3.7.2
+    - mpi4py 4.1.2
+    - vllm 0.26.1.dev0+g568afb3a1.d20260803.xpu
+    - vllm-xpu-kernels 0.1.11.2.dev0+ga692986.d20260803
+    - deepspeed 0.19.3
+    - dpctl 0.23.0.dev0+205.gb24f931fde
+    - dpnp 0.21.0.dev3+8.g987f2992697
+    - scikit-learn 1.9.0
+    - scikit-learn-intelex 20260728.214749
+    - Known Issues
+        - `frameworks` module load required an `LD_LIBRARY_PATH` workaround; fixed in the [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) update
+        - For vLLM XPUGraph capturing to work, in your job script:
+
+            ```bash
+            unset CCL_OP_SYNC
+            unset CCL_ATL_SYNC_COLL
+            export CCL_OP_SYNC=0
+            export CCL_ATL_SYNC_COLL=0
+            ```
+
+#### PE 26.26.0
+
+Largely matches current deployed PE on Aurora, but recompiled for SLES 15 SP7 and Intel UMD 1146.78. Includes fixes/changes:
+
+- Fixes for libxml2 missing pkgconfig
+- Update darshan 3.4.7 → 3.5.0 and include all optional extras
+- move pti to a spack package
+- Kokkos: 4.7.04 → 4.7.02, However, 5.1.1 is default
+- MPICH: 5.0.0.aurora_test.e358bbd → 5.0.0.aurora_test.87e2045
+- PyTorch: +gloo
+- pti: +0.17.0
+- mpi eager threshold: on by default
+- petsc: 3.24.5-sycl → 3.25.2-sycl
+- adios: 2.11.0 → 2.12.1
+- UMD: AICOE: 2026.06.19 release
+- UMD: debuginfo for 1146.78
 
 ## 2026-05-21: OS image and firmware update
 
@@ -32,30 +181,32 @@ ECB firmware:
 - BIOS 0116.D10
 - PVC IFWI WW43.3_14
 
-## Major update: Agama 1146.40 drivers and oneAPI 2025.3.1 (Feb-Mar 2026)
+## Major update: Agama 1146.40 drivers and oneAPI 2025.3.1 (Feb-Mar 2026) { #major-update-2026-02 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the updates to Aurora's programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+Due to the updates to Aurora's programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1146.40 / [LTS release 2523.40](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.40.html)
-    - **Programming environment:** PE 26.26.0 with oneAPI 2025.3.1
-    - **First available:** [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Rolled out to all nodes:** [2026-03-10](#2026-03-10-rolled-out-to-all-aurora-nodes)
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.40 / [LTS release 2523.40](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.40.html)
+- **Programming environment:** PE 26.26.0 with oneAPI 2025.3.1
+- **First available:** [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Rolled out to all nodes:** [2026-03-10](#2026-03-10-rolled-out-to-all-aurora-nodes)
+///
 
 ### 2026-03-10: Rolled out to all Aurora nodes
 
 The compute image with updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1, which was previously available in the `next-eval` queue, is rolled out to all of the nodes across Aurora.
 
-The full change log is in the [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue) entry below.
+The full changelog is in the [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue) entry below.
 
 ### 2026-02-23: Available in the `next-eval` test queue
 
 We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1.
 
-Details of the full change log are below (**`next-eval` test queue only**):
+Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image
 
@@ -133,19 +284,21 @@ Flare is scheduled to be upgraded Feb 2 - Feb 5, 2026 resulting in Aurora being 
 - Slingshot Fabric Manager update to 2.3.1
 - System `daos_user` has been upgraded to `daos-2.6.4` GA, enabled in PBS
 
-## Major update: Agama 1146.12 drivers and oneAPI 2025.2.0 (Sep-Oct 2025)
+## Major update: Agama 1146.12 drivers and oneAPI 2025.2.0 (Sep-Oct 2025) { #major-update-2025-09 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the updates to Aurora's GPU drivers and programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+Due to the updates to Aurora's GPU drivers and programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1146.12 / rolling release 2523.12
-    - **Programming environment:** PE 25.190.0 with oneAPI 2025.2.0
-    - **First available:** [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Revised:** [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4), AuroraSDK 25.190.0 RC4 in `next-eval`
-    - **Rolled out to most nodes:** [2025-10-13](#2025-10-13-rolled-out-to-most-aurora-nodes), with a `legacy` queue retaining the old image
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.12 / rolling release 2523.12
+- **Programming environment:** PE 25.190.0 with oneAPI 2025.2.0
+- **First available:** [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Revised:** [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4), AuroraSDK 25.190.0 RC4 in `next-eval`
+- **Rolled out to most nodes:** [2025-10-13](#2025-10-13-rolled-out-to-most-aurora-nodes), with a `legacy` queue retaining the old image
+///
 
 ### 2025-10-13: Rolled out to most Aurora nodes
 
@@ -188,7 +341,7 @@ We have a **temporary** test queue `next-eval` (open to all users) with 2,688 no
 
 The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0.
 
-Details of the full change log are below (**`next-eval` test queue only**):
+Details of the full changelog are below (**`next-eval` test queue only**):
 
 #### OS image: compute_aurora_test_20250905T165210_95b26e6
 
@@ -294,17 +447,19 @@ However, with our current approach due to limitations in cgroup-based enforcemen
 
 This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1, Reducing our ability to protect system services and prevent node-wide panics triggered by OOMs.
 
-## Major update: Agama 1099.12 drivers and oneAPI 2025.0.5 (2025-04-28)
+## Major update: Agama 1099.12 drivers and oneAPI 2025.0.5 (2025-04-28) { #major-update-2025-04 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the significant changes resulting from this PM, users will need to recompile applications.
+Due to the significant changes resulting from this PM, users will need to recompile applications.
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1099.12 / rolling release 2507.12
-    - **Programming environment:** PE 24.347.0 with oneAPI 2025.0.5
-    - **Rolled out to all nodes:** 2025-04-28, during the preventive maintenance
+- **Intel GPU drivers (KMD/UMD):** Agama 1099.12 / rolling release 2507.12
+- **Programming environment:** PE 24.347.0 with oneAPI 2025.0.5
+- **Rolled out to all nodes:** 2025-04-28, during the preventive maintenance
+///
 
 ### OS image
 
@@ -386,49 +541,53 @@ One important note is that **Kokkos Kernels fails to compile** in this SDK. If t
 
 The full list of regressions and fixes is below. If you see any new issues with this compute image, let us know.
 
-??? failure "List of regressions"
+/// details | List of regressions
+    type: failure
 
-    - source/reproducers/openmp/simd_loops [CMPLRLLVM-38420] P0
-    - source/reproducers/ifx/CMPLRLLVM-35621
-    - source/reproducers/ifx/XDEPS-5191:XDEPS-5191_simd
-    - source/reproducers/ifx/phasta_target_simd [CMPLRLLVM-35621,CMPLRLLVM-40195,CMPLRLLVM-52024,GSD-6634] P0
-    - source/reproducers/icx/assert_problem [CMPLRLLVM-62420]
-    - source/reproducers/dpcpp/catch2_segfault:catch2_segfault_all_at_once_ath_run [CMPLRLLVM-40048,GSD-10857] P0
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_amazon0302_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_europe_osm_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_wb-edu_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/openmp/simd_loops [CMPLRLLVM-38420] P0
+- source/reproducers/ifx/CMPLRLLVM-35621
+- source/reproducers/ifx/XDEPS-5191:XDEPS-5191_simd
+- source/reproducers/ifx/phasta_target_simd [CMPLRLLVM-35621,CMPLRLLVM-40195,CMPLRLLVM-52024,GSD-6634] P0
+- source/reproducers/icx/assert_problem [CMPLRLLVM-62420]
+- source/reproducers/dpcpp/catch2_segfault:catch2_segfault_all_at_once_ath_run [CMPLRLLVM-40048,GSD-10857] P0
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_amazon0302_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_europe_osm_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_wb-edu_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+///
 
-??? success "List of fixes"
+/// details | List of fixes
+    type: success
 
-    - source/reproducers/dpcpp/FMM [CMPLRLLVM-28325] P0
-    - source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_compile [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
-    - source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_run [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
-    - source/reproducers/dpcpp/device_copyable_dpl [CMPLRLLVM-57788,CMPLRLLVM-58384]
-    - source/reproducers/dpcpp/hang_inline_workgroup:hang_inline_workgroup_ath_run [CMPLRLLVM-47914,CMPLRLLVM-54117]
-    - source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_shared_jit_main [CMPLRLLVM-41597]
-    - source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_static_jit_main [CMPLRLLVM-41597]
-    - source/reproducers/dpcpp/madgraph4gpu-SYCL-gg_ttggg-nocompile:madgraph4gpu-SYCL-gg_ttggg-nocompile_gg-ttggg_ath_compile [CMPLRLLVM-35981,XDEPS-3923] P0
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_opcode [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_operand_syntax [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_duplicate_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_illegal_exec_size [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_region [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_simple [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_decl [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_pred [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_wrong_declare [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/sincos source/reproducers/dpcpp_ct/binary [OTFIP-248]
-    - source/reproducers/dpcpp_ct/segfault_build source/reproducers/dpcpp_ct/vector_trans [OTFIP-449]
-    - source/reproducers/hybrid/oneConcurency:oneConcurency_omp_nowait_ath_run [CMPLRLLVM-34779,CMPLRLLVM-38250,CMPLRLLVM-40729,XDEPS-2202,XDEPS-3493,XDEPS-5689,CMPLRLIBS-35258] P0
-    - source/reproducers/icx/global_bool_isoc_binding:global_bool_isoc_binding_read [CMPLRLLVM-57643,CMPLRLLVM-57935]
-    - source/reproducers/ifx/bgw_compare_wfns P0 source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_four [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_one [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_three [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_two [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/mkl/fft2d_scale [MKLD-13250] source/reproducers/mkl/slow_batch_getrs [MKLD-15079]
-    - source/reproducers/mkl/zgetrs_batch_slowdown [MKLD-15212,MKLD-15906,MKLD-16680]
-    - source/reproducers/openmp/ddpp_gamess_mini_wrong_answer_fp_precise [CMPLRLLVM-45082,GSD-7772]
-    - source/reproducers/openmp/oneapi_device_selector_test:oneapi_device_selector_test_ath_run [CMPLRLLVM-60986]
-    - source/reproducers/openmp/performance_increading_kernels source/reproducers/openmp/workshare_performance [CMPLRLLVM-43487]
-    - source/reproducers/tools/advisor_length [ADV-10315]
+- source/reproducers/dpcpp/FMM [CMPLRLLVM-28325] P0
+- source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_compile [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
+- source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_run [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
+- source/reproducers/dpcpp/device_copyable_dpl [CMPLRLLVM-57788,CMPLRLLVM-58384]
+- source/reproducers/dpcpp/hang_inline_workgroup:hang_inline_workgroup_ath_run [CMPLRLLVM-47914,CMPLRLLVM-54117]
+- source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_shared_jit_main [CMPLRLLVM-41597]
+- source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_static_jit_main [CMPLRLLVM-41597]
+- source/reproducers/dpcpp/madgraph4gpu-SYCL-gg_ttggg-nocompile:madgraph4gpu-SYCL-gg_ttggg-nocompile_gg-ttggg_ath_compile [CMPLRLLVM-35981,XDEPS-3923] P0
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_opcode [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_operand_syntax [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_duplicate_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_illegal_exec_size [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_region [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_simple [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_decl [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_pred [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_wrong_declare [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/sincos source/reproducers/dpcpp_ct/binary [OTFIP-248]
+- source/reproducers/dpcpp_ct/segfault_build source/reproducers/dpcpp_ct/vector_trans [OTFIP-449]
+- source/reproducers/hybrid/oneConcurency:oneConcurency_omp_nowait_ath_run [CMPLRLLVM-34779,CMPLRLLVM-38250,CMPLRLLVM-40729,XDEPS-2202,XDEPS-3493,XDEPS-5689,CMPLRLIBS-35258] P0
+- source/reproducers/icx/global_bool_isoc_binding:global_bool_isoc_binding_read [CMPLRLLVM-57643,CMPLRLLVM-57935]
+- source/reproducers/ifx/bgw_compare_wfns P0 source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_four [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_one [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_three [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_two [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/mkl/fft2d_scale [MKLD-13250] source/reproducers/mkl/slow_batch_getrs [MKLD-15079]
+- source/reproducers/mkl/zgetrs_batch_slowdown [MKLD-15212,MKLD-15906,MKLD-16680]
+- source/reproducers/openmp/ddpp_gamess_mini_wrong_answer_fp_precise [CMPLRLLVM-45082,GSD-7772]
+- source/reproducers/openmp/oneapi_device_selector_test:oneapi_device_selector_test_ath_run [CMPLRLLVM-60986]
+- source/reproducers/openmp/performance_increading_kernels source/reproducers/openmp/workshare_performance [CMPLRLLVM-43487]
+- source/reproducers/tools/advisor_length [ADV-10315]
+///

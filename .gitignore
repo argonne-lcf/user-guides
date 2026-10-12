@@ -8,3 +8,5 @@ venv/
 inbound-links.md
 pyproject.toml
 uv.lock
+.cache/
+__pycache__/

@@ -1,8 +1,14 @@
+---
+tags:
+  - File Systems
+---
+
 # DAOS
 
-DAOS is a major file system on Aurora, with 230 PB and up to >30 TB/s from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.
+DAOS is a major file system on Aurora, with an aggregate of 230 PB and over 30 TB/s write bandwidth (read bandwidth is slightly higher) from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.  DAOS is currently in a stability testing pre-production period but in its production configuration with 800 out of the total 1024 nodes with approximately 200 PB of storage available to users at a peak write bandwidth of over 24 TB/s.  Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](../../data-management/lustre/flare.md). There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
 This guide covers:
+
 - DAOS pool allocation and container setup
 - POSIX/DFS/MPI-IO access modes
 - Job submission and performance guidance
@@ -23,8 +29,6 @@ Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to request a DAOS pool
 - Justification
 - Preferred pool name
 
-This is an initial test DAOS configuration, and as such, any data on the DAOS system will eventually be deleted when the configuration is changed into a larger system. Warning will be given before the system is wiped to allow time for users to move any important data off.
-
 ## Modules
 
 Load the `daos` module when using DAOS. This can be done on the login node (UAN) or in the compute node job script:
@@ -39,23 +43,30 @@ module load daos
 A pool is a dedicated space allocated to your project. Once your pool has been allocated for your project space, confirm that you are able to query the pool:
 
 ```bash linenums="1"
-DAOS_POOL=<YOUR_PROJECT_NAME>
+DAOS_POOL=<project>
 daos pool query ${DAOS_POOL}
 ```
 
-```output title="Example output:"
-daos pool query hacc
-Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
+``` { .output .no-copy title="Example output:" }
+daos pool query alcf-ci-cd-tests
+Pool 383810e7-28b3-490d-8363-b5866908e8bb, ntarget=25600, disabled=0, leader=425, version=545, state=Ready
+Pool health info:
+- Rebuild done, 134 objs, 0 recs
 Pool space info:
-- Target(VOS) count:640
+- Target(VOS) count:25600
 - Storage tier 0 (SCM):
-Total size: 6.0 TB
-  Free: 4.4 TB, min:6.5 GB, max:7.0 GB, mean:6.9 GB
+  Total size: 173 TB
+  Free: 152 TB, min:5.9 GB, max:6.1 GB, mean:5.9 GB
 - Storage tier 1 (NVMe):
-  Total size: 200 TB
-  Free: 194 TB, min:244 GB, max:308 GB, mean:303 GB
-Rebuild done, 4 objs, 0 recs
+  Total size: 5.6 PB
+  Free: 5.6 PB, min:217 GB, max:218 GB, mean:218 GB
 ```
+
+Here are some notes on the output from the pool query.  There are 2 targets on each of 16 SSDs on a node, which makes 32 targets per node, the `Target(VOS) count` and `ntarget` is the total number of targets your pool is striped across, divided by 32 to get the number of nodes - the above example pool is a test pool striped across all 800 nodes, but your actual user pool will be a subset of the 800 nodes loosely correlated with the size.  The `Total size` for the SCM (persistent memory DIMMs which store metadata and small I/O) and NVMe storage tiers is the storage aggregate spread evenly across the targets.  `Free` is the amount of storage aggregate across the targets that is unallocated, but the `min`, `max`, and `mean` is relative to individual targets - ideally these 3 metrics should be relatively close, major deviations indicate imbalance that could result in `out of space` type errors in which case you should email support.  `Rebuild` is the current status of the rebuild, which is a process of redistributing data within the pool for redundancy usually as a result of the loss of an NVMe - `done` indicates no rebuild is currently running, `busy` indicates a rebuild is currently running and your performance will be severely degraded until the rebuild finishes.
+
+## Realized Write Bandwidth
+
+The actual write bandwidth your application will realize is directly related to the number of DAOS servers in your pool, running on an adequate number of compute nodes to drive the storage traffic, the redundancy factor (RF) of your container and any other concurrent storage traffic.  The peak write bandwidth of 24 TB/s is for a pool spanning all 800 servers and a container with RF0 with no other storage traffic, which is roughly 30 GB/s per server.  The recommended redundancy factor for a container is RF3 (described later in this guide) which carries significant performance overhead, equating to about 21 GB/s per server.  So for a container at RF3 in a pool spanning say 400 servers your application would only get slightly over 8 TB/s peak write bandwidth assuming no other storage traffic.
 
 ## POSIX Containers
 
@@ -118,8 +129,8 @@ daos cont list ${DAOS_POOL}
 The `-l filesystems=daos_user_fs` PBS resource requirement will ensure that DAOS is accessible on the compute nodes.
 
 ```bash linenums="1"
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
-qsub -l select=1 -l walltime=01:00:00 -A <ProjectName> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
+qsub -l select=1 -l walltime=01:00:00 -A <project> -k doe -l filesystems=flare              -q debug ./pbs_script1.sh # Job submission without requesting DAOS:
+qsub -l select=1 -l walltime=01:00:00 -A <project> -k doe -l filesystems=flare:daos_user_fs -q debug ./pbs_script1.sh # Job submission with DAOS:
 ```
 
 ## Interception Library for POSIX Containers
@@ -137,11 +148,11 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 
 ```bash linenums="1"
 #!/bin/bash -x
-# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <ProjectName> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh
+# qsub -l select=512:ncpus=208 -l walltime=01:00:00 -A <project> -l filesystems=flare:daos_user_fs -q prod ./pbs_script.sh
 # or: qsub -I ...
 #PBS -l select=512
 #PBS -l walltime=01:00:00
-#PBS -A <ProjectName>
+#PBS -A <project>
 #PBS -q prod
 #PBS -k doe
 #PBS -l filesystems=flare:daos_user_fs
@@ -174,7 +185,7 @@ clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on a compute node
 
 ## MPI-IO Container Access
 
-MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.0/user/mpi-io/>
+MPI-IO is a common backend for many I/O libraries, including HDF5 and PNetCDF. You should be able to directly use MPI-IO with DAOS: <https://docs.daos.io/v2.6/user/mpi-io/>
 
 To optimally enable collective buffering, create a file with the following contents:
 
@@ -190,7 +201,7 @@ striping_unit 2097152
 
 Then set the following environment variables at runtime to point to the file:
 ```bash linenums="1"
-export ROMIO_HINTS=<path to hints file>
+export ROMIO_HINTS=<path>
 export ROMIO_PRINT_HINTS=1 # If you want to verify the settings
 ```
 
@@ -327,21 +338,10 @@ Follow these notes to install your own Darshan tool under your user space [here]
 
 ### 1. Darshan
 
-On Aurora, Darshan has been built in the programming environment in `/soft`.
-
-To get the Darshan parser utilities loaded into your programming environment, execute the following:
+On Aurora, Darshan has been modularized in the programming environment.  In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, and must precede any DAOS interception library. So this specification would be:
 
 ```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-```
-
-In order to instrument your application and generate a Darshan binary log file, the shared library must be manually preloaded at run time via `LD_PRELOAD` passed as an environment variable to `mpiexec`, along with PNetCDF and HDF5 shared libraries (since support for those I/O libraries is included), and all 3 must precede any DAOS interception library. So the final specification would be:
-
-```bash linenums="1"
-LD_PRELOAD=/soft/perftools/darshan/darshan-3.4.7/lib/libdarshan.so:\
-            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/hdf5-1.14.6-zkruqq7/lib/libhdf5.so:\
-            /opt/aurora/25.190.0/spack/unified/0.10.1/install/linux-sles15-x86_64/oneapi-2025.2.0/parallel-netcdf-1.12.3-qfkwxue/lib/libpnetcdf.so:\
+LD_PRELOAD=/opt/aurora/26.181.0/spack/unified/1.1.1/install/linux-x86_64/darshan-runtime-3.5.0-tfnhlei/lib/libdarshan.so:\
             /usr/lib64/libpil4dfs.so
 ```
 
@@ -355,13 +355,13 @@ Run your application normally with `mpiexec` or `mpirun`.
 
 This generates a binary log file which has two additional modules: DFS for the DAOS file system API layer, and DAOS for the underlying object store.
 
-By default, the binary log file is stored here:
+By default, the binary log file is stored using a timestamp in the file name in your `$HOME` directory.  To specify another directory in which to store the binary log file set this environment variable at run time:
 
-```bash linenums="1"
-/lus/flare/logs/darshan/aurora/YYYY/M/D
+```bash
+export DARSHAN_LOG_DIR_PATH=<full path to binary file directory>
 ```
 
-where the last 3 directories are the date the file is generated, with your user ID, job ID, and timestamp in the file name. Alternatively, at run time, you can specify the file name and save it in a different location with the following environment variable:
+Alternatively, you can specify the exact file name with the following environment variable:
 
 ```bash
 export DARSHAN_LOGFILE=<full path to binary file name>
@@ -391,14 +391,14 @@ source bin/activate
 
 ### `darshan-parser` utility
 
-`darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`:
+`darshan-parser` can be used on the binary log file to get text output of all raw counters, which is more detailed than the Python summary `.html`.  To get the Darshan parser utility loaded into your programming environment and run it, execute the following:
 
 ```bash linenums="1"
-module use /soft/perftools/darshan/darshan-3.4.7/share/craype-2.x/modulefiles
-module load darshan
-darshan-parser /lus/flare/logs/darshan/aurora/2025/5/21/myfile.darshan > out.txt
+module load darshan-util
+darshan-parser <binary log file name> > out.txt
 ```
 
+<!--
 ## Cluster Size
 
 DAOS cluster size is the number of available DAOS servers. While we are working toward bringing up all 1024 DAOS servers for users, different numbers of DAOS nodes may be up at any given time. Please check with support or run an IOR test to estimate the current number of DAOS servers available. The bandwidth in the last column below is theoretical peak bandwidth.
@@ -414,9 +414,11 @@ DAOS cluster size is the number of available DAOS servers. While we are working 
 | 1024 |    100%    |  30 TB/s  |
 
 The size of your current DAOS cluster can be found using the following formula:
-```text
-daos_cluster_size = ntarget / targets_per_node
-```
+
+$$
+\text{DAOS cluster size} = \frac{\texttt{ntarget}}{\texttt{targets_per_node}}
+$$
+
 The value of `ntarget` comes from the output of:
 ```bash linenums="1"
 daos pool query ${DAOS_POOL}
@@ -429,11 +431,11 @@ An example:
 Pool 050b20a3-3fcc-499b-a6cf-07d4b80b04fd, ntarget=4096, disabled=0, leader=2, version=131
 ```
 So the DAOS cluster size is:
-```text
-4096 targets / 32 targets per node 
- = 128 daos servers
-```
 
+$$
+\frac{4096\ \text{targets}}{32\ \text{targets per node}} = 128\ \text{DAOS servers}
+$$
+-->
 
 ## DAOS Hardware and Aurora Architecture
 
@@ -656,10 +658,11 @@ More information: <https://docs.daos.io/v2.6/user/container/#ownership>
 
 ```bash linenums="1"
 daos container get-prop DAOS_POOL DAOS_CONT                   # provides the details on the current ACLs
-daos cont update-acl -e "A::pkcoff@:rw" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
+daos cont update-acl -e "A::pkcoff@:rwta" DAOS_POOL DAOS_CONT   # add the username to whom you want to share the container with
 daos cont update-acl -e "A:G:users@:rwta" DAOS_POOL DAOS_CONT # alternatively you can update the acl for the group instead of a user.
 daos container get-prop DAOS_POOL DAOS_CONT                   # verify the updated ACLs
-groups                                                        # to check if the users are in the same group name 
+groups                                                        # to check if the users are in the same group name
+chmod 0775 /tmp/${DAOS_POOL}/${DAOS_CONT}   # give adequate linux permission to base directory
 chmod -R 775 /tmp/${DAOS_POOL}/${DAOS_CONT}/shared-dir            # provide the right chmod settings on the directory where they can read or write
 kaushikvelusamy@x4405c0s0b0n0:> daos container get-prop d9cbdfc4-628b-4ec1-ad01-0b506e4fb3c0 ba1d5b48-4a88-4052-b764-729328a0dac3 # POOLUUID CONTUUID
 Properties for container ba1d5b48-4a88-4052-b764-729328a0dac3
@@ -679,6 +682,7 @@ users
 ### Large Bulk I/O Write Issue
 
 There is a known Python issue with `pil4dfs`.
+
 - Fix provided in DAOS-17499 
 - Current workaround is to set the `D_IL_COMPATIBLE=1` environment variable.
 - You can skip `pil4dfs` for now if that happens.

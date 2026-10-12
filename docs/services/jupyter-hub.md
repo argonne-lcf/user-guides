@@ -75,11 +75,12 @@ until the predetermined runtime concludes.
 Job queued
 ///
 
-!!! warning
+/// warning
 
-    If you would like to change your selection about where to run the Jupyter
-    instance after the Notebook has started, you need to stop the server to be able
-    to see the drop-down menu again.
+If you would like to change your selection about where to run the Jupyter
+instance after the Notebook has started, you need to stop the server to be able
+to see the drop-down menu again.
+///
 
 ## Known Issues
 
@@ -107,7 +108,8 @@ through
 or
 [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).
 
-More information on creating custom Python environments can be found in our
+More information on creating custom Python environments can be found in
+[Python Environments](../dev-environment/python-environments.md) and the machine-specific
 documentation for [Polaris](../polaris/data-science/python.md).
 
 After activating the custom environment, the `ipykernel` package needs to be

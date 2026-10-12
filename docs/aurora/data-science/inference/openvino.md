@@ -60,19 +60,22 @@ benchmark_app -m resnet50.xml -hint latency -d GPU.0 -data_shape [1,3,224,224]
 
 which returns a series of information on the parameters set for the benchmark tests and the performance of the tests. The last few lines of the output are shown below.
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-  ``` { .bash .no-copy }
-  [ INFO ] Execution Devices:['GPU.0']
-  [ INFO ] Count:            69857 iterations
-  [ INFO ] Duration:         60000.78 ms
-  [ INFO ] Latency:
-  [ INFO ]    Median:        0.83 ms
-  [ INFO ]    Average:       0.84 ms
-  [ INFO ]    Min:           0.81 ms
-  [ INFO ]    Max:           0.87 ms
-  [ INFO ] Throughput:   1164.27 FPS
-  ```
+``` { .bash .no-copy }
+[ INFO ] Execution Devices:['GPU.0']
+[ INFO ] Count:            69857 iterations
+[ INFO ] Duration:         60000.78 ms
+[ INFO ] Latency:
+[ INFO ]    Median:        0.83 ms
+[ INFO ]    Average:       0.84 ms
+[ INFO ]    Min:           0.81 ms
+[ INFO ]    Max:           0.87 ms
+[ INFO ] Throughput:   1164.27 FPS
+```
+///
 
 Note that `benchmark_app` takes a number of additional configuration options which are listed by running `benchmark_app -h`. 
 

@@ -1,5 +1,7 @@
 # Virtual Environments
 
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
+
 ## Poplar SDK Setup
 
 The Poplar SDK is downloaded onto the graphcore systems at the `/software/graphcore/poplar_sdk/` location. The default poplar

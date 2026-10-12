@@ -1,4 +1,11 @@
+---
+tags:
+  - Python
+---
+
 # Python
+
+For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).
 
 At a future date, we will provide prebuilt `conda` environments containing CPU-optimized builds of `torch`, `tensorflow` (both with `horovod` support for multi-node calculations), `jax`, and many other commonly used Python modules.
 

@@ -49,6 +49,7 @@ Filter on name or ID. DO NOT MIX. Enter `all` to get all. Wildcards `*` are allo
 
 #### -E END, --end=END
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators OPER1 and OPER2 can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -70,6 +71,7 @@ Only inactive allocations.
 
 #### -S START, --start=START
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators OPER1 and OPER2 can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -94,6 +96,7 @@ Filter on Clusterbank reference ID.
 
 #### --created=CREATED_TIMESTAMP
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators OPER1 and OPER2 can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -118,6 +121,7 @@ Only show list info that have charges regardless of project/user relationship.
 
 #### --last-updated=LAST_UPDATED_TIMESTAMP
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators OPER1 and OPER2 can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 

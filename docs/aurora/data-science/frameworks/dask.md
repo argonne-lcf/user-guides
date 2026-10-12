@@ -106,8 +106,8 @@ Paste the following Python script into a file called `pi_dask_gpu.py`. Here is a
 
 1. It connects to the Dask cluster (that you should start beforehand) and prints some information including the number of workers and available memory.
 2. It divides the total number of points to sample between the workers, and each worker uses its GPU to
-   - generate random points uniformly inside the unit square
-   - return the number of points that are inside the unit circle
+    - generate random points uniformly inside the unit square
+    - return the number of points that are inside the unit circle
 3. When the results from the workers are ready, they are aggregated to compute Pi.
 4. A total of 5 Pi calculations are performed and timed (the very first iterations will incur initialization and warmup costs).
 5. At the end, the Dask cluster is shut down.
@@ -177,16 +177,19 @@ client.shutdown()
   python pi_dask_gpu.py
   ```
 
-???+ example "Output"
+/// details | Output
+    type: example
+    open: True
 
-    ``` { .bash .no-copy }
-	<Client: 'tcp://10.168.0.10:8786' processes=6 threads=204, memory=1.00 TiB>
-	Run 0           Num samples: 1.04E+10           Estimate: 3.141653798           Time taken: 1.596 s
-	Run 1           Num samples: 1.04E+10           Estimate: 3.141570887           Time taken: 1.354 s
-	Run 2           Num samples: 1.04E+10           Estimate: 3.141651954           Time taken: 1.451 s
-	Run 3           Num samples: 1.04E+10           Estimate: 3.141636617           Time taken: 0.518 s
-	Run 4           Num samples: 1.04E+10           Estimate: 3.141650108           Time taken: 0.511 s
-	```
+``` { .bash .no-copy }
+<Client: 'tcp://10.168.0.10:8786' processes=6 threads=204, memory=1.00 TiB>
+Run 0           Num samples: 1.04E+10           Estimate: 3.141653798           Time taken: 1.596 s
+Run 1           Num samples: 1.04E+10           Estimate: 3.141570887           Time taken: 1.354 s
+Run 2           Num samples: 1.04E+10           Estimate: 3.141651954           Time taken: 1.451 s
+Run 3           Num samples: 1.04E+10           Estimate: 3.141636617           Time taken: 0.518 s
+Run 4           Num samples: 1.04E+10           Estimate: 3.141650108           Time taken: 0.511 s
+```
+///
 
 ## Connect to a Dask cluster from JupyterLab
 
@@ -198,9 +201,10 @@ Here are the steps to start a Dask cluster and connect to it interactively from 
   ```bash
   ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 YOUR_ALCF_USERNAME@aurora.alcf.anl.gov ssh -t -L 23456:localhost:23456 -L 8787:localhost:8787 COMPUTE_NODE
   ```
-!!! failure 
-    
-	If you have issues with the above sequence of `ssh` commands, check [this page](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/issues/56) for troubleshooting.
+/// failure
+
+If you have issues with the above sequence of `ssh` commands, check [this page](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/issues/56) for troubleshooting.
+///
 	
 - **On the compute node** where you land with the above ssh command, start JupyterLab:
   ```bash linenums="1"

@@ -1,77 +1,100 @@
+---
+tags:
+  - CFD
+---
+
 # nekRS
 
 ## Overview
 
+<!-- --8<-- [start:overview] -->
 nekRS is a fast and scalable computational fluid dynamics (CFD) software package targeting massively parallel computers. It is based on the high-order spectral element method and is capable of solving incompressible and low Mach-number fluid flow problems. 
 nekRS uses the [OCCA](https://github.com/libocca/occa) portability layer for offloading compute kernels to GPU devices.
+<!-- --8<-- [end:overview] -->
 
-For details about the code and its usage, see the [nekRS](https://github.com/Nek5000/nekRS/blob/master/README.md) home page. This page provides information specific to running on Polaris at the ALCF.
+For details about the code and its usage, see the [nekRS](https://github.com/Nek5000/nekRS/blob/master/README.md) home page. This page provides information specific to running on Polaris at the ALCF. For Aurora, see [nekRS on Aurora](../../../aurora/applications-and-libraries/applications/nekrs.md).
 
 ## Using nekRS at ALCF
 
+<!-- --8<-- [start:using] -->
 ALCF provides assistance with build instructions, compiling executables, submitting jobs, and providing prebuilt binaries (upon request). For questions, contact us at <support@alcf.anl.gov>.
+<!-- --8<-- [end:using] -->
 
 ## How to Obtain the Code
 
-nekRS is an open-source code and can be downloaded from the [website](https://github.com/Nek5000/nekRS/archive/refs/tags/v24.0.tar.gz). Alternatively, the user can clone from the [nekRS GitHub](https://github.com/Nek5000/nekRS/tree/master) repository. We recommend using the [next](https://github.com/Nek5000/nekRS/tree/next) branch since it is the most updated branch with some of the latest features, including the in-situ visualization capability. 
+<!-- --8<-- [start:obtain] -->
+nekRS is an open-source code developed in the [Nek5000/nekRS](https://github.com/Nek5000/nekRS) GitHub repository. ALCF maintains a version of nekRS with build scripts for ALCF systems in the [argonne-cps/nekRS_alcf](https://github.com/argonne-cps/nekRS_alcf) repository, and the instructions on this page are based on the `v26` branch of that repository:
 
 ```bash linenums="1"
-git clone https://github.com/Nek5000/nekRS.git
-git checkout next
+git clone https://github.com/argonne-cps/nekRS_alcf.git
+cd nekRS_alcf
+git checkout v26
 ```
-The rest of this documentation is based on building and running using the `next` branch. Users who are interested in running the default `master` branch can contact <support@alcf.anl.gov> for additional support. 
 
-## Building on Polaris 
+We encourage users to run their simulations with the `v26` branch on both Polaris and Aurora. If you have difficulty using it or need a different version of nekRS, contact <support@alcf.anl.gov>.
+<!-- --8<-- [end:obtain] -->
 
-nekRS uses CMake to build and install the software package. After nekRS has been downloaded or cloned on an ALCF filesystem, users should see a directory with the name `nekRS`. Inside this directory, the user will find a file named `nrsconfig` that can be used to configure and customize the CMake build options.
-The user should remove previous build and installation directories whenever there is an update.
+## Building on Polaris
 
-### Building using GNU compilers
-The following modules are to be loaded for this particular build.
+nekRS uses CMake to build and install the software package. The `BuildMe.Polaris` script at the top level of the repository loads the required modules, then configures, builds, and installs nekRS:
+
+```bash linenums="1"
+./BuildMe.Polaris
+```
+
+<!-- --8<-- [start:build] -->
+The script builds in a directory named `RBK_built.on.<date>` inside the repository (with a symbolic link `current` pointing to it) and installs nekRS to `.local/nekrs` in the directory **one level above** the repository. For example, if the repository was cloned into `$HOME/nekRS_alcf`, nekRS is installed in `$HOME/.local/nekrs`. Edit `NEKRS_HOME` in the script to install elsewhere.
+
+/// tip | Build on a compute node
+
+The build (hypre, OCCA, Nek5000, and nekRS) is sizable. The per-user limits on the login nodes can cause the build to fail or run slowly, so we recommend building within an interactive job on a compute node, for example in the `debug` queue.
+///
+<!-- --8<-- [end:build] -->
+
+The script uses the following modules, which must also be loaded when running nekRS (see the job script below):
+
 ```bash linenums="1"
 module restore
-module load craype-accel-nvidia80
-module swap PrgEnv-nvidia PrgEnv-gnu
-
 module use /soft/modulefiles
-module load cudatoolkit-standalone/12.4.0
-
+module swap PrgEnv-nvidia PrgEnv-gnu
+module unload darshan
+module load cuda/13.0
+module load craype-x86-milan craype-accel-nvidia80
 module load spack-pe-base cmake
 ```
 
-To build and install the code, run:
-```bash linenums="1"
-CC=cc CXX=CC FC=ftn ./build.sh -DCMAKE_INSTALL_PREFIX=/path/to/installation/directory
-```
-During the installation process, you will be prompted to verify the configuration options. If everything was done correctly, you should see the correct compilers and the `Default backend : CUDA` in the `Summary` section of the output. If you see this, press `Enter` to continue with the build and installation process.
+The `cuda/13.0` module must be loaded before `craype-accel-nvidia80`; the latter does not load without it, and the `cudatoolkit-standalone` modules do not satisfy this requirement. `craype-accel-nvidia80` is needed for the compiler wrappers (`cc`, `CC`, `ftn`) to link the Cray MPICH GPU Transport Layer (GTL) library used for GPU-aware MPI.
 
-After installation, execute the following commands to set up the environment. 
+If the configuration step was successful, the `Summary` section of the CMake output shows the Cray compiler wrappers and `Default backend : CUDA`. After installation, set up the environment:
+
+<!-- --8<-- [start:env] -->
 ```bash linenums="1"
 export NEKRS_HOME=/path/to/installation/directory
 export PATH=$NEKRS_HOME/bin:$PATH
 ```
 
 Alternatively, you may add the above lines to your `$HOME/.bashrc` and type `source $HOME/.bashrc` in the current terminal window.
+<!-- --8<-- [end:env] -->
 
-### Building using NVIDIA compilers
+/// warning | Rebuild after system software upgrades
 
-The following modules are to be loaded for this particular build. The initial `module restore` is just setting the default environment as the starting point.
-```bash linenums="1"
-module restore
-module load craype-accel-nvidia80
-
-module use /soft/modulefiles
-module load spack-pe-base cmake
-```
+<!-- --8<-- [start:conf] -->
+nekRS records the compilers and flags used at build time in `$NEKRS_HOME/nekrs.conf` and reuses them to compile kernels and case files at run time.
+<!-- --8<-- [end:conf] -->
+Installations built before the August 2026 Polaris upgrade (which removed `gcc-native/13.2` and older Cray PE releases) will not work and must be rebuilt from a clean build directory. Also delete the `.cache` directory in each case directory; see [Just-in-time (JIT) compilation](#just-in-time-jit-compilation).
+///
 
 ## Running Jobs on Polaris
 
 An example submission script for running a 2-node nekRS job is shown below as an example. Additional information on nekRS input files and application setup options is described [here](https://github.com/Nek5000/nekRS/blob/master/doc/parHelp.txt).
 The correct options to execute the script are as follows:
 
-> NEKRS_HOME= *</path/to/nekrs/install>* PROJ_ID=*<Your_Project_ID>* QUEUE=*<queue_to_submit>* ./run.sh *<casename>* *<number_of_nodes_requested>* *<walltime(hh:mm:ss)>*
+```bash
+NEKRS_HOME=<path> PROJ_ID=<project> QUEUE=<queue> ./run.sh <casename> <number_of_nodes> <walltime_hh:mm:ss>
+```
 
-Users can copy the script below into a file `run.sh` and execute it using the command above.
+Users can copy the script below into a file `run.sh`, make it executable with `chmod +x run.sh`, and execute it using the command above.
+
 ```bash linenums="1" title="run.sh"
 #!/bin/bash
 : ${PROJ_ID:=""}
@@ -156,13 +179,13 @@ echo "#PBS -j eo" >>$SFILE  #oe=merge stdout/stderr to stdout
 # job to “run” from your submission directory
 echo "cd \$PBS_O_WORKDIR" >> $SFILE
 
+echo "module restore" >> $SFILE
 echo "module use /soft/modulefiles" >> $SFILE
-echo "module use /opt/cray/pe/lmod/modulefiles/mix_compilers" >> $SFILE
-echo "module load libfabric" >> $SFILE
-echo "module load cpe-cuda" >> $SFILE
-echo "module load PrgEnv-gnu" >> $SFILE
-echo "module load nvidia-mixed" >> $SFILE
-echo "module load cmake" >> $SFILE
+echo "module swap PrgEnv-nvidia PrgEnv-gnu" >> $SFILE
+echo "module unload darshan" >> $SFILE
+echo "module load cuda/13.0" >> $SFILE
+echo "module load craype-x86-milan craype-accel-nvidia80" >> $SFILE
+echo "module load spack-pe-base cmake" >> $SFILE
 echo "module list" >> $SFILE
 
 echo "nvidia-smi" >> $SFILE
@@ -204,7 +227,13 @@ qsub -q $QUEUE $SFILE
 ```
 
 ## Just-in-time (JIT) compilation
+<!-- --8<-- [start:jit] -->
 nekRS uses the OCCA library to translate, compile, and run GPU-targeted functions and kernels. Some useful notes on the cached object files can be found [here](https://nekrsdoc.readthedocs.io/en/latest/just_in_time_compilation.html).
 
+The compiled kernels and case (`.udf`, `.usr`) objects are cached in the `.cache` directory of the case directory by default. After rebuilding or reinstalling nekRS, delete `.cache` so that stale objects built with the previous installation are not reused.
+<!-- --8<-- [end:jit] -->
+
 ## Discussion Group
+<!-- --8<-- [start:discussion] -->
 Users can visit the [GitHub Discussions](https://github.com/Nek5000/nekRS/discussions) page to seek help, find solutions, share ideas, and follow discussions on several application-specific topics.
+<!-- --8<-- [end:discussion] -->

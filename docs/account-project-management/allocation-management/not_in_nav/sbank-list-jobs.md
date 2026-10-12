@@ -57,6 +57,7 @@ Filter on name or ID. DO NOT MIX. Enter 'all' to get all. Wildcards '*' are allo
 #### -E END, --end=END
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -74,6 +75,7 @@ Abbreviate numbers and use unit suffixes: K (thousands), M (millions), G (billio
 #### -S START, --start=START
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -91,6 +93,7 @@ Transaction types: CHARGE, REFUND, PULLBACK, DEPOSIT, VOID.
 #### --created=CREATED_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -108,6 +111,7 @@ SILENT, MUCH_LESS, LESS, MORE, VERBOSE, DEBUG, DEBUG1, DEBUG2.
 #### --eligible=ELIGIBLE_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -125,6 +129,7 @@ Get only jobs that have not been charged.
 #### --last-updated=LAST_UPDATED_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 
@@ -158,6 +163,7 @@ Do not display the totals.
 #### --queued=QUEUED_TIMESTAMP
 
 `[OPER1]<UTC_DATE1>[...[OPER2]<UTC_DATE2>]`, where the operators `OPER1` and `OPER2` can be one of the following: 
+
   - `ge`, `gt`, `le`, `lt`, `eq` or `>=`, `>`, `<=`, `<`, `==`. 
   
 **Operator Defaults:** 

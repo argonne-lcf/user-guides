@@ -35,9 +35,10 @@ make install 2>&1 | tee adios2_install.log
 cd ..
 ```
 
-!!! info "Building the Python bindings"
+/// info | Building the Python bindings
 
-    The Python bindings for ADIOS2 can be built by setting `ADIOS2_USE_Python=ON`; however, this requires a Python 3 installation to be found. We recommend users load the Python AI/ML module with `module load frameworks` and build ADIOS2 under this environment. This will require users to augment their Python path with `export PYTHONPATH=$PYTHONPATH:/path/to/adios2-build/install/lib/python3.10/site-packages` in order to use the `adios2` package. Alternatively, users can use a custom Python installation, but note that ADIOS2 requires `numpy` and `mpi4py` as well.
+The Python bindings for ADIOS2 can be built by setting `ADIOS2_USE_Python=ON`; however, this requires a Python 3 installation to be found. We recommend users load the Python AI/ML module with `module load frameworks` and build ADIOS2 under this environment. This will require users to augment their Python path with `export PYTHONPATH=$PYTHONPATH:/path/to/adios2-build/install/lib/python3.10/site-packages` in order to use the `adios2` package. Alternatively, users can use a custom Python installation, but note that ADIOS2 requires `numpy` and `mpi4py` as well.
+///
 
 A full list of CMake options is available in the [documentation](https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html#install-from-source).
 
@@ -226,6 +227,7 @@ mpiexec -n $PROCS --ppn $PROCS_PER_NODE --cpu-bind list:53:54 python consumer.py
 wait
 ```
 
-!!! info "Selecting the SST Data Transport Plane"
+/// info | Selecting the SST Data Transport Plane
 
-    The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA; however, note that it requires running the applications on more than one node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
+The SST data transport plane can be selected with the parameter `DataTransport`. We recommend using RDMA; however, note that it requires running the applications on more than one node. The WAN data plane can also be used, but it may result in slower data transfer performance at scale. The MPI data plane is currently not available, but we are working on resolving the issue with the ADIOS2 team.
+///

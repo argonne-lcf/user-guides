@@ -1,3 +1,10 @@
+---
+tags:
+  - PyTorch
+  - LLMs
+  - Distributed Training
+---
+
 # Megatron-DeepSpeed
 
 [Megatron-DeepSpeed](https://github.com/argonne-lcf/Megatron-DeepSpeed) is a
@@ -27,20 +34,22 @@ In particular, it retains the core 4D parallelism[^4d] functionality of the [NVI
     ezpz_setup_env
     ```
 
-    ??? tip "\[Optional\] Setup WandB"
+    /// details | \[Optional\] Setup WandB
+        type: tip
 
-        To enable [Weights & Biases](https://wandb.ai/) (WandB) logging,
-        we need to install and login:
+    To enable [Weights & Biases](https://wandb.ai/) (WandB) logging,
+    we need to install and login:
 
-        ```bash
-        python3 -m pip install wandb --upgrade
-        wandb login
-        ```
+    ```bash
+    python3 -m pip install wandb --upgrade
+    wandb login
+    ```
 
-        > **NOTE**: WandB can be disabled by setting `export WANDB_DISABLED=1`
+    > **NOTE**: WandB can be disabled by setting `export WANDB_DISABLED=1`
 
-        See [`wandb`: Quickstart](https://docs.wandb.ai/quickstart) for
-        additional information
+    See [`wandb`: Quickstart](https://docs.wandb.ai/quickstart) for
+    additional information
+    ///
 
 
 1. Install dependencies:
@@ -73,46 +82,48 @@ In particular, it retains the core 4D parallelism[^4d] functionality of the [NVI
 
     - `DATA_FILE_LIST`: Using the [Books corpus](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/data-lists/aurora/books.txt) of the Dolma dataset
 
-    ??? info "Overridable Options"
+    /// details | Overridable Options
+        type: info
 
-        This is a simple subset of the overridable options.
+    This is a simple subset of the overridable options.
 
-        The full list (as well as their default values) can be found in [ALCF / `helpers.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/helpers.sh)
+    The full list (as well as their default values) can be found in [ALCF / `helpers.sh`](https://github.com/argonne-lcf/Megatron-DeepSpeed/blob/main/ALCF/helpers.sh)
 
-        - `DTYPE`: Data type
-        - `DATA_FILE_LIST`: Data file list
-        - `FFN_HIDDEN_SIZE`: Feedforward Neural Network projection size
-        - `GRAD_ACC_STEPS`: Gradient accumulation steps
-        - `HEADS`: Number of attention heads
-        - `HIDDEN`: Hidden size
-        - `MICRO_BATCH`: Micro batch size
-        - `NO_FLASH_ATTN`: No Flash Attention
-        - `NLAYERS`: Number of layers
-        - `NUM_KV_HEAD`: Number of key-value heads
-        - `OPT`: Optimizer
-            - `adam`
-            - `adam8bit`
-            - `adamw`
-            - `adamwschedulefree`
-            - `apex.adam`
-            - `apex.sgd`
-            - `ds.fusedlamb`
-            - `ds.onebitlamb`
-            - `galoreadamw`
-            - `galoreadamw8bit`
-            - `galoreadamw8bitperlayer`
-            - `ipex.fusedlamb`
-            - `ipex.lamb`
-            - `shampoo`
-            - `sgd`
-            - `sgdschedulefree`
-            - `sophiag`
-        - `PP`: Pipeline parallelism degree
-        - `SEQ`: Sequence length
-        - `SP`: Sequence parallelism (Ulysses) degree
-        - `TP`: Tensor parallelism degree
-        - `TRAIN_TOKENS`: Number of training tokens
-        - `TRAIN_ITERS`: Number of training iterations
-        - `USE_ACTIVATION_CHECKPOINTING`: Use activation checkpointing
-        - `WEIGHT_DECAY`: Weight decay
-        - `ZERO_STAGE`: Zero stage
+    - `DTYPE`: Data type
+    - `DATA_FILE_LIST`: Data file list
+    - `FFN_HIDDEN_SIZE`: Feedforward Neural Network projection size
+    - `GRAD_ACC_STEPS`: Gradient accumulation steps
+    - `HEADS`: Number of attention heads
+    - `HIDDEN`: Hidden size
+    - `MICRO_BATCH`: Micro batch size
+    - `NO_FLASH_ATTN`: No Flash Attention
+    - `NLAYERS`: Number of layers
+    - `NUM_KV_HEAD`: Number of key-value heads
+    - `OPT`: Optimizer
+        - `adam`
+        - `adam8bit`
+        - `adamw`
+        - `adamwschedulefree`
+        - `apex.adam`
+        - `apex.sgd`
+        - `ds.fusedlamb`
+        - `ds.onebitlamb`
+        - `galoreadamw`
+        - `galoreadamw8bit`
+        - `galoreadamw8bitperlayer`
+        - `ipex.fusedlamb`
+        - `ipex.lamb`
+        - `shampoo`
+        - `sgd`
+        - `sgdschedulefree`
+        - `sophiag`
+    - `PP`: Pipeline parallelism degree
+    - `SEQ`: Sequence length
+    - `SP`: Sequence parallelism (Ulysses) degree
+    - `TP`: Tensor parallelism degree
+    - `TRAIN_TOKENS`: Number of training tokens
+    - `TRAIN_ITERS`: Number of training iterations
+    - `USE_ACTIVATION_CHECKPOINTING`: Use activation checkpointing
+    - `WEIGHT_DECAY`: Weight decay
+    - `ZERO_STAGE`: Zero stage
+    ///

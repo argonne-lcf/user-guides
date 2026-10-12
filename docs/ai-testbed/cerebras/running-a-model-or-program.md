@@ -1,3 +1,11 @@
+---
+keywords:
+  - model zoo
+  - cerebras model zoo
+  - wafer scale
+  - run a model
+---
+
 
 # Running a Model/Program
 
@@ -87,11 +95,6 @@ if [ -d "$MODEL_DIR" ]; then rm -Rf $MODEL_DIR; fi
 cszoo fit configs/Cerebras_GPT/111m_modified.yaml --job_labels name=gpt3_111m --model_dir $MODEL_DIR |& tee mytest.log
 ```
 
-<!---
-Previously, 
-python run.py CSX --job_labels name=gpt3_111m --params configs/Cerebras_GPT/111m_modified.yaml --num_csx=1 --mode train --model_dir $MODEL_DIR --mount_dirs /home/ /software --python_paths /home/$(whoami)/R_2.10.0/modelzoo/src --compile_dir $(whoami) |& tee mytest.log
---->
-
 A successful GPT3 (111m parameters) PyTorch training/validation run should finish with output resembling the following:
 
 ```text
@@ -130,7 +133,7 @@ See [Job Queuing and Submission](./job-queuing-and-submission.md) for more detai
 ## Checkpoints
 
 Model training can be (re-)started from a model checkpoint, if e.g. a job stops due to error, by adding `--checkpoint_path=path_to_mdl_file` to a `cszoo fit` command line.
-For example, to continue training the model above another 400 steps after it is has been trained for 400 steps, modify configs/Cerebras_GPT/111m_modified.yaml, changing the value of `max_steps` to 800
+For example, to continue training the model above another 400 steps after it has been trained for 400 steps, modify `configs/Cerebras_GPT/111m_modified.yaml`, changing the value of `max_steps` to 800
 ```yaml
       max_steps: 800
       eval_frequency: 400

@@ -5,29 +5,34 @@
 A reservation allows users to set aside a number of nodes on a system from the general pool of resources for a limited time. Only certain users or projects can submit to the queues assigned to the reservation. 
 To get a reservation, you must first demonstrate a need to run outside of the normal queueing policies. Reservations are available only to projects with a positive allocation.
 
-!!! info "Disclaimer"
+/// info | Disclaimer
 
-    A **5-business-day** lead time is recommended to ensure timely approval. Requests submitted with less than 5 business days notice will be accommodated subject to machine availability. 
+A **5-business-day** lead time is recommended to ensure timely approval. Requests submitted with less than 5 business days notice will be accommodated subject to machine availability. 
+///
 
-!!! info "Disclaimer"
+/// info | Disclaimer
 
-    Approval for reservation requests is subject to their appropriateness and machine availability. Not all requests will be approved. It is particularly difficult to accommodate reservation requests during busy times of the year, e.g., Supercomputing, end of the ALCC and INCITE allocation cycles.
+Approval for reservation requests is subject to their appropriateness and machine availability. Not all requests will be approved. It is particularly difficult to accommodate reservation requests during busy times of the year, e.g., Supercomputing, end of the ALCC and INCITE allocation cycles.
+///
 
-!!! info "Kindness Policy"
-    
-	We do monitor reservation utilization. The Scheduling Committee reserves the right to cancel reservations without notice if we decide a reservation is underutilized, not being properly utilized, or otherwise wasting resources. For instance, requesting a 12-hour reservation for interactive work, but then going to lunch leaving the reservation empty with no work.
+/// info | Kindness Policy
 
-    !!! tip "Early Completion Policy"
-    
-    	If you have finished running your jobs before your reservation has ended, please reach out to the support team ([support@alcf.anl.gov](mailto:support@alcf.anl.gov)) to release it for other users. At this time, there is no way for a user to release a reservation early.
+We do monitor reservation utilization. The Scheduling Committee reserves the right to cancel reservations without notice if we decide a reservation is underutilized, not being properly utilized, or otherwise wasting resources. For instance, requesting a 12-hour reservation for interactive work, but then going to lunch leaving the reservation empty with no work.
+
+//// tip | Early Completion Policy
+
+If you have finished running your jobs before your reservation has ended, please reach out to the support team ([support@alcf.anl.gov](mailto:support@alcf.anl.gov)) to release it for other users. At this time, there is no way for a user to release a reservation early.
+////
+///
 
 ## Score Boosts
 
 Score boosts allow jobs to move ahead in the queue, but they still allow the scheduler to more efficiently fill the machine. This is the recommended approach for workloads that still fit within the normal queuing policies.
 
-!!! info "Disclaimer"
+/// info | Disclaimer
 
-    Approval for score boosts is subject to their appropriateness. Not all requests will be approved. Please clearly explain the reason for requesting a score boost in the request form.
+Approval for score boosts is subject to their appropriateness. Not all requests will be approved. Please clearly explain the reason for requesting a score boost in the request form.
+///
 
 ## Submitting Reservation and Score Boost Requests
 
@@ -69,7 +74,8 @@ For jobs using 33 percent or more of a system, place your job in the queue at le
 
 You can also move jobs from the regular queue to the reservation queue at any time using the `qmove` command. Keep in mind that a job won't start unless enough time is left in the reservation.
 
-!!! danger
+/// danger
 
-    There is absolutely no time padding at the end of the reservation. When the reservation ends, all jobs are terminated, deleted, and the reservation queue is deleted. If a routing queue is used for the reservation, then jobs may be preserved, but any running job(s) are still terminated.
+There is absolutely no time padding at the end of the reservation. When the reservation ends, all jobs are terminated, deleted, and the reservation queue is deleted. If a routing queue is used for the reservation, then jobs may be preserved, but any running job(s) are still terminated.
+///
 

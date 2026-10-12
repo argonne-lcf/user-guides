@@ -1,4 +1,58 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Polaris System Updates
+
+<!-- ## 2026-MM-DD: `conda/2026-10-01` becomes the default module -->
+
+<!-- `conda/2026-10-01` is now the default module loaded by `module load conda` on Polaris. The previous default, `conda/2025-09-25`, remains available via `module load conda/2025-09-25`. The old module may be removed entirely in the future (advance notice will be given). Virtual environments created on top of `conda/2025-09-25` should be recreated with the new module. -->
+
+## 2026-09-24: New `conda/2026-10-01` module available
+
+Following the system upgrade in August 2026, the new `conda/2026-10-01` module is now available to users on Polaris. It is recommended that all users of `conda/2025-09-25` test their workflows with the new module now. While `conda/2025-09-25` remains the default if `module load conda` is used, the default will change in a few weeks.
+
+The new module is built from source for PE 26.03 and the CUDA 13.0 driver, and updates the following major libraries and package versions:
+
+- Python 3.13
+- PyTorch 2.14
+- TensorFlow 2.21.0
+- JAX 0.11.1
+- vLLM 0.29.0
+- DeepSpeed 0.19.7
+- TransformerEngine 2.19
+- CUDA 13.0.3
+- cuDNN 9.26.0
+- NCCL 2.30.7
+- cuSPARSELt 0.9.1.1
+- TensorRT 10.16.1
+
+Some highlights of changes relative to `conda/2025-09-25`:
+
+- FlashInfer, mamba-ssm, flash-attention, megatron-core, verl, and ezpz updated to current releases
+- `globus-compute-endpoint` and `parsl` versions match the ALCF-managed Globus Compute endpoints on Polaris
+- SGLang, xformers, onnx-tf, tensorflow-probability, and falkon are no longer included
+- `torch_scatter` and `torch_sparse` are discontinued upstream; PyTorch Geometric is provided with `pyg_lib` only
+
+/// note | Updates to older conda modules
+
+`conda/2025-09-25` and `conda/2025-09-28` have been updated to run on the upgraded system software. Users who encountered library-loading or MPI errors with these modules since August 19 should try again. Conda modules older than `conda/2025-09-25`, including `conda/2024-04-29`, are incompatible with the upgraded system and have been removed.
+///
+
+## 2026-08-19; HPCM, PE, NVIDIA driver updates
+Polaris and Eagle to be upgraded between Aug 17 - Aug 19, 2026.
+
+- Upgrade to SLES 15 SP7
+- Upgrade to HPE PE 26.03
+- Upgrade to NVIDIA driver/cuda
+  - NVIDIA driver Driver Version: 580.65.06 CUDA Version: 13.0
+  - NVIDIAN hpc_sdk 25.9 CUDA Version: 13.0
+- Upgrade to Slingshot Host stack to 14.0.1
 
 ## 2026-01-07: NVIDIA driver, SHS 13.0.0, and DKMS migration
 
@@ -19,14 +73,15 @@ Eagle:
 
 - Network Element Operating System (NEO) upgraded to 7.2-021, including software updates and hardware firmware updates
 
-!!! danger "cgroups PID limit on login nodes"
+/// danger | cgroups PID limit on login nodes
 
-    The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
+The limit is now 128 tasks (i.e., both processes and threads) per-user (across all active sessions). It will be doubled to 256 tasks in the next planned maintenance. `cat /sys/fs/cgroup/users/<username>/pids.max` returns the current limit. When a user reaches `pids.max`, the kernel rejects creation of new tasks. Existing tasks are not killed, but attempts to create additional processes or threads will fail. Typical symptoms include: application hangs or stalled launches, errors such as `pthread_create failed` or `fork: Resource temporarily unavailable`, and other unpredictable failures in software that relies on background threads.
 
-    Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
+Process and thread-heavy workload should be performed on the compute nodes, when possible. Be sure to limit parallelism of compilation on login nodes, for example via `make -j [jobs]`. Remote GUI editors like VS Code are especially susceptible to hitting this limit when multiple extensions are installed and/or AI-enabled features are employed.
 
-    A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
-    The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
+A user can query their current usage PID via `cat /sys/fs/cgroup/users/<username>/pids.current`.
+The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/<username>/pids.events`.
+///
 
 ## 2025-10-24: `conda/2025-09-25` becomes the default module
 
@@ -54,9 +109,10 @@ Some highlights of changes relative to previous versions of this module:
 - vLLM, verl, mamba-ssm, megatron-core, SGLang, uv, FlashInfer, and other packages added
 - Improved PyTorch compatibility with mpi4py and Cray MPICH
 
-!!! note
+/// note
 
-    The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
+The Anaconda defaults channel has been removed from the package manager’s list of channels. No packages in the base environment come from the defaults channel. We recommend that users avoid both re-adding defaults and installing any packages from the Anaconda distribution due to a change in their licensing model.
+///
 
 ## 2025-08-29: HPCM upgrade to SUSE 15 SP6
 
@@ -71,9 +127,10 @@ Polaris HPCM upgrade involves the following key version software changes:
 - USS 1.3.1 / PALS updates to 1.6.1
 - PBS update to 2025.2.0
 
-!!! warning "Recompile recommended"
+/// warning | Recompile recommended
 
-    The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.
+The upgrades to the OS, libfabric, and CUDA drivers represent major changes and may break compatibility with older versions. Users are strongly encouraged to recompile code to avoid issues.
+///
 
 ## 2024-09-09: XALT enabled
 
@@ -94,6 +151,7 @@ The management software on Polaris has been upgraded to HPCM 1.10. The following
          which is consistent with 2.1.2 here in April 2024. Exact version unverified
          against HPE release notes (support-portal gated) -- confirm against the April
          2024 upgrade records if the distinction ever matters. -->
+
 - NVIDIA SDK 23.9
 - NVIDIA driver version 535.154.05
 - CUDA 12.2
@@ -120,9 +178,9 @@ In addition to the system upgrades, several changes have been made to the user s
 
 Older versions of the Cray PE (older than 23.12) are deprecated as they are incompatible with the upgraded system stack and are no longer available for use.
 
-#### Datascience Anaconda Module Updates
+#### Datascience conda Module Updates
 
-We have updated the datascience Anaconda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
+We have updated the datascience conda module and built various packages and libraries with CUDA 12.4.1 to be compatible with the new Polaris NVIDIA GPU hardware driver (CUDA 12.2) and to use the latest MPI, NCCL, cuDNN, TensorRT, etc. libraries. PyTorch 2.3.0 and TensorFlow 2.16.1 are now available as part of this module.
 
 To use the new environment, type:
 ```bash linenums="1"

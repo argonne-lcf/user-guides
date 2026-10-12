@@ -1,3 +1,13 @@
+---
+keywords:
+  - cs-3
+  - cs3
+  - cerebras cs-3
+  - wse
+  - wafer scale
+  - cerebras cluster
+---
+
 # System Overview
 
 The Cerebras CS-3 is a wafer-scale deep learning accelerator comprising 900K processing cores, each providing 48KB of dedicated SRAM memory, with a total of 44GB on-chip memory. Its software platform integrates the popular machine learning framework PyTorch.

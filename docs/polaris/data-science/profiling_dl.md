@@ -88,10 +88,10 @@ NSYS_WRAPPER=${WORK_DIR}/nsys_wrapper.sh
 NNODES=`wc -l < $PBS_NODEFILE`
 NRANKS_PER_NODE=4
 
-let NRANKS=${NNODES}*${NRANKS_PER_NODE}
+NRANKS=$((NNODES * NRANKS_PER_NODE))
 
 module use /soft/modulefiles/
-module load conda/2024-04-29
+module load conda
 conda activate
 
 mpiexec -n ${NRANKS} -ppn ${NRANKS_PER_NODE} --env TMPDIR=${TEMPORARY_DIR} -l --line-buffer \

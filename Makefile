@@ -5,6 +5,11 @@ install-dev:
 	python -m pip install --upgrade wheel pip
 	pip install -r requirements.txt
 
+.PHONY: install-uv
+install-uv:
+	uv venv --clear
+	uv pip install -r requirements.txt
+
 
 .PHONY: generate-inbound-links
 generate-inbound-links:
@@ -23,6 +28,12 @@ build-docs:
 	mkdocs build --strict
 	@echo "Validating inbound links..."
 	python3 scripts/validate_inbound_links.py
+
+# Report pages without a description: front matter, or with one over 120
+# characters. Warning only; run the script with --list-missing to list the pages.
+.PHONY: check-descriptions
+check-descriptions:
+	python3 scripts/check_descriptions.py
 
 .PHONY: clean
 clean:

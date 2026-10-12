@@ -1,3 +1,13 @@
+---
+keywords:
+  - module load
+  - module avail
+  - modules
+  - lmod
+  - environment modules
+  - PE version
+---
+
 # Aurora Programming Environment
 
 ## Overview

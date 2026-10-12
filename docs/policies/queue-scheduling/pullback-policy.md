@@ -7,10 +7,12 @@ The figures outlined below represent the maximum amount that will be pulled back
 ## INCITE Pullback Policy
 
 On May 1 of the current INCITE calendar year:
+
 - If usage is less than 15%, remove up to 15% of the unused balance.
 - If usage is less than 10%, remove up to 30% of the unused balance.
 
 On September 1 of the current INCITE calendar year:
+
 - If usage is less than 50%, remove up to 33% of the unused balance.
 - If usage is less than 33%, remove up to 50% of the unused balance.
 - If usage is less than 10%, remove up to 75% of the unused balance.

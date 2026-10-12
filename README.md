@@ -3,18 +3,6 @@ Source for the documentation located at https://docs.alcf.anl.gov/
 
 ## Contributing to documentation
 
-### Python environment
-
-To build documentation locally, you need a Python environment with `mkdocs` installed.  Check that Python 3.6+ is installed:
-```bash
-python --version
-```
-e.g. `Python 3.8.3`. Then create a new virtual env to isolate the `mkdocs` installation:
-```bash
-python -m venv env
-source env/bin/activate
-```
-
 ### Git
 
 Using Git's SSH protocol. Make sure you add your SSH public key to your GitHub account:
@@ -24,11 +12,49 @@ cd user-guides
 git submodule init; git submodule update
 ```
 
-### Installing MkDocs
+### Python environment and MkDocs
 
-To install `mkdocs` in the current environment: 
+To build the documentation locally, you need a Python 3.10+ environment with `mkdocs` and the
+plugins listed in [requirements.txt](requirements.txt) installed. Use either of the two options
+below.
+
+#### Option 1: `uv` (recommended)
+
+[`uv`](https://docs.astral.sh/uv/) manages the Python interpreter and the virtual environment for
+you, and is considerably faster than `pip`. If you do not already have it:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh    # macOS/Linux
+```
+Then, from the root of the repository:
 ```bash
 cd user-guides
+uv venv                                  # creates ./.venv, downloading Python if needed
+source .venv/bin/activate
+uv pip install -r requirements.txt
+```
+Equivalently, `make install-uv` runs the `uv venv` and `uv pip install` steps for you.
+To rebuild the environment from scratch (for example, to drop packages no longer in
+`requirements.txt`), run `uv venv --clear` and reinstall.
+
+Alternatively, skip the virtual environment entirely and prefix each command with
+[`uv run`](https://docs.astral.sh/uv/guides/scripts/), which resolves the dependencies on the fly:
+```bash
+uv run --with-requirements requirements.txt make serve
+```
+These temporary environments live in uv's cache, not the repo; `uv cache prune` removes unused ones.
+
+#### Option 2: `venv` + `pip`
+
+Check that Python 3.10+ is installed:
+```bash
+python --version
+```
+e.g. `Python 3.13.5`. Then create a new virtual env to isolate the `mkdocs` installation, and
+install the dependencies into it:
+```bash
+cd user-guides
+python -m venv env
+source env/bin/activate
 make install-dev
 ```
 
@@ -43,6 +69,36 @@ GitHub Actions are used to automatically validate all changes in pull requests b
 ```
 make build-docs
 ```
+
+The `optimize` plugin (image compression) and `social` plugin (link-preview cards in `site/assets/images/social/`) run only in CI. To build with them locally, install `pngquant` and Cairo (`brew install pngquant cairo` on macOS, `apt install pngquant libcairo2` on Ubuntu) and run `CI=true mkdocs build`. On Apple Silicon, also set `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` so CairoSVG can find Cairo, and call `mkdocs` directly: macOS strips `DYLD_*` variables when running `make`.
+
+To test search changes, run `node scripts/search_test.js "query"` against a running `mkdocs serve`.
+
+### Writing math
+
+LaTeX math renders via MathJax: inline `$...$` or `\(...\)`, blocks `$$...$$` or `\[...\]`.
+Keep shell commands in backticks or code fences. A prose line with two bare `$` (e.g. `$MODEL_DIR ... /home/$(whoami)`) can be misparsed as math; escape with `\$` if needed.
+
+### Page metadata (front matter)
+
+A page can start with a YAML front-matter block:
+
+```yaml
+---
+description: "Run LLM inference with vLLM on Aurora: provided installation, memory sizing, and serving from one tile to many nodes."
+tags:
+  - LLMs
+keywords:
+  - huggingface
+---
+```
+
+* `description:` one sentence, 120 characters max. Shown in link previews and search results. `make check-descriptions` lists pages without one.
+* `tags:` only topics the page is about. Must be listed in `tags_allowed` in `mkdocs.yml`. Search weights tags heavily, so don't over-tag.
+* `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page.
+* `search:` with `boost: 2` to rank a page higher, or `exclude: true` to hide it from search.
+* Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
+* Commit front-matter-only changes separately from content edits, so they can be excluded from each page's "Last Updated" date later (#1139).
 
 ### Working on documentation
 
@@ -71,6 +127,21 @@ git merge main                     # merge the local develop into **YOURBRANCH**
 git push origin YOURBRANCH         # push the changes from local branch up to your remote branch
 ```
 * Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
+
+### Using AI tools
+
+[`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: what content edits may touch, the site's writing and formatting conventions, Markdown pitfalls, how to add or move pages, page front matter, and contributing rules. Build and theme details are in a separate section at the end. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
+
+If you use an AI tool to edit these docs:
+
+* Review the full diff yourself before committing; you're responsible for every change.
+* Check facts about ALCF systems (queue limits, hostnames, module names, paths, versions) against the live system or the staff who own it, not the tool's output or another system's page. Say in the PR how you checked them.
+* Keep each PR to one topic. Don't run sweeping "consistency" or typo passes across many pages.
+* Keep commit messages and PR descriptions concise, and edit any generated text before submitting.
+* Run `make build-docs` before opening a PR.
+* Check the "AI tools were used" box in the pull request template, and name the tools in the description.
+
+When a convention changes, update `AGENTS.md` in the same PR, and `REVIEW.md` too if reviewers should flag it.
 
 ## Inbound Links Validation
 External URLs pointing to our docs are tracked in [includes/validate-inbound-URLs.txt](includes/validate-inbound-URLs.txt) and validated during build to prevent broken links from the main ALCF site, etc. Add URLs to that file to ensure that the matching `.md` in this repository is never moved, renamed, or deleted.
