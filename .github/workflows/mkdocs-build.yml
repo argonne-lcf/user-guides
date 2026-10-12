@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .cache/plugin
-          key: mkdocs-plugins-${{ hashFiles('mkdocs.yml', 'layouts/**') }}
+          key: mkdocs-plugins-${{ hashFiles('zensical.toml', 'layouts/**') }}
           restore-keys: mkdocs-plugins-
       - name: Build docs with --strict
         run: make build-docs

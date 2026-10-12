@@ -1,47 +1,36 @@
 #!/usr/bin/env python3
 """
 Simple script to convert URLs in includes/validate-inbound-URLs.txt to relative links in docs/inbound-links.md.
-Handles redirects defined in mkdocs.yml.
+Handles redirects defined in zensical.toml.
 """
 
 import os
-import yaml
-import re
+import tomllib
 
 # Configuration
 SOURCE_FILE = "includes/validate-inbound-URLs.txt"
 TARGET_FILE = "docs/inbound-links.md"
-MKDOCS_CONFIG = "mkdocs.yml"
+CONFIG_FILE = "zensical.toml"
 BASE_URL = "https://docs.alcf.anl.gov"
 DOCS_DIR = "docs"
 
 def load_redirects():
-    """Load redirects from mkdocs.yml."""
+    """Load redirects from zensical.toml."""
     redirects = {}
     
     try:
-        with open(MKDOCS_CONFIG, 'r') as f:
-            # Read the file content
-            content = f.read()
-            
-            # Extract the redirects section using regex
-            # This is a simple approach that works for the current format
-            redirect_section = re.search(r'redirect_maps:.*?(?=\n[a-z])', content, re.DOTALL)
-            if redirect_section:
-                redirect_text = redirect_section.group(0)
-                
-                # Extract each redirect pair
-                redirect_pairs = re.findall(r"'([^']+)': '([^']+)'", redirect_text)
-                
-                for source, target in redirect_pairs:
-                    # Convert to URL paths
-                    source_path = f"/{source.replace('.md', '')}"
-                    target_path = f"/{target.replace('.md', '')}"
-                    
-                    # Add to redirects dictionary
-                    redirects[source_path] = target_path
-        
-        print(f"Loaded {len(redirects)} redirects from {MKDOCS_CONFIG}")
+        with open(CONFIG_FILE, 'rb') as f:
+            config = tomllib.load(f)
+        redirect_maps = config["project"]["plugins"]["redirects"]["redirect_maps"]
+        for source, target in redirect_maps.items():
+            # Convert to URL paths
+            source_path = f"/{source.replace('.md', '')}"
+            target_path = f"/{target.replace('.md', '')}"
+
+            # Add to redirects dictionary
+            redirects[source_path] = target_path
+
+        print(f"Loaded {len(redirects)} redirects from {CONFIG_FILE}")
     except Exception as e:
         print(f"Error loading redirects: {e}")
     

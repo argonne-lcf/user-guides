@@ -19,6 +19,7 @@ import argparse
 import os
 import re
 import sys
+import tomllib
 from collections import Counter
 from pathlib import Path
 
@@ -26,14 +27,6 @@ import yaml
 
 # Front matter at the top of a page, as MkDocs and Zensical parse it.
 FRONT_MATTER_RE = re.compile(r"^-{3}[ \t]*\n(.*?\n)(?:\.{3}|-{3})[ \t]*\n", re.DOTALL)
-
-
-class ConfigLoader(yaml.SafeLoader):
-    """SafeLoader that reads mkdocs.yml's !ENV and !!python/name tags as None."""
-
-
-ConfigLoader.add_multi_constructor("!", lambda loader, suffix, node: None)
-ConfigLoader.add_multi_constructor("tag:yaml.org,2002:python/", lambda loader, suffix, node: None)
 
 
 def nav_pages(items):
@@ -83,8 +76,8 @@ def main():
                         help="exit 1 if any page is missing a description or is over the limit")
     args = parser.parse_args()
 
-    with open("mkdocs.yml", encoding="utf-8") as f:
-        config = yaml.load(f, Loader=ConfigLoader)
+    with open("zensical.toml", "rb") as f:
+        config = tomllib.load(f)["project"]
     docs_dir = config.get("docs_dir", "docs")
 
     missing, too_long = [], []
