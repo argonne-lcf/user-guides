@@ -3,7 +3,6 @@
 mkdocs-material[imaging]>=9.7.7
 mkdocs>=1.6.1
 pymdown-extensions>=12.1
-mkdocs-video
 mkdocs-minify-plugin
 # Pinned: 1.2.3 moved to the ProperDocs fork and added a hard `properdocs`
 # dependency solely to print a promo banner on every build. 1.2.2 is
