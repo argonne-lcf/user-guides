@@ -10,8 +10,8 @@ Full documentation: [ezpz.cool](https://ezpz.cool).
 
 ## The problem it solves
 
-Moving a working PyTorch script between ALCF systems — or from ALCF to
-NERSC — normally means rewriting the parts that have nothing to do with
+Moving a working PyTorch script between ALCF systems, or from ALCF to
+NERSC, normally means rewriting the parts that have nothing to do with
 the model:
 
 | Concern | Aurora / Sunspot | Polaris / Sophia | Perlmutter |
@@ -78,22 +78,24 @@ becomes a 12-rank-per-node `mpiexec --pmi=pmix`, on Perlmutter an `srun`.
 See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
 `--auto-retry` for resubmitting around node failures.
 
-!!! example "Minimal PBS job on Aurora"
+/// example | Minimal PBS job on Aurora
 
-    ```bash linenums="1" title="job.sh"
-    #!/bin/bash -l
-    #PBS -l select=2
-    #PBS -l walltime=00:30:00
-    #PBS -q debug
-    #PBS -A <ProjectName>
-    #PBS -l filesystems=home:flare
+```bash linenums="1" title="job.sh"
+#!/bin/bash -l
+#PBS -l select=2
+#PBS -l walltime=00:30:00
+#PBS -q debug
+#PBS -A <ProjectName>
+#PBS -l filesystems=home:flare
 
-    cd "${PBS_O_WORKDIR}"
-    source <(curl -LsSf https://bit.ly/ezpz-utils)
-    ezpz_setup_env
+cd "${PBS_O_WORKDIR}"
+source <(curl -LsSf https://bit.ly/ezpz-utils)
+ezpz_setup_env
 
-    ezpz launch python3 -m ezpz.examples.test --model small
-    ```
+ezpz launch python3 -m ezpz.examples.test --model small
+```
+
+///
 
 ## Using it in your own script
 
