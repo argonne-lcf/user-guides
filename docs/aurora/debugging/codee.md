@@ -1,6 +1,6 @@
 ---
 exclude_contributors:
-  - Kyle Gerard Felker  # credited only for merging main into the PR branch (#724)
+  - Kyle Gerard Felker  # demonstrates the setting; credited only for two small review suggestions (#724)
 ---
 
 # Using Codee to analyze Fortran code for correctness and modernization 
