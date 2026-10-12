@@ -203,6 +203,7 @@ hooks:
   - hooks/compress_social_cards.py
   - hooks/tag_order.py
   - hooks/search_tuning.py
+  - hooks/creation_dates.py
 
 plugins:
   - search:
@@ -211,16 +212,15 @@ plugins:
       # "PyTorch" as "Py" + "Torch", so lowercase queries like "pytorch",
       # "tensorflow", "jupyterhub", or "sambanova" missed those pages.
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;'
-  - git-authors:
-      exclude:
-        - index.md
-        - inbound-links.md
+  # Created and Last Updated dates from git history, shown by Material's
+  # source-file partial. Needs full history (fetch-depth: 0 in CI).
+  # hooks/creation_dates.py dates moved pages from before their move.
   - git-revision-date-localized:
       type: iso_date  # default: date
       timezone: America/Chicago
-      #ignored_commits_file: .git-blame-ignore-revs
+      ignored_commits_file: .git-blame-ignore-revs
       enable_creation_date: true
-      enable_git_follow: false
+      enable_git_follow: false  # see hooks/creation_dates.py
       exclude:
         - index.md
         - inbound-links.md

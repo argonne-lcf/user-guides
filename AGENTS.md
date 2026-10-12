@@ -73,6 +73,7 @@ The site uses Python-Markdown, which differs from GitHub-flavored Markdown:
 
 - **`nav` in `mkdocs.yml` is authoritative.** Add every new page to `nav`, or to `not_in_nav` if it should be reachable only by links, or the build fails. Don't put trailing comments inside the `not_in_nav`/`exclude_docs`/`draft_docs` blocks; they break parsing.
 - **Don't move, rename, or delete pages listed in `includes/validate-inbound-URLs.txt`.** Other sites (e.g. the main ALCF website) link to them, and the build fails if they stop resolving. Other pages can move if you add an old-path-to-new-path entry under `redirect_maps` (the `redirects` plugin) in `mkdocs.yml`.
+- Move a page with `git mv`, in a commit that changes little else in it: its Created date comes from git history, which follows a rename only while the file stays 90% similar.
 - Moving a page breaks relative links to and from it, and snippet includes that point at it; `make build-docs` reports most of these.
 - **Snippets** (`--8<--`) include text from another file. Paths are relative to the repo root, not the page: `--8<-- "./docs/polaris/..."`. To include part of a Markdown file, mark the section with `<!-- --8<-- [start:name] -->` and `<!-- --8<-- [end:name] -->`. Text shared between pages should use absolute URLs rather than relative links, and keep system-specific commands out of the shared part.
 - The Aurora known-issues table comes from the `AuroraBugTracking` submodule and is updated automatically; edit it in that repository.
@@ -87,7 +88,7 @@ Front matter is a `---` YAML block at the very top of the page. A folder's `.met
 - **`keywords:`** A list of search terms readers use that the page doesn't contain, e.g. `MFA`, `vscode`, `walltime`. Not shown on the page. `hooks/search_tuning.py` indexes them with the description, weighted below titles and tags.
 - **`author:`** Don't add per-page authors; every page gets `site_author`.
 - **`search:`** `search: {exclude: true}` drops a page from search; `search: {boost: 2}` ranks it higher. Use sparingly. To check ranking, run `node scripts/search_test.js "query"` against `make serve`.
-- **Commits:** put metadata-only changes across many pages in their own commits, separate from content changes, so they don't reset every page's "Last Updated" date (#1139).
+- **Commits:** put metadata-only changes across many pages in their own commits, separate from content changes, so they don't reset every page's "Last Updated" date (#1139). Once such a commit is on `main`, add its full hash to `.git-blame-ignore-revs`, which the date plugin skips.
 
 ## Site maintenance
 
@@ -112,6 +113,7 @@ Only relevant when changing the build, theme, plugins, or CI. Content edits don'
     - `overrides/main.html` adds an `apple-touch-icon` (a 180x180 PNG of `favicon.svg` on white), which Slack shows next to the site name in link previews; it can't use the SVG favicon. Slack desktop crops every site's card to a square thumbnail; the full card appears on hover and in Slack mobile.
     - System sections set a card background in their `.meta.yml` (`social: cards_layout_options: background_image: aurora.jpg`), from `layouts/backgrounds/`, tinted ALCF blue.
 - `hooks/search_tuning.py` rewrites `site/search/search_index.json` after the build: tag weight 1000 (Material's default is 1e6), a `keywords` field (weight 300) from `description:` and `keywords:`, and a patch to the search worker that drops stop words, trims plural "s", and treats a leading `-` as part of a command-line flag. `hooks/tag_order.py` lists system tags first.
+- Each page's Created and Last Updated dates come from git history (`git-revision-date-localized`, rendered by Material's `partials/source-file.html`), so every workflow that builds the site checks out with `fetch-depth: 0`; a shallow clone dates every page from the clone. Commits listed in `.git-blame-ignore-revs` don't count as updates. The plugin's rename following (`enable_git_follow`) is off, because its creation-date query finds nothing for some pages and fails `--strict`; `hooks/creation_dates.py` instead dates moved pages from the oldest commit of `git log --follow -M90%`. The hook calls the plugin's internal date formatting, so the plugin is pinned; check the hook when upgrading it. Zensical ignores the plugin until it implements it (zensical/backlog#18), and runs no hooks.
 - `overrides/fragments/tags/default/listing.html` shows each page's sidebar section on the Tags page, since titles repeat across systems.
 - Instant previews are opt-in: `navigation.instant.preview` stays off (it previews every internal link), and `material.extensions.preview` lists the target pages.
 - `minify` keeps attribute quotes (`htmlmin_opts: remove_optional_attribute_quotes: false`). htmlmin otherwise strips them from the social meta tags, and WhatsApp ignores an unquoted `og:image`.

@@ -78,6 +78,7 @@ jobs:
         with:
           submodules: recursive
           persist-credentials: false
+          fetch-depth: 0  # git-revision-date-localized dates pages from history
       - name: Install uv
         uses: astral-sh/setup-uv@v10.2.0
         with:
