@@ -220,6 +220,7 @@ plugins:
       timezone: America/Chicago
       #ignored_commits_file: .git-blame-ignore-revs
       enable_creation_date: true
+      enable_git_follow: false
       exclude:
         - index.md
         - inbound-links.md
