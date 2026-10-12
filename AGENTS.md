@@ -50,7 +50,7 @@ Preview with `make serve`, not a Markdown preview in an editor or on GitHub: thi
     - keys: `++ctrl+c++`.
 - **Raw HTML** only where Markdown has no equivalent, such as a `<br>` inside a table cell or an `<iframe>` embed. Use a blank line instead of `<br>` and `**bold**` instead of `<strong>`. Don't add `<a name>` anchors: link to the automatic heading ID, or if you need a fixed ID, use `## Heading {#id}` (`attr_list`). Note that `{#id}` replaces the automatic ID, so existing links to it break.
 - **Headings:** exactly one `# H1` per page, matching its purpose; don't skip levels (`##` then `####`), or the table of contents breaks. A system's overview page (its `index.md`) is titled "`<System>` Machine Overview".
-- **Names:** write product and system names as their owners do: Aurora, Polaris, PBS, TensorFlow, PyTorch, oneAPI, conda/Miniforge (don't recommend Anaconda). Sidebar labels in `nav` use Title Case.
+- **Names:** write product and system names as their owners do: Aurora, Polaris, PBS, Slurm, TensorFlow, PyTorch, oneAPI, conda/Miniforge (don't recommend Anaconda). Sidebar labels in `nav` use Title Case.
 - **Links:** link to other pages with relative paths to the `.md` file (`../running-jobs/index.md#section`), not `docs.alcf.anl.gov` URLs; MkDocs checks relative links at build time. Use descriptive link text, not "here".
 - **Images:** Markdown `![alt text](path)` with meaningful alt text, stored in the nearest existing `images/` folder (e.g. `docs/aurora/images/`, `docs/images/`) or next to the page.
 - **Acronyms:** add new ones to `docs/acronyms.md`. `includes/abbreviations.md` adds hover definitions on every page; many entries are commented out because they were too noisy, so check the comments before re-enabling one.
