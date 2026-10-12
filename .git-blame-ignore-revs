@@ -1,10 +1,11 @@
 # Commits that change many pages without changing what they say. Pages' Last
 # Updated dates and contributor lists skip them (hooks/page_history.py, via
 # ignored_commits_file in mkdocs.yml), and so does GitHub's blame view. The
-# hook already skips front-matter-only and whitespace-only changes, so list
-# only other mechanical sweeps, such as a syntax conversion; the front-matter
-# sweeps below are listed for blame. Use full hashes, and add a sweep after it
-# lands on main (squash merges change the hash).
+# hook already skips changes to only front matter, trailing spaces, or blank
+# lines, so list other mechanical sweeps, such as re-wrapping or a syntax
+# conversion; the front-matter sweeps below are listed for blame. Use full
+# hashes, and add a sweep after it lands on main (squash merges change the
+# hash).
 
 # Front matter only (tags, descriptions, keywords)
 08bc90e3d23113f7cfc9b5ab35a4b5d0ec9d3060  # Enable meta and tags plugins with section tags
