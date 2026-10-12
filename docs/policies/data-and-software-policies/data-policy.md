@@ -94,12 +94,12 @@ Projects that do not use a minimum of 50% of their allocated space after 6 month
 
 /// warning | Access Termination Policy
 
-Project endpoints that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
+Project collections that have exhibited no activity for a period of 6 months after the project ends will be disabled and the storage space will be reclaimed. Notification will be sent to the PI and project members 30 days prior to and the day of the action.
 
 Activity is defined as, but not limited to:
 
-- Creation of the Globus endpoint
-- Globus transfers to and from the endpoint
+- Creation of the Globus collection
+- Globus transfers to and from the collection
 - `atime` (access timestamp) audits of data files
 - Other factors may include DOIs and citations referring to the project
 ///
