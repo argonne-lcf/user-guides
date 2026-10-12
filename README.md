@@ -98,7 +98,9 @@ keywords:
 * `keywords:` search terms the page doesn't use itself (e.g. `MFA`, `vscode`). Not shown on the page.
 * `search:` with `boost: 2` to rank a page higher, or `exclude: true` to hide it from search.
 * Tags for a whole folder go in its `.meta.yml` (e.g. `docs/aurora/.meta.yml` adds `Aurora`).
-* Commit front-matter-only changes separately from content edits, so they can be excluded from each page's "Last Updated" date later (#1139).
+* `authors:` the people who wrote the page (a list of names); everyone else who changed it is listed from git as "Edited by".
+* `last_verified:` the date (`YYYY-MM-DD`) you last checked the whole page against the system.
+* Front-matter-only and whitespace-only changes don't change a page's "Last Updated" date. Put other mechanical changes across many pages in their own commits, and list them in `.git-blame-ignore-revs` (#1139).
 
 ### Working on documentation
 

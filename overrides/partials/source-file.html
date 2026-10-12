@@ -1,0 +1,88 @@
+{#-
+  Replaces Material's partials/source-file.html (the dates at the bottom of
+  each page) to label the dates and add the names, like the PyTorch tutorials:
+
+    Created 2022-10-03 · Last updated 2026-10-06 · Last verified 2026-10-12
+    Authors: <front matter authors> · Edited by: <other contributors>
+    (or, without authors: front matter, Contributors: <contributors>)
+
+  Dates and contributors come from git (git-revision-date-localized and
+  hooks/page_history.py); authors and last_verified from the page's front
+  matter. Without the hook (e.g. under Zensical), the front matter still shows.
+-#}
+{% set max_names = 8 %}
+{% macro names(list) -%}
+  {%- for name in list[:max_names] -%}
+    {{ name }}{% if not loop.last %}, {% endif %}
+  {%- endfor -%}
+  {%- set more = list[max_names:] | length -%}
+  {%- if more > 0 %}, and
+    {% if page.edit_url -%}
+      <a href="{{ page.edit_url | replace('/edit/', '/commits/') }}">{{ more }} more</a>
+    {%- else -%}
+      {{ more }} more
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro %}
+{% if page.meta %}
+  {% set updated = page.meta.git_revision_date_localized or page.meta.revision_date %}
+  {% set created = page.meta.git_creation_date_localized %}
+  {% set verified = page.meta.last_verified %}
+  {% set authors = page.meta.authors or [] %}
+  {% if authors is string %}{% set authors = [authors] %}{% endif %}
+  {% set editors = page.meta.page_editors or [] %}
+  {% set contributors = page.meta.page_contributors or [] %}
+{% endif %}
+{% if created or updated or verified or authors or contributors %}
+  <aside class="md-source-file">
+    {% if created or updated or verified %}
+      <div class="alcf-page-history">
+        {% if created %}
+          <span class="md-source-file__fact">
+            <span class="md-icon">{% include ".icons/material/clock-plus-outline.svg" %}</span>
+            Created {{ created }}
+          </span>
+        {% endif %}
+        {% if updated %}
+          <span class="md-source-file__fact">
+            <span class="md-icon">{% include ".icons/material/clock-edit-outline.svg" %}</span>
+            Last updated {{ updated }}
+          </span>
+        {% endif %}
+        {% if verified %}
+          <span class="md-source-file__fact">
+            <span class="md-icon">{% include ".icons/material/check-decagram-outline.svg" %}</span>
+            Last verified {{ verified }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if authors or contributors %}
+      <div class="alcf-page-history">
+        {% if authors %}
+          <span class="md-source-file__fact">
+            <span class="md-icon">
+              {% if authors | length == 1 %}
+                {% include ".icons/material/account.svg" %}
+              {% else %}
+                {% include ".icons/material/account-group.svg" %}
+              {% endif %}
+            </span>
+            {% if authors | length == 1 %}Author{% else %}Authors{% endif %}: {{ names(authors) }}
+          </span>
+          {% if editors %}
+            <span class="md-source-file__fact">
+              <span class="md-icon">{% include ".icons/material/pencil-outline.svg" %}</span>
+              Edited by: {{ names(editors) }}
+            </span>
+          {% endif %}
+        {% else %}
+          <span class="md-source-file__fact">
+            <span class="md-icon">{% include ".icons/material/account-group.svg" %}</span>
+            Contributors: {{ names(contributors) }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </aside>
+{% endif %}

@@ -1,0 +1,63 @@
+# Maps commit names to one display name per person, for git log %aN, git
+# shortlog, and the contributor lists from hooks/page_history.py. Names come
+# from each email's GitHub profile, or from the same person's other commits.
+# Format: Proper Name <commit email>  (see `git help gitmailmap`).
+Nils Heinonen <110477819+nheinonen@users.noreply.github.com>
+John O'Connor <123772779+joconnoranl@users.noreply.github.com>
+Amaka Okafor <152440402+okaforn@users.noreply.github.com>
+Christine Simpson <48525133+cms21@users.noreply.github.com>
+Saumil Patel <730477+spatel81@users.noreply.github.com>
+Aditya Tanikanti <93-atanikanti@users.noreply.gitlab.alcf.anl.gov>
+Haritha Siddabathuni Som <93623920+alcf-haritha@users.noreply.github.com>
+Aditya Tanikanti <aditya.tanikanti@gmail.com>
+William Allcock <allcock@anl.gov>
+Michael Prince <anoxymoren@gmail.com>
+Aditya Tanikanti <atanikanti@anl.gov>
+Benoit Cote <benoitcote@anlvpn023.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn030.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn040.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn062.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn083.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn084.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn096.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn098.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn164.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn166.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn196.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn208.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn212.mcs.anl.gov>
+Benoit Cote <benoitcote@anlvpn230.mcs.anl.gov>
+Benoit Cote <benoitcote@BenoitCotes-MacBook-Pro.local>
+Christopher Knight <cjknight2009@gmail.com>
+Ethan Glaser <ethan.glaser@intel.com>
+Ethan Glaser <42726565+ethanglaser@users.noreply.github.com>
+Ethan Wong <ewong@anl.gov>
+Harikrishna Tummalapalli <harikrishna1410@gmail.com>
+Haritha Siddabathuni Som <haritha@anl.gov>
+Jennifer Francis <jfrancis@anl.gov>
+John-Luke Navarro <jnavarro@anl.gov>
+Kaushik Velusamy <kaushik@linux.com>
+Murat Keçeli <keceli@gmail.com>
+Misha Salim <msalim@anl.gov>
+Amaka Okafor <nokafor@anl.gov>
+Riccardo Balin <riccardo.balin@colorado.edu>
+Rachel Taub <rtaub@anl.gov>
+Stephen Hudson <shudson@anl.gov>
+Katie Sims-Partacz <simspartacz@anl.gov>
+Sid Raskar <sraskar@udel.edu>
+Shilpika <sshilpika@luc.edu>
+Tom Uram <tomuram@gmail.com>
+Väinö Hatanpää <vhat@Vaeinoes-MBP.attlocal.net>
+Varuni Sastry <vsastry@anl.gov>
+William Allcock <weallcock@gmail.com>
+Xiao-Yong Jin <xjin@anl.gov>
+Timothy Williams <zippy@alunni.cmu.edu>
+Kaushik Velusamy <kaushikvelusamy@gmail.com>
+Jaime Vega <jvega@anl.gov>
+Matthew Stone <junkmail@sandboxstudio.net>
+Jack Kirk <jack.kirk@codeplay.com>
+Corey Adams <coreyjadams@gmail.com>
+
+# Unconfirmed: uncomment if these are the same person.
+# Bill Arnold <84726266+wcarnold1010@users.noreply.github.com>  # "William C. Arnold"; vs "Bill Arnold" <arnoldw@anlgov>, <you@example.com>
+# Corey Adams <>  # commits as "Corey" with no email; vs Corey Adams <coreyjadams@gmail.com>

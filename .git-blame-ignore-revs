@@ -1,8 +1,10 @@
-# Commits that change many pages without changing what they say: front matter
-# only, or source formatting that renders the same. git-revision-date-localized
-# skips them when dating a page's last update (ignored_commits_file in
-# mkdocs.yml), and GitHub's blame view skips them too. Use full hashes, and add
-# a sweep after it lands on main (squash merges change the hash).
+# Commits that change many pages without changing what they say. Pages' Last
+# Updated dates and contributor lists skip them (hooks/page_history.py, via
+# ignored_commits_file in mkdocs.yml), and so does GitHub's blame view. The
+# hook already skips front-matter-only and whitespace-only changes, so list
+# only other mechanical sweeps, such as a syntax conversion; the front-matter
+# sweeps below are listed for blame. Use full hashes, and add a sweep after it
+# lands on main (squash merges change the hash).
 
 # Front matter only (tags, descriptions, keywords)
 08bc90e3d23113f7cfc9b5ab35a4b5d0ec9d3060  # Enable meta and tags plugins with section tags
