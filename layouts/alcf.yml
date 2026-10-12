@@ -56,9 +56,9 @@ definitions:
     {%- if layout.background_color -%}
       {{ layout.background_color }}
     {%- elif layout.background_image -%}
-      #0061AFD9
+      #E86A00D9
     {%- else -%}
-      #0061AF
+      #E86A00
     {%- endif -%}
 
   # Text color
