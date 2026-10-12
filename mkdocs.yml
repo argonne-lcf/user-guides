@@ -184,6 +184,11 @@ validation:
 
 extra:
   homepage: 'https://docs.alcf.anl.gov'
+  # Left out of the contributor names at the bottom of each page
+  # (hooks/page_history.py), as `git log --format=%aN` shows them. Their
+  # commits still count toward Last Updated.
+  page_history_exclude:
+    - dymil
   social:  # placed in overridden footer
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'

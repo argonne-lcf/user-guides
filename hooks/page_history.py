@@ -17,7 +17,8 @@ hook replaces the plugin's dates and adds the names:
 - Contributors are the authors and co-authors (Co-authored-by trailers) of
   those commits, most commits first, with names from .mailmap. Names in the
   page's `authors:` front matter are shown as authors, and the rest as
-  "Edited by".
+  "Edited by". Names under extra.page_history_exclude in mkdocs.yml are left
+  out.
 
 It reuses the plugin's date formatting, which is internal to the plugin, so
 the plugin is pinned; check this hook when upgrading it. Hooks run after
@@ -184,7 +185,8 @@ def on_page_markdown(markdown, page, config, **kwargs):
     for h in [own, *included]:
         if h:
             names.update(h["names"])
-    contributors = [n for n, _ in names.most_common()]
+    excluded = {n.casefold() for n in config.extra.get("page_history_exclude") or []}
+    contributors = [n for n, _ in names.most_common() if n.casefold() not in excluded]
     listed = {a.casefold() for a in page.meta["authors"]}
     page.meta["page_contributors"] = contributors
     page.meta["page_editors"] = [n for n in contributors if n.casefold() not in listed]
