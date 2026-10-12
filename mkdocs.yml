@@ -189,7 +189,7 @@ extra:
   # commits still count toward Last Updated. A page's own
   # exclude_contributors: front matter does the same for that page.
   exclude_contributors: []
-  #  - <name, as git log --format=%aN shows it>
+  #  - <name>
   social:  # placed in overridden footer
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'
