@@ -9,6 +9,8 @@ edit_uri: 'edit/main/docs/'
 
 theme:
   name: 'material'
+  # Zensical: keep Material for MkDocs' look (custom CSS depends on it).
+  variant: classic
   custom_dir: overrides
   language: 'en'
   palette:
@@ -69,8 +71,9 @@ theme:
     - toc.follow
     #- toc.integrate  # move right-side intra-page TOC within left nav sidebar
     - search.highlight
-    - search.suggest
-    - search.share
+    # Not implemented by Zensical's search:
+    #- search.suggest
+    #- search.share
 
   logo: images/logo.svg
   favicon: "images/favicon.svg"
@@ -97,8 +100,8 @@ markdown_extensions:
   - abbr
   - pymdownx.critic
   - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:zensical.extensions.emoji.twemoji
+      emoji_generator: !!python/name:zensical.extensions.emoji.to_svg
       options:
         custom_icons:
           # Google Material Symbols, vendored; not bundled with the theme,
@@ -155,7 +158,7 @@ markdown_extensions:
   # tables). Patterns are globs; "*" also matches "/". Don't enable the
   # navigation.instant.preview theme feature: it previews every internal
   # link, regardless of these targets.
-  - material.extensions.preview:
+  - zensical.extensions.preview:
       sources:
         exclude:
           - index.md  # no previews on the home page tiles
@@ -175,12 +178,11 @@ markdown_extensions:
 
   - toc:
       permalink: true
+# Zensical's checks; MkDocs' omitted_files/absolute_links/unrecognized_links/
+# anchors/not_found keys don't apply. --strict fails the build on these.
 validation:
-  omitted_files: warn
-  absolute_links: warn
-  unrecognized_links: warn
-  anchors: warn
-  not_found: warn
+  invalid_links: true
+  invalid_link_anchors: true
 
 extra:
   homepage: 'https://docs.alcf.anl.gov'
@@ -198,15 +200,16 @@ extra:
     property: G-4M48E2L33R
 
 # Build hooks; each file's docstring says what it does.
-hooks:
-  - hooks/optimize_race_fix.py
-  - hooks/compress_social_cards.py
-  - hooks/tag_order.py
-  - hooks/search_tuning.py
+# Disabled: Zensical doesn't support MkDocs hooks.
+# hooks:
+#   - hooks/optimize_race_fix.py
+#   - hooks/compress_social_cards.py
+#   - hooks/tag_order.py
+#   - hooks/search_tuning.py
 
 plugins:
   - search:
-      lang: en
+      # Zensical ignores `lang`; the search language comes from theme.language.
       # No camelCase split (Material's suggested (?!\b)(?=[A-Z][a-z])): it indexed
       # "PyTorch" as "Py" + "Torch", so lowercase queries like "pytorch",
       # "tensorflow", "jupyterhub", or "sambanova" missed those pages.
@@ -217,18 +220,19 @@ plugins:
       # ignore unquoted og:image meta tags from the social plugin.
       htmlmin_opts:
         remove_optional_attribute_quotes: false
+  # Disabled: privacy isn't implemented in Zensical yet (planned).
   # Vendors external assets (e.g. the unpkg tablesort scripts) at build time so
   # pages make no third-party requests at runtime.
-  - privacy:
-      assets_exclude:
-        # MathJax loads font/component files relative to its own script path;
-        # vendoring only the bundle would 404 on output/chtml/fonts/*. The
-        # bundle URL is now only in javascripts/mathjax.js, which privacy
-        # doesn't rewrite; this guards against it being re-added here.
-        - cdn.jsdelivr.net/npm/mathjax@3/*
-        # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
-        - use.typekit.net/*
-        - p.typekit.net/*
+  #- privacy:
+  #    assets_exclude:
+  #      # MathJax loads font/component files relative to its own script path;
+  #      # vendoring only the bundle would 404 on output/chtml/fonts/*. The
+  #      # bundle URL is now only in javascripts/mathjax.js, which privacy
+  #      # doesn't rewrite; this guards against it being re-added here.
+  #      - cdn.jsdelivr.net/npm/mathjax@3/*
+  #      # Adobe Fonts' terms require serving kits from Adobe; no self-hosting.
+  #      - use.typekit.net/*
+  #      - p.typekit.net/*
   # Applies each folder's .meta.yml front matter to every page in that folder
   # and below (lists are appended, page values win for scalars). Runs before
   # social and tags, which read the merged front matter.
@@ -285,18 +289,37 @@ plugins:
         - AI Agents
         - CFD
         - Continuous Integration
-  # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Needs
-  # the system Cairo library, so like optimize it runs only in CI (CI=true
-  # there). SOCIAL_CARDS=false turns it off in CI too (PR previews). Card
-  # design (logo, colors, font) is in layouts/alcf.yml.
+  # Link-preview cards (Open Graph/Twitter tags plus a PNG per page). Runs
+  # only in CI (CI=true there), to keep local builds fast. SOCIAL_CARDS=false
+  # turns it off in CI too (PR previews). Card design (logo, colors, font) is
+  # in layouts/alcf.yml.
   - social:
       enabled: !ENV [SOCIAL_CARDS, CI, false]
       cards_layout: alcf
+  # Disabled: group isn't supported and optimize is still in progress in Zensical.
   # optimize needs the pngquant binary, so run it only in CI (CI=true there).
-  - group:
-      enabled: !ENV [CI, false]
-      plugins:
-        - optimize
+  #- group:
+  #    enabled: !ENV [CI, false]
+  #    plugins:
+  #      - optimize
+  # Replaces MkDocs' exclude_docs and draft_docs, which Zensical doesn't
+  # support. `*` also matches "/"; `**/` matches any depth, including none.
+  - exclude:
+      glob:
+        - "**/unused/*"
+        - "**/old/*"
+        - "**/drafts/*"
+        - "**/todo.md"
+        - "**/TODO.md"
+        - "**/notes.md"
+        # TODO: complete or remove Aurora placeholder pages
+        - aurora/compiling-and-linking/llvm-compilers-aurora.md
+        - aurora/compiling-and-linking/gnu-compilers-aurora.md
+        - aurora/compiling-and-linking/cce-compilers-aurora.md
+        - aurora/applications-and-libraries/libraries/math-libraries.md
+        - aurora/applications-and-libraries/libraries/mkl.md
+        - aurora/applications-and-libraries/libraries/mpi.md
+        - aurora/performance-tools/performance-overview.md
   - redirects:
       redirect_maps:
         'support/technical-support.md': 'support/ticket.md'
@@ -638,40 +661,46 @@ nav:
   - Acronyms: acronyms.md
   - Tags: tags.md
 
+# The settings below are commented out because Zensical doesn't support them.
+# exclude_docs and draft_docs are replaced by the `exclude` plugin above (draft
+# pages are no longer built by `serve`). not_in_nav has no equivalent: Zensical
+# builds pages missing from nav without warning. `watch` makes Zensical build
+# nothing, silently.
+
 # Pages that are not in navigation but still built
 # These always end up in the generated site (both mkdocs "build" and "serve")
-not_in_nav: |
-  not_in_nav/
-  index.md
-  inbound-links.md
-  aurora/bugs-table.md
-  #account-project-management/allocation-management/not_in_nav/
+#not_in_nav: |
+#  not_in_nav/
+#  index.md
+#  inbound-links.md
+#  aurora/bugs-table.md
+#  #account-project-management/allocation-management/not_in_nav/
 
 # Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)
-exclude_docs: |
-  unused/
-  old/
-  todo.md
-  TODO.md
-  notes.md
+#exclude_docs: |
+#  unused/
+#  old/
+#  todo.md
+#  TODO.md
+#  notes.md
 
 # Pages still built during "mkdocs serve" for local testing, but not during "mkdocs build"
 # appears to suppress not_in_nav WARNINGs for these pages, too
 # emits harmless INFO logs that will disappear during "mkdocs build"
-draft_docs: |
-  drafts/
-  # TODO: complete or remove Aurora placeholder pages
-  aurora/compiling-and-linking/llvm-compilers-aurora.md
-  aurora/compiling-and-linking/gnu-compilers-aurora.md
-  aurora/compiling-and-linking/cce-compilers-aurora.md
-  aurora/applications-and-libraries/libraries/math-libraries.md
-  aurora/applications-and-libraries/libraries/mkl.md
-  aurora/applications-and-libraries/libraries/mpi.md
-  # KGF: nothing in aurora/applications-and-libraries/applications/ !
-  aurora/performance-tools/performance-overview.md
+#draft_docs: |
+#  drafts/
+#  # TODO: complete or remove Aurora placeholder pages
+#  aurora/compiling-and-linking/llvm-compilers-aurora.md
+#  aurora/compiling-and-linking/gnu-compilers-aurora.md
+#  aurora/compiling-and-linking/cce-compilers-aurora.md
+#  aurora/applications-and-libraries/libraries/math-libraries.md
+#  aurora/applications-and-libraries/libraries/mkl.md
+#  aurora/applications-and-libraries/libraries/mpi.md
+#  # KGF: nothing in aurora/applications-and-libraries/applications/ !
+#  aurora/performance-tools/performance-overview.md
 # note, trailing inline comments under draft_docs, etc blocks break mkdocs parsing,
 # despite official example https://www.mkdocs.org/user-guide/configuration/#draft_docs
 
-watch:
-  - includes/
-  - overrides/
+#watch:
+#  - includes/
+#  - overrides/

@@ -1,10 +1,4 @@
-# [imaging] adds CairoSVG (social plugin) and Pillow (social, optimize).
-# CairoSVG also needs the system Cairo library (libcairo2 / brew install cairo).
-mkdocs-material[imaging]>=9.7.7
-mkdocs>=1.6.1
+# Zensical natively implements the theme and the plugins used here (search,
+# minify, meta, tags, social, redirects, exclude); no MkDocs packages needed.
+zensical>=0.0.69
 pymdown-extensions>=12.1
-mkdocs-minify-plugin
-# Pinned: 1.2.3 moved to the ProperDocs fork and added a hard `properdocs`
-# dependency solely to print a promo banner on every build. 1.2.2 is
-# functionally identical (only the banner import differs).
-mkdocs-redirects==1.2.2
