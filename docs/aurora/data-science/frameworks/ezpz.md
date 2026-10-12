@@ -99,7 +99,7 @@ See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
 
 Two calls replace the usual distributed preamble:
 
-```python
+```python linenums="1"
 import ezpz
 
 rank = ezpz.setup_torch()          # (1)!
