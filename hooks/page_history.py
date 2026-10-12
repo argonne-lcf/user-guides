@@ -47,7 +47,7 @@ BOT = re.compile(r"\[bot\]|^(github[- ]actions?|copilot|claude)\b|ai-assistant|^
 FRONT_MATTER = re.compile(r"\A---[ \t]*\n.*?^(---|\.\.\.)[ \t]*$", re.S | re.M)
 RECORD, FIELD = "\x1e", "\x1f"
 
-histories = {}  # (absolute path, selector) -> {"created", "updated", "names"}
+histories = {}  # (absolute path, selector) -> {"created", "updated", "commits"}
 dependencies = {}  # page path -> set of (absolute path, selector) it includes
 ignored = ()
 mailmap = []  # this repo's .mailmap, also for submodule histories
@@ -113,6 +113,8 @@ def select(text, selector):
         return text
     kind, spec = selector
     lines, out = text.splitlines(), []
+    if text.endswith(("\n", "\r")):
+        lines.append("")  # pymdownx counts the empty line after a final newline
     if kind == "section":
         inside = found = False
         for line in lines:
@@ -129,11 +131,18 @@ def select(text, selector):
         if not found:
             return None
     else:
+        total = len(lines)
         for span in spec.split(","):
-            start, _, end = span.partition(":")
-            start = int(start) if start else None
+            span = span.split(":")
+            start = int(span[0]) if span[0] else None
+            end = int(span[1]) if len(span) > 1 and span[1] else None
+            # Like pymdownx: 1-based start, inclusive end, negatives from the end.
             start = start if start is None or start < 0 else max(0, start - 1)
-            out += lines[start:int(end) if end else None]
+            if start and start < 0:
+                start = min(max(total + start, 0), total)
+            if end and end < 0:
+                end = min(max(total + 1 + end, 0), total)
+            out += lines[start:end]
     return "\n".join(out)
 
 
@@ -158,8 +167,8 @@ def blobs(names, cwd):
 
 
 def history(path, selector=None):
-    """Created, last real update, and contributor counts for a file, or the
-    part of it a snippet selector includes."""
+    """Created, last real update, and the people credited by each commit
+    that changed a file, or the part of it a snippet selector includes."""
     cwd = path.parent
     fmt = FIELD.join(["%H", "%P", "%at", "%aN", "%aE", "%(trailers:key=Co-authored-by,valueonly,separator=%x1d)"])
     # Not --no-merges: it stops --follow at some renames. Merges are skipped below.
@@ -186,7 +195,7 @@ def history(path, selector=None):
         names += [f"{sha}:{new}", f"{sha}^:{old}"]  # the parent's is missing for an add
     contents = blobs(names, root)
     created = commits[-1][1]
-    updated, counts = None, Counter()
+    updated, credited = None, {}
     for i, (sha, timestamp, name, email, coauthors, new, old) in enumerate(commits):
         after, before = contents[2 * i], contents[2 * i + 1]
         front_matter = selector is None and path.suffix == ".md"
@@ -202,10 +211,8 @@ def history(path, selector=None):
         people = [] if BOT.search(name) or BOT.search(email) else [name]
         people += [c.strip() for c in coauthors.split("\x1d")
                    if c.strip() and c.split(" <")[0].strip() != name]
-        for person in dict.fromkeys(people):
-            if not BOT.search(person):
-                counts[person] += 1
-    return {"created": created, "updated": updated, "names": counts, "root": root}
+        credited[sha] = [p for p in dict.fromkeys(people) if not BOT.search(p)]
+    return {"created": created, "updated": updated, "commits": credited, "root": root}
 
 
 def included(path, selector, repo, seen):
@@ -241,16 +248,14 @@ def on_files(files, config, **kwargs):
     with ThreadPoolExecutor() as pool:
         histories.update(zip(keys, pool.map(lambda key: history(*key), keys)))
     # Co-author trailers aren't mapped by %aN; map them, then drop emails.
-    raw = {n for h in histories.values() if h for n in h["names"] if "<" in n}
+    raw = {n for h in histories.values() if h for people in h["commits"].values() for n in people if "<" in n}
     if raw:
         mapped = run(["check-mailmap", *sorted(raw)], repo).splitlines()
         rename = {r: m.split(" <")[0].strip() for r, m in zip(sorted(raw), mapped)}
         for h in histories.values():
             if h:
-                merged = Counter()
-                for n, c in h["names"].items():
-                    merged[rename.get(n, n)] += c
-                h["names"] = merged
+                h["commits"] = {sha: list(dict.fromkeys(rename.get(n, n) for n in people))
+                                for sha, people in h["commits"].items()}
 
 
 def on_page_markdown(markdown, page, config, **kwargs):
@@ -270,10 +275,13 @@ def on_page_markdown(markdown, page, config, **kwargs):
         return markdown
     parts = [histories.get(key) for key in sorted(dependencies.get(path, ()), key=str)]
     updated = max([h["updated"] for h in [own, *parts] if h and h["updated"]], default=None)
-    names = Counter()
+    # Count each commit once, though it may change several included parts.
+    commits = {}
     for h in [own, *parts]:
         if h:
-            names.update(h["names"])
+            for sha, people in h["commits"].items():
+                commits.setdefault(sha, people)
+    names = Counter(n for people in commits.values() for n in people)
     excluded = {str(n).casefold() for n in [*(config.extra.get("exclude_contributors") or []),
                                             *(page.meta.get("exclude_contributors") or [])]}
     contributors = [n for n, _ in names.most_common() if n.casefold() not in excluded]
