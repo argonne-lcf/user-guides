@@ -2166,7 +2166,11 @@ pre .normal a {
 }
 
 /* Dates and names at the bottom of each page (overrides/partials/
-   source-file.html): one line of dates, one of names. */
+   source-file.html): one line of dates, one of names. A long name list
+   wraps under its label, with the icon at the first line. */
 .md-source-file .alcf-page-history + .alcf-page-history {
   margin-top: 0.4em;
+}
+.md-source-file .alcf-page-history .md-source-file__fact {
+  align-items: flex-start;
 }

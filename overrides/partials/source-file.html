@@ -12,10 +12,12 @@
 -#}
 {% set max_names = 8 %}
 {% macro names(list) -%}
-  {%- for name in list[:max_names] -%}
+  {#- "and 1 more" takes as much room as the name, so show up to one over -#}
+  {%- set shown = list if list | length <= max_names + 1 else list[:max_names] -%}
+  {%- for name in shown -%}
     {{ name }}{% if not loop.last %}, {% endif %}
   {%- endfor -%}
-  {%- set more = list[max_names:] | length -%}
+  {%- set more = list | length - shown | length -%}
   {%- if more > 0 %}, and
     {% if page.edit_url -%}
       <a href="{{ page.edit_url | replace('/edit/', '/commits/') }}">{{ more }} more</a>
@@ -68,18 +70,18 @@
                 {% include ".icons/material/account-group.svg" %}
               {% endif %}
             </span>
-            {% if authors | length == 1 %}Author{% else %}Authors{% endif %}: {{ names(authors) }}
+            <span>{% if authors | length == 1 %}Author{% else %}Authors{% endif %}: {{ names(authors) }}</span>
           </span>
           {% if editors %}
             <span class="md-source-file__fact">
               <span class="md-icon">{% include ".icons/material/pencil-outline.svg" %}</span>
-              Edited by: {{ names(editors) }}
+              <span>Edited by: {{ names(editors) }}</span>
             </span>
           {% endif %}
         {% else %}
           <span class="md-source-file__fact">
             <span class="md-icon">{% include ".icons/material/account-group.svg" %}</span>
-            Contributors: {{ names(contributors) }}
+            <span>Contributors: {{ names(contributors) }}</span>
           </span>
         {% endif %}
       </div>
