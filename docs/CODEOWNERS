@@ -69,6 +69,7 @@
 **/data-science/**/dask.md               @FilippoSimini
 **/data-science/**/pyg.md                @FilippoSimini
 **/data-science/**/gpytorch.md           @FilippoSimini
+**/data-science/**/ezpz.md               @saforem2
 **/data-science/**/oneCCL.md             @kaushikvelusamy @khossain4337
 **/data-science/**/libtorch.md           @rickybalin
 **/data-science/**/fine-tune-LLM-with-Autotrain.md  @saforem2

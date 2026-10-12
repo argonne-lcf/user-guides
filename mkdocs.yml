@@ -3,7 +3,8 @@ site_description: "How to use the Argonne Leadership Computing Facility's comput
 site_author: Argonne Leadership Computing Facility
 repo_name: 'argonne-lcf/user-guides'
 repo_url: 'https://github.com/argonne-lcf/user-guides'
-site_url: 'https://docs.alcf.anl.gov/'
+# SITE_URL overrides it, e.g. for PR previews labeled preview-social-cards.
+site_url: !ENV [SITE_URL, 'https://docs.alcf.anl.gov/']
 edit_uri: 'edit/main/docs/'
 
 theme:
@@ -377,6 +378,7 @@ nav:
             - oneDAL: aurora/applications-and-libraries/libraries/onedal.md
             - GPyTorch: aurora/data-science/frameworks/gpytorch.md
             - PyTorch Geometric (PyG): aurora/data-science/frameworks/pyg.md
+            - ezpz: aurora/data-science/frameworks/ezpz.md
           - AI Inference:
             - LibTorch: aurora/data-science/inference/libtorch.md
             - OpenVINO: aurora/data-science/inference/openvino.md
@@ -522,6 +524,7 @@ nav:
           - LibTorch: polaris/data-science/frameworks/libtorch.md
           - GPyTorch: polaris/data-science/frameworks/gpytorch.md
           - vLLM: polaris/data-science/frameworks/vllm.md
+          - ezpz: polaris/data-science/frameworks/ezpz.md
         - Applications:
           - Megatron-DeepSpeed: polaris/data-science/applications/megatron-deepspeed.md
           - gpt-neox: polaris/data-science/applications/gpt-neox.md
