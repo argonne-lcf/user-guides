@@ -1,3 +1,14 @@
+---
+description: Launch distributed PyTorch on Aurora with ezpz, which detects ranks, backend, and launcher for each system.
+tags:
+  - PyTorch
+  - Distributed Training
+keywords:
+  - torchrun
+  - multi-node
+  - data parallel
+---
+
 # ezpz
 
 [`ezpz`](https://github.com/saforem2/ezpz) is a thin layer over PyTorch
