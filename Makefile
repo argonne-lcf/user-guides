@@ -25,7 +25,7 @@ generate-inbound-links:
 .PHONY: build-docs
 build-docs:
 	@echo "Building site..."
-	mkdocs build --strict
+	zensical build --strict
 	@echo "Validating inbound links..."
 	python3 scripts/validate_inbound_links.py
 
@@ -50,5 +50,5 @@ all: build-docs
 serve: generate-inbound-links
 	@echo "Finding available port..."
 	$(eval PORT := $(shell python scripts/find_port.py))
-	@echo "Starting MkDocs server on port $(PORT)..."
-	mkdocs serve -a 127.0.0.1:$(PORT)
+	@echo "Starting Zensical server on port $(PORT)..."
+	zensical serve -a 127.0.0.1:$(PORT)
