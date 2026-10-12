@@ -45,8 +45,12 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .cache/plugin
-          key: mkdocs-plugins-${{ hashFiles('mkdocs.yml', 'layouts/**') }}
-          restore-keys: mkdocs-plugins-
+          # Own key prefix: this build has no social cards, so mkdocs-build
+          # (docs-strict) must not restore its cache.
+          key: preview-mkdocs-plugins-${{ hashFiles('mkdocs.yml', 'layouts/**') }}
+          restore-keys: |
+            preview-mkdocs-plugins-
+            mkdocs-plugins-
       - name: Build docs with --strict
         env:
           # Preview pages point og:image at production (site_url), so the
@@ -92,6 +96,8 @@ jobs:
           # is rebased and retried, and each PR writes only its own folder.
           force: false
           attempt-limit: 10
+          git-config-name: pr-preview
+          git-config-email: pr-preview@localhost
           commit-message: Deploy preview of ${{ github.repository }}#${{ github.event.pull_request.number }} at ${{ github.event.pull_request.head.sha }}
       - name: Wait for GitHub Pages to serve this commit
         # The push succeeds even when the Pages build then fails (e.g. over
@@ -126,6 +132,8 @@ jobs:
           target-folder: ${{ env.PREVIEW_DIR }}
           force: false
           attempt-limit: 10
+          git-config-name: pr-preview
+          git-config-email: pr-preview@localhost
           commit-message: Remove preview of ${{ github.repository }}#${{ github.event.pull_request.number }}
 
   comment:
@@ -168,7 +176,9 @@ jobs:
           # this workflow used before ("<!-- Sticky Pull Request Commentpr-preview -->").
           id=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
             --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("pr-preview -->"))) | .id' | head -n 1)
-          if [ -n "$id" ]; then
+          if [ -z "$id" ] && [ "$EVENT" = closed ]; then
+            exit 0  # never had a preview comment, e.g. opened before this workflow existed
+          elif [ -n "$id" ]; then
             gh api -X PATCH "repos/$REPO/issues/comments/$id" -f body="$body" > /dev/null
           else
             gh api "repos/$REPO/issues/$PR/comments" -f body="$body" > /dev/null
