@@ -10,7 +10,7 @@ If you find any issues within these pages, please open an Issue at [ALCF GitHub 
 
 ## Dates and Names on Each Page
 
-The bottom of each page shows when it was created and last updated, and who has worked on it. These come from the page's history on GitHub. An edit counts only if it changes the page's text, so changes to only tags, descriptions, or trailing spaces don't.
+The bottom of each page except the home page shows when it was created and last updated, and who has worked on it. These come from the page's history on GitHub. An edit counts only if it changes the page's text, so changes to only tags, descriptions, or trailing spaces don't.
 
 The page's authors and its "Last verified" date are set by hand, in the page's front matter:
 

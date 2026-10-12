@@ -11,9 +11,10 @@ hook replaces the plugin's dates and adds the names:
   for some pages and fails --strict.
 - A commit counts as an update only if it changes the page's text: not one
   that changes only front matter (tags, description, last_verified),
-  trailing spaces, or blank lines; one listed in .git-blame-ignore-revs; a
-  merge; or one by a bot. Indentation and line breaks count, since in
-  Markdown and in included code they can change what renders.
+  trailing spaces, or blank lines; one listed in .git-blame-ignore-revs; or
+  a merge. Indentation and line breaks count, since in Markdown and in
+  included code they can change what renders. Bots' commits count (e.g. the
+  generated Aurora known-issues table), but bots aren't contributors.
 - A page that includes snippets (--8<--, inline or block form) is also
   updated by changes to the part it includes (a section or line range, or the
   whole file), and to the snippets that part includes in turn.
@@ -194,13 +195,14 @@ def history(path, selector=None):
             # The section doesn't exist on one side (its markers came later):
             # compare the whole file, whose section markers normalize() drops.
             new_part, old_part = after, before
-        if (sha.startswith(ignored) or BOT.search(name) or BOT.search(email)
-                or normalize(new_part, front_matter) == normalize(old_part, front_matter)):
+        if sha.startswith(ignored) or normalize(new_part, front_matter) == normalize(old_part, front_matter):
             continue
         updated = updated or timestamp
-        people = {name} | {c.strip() for c in coauthors.split("\x1d")
-                           if c.strip() and c.split(" <")[0].strip() != name}
-        for person in people:
+        # Author first, then co-authors in trailer order, so ties sort the same every build.
+        people = [] if BOT.search(name) or BOT.search(email) else [name]
+        people += [c.strip() for c in coauthors.split("\x1d")
+                   if c.strip() and c.split(" <")[0].strip() != name]
+        for person in dict.fromkeys(people):
             if not BOT.search(person):
                 counts[person] += 1
     return {"created": created, "updated": updated, "names": counts, "root": root}
