@@ -25,6 +25,11 @@ jobs:
         with:
           # Submodules only needed to build; skip for teardown-only runs
           submodules: ${{ github.event.action != 'closed' && 'recursive' || 'false' }}
+          # Otherwise checkout's GITHUB_TOKEN credentials (an includeIf config
+          # that the deploy action's pinned v4.7.4 can't unset) override
+          # PREVIEW_DEPLOY_TOKEN, and the push to the previews repo gets
+          # "Repository not found".
+          persist-credentials: false
       - name: Install uv
         if: github.event.action != 'closed'
         uses: astral-sh/setup-uv@v10.2.0
