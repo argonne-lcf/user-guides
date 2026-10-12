@@ -1,3 +1,12 @@
+---
+tags:
+  - System Updates
+keywords:
+  - what changed
+  - release notes
+  - changelog
+---
+
 # Aurora System Updates
 
 This page is a reverse-chronological log of changes to Aurora's system software, firmware, and programming environment.
@@ -19,19 +28,21 @@ Everything else appears as a standalone dated entry: firmware refreshes, fabric 
 
 ## Major update: Agama 1146.78 drivers and oneAPI 2026.1.0 (Sep 2026) { #major-update-2026-09 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the updates to Aurora's OS, GPU drivers, and programming environment, users will need to recompile applications.
+Due to the updates to Aurora's OS, GPU drivers, and programming environment, users will need to recompile applications.
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
-    - **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
-    - **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
-    - **PBS scheduler:** 2026.1.0, updated at rollout
-    - **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Revised:** [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) and [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), in `next-eval`
-    - **Rolled out to all nodes:** [2026-09-28](#2026-09-28-rolled-out-to-all-aurora-nodes), during scheduled maintenance
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.78 / [LTS release 2523.78](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.78.html)
+- **OS image:** SLES 15 SP7 with Slingshot Host Software 14.0.1
+- **Programming environment:** PE 26.181.0 with oneAPI 2026.1.0; PE 26.26.0 (oneAPI 2025.3.1) rebuilt for the new image
+- **PBS scheduler:** 2026.1.0, updated at rollout
+- **First available:** [2026-09-01](#2026-09-01-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Revised:** [2026-09-21](#2026-09-21-next-eval-os-image-and-pe-fixes) and [2026-09-24](#2026-09-24-next-eval-mpich-and-vtune-updates), in `next-eval`
+- **Rolled out to all nodes:** [2026-09-28](#2026-09-28-rolled-out-to-all-aurora-nodes), during scheduled maintenance
+///
 
 ### 2026-09-28: Rolled out to all Aurora nodes
 
@@ -172,16 +183,18 @@ ECB firmware:
 
 ## Major update: Agama 1146.40 drivers and oneAPI 2025.3.1 (Feb-Mar 2026) { #major-update-2026-02 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the updates to Aurora's programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+Due to the updates to Aurora's programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1146.40 / [LTS release 2523.40](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.40.html)
-    - **Programming environment:** PE 26.26.0 with oneAPI 2025.3.1
-    - **First available:** [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Rolled out to all nodes:** [2026-03-10](#2026-03-10-rolled-out-to-all-aurora-nodes)
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.40 / [LTS release 2523.40](https://dgpu-docs.intel.com/overview/release-notes/lts-drivers-and-packages/2523.40.html)
+- **Programming environment:** PE 26.26.0 with oneAPI 2025.3.1
+- **First available:** [2026-02-23](#2026-02-23-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Rolled out to all nodes:** [2026-03-10](#2026-03-10-rolled-out-to-all-aurora-nodes)
+///
 
 ### 2026-03-10: Rolled out to all Aurora nodes
 
@@ -273,17 +286,19 @@ Flare is scheduled to be upgraded Feb 2 - Feb 5, 2026 resulting in Aurora being 
 
 ## Major update: Agama 1146.12 drivers and oneAPI 2025.2.0 (Sep-Oct 2025) { #major-update-2025-09 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the updates to Aurora's GPU drivers and programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+Due to the updates to Aurora's GPU drivers and programming environment, users will need to recompile applications (if they already haven't been recompiled in the `next-eval` environment).
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1146.12 / rolling release 2523.12
-    - **Programming environment:** PE 25.190.0 with oneAPI 2025.2.0
-    - **First available:** [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue), in the `next-eval` test queue
-    - **Revised:** [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4), AuroraSDK 25.190.0 RC4 in `next-eval`
-    - **Rolled out to most nodes:** [2025-10-13](#2025-10-13-rolled-out-to-most-aurora-nodes), with a `legacy` queue retaining the old image
+- **Intel GPU drivers (KMD/UMD):** Agama 1146.12 / rolling release 2523.12
+- **Programming environment:** PE 25.190.0 with oneAPI 2025.2.0
+- **First available:** [2025-09-08](#2025-09-08-available-in-the-next-eval-test-queue), in the `next-eval` test queue
+- **Revised:** [2025-10-07](#2025-10-07-next-eval-updated-to-aurorasdk-251900-rc4), AuroraSDK 25.190.0 RC4 in `next-eval`
+- **Rolled out to most nodes:** [2025-10-13](#2025-10-13-rolled-out-to-most-aurora-nodes), with a `legacy` queue retaining the old image
+///
 
 ### 2025-10-13: Rolled out to most Aurora nodes
 
@@ -434,15 +449,17 @@ This results in often out-of-memory (OOM) conditions in DDR5 NUMA nodes 0 and 1,
 
 ## Major update: Agama 1099.12 drivers and oneAPI 2025.0.5 (2025-04-28) { #major-update-2025-04 }
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Due to the significant changes resulting from this PM, users will need to recompile applications.
+Due to the significant changes resulting from this PM, users will need to recompile applications.
+///
 
-!!! abstract "At a glance"
+/// abstract | At a glance
 
-    - **Intel GPU drivers (KMD/UMD):** Agama 1099.12 / rolling release 2507.12
-    - **Programming environment:** PE 24.347.0 with oneAPI 2025.0.5
-    - **Rolled out to all nodes:** 2025-04-28, during the preventive maintenance
+- **Intel GPU drivers (KMD/UMD):** Agama 1099.12 / rolling release 2507.12
+- **Programming environment:** PE 24.347.0 with oneAPI 2025.0.5
+- **Rolled out to all nodes:** 2025-04-28, during the preventive maintenance
+///
 
 ### OS image
 
@@ -524,49 +541,53 @@ One important note is that **Kokkos Kernels fails to compile** in this SDK. If t
 
 The full list of regressions and fixes is below. If you see any new issues with this compute image, let us know.
 
-??? failure "List of regressions"
+/// details | List of regressions
+    type: failure
 
-    - source/reproducers/openmp/simd_loops [CMPLRLLVM-38420] P0
-    - source/reproducers/ifx/CMPLRLLVM-35621
-    - source/reproducers/ifx/XDEPS-5191:XDEPS-5191_simd
-    - source/reproducers/ifx/phasta_target_simd [CMPLRLLVM-35621,CMPLRLLVM-40195,CMPLRLLVM-52024,GSD-6634] P0
-    - source/reproducers/icx/assert_problem [CMPLRLLVM-62420]
-    - source/reproducers/dpcpp/catch2_segfault:catch2_segfault_all_at_once_ath_run [CMPLRLLVM-40048,GSD-10857] P0
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_amazon0302_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_europe_osm_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
-    - source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_wb-edu_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/openmp/simd_loops [CMPLRLLVM-38420] P0
+- source/reproducers/ifx/CMPLRLLVM-35621
+- source/reproducers/ifx/XDEPS-5191:XDEPS-5191_simd
+- source/reproducers/ifx/phasta_target_simd [CMPLRLLVM-35621,CMPLRLLVM-40195,CMPLRLLVM-52024,GSD-6634] P0
+- source/reproducers/icx/assert_problem [CMPLRLLVM-62420]
+- source/reproducers/dpcpp/catch2_segfault:catch2_segfault_all_at_once_ath_run [CMPLRLLVM-40048,GSD-10857] P0
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_amazon0302_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_europe_osm_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+- source/reproducers/mkl/sparse_openmp_kokkos_kernels:sparse_openmp_kokkos_kernels_wb-edu_ath_run [MKLD-12835,MKLD-14715,GSD-10930]
+///
 
-??? success "List of fixes"
+/// details | List of fixes
+    type: success
 
-    - source/reproducers/dpcpp/FMM [CMPLRLLVM-28325] P0
-    - source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_compile [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
-    - source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_run [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
-    - source/reproducers/dpcpp/device_copyable_dpl [CMPLRLLVM-57788,CMPLRLLVM-58384]
-    - source/reproducers/dpcpp/hang_inline_workgroup:hang_inline_workgroup_ath_run [CMPLRLLVM-47914,CMPLRLLVM-54117]
-    - source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_shared_jit_main [CMPLRLLVM-41597]
-    - source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_static_jit_main [CMPLRLLVM-41597]
-    - source/reproducers/dpcpp/madgraph4gpu-SYCL-gg_ttggg-nocompile:madgraph4gpu-SYCL-gg_ttggg-nocompile_gg-ttggg_ath_compile [CMPLRLLVM-35981,XDEPS-3923] P0
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_opcode [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_operand_syntax [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_duplicate_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_illegal_exec_size [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_region [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_simple [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_decl [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_pred [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_wrong_declare [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
-    - source/reproducers/dpcpp/sincos source/reproducers/dpcpp_ct/binary [OTFIP-248]
-    - source/reproducers/dpcpp_ct/segfault_build source/reproducers/dpcpp_ct/vector_trans [OTFIP-449]
-    - source/reproducers/hybrid/oneConcurency:oneConcurency_omp_nowait_ath_run [CMPLRLLVM-34779,CMPLRLLVM-38250,CMPLRLLVM-40729,XDEPS-2202,XDEPS-3493,XDEPS-5689,CMPLRLIBS-35258] P0
-    - source/reproducers/icx/global_bool_isoc_binding:global_bool_isoc_binding_read [CMPLRLLVM-57643,CMPLRLLVM-57935]
-    - source/reproducers/ifx/bgw_compare_wfns P0 source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_four [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_one [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_three [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_two [GSD-8346,CMPLRLLVM-63003]
-    - source/reproducers/mkl/fft2d_scale [MKLD-13250] source/reproducers/mkl/slow_batch_getrs [MKLD-15079]
-    - source/reproducers/mkl/zgetrs_batch_slowdown [MKLD-15212,MKLD-15906,MKLD-16680]
-    - source/reproducers/openmp/ddpp_gamess_mini_wrong_answer_fp_precise [CMPLRLLVM-45082,GSD-7772]
-    - source/reproducers/openmp/oneapi_device_selector_test:oneapi_device_selector_test_ath_run [CMPLRLLVM-60986]
-    - source/reproducers/openmp/performance_increading_kernels source/reproducers/openmp/workshare_performance [CMPLRLLVM-43487]
-    - source/reproducers/tools/advisor_length [ADV-10315]
+- source/reproducers/dpcpp/FMM [CMPLRLLVM-28325] P0
+- source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_compile [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
+- source/reproducers/dpcpp/VirtualFunction:VirtualFunction_newminimal_ath_run [CMPLRLLVM-35295,XDEPS-6157,CMPLRLLVM-48349,CMPLRLLVM-50632] P0
+- source/reproducers/dpcpp/device_copyable_dpl [CMPLRLLVM-57788,CMPLRLLVM-58384]
+- source/reproducers/dpcpp/hang_inline_workgroup:hang_inline_workgroup_ath_run [CMPLRLLVM-47914,CMPLRLLVM-54117]
+- source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_shared_jit_main [CMPLRLLVM-41597]
+- source/reproducers/dpcpp/library_jit_main:library_jit_main_aot_static_jit_main [CMPLRLLVM-41597]
+- source/reproducers/dpcpp/madgraph4gpu-SYCL-gg_ttggg-nocompile:madgraph4gpu-SYCL-gg_ttggg-nocompile_gg-ttggg_ath_compile [CMPLRLLVM-35981,XDEPS-3923] P0
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_opcode [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_bad_operand_syntax [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_duplicate_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_illegal_exec_size [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_label [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_missing_region [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_simple [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_decl [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_undefined_pred [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/ms371-InlineAsm:ms371-InlineAsm_asm_wrong_declare [cmplrllvm-46097,GSD-7606,GSD-7621,CMPLRLLVM-57331,URLZA-308]
+- source/reproducers/dpcpp/sincos source/reproducers/dpcpp_ct/binary [OTFIP-248]
+- source/reproducers/dpcpp_ct/segfault_build source/reproducers/dpcpp_ct/vector_trans [OTFIP-449]
+- source/reproducers/hybrid/oneConcurency:oneConcurency_omp_nowait_ath_run [CMPLRLLVM-34779,CMPLRLLVM-38250,CMPLRLLVM-40729,XDEPS-2202,XDEPS-3493,XDEPS-5689,CMPLRLIBS-35258] P0
+- source/reproducers/icx/global_bool_isoc_binding:global_bool_isoc_binding_read [CMPLRLLVM-57643,CMPLRLLVM-57935]
+- source/reproducers/ifx/bgw_compare_wfns P0 source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_four [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_one [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_three [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/ifx/fopenmp-target-simd-data:fopenmp-target-simd-data_two [GSD-8346,CMPLRLLVM-63003]
+- source/reproducers/mkl/fft2d_scale [MKLD-13250] source/reproducers/mkl/slow_batch_getrs [MKLD-15079]
+- source/reproducers/mkl/zgetrs_batch_slowdown [MKLD-15212,MKLD-15906,MKLD-16680]
+- source/reproducers/openmp/ddpp_gamess_mini_wrong_answer_fp_precise [CMPLRLLVM-45082,GSD-7772]
+- source/reproducers/openmp/oneapi_device_selector_test:oneapi_device_selector_test_ath_run [CMPLRLLVM-60986]
+- source/reproducers/openmp/performance_increading_kernels source/reproducers/openmp/workshare_performance [CMPLRLLVM-43487]
+- source/reproducers/tools/advisor_length [ADV-10315]
+///

@@ -1,3 +1,8 @@
+---
+tags:
+  - Kokkos
+---
+
 # Cabana
 
 ## Cabana

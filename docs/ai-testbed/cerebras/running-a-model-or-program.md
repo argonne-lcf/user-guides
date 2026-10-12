@@ -1,3 +1,11 @@
+---
+keywords:
+  - model zoo
+  - cerebras model zoo
+  - wafer scale
+  - run a model
+---
+
 
 # Running a Model/Program
 
@@ -125,7 +133,7 @@ See [Job Queuing and Submission](./job-queuing-and-submission.md) for more detai
 ## Checkpoints
 
 Model training can be (re-)started from a model checkpoint, if e.g. a job stops due to error, by adding `--checkpoint_path=path_to_mdl_file` to a `cszoo fit` command line.
-For example, to continue training the model above another 400 steps after it is has been trained for 400 steps, modify configs/Cerebras_GPT/111m_modified.yaml, changing the value of `max_steps` to 800
+For example, to continue training the model above another 400 steps after it has been trained for 400 steps, modify `configs/Cerebras_GPT/111m_modified.yaml`, changing the value of `max_steps` to 800
 ```yaml
       max_steps: 800
       eval_frequency: 400

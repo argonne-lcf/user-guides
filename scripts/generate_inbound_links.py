@@ -101,6 +101,8 @@ def main():
     # Create the content for the target file
     content = """---
 title: Inbound Links Validation
+search:
+  exclude: true
 ---
 
 # Inbound Links Validation

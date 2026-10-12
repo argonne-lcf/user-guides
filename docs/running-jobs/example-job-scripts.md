@@ -1,12 +1,19 @@
+---
+keywords:
+  - job array
+  - job arrays
+---
+
 # Example Job Scripts
 
 This page contains a small collection of example job scripts users may find useful for submitting their jobs on Polaris. Additional information on PBS and how to submit these job scripts is available [here](./index.md).
 
 A simple example using a similar script on Polaris is available in the [Getting Started Repo](https://github.com/argonne-lcf/GettingStarted/tree/master/Examples/Polaris/affinity_omp).
 
-!!! warning "Comments in PBS scripts"
+/// warning | Comments in PBS scripts
 
-    Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue_name>  #comment`).
+Since `#` is required prior to each PBS directive, comments should be added **after** the directives have been listed in your submission script. If you try to add comments within the directive list, you *could* experience submission issues due to PBS attempting to read your comment as an additional directive. This includes adding comments on the same line as a directive (i.e., `#PBS -q <queue>  #comment`).
+///
 
 ## CPU MPI-OpenMP Examples
 
@@ -50,7 +57,8 @@ The following function in the `hello_affinity` source code prints the UUID of ea
 <!-- Snippets paths are relative to base location, by default the current working directory (relative to mkdocs.yml?). You can specify a new base location by setting the base_path. base_path is a list of paths. When evaluating paths, they are done in the order specified. The specified snippet will be evaluated against each base path and the first base path that yields a valid snippet will be returned. -->
 
 <!-- note: "===" is from older pymdownx.tabbed feature. TODO: consider replacing with code block title or pymdownx.blocks.tab -->
-=== "Identifying GPU by UUID"
+/// tab | Identifying GPU by UUID
+///
 ```c++ linenums="1"
 ---8<---
 GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
@@ -60,9 +68,11 @@ GettingStarted/Examples/Polaris/affinity_gpu/main.cpp:15:25
 <!--- example of alternative pymdownx.snippets syntax. "; temporarily disables it -->
 ---8<--- "; docs/running-jobs/not_in_nav/pbs-qsub-options-table.md"
 
-!!! warning inline end "Zsh users"
+/// warning | Zsh users
+    attrs: {class: inline end}
 
-    If you are a `zsh` user, you will need to ensure **all** PBS job submission and shell scripts include the `-l` flag following `#!/bin/bash` as seen in the example above to ensure your environment is being instantiated properly. `zsh` is **not** officially supported by HPE and support from ALCF will be best effort only.
+If you are a `zsh` user, you will need to ensure **all** PBS job submission and shell scripts include the `-l` flag following `#!/bin/bash` as seen in the example above to ensure your environment is being instantiated properly. `zsh` is **not** officially supported by HPE and support from ALCF will be best effort only.
+///
 
 
 Each Polaris compute node has 1 Milan CPU with a total of 32 physical cores, with each core supporting 2 hardware threads (for a total of 64 logical cores).
@@ -155,13 +165,15 @@ mpiexec -n ${NTOTRANKS} --ppn ${NRANKS_PER_NODE} --depth=${NDEPTH} --cpu-bind de
 The affinity options `NDEPTH=8;` and `--cpu-bind depth` or `core` are set to ensure that each MPI rank is bound to a separate NUMA node. If OpenMP threading is desired, set `NTHREADS=8` for each MPI rank to spawn 1 thread per physical core (all in the same NUMA domain that the rank is bound to). The OpenMP-related options are not needed if your application does not use OpenMP. Nothing additional is required on the `mpiexec` command for applications that internally manage GPU devices and handle the binding of MPI/OpenMP processes to GPUs. A small helper script is available for those with applications that rely on MPI to handle the binding of MPI ranks to GPUs. Some notes on this helper script and other key differences with the early CPU example follow.
 <!-- NOTE: "-d 8 --cpu-bind=core" equiv to "-d 16 --cpu-bind=numa", so it is not quite the same as -d 8 --cp-bind=depth. E.g. in the former 2, rank0 has logical cores (0-7,32-39) so if NTHREADS=8, the behavior will be the same as "-d 8 --cpu-bind=depth -->
 
-!!! info "`export MPICH_GPU_SUPPORT_ENABLED=1`"
+/// info | `export MPICH_GPU_SUPPORT_ENABLED=1`
 
-    For applications that support GPU-aware MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
+For applications that support GPU-aware MPI (i.e. use MPI to communicate data directly between GPUs), this environment variable is required to enable GPU support in Cray's MPICH. Omitting this will result in a segfault. Support for this also requires that the application was linked against the GPU Transport Layer library (e.g. -lmpi_gtl_cuda), which is automatically included for users by the `craype-accel-nvidia80` module in the default environment on Polaris. If this gtl library is not properly linked, then users will see an error message indicating that upon executing the first MPI command that uses a device pointer.
+///
 
-!!! info "`./set_affinity_gpu_polaris.sh`"
+/// info | `./set_affinity_gpu_polaris.sh`
 
-    This script is useful for those applications that rely on MPI to bind MPI ranks to GPUs on each node. Such a script is not necessary when the application handles process-gpu binding. This script simply sets the environment variable `CUDA_VISIBLE_DEVICES` to a restricted set of GPUs (e.g. each MPI rank sees only one GPU). Otherwise, users would find that all MPI ranks on a node will target the first GPU likely having a negative impact on performance. An example for this script is available in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) and copied below.
+This script is useful for those applications that rely on MPI to bind MPI ranks to GPUs on each node. Such a script is not necessary when the application handles process-gpu binding. This script simply sets the environment variable `CUDA_VISIBLE_DEVICES` to a restricted set of GPUs (e.g. each MPI rank sees only one GPU). Otherwise, users would find that all MPI ranks on a node will target the first GPU likely having a negative impact on performance. An example for this script is available in the [Getting Started repo](https://github.com/argonne-lcf/GettingStarted/blob/master/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh) and copied below.
+///
 
 ### Hardware threads
 
@@ -201,15 +213,17 @@ As in the previous hardware threads example, the MPI ranks are spaced apart assu
 In this script, we have added `-j oe` to the list of PBS options; `-j oe` combines stdout and stderr to the same file and uses the stdout filename provided (if provided). `-j eo` would do the same but use the stderr filename provided. Without these options, separate files containing stdout and stderr of the job are produced.
 
 Here we compare two bare-bones PBS submission scripts for a CUDA example with and without MPI:
-=== "No MPI"
-	```bash linenums="1"
-	---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_cu.sh"
-	```
+/// tab | No MPI
+```bash linenums="1"
+---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_cu.sh"
+```
+///
 
-=== "With MPI"
-	```bash linenums="1"
-	---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_mpi.sh"
-	```
+/// tab | With MPI
+```bash linenums="1"
+---8<--- "./ALCFBeginnersGuide/polaris/examples/01_example_mpi.sh"
+```
+///
 
 ### Setting GPU affinity for each MPI rank
 
@@ -221,13 +235,15 @@ A copy of the small helper script provided in the [Getting Started repo](https:/
 ---8<--- "GettingStarted/Examples/Polaris/affinity_gpu/set_affinity_gpu_polaris.sh"
 ```
 
-!!! note
+/// note
 
-    The `echo` command prints a helpful message for the user to confirm the desired mapping is achieved. Users are encouraged to edit this file as necessary for their particular needs.
+The `echo` command prints a helpful message for the user to confirm the desired mapping is achieved. Users are encouraged to edit this file as necessary for their particular needs.
+///
 
-!!! warning
+/// warning
 
-    If planning large-scale runs with many thousands of MPI ranks, it is advised to comment out the `echo` command above so as not to have thousands of lines of output written to `stdout`.
+If planning large-scale runs with many thousands of MPI ranks, it is advised to comment out the `echo` command above so as not to have thousands of lines of output written to `stdout`.
+///
 
 
 ## Single-node Ensemble Calculations Example
@@ -406,20 +422,21 @@ On Polaris, that concurrent limit is:
 
 The limit for `prod` on Polaris is 10 because 10 is the maximum number of jobs that can be routed by `prod` to one of the execution queues (`small`, `medium`, or `large`) at once.
 
-!!! warning "A job array wider than the queue limit will never run in `prod`"
+/// warning | A job array wider than the queue limit will never run in `prod`
 
-    PBS will *accept* a job array submission to `prod` with up to 100 subjobs, but if more subjobs become eligible than the routing limit allows, the excess subjobs **cannot route to an execution queue and will sit forever without running** (they accrue eligible time but are never placed). This is a known issue on Polaris. It is easy to hit accidentally with a parameter sweep, because by default *every* subjob in an array becomes eligible the moment the array is submitted.
+PBS will *accept* a job array submission to `prod` with up to 100 subjobs, but if more subjobs become eligible than the routing limit allows, the excess subjobs **cannot route to an execution queue and will sit forever without running** (they accrue eligible time but are never placed). This is a known issue on Polaris. It is easy to hit accidentally with a parameter sweep, because by default *every* subjob in an array becomes eligible the moment the array is submitted.
 
-    **To use an array in `prod`, throttle the number of concurrently eligible subjobs with `%<num_concurrent>` so it never exceeds the queue limit.** For example, an array of 100 subjobs that only ever has 10 eligible at a time is compatible with the `prod` limit of 10:
+**To use an array in `prod`, throttle the number of concurrently eligible subjobs with `%<num_concurrent>` so it never exceeds the queue limit.** For example, an array of 100 subjobs that only ever has 10 eligible at a time is compatible with the `prod` limit of 10:
 
-    ```bash
-    #PBS -J 0-99%10
-    ```
+```bash
+#PBS -J 0-99%10
+```
 
-    You can also apply the throttle to an already-submitted array without resubmitting:
+You can also apply the throttle to an already-submitted array without resubmitting:
 
-    ```bash
-    qalter -J 0-99%10 <job_array_id>[]
-    ```
+```bash
+qalter -J 0-99%10 <job_array_id>[]
+```
 
-    If you cannot express your work within the concurrent limit (for example you want many subjobs running at once), submit the array to `preemptable` (limit 20) instead of `prod`, or drive the tasks with a [workflow management tool](../polaris/workflows/balsam.md) such as Balsam rather than a job array.
+If you cannot express your work within the concurrent limit (for example you want many subjobs running at once), submit the array to `preemptable` (limit 20) instead of `prod`, or drive the tasks with a [workflow management tool](../polaris/workflows/balsam.md) such as Balsam rather than a job array.
+///

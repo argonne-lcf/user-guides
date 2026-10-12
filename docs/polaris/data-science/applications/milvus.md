@@ -33,13 +33,14 @@ mkdir milvus-install
 python -m pip install -U "pymilvus[milvus-lite]"
 ```
 
-!!! tip "Verify installation"
+/// tip | Verify installation
 
-    You can confirm that `pymilvus` was installed correctly by running:
+You can confirm that `pymilvus` was installed correctly by running:
 
-    ```bash
-    python -c "import pymilvus; print(pymilvus.__version__)"
-    ```
+```bash
+python -c "import pymilvus; print(pymilvus.__version__)"
+```
+///
 
 ## Running Milvus on Polaris
 
@@ -48,10 +49,10 @@ python -m pip install -U "pymilvus[milvus-lite]"
 A multi-node Milvus deployment requires at least two compute nodes: one to host the Milvus server and one to act as the client. Request an interactive session with two nodes using PBS:
 
 ```bash
-qsub -I -l select=2 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project_name>
+qsub -I -l select=2 -l filesystems=home:eagle -l walltime=1:00:00 -q debug -A <project>
 ```
 
-Replace `<project_name>` with your ALCF project allocation name.
+Replace `<project>` with your ALCF project allocation name.
 
 ### Launching the Milvus Server
 
@@ -67,11 +68,13 @@ Launch the Milvus server on the first compute node. The deployment script starts
 bash apptainer_deploy.sh
 ```
 
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    Replaced <ETCD_HOST> with 10.140.57.19 and <MINIO_HOST> with 10.140.57.19 in config/milvus.yaml
-    ```
+```
+Replaced <ETCD_HOST> with 10.140.57.19 and <MINIO_HOST> with 10.140.57.19 in config/milvus.yaml
+```
+///
 
 After the server starts, navigate back to the parent directory and set the correct file permissions on the `multiNode` directory so that the client node can access the shared files:
 
@@ -86,11 +89,13 @@ You can verify the deployment size to confirm all necessary files were generated
 du -sh multiNode
 ```
 
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    125M    multiNode
-    ```
+```
+125M    multiNode
+```
+///
 
 ### Connecting from the Client Node
 
@@ -106,11 +111,13 @@ cat $PBS_NODEFILE
 hostname -I | awk '{print $1}'
 ```
 
-??? example "Example output"
+/// details | Example output
+    type: example
 
-    ```
-    10.140.57.11
-    ```
+```
+10.140.57.11
+```
+///
 
 Next, open a new terminal window and SSH into the second compute node (the client node):
 
@@ -136,9 +143,10 @@ conda activate base
 NO_PROXY="" no_proxy="" http_proxy="" https_proxy="" HTTP_PROXY="" HTTPS_PROXY="" python test_cluster.py
 ```
 
-!!! warning "Proxy settings"
+/// warning | Proxy settings
 
-    Polaris compute nodes may be configured with HTTP proxy environment variables by default. These must be unset when communicating between compute nodes to avoid routing traffic through the proxy, which would prevent the client from reaching the Milvus server.
+Polaris compute nodes may be configured with HTTP proxy environment variables by default. These must be unset when communicating between compute nodes to avoid routing traffic through the proxy, which would prevent the client from reaching the Milvus server.
+///
 
 ### Expected Output
 
@@ -189,16 +197,17 @@ apptainer_deploy.sh: line 118: 159064 Aborted  apptainer exec --fakeroot ...
 
 This typically occurs because `milvus/multiNode/config/milvus.yaml` was modified during a previous failed run and still contains hardcoded IP addresses instead of the expected placeholder values.
 
-!!! note "Fix"
+/// note | Fix
 
-    Open `config/milvus.yaml` and restore the placeholder tokens. Locate the etcd endpoint configuration and reset it:
+Open `config/milvus.yaml` and restore the placeholder tokens. Locate the etcd endpoint configuration and reset it:
 
-    ```yaml
-    endpoints: <ETCD_HOST>:2379
-    ```
+```yaml
+endpoints: <ETCD_HOST>:2379
+```
 
-    Similarly, locate the MinIO address configuration and reset it:
+Similarly, locate the MinIO address configuration and reset it:
 
-    ```yaml
-    address: <MINIO_HOST>:9000
-    ```
+```yaml
+address: <MINIO_HOST>:9000
+```
+///

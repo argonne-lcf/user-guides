@@ -1,3 +1,11 @@
+---
+keywords:
+  - cerebras virtual environment
+  - cerebras venv
+  - pytorch virtual environment
+  - modelzoo environment
+---
+
 # Customizing Environments
 
 ## Using virtual Python environments

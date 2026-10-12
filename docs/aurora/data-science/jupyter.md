@@ -14,7 +14,7 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
    The first step is to connect to Aurora through SSH. Note that tunneling or port forwarding is not required for this step.
    If you have a problem with this step, please check [Getting Started on Aurora](../getting-started-on-aurora.md).
    ```bash
-   ssh <your-username>@aurora.alcf.anl.gov
+   ssh <username>@aurora.alcf.anl.gov
    ```
    Make a note of the specific login node ID that you landed on. Run `hostname`, which may return something like:
    ```output
@@ -49,9 +49,10 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
 
 ## 2. Run JupyterLab on a Login Node
 
-!!! warning
+/// warning
 
-    This is not recommended for compute-intensive or memory-intensive workloads. Run the JupyterLab server on a compute node (see below section) if the workload is heavy.
+This is not recommended for compute-intensive or memory-intensive workloads. Run the JupyterLab server on a compute node (see below section) if the workload is heavy.
+///
 
 1. **Start JupyterLab**:
    ```bash
@@ -68,7 +69,7 @@ Please note that you only need a terminal (to SSH into Aurora) and a browser on 
 3. **Set Up SSH Tunneling**:
    Open a new terminal tab or window on your local machine and run the following command:
    ```bash
-   ssh -L 9999:127.0.0.1:9999 <your-username>@<login_node_hostname>
+   ssh -L 9999:127.0.0.1:9999 <username>@<login_node_hostname>
    ```
    where `<login_node_hostname>` is the specific login node address noted in step 1.
     - Replace `9999` with another port if it is unavailable.
@@ -89,7 +90,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
 1. **Submit a Job**:
    Submit an interactive job to request a compute node:
    ```bash
-   qsub -l select=1 -l walltime=60:00 -A <project_name> -q <queue_name> -I
+   qsub -l select=1 -l walltime=60:00 -A <project> -q <queue> -I
    ```
    You need to modify the `-A` and `-q` options to match your project name and queue name as well as the resources you need.
 
@@ -101,15 +102,15 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
    If you are not running an interactive job, you can find the hostname of the compute node by checking the `qstat` output.
    First, you need to find the job ID of the job you are interested in. The following command will list all the jobs you have submitted. You need the ID of any one of the **running** jobs you are interested in.
    ```bash
-   qstat -u <your_username>
+   qstat -u $USER
    ```
    Then, we can find the hostname of the compute node by running:
    ```bash
-   qstat -f <job_id>
+   qstat -f <jobid>
    ```
    The hostname of the compute node will be displayed in the `exec_host` field. You can extract the hostname from the output with the following command:
    ```bash
-   qstat -f <job_id> | awk -F '=' '/exec_host/ {print $2}' | tr '+' '\n' | cut -d '/' -f 1
+   qstat -f <jobid> | awk -F '=' '/exec_host/ {print $2}' | tr '+' '\n' | cut -d '/' -f 1
    ```
    This should give you a hostname like `x4603c0s0b0n0`. Note that you can SSH into the compute nodes only when your job is running.
 
@@ -122,7 +123,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
 
 2. **Activate the Environment**:
    ```bash
-   source <path_to_your_virtual_environment>/bin/activate
+   source <path>/bin/activate  # your virtual environment
    ```
 
 3. **Start JupyterLab**:
@@ -134,7 +135,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
 1. **Tunnel from Compute Node to Local Machine**:
    On your local machine, run:
    ```bash
-   ssh -L 9999:127.0.0.1:9999 -J <your-username>@aurora.alcf.anl.gov <your-username>@<compute_node_hostname>
+   ssh -L 9999:127.0.0.1:9999 -J <username>@aurora.alcf.anl.gov <username>@<compute_node_hostname>
    ```
    Please note that the `-J` option is used to specify the jump host, which is the Aurora login node.
    Replace `9999` with another port if it is unavailable.
@@ -148,6 +149,7 @@ You need a job running on Aurora to launch JupyterLab on a compute node. Below i
 
 ---
 
-!!! tip
+/// tip
 
-    You can use `tmux` or `screen` to keep JupyterLab running if the SSH connection drops.
+You can use `tmux` or `screen` to keep JupyterLab running if the SSH connection drops.
+///

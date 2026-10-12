@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Acronyms
 
 <!-- TODO: wait for an ability to disable the abbr extension on this page;

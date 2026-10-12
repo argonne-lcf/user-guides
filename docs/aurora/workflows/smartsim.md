@@ -16,7 +16,7 @@ For more resources on SmartSim, follow the links below:
 * [Documentation](https://www.craylabs.org/docs/overview.html)
 * [Zoo of examples](https://github.com/CrayLabs/SmartSim-Zoo)
 * [Fall 2023 ALCF User Hands-On Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/couplingSimulationML/NekRS-ML)
-* [NekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
+* [nekRS-ML](https://github.com/argonne-lcf/nekRS-ML/tree/smartredis)
 
 ## Installation
 
@@ -59,15 +59,17 @@ cd ..
 ```
 
 
-!!! info "Running with SmartSim"
-    When running a workload with SmartSim, please include the following in your run or submit scripts:
-    ```bash
-    export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
-    export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
-    ```
+/// info | Running with SmartSim
+When running a workload with SmartSim, please include the following in your run or submit scripts:
+```bash
+export TORCH_PATH=$( python -c 'import torch; print(torch.__path__[0])' )
+export LD_LIBRARY_PATH=$TORCH_PATH/lib:$LD_LIBRARY_PATH
+```
+///
 
-!!! warning "Known Issues"
-    * Pip installing SmartSim returns some warnings which can be safely ignored.
-    * The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
-    * The instructions focus on PyTorch workloads, thus `--skip-tensorflow --skip-onnx` are used. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
-    * The patch is needed to make sure the RedisAI installation uses the PyTorch installation provided in the frameworks module instead of installing a new one.
+/// warning | Known Issues
+* Pip installing SmartSim returns some warnings which can be safely ignored.
+* The `smart build -v --device cpu` command builds the RedisAI backend for the CPU. This enables ML model inferencing on the CPU with SmartSim and SmartRedis. Due to a limitation with RedisAI, the backend cannot be built for the Intel Max 1550 GPU.
+* The instructions focus on PyTorch workloads, thus `--skip-tensorflow --skip-onnx` are used. If you need the TensorFlow backend, please contact us at support@alcf.anl.gov.
+* The patch is needed to make sure the RedisAI installation uses the PyTorch installation provided in the frameworks module instead of installing a new one.
+///

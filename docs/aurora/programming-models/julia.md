@@ -1,16 +1,18 @@
 # Julia
-!!! example "Experimental support"
+/// example | Experimental support
 
-    Support for the Julia programming language on Aurora is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+Support for the Julia programming language on Aurora is currently experimental. This guide provides a set of best practices, but you may encounter unexpected issues.
+///
 
 ## Introduction
 Julia is a high-level, high-performance programming language designed for technical and scientific computing. It combines the ease of use of dynamic languages with the performance of compiled languages, making it well-suited for large-scale simulations and data analysis.
 
 This guide details how to configure and run Julia on the Aurora supercomputer, focusing on leveraging the system's key architectural features for large-scale parallel and GPU-accelerated computing.
 
-!!! example "Contributing"
+/// example | Contributing
 
-    This guide is a first draft of the Julia documentation for Aurora. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+This guide is a first draft of the Julia documentation for Aurora. If you have suggestions or find errors, please open a pull request or contact us by [opening a ticket](../../support/ticket.md) at the [ALCF Helpdesk](mailto:support@alcf.anl.gov).
+///
 
 All the source files used in this documentation are located at [https://github.com/anlsys/julia_alcf](https://github.com/anlsys/julia_alcf). Feel free to open PRs!
 
@@ -26,19 +28,21 @@ export JULIA_DEPOT_PATH="/flare/PROJECT/$USER/julia_depot"
 
 Two things about *where* and *when* you set this matter more than they look:
 
-!!! warning "Set it in your job script, not only in your shell configuration"
+/// warning | Set it in your job script, not only in your shell configuration
 
-    A PBS job runs **bash**, whatever your interactive login shell is. If you set `JULIA_DEPOT_PATH` only in `~/.zshrc` (or `~/.tcshrc`, or any other non-bash file), your interactive sessions will be configured correctly and your batch jobs will silently fall back to `~/.julia` — where none of your packages are installed. Every rank then fails with:
+A PBS job runs **bash**, whatever your interactive login shell is. If you set `JULIA_DEPOT_PATH` only in `~/.zshrc` (or `~/.tcshrc`, or any other non-bash file), your interactive sessions will be configured correctly and your batch jobs will silently fall back to `~/.julia` — where none of your packages are installed. Every rank then fails with:
 
-    ```
-    ArgumentError: Package MPI [da04e1cc-...] is required but does not seem to be installed
-    ```
+```
+ArgumentError: Package MPI [da04e1cc-...] is required but does not seem to be installed
+```
 
-    Even in bash this is easy to get wrong: a login shell reads `~/.bash_profile` (or `~/.profile`), **not** `~/.bashrc`. The reliable fix is to export it in the submission script itself, as the [job script below](#job-submission-script) does. Setting it in both places is fine.
+Even in bash this is easy to get wrong: a login shell reads `~/.bash_profile` (or `~/.profile`), **not** `~/.bashrc`. The reliable fix is to export it in the submission script itself, as the [job script below](#job-submission-script) does. Setting it in both places is fine.
+///
 
-!!! warning "Set it before loading the module"
+/// warning | Set it before loading the module
 
-    The module reads `JULIA_DEPOT_PATH` at load time to derive other settings, so exporting it afterwards leaves those pointing at the wrong place. Always `export` first, then `module load`.
+The module reads `JULIA_DEPOT_PATH` at load time to derive other settings, so exporting it afterwards leaves those pointing at the wrong place. Always `export` first, then `module load`.
+///
 
 If `$JULIA_DEPOT_PATH` is not set, it defaults to `~/.julia` and the module prints a warning when you load it. Make sure the filesystem holding your depot is also listed in the job's `#PBS -l filesystems=` directive, or the compute nodes will not be able to reach it.
 
@@ -68,17 +72,18 @@ module load libraries/julia/1.11  # Previous version
 module load libraries/julia/1.10  # LTS (Long Term Support)
 ```
 
-!!! note "Pick one spelling and stay with it"
+/// note | Pick one spelling and stay with it
 
-    `/soft/modulefiles/libraries/julia` is a symlink into the Julia installation, so the same modulefile can be reached two ways — as `libraries/julia` (via `module use /soft/modulefiles`, shown above) or as `julia` (via `module use /soft/modulefiles/libraries`). They are the same module, but Lmod treats them as different names, and the modulefile declares a conflict with itself. Loading the second on top of the first fails:
+`/soft/modulefiles/libraries/julia` is a symlink into the Julia installation, so the same modulefile can be reached two ways — as `libraries/julia` (via `module use /soft/modulefiles`, shown above) or as `julia` (via `module use /soft/modulefiles/libraries`). They are the same module, but Lmod treats them as different names, and the modulefile declares a conflict with itself. Loading the second on top of the first fails:
 
-    ```
-    Lmod has detected the following error: Cannot load module
-    "libraries/julia/1.12" because these module(s) are loaded:
-       julia
-    ```
+```
+Lmod has detected the following error: Cannot load module
+"libraries/julia/1.12" because these module(s) are loaded:
+   julia
+```
 
-    If you already load Julia from your shell configuration, either use the same spelling in your job scripts or `module unload julia` first.
+If you already load Julia from your shell configuration, either use the same spelling in your job scripts or `module unload julia` first.
+///
 
 ### Version Policy
 
@@ -107,15 +112,17 @@ Aurora runs Intel's long-term-servicing (LTS) branch of the Compute Runtime (NEO
 
 `oneAPI.jl` v2.8 added workarounds for these behind a single opt-in switch, `ONEAPI_LTS`, which the Julia module sets for you. No action is required on your part beyond using a recent enough `oneAPI.jl`.
 
-!!! warning "`oneAPI.jl` v2.8 or newer is required"
+/// warning | `oneAPI.jl` v2.8 or newer is required
 
-    Older versions ignore `ONEAPI_LTS` entirely, without a warning, leaving the workarounds disabled. The resulting failures are silent: wrong numerical results from reductions over strided arrays, or a banned Level Zero context that surfaces much later as a `ZE_RESULT_ERROR_UNKNOWN` at an unrelated call.
+Older versions ignore `ONEAPI_LTS` entirely, without a warning, leaving the workarounds disabled. The resulting failures are silent: wrong numerical results from reductions over strided arrays, or a banned Level Zero context that surfaces much later as a `ZE_RESULT_ERROR_UNKNOWN` at an unrelated call.
 
-    If you are reusing an environment whose `Manifest.toml` predates this, run `Pkg.update("oneAPI")` and confirm the resolved version with `Pkg.status("oneAPI")`.
+If you are reusing an environment whose `Manifest.toml` predates this, run `Pkg.update("oneAPI")` and confirm the resolved version with `Pkg.status("oneAPI")`.
+///
 
-!!! warning "Recompile required"
+/// warning | Recompile required
 
-    Julia does not invalidate precompilation caches when an environment variable changes. If you precompiled `oneAPI.jl` in a depot created before the LTS switch was enabled, run `Pkg.precompile()` once. This affects first-call latency only, never correctness.
+Julia does not invalidate precompilation caches when an environment variable changes. If you precompiled `oneAPI.jl` in a depot created before the LTS switch was enabled, run `Pkg.precompile()` once. This affects first-call latency only, never correctness.
+///
 
 Confirm that the LTS path is active (on a compute node — see [Verify Configuration](#verify-configuration-on-a-compute-node) below):
 
@@ -165,11 +172,12 @@ data = oneAPI.rand(Float64, 100)
 MPI.Allreduce!(data, +, MPI.COMM_WORLD)  # GPU-to-GPU communication
 ```
 
-!!! warning "Do not configure `MPIPreferences` yourself"
+/// warning | Do not configure `MPIPreferences` yourself
 
-    `MPIPreferences` is a dependency of `MPI.jl` and does not need to be added explicitly. Do **not** run `MPIPreferences.use_system_binary()`, and do not keep an `[MPIPreferences]` section in your own project's `LocalPreferences.toml`. Either one shadows the system configuration and pins `MPI.jl` to a specific MPICH installation path, which breaks outright once that Aurora programming environment release is retired.
+`MPIPreferences` is a dependency of `MPI.jl` and does not need to be added explicitly. Do **not** run `MPIPreferences.use_system_binary()`, and do not keep an `[MPIPreferences]` section in your own project's `LocalPreferences.toml`. Either one shadows the system configuration and pins `MPI.jl` to a specific MPICH installation path, which breaks outright once that Aurora programming environment release is retired.
 
-    The system configuration instead tracks whichever MPICH the `mpich` module provides at deployment time, so it follows Aurora's programming environment updates. If you have an `[MPIPreferences]` section of your own, delete it and restart Julia.
+The system configuration instead tracks whichever MPICH the `mpich` module provides at deployment time, so it follows Aurora's programming environment updates. If you have an `[MPIPreferences]` section of your own, delete it and restart Julia.
+///
 
 ### Parallel HDF5
 
@@ -213,11 +221,12 @@ MPI.Finalize()
 
 See the [Parallel HDF5 section](https://juliaio.github.io/HDF5.jl/stable/mpi/) of the `HDF5.jl` documentation for the full API.
 
-!!! note "Serial writes remain valid"
+/// note | Serial writes remain valid
 
-    The [π example below](#example-julia-code-for-approximating-pi) opens the file without a communicator and writes from rank 0 only. That is still correct, and is often the better choice for small outputs — parallel HDF5 pays off when every rank contributes a large slice of the data.
+The [π example below](#example-julia-code-for-approximating-pi) opens the file without a communicator and writes from rank 0 only. That is still correct, and is often the better choice for small outputs — parallel HDF5 pays off when every rank contributes a large slice of the data.
 
-    The HDF5 version tracks Aurora's programming environment and changes when the `mpich` default moves, so treat the version reported above as indicative rather than fixed.
+The HDF5 version tracks Aurora's programming environment and changes when the `mpich` default moves, so treat the version reported above as indicative rather than fixed.
+///
 
 ## Verify Configuration on a Compute Node
 
@@ -366,12 +375,13 @@ echo "Running Julia from: ${JULIA_EXE_PATH}"
 mpiexec ${MPI_ARGS} ${JULIA_EXE_PATH} --project pi.jl
 ```
 
-!!! warning "`Package X is required but does not seem to be installed`"
+/// warning | `Package X is required but does not seem to be installed`
 
-    If every rank fails this way, the job is almost certainly running against the wrong depot. Look for this line in the module's output:
+If every rank fails this way, the job is almost certainly running against the wrong depot. Look for this line in the module's output:
 
-    ```
-    JULIA_DEPOT_PATH not set. Using default: /home/<user>/.julia
-    ```
+```
+JULIA_DEPOT_PATH not set. Using default: /home/<username>/.julia
+```
 
-    Exporting `JULIA_DEPOT_PATH` in the submission script, as above, is the fix. Setting it only in `~/.bashrc` is not enough, because a batch job does not necessarily source it.
+Exporting `JULIA_DEPOT_PATH` in the submission script, as above, is the fix. Setting it only in `~/.bashrc` is not enough, because a batch job does not necessarily source it.
+///
