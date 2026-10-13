@@ -17,6 +17,6 @@ We have a Globus endpoint each to move data to and from the `/projects` and `/ho
 Relevant information regarding using globus can be found [here](https://www.alcf.anl.gov/support-center/theta-and-thetagpu/using-globus-theta)
 
 ## ALCF Storage Policies
-ALCF data policies is available **[here](../../policies/data-and-software-policies/data-policy.md)** 
+ALCF data policies are available **[here](../../policies/data-and-software-policies/data-policy.md)** 
 
 *Please Note:* The basic level of protection provided is UNIX file level permissions; it is the user's responsibility to ensure that file permissions and umasks are set to match their needs.

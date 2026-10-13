@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block extrahead %}
+{%- if page.meta and page.meta.robots %}
+<meta name="robots" content="{{ page.meta.robots }}">
+{%- endif %}
 <link rel="stylesheet" href="https://use.typekit.net/pxo0nvo.css">
 <link rel="apple-touch-icon" href="{{ 'images/apple-touch-icon.png' | url }}">
 {% endblock %}

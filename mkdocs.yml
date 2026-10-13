@@ -86,6 +86,8 @@ extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.filesize.min.js
   - https://unpkg.com/tablesort@5.3.0/dist/sorts/tablesort.dotsep.min.js
   - javascripts/tablesort.js
+  # Renders the page status dashboard (page-status.md) from page-metadata.json.
+  - javascripts/page-status.js
   # Loads the MathJax bundle itself, only on pages with math.
   - javascripts/mathjax.js
 
@@ -159,6 +161,7 @@ markdown_extensions:
       sources:
         exclude:
           - index.md  # no previews on the home page tiles
+          - ai-testbed/data-management/data-management-overview.md  # its data-policy link previews badly
       targets:
         include:
           - acronyms.md
@@ -190,6 +193,9 @@ extra:
   # exclude_contributors: front matter does the same for that page.
   exclude_contributors: []
   #  - <name>
+  # A page's last_verified: date is shown as stale after this many days
+  # (hooks/page_metadata.py), or once the page changed after it.
+  last_verified_max_age_days: 365
   social:  # placed in overridden footer
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'
@@ -210,6 +216,7 @@ hooks:
   - hooks/tag_order.py
   - hooks/search_tuning.py
   - hooks/page_history.py
+  - hooks/page_metadata.py  # after page_history.py: uses its dates
 
 plugins:
   - search:
@@ -668,6 +675,7 @@ not_in_nav: |
   index.md
   inbound-links.md
   aurora/bugs-table.md
+  page-status.md
   #account-project-management/allocation-management/not_in_nav/
 
 # Pages that will never end up in a generated site (neither mkdocs "build" or "serve") (implies not_in_nav)
