@@ -161,6 +161,7 @@ markdown_extensions:
       sources:
         exclude:
           - index.md  # no previews on the home page tiles
+          - ai-testbed/data-management/data-management-overview.md  # its data-policy link previews badly
       targets:
         include:
           - acronyms.md
