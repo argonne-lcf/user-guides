@@ -20,6 +20,7 @@ updated dates in page.meta (page_created, page_updated).
 """
 
 import datetime
+import html
 import json
 import logging
 import posixpath
@@ -171,7 +172,7 @@ def on_page_context(context, page, config, nav):
     records[src] = {
         "path": f"docs/{src}",
         "url": page.url,
-        "title": page.title,
+        "title": html.unescape(page.title or ""),  # a title from the H1 is escaped
         "section": [s.title for s in reversed(page.ancestors)],
         "in_nav": src in nav_pages,
         "owners": owners(f"docs/{src}"),
