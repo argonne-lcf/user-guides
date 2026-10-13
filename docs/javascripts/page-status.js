@@ -26,6 +26,12 @@
     return Math.round((new Date(to) - new Date(from)) / 86400000);
   }
 
+  function swatch(band, label) {
+    return el("span", { class: "alcf-page-status__swatch" }, [
+      el("span", { class: "alcf-page-status__dot alcf-page-status__age--" + band }), document.createTextNode(label)
+    ]);
+  }
+
   function status(page) {
     if (page.stale === "age") return ["stale", "Stale: " + page.verified_age_days + " days"];
     if (page.stale === "updated") return ["stale", "Stale: changed " + page.updated];
@@ -87,6 +93,13 @@
     }
     buildSectionSelects();
     var summary = el("div", { class: "alcf-page-status__summary" });
+    // Build date, the staleness limit, and a legend for the Updated colors.
+    var note = el("p", { class: "alcf-page-status__note" }, [
+      document.createTextNode("Built " + data.generated + ". A verification is stale after " +
+        data.last_verified_max_age_days + " days. Last updated: "),
+      swatch("fresh", "within 6 months"), swatch("aging", "within a year"),
+      swatch("old", "within 2 years"), swatch("stale", "older")
+    ]);
     var bar = el("div", { class: "alcf-page-status__filters" }, [
       filters.status, filters.section, filters.owner, filters.search,
       el("label", {}, [filters.nav, document.createTextNode(" Include pages not in the sidebar")])
@@ -98,7 +111,7 @@
       var button = e.target.closest("button[data-section]");
       if (button) selectSection(JSON.parse(button.dataset.section));
     });
-    root.replaceChildren(summary, bar, tableWrap);
+    root.replaceChildren(summary, note, bar, tableWrap);
 
     // Each part of the section path filters the table to that path.
     function sectionLinks(section) {
@@ -148,8 +161,7 @@
         el("span", {}, [el("strong", { text: counts.ok }), document.createTextNode("verified")]),
         el("span", {}, [el("strong", { text: counts.stale }), document.createTextNode("stale")]),
         el("span", {}, [el("strong", { text: counts.never }), document.createTextNode("never verified")]),
-        el("span", {}, [el("strong", { text: counts.missing }), document.createTextNode("without a description")]),
-        el("span", {}, [document.createTextNode("Data from " + data.generated + "; stale after " + data.last_verified_max_age_days + " days")])
+        el("span", {}, [el("strong", { text: counts.missing }), document.createTextNode("without a description")])
       );
 
       // Dates and counts sort as numbers (data-sort): Tablesort's date plugin

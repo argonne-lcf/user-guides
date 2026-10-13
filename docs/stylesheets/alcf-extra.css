@@ -2082,6 +2082,23 @@ pre .normal a {
   font-size: 1.3em;
   margin-right: 0.2em;
 }
+.md-typeset .alcf-page-status__note {
+  margin: 0 0 1em;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+.alcf-page-status__swatch {
+  white-space: nowrap;
+  margin-left: 0.8em;
+}
+.alcf-page-status__dot {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.3em;
+  border-radius: 50%;
+  background: currentcolor;
+}
 .alcf-page-status__filters {
   display: flex;
   flex-wrap: wrap;
