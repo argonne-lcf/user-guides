@@ -70,7 +70,7 @@ jobs:
   build:
     needs: gate
     if: needs.gate.outputs.build == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # pinned for the apt-get installs; see AGENTS.md
     permissions:
       contents: read
     steps:
