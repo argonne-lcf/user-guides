@@ -2156,6 +2156,9 @@ pre .normal a {
 .md-typeset .alcf-page-status table td.alcf-page-status__owners a {
   display: inline-block;
 }
+.md-typeset .alcf-page-status table td.alcf-page-status__check {
+  text-align: center;
+}
 .alcf-page-status__status--stale {
   color: #ff9100;
 }

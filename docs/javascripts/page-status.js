@@ -134,6 +134,11 @@
     function dateKey(date) {  // YYYY-MM-DD as a sortable integer; blanks sort first
       return date ? date.replace(/-/g, "") : 0;
     }
+    // A check mark when the page's own front matter sets the key.
+    function checkCell(count, noun) {
+      return el("td", { class: "alcf-page-status__check", "data-sort": count,
+        text: count ? "\u2705" : "", title: count ? count + " " + noun + (count === 1 ? "" : "s") : "" });
+    }
     function updatedCell(updated) {
       if (!updated) return el("td");
       var days = daysBetween(updated, data.generated);
@@ -167,8 +172,8 @@
 
       // Dates and counts sort as numbers (data-sort): Tablesort's date plugin
       // doesn't recognize YYYY-MM-DD and sorts those by day of month.
-      var NUMERIC = { Created: 1, Updated: 1, Verified: 1, Status: 1, Description: 1, "Links out": 1, "Links in": 1 };
-      var head = el("tr", {}, ["Page", "Section", "Owners", "Created", "Updated", "Verified", "Status", "Description", "Links out", "Links in"]
+      var NUMERIC = { Created: 1, Updated: 1, Verified: 1, Status: 1, Description: 1, Tags: 1, Keywords: 1, Authors: 1, Excluded: 1, "Links out": 1, "Links in": 1 };
+      var head = el("tr", {}, ["Page", "Section", "Owners", "Created", "Updated", "Verified", "Status", "Description", "Tags", "Keywords", "Authors", "Excluded", "Links out", "Links in"]
         .map(function (h) { return el("th", NUMERIC[h] ? { text: h, "data-sort-method": "number" } : { text: h }); }));
       var rows = shown.map(function (p) {
         var st = status(p);
@@ -186,6 +191,8 @@
           el("td", { text: p.last_verified || "", "data-sort": dateKey(p.last_verified) }),
           el("td", { class: "alcf-page-status__status--" + st[0], text: st[1], "data-sort": statusKey }),
           el("td", { class: p.description ? "" : "alcf-page-status__status--missing", text: p.description ? "yes, " + p.description_length + " chars" : "none", "data-sort": p.description_length }),
+          checkCell(p.front_matter.tags, "tag"), checkCell(p.front_matter.keywords, "keyword"),
+          checkCell(p.front_matter.authors, "author"), checkCell(p.front_matter.exclude_contributors, "excluded name"),
           el("td", { text: p.links.length }),
           el("td", { text: p.inbound })
         ]);

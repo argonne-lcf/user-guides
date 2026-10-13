@@ -15,8 +15,9 @@ updated dates in page.meta (page_created, page_updated).
   section, owners (docs/CODEOWNERS, last matching pattern wins, as GitHub
   applies it), dates, verification status, whether it has a description, and
   its links to other pages (from the rendered HTML, including links by
-  docs.alcf.anl.gov URL). The dashboard reads it in the browser, and
-  scripts/check_verified.py reports from it.
+  docs.alcf.anl.gov URL), and how many tags, keywords, authors and
+  exclude_contributors its own front matter sets. The dashboard reads it in
+  the browser, and scripts/check_verified.py reports from it.
 """
 
 import datetime
@@ -28,6 +29,8 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
+
+from mkdocs.utils.meta import get_data
 
 log = logging.getLogger("mkdocs.hooks.page_metadata")
 
@@ -165,6 +168,25 @@ def on_page_content(html, page, config, files):
     return html
 
 
+FRONT_MATTER_KEYS = ("tags", "keywords", "authors", "exclude_contributors")
+
+
+def own_front_matter(page):
+    """How many values the page's own front matter (not a folder's .meta.yml,
+    which the meta plugin merges into page.meta) gives each list key."""
+    try:
+        _, meta = get_data(Path(page.file.abs_src_path).read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError):
+        meta = {}
+    counts = {}
+    for key in FRONT_MATTER_KEYS:
+        value = meta.get(key)
+        if isinstance(value, str):
+            value = [value] if value.strip() else []
+        counts[key] = len(value) if isinstance(value, list) else 0
+    return counts
+
+
 def on_page_context(context, page, config, nav):
     meta = page.meta
     src = page.file.src_uri
@@ -184,6 +206,7 @@ def on_page_context(context, page, config, nav):
         "stale": meta.get("last_verified_stale"),
         "description": bool(description),
         "description_length": len(description),
+        "front_matter": own_front_matter(page),
         "links": [f"docs/{s}" for s in meta.get("page_links", [])],
     }
     return context
