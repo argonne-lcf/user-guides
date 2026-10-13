@@ -9,6 +9,9 @@
   Dates and contributors come from git (git-revision-date-localized and
   hooks/page_history.py); authors and last_verified from the page's front
   matter. Without the hook (e.g. under Zensical), the front matter still shows.
+  A stale Last verified (hooks/page_metadata.py: older than
+  extra.last_verified_max_age_days, or the page changed since) gets a
+  warning icon and color, with the reason as a tooltip.
 -#}
 {% set max_names = 8 %}
 {% macro names(list) -%}
@@ -52,8 +55,15 @@
           </span>
         {% endif %}
         {% if verified %}
-          <span class="md-source-file__fact">
-            <span class="md-icon">{% include ".icons/material/check-decagram-outline.svg" %}</span>
+          {% set stale = page.meta.last_verified_stale %}
+          <span class="md-source-file__fact{% if stale %} alcf-page-history__stale{% endif %}"{% if stale %} title="{{ page.meta.last_verified_note }}"{% endif %}>
+            <span class="md-icon">
+              {% if stale %}
+                {% include ".icons/material/alert-decagram-outline.svg" %}
+              {% else %}
+                {% include ".icons/material/check-decagram-outline.svg" %}
+              {% endif %}
+            </span>
             Last verified {{ verified }}
           </span>
         {% endif %}

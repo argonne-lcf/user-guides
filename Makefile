@@ -35,6 +35,13 @@ build-docs:
 check-descriptions:
 	python3 scripts/check_descriptions.py
 
+# Report pages with no last_verified: date, or a stale one, from
+# site/page-metadata.json (written by the build). Warning only; --list lists
+# the pages.
+.PHONY: check-verified
+check-verified:
+	python3 scripts/check_verified.py
+
 .PHONY: clean
 clean:
 	@echo "Cleaning up generated files..."

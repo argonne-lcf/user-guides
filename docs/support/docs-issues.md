@@ -23,6 +23,6 @@ last_verified: 2026-10-12
 ```
 
 - `authors:` lists the people who wrote the page. Everyone else who changed it is listed as "Edited by". A page without `authors:` lists all its contributors, most commits first.
-- `last_verified:` is the date someone last checked the whole page against the system, for example by running its commands. Update it only after checking the whole page, not with every edit.
+- `last_verified:` is the date someone last checked the whole page against the system, for example by running its commands. Update it only after checking the whole page, not with every edit. The date turns orange once it's a year old or the page has changed since; hover over it for the reason. The [Page Status](../page-status.md) table lists every page's dates, owners, and verification status.
 
 To change how your name appears, or to merge two of your git identities into one name, add your commit email to [`.mailmap`](https://github.com/argonne-lcf/user-guides/blob/main/.mailmap).
