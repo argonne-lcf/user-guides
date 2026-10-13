@@ -184,6 +184,12 @@ validation:
 
 extra:
   homepage: 'https://docs.alcf.anl.gov'
+  # Left out of the contributor names at the bottom of every page
+  # (hooks/page_history.py), as `git log --format=%aN` shows them. Their
+  # commits still count toward Last Updated. A page's own
+  # exclude_contributors: front matter does the same for that page.
+  exclude_contributors: []
+  #  - <name>
   social:  # placed in overridden footer
     - icon: 'fontawesome/brands/github-alt'
       link: 'https://github.com/argonne-lcf/user-guides'
@@ -203,6 +209,7 @@ hooks:
   - hooks/compress_social_cards.py
   - hooks/tag_order.py
   - hooks/search_tuning.py
+  - hooks/page_history.py
 
 plugins:
   - search:
@@ -211,6 +218,20 @@ plugins:
       # "PyTorch" as "Py" + "Torch", so lowercase queries like "pytorch",
       # "tensorflow", "jupyterhub", or "sambanova" missed those pages.
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;'
+  # Created and Last Updated dates from git history, shown with contributors
+  # and last_verified by overrides/partials/source-file.html. Needs full
+  # history (fetch-depth: 0 in CI). hooks/page_history.py recomputes the dates
+  # (renames, snippets, front-matter-only edits) and adds the names.
+  - git-revision-date-localized:
+      type: iso_date  # default: date
+      timezone: America/Chicago
+      ignored_commits_file: .git-blame-ignore-revs
+      enable_creation_date: true
+      enable_git_follow: false  # see hooks/page_history.py
+      exclude:
+        - index.md  # only the home page (section index pages get dates): its tiles link elsewhere
+        - inbound-links.md  # generated
+      #strict: false  # default is true; might need to change to false for builds where git is not avail
   - minify:
       minify_html: true
       # Keep attribute quotes: some link-preview crawlers (e.g. WhatsApp)

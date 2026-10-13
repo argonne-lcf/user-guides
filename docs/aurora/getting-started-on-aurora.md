@@ -57,7 +57,7 @@ Note that there is a separate Python installation in `spack-pe-gcc` which is use
 
 ## Software Environment
 
-The Aurora Programming Environment (Aurora PE) provides the OneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
+The Aurora Programming Environment (Aurora PE) provides the oneAPI SDK, MPICH, runtime libraries, and a suite of additional tools and libraries. The Aurora PE is available in the default environment and is accessible through modules. For example, tools and libraries like `cmake`, `boost`, and `hdf5` are available in the default environment.
 ```bash linenums="1"
 module load cmake
 ```
