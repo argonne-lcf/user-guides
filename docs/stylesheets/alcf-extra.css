@@ -69,7 +69,7 @@
 
 
   body {
-    color: var(--neutral-med-dark);
+    color: var(--neutral_med-dark);
     transition: color .25s, background-color .25s;
   }
 
@@ -505,7 +505,7 @@
   /* --md-code-hl-constant-color:    var(--blue_dark);  */
 
   body {
-    color: var(--neutral-med-light);
+    color: var(--neutral_med-light);
     transition: color .25s, background-color .25s;
   }
 
