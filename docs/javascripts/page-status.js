@@ -179,8 +179,8 @@
             el("a", { href: new URL(p.url, base).href, text: p.title }),
             el("br"), el("small", { text: p.path })
           ]),
-          el("td", {}, sectionLinks(p.section)),
-          el("td", {}, ownerLinks(p.owners)),
+          el("td", { class: "alcf-page-status__section" }, sectionLinks(p.section)),
+          el("td", { class: "alcf-page-status__owners" }, ownerLinks(p.owners)),
           el("td", { text: p.created || "", "data-sort": dateKey(p.created) }),
           updatedCell(p.updated),
           el("td", { text: p.last_verified || "", "data-sort": dateKey(p.last_verified) }),

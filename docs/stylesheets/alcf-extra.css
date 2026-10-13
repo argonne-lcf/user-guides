@@ -2142,6 +2142,19 @@ pre .normal a {
   white-space: normal;
   min-width: 14em;
 }
+/* Section paths wrap at their separators, and owners one handle per line
+   when there are several, to keep those columns narrow. */
+.md-typeset .alcf-page-status table td.alcf-page-status__section {
+  white-space: normal;
+  max-width: 16em;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__owners {
+  white-space: normal;
+  max-width: 13em;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__owners a {
+  display: inline-block;
+}
 .alcf-page-status__status--stale {
   color: #ff9100;
 }
