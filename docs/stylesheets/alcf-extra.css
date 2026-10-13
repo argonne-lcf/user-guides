@@ -52,12 +52,15 @@
    theme blocks below, which come later and override it. Put a rule here
    unless its value differs between the themes, so they can't drift apart. */
 [data-md-color-scheme] {
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     text-decoration: underline;
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     text-decoration: none;
   }
 
@@ -316,13 +319,16 @@
     background-color: var(--blue_med);
   }
 
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     color: var(--blue_dark);
     text-decoration-color: var(--blue_med);
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     color: var(--green_med-dark);
   } 
 
@@ -553,13 +559,16 @@
     background-color: var(--neutral_dark);
   }
 
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     color: var(--green_pale);
     text-decoration-color: var(--green_med);
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     color: var(--green_med-light);
   } 
 
@@ -2094,16 +2103,12 @@ pre .normal a {
   background: var(--md-default-bg-color);
   color: var(--md-default-fg-color);
 }
-/* Section path entries: buttons that filter the table, styled as links. */
+/* Section path entries: buttons that filter the table. The .md-typeset a
+   rules in the theme blocks above give them the link colors. */
 .md-typeset .alcf-page-status__link {
   all: unset;
-  color: var(--md-typeset-a-color);
-  text-decoration: underline;
+  font: inherit;
   cursor: pointer;
-}
-.md-typeset .alcf-page-status__link:hover,
-.md-typeset .alcf-page-status__link:focus-visible {
-  color: var(--md-accent-fg-color);
 }
 .md-typeset .alcf-page-status table td,
 .md-typeset .alcf-page-status table th {

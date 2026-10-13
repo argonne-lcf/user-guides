@@ -117,10 +117,13 @@
       });
       return nodes;
     }
+    function dateKey(date) {  // YYYY-MM-DD as a sortable integer; blanks sort first
+      return date ? date.replace(/-/g, "") : 0;
+    }
     function updatedCell(updated) {
       if (!updated) return el("td");
       var days = daysBetween(updated, data.generated);
-      return el("td", { class: "alcf-page-status__age--" + ageBand(days), title: days + " days ago", text: updated });
+      return el("td", { class: "alcf-page-status__age--" + ageBand(days), title: days + " days ago", text: updated, "data-sort": dateKey(updated) });
     }
 
     function update() {
@@ -149,11 +152,15 @@
         el("span", {}, [document.createTextNode("Data from " + data.generated + "; stale after " + data.last_verified_max_age_days + " days")])
       );
 
+      // Dates and counts sort as numbers (data-sort): Tablesort's date plugin
+      // doesn't recognize YYYY-MM-DD and sorts those by day of month.
+      var NUMERIC = { Created: 1, Updated: 1, Verified: 1, Status: 1, Description: 1, "Links out": 1, "Links in": 1 };
       var head = el("tr", {}, ["Page", "Section", "Owners", "Created", "Updated", "Verified", "Status", "Description", "Links out", "Links in"]
-        .map(function (h) { return el("th", { text: h }); }));
+        .map(function (h) { return el("th", NUMERIC[h] ? { text: h, "data-sort-method": "number" } : { text: h }); }));
       var rows = shown.map(function (p) {
         var st = status(p);
-        var sortKey = p.stale ? 0 : p.last_verified ? 2 : 1;
+        // Stale first (by age), then never verified, then verified (by age).
+        var statusKey = p.stale ? p.verified_age_days : p.last_verified ? 2000000 + p.verified_age_days : 1000000;
         return el("tr", {}, [
           el("td", { class: "alcf-page-status__page" }, [
             el("a", { href: new URL(p.url, base).href, text: p.title }),
@@ -161,10 +168,10 @@
           ]),
           el("td", {}, sectionLinks(p.section)),
           el("td", {}, ownerLinks(p.owners)),
-          el("td", { text: p.created || "" }),
+          el("td", { text: p.created || "", "data-sort": dateKey(p.created) }),
           updatedCell(p.updated),
-          el("td", { text: p.last_verified || "" }),
-          el("td", { class: "alcf-page-status__status--" + st[0], text: st[1], "data-sort": sortKey + " " + (p.verified_age_days || 0) }),
+          el("td", { text: p.last_verified || "", "data-sort": dateKey(p.last_verified) }),
+          el("td", { class: "alcf-page-status__status--" + st[0], text: st[1], "data-sort": statusKey }),
           el("td", { class: p.description ? "" : "alcf-page-status__status--missing", text: p.description ? "yes, " + p.description_length + " chars" : "none", "data-sort": p.description_length }),
           el("td", { text: p.links.length }),
           el("td", { text: p.inbound })
