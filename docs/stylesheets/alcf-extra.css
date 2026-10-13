@@ -2146,7 +2146,8 @@ pre .normal a {
    when there are several, to keep those columns narrow. */
 .md-typeset .alcf-page-status table td.alcf-page-status__section {
   white-space: normal;
-  max-width: 16em;
+  min-width: 15em;
+  max-width: 20em;
 }
 .md-typeset .alcf-page-status table td.alcf-page-status__owners {
   white-space: normal;
