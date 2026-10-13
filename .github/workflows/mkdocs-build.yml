@@ -9,7 +9,7 @@ on:
 
 jobs:
   docs-strict:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # pinned for the apt-get installs; see AGENTS.md
     steps:
       - uses: actions/checkout@v7
         with:
