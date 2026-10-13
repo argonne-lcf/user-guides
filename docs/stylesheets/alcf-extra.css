@@ -2094,6 +2094,17 @@ pre .normal a {
   background: var(--md-default-bg-color);
   color: var(--md-default-fg-color);
 }
+/* Section path entries: buttons that filter the table, styled as links. */
+.md-typeset .alcf-page-status__link {
+  all: unset;
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.md-typeset .alcf-page-status__link:hover,
+.md-typeset .alcf-page-status__link:focus-visible {
+  color: var(--md-accent-fg-color);
+}
 .md-typeset .alcf-page-status table td,
 .md-typeset .alcf-page-status table th {
   white-space: nowrap;
@@ -2111,4 +2122,18 @@ pre .normal a {
 }
 .alcf-page-status__status--ok {
   color: #00c853;
+}
+/* Last updated, by age (AGE_BANDS in page-status.js): green within six
+   months, yellow within a year, orange within two, red beyond. */
+.alcf-page-status__age--fresh {
+  color: #00c853;
+}
+.alcf-page-status__age--aging {
+  color: #e0a800;
+}
+.alcf-page-status__age--old {
+  color: #ff9100;
+}
+.alcf-page-status__age--stale {
+  color: #ff1744;
 }

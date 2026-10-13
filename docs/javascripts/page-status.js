@@ -17,6 +17,15 @@
     return el("option", { value: value, text: text });
   }
 
+  // Color for a Last updated date, by age in days.
+  var AGE_BANDS = [[180, "fresh"], [365, "aging"], [730, "old"], [Infinity, "stale"]];
+  function ageBand(days) {
+    for (var i = 0; i < AGE_BANDS.length; i++) if (days <= AGE_BANDS[i][0]) return AGE_BANDS[i][1];
+  }
+  function daysBetween(from, to) {
+    return Math.round((new Date(to) - new Date(from)) / 86400000);
+  }
+
   function status(page) {
     if (page.stale === "age") return ["stale", "Stale: " + page.verified_age_days + " days"];
     if (page.stale === "updated") return ["stale", "Stale: changed " + page.updated];
@@ -45,6 +54,11 @@
       nav: el("input", { type: "checkbox" })
     };
     var sectionPrefix = [];  // the chosen section path so far
+    function selectSection(path) {
+      sectionPrefix = path.slice();
+      buildSectionSelects();
+      update();
+    }
     function buildSectionSelects() {
       var selects = [];
       for (var level = 0; level <= sectionPrefix.length; level++) {
@@ -78,7 +92,36 @@
       el("label", {}, [filters.nav, document.createTextNode(" Include pages not in the sidebar")])
     ]);
     var tableWrap = el("div", { class: "md-typeset__table" });
+    // Buttons, not anchors: Material's instant navigation reloads the page
+    // for an anchor with href="#", which resets the table.
+    tableWrap.addEventListener("click", function (e) {
+      var button = e.target.closest("button[data-section]");
+      if (button) selectSection(JSON.parse(button.dataset.section));
+    });
     root.replaceChildren(summary, bar, tableWrap);
+
+    // Each part of the section path filters the table to that path.
+    function sectionLinks(section) {
+      var nodes = [];
+      section.forEach(function (name, i) {
+        if (i) nodes.push(document.createTextNode(" / "));
+        nodes.push(el("button", { type: "button", class: "alcf-page-status__link", "data-section": JSON.stringify(section.slice(0, i + 1)), text: name }));
+      });
+      return nodes;
+    }
+    function ownerLinks(owners) {
+      var nodes = [];
+      owners.forEach(function (o, i) {
+        if (i) nodes.push(document.createTextNode(" "));
+        nodes.push(el("a", { href: "https://github.com/" + o.replace(/^@/, ""), text: o }));
+      });
+      return nodes;
+    }
+    function updatedCell(updated) {
+      if (!updated) return el("td");
+      var days = daysBetween(updated, data.generated);
+      return el("td", { class: "alcf-page-status__age--" + ageBand(days), title: days + " days ago", text: updated });
+    }
 
     function update() {
       var shown = pages.filter(function (p) {
@@ -116,10 +159,10 @@
             el("a", { href: new URL(p.url, base).href, text: p.title }),
             el("br"), el("small", { text: p.path })
           ]),
-          el("td", { text: p.section.join(" / ") }),
-          el("td", { text: p.owners.join(" ") }),
+          el("td", {}, sectionLinks(p.section)),
+          el("td", {}, ownerLinks(p.owners)),
           el("td", { text: p.created || "" }),
-          el("td", { text: p.updated || "" }),
+          updatedCell(p.updated),
           el("td", { text: p.last_verified || "" }),
           el("td", { class: "alcf-page-status__status--" + st[0], text: st[1], "data-sort": sortKey + " " + (p.verified_age_days || 0) }),
           el("td", { class: p.description ? "" : "alcf-page-status__status--missing", text: p.description ? "yes, " + p.description_length + " chars" : "none", "data-sort": p.description_length }),
