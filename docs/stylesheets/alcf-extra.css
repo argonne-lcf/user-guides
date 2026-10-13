@@ -46,65 +46,25 @@
   --md-accent-fg-color--transparent: rgba(24, 185, 180, 0.1);
 }
 
-
-
-/* Light theme color rules */
-[data-md-color-scheme="alcf"] {
-  /* Using makedoc var names for code coloring */
-  --md-code-hl-operator-color:    rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-punctuation-color: rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-variable-color:    var(--neutral_dark);
-  --md-code-bg-color:             rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-color:             var(--green_pale);
-  --md-code-hl-generic-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-comment-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
-  --md-code-hl-name-color:        var(--neutral_dark);
-  --md-code-hl-color--light:      var(--blue_pale);
-  --md-code-hl-number-color:      var(--warm_red); 
-  --md-code-hl-special-color:     var(--warm_red);
-  --md-code-hl-function-color:    var(--warm_orange);
-  --md-code-hl-constant-color:    var(--blue_dark); 
-  --md-code-hl-keyword-color:     var(--blue_med); 
-  --md-code-hl-string-color:      var(--green_med);
-
-
-  body {
-    color: var(--neutral_med-dark);
-    transition: color .25s, background-color .25s;
-  }
-
-  .md-container {
-    background-color: var(--neutral_light);
-  }
-
-  .md-header {
-    background-color: var(--blue_med);
-  }
-
+/* Both themes: layout, and colors the themes share. Same specificity as the
+   theme blocks below, which come later and override it. Put a rule here
+   unless its value differs between the themes, so they can't drift apart. */
+[data-md-color-scheme] {
   .md-typeset a {
-    color: var(--blue_dark);
     text-decoration: underline;
-    text-decoration-color: var(--blue_med);
   }
 
   .md-typeset a:focus,
   .md-typeset a:hover {
-    color: var(--green_med-dark);
     text-decoration: none;
-  } 
+  }
 
   .md-header {
     color: var(--neutral_light);
-    border-bottom: 1px solid var(--blue_dark);
-  }
-
-  .md-typeset h1,
-  .md-typeset h2 {
-    color: var(--neutral_dark);
+    border-bottom: 1px solid;
   }
 
   .md-typeset h3 {
-    color: var(--neutral_med-dark);
     font-size: 21px;
     font-weight: 600;
     margin-top: .75em;
@@ -127,54 +87,8 @@
     color: var(--neutral_light);
   }
 
-  .header--primary .header__nav-primary a:hover,
-  .header--primary .header__nav-secondary a:hover,
-  .header--primary a:hover {
-    opacity: .5;
-  }
-
-  .header--primary .header__nav-secondary a,
-  .md-header__button {
-    color: var(--green_pale);
-  }
-
-  @media screen and (min-width: 60em) {
-    .md-search__overlay {
-      background-color: var(--blue_dark);
-      opacity: .65 !important;
-    }
-  }
-
-  .md-search-result__link:focus, .md-search-result__link:hover,
-  .md-search-result__more > summary:focus > div, .md-search-result__more > summary:hover > div {
-    background-color: var(--neutral_dark);
-  }
-
-  .md-search__input {
-    background: var(--green_pale); 
-  }
-
-  @media screen and (min-width: 60em) {
-    [data-md-toggle="search"]:checked ~ .md-header .md-search__input {
-      background: var(--blue_pale);
-    }
-  }
-
-  .md-search-result__list, .md-search-result__meta {
-    background: var(--neutral_dark);
-  }
-
   .md-search-result .md-typeset {
     border-top: 1px solid var(--neutral_med);
-  }
-
-  .md-nav__item--section>.md-nav__link[for] {
-    color: var(--blue_dark);
-  }
-
-  .md-search__scrollwrap h1,
-  .md-search__scrollwrap p {
-      color: var(--blue_dark);
   }
 
   .md-search-result__article--document .md-search-result__title,
@@ -184,26 +98,15 @@
   }
 
   .dropdown {
-    border-top: 1px solid var(--blue_med);
+    border-top: 1px solid;
   }
 
   .dropdown nav {
-    background-color: var(--neutral_dark);
     color: var(--neutral_light);
   }
 
   .dropdown .dropdown__links-group li {
     border-top: 1px solid var(--blue_med);
-  }
-
-  .dropdown .dropdown__links-group li a,
-  .dropdown .dropdown__featured a {
-    color: var(--green_pale);
-  }
-
-  .dropdown .dropdown__links-group li a:hover,
-  .dropdown .dropdown__featured a:hover {
-    color: var(--neutral_med);
   }
 
   .header--mobile .header__nav-primary a {
@@ -257,27 +160,18 @@
   }
 
   footer {
-    background-color: var(--neutral_dark); 
     color: var(--neutral_light);
-  }
-
-  footer a {
-    color: var(--blue_pale);
   }
 
   footer a:hover {
     color: var(--neutral_med);
   }
 
-  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
-     instant previews are [role=dialog] and keep the theme colors, since their
-     fade gradients and nested headings/links use --md-default-bg-color. */
   .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
-  /* The tail is drawn with a border; a background-color paints a square. */
   .md-tooltip2--top[role=tooltip]:before {
     border-top-color: var(--neutral_med-light);
   }
@@ -286,17 +180,236 @@
     border-bottom-color: var(--neutral_med-light);
   }
 
-  .md-typeset code {
-    background-color: var(--neutral_med-light);
-    color: var(--neutral_dark);
-  }
-
   .md-typeset a code {
-    color: var(--green_med-light); /* #007b70; */
+    color: var(--green_med-light);
   }
 
   .md-typeset a:hover code {
     background-color: var(--green_pale);
+  }
+
+  .md-typeset .md-content__button {
+    color: var(--neutral_med);
+  }
+
+  .md-top {
+    border: 1px solid var(--neutral_med);
+  }
+
+  .md-search-result mark {
+    background-color: initial;
+    font-weight: 700;
+  }
+
+  .md-search-result__more > summary > div {
+    transition: color .25s, background-color .25s;
+  }
+
+  .md-search-result__more > summary:focus > div,
+  .md-search-result__more > summary:hover > div {
+    color: var(--neutral_med);
+  }
+
+  .header--primary .md-search-result__item a:hover,
+  .header--primary .md-search-result__item a:hover p,
+  .header--primary .md-search-result__item a:hover h1,
+  .header--primary .md-search-result__item a:hover h2,
+  .header--primary .md-search-result__item a:hover div,
+  .header--primary .md-search-result__item a:hover mark,
+  .header--primary .md-search-result__item a:hover article {
+    color: var(--neutral_med);
+  }
+
+  .header--primary .md-search-result__item a:hover pre,
+  .header--primary .md-search-result__item a:hover code {
+    opacity: .5;
+  }
+
+  .md-typeset .headerlink,
+  .md-typeset .headerlink:focus,
+  .md-typeset .headerlink:hover,
+  .md-typeset :target > .headerlink {
+    color: var(--neutral_med);
+    text-decoration: none;
+  }
+
+  .footer--copyright p {
+    color: var(--neutral_med);
+  }
+
+  .md-typeset .footnote {
+    color: var(--neutral_med-light);
+  }
+
+  .md-typeset .footnote-backref {
+    color: var(--green_pale);
+  }
+
+  .md-typeset .footnote-backref:hover {
+    color: var(--green_med);
+  }
+
+  .md-typeset hr {
+    border-bottom: .05rem solid var(--neutral_med);
+  }
+
+  [dir="ltr"] .md-typeset blockquote {
+    border-left: .2rem solid var(--neutral_med);
+  }
+
+  .header--primary .header__nav-primary li.top:last-child,
+  .header--primary .header__nav-primary li.top:nth-last-child(2) {
+    border-left: 1px solid;
+    padding-left: 10px;
+  }
+
+  @media screen and (min-width: 1250px) {
+    .header--primary .header__nav-primary li.top:last-child,
+    .header--primary .header__nav-primary li.top:nth-last-child(2) {
+      padding-left: 28px;
+    }
+  }
+
+  .md-typeset img {
+    border: 1px solid;
+  }
+
+  .highlighttable .linenos a {
+    text-decoration: none;
+  }
+}
+
+/* Light theme color rules */
+[data-md-color-scheme="alcf"] {
+  /* Using makedoc var names for code coloring */
+  --md-code-hl-operator-color:    rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
+  --md-code-hl-punctuation-color: rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
+  --md-code-hl-variable-color:    var(--neutral_dark);
+  --md-code-bg-color:             rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
+  --md-code-hl-color:             var(--green_pale);
+  --md-code-hl-generic-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
+  --md-code-hl-comment-color:     rgba(  7,   7,  18, 0.5); /* neutral_dark at 50% */
+  --md-code-hl-name-color:        var(--neutral_dark);
+  --md-code-hl-color--light:      var(--blue_pale);
+  --md-code-hl-number-color:      var(--warm_red); 
+  --md-code-hl-special-color:     var(--warm_red);
+  --md-code-hl-function-color:    var(--warm_orange);
+  --md-code-hl-constant-color:    var(--blue_dark); 
+  --md-code-hl-keyword-color:     var(--blue_med); 
+  --md-code-hl-string-color:      var(--green_med);
+
+  .md-container {
+    background-color: var(--neutral_light);
+  }
+
+  .md-header {
+    background-color: var(--blue_med);
+  }
+
+  .md-typeset a {
+    color: var(--blue_dark);
+    text-decoration-color: var(--blue_med);
+  }
+
+  .md-typeset a:focus,
+  .md-typeset a:hover {
+    color: var(--green_med-dark);
+  } 
+
+  .md-header {
+    border-bottom-color: var(--blue_dark);
+  }
+
+  .md-typeset h1,
+  .md-typeset h2 {
+    color: var(--neutral_dark);
+  }
+
+  .md-typeset h3 {
+    color: var(--neutral_med-dark);
+  }
+
+  .header--primary .header__nav-primary a:hover,
+  .header--primary .header__nav-secondary a:hover,
+  .header--primary a:hover {
+    opacity: .5;
+  }
+
+  .header--primary .header__nav-secondary a,
+  .md-header__button {
+    color: var(--green_pale);
+  }
+
+  @media screen and (min-width: 60em) {
+    .md-search__overlay {
+      background-color: var(--blue_dark);
+      opacity: .65 !important;
+    }
+  }
+
+  .md-search-result__link:focus, .md-search-result__link:hover,
+  .md-search-result__more > summary:focus > div, .md-search-result__more > summary:hover > div {
+    background-color: var(--neutral_dark);
+  }
+
+  .md-search__input {
+    background: var(--green_pale); 
+  }
+
+  @media screen and (min-width: 60em) {
+    [data-md-toggle="search"]:checked ~ .md-header .md-search__input {
+      background: var(--blue_pale);
+    }
+  }
+
+  .md-search-result__list, .md-search-result__meta {
+    background: var(--neutral_dark);
+  }
+
+  .md-nav__item--section>.md-nav__link[for] {
+    color: var(--blue_dark);
+  }
+
+  .md-search__scrollwrap h1,
+  .md-search__scrollwrap p {
+      color: var(--blue_dark);
+  }
+
+  .dropdown {
+    border-top-color: var(--blue_med);
+  }
+
+  .dropdown nav {
+    background-color: var(--neutral_dark);
+  }
+
+  .dropdown .dropdown__links-group li a,
+  .dropdown .dropdown__featured a {
+    color: var(--green_pale);
+  }
+
+  .dropdown .dropdown__links-group li a:hover,
+  .dropdown .dropdown__featured a:hover {
+    color: var(--neutral_med);
+  }
+
+  footer {
+    background-color: var(--neutral_dark); 
+  }
+
+  footer a {
+    color: var(--blue_pale);
+  }
+
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
+
+  /* The tail is drawn with a border; a background-color paints a square. */
+
+  .md-typeset code {
+    background-color: var(--neutral_med-light);
+    color: var(--neutral_dark);
   }
 
   /* Custom styles for the navigation title link - ONLY FOR DESKTOP */
@@ -357,14 +470,6 @@
     background-color: var(--neutral_light) !important;
   }
 
-  .md-typeset .md-content__button {
-    color: var(--neutral_med);
-  }
-
-  .md-top {
-    border: 1px solid var(--neutral_med);
-  }
-
   .md-top:focus, .md-top:hover {
     background-color: var(--blue_dark);
     border: 1px solid var(--blue_med);
@@ -372,67 +477,12 @@
   }
 
   .md-search-result mark {
-    background-color: initial;
     color: var(--blue_pale);
-    font-weight: 700;
     text-decoration-color: var(--blue_med);
   }
 
   .md-search-result__more > summary > div {
     color: var(--blue_pale);
-    transition: color .25s, background-color .25s;
-  }
-
-  .md-search-result__more > summary:focus > div, 
-  .md-search-result__more > summary:hover > div {
-    color: var(--neutral_med);
-  }
-
-  .header--primary .md-search-result__item a:hover,
-  .header--primary .md-search-result__item a:hover p,
-  .header--primary .md-search-result__item a:hover h1,
-  .header--primary .md-search-result__item a:hover h2,
-  .header--primary .md-search-result__item a:hover div,
-  .header--primary .md-search-result__item a:hover mark,
-  .header--primary .md-search-result__item a:hover article {
-    color: var(--neutral_med);
-  }
-
-  .header--primary .md-search-result__item a:hover pre,
-  .header--primary .md-search-result__item a:hover code {
-    opacity: .5;
-  }
-
-  .md-typeset .headerlink,
-  .md-typeset .headerlink:focus, 
-  .md-typeset .headerlink:hover, 
-  .md-typeset :target > .headerlink {
-    color: var(--neutral_med);
-    text-decoration: none;
-  }
-
-  .footer--copyright p {
-    color: var(--neutral_med);
-  }
-
-  .md-typeset .footnote {
-    color: var(--neutral_med-light);
-  }
-
-  .md-typeset .footnote-backref {
-    color: var(--green_pale);
-  }
-
-  .md-typeset .footnote-backref:hover {
-    color: var(--green_med);
-  }
-
-  .md-typeset hr {
-    border-bottom: .05rem solid var(--neutral_med);
-  }
-
-  [dir="ltr"] .md-typeset blockquote {
-    border-left: .2rem solid var(--neutral_med);
   }
 
   .md-typeset blockquote {
@@ -441,16 +491,8 @@
 
   .header--primary .header__nav-primary li.top:last-child,
   .header--primary .header__nav-primary li.top:nth-last-child(2) { 
-    border-left: 1px solid var(--blue_dark);
-    padding-left: 10px;
+    border-left-color: var(--blue_dark);
   } 
-
-  @media screen and (min-width: 1250px) {
-    .header--primary .header__nav-primary li.top:last-child,
-    .header--primary .header__nav-primary li.top:nth-last-child(2) { 
-      padding-left: 28px;
-    } 
-  }
 
   .md-search__input::placeholder,
   .md-search__input + .md-search__icon {
@@ -458,7 +500,7 @@
   }
 
   .md-typeset img {
-    border: 1px solid var(--neutral_med-light);
+    border-color: var(--neutral_med-light);
   }
 
   .highlighttable .linenos {
@@ -467,7 +509,6 @@
 
   .highlighttable .linenos a {
     color: var(--neutral_light);
-    text-decoration: none;
   }
 
   .md-search-result .md-typeset h1,
@@ -479,11 +520,7 @@
     color: var(--neutral_med-light);
   }
 
-
-
 }
-
-
 
 /* Dark theme color rules */
 [data-md-color-scheme="slate"] {
@@ -504,52 +541,27 @@
   /* Placeholder: --md-code-hl-name-color not yet defined */
   /* --md-code-hl-constant-color:    var(--blue_dark);  */
 
-  body {
-    color: var(--neutral_med-light);
-    transition: color .25s, background-color .25s;
-  }
-
   .md-container, .md-header {
     background-color: var(--neutral_dark);
   }
 
   .md-typeset a {
     color: var(--green_pale);
-    text-decoration: underline;
     text-decoration-color: var(--green_med);
   }
 
   .md-typeset a:focus,
   .md-typeset a:hover {
     color: var(--green_med-light);
-    text-decoration: none;
   } 
 
   .md-header {
-    color: var(--neutral_light);
-    border-bottom: 1px solid var(--neutral_med);
+    border-bottom-color: var(--neutral_med);
   }
 
   .md-typeset h1,
   .md-typeset h2,
   .md-typeset h3 {
-    color: var(--neutral_light);
-  }
-
-  .md-typeset ul>li:before {
-    color: var(--neutral_med);
-  }
-
-  .header--primary .header__site-title h1 {
-    color: var(--green_pale);
-  }
-
-  .header--primary .header__site-title img {
-    width: 270px;
-  }
-
-  .header--secondary .header__nav-secondary a,
-  .header--primary .header__nav-primary a {
     color: var(--neutral_light);
   }
 
@@ -590,10 +602,6 @@
     background: var(--neutral_med-dark);
   }
 
-  .md-search-result .md-typeset {
-    border-top: 1px solid var(--neutral_med);
-  }
-
   .md-nav__item--section>.md-nav__link[for] {
     color: var(--neutral_light);
   }
@@ -603,23 +611,12 @@
       color: var(--neutral_light);
   }
 
-  .md-search-result__article--document .md-search-result__title,
-  .md-search__scrollwrap details,
-  .md-search__scrollwrap summary {
-    color: var(--green_med-light);
-  }
-
   .dropdown {
-    border-top: 1px solid var(--neutral_med);
+    border-top-color: var(--neutral_med);
   }
 
   .dropdown nav {
     background-color: var(--green_med-dark);
-    color: var(--neutral_light);
-  }
-
-  .dropdown .dropdown__links-group li {
-    border-top: 1px solid var(--blue_med);
   }
 
   .dropdown .dropdown__links-group li a,
@@ -632,97 +629,23 @@
     color: var(--blue_med);
   }
 
-  .header--mobile .header__nav-primary a {
-    color: var(--neutral_light);
-  }
-
-  .header--mobile .header__site-title h1 {
-    color: var(--green_pale);
-  }
-
-  .header--mobile .header__mobIcons svg {
-    fill: var(--green_pale);
-  }
-
-  .header--mobile .header__mobIcons svg:hover {
-    fill: var(--green_med-light);
-  }
-
-  .header--mobile .dropdown nav {
-    background-color: var(--neutral_dark);
-    color: var(--neutral_light);
-  }
-
-  .header--mobile .dropdown .dropdown__links-group li {
-    border-top: 1px solid var(--blue_med);
-  }
-
-  .header--mobile .dropdown .dropdown__links-group li:last-child {
-    border-bottom: 1px solid var(--blue_med);
-  }
-
-  .header--mobile .dropdown .dropdown__links-group li a {
-    color: var(--blue_pale);
-  }
-
-  .header--mobile .dropdown .dropdown__links-group li a:hover {
-    color: var(--neutral_med);
-  }
-
-  .header--mobile .header__dropdownBG {
-    background-color: var(--neutral_dark);
-  }
-
-  .header--mobile .dropdown {
-    background-color: var(--neutral_dark);
-    color: var(--neutral_light);
-  }
-
-  .header--mobile a.drawer-head {
-    border-bottom: 1px solid var(--blue_pale);
-  }
-
   footer {
     background-color: var(--neutral_med-dark); 
-    color: var(--neutral_light);
   }
 
   footer a {
     color: var(--green_med-light);
   }
 
-  footer a:hover {
-    color: var(--neutral_med);
-  }
-
   /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
      instant previews are [role=dialog] and keep the theme colors, since their
      fade gradients and nested headings/links use --md-default-bg-color. */
-  .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
-    background-color: var(--neutral_med-light);
-    color: var(--neutral_dark);
-  }
 
   /* The tail is drawn with a border; a background-color paints a square. */
-  .md-tooltip2--top[role=tooltip]:before {
-    border-top-color: var(--neutral_med-light);
-  }
-
-  .md-tooltip2--bottom[role=tooltip]:before {
-    border-bottom-color: var(--neutral_med-light);
-  }
 
   .md-typeset code {
     color: var(--neutral_med-light);
     background-color: var(--neutral_med-dark);
-  }
-
-  .md-typeset a code {
-    color: var(--green_med-light); /* #007b70; */
-  }
-
-  .md-typeset a:hover code {
-    background-color: var(--green_pale);
   }
 
   /* Custom styles for the navigation title link - ONLY FOR DESKTOP */
@@ -783,81 +706,18 @@
     background-color: var(--neutral_dark) !important;
   }
 
-  .md-typeset .md-content__button {
-    color: var(--neutral_med);
-  }
-
-  .md-top {
-    border: 1px solid var(--neutral_med);
-  }
-
   .md-top:focus, .md-top:hover {
     background-color: var(--green_med-dark);
     color: var(--green_pale);
   }
 
   .md-search-result mark {
-    background-color: initial;
     color: var(--green_pale);
-    font-weight: 700;
     text-decoration-color: var(--green_med);
   }
 
   .md-search-result__more > summary > div {
     color: var(--green_med-light);
-    transition: color .25s, background-color .25s;
-  }
-
-  .md-search-result__more > summary:focus > div, 
-  .md-search-result__more > summary:hover > div {
-    color: var(--neutral_med);
-  }
-
-  .header--primary .md-search-result__item a:hover,
-  .header--primary .md-search-result__item a:hover p,
-  .header--primary .md-search-result__item a:hover h1,
-  .header--primary .md-search-result__item a:hover h2,
-  .header--primary .md-search-result__item a:hover div,
-  .header--primary .md-search-result__item a:hover mark,
-  .header--primary .md-search-result__item a:hover article {
-    color: var(--neutral_med);
-  }
-
-  .header--primary .md-search-result__item a:hover pre,
-  .header--primary .md-search-result__item a:hover code {
-    opacity: .5;
-  }
-
-  .md-typeset .headerlink,
-  .md-typeset .headerlink:focus, 
-  .md-typeset .headerlink:hover, 
-  .md-typeset :target > .headerlink {
-    color: var(--neutral_med);
-    text-decoration: none;
-  }
-
-  .footer--copyright p {
-    color: var(--neutral_med);
-  }
-
-  .md-typeset .footnote {
-    color: var(--neutral_med-light);
-  }
-
-  .md-typeset .footnote-backref {
-    color: var(--green_pale);
-  }
-
-  .md-typeset .footnote-backref:hover {
-    color: var(--green_med);
-  }
-
-  .md-typeset hr {
-    border-bottom: .05rem solid var(--neutral_med);
-  }
-
-  [dir="ltr"] .md-typeset blockquote {
-    border-left: .2rem solid var(--neutral_med);
   }
 
   .md-typeset blockquote {
@@ -866,19 +726,11 @@
 
   .header--primary .header__nav-primary li.top:last-child,
   .header--primary .header__nav-primary li.top:nth-last-child(2) { 
-    border-left: 1px solid var(--neutral_med);
-    padding-left: 10px;
+    border-left-color: var(--neutral_med);
   } 
 
-  @media screen and (min-width: 1250px) {
-    .header--primary .header__nav-primary li.top:last-child,
-    .header--primary .header__nav-primary li.top:nth-last-child(2) { 
-      padding-left: 28px;
-    } 
-  }
-
   .md-typeset img {
-    border: 1px solid var(--neutral_med);
+    border-color: var(--neutral_med);
   }
 
   .highlighttable .linenos {
@@ -887,7 +739,6 @@
 
   .highlighttable .linenos a {
     color: var(--green_pale);
-    text-decoration: none;
   }
 
   color-scheme: dark;
@@ -1018,11 +869,8 @@
   padding: 2.15rem 0;
 }
 
-
-
 /* primary header */
 /* ------------------------------------------------------------------------- */
-
 
 /* hide material header at large sizes, and the alcf header at small sizes */
 @media only screen and (max-width: 1020px) {
@@ -1441,7 +1289,6 @@
   width: 100%;
 }
 
-
 .dropdown .dropdown__links-group li a {
   width: 100%;
   display: inline-block;
@@ -1494,11 +1341,6 @@
   object-fit: cover;
   width: 100%;
 }
-
-
-
-
-
 
 /* mobile header */
 
@@ -1740,9 +1582,6 @@
   display: none !important;
 }
 
-
-
-
 /* footer */
 /* ----------------------------------------------------------------- */
 
@@ -1849,7 +1688,6 @@ footer .grid {
   text-align: left;
 }
 
-
 .footer--logos {
   /*grid-column: 4 / span 1;*/
   grid-column: 3 / -1;
@@ -1890,8 +1728,6 @@ footer a {
   margin-right: 18px;
 }
 
-
-
 /*// For the js script*/
 .js-dropdown-visible {
   display: block;
@@ -1910,12 +1746,9 @@ table {
   overflow-wrap: break-word;
 }
 
-
 pre .normal a {
   text-decoration: none;
 }
-
-
 
 /* Footer social media icons styling */
 .footer--social {
