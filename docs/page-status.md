@@ -14,7 +14,7 @@ One table of every page in the sidebar, for the people who manage the user guide
 
 A verification is **stale** when it's older than the site's limit, or when the page's text changed after it. Pages that were never verified aren't flagged on the page itself, only here and in `make check-verified`.
 
-The data is <a href="../page-metadata.json"><code>page-metadata.json</code></a>, written by every build, and also lists each page's links to other pages.
+The data is <a href="../page-metadata.json"><code>page-metadata.json</code></a>, written by every build. Links out and in count links between pages of this site only, from each page's content (not the sidebar or links from other sites), with each linked page counted once.
 
 <div class="alcf-page-status" data-src="../page-metadata.json">
 <p>Loading page data…</p>
