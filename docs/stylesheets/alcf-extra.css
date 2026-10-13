@@ -46,6 +46,8 @@
   --md-accent-fg-color--transparent: rgba(24, 185, 180, 0.1);
 }
 
+
+
 /* Both themes: layout, and colors the themes share. Same specificity as the
    theme blocks below, which come later and override it. Put a rule here
    unless its value differs between the themes, so they can't drift apart. */
@@ -167,11 +169,15 @@
     color: var(--neutral_med);
   }
 
+  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
+     instant previews are [role=dialog] and keep the theme colors, since their
+     fade gradients and nested headings/links use --md-default-bg-color. */
   .md-tooltip2[role=tooltip] > .md-tooltip2__inner {
     background-color: var(--neutral_med-light);
     color: var(--neutral_dark);
   }
 
+  /* The tail is drawn with a border; a background-color paints a square. */
   .md-tooltip2--top[role=tooltip]:before {
     border-top-color: var(--neutral_med-light);
   }
@@ -404,12 +410,6 @@
   footer a {
     color: var(--blue_pale);
   }
-
-  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
-     instant previews are [role=dialog] and keep the theme colors, since their
-     fade gradients and nested headings/links use --md-default-bg-color. */
-
-  /* The tail is drawn with a border; a background-color paints a square. */
 
   .md-typeset code {
     background-color: var(--neutral_med-light);
@@ -645,12 +645,6 @@
     color: var(--green_med-light);
   }
 
-  /* Small title-attribute tooltips only (abbreviations, buttons). Footnote tooltips and
-     instant previews are [role=dialog] and keep the theme colors, since their
-     fade gradients and nested headings/links use --md-default-bg-color. */
-
-  /* The tail is drawn with a border; a background-color paints a square. */
-
   .md-typeset code {
     color: var(--neutral_med-light);
     background-color: var(--neutral_med-dark);
@@ -877,8 +871,11 @@
   padding: 2.15rem 0;
 }
 
+
+
 /* primary header */
 /* ------------------------------------------------------------------------- */
+
 
 /* hide material header at large sizes, and the alcf header at small sizes */
 @media only screen and (max-width: 1020px) {
@@ -1297,6 +1294,7 @@
   width: 100%;
 }
 
+
 .dropdown .dropdown__links-group li a {
   width: 100%;
   display: inline-block;
@@ -1349,6 +1347,11 @@
   object-fit: cover;
   width: 100%;
 }
+
+
+
+
+
 
 /* mobile header */
 
@@ -1590,6 +1593,9 @@
   display: none !important;
 }
 
+
+
+
 /* footer */
 /* ----------------------------------------------------------------- */
 
@@ -1696,6 +1702,7 @@ footer .grid {
   text-align: left;
 }
 
+
 .footer--logos {
   /*grid-column: 4 / span 1;*/
   grid-column: 3 / -1;
@@ -1736,6 +1743,8 @@ footer a {
   margin-right: 18px;
 }
 
+
+
 /*// For the js script*/
 .js-dropdown-visible {
   display: block;
@@ -1754,9 +1763,12 @@ table {
   overflow-wrap: break-word;
 }
 
+
 pre .normal a {
   text-decoration: none;
 }
+
+
 
 /* Footer social media icons styling */
 .footer--social {
