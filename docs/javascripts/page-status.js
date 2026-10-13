@@ -172,9 +172,14 @@
 
       // Dates and counts sort as numbers (data-sort): Tablesort's date plugin
       // doesn't recognize YYYY-MM-DD and sorts those by day of month.
+      var CHECKS = { Tags: 1, Keywords: 1, Authors: 1, Excluded: 1 };
       var NUMERIC = { Created: 1, Updated: 1, Verified: 1, Status: 1, Description: 1, Tags: 1, Keywords: 1, Authors: 1, Excluded: 1, "Links out": 1, "Links in": 1 };
       var head = el("tr", {}, ["Page", "Section", "Owners", "Created", "Updated", "Verified", "Status", "Description", "Tags", "Keywords", "Authors", "Excluded", "Links out", "Links in"]
-        .map(function (h) { return el("th", NUMERIC[h] ? { text: h, "data-sort-method": "number" } : { text: h }); }));
+        .map(function (h) {
+          var attrs = NUMERIC[h] ? { text: h, "data-sort-method": "number" } : { text: h };
+          if (CHECKS[h]) attrs.class = "alcf-page-status__check";
+          return el("th", attrs);
+        }));
       var rows = shown.map(function (p) {
         var st = status(p);
         // Stale first (by age), then never verified, then verified (by age).
