@@ -272,7 +272,7 @@ export PYTORCH_CACHE_DIR=~/graphcore/tmp/pt_cache/
 To run 4 replicas (a total for 4 IPUs) of the ResNet50 model:
 Make a script with the following contents, called poprun_unet.sh
 
-This script tells poprun to use the partition id of the partition created for the slurm job used to run the script.
+This script tells poprun to use the partition id of the partition created for the Slurm job used to run the script.
 ```console
 #!/bin/bash
 poprun -vv --vipu-partition=slurm_${SLURM_JOBID} --num-instances=1 --num-replicas=4 --executable-cache-path=$PYTORCH_CACHE_DIR python3 /home/$USER/graphcore/examples/vision/cnns/pytorch/train/train.py --config resnet50-pod4 --imagenet-data-path /mnt/localdata/datasets/imagenet-raw-dataset --epoch 2 --validation-mode none --dataloader-worker 14 --dataloader-rebatch-size 256
