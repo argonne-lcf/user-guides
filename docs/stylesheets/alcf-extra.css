@@ -2080,6 +2080,11 @@ pre .normal a {
   align-items: center;
   margin: 1em 0;
 }
+.alcf-page-status__sections {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
 .alcf-page-status__filters select,
 .alcf-page-status__filters input {
   font: inherit;

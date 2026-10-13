@@ -27,22 +27,51 @@
   function render(root, data) {
     var pages = data.pages;
     var base = new URL(root.dataset.src, location.href);  // site root, for page links
-    var sections = {}, owners = {};
+    var owners = {};
     pages.forEach(function (p) {
-      sections[p.section[0] || "(not in sidebar)"] = true;
       (p.owners.length ? p.owners : ["(no owner)"]).forEach(function (o) { owners[o] = true; });
     });
+    var NOT_IN_NAV = "(not in sidebar)";
+    function sectionPath(p) { return p.section.length ? p.section : [NOT_IN_NAV]; }
 
     var filters = {
       status: el("select", {}, [option("", "All pages"), option("stale", "Stale"),
         option("never", "Never verified"), option("ok", "Verified"), option("missing", "No description")]),
-      section: el("select", {}, [option("", "All sections")].concat(
-        Object.keys(sections).sort().map(function (s) { return option(s, s); }))),
+      // One select per level of the chosen section path, added as you go.
+      section: el("span", { class: "alcf-page-status__sections" }),
       owner: el("select", {}, [option("", "All owners")].concat(
         Object.keys(owners).sort().map(function (o) { return option(o, o); }))),
       search: el("input", { type: "search", placeholder: "Filter by title or path" }),
       nav: el("input", { type: "checkbox" })
     };
+    var sectionPrefix = [];  // the chosen section path so far
+    function buildSectionSelects() {
+      var selects = [];
+      for (var level = 0; level <= sectionPrefix.length; level++) {
+        var prefix = sectionPrefix.slice(0, level);
+        var names = {};
+        pages.forEach(function (p) {
+          var path = sectionPath(p);
+          if (path.length > level && prefix.every(function (n, i) { return path[i] === n; })) names[path[level]] = true;
+        });
+        var keys = Object.keys(names).sort();
+        if (!keys.length) break;
+        var select = el("select", {}, [option("", level ? "All subsections" : "All sections")].concat(
+          keys.map(function (n) { return option(n, n); })));
+        select.value = sectionPrefix[level] || "";
+        select.addEventListener("change", (function (level) {
+          return function (e) {
+            sectionPrefix = sectionPrefix.slice(0, level);
+            if (e.target.value) sectionPrefix.push(e.target.value);
+            buildSectionSelects();
+            update();
+          };
+        })(level));
+        selects.push(select);
+      }
+      filters.section.replaceChildren.apply(filters.section, selects);
+    }
+    buildSectionSelects();
     var summary = el("div", { class: "alcf-page-status__summary" });
     var bar = el("div", { class: "alcf-page-status__filters" }, [
       filters.status, filters.section, filters.owner, filters.search,
@@ -56,7 +85,8 @@
         var s = status(p)[0];
         if (!filters.nav.checked && !p.in_nav) return false;
         if (filters.status.value === "missing" ? p.description : filters.status.value && s !== filters.status.value) return false;
-        if (filters.section.value && (p.section[0] || "(not in sidebar)") !== filters.section.value) return false;
+        var path = sectionPath(p);
+        if (!sectionPrefix.every(function (n, i) { return path[i] === n; })) return false;
         if (filters.owner.value && (p.owners.length ? p.owners : ["(no owner)"]).indexOf(filters.owner.value) < 0) return false;
         var q = filters.search.value.trim().toLowerCase();
         if (q && (p.title + " " + p.path).toLowerCase().indexOf(q) < 0) return false;
@@ -102,7 +132,7 @@
       if (typeof Tablesort !== "undefined") new Tablesort(table);
     }
 
-    Object.keys(filters).forEach(function (k) {
+    ["status", "owner", "search", "nav"].forEach(function (k) {
       filters[k].addEventListener(k === "search" ? "input" : "change", update);
     });
     update();
