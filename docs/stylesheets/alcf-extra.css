@@ -2092,7 +2092,7 @@ pre .normal a {
   color: var(--md-default-fg-color--light);
 }
 .md-typeset .alcf-page-status__note .md-tag {
-  margin-right: 0.4em;
+  margin-right: 0.6em;
 }
 .alcf-page-status__swatch {
   white-space: nowrap;

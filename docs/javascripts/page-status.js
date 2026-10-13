@@ -97,7 +97,6 @@
     var note = el("p", { class: "alcf-page-status__note" }, [
       el("span", { class: "md-tag", text: "Built " + data.generated }),
       el("span", { class: "md-tag", text: "Stale after " + data.last_verified_max_age_days + " days" }),
-      el("br"),
       document.createTextNode("Last updated: "),
       swatch("fresh", "within 6 months"), swatch("aging", "within a year"),
       swatch("old", "within 2 years"), swatch("stale", "older")
