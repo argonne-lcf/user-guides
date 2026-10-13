@@ -298,6 +298,10 @@
   --md-code-hl-keyword-color:     var(--blue_med); 
   --md-code-hl-string-color:      var(--green_med);
 
+  /* Body text color (Material uses it for body, input, and aside). Off: Material's
+     default reads better, especially its dimmer dark-mode text. */
+  /* --md-typeset-color: var(--neutral_med-dark); */
+
   .md-container {
     background-color: var(--neutral_light);
   }
@@ -540,6 +544,10 @@
   --md-code-hl-string-color:      var(--green_med);
   /* Placeholder: --md-code-hl-name-color not yet defined */
   /* --md-code-hl-constant-color:    var(--blue_dark);  */
+
+  /* Body text color (Material uses it for body, input, and aside). Off: Material's
+     default reads better, especially its dimmer dark-mode text. */
+  /* --md-typeset-color: var(--neutral_med-light); */
 
   .md-container, .md-header {
     background-color: var(--neutral_dark);
