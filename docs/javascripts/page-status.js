@@ -95,7 +95,8 @@
     var summary = el("div", { class: "alcf-page-status__summary" });
     // Build date, the staleness limit, and a legend for the Updated colors.
     var note = el("p", { class: "alcf-page-status__note" }, [
-      document.createTextNode("Built " + data.generated + ". A verification is stale after " +
+      el("span", { class: "md-tag", text: "Built " + data.generated }),
+      document.createTextNode(" A verification is stale after " +
         data.last_verified_max_age_days + " days. Last updated: "),
       swatch("fresh", "within 6 months"), swatch("aging", "within a year"),
       swatch("old", "within 2 years"), swatch("stale", "older")

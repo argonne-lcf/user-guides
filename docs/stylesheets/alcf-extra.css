@@ -2006,10 +2006,12 @@ pre .normal a {
   padding-top: 1.2rem;
 }
 
-/* Tag chips at the end of each page and on the Tags page: brand blue instead of
+/* Tag chips at the end of each page and on the Tags page (and span.md-tag, the
+   build date on the Page Status page): brand blue instead of
    Material's grey, and no underline from the scheme-nested .md-typeset a rules above
    (a.md-tag matches their specificity; being later in the file, it wins). */
-.md-typeset a.md-tag {
+.md-typeset a.md-tag,
+.md-typeset span.md-tag {
   background-color: var(--blue_tint);
   color: var(--blue_dark);
   text-decoration: none;
@@ -2022,7 +2024,8 @@ pre .normal a {
 }
 
 /* Same inversion as the tiles: a light tint is unreadable on dark. */
-[data-md-color-scheme="slate"] .md-typeset a.md-tag {
+[data-md-color-scheme="slate"] .md-typeset a.md-tag,
+[data-md-color-scheme="slate"] .md-typeset span.md-tag {
   background-color: color-mix(in srgb, var(--blue_med) 35%, transparent);
   color: var(--blue_pale);
 }
