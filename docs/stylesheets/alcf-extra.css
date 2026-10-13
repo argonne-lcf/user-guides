@@ -2171,6 +2171,18 @@ pre .normal a {
 .md-typeset .alcf-page-status table th.alcf-page-status__check {
   text-align: center;
 }
+/* Material's inline sort-icon placeholder (th::after) would push the centered
+   header text left of the check marks; take it out of the text flow. */
+.md-typeset .alcf-page-status table th.alcf-page-status__check {
+  position: relative;
+}
+.md-typeset .alcf-page-status table th.alcf-page-status__check[role="columnheader"]::after {
+  position: absolute;
+  right: 0.2em;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0;
+}
 .alcf-page-status__status--stale {
   color: #ff9100;
 }
