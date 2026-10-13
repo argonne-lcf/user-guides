@@ -38,7 +38,7 @@ Alternatively, it can be launched with the python binary but the `-m` flag shoul
 python -m dragon my_dragon_script.py
 ```
 
-Dragon needs access to the PBS `qstat` command in order to run (this is used to determine the nodes have been allocated by PBS as opposed to SLURM or LSF and determines how dragon will discover nodes and launch the runtime).  In some interactive jobs on Polaris, you may need to modify the `PATH` to ensure `qstat` is visible to `dragon`:
+Dragon needs access to the PBS `qstat` command in order to run (this is used to determine the nodes have been allocated by PBS as opposed to Slurm or LSF and determines how dragon will discover nodes and launch the runtime).  In some interactive jobs on Polaris, you may need to modify the `PATH` to ensure `qstat` is visible to `dragon`:
 
 ```shell
 export PATH=/opt/pbs/bin:$PATH

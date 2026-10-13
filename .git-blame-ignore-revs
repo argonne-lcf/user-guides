@@ -1,0 +1,25 @@
+# Commits that change many pages without changing what they say. Pages' Last
+# Updated dates and contributor lists skip them (hooks/page_history.py, via
+# ignored_commits_file in mkdocs.yml), and so does GitHub's blame view. The
+# hook already skips changes to only front matter, trailing spaces, or blank
+# lines, so list other mechanical sweeps, such as re-wrapping or a syntax
+# conversion; the front-matter sweeps below are listed for blame. Use full
+# hashes, and add a sweep after it lands on main (squash merges change the
+# hash).
+
+# Front matter only (tags, descriptions, keywords)
+08bc90e3d23113f7cfc9b5ab35a4b5d0ec9d3060  # Enable meta and tags plugins with section tags
+f2e91890588f6f2f5da7d68912587949f905c285  # Tag pages with cross-cutting topics
+d83414046a1d30aa2ff8e3e0236bcd937a94fe30  # Add PyTorch, Classical ML, and Known Issues tags
+695f2459bc7107778cfdbcbfedca96cf3e85b8df  # Add site_author and descriptions for section and getting-started pages
+12bca9cc82a9cceda14076b1f08e5180f968120b  # Tag pages with the new topics (front matter only)
+a493b4ee261cce3af24aa55f5a3156f3d6304d75  # Add search keywords to 30 pages (front matter only)
+0bd417ebb136e4368def2b7d73587c8fde1abda4  # Add description and Compiling, Debugging tags to the VS Code page (front matter only)
+69cbff8b159933b0ff647093ef7c69eb936893ff  # Add Job Submission tags and shorten the Aurora vLLM description (front matter only)
+e4054afe1a87992fb674fcf6e3fcbaf6732b7c00  # Add vscode search keyword to the VS Code page (front matter only)
+5abd985f3c48f4d1beda1d6d90844a2432c161e0  # Tag the Polaris vLLM page Inference, like the Aurora one (front matter only)
+1818e11af64fc78c02e3ec506a85fc8cfae86ed2  # Boost the main PBS job pages in search (front matter only)
+
+# Source formatting
+27cf668167c92656d2930922674f77cc8c629c6c  # unwrap hard-wrapped prose
+9db1a50f2e3d1741fd7c0072e1fb03ed40fb6644  # Convert admonitions, details, and tabs to the pymdownx Blocks syntax
