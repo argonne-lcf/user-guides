@@ -40,5 +40,5 @@ ssh gc-poplar-03.ai.alcf.anl.gov
 ssh gc-poplar-04.ai.alcf.anl.gov
 ```
 
-> **Note: `ssh gc-poplar-01.ai.alcf.anl.gov` is not accessible to users. However, its IPU resources are assigned by the slurm tasks.
+> **Note: `ssh gc-poplar-01.ai.alcf.anl.gov` is not accessible to users. However, its IPU resources are assigned by the Slurm tasks.
 

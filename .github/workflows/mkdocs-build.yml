@@ -9,11 +9,12 @@ on:
 
 jobs:
   docs-strict:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # pinned for the apt-get installs; see AGENTS.md
     steps:
       - uses: actions/checkout@v7
         with:
           submodules: recursive
+          fetch-depth: 0  # git-revision-date-localized dates pages from history
       - name: Install uv
         uses: astral-sh/setup-uv@v10.2.0
         with:
