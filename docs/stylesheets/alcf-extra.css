@@ -2142,6 +2142,17 @@ pre .normal a {
   white-space: normal;
   min-width: 14em;
 }
+/* The source path under each title links to GitHub's editor, but looks like
+   the plain text it replaced; the underline appears on hover. */
+.md-typeset .alcf-page-status table a.alcf-page-status__edit {
+  font-size: 0.8em;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+}
+.md-typeset .alcf-page-status table a.alcf-page-status__edit:hover,
+.md-typeset .alcf-page-status table a.alcf-page-status__edit:focus-visible {
+  text-decoration: underline;
+}
 /* Section paths wrap at their separators, and owners one handle per line
    when there are several, to keep those columns narrow. */
 .md-typeset .alcf-page-status table td.alcf-page-status__section {

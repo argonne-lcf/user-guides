@@ -187,7 +187,10 @@
         return el("tr", {}, [
           el("td", { class: "alcf-page-status__page" }, [
             el("a", { href: new URL(p.url, base).href, text: p.title }),
-            el("br"), el("small", { text: p.path })
+            el("br"),
+            p.edit_url  // the path opens GitHub's editor, for quick front matter fixes
+              ? el("a", { class: "alcf-page-status__edit", href: p.edit_url, title: "Edit on GitHub", text: p.path })
+              : el("small", { text: p.path })
           ]),
           el("td", { class: "alcf-page-status__section" }, sectionLinks(p.section)),
           el("td", { class: "alcf-page-status__owners" }, ownerLinks(p.owners)),
