@@ -28,9 +28,9 @@ A summary of available GPU programming models and relevant compiler flags is sho
 `--intel` is only needed if the base compiler isn't `icpx` or `icx`
 ///
 
-For SYCL, `-fsycl-targets=intel_gpu_pvc` is the recommended spelling of the AoT target. It is equivalent to `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`, which is still accepted, and it takes no quoted backend argument, so build systems such as CMake need no extra escaping.
+For SYCL, `-fsycl-targets=intel_gpu_pvc` is the recommended spelling of the AoT target. It is equivalent to `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`.
 
-OpenMP has no equivalent alias: `-fopenmp-targets` accepts only `spir64_gen` with `-device pvc`. For some build systems (e.g., `cmake`), it may be necessary to use the backslash character to escape the double quotes when specifying the device in AoT builds.
+OpenMP has no equivalent alias. One should use the `-fopenmp-targets=spir64_gen -Xopenmp-target-backend=spir64_gen "-device pvc"` command. Please note that some build systems (e.g., `cmake`) may require escaping the double quotes when specifying the device in AoT builds.
 
 ```bash
 -Xopenmp-target-backend=spir64_gen \"-device pvc\"
