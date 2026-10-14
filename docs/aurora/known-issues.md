@@ -187,6 +187,11 @@ Alternatively, it can be set with the `mpiexec` command, e.g.
 mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 ```
 
+#### 8. Slow performance with >= 96 processes per node
+
+If you are running with 96 processes per node (i.e. -ppn 96) or more, you may see slowdowns or hanging (see https://github.com/pmodels/mpich/issues/7593 for example). To be clear, this is not total number of processes, but processes per node. A workaround for this is to set `export MPIR_CVAR_CH4_PROGRESS_THROTTLE=1`.
+
+
 ### Submitting Jobs
 
 Jobs may fail to successfully start at times (particularly at higher node counts). If no error message is apparent, then one thing to check is the `comment` field in the full job information for the job using the command `qstat -xfw <jobid> | grep comment`. Some example comments follow.
