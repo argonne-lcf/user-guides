@@ -39,30 +39,37 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 
 `-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). 
 
-When compiling and linking in separate steps, pass `-fsycl-targets=` to both. Passing it only to the link step still produces a working executable, but it will contain no GPU code: the kernels stay as SPIR-V and are compiled at first run, which is what AoT is meant to avoid. Only the backend argument of the older spelling, `-Xsycl-target-backend "-device pvc"`, is link-only; the compiler reports it as unused at compile time.
+/// tip
+When compiling and linking in separate steps, pass `-fsycl-targets=intel_gpu_pvc` to both. Passing it only to the link step still produces a working executable, but it will contain no GPU code: the kernels stay as SPIR-V and are compiled at first run, which is what AoT is meant to avoid.
+
+Note that the backend argument of the older spelling, `-Xsycl-target-backend "-device pvc"`, is link-only; the compiler reports it as unused at compile time.
+///
 
 ### Reducing link time with `-fno-sycl-rdc`
 
 By default in an AoT build, device code in each object file is kept in a relocatable form, and GPU machine code for every kernel is generated during the link step. Because this step is serial and reruns completely whenever any single source file changes, it can easily dominate build times in large applications.
 
-Compiling with `-fno-sycl-rdc` shifts code generation from the link step into the per-file compilation step, allowing build systems like `make -j` or `ninja` to parallelize it across CPU cores:
+Compiling with `-fno-sycl-rdc` shifts code generation from the link step into the per-file compilation step, allowing parallelization of the GPU-code gen:
 
 ```bash
-icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o
-icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_b.cpp -o tu_b.o
-icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o   # generates GPU code here
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_b.cpp -o tu_b.o   # and here, in parallel
+icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app   # fast: no GPU code left to generate
 ```
 
-Because this option applies per source file, projects can mix both styles: files requiring cross-file device calls (`SYCL_EXTERNAL`) keep the default RDC mode, while self-contained files use `-fno-sycl-rdc`. How much build time this saves depends on how many files can avoid `SYCL_EXTERNAL`, so measure your application before redesigning your build system.
-
-Note: while `-fno-sycl-rdc` is accepted in JIT builds, it has no effect on the resulting object files; use it only with AoT.
-
-/// warning | Caveats for `-fno-sycl-rdc`
-- **`SYCL_EXTERNAL` is unsupported:** every kernel in a file compiled with `-fno-sycl-rdc` must be self-contained. The macro is left undefined rather than cleanly diagnosed, causing compilation to fail with `unknown type name 'SYCL_EXTERNAL'`. This error will also trigger in files that merely call an external device function, due to the declaration in the included header.
+/// warning | Caveats
+- **`SYCL_EXTERNAL` is unsupported:** every kernel in a file compiled with `-fno-sycl-rdc` must be self-contained. Compilation will fail with `unknown type name 'SYCL_EXTERNAL'`.
 - **Always retain `-fsycl-targets=` at link:** omitting the target flag during the link step is only safe if every object was built with `-fno-sycl-rdc`. If any object still relies on RDC, the link will succeed without warnings, but that object's kernels will be silently omitted from the final binary and fail when launched.
+-  while `-fno-sycl-rdc` is accepted in JIT builds, it has no effect on the resulting object files; use it only with AoT.
 ///
 
-To check how an object file was built, inspect its offload targets with `clang-offload-bundler`:
+
+Projects can mix both styles: files requiring cross-file device calls (`SYCL_EXTERNAL`) keep the default RDC mode, while self-contained files use `-fno-sycl-rdc`.
+
+
+### Checking a binary or object for SPIR-V or native code
+
+Inspect its offload targets with `clang-offload-bundler`:
 
 ```bash
 clang-offload-bundler --type=o --input=tu_a.o --list
@@ -71,6 +78,12 @@ clang-offload-bundler --type=o --input=tu_a.o --list
 - `sycl-spir64_gen_image-...`: contains finished PVC device code (built with `-fno-sycl-rdc`).
 - `sycl-spir64_gen-...`: contains relocatable device code; final GPU code will be generated at link time.
 - `sycl-spir64-...`: no AoT target was given at compile time, so the object holds generic SPIR-V and its kernels will be compiled at first run.
+
+The same command works on the final executable, where it reports which kinds of device code the binary carries:
+
+- `sycl-spir64_gen` alone: every kernel is PVC device code, as intended for an AoT build.
+- `sycl-spir64` alone: a JIT build.
+- both: part of the application is still SPIR-V and will be compiled at first run, which usually means an AoT target was missing from a compile step.
 
 ## Example
 
