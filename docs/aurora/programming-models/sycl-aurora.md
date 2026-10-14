@@ -41,9 +41,9 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 
 ### Reducing link time with `-fno-sycl-rdc`
 
-By default the device code in each object file is kept in a relocatable form, and the device image is produced during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
+In an AoT build, the device code in each object file is kept in a relocatable form by default, and the GPU code for every kernel is generated during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
 
-Compiling a source file with `-fno-sycl-rdc` builds its device image at that point and stores it in the `.o`, which moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores. This is independent of AoT: it applies to a JIT build (`-fsycl-targets=spir64`, or plain `-fsycl`) as well as an AoT one, though the saving is larger with AoT, where the link is what runs the GPU code generation.
+Compiling a source file with `-fno-sycl-rdc` generates its GPU code at that point and stores it in the `.o`, which moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores.
 
 ```bash
 icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o
@@ -52,6 +52,8 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app
 ```
 
 The option applies per source file, so a project can mix the two: files that use `SYCL_EXTERNAL` keep the default, and the rest can use `-fno-sycl-rdc`. How much this saves depends on how many files can avoid `SYCL_EXTERNAL`, so measure it on the application before changing a build system.
+
+The option is accepted in a JIT build as well, but there it has no effect on the object file, which holds the same device code either way; use it only with AoT.
 
 /// warning | Caveats for `-fno-sycl-rdc`
 `SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so any file that uses it fails to compile with `unknown type name 'SYCL_EXTERNAL'`. This includes a file that only calls such a function, since the declaration in the header is enough to trigger the error.
