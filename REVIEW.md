@@ -19,7 +19,7 @@ Review rules for pull requests to the ALCF User Guides (MkDocs, Material theme).
 13. Examples with a real person's project, username, or home path. Placeholders other than `<username>`, `<project>`, `<jobid>`, `<queue>`, `<path>`, `<name>` (e.g. `<project_name>`, `MYPROJECT`, `<job_id>`), or `<username>` in commands run on ALCF systems where `$USER` works.
 14. Snippet includes (`--8<--`) with page-relative paths; they're relative to the repo root.
 15. Misspelled product names (Tensorflow, Pytorch, OneAPI, SLURM), or recommending Anaconda instead of conda/Miniforge.
-16. New pages without `description:` front matter, or descriptions over about 120 characters. `author:` (singular) front matter; `authors:` added to a page the PR author didn't write. Tags for topics the page only mentions, or a system tag the page already gets from `.meta.yml`.
+16. New pages without `description:` front matter, or descriptions over about 120 characters. `author:` (singular) front matter; `authors:` added to a page the PR author didn't write. `last_verified:` added or changed without the PR saying the whole page was checked on the system. Tags for topics the page only mentions, or a system tag the page already gets from `.meta.yml`.
 17. Unrelated changes bundled together, the same edit applied across many pages with different owners in `docs/CODEOWNERS`, or sidebar reorganizations without a linked discussion. Suggest splitting the PR.
 
 ## Don't flag
