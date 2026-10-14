@@ -37,7 +37,7 @@ With `-fsycl` alone, kernels ship as SPIR-V and are compiled for the GPU the fir
 icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 ```
 
-This is the recommended spelling. It is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`, which still works, but it takes no quoted backend argument, so build systems such as CMake need no extra escaping. The flag is only needed when linking, so it can be added to a project's link flags alone.
+`-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). The `-fsycl-targets` flag is only needed when linking.
 
 #### Reducing link time with `-fno-sycl-rdc`
 
