@@ -31,13 +31,15 @@ Simply use `-fsycl`. For CMake, use `find_package(IntelSYCL REQUIRED)`. See `cat
 
 ### Ahead-of-time compilation
 
-With `-fsycl` alone, kernels ship as SPIR-V and are compiled for the GPU the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, and so avoid that startup cost, add `-fsycl-targets=intel_gpu_pvc`:
+With `-fsycl` alone, kernels ship as SPIR-V and are lower to the PVC ISA the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, one can use `-fsycl-targets=intel_gpu_pvc`:
 
 ```bash
 icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 ```
 
-`-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). The `-fsycl-targets` flag is only needed when linking.
+`-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). 
+
+When compiling and linking in separate steps, pass `-fsycl-targets=` to both. Passing it only to the link step still produces a working executable, but it will contain no GPU code: the kernels stay as SPIR-V and are compiled at first run, which is what AoT is meant to avoid. Only the backend argument of the older spelling, `-Xsycl-target-backend "-device pvc"`, is link-only; the compiler reports it as unused at compile time.
 
 ### Reducing link time with `-fno-sycl-rdc`
 
@@ -68,6 +70,7 @@ clang-offload-bundler --type=o --input=tu_a.o --list
 
 - `sycl-spir64_gen_image-...`: contains finished PVC device code (built with `-fno-sycl-rdc`).
 - `sycl-spir64_gen-...`: contains relocatable device code; final GPU code will be generated at link time.
+- `sycl-spir64-...`: no AoT target was given at compile time, so the object holds generic SPIR-V and its kernels will be compiled at first run.
 
 ## Example
 
