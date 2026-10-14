@@ -69,21 +69,13 @@ Projects can mix both styles: files requiring cross-file device calls (`SYCL_EXT
 
 ### Checking a binary or object for SPIR-V or native code
 
-Inspect its offload targets with `clang-offload-bundler`:
+To see whether an object file or an executable will JIT at first run, inspect its offload targets with `clang-offload-bundler`:
 
 ```bash
-clang-offload-bundler --type=o --input=tu_a.o --list
+clang-offload-bundler --type=o --input=<file> --list
 ```
 
-- `sycl-spir64_gen_image-...`: contains finished PVC device code (built with `-fno-sycl-rdc`).
-- `sycl-spir64_gen-...`: contains relocatable device code; final GPU code will be generated at link time.
-- `sycl-spir64-...`: no AoT target was given at compile time, so the object holds generic SPIR-V and its kernels will be compiled at first run.
-
-The same command works on the final executable, where it reports which kinds of device code the binary carries:
-
-- `sycl-spir64_gen` alone: every kernel is PVC device code, as intended for an AoT build.
-- `sycl-spir64` alone: a JIT build.
-- both: part of the application is still SPIR-V and will be compiled at first run, which usually means an AoT target was missing from a compile step.
+A target named `spir64_gen` holds device code for PVC and will not JIT, while a target named `spir64` holds generic SPIR-V and will. 
 
 ## Example
 
