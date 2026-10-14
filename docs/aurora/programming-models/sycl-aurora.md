@@ -41,9 +41,9 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 
 ### Reducing link time with `-fno-sycl-rdc`
 
-In an AoT build, the device code in each object file is kept in a relocatable form by default, and the GPU code for every kernel is generated during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
+By default in an AoT build, device code in each object file is kept in a relocatable form, and GPU machine code for every kernel is generated during the link step. Because this step is serial and reruns completely whenever any single source file changes, it can easily dominate build times in large applications.
 
-Compiling a source file with `-fno-sycl-rdc` generates its GPU code at that point and stores it in the `.o`, which moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores.
+Compiling with `-fno-sycl-rdc` shifts code generation from the link step into the per-file compilation step, allowing build systems like `make -j` or `ninja` to parallelize it across CPU cores:
 
 ```bash
 icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o
@@ -51,24 +51,23 @@ icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_b.cpp -o tu_b.o
 icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app
 ```
 
-The option applies per source file, so a project can mix the two: files that use `SYCL_EXTERNAL` keep the default, and the rest can use `-fno-sycl-rdc`. How much this saves depends on how many files can avoid `SYCL_EXTERNAL`, so measure it on the application before changing a build system.
+Because this option applies per source file, projects can mix both styles: files requiring cross-file device calls (`SYCL_EXTERNAL`) keep the default RDC mode, while self-contained files use `-fno-sycl-rdc`. How much build time this saves depends on how many files can avoid `SYCL_EXTERNAL`, so measure your application before redesigning your build system.
 
-The option is accepted in a JIT build as well, but there it has no effect on the object file, which holds the same device code either way; use it only with AoT.
+Note: while `-fno-sycl-rdc` is accepted in JIT builds, it has no effect on the resulting object files; use it only with AoT.
 
 /// warning | Caveats for `-fno-sycl-rdc`
-`SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so any file that uses it fails to compile with `unknown type name 'SYCL_EXTERNAL'`. This includes a file that only calls such a function, since the declaration in the header is enough to trigger the error.
-
-In an AoT build, keep `-fsycl-targets=` on the link command, as shown above. Dropping it is only safe when every object was compiled with `-fno-sycl-rdc`; if any was not, the link still succeeds and prints no warning, but that object's kernels are left out of the executable and fail when launched.
+- **`SYCL_EXTERNAL` is unsupported:** every kernel in a file compiled with `-fno-sycl-rdc` must be self-contained. The macro is left undefined rather than cleanly diagnosed, causing compilation to fail with `unknown type name 'SYCL_EXTERNAL'`. This error will also trigger in files that merely call an external device function, due to the declaration in the included header.
+- **Always retain `-fsycl-targets=` at link:** omitting the target flag during the link step is only safe if every object was built with `-fno-sycl-rdc`. If any object still relies on RDC, the link will succeed without warnings, but that object's kernels will be silently omitted from the final binary and fail when launched.
 ///
 
-To check how an object was built in an AoT build, list its offload targets:
+To check how an object file was built, inspect its offload targets with `clang-offload-bundler`:
 
 ```bash
 clang-offload-bundler --type=o --input=tu_a.o --list
 ```
 
-- `sycl-spir64_gen_image-...`: a finished PVC device image, built at compile time with `-fno-sycl-rdc`.
-- `sycl-spir64_gen-...`: relocatable device code; the device image is produced at link time.
+- `sycl-spir64_gen_image-...`: contains finished PVC device code (built with `-fno-sycl-rdc`).
+- `sycl-spir64_gen-...`: contains relocatable device code; final GPU code will be generated at link time.
 
 ## Example
 
