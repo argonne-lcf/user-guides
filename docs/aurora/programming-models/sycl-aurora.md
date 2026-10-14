@@ -31,7 +31,7 @@ Simply use `-fsycl`. For CMake, use `find_package(IntelSYCL REQUIRED)`. See `cat
 
 ### Ahead-of-time compilation
 
-With `-fsycl` alone, kernels ship as SPIR-V and are lower to the PVC ISA the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, one can use `-fsycl-targets=intel_gpu_pvc`:
+With `-fsycl` alone, kernels ship as SPIR-V and are lowered to the PVC ISA the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, one can use `-fsycl-targets=intel_gpu_pvc`:
 
 ```bash
 icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
