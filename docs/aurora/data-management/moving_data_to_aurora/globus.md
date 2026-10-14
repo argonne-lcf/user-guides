@@ -11,7 +11,7 @@ keywords:
 # Transferring Files through Globus
 
 ## Flare filesystem
-For transfers to/from [Flare](../lustre/flare.md), you may use the Globus collection `alcf#dtn_flare`.
+For transfers to/from [Flare](../lustre/flare.md), you may use the Globus collection [`alcf#dtn_flare`](https://app.globus.org/file-manager?origin_id=f39a7a0f-5bfc-46ce-9615-ba9f8592814f&two_pane=false).
 
 ## Home filesystem
 Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is supported. Perform the following steps to transfer data to/from there:
@@ -38,5 +38,5 @@ Currently, for transfers to/from Aurora `/home`, only Globus Connect Personal is
     - By default, the command only gives access to your home directory.
     - You can add `-restrict-paths /lus/flare/projects/<project>` to access your project directory.
 
-4. Open the [Globus web app](https://app.globus.org/file-manager?destination_id=05d2c76a-e867-4f67-aa57-76edeb0beda0) and search for the endpoint name defined above. You will now see your home directory (and project directory, if requested) on Aurora and can initiate transfers with other endpoints (e.g., the Eagle file system on Polaris at `alcf#dtn_eagle`).
+4. Open the [Globus web app](https://app.globus.org/file-manager?destination_id=05d2c76a-e867-4f67-aa57-76edeb0beda0) and search for the endpoint name defined above. You will now see your home directory (and project directory, if requested) on Aurora and can initiate transfers with other endpoints (e.g., the Eagle file system on Polaris at [`alcf#dtn_eagle`](https://app.globus.org/file-manager?origin_id=05d2c76a-e867-4f67-aa57-76edeb0beda0)).
 

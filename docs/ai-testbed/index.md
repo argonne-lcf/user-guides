@@ -29,9 +29,9 @@ Submit your proposal requests at: [Allocation Request Page](https://my.alcf.anl.
 
 3. Transfer data to ALCF using Globus after your account has been created.
 
-    a. The endpoint for your data in ALCF is ``` alcf#ai_testbed_projects ``` with the path to your project being  ``` /<project> ```. 
+    a. The collection for your data in ALCF is ``` alcf#ai_testbed_projects ``` with the path to your project being  ``` /<project> ```. 
 
-    b. The endpoint for your home directory on the AI Testbeds in ALCF is ``` alcf#ai_testbed_home ```.
+    b. The collection for your home directory on the AI Testbeds in ALCF is [`alcf#ai_testbed_home`](https://app.globus.org/file-manager?origin_id=060f3154-422b-4db0-bae3-37b209e29753&two_pane=false).
 
 4. Add/invite team members to your ALCF project on Cerebras/Graphcore/Groq. 
 
