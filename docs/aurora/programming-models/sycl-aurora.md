@@ -29,6 +29,32 @@ Currently Loaded Modules:
 
 Simply use `-fsycl`. For CMake, use `find_package(IntelSYCL REQUIRED)`. See `cat $CMPLR_ROOT/lib/cmake/IntelSYCL/IntelSYCLConfig.cmake` for more details.
 
+### Ahead-of-time compilation
+
+With `-fsycl` alone, kernels ship as SPIR-V and are compiled for the GPU the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, and so avoid that startup cost, add `-fsycl-targets=intel_gpu_pvc`:
+
+```bash
+icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp
+```
+
+This is the recommended spelling. It is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`, which still works, but it takes no quoted backend argument, so build systems need no extra escaping. The flag is only needed when linking, so it can be added to a project's link flags alone.
+
+By default the device code in each `.o` stays as an intermediate form, and the GPU code is generated once at link time. Adding `-fno-sycl-rdc` to the compile step makes each `.o` carry finished PVC code, so editing one source file regenerates GPU code for that file only:
+
+```bash
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -c tu_a.cpp -o tu_a.o
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -c tu_b.cpp -o tu_b.o
+icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app
+```
+
+`-fno-sycl-rdc` applies per source file, so a project can mix the two. Files that use `SYCL_EXTERNAL` are compiled without it, the rest with it, and all of the resulting `.o` files link together as usual. To see how an object was built, run `clang-offload-bundler --type=o --input=tu_a.o --list`: a `spir64_gen_image` target means the object already holds GPU code, and `spir64_gen` means it will be generated at link time.
+
+/// warning
+`SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so a file that uses it fails with `unknown type name 'SYCL_EXTERNAL'`.
+
+Keep `-fsycl-targets=` on the link command, as shown above. Dropping it is only safe when every object was compiled with `-fno-sycl-rdc`; if any was not, the link still succeeds and prints no warning, but that object's kernels are left out of the executable and fail when launched.
+///
+
 ## Example
 
 ```cpp
