@@ -22,10 +22,10 @@ A summary of available GPU programming models and relevant compiler flags is sho
 | --- | --- | --- |
 | OpenCL | -- | N/A |
 | OpenMP | -fiopenmp -fopenmp-targets=spir64 | -fiopenmp -fopenmp-targets=spir64_gen -Xopenmp-target-backend=spir64_gen "-device pvc" |
-| SYCL | --intel -fsycl -fsycl-targets=spir64 | --intel -fsycl -fsycl-targets=intel_gpu_pvc |
+| SYCL | -fsycl -fsycl-targets=spir64 | -fsycl -fsycl-targets=intel_gpu_pvc |
 
 /// tip
-`--intel` is only needed if the base compiler isn't `icpx` or `icx`
+One can add `--intel` if the base compiler isn't `icpx` or `icx`
 ///
 
 For SYCL, `-fsycl-targets=intel_gpu_pvc` is the recommended spelling of the AoT target. It is equivalent to `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`.
@@ -37,7 +37,7 @@ OpenMP has no equivalent alias. One should use the `-fopenmp-targets=spir64_gen 
 ```
 
 /// tip
-On a large SYCL application, generating GPU code for every kernel during the link can dominate the build. See [Ahead-of-time compilation](../programming-models/sycl-aurora.md#ahead-of-time-compilation) for using `-fno-sycl-rdc` to move that work into the per-file compiles, where it can run in parallel.
+On a large SYCL application, producing the device image during the link can dominate the build. See [Reducing link time with `-fno-sycl-rdc`](../programming-models/sycl-aurora.md#reducing-link-time-with-fno-sycl-rdc) for moving that work into the per-file compiles, where it can run in parallel.
 ///
 
 OpenCL is supported, but does not require specific compiler flags per-se as the offloaded kernels are JIT-compiled. One does need to link against the OpenCL library `-lOpenCL`. Abstraction programming models, such as Kokkos, can be built on top of these programming models.

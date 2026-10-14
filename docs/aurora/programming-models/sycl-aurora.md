@@ -39,11 +39,11 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 
 `-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). The `-fsycl-targets` flag is only needed when linking.
 
-#### Reducing link time with `-fno-sycl-rdc`
+### Reducing link time with `-fno-sycl-rdc`
 
-By default the device code in each object file stays as an intermediate form, and GPU code for every kernel is generated during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
+By default the device code in each object file is kept in a relocatable form, and the device image is produced during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
 
-Compiling a source file with `-fno-sycl-rdc` generates its GPU code at that point and stores it in the `.o`. This moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores, and an edit to one file regenerates GPU code for that file alone:
+Compiling a source file with `-fno-sycl-rdc` builds its device image at that point and stores it in the `.o`, which moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores. This is independent of AoT: it applies to a JIT build (`-fsycl-targets=spir64`, or plain `-fsycl`) as well as an AoT one, though the saving is larger with AoT, where the link is what runs the GPU code generation.
 
 ```bash
 icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o
@@ -56,19 +56,17 @@ The option applies per source file, so a project can mix the two: files that use
 /// warning | Caveats for `-fno-sycl-rdc`
 `SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so any file that uses it fails to compile with `unknown type name 'SYCL_EXTERNAL'`. This includes a file that only calls such a function, since the declaration in the header is enough to trigger the error.
 
-Keep `-fsycl-targets=` on the link command, as shown above. Dropping it is only safe when every object was compiled with `-fno-sycl-rdc`; if any was not, the link still succeeds and prints no warning, but that object's kernels are left out of the executable and fail when launched.
+In an AoT build, keep `-fsycl-targets=` on the link command, as shown above. Dropping it is only safe when every object was compiled with `-fno-sycl-rdc`; if any was not, the link still succeeds and prints no warning, but that object's kernels are left out of the executable and fail when launched.
 ///
 
-#### Checking what an object file holds
-
-To see whether an object carries finished GPU code or intermediate device code, list its offload targets:
+To check how an object was built in an AoT build, list its offload targets:
 
 ```bash
 clang-offload-bundler --type=o --input=tu_a.o --list
 ```
 
-- `sycl-spir64_gen_image-...`: finished PVC code, generated at compile time with `-fno-sycl-rdc`.
-- `sycl-spir64_gen-...`: intermediate device code; GPU code is generated at link time.
+- `sycl-spir64_gen_image-...`: a finished PVC device image, built at compile time with `-fno-sycl-rdc`.
+- `sycl-spir64_gen-...`: relocatable device code; the device image is produced at link time.
 
 ## Example
 
