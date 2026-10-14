@@ -37,7 +37,7 @@ With `-fsycl` alone, kernels ship as SPIR-V and are lowered to the PVC ISA the f
 icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 ```
 
-`-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`). 
+`-fsycl-targets=intel_gpu_pvc` is the recommended option (it is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`).
 
 /// tip
 When compiling and linking in separate steps, pass `-fsycl-targets=intel_gpu_pvc` to both. Passing it only to the link step still produces a working executable, but it will contain no GPU code: the kernels stay as SPIR-V and are compiled at first run, which is what AoT is meant to avoid.
@@ -60,12 +60,10 @@ icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app   # fast: no GPU c
 /// warning | Caveats
 - **`SYCL_EXTERNAL` is unsupported:** every kernel in a file compiled with `-fno-sycl-rdc` must be self-contained. Compilation will fail with `unknown type name 'SYCL_EXTERNAL'`.
 - **Always retain `-fsycl-targets=` at link:** omitting the target flag during the link step is only safe if every object was built with `-fno-sycl-rdc`. If any object still relies on RDC, the link will succeed without warnings, but that object's kernels will be silently omitted from the final binary and fail when launched.
--  while `-fno-sycl-rdc` is accepted in JIT builds, it has no effect on the resulting object files; use it only with AoT.
+- while `-fno-sycl-rdc` is accepted in JIT builds, it has no effect on the resulting object files; use it only with AoT.
 ///
 
-
 Projects can mix both styles: files requiring cross-file device calls (`SYCL_EXTERNAL`) keep the default RDC mode, while self-contained files use `-fno-sycl-rdc`.
-
 
 ### Checking a binary or object for SPIR-V or native code
 
@@ -75,7 +73,7 @@ To see whether an object file or an executable will JIT at first run, inspect it
 clang-offload-bundler --type=o --input=<file> --list
 ```
 
-A target named `spir64_gen` holds device code for PVC and will not JIT, while a target named `spir64` holds generic SPIR-V and will. 
+A target named `spir64_gen` holds device code for PVC and will not JIT, while a target named `spir64` holds generic SPIR-V and will.
 
 ## Example
 
