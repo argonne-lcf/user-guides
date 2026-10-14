@@ -34,26 +34,41 @@ Simply use `-fsycl`. For CMake, use `find_package(IntelSYCL REQUIRED)`. See `cat
 With `-fsycl` alone, kernels ship as SPIR-V and are compiled for the GPU the first time the application runs. To compile them for Aurora's PVC GPUs at build time instead, and so avoid that startup cost, add `-fsycl-targets=intel_gpu_pvc`:
 
 ```bash
-icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp
+icpx -fsycl -fsycl-targets=intel_gpu_pvc hello_sycl.cpp -o hello_sycl
 ```
 
-This is the recommended spelling. It is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`, which still works, but it takes no quoted backend argument, so build systems need no extra escaping. The flag is only needed when linking, so it can be added to a project's link flags alone.
+This is the recommended spelling. It is equivalent to the older `-fsycl-targets=spir64_gen -Xsycl-target-backend "-device pvc"`, which still works, but it takes no quoted backend argument, so build systems such as CMake need no extra escaping. The flag is only needed when linking, so it can be added to a project's link flags alone.
 
-By default the device code in each `.o` stays as an intermediate form, and the GPU code is generated once at link time. Adding `-fno-sycl-rdc` to the compile step makes each `.o` carry finished PVC code, so editing one source file regenerates GPU code for that file only:
+#### Reducing link time with `-fno-sycl-rdc`
+
+By default the device code in each object file stays as an intermediate form, and GPU code for every kernel is generated during the link. That step is serial, and it runs again in full whenever any one source file changes, so on a large application it can dominate the build.
+
+Compiling a source file with `-fno-sycl-rdc` generates its GPU code at that point and stores it in the `.o`. This moves the work off the link and into the per-file compiles, where `make -j` or `ninja` can spread it across cores, and an edit to one file regenerates GPU code for that file alone:
 
 ```bash
-icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -c tu_a.cpp -o tu_a.o
-icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -c tu_b.cpp -o tu_b.o
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_a.cpp -o tu_a.o
+icpx -fsycl -fno-sycl-rdc -fsycl-targets=intel_gpu_pvc -O2 -c tu_b.cpp -o tu_b.o
 icpx -fsycl -fsycl-targets=intel_gpu_pvc tu_a.o tu_b.o -o app
 ```
 
-`-fno-sycl-rdc` applies per source file, so a project can mix the two. Files that use `SYCL_EXTERNAL` are compiled without it, the rest with it, and all of the resulting `.o` files link together as usual. To see how an object was built, run `clang-offload-bundler --type=o --input=tu_a.o --list`: a `spir64_gen_image` target means the object already holds GPU code, and `spir64_gen` means it will be generated at link time.
+The option applies per source file, so a project can mix the two: files that use `SYCL_EXTERNAL` keep the default, and the rest can use `-fno-sycl-rdc`. How much this saves depends on how many files can avoid `SYCL_EXTERNAL`, so measure it on the application before changing a build system.
 
-/// warning
-`SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so a file that uses it fails with `unknown type name 'SYCL_EXTERNAL'`.
+/// warning | Caveats for `-fno-sycl-rdc`
+`SYCL_EXTERNAL` is not available under `-fno-sycl-rdc`, so every kernel must be self-contained in its source file. The macro is left undefined rather than diagnosed, so any file that uses it fails to compile with `unknown type name 'SYCL_EXTERNAL'`. This includes a file that only calls such a function, since the declaration in the header is enough to trigger the error.
 
 Keep `-fsycl-targets=` on the link command, as shown above. Dropping it is only safe when every object was compiled with `-fno-sycl-rdc`; if any was not, the link still succeeds and prints no warning, but that object's kernels are left out of the executable and fail when launched.
 ///
+
+#### Checking what an object file holds
+
+To see whether an object carries finished GPU code or intermediate device code, list its offload targets:
+
+```bash
+clang-offload-bundler --type=o --input=tu_a.o --list
+```
+
+- `sycl-spir64_gen_image-...`: finished PVC code, generated at compile time with `-fno-sycl-rdc`.
+- `sycl-spir64_gen-...`: intermediate device code; GPU code is generated at link time.
 
 ## Example
 
