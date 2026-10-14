@@ -16,7 +16,7 @@ Higher-level programming models such as Kokkos and Raja may also be used for CPU
 
 ## GPU Programming Models
 
-A summary of available GPU programming models and relevant compiler flags is shown below for compilers that generate offloadable code. Two modes of compilation are currently available with the oneAPI compilers: Just-in-Time (JIT) and Ahead-of-Time (AoT). With AoT compilation, the backend argument that names the device is only needed when linking the application. For SYCL, however, `-fsycl-targets=` itself must be given to both the compile and the link step; passing it only at link produces an executable whose kernels are still compiled at first run. Users are encouraged to review the corresponding man pages and documentation.
+The table below summarizes GPU programming models and compiler flags for offloadable code. oneAPI supports Just-in-Time (JIT) and Ahead-of-Time (AoT) compilation. For AoT, the device backend is specified only at link time. However, SYCL requires `-fsycl-targets=` during both compilation and linking; specifying it only at link time results in JIT compilation at runtime. Consult the relevant man pages and documentation for details.
 
 | Programming Model | oneAPI (JIT) | oneAPI (AoT) |
 | --- | --- | --- |
