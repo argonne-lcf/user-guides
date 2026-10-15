@@ -1,0 +1,21 @@
+extends: existence
+level: warning
+message: "Use 'bash' instead of 'sh'."
+scope: sentence
+nonword: false
+tokens:
+  - sh
+tests:
+  - name: flags sh
+    input: "The shell script sh is used."
+    want: |
+      1:18:alcf-style.terminology.shell-bash:Use 'bash' instead of 'sh'.
+  - name: allows shell
+    input: "The shell script is used."
+    want: ''
+  - name: allows bash
+    input: "Use bash for scripts."
+    want: ''
+  - name: ignores sh in code block
+    input: "```bash\n#!/bin/sh\n```"
+    want: ''
