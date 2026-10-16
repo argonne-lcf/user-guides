@@ -1,0 +1,26 @@
+extends: substitution
+level: error
+message: "Use '%s' instead of '%s'."
+ignorecase: true
+swap:
+  Oneapi: oneAPI
+  Slurm: Slurm
+  tensorflow: TensorFlow
+  pytorch: PyTorch
+  filesystem: 'file system'
+  github: GitHub
+  conda: conda/Miniforge
+  pbs: PBSpro
+  aurora: Aurora
+  polaris: Polaris
+  crux: Crux
+  sophia: Sophia
+  anaconda: conda/Miniforge
+tests:
+  - name: flags wrong casing
+    input: "Using Oneapi."
+    want: |
+      1:7:ALCF_Style.terminology.capitalization:Use 'oneAPI' instead of 'Oneapi'.
+  - name: allows correct casing
+    input: "Using oneAPI."
+    want: ''

@@ -1,0 +1,15 @@
+extends: existence
+level: warning
+message: "Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>."
+nonword: true
+scope: raw
+tokens:
+  - '<(?!username|project|jobid|queue|path|name)[^>]+>'
+tests:
+  - name: flags unapproved placeholder
+    input: "Enter <my_var> here."
+    want: |
+      1:7:ALCF_Style.placeholders.approved-placeholders:Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>.
+  - name: allows approved placeholder
+    input: "Enter <name> here."
+    want: ''

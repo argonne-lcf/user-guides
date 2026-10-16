@@ -1,0 +1,15 @@
+extends: existence
+level: warning
+message: "Prose with two bare '$' signs (e.g. '$HOME ... $USER') can be misparsed as math. Wrap shell variables in backticks or use '\\$' to escape."
+nonword: true
+scope: raw
+tokens:
+  - '[^`\n]*\$[^`\n]*\$[^`\n]*'
+tests:
+  - name: flags bare dollar signs
+    input: "Use $HOME and $USER."
+    want: |
+      1:1:ALCF_Style.formatting.math-parsing:Prose with two bare '$' signs (e.g. '$HOME ... $USER') can be misparsed as math. Wrap shell variables in backticks or use '\$' to escape.
+  - name: allows backticks
+    input: "Use `$HOME` and `$USER`."
+    want: ''

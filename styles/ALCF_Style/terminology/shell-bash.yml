@@ -1,0 +1,16 @@
+extends: substitution
+level: warning
+message: "Use '%s' instead of '%s' for shell commands."
+swap:
+  shell: bash
+  sh: bash
+scope: raw
+nonword: false
+tests:
+  - name: flags sh
+    input: "Run the fish sh script."
+    want: |
+      1:14:ALCF_Style.terminology.shell-bash:Use 'bash' instead of 'sh' for shell commands.
+  - name: allows bash
+    input: "Run the bash script."
+    want: ''

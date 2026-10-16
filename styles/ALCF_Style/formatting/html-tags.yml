@@ -1,0 +1,16 @@
+extends: existence
+level: warning
+message: "Use Material/pymdownx features instead of raw HTML. Use '/// details' instead of '<details>' and '**bold**' instead of '<strong>'."
+nonword: true
+scope: raw
+tokens:
+  - '<details'
+  - '<strong'
+tests:
+  - name: flags html tags
+    input: "<details>Some info</details>"
+    want: |
+      1:1:ALCF_Style.formatting.html-tags:Use Material/pymdownx features instead of raw HTML. Use '/// details' instead of '<details>' and '**bold**' instead of '<strong>'.
+  - name: allows markdown
+    input: "/// details\nSome info\n///"
+    want: ''

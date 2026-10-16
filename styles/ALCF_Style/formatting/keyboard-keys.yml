@@ -1,0 +1,15 @@
+extends: existence
+level: warning
+message: "Use '++key++' syntax for keyboard keys (e.g., '++ctrl+c++' instead of 'Ctrl+C')."
+scope: raw
+nonword: true
+tokens:
+  - '(?<!\+)(?i)(Ctrl|Alt|Shift|Cmd|Enter|Esc|Delete|Backspace)\s?[\+\-][A-Z0-9](?!\+)'
+tests:
+  - name: flags old key syntax
+    input: "Press Ctrl+C"
+    want: |
+      1:7:ALCF_Style.formatting.keyboard-keys:Use '++key++' syntax for keyboard keys (e.g., '++ctrl+c++' instead of 'Ctrl+C').
+  - name: allows new key syntax
+    input: "Press ++ctrl+c++"
+    want: ''

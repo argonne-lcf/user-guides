@@ -1,0 +1,15 @@
+extends: existence
+level: warning
+message: "Use descriptive link text instead of '%s'."
+scope: sentence
+ignorecase: true
+tokens:
+  - click here
+tests:
+  - name: flags click here
+    input: "Click here for more."
+    want: |
+      1:1:ALCF_Style.terminology.link-text:Use descriptive link text instead of 'Click here'.
+  - name: allows descriptive text
+    input: "See the documentation for more."
+    want: ''

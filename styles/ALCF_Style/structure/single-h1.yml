@@ -1,0 +1,20 @@
+extends: occurrence
+level: warning
+message: "More than one # H1 heading present"
+scope: raw
+max: 1
+token: '(?m)^#(?:\s|$)'
+tests:
+  - name: flags multiple H1s
+    input: |
+      # First H1
+      Some text
+      # Second H1
+    want: |
+      1:1:ALCF_Style.structure.single-h1:More than one # H1 heading present
+  - name: allows single H1
+    input: |
+      # Only H1
+      Some text
+      ## H2
+    want: ''

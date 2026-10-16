@@ -1,0 +1,17 @@
+extends: existence
+level: warning
+message: "Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead."
+nonword: true
+scope: raw
+tokens:
+  - '^!!!'
+  - '^\?\?\?'
+  - '^==='
+tests:
+  - name: flags legacy blocks
+    input: "!!! note\nThis is a note."
+    want: |
+      1:1:ALCF_Style.formatting.legacy-blocks:Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead.
+  - name: allows new blocks
+    input: "/// note\nThis is a note.\n///"
+    want: ''

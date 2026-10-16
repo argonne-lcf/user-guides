@@ -1,0 +1,41 @@
+extends: existence
+level: warning
+message: "Sample output should be in a separate block with the class '{ .output .no-copy }'."
+scope: raw
+nonword: true
+tokens:
+  - '```(?!\s*\{.*\.output\})\n\s*[a-zA-Z0-9._\/-]+@[a-zA-Z0-9._\/-]+[:\s].*[$#]'
+tests:
+  - name: flags missing output class
+    input: |
+      ```
+      user@host:~$ ls
+      file1
+      ```
+    want: |
+      1:1:ALCF_Style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
+  - name: allows output class
+    input: |
+      ```{.output .no-copy}
+      user@host:~$ ls
+      file1
+      ```
+    want: ''
+  - name: flags root prompt missing class
+    input: |
+      ```
+      root@host:~# ls
+      file1
+      ```
+    want: |
+      1:1:ALCF_Style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
+  - name: ignores standard code block
+    input: |
+      ```bash
+      ls -la
+      ```
+    want: ''
+  - name: ignores plain text
+    input: |
+      This is just some text.
+    want: ''
