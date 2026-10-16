@@ -3,4 +3,4 @@ repos:
   rev: v3.24.0
   hooks:
     - id: vale
-      args: [--config=.vale.ini, --output=line, --minAlertLevel=suggestion]
+      args: [--config=.vale.ini, --minAlertLevel=warning]
