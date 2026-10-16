@@ -1,5 +1,5 @@
 extends: occurrence
-level: warning
+level: error
 message: "More than one # H1 heading present"
 scope: raw
 max: 1

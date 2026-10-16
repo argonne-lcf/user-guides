@@ -1,5 +1,5 @@
 extends: existence
-level: warning
+level: error
 message: "Remove the '$ ' or '# ' prompt from the start of the command; the copy button should not include it."
 nonword: true
 scope: raw
