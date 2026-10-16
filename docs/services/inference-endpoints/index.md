@@ -196,6 +196,7 @@ Four clusters are currently available, with additional systems coming soon:
 - **Permission Denied:** Your token may have expired. Logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-authenticate. With `alcf-tokens`/`alcf-ai`, re-run `alcf-tokens login inference` (or `alcf-tokens login` to authorize all services). With the `inference_auth_token.py` helper, re-run `python inference_auth_token.py authenticate --force`.
 - **Batch Permission Error:** Ensure your input/output paths are in a readable location like `/eagle/argonne_tpc`. It is currently internal only to ALCF and will be made public in the future.
 - **IdentityMismatchError: Detected a change in identity:** This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Delete the cached tokens file and restart the authentication process. The file depends on which client you use: the `inference_auth_token.py` helper stores tokens at `~/.globus/app/58fdd3bc-e1c3-4ce5-80ea-8d6b87cfb944/inference_app/tokens.json`, while `alcf-tokens` and `alcf-ai` store them at `~/.globus/app/7f3e61f5-e0de-4e8f-9150-0a62c65dda63/alcf_tokens/tokens.json` (or run `alcf-tokens clear-tokens`).
+- **Too Many Requests (429):** You have exceeded the per-second request limit or a tokens-per-minute limit. Wait for the window to reset, then retry with smaller requests. See [Rate Limits](api.md#rate-limits).
 
 ## Notifications
 

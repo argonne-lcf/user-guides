@@ -257,4 +257,75 @@ print(response.data[0].embedding)
 ////
 ///
 
+## Rate Limits
+
+The service enforces two global request limits. Exceeding either of them returns `429 Too Many Requests`.
+
+| Limit | Value |
+| ----- | ----- |
+| Requests per second (per IP address) | 50 req/s |
+| Requests per second (per caller) | 20 req/s |
+
+The per-IP limit applies before the per-caller one, and each returns its own body:
+
+```json
+{
+  "error": "Rate limit exceeded",
+  "message": "Too many requests from your IP address. Please try again later.",
+  "retry_after": "1 second"
+}
+```
+
+```json
+{
+  "detail": "Too many requests."
+}
+```
+
+A request that exceeds a limit is rejected with `429` and a `Retry-After` header giving the number of seconds to wait.
+
+<!-- Per-model token limits are not currently enabled.
+
+Each model additionally applies tokens-per-minute limits, per model and per user, with a burst allowance and a cap on concurrent requests per user:
+
+| Cluster | Model | Tokens/minute | Requests/minute | Burst tokens | Burst requests | Concurrent requests per user |
+| ------- | ----- | -------------- | --------------- | ------------ | -------------- | --------------------------- |
+| Sophia | `openai/gpt-oss-120b` | 64,000 | 120 | 128,000 | 10 | 5 |
+| Metis | `openai/gpt-oss-120b` | 64,000 | 120 | 128,000 | 10 | 5 |
+| Tara | `nemotron-3-ultra` | 262,144 | 30 | 262,144 | 2 | 1 |
+| Tara | `inkling-bf16` | 262,144 | 30 | 262,144 | 2 | 1 |
+
+Models with no entry in the table above have no token or request limit of their own. However, the global limits still apply. Token limits count the actual prompt and completion tokens of each response.
+
+The values in effect are available per model:
+
+```bash
+#!/bin/bash
+
+# Get your access token
+access_token=$(alcf-tokens get-token inference)
+
+# Check the limits published for each Sophia model
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
+    -H "Authorization: Bearer ${access_token}"
+```
+
+A model reports `rate_limit_token_per_minute` and `rate_limit_token_per_minute_per_user` when that limit is enabled. Exceeding a token limit returns the current usage alongside the error:
+
+```json
+{
+  "error": {
+    "code": "too_many_requests",
+    "message": "Tokens/minute limit exceeded",
+    "info": {
+      "global_model_usage": 100000,
+      "user_model_usage": 60000
+    }
+  }
+}
+```
+
+Wait for the one-minute window to reset before retrying, and reduce the request size if a single request exceeds the per-user limit.
+-->
+
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).
