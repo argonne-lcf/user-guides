@@ -13,10 +13,12 @@ Most agents have an installation script that you can run with one command to ins
 
 | Agent | Install Command |
 | --- | --- |
-| **[OpenCode](https://opencode.ai/) (recommended)** | `curl -fsSL https://opencode.ai/install | bash` |
-| **[Pi](https://pi.dev/) (recommended)** | `curl -fsSL https://pi.dev/install.sh | sh` |
+| **[OpenCode](https://opencode.ai/)**[^custom-provider] | `curl -fsSL https://opencode.ai/install | bash` |
+| **[Pi](https://pi.dev/)**[^custom-provider] | `curl -fsSL https://pi.dev/install.sh | sh` |
 | **[OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli)** | `curl -fsSL https://chatgpt.com/codex/install.sh | sh` |
 | **[Claude Code](https://code.claude.com/docs/en/quickstart)** | `curl -fsSL https://claude.ai/install.sh | bash` |
+
+[^custom-provider]: OpenCode and Pi explicitly support third-party/custom provider endpoints.
 
 Most scripts will require you to reload your environment with `source ~/.bashrc` before the agent will be in your `PATH`.
 
