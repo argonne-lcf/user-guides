@@ -37,7 +37,7 @@ if [ -d "groqflow_demo_helpers.egg-info" ]; then rm -r groqflow_demo_helpers.egg
 cp ../frozen.txt .
 pip install -r frozen.txt -e .
 popd
-pip install transformers==4.20.0 huggingface-hub==0.1.0 install datasets==2.3.2
+pip install transformers==4.20.0 huggingface-hub==0.1.0 datasets==2.3.2
 pip install scikit-learn==1.1.1 numpy==1.21.6 pandas==2.0.0 scipy==1.8.0
 pip install pyarrow==18.0.0 onnxconverter-common==1.13.0 skl2onnx==1.17.0
 pip install soundfile==0.12.0
