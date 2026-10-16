@@ -37,7 +37,7 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/minerva/jobs" \
 ```
 
 ///// tip | Switching Between Clusters
-Replace `/sophia/` with `/metis/` or `/minerva/` in the URL.
+Replace `/sophia/` with `/metis/`, `/minerva/`, or `/tara/` in the URL.
 /////
 ////
 
@@ -154,6 +154,7 @@ To target a different cluster, simply replace the cluster/framework portion of t
 - **Sophia**: `/resource_server/sophia/vllm/v1`
 - **Metis**: `/resource_server/metis/api/v1`
 - **Minerva**: `/resource_server/minerva/api/v1`
+- **Tara**: `/resource_server/tara/api/v1`
 ////
 ///
 
@@ -205,7 +206,7 @@ print(response.choices[0].message.content)
 
 /// details | Embeddings
 
-This endpoint generates vector embeddings from text, currently supported by the `infinity` framework.
+This endpoint generates vector embeddings from text, currently supported by the `vLLM` framework.
 
 //// tab | Python (OpenAI SDK)
 

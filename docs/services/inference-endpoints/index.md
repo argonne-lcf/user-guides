@@ -176,13 +176,15 @@ print(response.choices[0].message.content)
 
 ### Available Clusters
 
-Three clusters are currently active, with additional systems coming soon:
+Four clusters are currently available, with additional systems coming soon:
 
 | Cluster | Status | Framework | Base URL | Supported Endpoints |
 | ------- | ------ | --------- | -------- | ------------------- |
 | **[NVIDIA A100 (Sophia)](https://docs.alcf.anl.gov/sophia/getting-started/)** | Active | vLLM | `/resource_server/sophia/vllm/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions`<br>`/embeddings`<br>`/batches` |
-| **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | SambaNova API | `/resource_server/metis/api/v1` | `/chat/completions`<br>`/responses` |
-| **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | API | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions` |
+| **[SambaNova SN40L (Metis)](https://docs.alcf.anl.gov/ai-testbed/sn40l_inference/)** | Active | DirectAPI | `/resource_server/metis/api/v1` | `/chat/completions`<br>`/responses` |
+| **[NVIDIA B200 (Minerva)](https://www.alcf.anl.gov/minerva)** | Active | DirectAPI | `/resource_server/minerva/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages`<br>`/completions` |
+| **[NVIDIA GH200 (Tara)](https://www.alcf.anl.gov/tara)** | Active | DirectAPI | `/resource_server/tara/api/v1` | `/chat/completions`<br>`/responses`<br>`/messages` |
+
 
 ## Important Notes
 

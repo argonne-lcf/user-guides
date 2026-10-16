@@ -252,7 +252,7 @@ codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disa
 ```
 
 /// note | Suggested Models
-`openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+`openai/gpt-oss-120b` is provided by Sophia, Metis, and Minerva and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
 ///
 
 ### Claude Code
@@ -272,7 +272,7 @@ Add the following to `~/.claude/settings.json`.
 ```
 
 /// note | Anthropic Messages Support
-You need to use a Direct API-backed endpoint that supports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva).
+You need to use a Direct API-backed endpoint that supports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva or Tara).
 ///
 
 ### Other 3rd-Party Agents
