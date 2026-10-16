@@ -34,6 +34,10 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/jobs" \
 # Check Minerva cluster status
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/minerva/jobs" \
  -H "Authorization: Bearer ${access_token}"
+
+# Check Tara cluster status
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/tara/jobs" \
+ -H "Authorization: Bearer ${access_token}"
 ```
 
 ///// tip | Switching Between Clusters
@@ -99,6 +103,17 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/
             "max_tokens": 150,
             "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
          }'
+
+# Tara cluster example
+curl -X POST "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/chat/completions" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "model": "openai/gpt-oss-20b",
+            "temperature": 0.2,
+            "max_tokens": 150,
+            "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+         }'
 ```
 ////
 
@@ -142,6 +157,18 @@ client_minerva = OpenAI(
 
 response = client_minerva.chat.completions.create(
     model="nemotron-3-ultra",
+    messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+)
+print(response.choices[0].message.content)
+
+# Tara cluster
+client_tara = OpenAI(
+    api_key=access_token,
+    base_url="https://inference-api.alcf.anl.gov/resource_server/tara/api/v1"
+)
+
+response = client_tara.chat.completions.create(
+    model="openai/gpt-oss-20b",
     messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
 )
 print(response.choices[0].message.content)

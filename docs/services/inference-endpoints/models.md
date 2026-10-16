@@ -91,6 +91,10 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
 # Check serving configuration for a specific model (e.g., openai/gpt-oss-120b)
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?model_id=openai/gpt-oss-120b" \
     -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for another cluster (e.g., Tara)
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/tara/models" \
+    -H "Authorization: Bearer ${access_token}"
 ```
 
 ### Model Capabilities
