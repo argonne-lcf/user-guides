@@ -1,22 +1,22 @@
 # Examples
 
-## Running Llama-2 7B on the Groqrack
+## Running Llama-2 7B on the GroqRack
 
 /// warning | Currently unavailable
-As of October 16, 2026, Llama-2 7B, which needs all 72 cards in the Groqrack, does not run because of a failed card. There is no ETA for a fix.
+As of October 16, 2026, Llama-2 7B, which needs all 72 cards in the GroqRack, does not run because of a failed card. There is no ETA for a fix.
 ///
 
-Llama-2 7B requires all 9 nodes in a Groqrack.
+Llama-2 7B requires all 9 nodes in a GroqRack.
 
 ### Checking status
 
-First, verify that there are no other PBS jobs using the Groqrack. This can be done from either a Groqrack node or a login node.
+First, verify that there are no other PBS jobs using the GroqRack. This can be done from either a GroqRack node or a login node.
 ```console
 qstat -wa
 ```
 If `qstat -wa` shows any jobs active, do not attempt to start Llama2.
 
-Also, be sure to check if anyone else is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; this would only be an actual conflict if the user starts a job during the attempt to run the full-rack llama job.
+Also, be sure to check if anyone else is connected to any of the nodes: This can be done from either a GroqRack node or a login node. Logins on nodes just indicate a potential conflict; this would only be an actual conflict if the user starts a job during the attempt to run the full-rack llama job.
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
