@@ -44,16 +44,26 @@ pip install soundfile==0.12.0
 pip install opencv-python==4.6.0.66
 ```
 
-Note: if you encounter problems trying to update an existing groqflow conda environment, consider removing the existing environment with the following command, and recreating it. Make sure you deactivate the environment before removing it. 
-    ```bash
-      conda remove --name groqflow --all -y
-    ```
+/// tip | Problems updating an existing environment
+If updating an existing groqflow conda environment fails, remove the environment and recreate it:
+
+```bash
+conda deactivate
+conda remove --name groqflow --all -y
+```
+///
 
 ### Use Groqflow
-To use groqfloq,
+To use groqflow:
+
 ```bash
 conda activate groqflow
 ```
-Note: Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into `~/.local` and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
 
-Note: The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps, including the removal of the egg-info directories.
+/// note
+Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into `~/.local` and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
+///
+
+/// note
+The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps, including the removal of the egg-info directories.
+///
