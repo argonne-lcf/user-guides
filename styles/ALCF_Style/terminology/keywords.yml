@@ -1,0 +1,59 @@
+extends: substitution
+level: error
+message: "Use '%s' instead of '%s'."
+ignorecase: true
+swap:
+  anaconda: conda/Miniforge
+  api: API
+  aurora: Aurora
+  cmake: CMake
+  conda: conda/Miniforge
+  cpu: CPU
+  crux: Crux
+  cuda: CUDA
+  daos: DAOS
+  filesystem: 'file system'
+  gcc: GCC
+  gdb: GDB
+  github: GitHub
+  gpu: GPU
+  hpc: HPC
+  hpss: HPSS
+  infiniband: InfiniBand
+  jax: JAX
+  llvm: LLVM
+  lustre: Lustre
+  mkl: MKL
+  mpi: MPI
+  nccl: NCCL
+  oneapi: oneAPI
+  openmp: OpenMP
+  pbs: PBSpro
+  polaris: Polaris
+  pytorch: PyTorch
+  slingshot: Slingshot
+  slurm: SLURM
+  sophia: Sophia
+  spack: Spack
+  sycl: SYCL
+  tensorflow: TensorFlow
+tests:
+  - name: allows correct product name
+    input: "Using oneAPI."
+    want: ''
+  - name: flags wrong keywords for CMake
+    input: "Run cmake."
+    want: |
+      1:5:ALCF_Style.terminology.keywords:Use 'CMake' instead of 'cmake'.
+  - name: flags wrong keywords for HPC
+    input: "This is hpc."
+    want: |
+      1:9:ALCF_Style.terminology.keywords:Use 'HPC' instead of 'hpc'.
+  - name: flags wrong keywords for SYCL
+    input: "Using sycl."
+    want: |
+      1:7:ALCF_Style.terminology.keywords:Use 'SYCL' instead of 'sycl'.
+  - name: flags wrong product name/keyword
+    input: "Using Oneapi."
+    want: |
+      1:7:ALCF_Style.terminology.keywords:Use 'oneAPI' instead of 'Oneapi'.
