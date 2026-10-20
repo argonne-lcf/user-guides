@@ -1,5 +1,5 @@
 extends: existence
-level: warning
+level: error
 message: "Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>."
 nonword: true
 scope: raw

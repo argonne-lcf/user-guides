@@ -1,5 +1,5 @@
 extends: existence
-level: warning
+level: error
 message: "Headings need a space after the '#' marks (e.g., '### Heading' instead of '###Heading')."
 scope: raw
 nonword: true
