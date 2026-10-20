@@ -2,7 +2,9 @@
 
 ## Running Llama-2 7B on the Groqrack
 
-*Note: as of October 16, 2026, the Llama-2 7B model, which uses all 72 cards in the groqrack, no longer runs, due to a card failure. There is no ETA for a fix.*
+/// warning | Currently unavailable
+As of October 16, 2026, Llama-2 7B, which needs all 72 cards in the Groqrack, does not run because of a failed card. There is no ETA for a fix.
+///
 
 Llama-2 7B requires all 9 nodes in a Groqrack.
 
