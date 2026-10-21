@@ -1,3 +1,10 @@
+---
+description: "Clone GroqFlow and run its proof_points samples on GroqRack nodes with PBS, in batch or interactive mode."
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Running a Model/Program
 
 Jobs are launched from any GroqRack node.

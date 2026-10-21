@@ -1,3 +1,10 @@
+---
+description: "Run Llama-2 7B across all nine GroqRack nodes on the ALCF AI Testbed: checking that the rack is free, then running it."
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Examples
 
 ## Running Llama-2 7B on the GroqRack

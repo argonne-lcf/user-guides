@@ -1,4 +1,8 @@
 ---
+description: "Submit, monitor, hold, and cancel PBS jobs on the GroqRack on the ALCF AI Testbed with qsub, qstat, qdel, and qhold."
+authors:
+  - William Arnold
+last_verified: 2026-10-20
 tags:
   - Job Submission
 ---
