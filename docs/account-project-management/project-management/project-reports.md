@@ -16,11 +16,11 @@ PIs of INCITE, ALCC, and ADSP projects must complete quarterly reports and a fin
 ### 2025-2026 ALCC EOP report:
 - December 15, 2026 (CY2026)
 
-### 2025-2026 ALCC quarterly and EOP reports:
-- January 1, 2026 (CY2025 - Q4)
-- April 1, 2026 (CY2025 - Q1)
-- July 1, 2026 (CY2026 - Q2)
-- August 15, 2026 (CY2026 - EOP)
+### 2026-2027 ALCC quarterly and EOP reports:
+- January 1, 2027 (CY2026 - Q4)
+- April 1, 2027 (CY2026 - Q1)
+- July 1, 2027 (CY2026 - Q2)
+- August 15, 2027 (CY2026 - EOP)
 
 ## Penalties
 
