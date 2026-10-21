@@ -726,6 +726,7 @@ All filesystem operations are asynchronous and return a task ID. See [Get a Task
 - Flare (All paths must start with `/flare` or `/lus/flare/projects`) 
 - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
 - Home (All paths must start with `/home`)
+- Grand (Please target Eagle with `/lus/eagle/clone/g2/projects/`)
 ///
 
 /// details | 3.1. List Directory Contents (`ls`)
