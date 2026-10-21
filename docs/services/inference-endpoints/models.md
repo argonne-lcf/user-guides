@@ -58,7 +58,8 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Minerva | Chat | NVIDIA | nemotron-3-ultra^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
 | Minerva | Chat | OpenAI | gpt-oss-120b^RT^ | chat_completions, responses, messages | 131072 | text | ✓ | ✓ | ✓ |
-| Minerva | Chat | Meta | muse-spark-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
+| Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
+| Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Tara | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓ | ✓ |
 | Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 32768 | text | ✓ | ✓ | ✓ |
 | Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions | 131072 | text, image, audio | ✓ | ✓ | ✓ |
