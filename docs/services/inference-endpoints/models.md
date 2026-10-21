@@ -8,6 +8,7 @@ Models are organized by cluster and marked with the following capabilities:
 - **H** - Always Hot Model
 
 The table reports each endpoint's cluster, type, organization, API protocols, context window (in tokens), supported input modalities, streaming support, reasoning, and tool calling. A `—` indicates the value is not published for that endpoint.
+
 | Cluster | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
 |---------|------|--------------|-------|---------------|----------------|------------------|-----------|-----------|--------------|
 | Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
