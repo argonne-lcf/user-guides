@@ -61,9 +61,9 @@ conda activate groqflow
 ```
 
 /// note
-Always use a personal conda environment when installing packages on groq nodes; otherwise they can get installed into `~/.local` and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
+Always use a personal conda environment when installing packages on Groq nodes; otherwise they can get installed into `~/.local` and can cause problems when your shared home directory is used on other systems. If you encounter mysterious package dependency/version issues, check your `~/.local/lib` and `~/.local/bin` for mistakenly installed packages.
 ///
 
 /// note
-The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps, including the removal of the egg-info directories.
+The conda environment should be reinstalled whenever new GroqFlow code is pulled from the GroqFlow GitHub repository. With the `groqflow` conda environment activated, redo just the `pip install` steps, including the removal of the egg-info directories.
 ///
