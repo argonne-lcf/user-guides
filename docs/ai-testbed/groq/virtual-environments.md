@@ -1,4 +1,5 @@
 ---
+description: "Install conda and set up a GroqFlow conda environment with pinned package versions on the ALCF AI Testbed GroqRack."
 authors:
   - William Arnold
 last_verified: 2026-10-20
