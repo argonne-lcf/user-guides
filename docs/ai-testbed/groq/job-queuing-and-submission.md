@@ -5,7 +5,7 @@ tags:
 
 # Job Submission with PBS
 
-Groq jobs in the AI Testbed's groqrack are managed by the PBS job scheduler. Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System).
+Groq jobs in the AI Testbed's GroqRack are managed by the PBS job scheduler. Overview: [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System).
 For additional information, see [Running Jobs using PBS](../../running-jobs/index.md)
 
 Man pages are available. These are the key commands:
