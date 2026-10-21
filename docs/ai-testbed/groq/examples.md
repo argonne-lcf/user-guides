@@ -55,7 +55,7 @@ cd ~/groq_llama2-7b-kludge/
 Packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. If you have a `~/.local/lib/python3.10/site-packages/` directory, please remove it or rename it before continuing.
 ///
 
-Create and activate a `groqflow_for_llama2`conda environment.
+Create and activate a `groqflow_for_llama2` conda environment.
 ```console
 conda env remove -n groqflow_for_llama2
 export PYTHON_VERSION=3.10.12

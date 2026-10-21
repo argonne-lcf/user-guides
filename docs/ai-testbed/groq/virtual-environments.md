@@ -13,16 +13,16 @@ bash Miniforge3-Linux-x86_64.sh
 exit
 ```
 ## GroqFlow conda environment setup
-### Create and activate a groqflow conda environment
-Create a groqflow conda environment and activate it
+### Create and activate a `groqflow` conda environment
+Create a `groqflow` conda environment and activate it
 ```bash
 export PYTHON_VERSION=3.10.12
 conda create -n groqflow python=$PYTHON_VERSION -y
 conda activate groqflow
 ```
 
-### Install groqflow into the groqflow conda environment
-Execute the following commands to install groqflow into the activated groqflow conda environment
+### Install GroqFlow into the `groqflow` conda environment
+Execute the following commands to install GroqFlow into the activated `groqflow` conda environment
 
 ```bash
 # Alter this if you have cloned groqflow to some other location.
@@ -53,8 +53,8 @@ conda remove --name groqflow --all -y
 ```
 ///
 
-### Use Groqflow
-To use groqflow:
+### Use GroqFlow
+To use GroqFlow:
 
 ```bash
 conda activate groqflow

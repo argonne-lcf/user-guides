@@ -15,10 +15,10 @@ or online man pages: [screen](https://manpages.ubuntu.com/manpages/jammy/en/man1
 
 ### GroqFlow
 
-GroqFlow is the simplest way to port applications running inference to groq. The groqflow github repo includes many sample applications.</br>
+GroqFlow is the simplest way to port applications running inference to Groq. The GroqFlow GitHub repository includes many sample applications.</br>
 See [GroqFlow](https://github.com/groq/groqflow/tree/main).
 
-### Clone the GroqFlow github repo
+### Clone the GroqFlow GitHub repository
 
 Clone the groqflow github repo and change current directory to the clone:
 ```bash
@@ -29,14 +29,14 @@ cd groqflow
 
 ### GroqFlow conda environments
 
-Create a groqflow conda environment, and activate it.
+Create a `groqflow` conda environment, and activate it.
 Follow the instructions in the [Virtual Environments](virtual-environments.md) section.
 Note: Similar install instructions are in `~/groqflow/docs/install.md` or [GroqFlow™ Installation Guide](https://github.com/groq/groqflow/blob/main/docs/install.md)
 
-The conda environment should be reinstalled whenever new groqflow code is pulled from the groqflow github. With a groqflow conda environment activated, redo just the pip install steps.
+The conda environment should be reinstalled whenever new GroqFlow code is pulled from the GroqFlow GitHub repository. With the `groqflow` conda environment activated, redo just the `pip install` steps.
 
-### Running a groqflow sample
-Each groqflow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
+### Running a GroqFlow sample
+Each GroqFlow sample directory in the `~/groqflow/proof_points` tree has a README.md describing the sample and how to run it.
 
 #### Optionally activate your GroqFlow conda environment
 ```console
@@ -79,7 +79,7 @@ Note: the number of chips used by a model can be found in the compile cache dir 
 $ grep num_chips_used ~/.cache/groqflow/minilmv2/minilmv2_state.yaml
 num_chips_used: 1
 ```
-The groqflow proofpoints models use 1, 2 or 4 chips. 
+The GroqFlow `proof_points` models use 1, 2 or 4 chips. 
 
 
 
@@ -128,7 +128,7 @@ An alternative is to use an interactive PBS job. This may be useful when debuggi
 ```bash
 qsub -IV -l walltime=24:00:00 -l select=1,place=excl
 ```
-Then activate your groqflow environment, and run python scripts with
+Then activate your `groqflow` environment, and run python scripts with
 ```console
 conda activate groqflow
 python scriptname.py
