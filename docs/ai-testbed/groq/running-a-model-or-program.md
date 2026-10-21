@@ -1,3 +1,9 @@
+---
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Running a Model/Program
 
 Jobs are launched from any GroqRack node.

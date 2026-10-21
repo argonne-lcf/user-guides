@@ -1,3 +1,9 @@
+---
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Virtual Environments
 
 For general guidance on creating and using Python environments, see [Python Environments](../../dev-environment/python-environments.md).

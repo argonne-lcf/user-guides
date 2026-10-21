@@ -1,4 +1,7 @@
 ---
+authors:
+  - William Arnold
+last_verified: 2026-10-20
 tags:
   - Job Submission
 ---

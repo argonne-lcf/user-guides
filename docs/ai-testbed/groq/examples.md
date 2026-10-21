@@ -1,3 +1,9 @@
+---
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Examples
 
 ## Running Llama-2 7B on the GroqRack
