@@ -208,8 +208,10 @@ curl -X POST "https://api.alcf.anl.gov/api/v2/compute/job/${resource_id}" \
            "name": "my_job",
            "stdout_path": "/home/<username>/logs",
            "stderr_path": "/home/<username>/logs",
+           "environment": {"MY_ENV_NAME": "my environment value"},
            "resources": {
                "node_count": 1
+               "cpu_cores_per_process": 64
            },
            "attributes": {
                "duration": 300,
@@ -248,8 +250,10 @@ response = requests.post(
         "name": "my_job",
         "stdout_path": "/home/<username>/logs",
         "stderr_path": "/home/<username>/logs",
+        "environment": {"MY_ENV_NAME": "my environment value"},
         "resources": {
-            "node_count": 1
+            "node_count": 1,
+            "cpu_cores_per_process": 64
         },
         "attributes": {
             "duration": 300,
@@ -265,6 +269,11 @@ print(response.status_code)
 print(response.json())
 ```
 ////
+
+**Note**
+ 
+ - `cpu_cores_per_process` refers to the requested number of CPUs per node. If not provided, each node will acquire the full set of CPUs.
+
 ///
 
 /// details | 2.2. List Jobs
