@@ -19,7 +19,9 @@ hook replaces the plugin's dates and adds the names:
   updated by changes to the part it includes (a section or line range, or the
   whole file), and to the snippets that part includes in turn.
 - Contributors are the authors and co-authors (Co-authored-by trailers) of
-  those commits, most commits first, with names from .mailmap. Names in the
+  those commits, most commits first, with names from .mailmap (where an
+  author's numbered VPN address, user@anlvpn123.mcs.anl.gov, is looked up as
+  user@anlvpn.mcs.anl.gov). Names in the
   page's `authors:` front matter are shown as authors, and the rest as
   "Edited by". Names under exclude_contributors, in mkdocs.yml's extra (every
   page) or the page's front matter (that page), are left out; their commits
@@ -47,6 +49,10 @@ log = logging.getLogger("mkdocs.hooks.page_history")
 
 PLUGIN = "git-revision-date-localized"
 BOT = re.compile(r"\[bot\]|^(github[- ]actions?|copilot|claude)\b|ai-assistant|^action@github\.com$", re.I)
+# Without user.email, git uses user@hostname, and Argonne VPN hostnames are
+# numbered (anlvpn123.mcs.anl.gov). Such an author is looked up in .mailmap as
+# user@anlvpn.mcs.anl.gov, so one entry covers every number.
+VPN_EMAIL = re.compile(r"@anlvpn\d+\.mcs\.anl\.gov$", re.I)
 FRONT_MATTER = re.compile(r"\A---[ \t]*\n.*?^(---|\.\.\.)[ \t]*$", re.S | re.M)
 RECORD, FIELD = "\x1e", "\x1f"
 
@@ -183,6 +189,9 @@ def history(path, selector=None):
         sha, parents, timestamp, name, email, coauthors = meta.split(FIELD)
         if len(parents.split()) > 1:
             continue  # a merge: its changes are counted in the merged commits
+        if VPN_EMAIL.search(email):
+            # Mapped with the co-author trailers in on_files.
+            name = f"{name} <{VPN_EMAIL.sub('@anlvpn.mcs.anl.gov', email)}>"
         status = files.strip().split("\n")[0].split("\t") if files.strip() else ["M", path.name]
         new = status[-1]
         old = status[1] if status[0][0] in "RC" else new
