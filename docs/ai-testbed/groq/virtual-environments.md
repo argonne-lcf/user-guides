@@ -45,7 +45,7 @@ pip install opencv-python==4.6.0.66
 ```
 
 /// tip | Problems updating an existing environment
-If updating an existing groqflow conda environment fails, remove the environment and recreate it:
+If updating the `groqflow` conda environment fails, remove the environment and recreate it:
 
 ```bash
 conda deactivate
