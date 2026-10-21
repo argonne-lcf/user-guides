@@ -1,15 +1,23 @@
 extends: existence
 level: warning
 message: "Use descriptive link text instead of '%s'."
-scope: sentence
+scope: raw
 ignorecase: true
+nonword: true
 tokens:
-  - click here
+  - '\[(?:click here|here|this link|this page|read more|more|link)\]\('
 tests:
-  - name: flags click here
-    input: "Click here for more."
+  - name: flags here as link text
+    input: "The queue limits are [here](../running-jobs/index.md)."
     want: |
-      1:1:ALCF_Style.terminology.link-text:Use descriptive link text instead of 'Click here'.
-  - name: allows descriptive text
-    input: "See the documentation for more."
+      1:22:ALCF_Style.terminology.link-text:Use descriptive link text instead of '[here]('.
+  - name: flags click here as link text
+    input: "[Click here](../running-jobs/index.md) for the queue limits."
+    want: |
+      1:1:ALCF_Style.terminology.link-text:Use descriptive link text instead of '[Click here]('.
+  - name: allows descriptive link text
+    input: "See [the queue limits](../running-jobs/index.md)."
+    want: ''
+  - name: allows here as an ordinary word
+    input: "The queue limits are listed here and on the policy page."
     want: ''

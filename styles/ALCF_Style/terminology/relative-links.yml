@@ -1,0 +1,21 @@
+extends: existence
+level: warning
+message: "Link to the .md file with a relative path, not a docs.alcf.anl.gov URL; MkDocs only checks relative links at build time."
+scope: raw
+nonword: true
+tokens:
+  - '\]\(\s*https?://docs\.alcf\.anl\.gov'
+tests:
+  - name: flags an absolute link to this site
+    input: "See [the queue page](https://docs.alcf.anl.gov/running-jobs/)."
+    want: |
+      1:20:ALCF_Style.terminology.relative-links:Link to the .md file with a relative path, not a docs.alcf.anl.gov URL; MkDocs only checks relative links at build time.
+  - name: allows a relative link
+    input: "See [the queue page](../running-jobs/index.md#queues)."
+    want: ''
+  - name: allows an external link
+    input: "See [the ALCF site](https://www.alcf.anl.gov/)."
+    want: ''
+  - name: allows the site named in prose
+    input: "The guides live at https://docs.alcf.anl.gov/."
+    want: ''

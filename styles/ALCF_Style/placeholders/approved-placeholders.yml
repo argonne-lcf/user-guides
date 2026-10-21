@@ -4,7 +4,7 @@ message: "Use an approved placeholder: <username>, <project>, <jobid>, <queue>, 
 nonword: true
 scope: raw
 tokens:
-  - '<(?!username|project|jobid|queue|path|name)[^>]+>'
+  - '<(?!(?:username|project|jobid|queue|path|name)>)[a-z][a-z0-9_-]*>'
 tests:
   - name: flags unapproved placeholder
     input: "Enter <my_var> here."

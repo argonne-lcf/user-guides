@@ -2,12 +2,12 @@ extends: substitution
 level: error
 message: "Use '%s' instead of '%s'."
 ignorecase: true
+scope: summary
 swap:
   anaconda: conda/Miniforge
   api: API
   aurora: Aurora
   cmake: CMake
-  conda: conda/Miniforge
   cpu: CPU
   crux: Crux
   cuda: CUDA
@@ -17,6 +17,7 @@ swap:
   gdb: GDB
   github: GitHub
   gpu: GPU
+  'high performance computing': 'high-performance computing'
   hpc: HPC
   hpss: HPSS
   infiniband: InfiniBand
@@ -28,11 +29,11 @@ swap:
   nccl: NCCL
   oneapi: oneAPI
   openmp: OpenMP
-  pbs: PBSpro
+  pbs: PBS
   polaris: Polaris
   pytorch: PyTorch
   slingshot: Slingshot
-  slurm: SLURM
+  slurm: Slurm
   sophia: Sophia
   spack: Spack
   sycl: SYCL
@@ -57,3 +58,17 @@ tests:
     input: "Using Oneapi."
     want: |
       1:7:ALCF_Style.terminology.keywords:Use 'oneAPI' instead of 'Oneapi'.
+  - name: allows PBS and Slurm as their owners write them
+    input: "Submit with PBS. We run Slurm elsewhere."
+    want: ''
+  - name: flags the SLURM spelling
+    input: "Jobs run under SLURM."
+    want: |
+      1:16:ALCF_Style.terminology.keywords:Use 'Slurm' instead of 'SLURM'.
+  - name: allows conda in prose
+    input: "Activate the conda environment."
+    want: ''
+  - name: flags Anaconda
+    input: "Install Anaconda first."
+    want: |
+      1:9:ALCF_Style.terminology.keywords:Use 'conda/Miniforge' instead of 'Anaconda'.

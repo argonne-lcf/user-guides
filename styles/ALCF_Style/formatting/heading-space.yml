@@ -3,8 +3,9 @@ level: error
 message: "Headings need a space after the '#' marks (e.g., '### Heading' instead of '###Heading')."
 scope: raw
 nonword: true
+# `##PBS` appears in commented-out directives in job scripts, so it is
 tokens:
-  - '(?m)^#{1,6}[^\s#]'
+  - '(?m)^#{2,6}(?!PBS\b)[^#\s]'
 tests:
   - name: flags missing space
     input: "###Heading"
@@ -12,4 +13,16 @@ tests:
       1:1:ALCF_Style.formatting.heading-space:Headings need a space after the '#' marks (e.g., '### Heading' instead of '###Heading').
   - name: allows correct space
     input: "### Heading"
+    want: ''
+  - name: allows a shebang
+    input: "```bash\n#!/bin/bash\n```"
+    want: ''
+  - name: allows PBS directives
+    input: "```bash\n#PBS -l select=2:system=polaris\n##PBS -q debug\n```"
+    want: ''
+  - name: allows a bash comment
+    input: "```bash\n# per-node settings\n```"
+    want: ''
+  - name: allows C preprocessor lines
+    input: "```c\n#include <mpi.h>\n#define N 4\n```"
     want: ''

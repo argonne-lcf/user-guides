@@ -1,6 +1,6 @@
 extends: occurrence
 level: error
-message: "More than one # H1 heading present"
+message: "More than one # H1 heading present (a '# comment' in a fenced block also counts here)"
 scope: raw
 max: 1
 token: '(?m)^#(?:\s|$)'
@@ -11,7 +11,7 @@ tests:
       Some text
       # Second H1
     want: |
-      1:1:ALCF_Style.structure.single-h1:More than one # H1 heading present
+      1:1:ALCF_Style.structure.single-h1:More than one # H1 heading present (a '# comment' in a fenced block also counts here)
   - name: allows single H1
     input: |
       # Only H1
