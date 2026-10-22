@@ -11,29 +11,29 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 
 | Cluster | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
 |---------|------|--------------|-------|---------------|----------------|------------------|-----------|-----------|--------------|
-| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
-| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^ | chat_completions | 16384 | text | ✓ | — | ✓ |
-| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-405B-Instruct^BT^ | chat_completions | 24576 | text | ✓ | — | ✓ |
-| Sophia | Chat | Meta | meta-llama/Llama-3.3-70B-Instruct^BT^ | chat_completions | 32768 | text | ✓ | — | ✓ |
-| Sophia | Chat | Meta | meta-llama/Llama-4-Scout-17B-16E-Instruct^BT^ | chat_completions | 32768 | text, image | ✓ | — | ✓ |
-| Sophia | Chat | Meta | meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^ | chat_completions | 16384 | text, image | ✓ | — | ✓ |
-| Sophia | Chat | Mistral AI | mistralai/Mistral-Large-Instruct-2407 | chat_completions | 16384 | text | ✓ | — | — |
-| Sophia | Chat | Mistral AI | mistralai/Mixtral-8x22B-Instruct-v0.1 | chat_completions | 16384 | text | ✓ | — | — |
-| Sophia | Chat | Mistral AI | mistralai/Devstral-2-123B-Instruct-2512^T^ | chat_completions | 16384 | text | ✓ | — | ✓ |
-| Sophia | Chat | OpenAI | openai/gpt-oss-20b^BRTH^ | chat_completions | — | text | ✓ | ✓ | ✓ |
-| Sophia | Chat | OpenAI | openai/gpt-oss-120b^BRTH^ | chat_completions | 65536 | text | ✓ | ✓ | ✓ |
-| Sophia | Chat | Argonne | argonne/AuroraGPT-IT-v4-0125^B^ | chat_completions | — | text | ✓ | — | — |
-| Sophia | Chat | Argonne | argonne/AuroraGPT-Tulu3-SFT-0125^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Arcee AI | arcee-ai/Trinity-Large-Thinking-W4A16^RT^ | chat_completions | 131072 | text | ✓ | ✓ | ✓ |
 | Sophia | Chat | Argonne | argonne/AuroraGPT-DPO-UFB-0225^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-IT-v4-0125^B^ | chat_completions | — | text | ✓ | — | — |
 | Sophia | Chat | Argonne | argonne/AuroraGPT-KTO-UFB-0325^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-Tulu3-SFT-0125^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | AstroMLab | AstroMLab/AstroSage-70B-20251009^T^ | chat_completions | — | text | ✓ | — | ✓ |
 | Sophia | Chat | Google | google/gemma-3-27b-it^BT^ | chat_completions | 32768 | text, image | ✓ | — | ✓ |
 | Sophia | Chat | Google | google/gemma-4-26B-A4B-it^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
 | Sophia | Chat | Google | google/gemma-4-31B-it^RTH^ | chat_completions | 128000 | text, image, video | ✓ | ✓ | ✓ |
 | Sophia | Chat | Google | google/gemma-4-E4B-it^RTH^ | chat_completions | — | text, image, video | ✓ | ✓ | ✓ |
-| Sophia | Chat | Arcee AI | arcee-ai/Trinity-Large-Thinking-W4A16^RT^ | chat_completions | 131072 | text | ✓ | ✓ | ✓ |
-| Sophia | Chat | NVIDIA | nvidia/nemotron-3-super-120b^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-3.3-70B-Instruct^BT^ | chat_completions | 32768 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^ | chat_completions | 16384 | text, image | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-4-Scout-17B-16E-Instruct^BT^ | chat_completions | 32768 | text, image | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-405B-Instruct^BT^ | chat_completions | 24576 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^ | chat_completions | 16384 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
+| Sophia | Chat | Mistral AI | mistralai/Devstral-2-123B-Instruct-2512^T^ | chat_completions | 16384 | text | ✓ | — | ✓ |
+| Sophia | Chat | Mistral AI | mistralai/Mistral-Large-Instruct-2407 | chat_completions | 16384 | text | ✓ | — | — |
+| Sophia | Chat | Mistral AI | mistralai/Mixtral-8x22B-Instruct-v0.1 | chat_completions | 16384 | text | ✓ | — | — |
 | Sophia | Chat | NVIDIA | mgoin/Nemotron-4-340B-Instruct-hf | chat_completions | — | text | ✓ | — | — |
-| Sophia | Chat | AstroMLab | AstroMLab/AstroSage-70B-20251009^T^ | chat_completions | — | text | ✓ | — | ✓ |
+| Sophia | Chat | NVIDIA | nvidia/nemotron-3-super-120b^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-120b^BRTH^ | chat_completions | 65536 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-20b^BRTH^ | chat_completions | — | text | ✓ | ✓ | ✓ |
 | Sophia | Vision | Meta | meta-llama/Llama-3.2-90B-Vision-Instruct^T^ | chat_completions | 8192 | text, image | ✓ | — | ✓ |
 | Sophia | Embedding | Google | google/embeddinggemma-300m | — | — | — | — | — | — |
 | Sophia | Embedding | Mistral AI | mistralai/Mistral-7B-Instruct-v0.3-embed | — | — | — | — | — | — |
@@ -49,20 +49,20 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-contrastive-2026-08 | — | — | — | — | — | — |
 | Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-joint | — | — | — | — | — | — |
 | Sophia | Genomics | genslm | genslm-test/genslm-esmc-6B-contrastive-2026-08 | — | — | — | — | — | — |
-| Sophia | Segmentation | Meta | facebook/sam3 | — | — | — | — | — | — |
 | Sophia | Segmentation | Meta | dinov3 | — | — | — | — | — | — |
+| Sophia | Segmentation | Meta | facebook/sam3 | — | — | — | — | — | — |
 | Sophia | Triton | — | amsc-d3 | KServe gRPC | — | — | — | — | — |
-| Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓ | ✓ |
 | Metis | Chat | Google | gemma-4-31B-it^RTH^ | chat_completions, responses | 262144 | text, image, video | ✓ | ✓ | ✓ |
 | Metis | Chat | Mistral AI | Mistral-Large-3-675B-Instruct-2512^TH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
-| Minerva | Chat | NVIDIA | nemotron-3-ultra^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
-| Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
-| Minerva | Chat | OpenAI | gpt-oss-120b^RT^ | chat_completions, responses, messages | 131072 | text | ✓ | ✓ | ✓ |
+| Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
+| Minerva | Chat | NVIDIA | nemotron-3-ultra^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
+| Minerva | Chat | OpenAI | gpt-oss-120b^RT^ | chat_completions, responses, messages | 131072 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
+| Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
+| Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 1048576 | text | ✓ | ✓ | ✓ |
 | Tara | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓ | ✓ |
-| Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 32768 | text | ✓ | ✓ | ✓ |
-| Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions | 131072 | text, image, audio | ✓ | ✓ | ✓ |
+| Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions | 1048576 | text, image, audio | ✓ | ✓ | ✓ |
 
 For Metis, endpoint and model status is on the [Metis status page](https://metis.alcf.anl.gov/status). See SambaNova's [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html) documentation for API details.
 
