@@ -89,7 +89,7 @@ sbank is the compute node hour accounting system at ALCF. It has historically be
 - **Saved Commands**: Commands that are likely to be repeated can be saved for later use with the ‘save command’ feature. ‘Save command’ buttons can be found next to the command bar or next to the output window. When you want to save a command, enter it via the command bar or by selecting options through the interface, click the save command button, and then enter a name and a brief description of the function. Once saved, the command will be accessible in the saved commands window unless deleted. The saved command can be run as is, copied to either the command builder or clipboard, edited (name and description), or deleted.
 
 #### Training
-Link to ALCF training events.
+Selecting "Training" on the navigation menu will take you to a page featuring upcoming ALCF training events.
 
 #### User Guides
-Link to ALCF User Guides.
+Selecting "User Guides" on the navigation menu will take you to ALCF's user guides.
