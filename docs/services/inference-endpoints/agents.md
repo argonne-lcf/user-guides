@@ -264,7 +264,7 @@ Add the following to `~/.claude/settings.json`.
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api",
     "ANTHROPIC_AUTH_TOKEN": "<your-api-key-here>",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "inkling-bf16",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "inkling-bf16",
@@ -272,6 +272,10 @@ Add the following to `~/.claude/settings.json`.
   }
 }
 ```
+
+/// note | Base URL
+`ANTHROPIC_BASE_URL` intentionally omits the trailing `/v1` used by the OpenAI-compatible endpoints. Claude Code automatically appends `/v1/messages` to the base URL.
+///
 
 /// note | Anthropic Messages Support
 You need to use a Direct API-backed endpoint that supports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva or Tara).
