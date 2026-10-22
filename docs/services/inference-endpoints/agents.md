@@ -32,7 +32,7 @@ Codex removed support for the Chat Completions API in `0.95`. Use [`0.94`](https
 
 You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (installable with `pip install alcf-ai`). This also handles authentication and pulling an API key from the service. See [alcf-ai CLI and SDK](alcf-ai.md) for installation details and additional options.
 
-```sh
+```bash
 alcf-ai agent configure <agent>
 ```
 
@@ -88,7 +88,7 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 
 Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](index.md#api-access)) or utilize `alcf-tokens`.
 
-```sh
+```bash
 alcf-tokens login inference # follow interactive instructions to login
 export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)" # pull a token and store
 
@@ -249,7 +249,7 @@ model_catalog_json = "~/.codex/catalogs/inkling.json"
 
 To run Codex, use the following parameters to ensure the correct model, provider, and profile is selected. You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
 
-```sh
+```bash
 codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disabled"'
 ```
 
