@@ -57,7 +57,6 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
 | Minerva | Chat | NVIDIA | nemotron-3-ultra^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
-| Minerva | Chat | OpenAI | gpt-oss-120b^RT^ | chat_completions, responses, messages | 131072 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
 | Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 1048576 | text | ✓ | ✓ | ✓ |
@@ -80,7 +79,7 @@ If this is your first time using `alcf-ai`, run `alcf-tokens login inference` fi
 
 When available, model serving configuration details can be viewed for each cluster.
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
