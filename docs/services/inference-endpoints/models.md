@@ -80,7 +80,7 @@ If this is your first time using `alcf-ai`, run `alcf-tokens login inference` fi
 
 When available, model serving configuration details can be viewed for each cluster.
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token

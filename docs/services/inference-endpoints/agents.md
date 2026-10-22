@@ -140,7 +140,7 @@ wire_api = "responses"
 In addition, you need to add a `model_config_json` for Codex to understand the model's capabilities. You can use this shell script to create one for you.
 
 /// details | Model Config Generation Script
-```sh
+```bash linenums="1"
 #!/usr/bin/env bash
 set -euo pipefail
 
