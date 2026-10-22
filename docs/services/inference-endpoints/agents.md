@@ -254,7 +254,7 @@ codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disa
 ```
 
 /// note | Suggested Models
-`openai/gpt-oss-120b` is provided by Sophia, Metis, and Minerva and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+`inkling-bf16` is provided by Minerva and Tara and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
 ///
 
 ### Claude Code
