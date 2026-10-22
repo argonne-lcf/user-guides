@@ -24,6 +24,7 @@ e4054afe1a87992fb674fcf6e3fcbaf6732b7c00  # Add vscode search keyword to the VS 
 27cf668167c92656d2930922674f77cc8c629c6c  # unwrap hard-wrapped prose
 9db1a50f2e3d1741fd7c0072e1fb03ed40fb6644  # Convert admonitions, details, and tabs to the pymdownx Blocks syntax
 58bdceb0bd7af1bcdbd30a79fe321306f20f4fed  # Inference endpoints: line numbers on full scripts; sh -> bash
+cdc608c21f8f45b667acbb11afb985790491674a  # Inference endpoints agents: sh -> bash code blocks
 
 # Typo fix that should not move the page's Last Updated date
 421bee67768dcf4bbf0db5aeaf2193a1a3e82450  # AI Testbed data management: grammar fix; no instant preview on its data policy link
