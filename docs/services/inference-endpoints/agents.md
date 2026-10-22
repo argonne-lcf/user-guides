@@ -46,7 +46,7 @@ Supported `agent`s include:
 | Option | Description |
 | ------ | ----------- |
 | `--include-experimental` | Also configure non-whitelisted (experimental) models. |
-| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `inkling-bf16`. |
+| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `muse-spark-bf16`. |
 | `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
 
 /// tip | Refreshing API Keys
@@ -111,7 +111,7 @@ Add the following provider to your `~/.pi/agent/models.json`.
                     "supportsDeveloperRole": false,
                     "supportsReasoningEffort": false
                 },
-                "models": [{ "id": "inkling-bf16" }, {"id": "nemotron-3-ultra"}]
+                "models": [{ "id": "muse-spark-bf16" }, { "id": "inkling-bf16" }, { "id": "nemotron-3-ultra" }]
         }
     }
     ...
@@ -137,7 +137,7 @@ env_key = "ALCF_AI_TOKEN"
 wire_api = "responses"
 ```
 
-In addition, you need to add a `model_config_json` for Codex to understand the model's capabilities. You can use this shell script to create one for you.
+In addition, you need to add a `model_catalog_json` for Codex to understand the model's capabilities. You can use this shell script to create one for you.
 
 /// details | Model Config Generation Script
 ```bash linenums="1"
@@ -153,10 +153,10 @@ CODEX_VERSION="$(
 CATALOG_DIR="$HOME/.codex/catalogs"
 UPSTREAM_CATALOG="$CATALOG_DIR/models-${CODEX_VERSION}.upstream.json"
 UPSTREAM_PROMPT="$CATALOG_DIR/prompt-${CODEX_VERSION}.md"
-INKLING_CATALOG="$CATALOG_DIR/inkling.json"
+MUSE_SPARK_CATALOG="$CATALOG_DIR/muse-spark-bf16.json"
 
 # Confirm this against the deployed serving configuration.
-CONTEXT_WINDOW=262144
+CONTEXT_WINDOW=1048576
 
 mkdir -p "$CATALOG_DIR"
 
@@ -173,9 +173,9 @@ jq \
   --argjson context_window "$CONTEXT_WINDOW" \
   --rawfile prompt "$UPSTREAM_PROMPT" '
     ([.models[] | select(.slug == "gpt-5.4")][0] // .models[0])
-    | .slug = "inkling-bf16"
-    | .display_name = "Inkling BF16"
-    | .description = "Inkling BF16 served through ALCF Minerva"
+    | .slug = "muse-spark-bf16"
+    | .display_name = "Muse Spark BF16"
+    | .description = "Muse Spark BF16 served through ALCF Minerva"
     | .visibility = "list"
     | .supported_in_api = true
     | .priority = 0
@@ -221,16 +221,16 @@ jq \
     | (if has("node_repl_disabled") then .node_repl_disabled = true else . end)
     | (if has("node_repl_auto_review_required") then .node_repl_auto_review_required = false else . end)
     | {models: [.]}
-  ' "$UPSTREAM_CATALOG" > "$INKLING_CATALOG"
+  ' "$UPSTREAM_CATALOG" > "$MUSE_SPARK_CATALOG"
 
 jq -e '
   .models
   | length == 1
-    and .[0].slug == "inkling-bf16"
-' "$INKLING_CATALOG" >/dev/null
+    and .[0].slug == "muse-spark-bf16"
+' "$MUSE_SPARK_CATALOG" >/dev/null
 
 printf 'Created %s for Codex %s\n' \
-  "$INKLING_CATALOG" \
+  "$MUSE_SPARK_CATALOG" \
   "$CODEX_VERSION"
 ```
 
@@ -239,18 +239,18 @@ The catalog fields depend on your Codex version. If you upgrade Codex, re-run th
 ////
 ///
 
-Finally, add a profile (e.g. `alcf-inkling.config.toml`) for Codex to switch between models easily.
+Finally, add a profile (e.g. `alcf-minerva-muse-spark-bf16.config.toml`) for Codex to switch between models easily.
 
 ```toml
-model_provider = "alcf_minerva"
-model = "inkling-bf16"
-model_catalog_json = "~/.codex/catalogs/inkling.json"
+model_provider = "alcf-inference-service-minerva-api"
+model = "muse-spark-bf16"
+model_catalog_json = "~/.codex/catalogs/muse-spark-bf16.json"
 ```
 
 To run Codex, use the following parameters to ensure the correct model, provider, and profile is selected. You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
 
 ```bash
-codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disabled"'
+codex --disable apps --strict-config --profile alcf-minerva-muse-spark-bf16 -c 'web_search="disabled"'
 ```
 
 /// note | Suggested Models
@@ -266,9 +266,9 @@ Add the following to `~/.claude/settings.json`.
   "env": {
     "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api",
     "ANTHROPIC_AUTH_TOKEN": "<your-api-key-here>",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "inkling-bf16",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "inkling-bf16",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "inkling-bf16"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "muse-spark-bf16",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "muse-spark-bf16",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "muse-spark-bf16"
   }
 }
 ```
