@@ -271,7 +271,7 @@ print(response.json())
 ////
 
 //// note
-Despite its name, which comes from the IRI API specification, `cpu_cores_per_process` sets the number of CPU cores requested on each node (PBS `ncpus`) on ALCF systems. If it's omitted, each node gets all of its CPU cores.
+`cpu_cores_per_process` sets the number of CPU cores requested on each node (PBS `ncpus`). If omitted, each node gets all of its CPU cores.
 ////
 
 ///
