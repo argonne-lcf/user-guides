@@ -133,7 +133,7 @@ Once authenticated, you can make a test call using cURL or Python.
 
 /// tab | cURL
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -151,7 +151,7 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/ch
 
 /// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 

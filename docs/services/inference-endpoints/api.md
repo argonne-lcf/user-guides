@@ -17,7 +17,7 @@ You can check the status of models on the cluster and list all available endpoin
 
 //// tab | Check Job/Model Status
 This endpoint provides information about what is currently live or queued.
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -47,7 +47,7 @@ Replace `/sophia/` with `/metis/`, `/minerva/`, or `/tara/` in the URL.
 
 //// tab | List All Available Endpoints
 This provides a list of all available endpoints.
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -67,7 +67,7 @@ This endpoint is used for conversational AI.
 
 //// tab | cURL
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 access_token=$(alcf-tokens get-token inference)
 
@@ -119,7 +119,7 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/cha
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 
@@ -193,7 +193,7 @@ Use this endpoint to analyze images with text prompts.
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 import base64
 from alcf_tokens.auth import get_access_token
@@ -237,7 +237,7 @@ This endpoint generates vector embeddings from text, currently supported by the 
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 
@@ -299,7 +299,7 @@ Models with no entry in the table above have no token or request limit of their 
 
 The values in effect are available per model:
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
