@@ -25,7 +25,7 @@ See [Python Environments](../../dev-environment/python-environments.md) for the 
 
 ## Authentication
 
-`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI. Use this command to login to the inference service:
+`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI which can be installed by ```pip install alcf-tokens```.   Use this command to login to the inference service:
 
 ```bash
 alcf-tokens login inference
