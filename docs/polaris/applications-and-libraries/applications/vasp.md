@@ -184,7 +184,8 @@ A typical submission script looks like this:
 #PBS -A myproject
 
 unset LD_PRELOAD
-module rm xalt
+module rm darshan
+module add xalt
 
 module load cray-libsci
 
@@ -208,8 +209,8 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
 # VASP  6.5.1
 bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
-# VASP 6.6.0
-bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
+# VASP 6.6.1
+bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /soft/applications/vasp/affinity.sh $bin
 ```
