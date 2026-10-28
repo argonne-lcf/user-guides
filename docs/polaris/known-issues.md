@@ -24,6 +24,16 @@ This is a collection of known issues that have been encountered on Polaris. Docu
    ERROR: ld.so: object '/soft/xalt/3.0.2-202408282050/lib64/libxalt_init.so' from LD_PRELOAD cannot be preloaded (cannot open shared object file): ignored.
    ```
 
+3. With the current default modules (`PrgEnv-nvidia/8.7.0`, `cray-mpich/9.1.0`, `darshan/3.5.0`), applications built with the Cray compiler wrappers (`cc`, `CC`, `ftn`), including programs that don't use MPI, compile but fail at launch with the message below. The `darshan` module links `libdarshan.so`, which depends on an MPI library that `cray-mpich/9.1.0` doesn't provide.
+    ```{ .output .no-copy }
+    error while loading shared libraries: libmpi_gnu_123.so.12: cannot open shared object file: No such file or directory
+    ```
+    Unload `darshan` before compiling, then rebuild. This also turns off Darshan I/O characterization for the application.
+    ```bash
+    module unload darshan
+    ```
+    To check an existing executable, run `ldd <executable> | grep 'not found'`.
+
 ## `ssh`'ing between Polaris Compute Nodes
 
 1. You should be able to `ssh` freely (without needing a password) between your assigned compute nodes on Polaris. If you are running into `ssh` issues, check for the following causes:
