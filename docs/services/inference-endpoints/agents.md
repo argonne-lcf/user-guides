@@ -151,25 +151,37 @@ Add the following provider to your `~/.pi/agent/models.json`.
 
 ### Codex
 
-In your `~/.codex/config.toml`, add these configuration values.
+Choose a model and a Direct API cluster with Responses support from [Available Models](models.md), then set these variables in your terminal:
+
+```bash
+export model="<model>"
+export cluster="<cluster>"
+export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)"
+```
+
+In your `~/.codex/config.toml`, merge the following template with your existing settings. Replace `<model>` and `<cluster>` with the values selected above; TOML does not substitute these placeholders. The cluster selects the URL, while the model ID is sent in requests, not appended to the URL.
 
 ```toml
-model = "muse-spark-bf16"
-model_provider = "alcf-inference-service-minerva-api"
+model = "<model>"
+model_provider = "alcf-inference-service-<cluster>-api"
 
-[model_providers.alcf-inference-service-minerva-api]
-name = "ALCF Inference Service (Minerva)"
-base_url = "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1"
+[model_providers."alcf-inference-service-<cluster>-api"]
+name = "ALCF Inference Service (<cluster>)"
+base_url = "https://inference-api.alcf.anl.gov/resource_server/<cluster>/api/v1"
 env_key = "ALCF_AI_TOKEN"
 wire_api = "responses"
 ```
 
-In addition, you need to add a `model_catalog_json` for Codex to understand the model's capabilities. You can use this shell script to create one for you.
+In addition, you need to add a `model_catalog_json` for Codex to understand the model's capabilities. This script uses the exported `model` and `cluster` variables and reads the context limit and input types from the selected model's published capabilities. Catalog filenames include the cluster, with `/` in model IDs replaced by `-`.
 
 /// details | Model Config Generation Script
 ```bash linenums="1"
 #!/usr/bin/env bash
 set -euo pipefail
+
+: "${model:?Set model to the served model ID}"
+: "${cluster:?Set cluster to the serving cluster}"
+: "${ALCF_AI_TOKEN:?Set ALCF_AI_TOKEN to a valid inference access token}"
 
 CODEX_VERSION="$(
   codex --version |
@@ -180,10 +192,23 @@ CODEX_VERSION="$(
 CATALOG_DIR="$HOME/.codex/catalogs"
 UPSTREAM_CATALOG="$CATALOG_DIR/models-${CODEX_VERSION}.upstream.json"
 UPSTREAM_PROMPT="$CATALOG_DIR/prompt-${CODEX_VERSION}.md"
-MUSE_SPARK_CATALOG="$CATALOG_DIR/muse-spark-bf16.json"
+MODEL_CATALOG="$CATALOG_DIR/${cluster}-${model//\//-}.json"
 
-# Confirm this against the deployed serving configuration.
-CONTEXT_WINDOW=1048576
+capabilities="$(
+  curl -fsS --get \
+    -H "Authorization: Bearer $ALCF_AI_TOKEN" \
+    --data-urlencode "model_id=$model" \
+    "https://inference-api.alcf.anl.gov/resource_server/${cluster}/models" |
+    jq -e --arg model "$model" '
+      .[] | select(.id == $model and .framework == "api")
+      | .capabilities | select(.api_protocols | index("responses"))
+    '
+)"
+CONTEXT_WINDOW="$(jq -er '.context_window_tokens' <<< "$capabilities")"
+INPUT_MODALITIES="$(jq -ce '
+  [.input_modalities[] | select(. == "text" or . == "image" or . == "audio")]
+  | select(length > 0)
+' <<< "$capabilities")"
 
 mkdir -p "$CATALOG_DIR"
 
@@ -196,13 +221,16 @@ curl -fsSL \
   -o "$UPSTREAM_PROMPT"
 
 jq \
+  --arg model "$model" \
+  --arg cluster "$cluster" \
   --arg version "$CODEX_VERSION" \
   --argjson context_window "$CONTEXT_WINDOW" \
+  --argjson input_modalities "$INPUT_MODALITIES" \
   --rawfile prompt "$UPSTREAM_PROMPT" '
     ([.models[] | select(.slug == "gpt-5.4")][0] // .models[0])
-    | .slug = "muse-spark-bf16"
-    | .display_name = "Muse Spark BF16"
-    | .description = "Muse Spark BF16 served through ALCF Minerva"
+    | .slug = $model
+    | .display_name = $model
+    | .description = ($model + " served through ALCF " + $cluster)
     | .visibility = "list"
     | .supported_in_api = true
     | .priority = 0
@@ -230,7 +258,7 @@ jq \
     | .supports_search_tool = false
     | .web_search_tool_type = "text"
     | .experimental_supported_tools = []
-    | .input_modalities = ["text"]
+    | .input_modalities = $input_modalities
     | .supports_image_detail_original = false
     | .prefer_websockets = false
     | .use_responses_lite = false
@@ -248,16 +276,16 @@ jq \
     | (if has("node_repl_disabled") then .node_repl_disabled = true else . end)
     | (if has("node_repl_auto_review_required") then .node_repl_auto_review_required = false else . end)
     | {models: [.]}
-  ' "$UPSTREAM_CATALOG" > "$MUSE_SPARK_CATALOG"
+  ' "$UPSTREAM_CATALOG" > "$MODEL_CATALOG"
 
-jq -e '
+jq -e --arg model "$model" '
   .models
   | length == 1
-    and .[0].slug == "muse-spark-bf16"
-' "$MUSE_SPARK_CATALOG" >/dev/null
+    and .[0].slug == $model
+' "$MODEL_CATALOG" >/dev/null
 
 printf 'Created %s for Codex %s\n' \
-  "$MUSE_SPARK_CATALOG" \
+  "$MODEL_CATALOG" \
   "$CODEX_VERSION"
 ```
 
@@ -266,22 +294,22 @@ The catalog fields depend on your Codex version. If you upgrade Codex, re-run th
 ////
 ///
 
-Finally, add a profile (e.g. `alcf-minerva-muse-spark-bf16.config.toml`) for Codex to switch between models easily.
+Finally, add a profile named `alcf-<cluster>-<model>.config.toml` beside `config.toml`, replacing `/` in the model ID with `-` in the filename. Replace `<path>` below with the catalog's absolute path printed by the script, and replace the model and cluster placeholders as above.
 
 ```toml
-model_provider = "alcf-inference-service-minerva-api"
-model = "muse-spark-bf16"
-model_catalog_json = "~/.codex/catalogs/muse-spark-bf16.json"
+model_provider = "alcf-inference-service-<cluster>-api"
+model = "<model>"
+model_catalog_json = "<path>"
 ```
 
-To run Codex, use the following parameters to ensure the correct model, provider, and profile is selected. You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
+To run Codex, use the same `model` and `cluster` variables to select the profile. The manual configuration reads `ALCF_AI_TOKEN`; refresh that variable with `alcf-tokens get-token inference` when it expires. The automatic configuration above retains its token-helper refresh mechanism.
 
 ```bash
-codex --disable apps --strict-config --profile alcf-minerva-muse-spark-bf16 -c 'web_search="disabled"'
+codex --disable apps --strict-config --profile "alcf-${cluster}-${model//\//-}" -c 'web_search="disabled"'
 ```
 
 /// note | Suggested Models
-Muse Spark remains the default. Other models with published Responses and tool-calling support can be selected using their generated profiles. Minerva provides a native Responses API; no Harmony-format translation proxy is required. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model.
+Muse Spark remains the default. Other models with published Responses and tool-calling support can be selected using their generated profiles. Direct API endpoints with native Responses support need no Harmony-format translation proxy. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model.
 ///
 
 ### Claude Code
