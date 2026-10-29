@@ -1,4 +1,5 @@
 ---
+description: Configure OpenCode, Pi, Codex, and Claude Code to use ALCF inference models and published capabilities.
 tags:
   - AI Agents
 ---
@@ -52,6 +53,17 @@ Supported `agent`s include:
 /// tip | Refreshing API Keys
 `alcf-ai agent configure <agent>` is *idempotent*, so you can re-run it to reconfigure an agent at any time. When a token helper (`alcf-tokens` or `alcf-ai`) is on your `PATH`, the generated configuration refreshes access tokens automatically. Otherwise, `alcf-ai` embeds the current access token and warns you to re-run the command when it expires.
 ///
+
+Configuration uses the [published model capabilities](models.md#model-capabilities), including context limits and supported input types. Update `alcf-ai` and re-run configuration when new models are added to its allowlist. OpenCode and Pi expose configured models in their model pickers; choose the appropriate cluster/provider, such as Minerva Direct API (`alcf-inference-service-minerva-api`).
+
+| Agent | API selection | Reasoning controls |
+| --- | --- | --- |
+| OpenCode | Chat Completions | Variants from the model's published effort levels. |
+| Pi | Responses when advertised; otherwise Chat Completions | Thinking levels mapped to the model's published effort levels. |
+| Codex | Responses with current Codex versions | Generated catalogs retain conservative settings: OpenAI-specific reasoning summaries and built-in tools are disabled, with no effort selector. |
+| Claude Code | Messages | Client-dependent effort controls; requests must use the model's accepted values. |
+
+Muse Spark remains the default. Codex preserves an existing model/provider selection and generates a separate `alcf-<cluster>-<model>` profile for each configured model. Select that profile to switch models, and regenerate its version-matched catalog after upgrading Codex. Claude Code's `--default-model` option sets its model and Opus/Sonnet/Haiku aliases; omitting it selects Muse. See [API reasoning fields](api.md#reasoning-and-api-protocols) for protocol-specific controls.
 
 ## Manual Configuration
 
@@ -111,7 +123,26 @@ Add the following provider to your `~/.pi/agent/models.json`.
                     "supportsDeveloperRole": false,
                     "supportsReasoningEffort": false
                 },
-                "models": [{ "id": "muse-spark-bf16" }, { "id": "inkling-bf16" }, { "id": "nemotron-3-ultra" }]
+                "models": [
+                    { "id": "muse-spark-bf16" },
+                    { "id": "inkling-bf16" },
+                    {
+                        "id": "mistral-large-4-nvfp4",
+                        "api": "openai-responses",
+                        "contextWindow": 1048576,
+                        "input": ["text", "image"],
+                        "reasoning": true,
+                        "thinkingLevelMap": {
+                            "minimal": null,
+                            "low": "low",
+                            "medium": "medium",
+                            "high": "high",
+                            "xhigh": null,
+                            "max": null
+                        },
+                        "compat": { "supportsReasoningEffort": true }
+                    }
+                ]
         }
     }
     ...
@@ -123,16 +154,12 @@ Add the following provider to your `~/.pi/agent/models.json`.
 In your `~/.codex/config.toml`, add these configuration values.
 
 ```toml
-model = "<your model here>"
+model = "muse-spark-bf16"
 model_provider = "alcf-inference-service-minerva-api"
-
-model_reasoning_effort = "ultra"
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
 
 [model_providers.alcf-inference-service-minerva-api]
 name = "ALCF Inference Service (Minerva)"
-base_url = "<your endpoint url here>"
+base_url = "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1"
 env_key = "ALCF_AI_TOKEN"
 wire_api = "responses"
 ```
@@ -254,7 +281,7 @@ codex --disable apps --strict-config --profile alcf-minerva-muse-spark-bf16 -c '
 ```
 
 /// note | Suggested Models
-`inkling-bf16` is provided by Minerva and Tara and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+Muse Spark remains the default. Other models with published Responses and tool-calling support can be selected using their generated profiles. Minerva provides a native Responses API; no Harmony-format translation proxy is required. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model.
 ///
 
 ### Claude Code
