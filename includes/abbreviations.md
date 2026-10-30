@@ -104,7 +104,7 @@
 *[USM]: Unified Shared Memory
 *[UUID]: Universally Unique Identifier
 *[UUIDs]: Universally Unique Identifiers
-*[VASP]: Vienna Ab initio Simulation Package
+<!-- *[VASP]: Vienna Ab initio Simulation Package -- omitted: 30+ prose hits on each VASP page, which already spell it out -->
 *[VCS]: Version Control System
 *[VMC]: Variational Monte Carlo
 *[VNC]: Virtual Network Computing
