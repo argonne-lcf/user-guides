@@ -1,14 +1,17 @@
 ---
 tags:
   - Electronic Structure
+authors:
+  - Alvaro Vazquez-Mayagoitia
+last_verified: 2026-10-30
 ---
 
 # VASP
 
 ## What is VASP?
-The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. 
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method.
 
-For a full documentation of VASP, visit: [https://www.vasp.at](https://www.vasp.at)
+See the [VASP website](https://www.vasp.at) for full documentation.
 
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be granted after the user requesting access has been verified to be on the VASP license by an official VASP license distributor.
@@ -17,16 +20,16 @@ To access the VASP binary at ALCF, please email the details listed directly belo
 
 Information to provide:
 
-- User’s full name:
-- User’s ALCF username:
-- Name of the organization that purchased the VASP license:
-- VASP license purchased from (University of Vienna or MaterialsDesign):
-- Principal investigator who is the POC for the VASP license:
-- VASP license number:
-- Version of VASP requested (VASP 6.4.x, VASP 6.5.x):
+- User’s full name
+- User’s ALCF username
+- Name of the organization that purchased the VASP license
+- VASP license purchased from (University of Vienna or MaterialsDesign)
+- Principal investigator who is the POC for the VASP license
+- VASP license number
+- Version of VASP requested (VASP 6.4.x, VASP 6.5.x, VASP 6.6.x)
 
 ## Support policy
-ALCF suport team compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP  or with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. ALCF can provide limited help with fatal runtime errors encountered on ALCF systems.
+The ALCF support team compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP or with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. ALCF can provide limited help with fatal runtime errors encountered on ALCF systems.
 
 Once the user licence is validated, ALCF will add the user to the UNIX groups: `vasp65` or `vasp6` , and grant access to the subdirectories in `/soft/applications/vasp`.
 
@@ -35,7 +38,7 @@ The VASP source can only be obtained from an official license reseller of VASP. 
 
 ## Building VASP on Polaris
 
-This section describes a VASP 6.4.x or 6.5.x build configuration for Polaris using:
+This section describes a VASP 6.4.x, 6.5.x, or 6.6.x build configuration for Polaris using:
 
 - NVHPC
 - OpenACC
@@ -44,12 +47,12 @@ This section describes a VASP 6.4.x or 6.5.x build configuration for Polaris usi
 - Cray MPI
 
 
-### General compiling/installing instructions provided by VASP support 
-VASP provides general build guidance and sample `makefile.include` files on its wiki: [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
+### General compiling/installing instructions provided by VASP support
+The VASP Wiki has general build guidance and sample `makefile.include` files for the NVIDIA HPC SDK: see [Makefile.include](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
 
-The example below was adapted for Polaris from the VASP wiki page for `makefile.include` found  [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
+The example below is adapted for Polaris from the VASP Wiki's [`makefile.include.nvhpc_omp_acc`](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
-```makefile
+```makefile linenums="1" title="makefile.include"
 # Precompiler options
 CPP_OPTIONS= -DHOST=\"LinuxNV_CrayMPICH\" \
              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
@@ -147,6 +150,7 @@ module restore
 
 unset LD_PRELOAD
 module rm xalt
+module rm darshan
 
 module load cray-libsci
 module load nvidia/25.5
@@ -157,20 +161,21 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
-
 ```
+
+Unloading `darshan` works around a [known issue](../../known-issues.md#compiling-running-applications) with the current default modules: executables built with it loaded fail at launch.
 
 ### Compiling VASP
 
 After loading the modules and placing `makefile.include` in the `vasp` source folder, compiling all the object files and binaries is done with:
 
-``` 
+```bash
 make -j1
 ```
 
 ### Running VASP on Polaris
 
-An example of a submission script can be found here `/soft/applications/vasp/script.sh`. 
+An example of a submission script can be found here `/soft/applications/vasp/script.sh`.
 
 A typical submission script looks like this:
 
@@ -184,7 +189,8 @@ A typical submission script looks like this:
 #PBS -A myproject
 
 unset LD_PRELOAD
-module rm xalt
+module rm darshan
+module add xalt
 
 module load cray-libsci
 
@@ -208,11 +214,13 @@ NTOTRANKS=$(( NNODES * NRANKS ))
 bin=/soft/applications/vasp/vasp.6.4.3/bin/vasp_std
 # VASP  6.5.1
 bin=/soft/applications/vasp/vasp.6.5.1/bin/vasp_std
-# VASP 6.6.0
-bin=/soft/applications/vasp/vasp.6.6.0/bin/vasp_std
+# VASP 6.6.1
+bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /soft/applications/vasp/affinity.sh $bin
 ```
+
+The script unloads `darshan` because of a [known issue](../../known-issues.md#compiling-running-applications) with the current default modules.
 
 Submission scripts should have executable attributes to be used with `qsub` script mode.
 
