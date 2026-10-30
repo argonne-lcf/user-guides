@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for AI coding agents (Codex, Copilot, Cursor, Claude Code, and others) and for human contributors working in this repository. `CLAUDE.md` imports this file. `REVIEW.md` is a short list of review rules for code-review tools (Copilot code review reads it), kept under about 4,000 characters; update it when a rule here changes what reviewers should flag.
+Guidance for AI coding agents (Codex, Copilot, Cursor, Claude Code, and others) and for human contributors working in this repository. `CLAUDE.md` imports this file. `REVIEW.md` is a short list of review rules for code-review tools (Copilot code review reads it), kept under about 4,000 characters; update it when a rule here changes what reviewers should flag. `STYLE_GUIDE.md` covers prose voice, tone, and terminology, not covered here; Claude Code can check a diff against it with the `style-check` skill.
 
 Source for the ALCF User Guides (https://docs.alcf.anl.gov/), an MkDocs site using the Material theme. Content is Markdown under `docs/`; the sidebar and site configuration are in `mkdocs.yml`.
 
