@@ -104,14 +104,13 @@ fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount. It is very i
 
 ### Mount a POSIX container on compute nodes
 
-You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script, which runs a `clush` command for `start-dfuse.sh`.  However it is unnecessary to unmount since the PBS epilogue does it for you.
+You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script, which runs a `clush` command for `start-dfuse.sh`. However it is unnecessary to unmount since the PBS epilogue does it for you.
 
 ```bash linenums="1"
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes, mounted at: /tmp/<pool>/<container>
 mount | grep dfuse # To confirm it is mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
-
 ```
 
 DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamover.md).
@@ -177,7 +176,6 @@ export THUN_WS_PROB_SIZE=1024
  mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
                                             --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
                                             -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
-
 ```
 
 ## MPI-IO Container Access
