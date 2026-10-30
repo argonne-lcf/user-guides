@@ -6,7 +6,7 @@ tags:
 # VASP
 
 ## What is VASP?
-The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. 
+The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method.
 
 For a full documentation of VASP, visit: [https://www.vasp.at](https://www.vasp.at)
 
@@ -44,10 +44,10 @@ This section describes a VASP 6.4.x or 6.5.x build configuration for Polaris usi
 - Cray MPI
 
 
-### General compiling/installing instructions provided by VASP support 
-VASP provides general build guidance and sample `makefile.include` files on its wiki: [`vasp.at` wiki page](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
+### General compiling/installing instructions provided by VASP support
+The VASP Wiki has general build guidance and sample `makefile.include` files for the NVIDIA HPC SDK: see [Makefile.include](https://www.vasp.at/wiki/index.php/Makefile.include#NVIDIA_HPC-SDK_for_CPU_and_GPU).
 
-The example below was adapted for Polaris from the VASP wiki page for `makefile.include` found  [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
+The example below is adapted for Polaris from the VASP Wiki's [`makefile.include.nvhpc_omp_acc`](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
 ```makefile linenums="1" title="makefile.include"
 # Precompiler options
@@ -147,6 +147,7 @@ module restore
 
 unset LD_PRELOAD
 module rm xalt
+module rm darshan
 
 module load cray-libsci
 module load nvidia/25.5
@@ -157,20 +158,21 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NVROOT/compilers/extras/qd/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-blis/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-libflame/lib/ILP64/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/soft/applications/vasp/aol-libs/3.2/amd-fftw/lib
-
 ```
+
+Unloading `darshan` works around a [known issue](../../known-issues.md#compiling-running-applications) with the current default modules: executables built with it loaded fail at launch.
 
 ### Compiling VASP
 
 After loading the modules and placing `makefile.include` in the `vasp` source folder, compiling all the object files and binaries is done with:
 
-``` 
+```bash
 make -j1
 ```
 
 ### Running VASP on Polaris
 
-An example of a submission script can be found here `/soft/applications/vasp/script.sh`. 
+An example of a submission script can be found here `/soft/applications/vasp/script.sh`.
 
 A typical submission script looks like this:
 
