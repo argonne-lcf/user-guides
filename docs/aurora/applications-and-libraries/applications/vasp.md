@@ -8,7 +8,7 @@ tags:
 ## What is VASP?
 The Vienna Ab initio Simulation Package (VASP) is a software package for performing electronic structure calculations with periodic boundary conditions. It is most commonly used to perform density functional theory (DFT) calculations in a plane wave basis using the projector augmented wave (PAW) method. 
 
-For a full documentation of VASP, visit: [https://www.vasp.at](https://www.vasp.at)
+See the [VASP website](https://www.vasp.at) for full documentation.
 
 ## Using VASP at ALCF
 VASP is commercial software. Access to binaries compiled by ALCF can only be granted after the user requesting access has been verified to be on the VASP license by an official VASP license distributor.
@@ -17,16 +17,16 @@ To access the VASP binary at ALCF, please email the details listed directly belo
 
 Information to provide:
 
-- User’s full name:
-- User’s ALCF username:
-- Name of the organization that purchased the VASP license:
-- VASP license purchased from (University of Vienna or MaterialsDesign):
-- Principal investigator who is the POC for the VASP license:
-- VASP license number:
-- Version of VASP requested (VASP 6.x):
+- User’s full name
+- User’s ALCF username
+- Name of the organization that purchased the VASP license
+- VASP license purchased from (University of Vienna or MaterialsDesign)
+- Principal investigator who is the POC for the VASP license
+- VASP license number
+- Version of VASP requested (VASP 6.x)
 
 ## Support policy
-ALCF suport team compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP  or with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. ALCF can provide limited help with fatal runtime errors encountered on ALCF systems.
+The ALCF support team compiles the latest release of VASP on a per-request basis. We do not offer support for compiling customized versions of VASP or with plugins. Support for scientific runs that encounter performance or numerical issues should be directed to the official VASP support mailing list or the VASP user forum. ALCF can provide limited help with fatal runtime errors encountered on ALCF systems.
 
 Once the user licence is validated, ALCF will add the user to the UNIX groups: `vasp65` or `vasp6` , and grant access to the subdirectories in `/soft/applications/vasp`.
 
