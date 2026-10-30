@@ -1,3 +1,7 @@
+---
+description: Find ALCF inference models, supported APIs, context limits, input types, reasoning, and tool-calling capabilities.
+---
+
 # Available Models
 
 Models are organized by cluster and marked with the following capabilities:
@@ -56,7 +60,7 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Metis | Chat | Mistral AI | Mistral-Large-3-675B-Instruct-2512^TH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
 | Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
-| Minerva | Chat | NVIDIA | nemotron-3-ultra^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
+| Minerva | Chat | Mistral AI | mistral-large-4-nvfp4^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
 | Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
 | Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 1048576 | text | ✓ | ✓ | ✓ |
@@ -97,6 +101,10 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?mo
 # Check serving configuration for another cluster (e.g., Tara)
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/tara/models" \
     -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for Minerva
+curl --fail-with-body "https://inference-api.alcf.anl.gov/resource_server/minerva/models" \
+    -H "Authorization: Bearer ${access_token}"
 ```
 
 ### Model Capabilities
@@ -113,10 +121,12 @@ Each model includes a versioned `capabilities` object describing what the deploy
 | `reasoning.supported` | Whether the model supports reasoning. |
 | `reasoning.effort_levels` | Accepted reasoning effort values. |
 | `reasoning.default_effort` | Effort applied when a request omits one. |
-| `reasoning.separate_output` | Whether reasoning is returned separately as `reasoning_content` instead of inline. |
+| `reasoning.separate_output` | Whether reasoning is returned separately from final content; the field or block type depends on the API protocol. |
 | `tool_calling.supported` | Whether the model supports tool calling. |
 
 Optional fields are omitted when they do not apply, so clients should fall back to conservative defaults. Models served by vLLM also report `max_model_len`, `max_num_seqs`, `tool_call_parser`, and `enable_auto_tool_choice` alongside `capabilities`.
+
+Context limits include input and generated output; leave room for reasoning and the final answer. Accepted reasoning efforts are model-specific, not a universal set. See [API reasoning fields](api.md#reasoning-and-api-protocols) and [agent configuration](agents.md) for how clients use these capabilities.
 
 #### Possible Values
 

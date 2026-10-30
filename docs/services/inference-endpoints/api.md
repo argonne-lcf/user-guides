@@ -1,3 +1,7 @@
+---
+description: Call ALCF inference APIs for chat, Responses, Messages, streaming, reasoning, and image input.
+---
+
 # API Usage Examples
 
 ## Interactive API Reference
@@ -98,9 +102,10 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{
-            "model": "nemotron-3-ultra",
-            "temperature": 0.2,
-            "max_tokens": 150,
+            "model": "mistral-large-4-nvfp4",
+            "reasoning_effort": "low",
+            "temperature": 1.0,
+            "max_tokens": 1024,
             "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
          }'
 
@@ -156,7 +161,9 @@ client_minerva = OpenAI(
 )
 
 response = client_minerva.chat.completions.create(
-    model="nemotron-3-ultra",
+    model="mistral-large-4-nvfp4",
+    reasoning_effort="low",
+    max_tokens=1024,
     messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
 )
 print(response.choices[0].message.content)
@@ -184,6 +191,20 @@ To target a different cluster, simply replace the cluster/framework portion of t
 - **Tara**: `/resource_server/tara/api/v1`
 ////
 ///
+
+## Reasoning and API Protocols
+
+For Direct API models advertising all three protocols, use the appropriate native endpoint and request fields. Examples below use `low`; check the model's published [capabilities](models.md#model-capabilities) for accepted efforts and the default. Controls are model/backend-specific, so do not copy one protocol's payload unchanged to another.
+
+| Protocol | Minerva endpoint suffix | Effort request fields | Separate reasoning and final output |
+| --- | --- | --- | --- |
+| Chat Completions | `/minerva/api/v1/chat/completions` | `"reasoning_effort": "low"` | Reasoning alongside `choices[0].message.content`; streaming uses reasoning and content deltas. |
+| Responses | `/minerva/api/v1/responses` | `"reasoning": {"effort": "low"}` | Reasoning items and message items in `output`; final text blocks have type `output_text`. |
+| Messages | `/minerva/api/v1/messages` | `"thinking": {"type": "adaptive"}, "output_config": {"effort": "low"}` | `thinking` and `text` blocks in `content`. |
+
+When `reasoning.separate_output` is true, read final content separately from reasoning. The output-token budget includes reasoning; a very small budget can end before any final text appears. Responses uses `input` and `max_output_tokens`, rather than Chat Completions' `messages` and `max_tokens`. Messages requires `max_tokens` and uses its own message and tool schemas.
+
+Add `"stream": true` to request server-sent events when streaming is advertised, and use `curl --no-buffer` when inspecting them. Consume the protocol's completion event rather than stopping after the first text or reasoning chunk. For tool calling, use each API's native tool schema and return tool results using that same protocol. Model tool calling does not imply support for provider-specific built-in tools such as web search.
 
 ## Vision Language Models
 
