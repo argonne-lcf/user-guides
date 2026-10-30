@@ -38,13 +38,15 @@
   box-sizing: border-box;
 }
 
-/* ---- Floating action button: robot-icon chat launcher ---- */
+/* ---- Floating action button: robot-icon chat launcher ----
+ * The widget JS moves it to the left edge of the table-of-contents column
+ * when that column is visible. Otherwise it stays in this corner. */
 #askalcf-fab {
   position: fixed;
   right: 24px;
   bottom: 24px;
-  width: 72px;
-  height: 72px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -258,5 +260,5 @@
 /* ---- Mobile ---- */
 @media (max-width: 600px) {
   #askalcf-panel { right: 8px; left: 8px; bottom: 8px; width: auto; height: 80vh; }
-  #askalcf-fab { right: 16px; bottom: 16px; width: 56px; height: 56px; }
+  #askalcf-fab { right: 16px; bottom: 16px; width: 64px; height: 64px; }
 }

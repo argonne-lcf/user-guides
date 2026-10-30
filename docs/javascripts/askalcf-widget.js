@@ -216,6 +216,19 @@
     if (v) setTimeout(function () { els.input.focus(); }, 50);
   }
 
+  // ---- launcher placement ------------------------------------------------
+  // When the table-of-contents column is visible, line the launcher up with
+  // the column's text, next to the page being read. Otherwise (narrow
+  // screens, pages without a TOC) the CSS corner position applies.
+  function placeLauncher() {
+    var title = document.querySelector(".md-sidebar--secondary .md-nav__title");
+    var r = title && title.getBoundingClientRect();
+    var visible = !!r && r.width > 0 && r.right <= window.innerWidth;
+    els.fab.style.left = visible ?
+      Math.round(r.left + parseFloat(getComputedStyle(title).paddingLeft)) + "px" : "";
+    els.fab.style.right = visible ? "auto" : "";
+  }
+
   // ---- build DOM ---------------------------------------------------------
   function build() {
     var root = document.createElement("div");
@@ -286,6 +299,10 @@
       save();
       render();
     });
+    // Instant navigation swaps the page, and with it the TOC column.
+    window.addEventListener("resize", placeLauncher);
+    if (window.document$) window.document$.subscribe(placeLauncher);
+    else placeLauncher();
 
     render();
     if (state.open) setOpen(true);
