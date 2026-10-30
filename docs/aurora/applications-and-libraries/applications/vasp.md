@@ -1,6 +1,8 @@
 ---
 tags:
   - Electronic Structure
+authors:
+  - Alvaro Vazquez-Mayagoitia
 ---
 
 # VASP
