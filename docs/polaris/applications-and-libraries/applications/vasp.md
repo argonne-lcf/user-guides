@@ -49,7 +49,7 @@ VASP provides general build guidance and sample `makefile.include` files on its 
 
 The example below was adapted for Polaris from the VASP wiki page for `makefile.include` found  [here](https://www.vasp.at/wiki/index.php/Makefile.include.nvhpc_omp_acc).
 
-```makefile
+```makefile linenums="1" title="makefile.include"
 # Precompiler options
 CPP_OPTIONS= -DHOST=\"LinuxNV_CrayMPICH\" \
              -DMPI -DMPI_BLOCK=8000 -Duse_collective \
