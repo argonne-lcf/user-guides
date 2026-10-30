@@ -217,6 +217,8 @@ bin=/soft/applications/vasp/vasp.6.6.1/bin/vasp_std
 mpiexec -n ${NTOTRANKS} --ppn ${NRANKS} --depth ${NDEPTH} --cpu-bind depth --env OMP_NUM_THREADS=${NTHREADS} /soft/applications/vasp/affinity.sh $bin
 ```
 
+The script unloads `darshan` because of a [known issue](../../known-issues.md#compiling-running-applications) with the current default modules.
+
 Submission scripts should have executable attributes to be used with `qsub` script mode.
 
 ```bash
