@@ -104,7 +104,7 @@ fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount. It is very i
 
 ### Mount a POSIX container on compute nodes
 
-You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script, which runs a `clush` command for `start-dfuse.sh`. However it is unnecessary to unmount since the PBS epilogue does it for you.
+You need to mount the container on all compute nodes. This is done via the `launch-dfuse.sh` script, which runs a `clush` command for `start-dfuse.sh`:
 
 ```bash linenums="1"
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute nodes, mounted at: /tmp/<pool>/<container>
@@ -112,6 +112,8 @@ mount | grep dfuse # To confirm it is mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
 ```
+
+You don't need to unmount the container on compute nodes; the PBS epilogue unmounts it when the job ends.
 
 DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamover.md).
 
