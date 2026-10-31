@@ -54,6 +54,6 @@ TensorFlow is compatible with scaling up to multiple GPUs per node and across mu
 
 --8<-- "./docs/polaris/data-science/frameworks/pytorch.md:scalingsetup"
 
-# TensorFlow Dataloaders
+## TensorFlow Dataloaders
 
 It is crucial to enable multiple workers in the data pipeline for best performance. For details, please refer to [TensorFlow Data Performance Guide](https://www.tensorflow.org/guide/data_performance).

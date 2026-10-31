@@ -237,7 +237,7 @@ For further details regarding the arguments passed to the `mpiexec` command show
 
 **Note:** By default, there is no GPU-aware MPI library linking support. The example above shows how the user can enable the linking by specifying the path to the GTL (GPU Transport Layer) library (`libmpi_gtl_cuda`) to the link line.
 
-# oneAPI Math Library (oneMath)
+## oneAPI Math Library (oneMath)
 [oneMath](https://github.com/uxlfoundation/oneMath) is an open-source implementation of the oneMath interface according to the [oneMath specification](https://oneapi-spec.uxlfoundation.org/specifications/oneapi/latest/elements/onemath/source/). It works with multiple devices (backends) using device-specific libraries underneath.
 
 oneMath is part of oneAPI. Various backends supported are shown below. More information [here](https://github.com/uxlfoundation/oneMath#supported-configurations).
@@ -248,7 +248,7 @@ oneMath is part of oneAPI. Various backends supported are shown below. More info
 | oneMath interface | [cuSOLVER](https://docs.nvidia.com/cuda/cusolver/index.html) |
 |                   | [cuRAND](https://docs.nvidia.com/cuda/curand/index.html)     |
 
-## Example (using math::gemm)
+### Example (using math::gemm)
 
 The following snippet shows how to compile and run a SYCL code with the oneMath library. For instance, a GPU-based GEMM is performed using the `math::gemm` API and the results are compared to a CPU-based GEMM performed using the traditional BLAS (e.g., AOCL-BLIS) library.
 ```c++
