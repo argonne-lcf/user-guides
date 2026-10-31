@@ -59,7 +59,7 @@
   background: var(--aa-accent) url("../images/light-mode-chatbot-icon.png") 50% 58% / 123% no-repeat;
   box-shadow: var(--aa-fab-shadow);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  z-index: 1000000;
+  z-index: 3;  /* above content and .md-top, below Material's header (4), drawer and consent (5) */
 }
 [data-md-color-scheme="slate"] #askalcf-fab {
   background-image: url("../images/dark-mode-chatbot-icon.png");
@@ -76,7 +76,7 @@
   max-width: calc(100vw - 32px);
   height: 660px;
   max-height: calc(100vh - 48px);
-  z-index: 1000000;
+  z-index: 6;  /* the open panel stays above the sticky header and drawer */
   display: none;
   flex-direction: column;
   overflow: hidden;
