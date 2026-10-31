@@ -77,13 +77,21 @@
     var last = s.split("/").pop() || s;
     return last.replace(/\.(md|html?|txt)$/i, "").replace(/[-_]/g, " ").trim();
   }
+  // Only http(s) links, so a javascript: URL in the API's metadata can't become
+  // a clickable link. Relative URLs resolve against the current page.
+  function safeUrl(u) {
+    try {
+      var p = new URL(u, location.href).protocol;
+      return p === "http:" || p === "https:" ? u : "";
+    } catch (e) { return ""; }
+  }
   function renderSources(contexts) {
     if (!contexts || !contexts.length) return "";
     var seen = {}, items = [];
     contexts.forEach(function (c) {
       var md = (c && c.metadata) || {};
       var src = c.source || md.source || "";
-      var url = md.url || md.source_url || md.link || "";
+      var url = safeUrl(md.url || md.source_url || md.link || "");
       if (!url && /^https?:\/\//i.test(src)) url = src;
       var title = md.title || md.page_title || titleFromSource(url || src) || "Source";
       var key = (url || title).toLowerCase();
