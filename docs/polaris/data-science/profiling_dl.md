@@ -66,7 +66,7 @@ To view the produced trace files, we need to use NVIDIA's Nsight Systems on the 
 
 [Getting Started, Download Nsys](https://developer.nvidia.com/nsight-systems/get-started)
 
-#### Deployment
+### Deployment
 
 The wrapper above can be deployed using the following PBS job script:
 

@@ -37,7 +37,7 @@ source env_gpytorch/bin/activate
 python3 -m pip install gpytorch
 ```
 
-#### Optional
+### Optional
 
 Create an `activation_env.sh` file that contains the following lines:
 

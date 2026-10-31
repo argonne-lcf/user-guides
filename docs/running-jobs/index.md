@@ -153,7 +153,7 @@ Where:
 
   Also note that if you want to run an executable directly rather than a script you use two dashes and the executable name in place of your script name like this: `-- /usr/bin/sleep 600`
 
-#### Resource Selection and Job Placement
+### Resource Selection and Job Placement
 
 Section 2.57.2.6 RG-219 Requesting Resources and Placing jobs in the [Reference Guide](https://help.altair.com/2022.1.0/PBS%20Professional/PBSReferenceGuide2022.1.pdf).
 
@@ -268,13 +268,13 @@ echo "NUM_OF_NODES=${NNODES}  TOTAL_NUM_RANKS=${NTOTRANKS}  RANKS_PER_NODE=${NRA
 mpiexec --np ${NTOTRANKS} -ppn ${NRANKS} -d ${NDEPTH} -env OMP_NUM_THREADS=${NTHREADS} ./hello_mpi
 ```
 
-#### Email Notifications
+### Email Notifications
 
 Users should add `-M <email address>` if they want notifications as a best practice.
 
 **Note:** For users with `<username>@alcf.anl.gov` email addresses, PBS will send out an email once the job has ended by default. If you do not want to receive these notifications, you will need to add `#PBS -m n` to your script.
 
-#### Specifying Filesystems
+### Specifying Filesystems
 
 **Note:** The `filesystems` attribute is mandatory. If you do not specify a filesystem(s) you will receive the following error message upon submission:
 

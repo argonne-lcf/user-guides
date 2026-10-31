@@ -1,6 +1,6 @@
 # Running Jobs on Sophia
 
-### Nodes vs Queue
+## Nodes vs Queue
 The Sophia nodes are NVIDIA DGX A100 nodes, and each node contains eight (8) A100 GPUs. 
 The majority of the nodes have the 40 GB A100 models, but two nodes contain the 80 GB A100 models (see below). 
 You may request resources by node (with 8 GPUs) or by individual GPUs based on your job needs. 

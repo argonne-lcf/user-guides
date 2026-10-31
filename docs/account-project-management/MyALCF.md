@@ -20,13 +20,13 @@ Once logged in to MyALCF, a home screen is presented with useful information per
 Example appearance of home screen dashboard.
 ///
 
-#### Navigation
+### Navigation
 Navigation menu items link to pages to update account and project information, use the sbank accounting tool, view training and documentation, and use any other tools your role allows you to access.
 
-#### System Status
+### System Status
 ALCF machine status is visible with a green up arrow showing a running system and a red down arrow showing a system down for scheduled or unscheduled maintenance. Clicking the system name will take you to the resource status page for that machine if available. Machine usage, active jobs, and more is shown on the [resource status page](https://status.alcf.anl.gov/#/home).
 
-#### Current Allocations
+### Current Allocations
 Collection of data showing status and usage of compute allocations. If there are no current compute allocations, a link to request a new discretionary allocation is visible. Data for each allocation is presented in rows with five columns per row:
 
 - **Compute Allocation**: The project name, system, award type, allocation ID and dates.
@@ -52,19 +52,19 @@ Collection of data showing status and usage of compute allocations. If there are
   Screenshot of example expanded jobs by size graph.
   ///
 
-#### Links, Training, Facility Updates
+### Links, Training, Facility Updates
 The bottom portion of the MyALCF home screen shows quick links to training events, support, and current facility news.
 
 ## Navigation Menu
 The navigation menu is personalized and shows sections available based on the user role. As more MyALCF features are developed, this menu will update to keep the site easy to navigate. All active account users will be able to access the following:
 
-#### Update Account
+### Update Account
 View account details and update necessary fields here. View project memberships and UNIX groups.
 
-#### Projects & Resources
+### Projects & Resources
 View and update project memberships, join projects, view and edit UNIX groups and request an allocation from this section.
 
-#### sbank
+### sbank
 sbank is the compute node hour accounting system at ALCF. It has historically been accessed via the command line but this interface allows for accessing information via graphic-based interactions. The basic capabilities and tools within the graphic interface are the following:
 
 - **Command Builder**: The Command Builder is a point-and-click style interface that allows for typing commands into the top command bar and/or selecting options from input boxes and/or dropdowns to create specific sbank commands. The default command is ‘sbank-list-allocations’. You can switch to sbank-list-jobs, sbank-detail-allocations, etc. under the top command bar and refine the command below via the input fields. Dynamic help is offered when a field is highlighted to explain the command and give examples. The output commands can be altered in the ‘view options’ panel accessed via the "View Options" button.
@@ -88,8 +88,8 @@ sbank is the compute node hour accounting system at ALCF. It has historically be
 - **Popular Commands**: Popular commands are a set of preconfigured commands that will output useful information with no modification necessary.  ‘Popular Commands’ can be accessed by clicking the ‘Quick Commands’ bar. Each command can be run as is or can be copied to the clipboard for use in the command line or copied to the command builder.
 - **Saved Commands**: Commands that are likely to be repeated can be saved for later use with the ‘save command’ feature. ‘Save command’ buttons can be found next to the command bar or next to the output window. When you want to save a command, enter it via the command bar or by selecting options through the interface, click the save command button, and then enter a name and a brief description of the function. Once saved, the command will be accessible in the saved commands window unless deleted. The saved command can be run as is, copied to either the command builder or clipboard, edited (name and description), or deleted.
 
-#### Training
+### Training
 Selecting "Training" on the navigation menu will take you to a page featuring upcoming ALCF training events.
 
-#### User Guides
+### User Guides
 Selecting "User Guides" on the navigation menu will take you to ALCF's user guides.
