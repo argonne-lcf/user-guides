@@ -18,7 +18,11 @@
 
   var API_BASE = (window.ASKALCF_API_BASE || "http://localhost:8080").replace(/\/+$/, "");
   var ENDPOINT = API_BASE + "/v1/agent/chat";
-  var LOGO = window.ASKALCF_LOGO_URL || "/images/icon-for-chat-window.png";
+  // Resolve against this script's URL, like the CSS's ../images/ paths, so the
+  // logo loads under any base path (PR previews, a site_url with a subpath).
+  // document.currentScript is only set while the script first runs.
+  var LOGO = window.ASKALCF_LOGO_URL ||
+    new URL("../images/icon-for-chat-window.png", document.currentScript.src).href;
   var STORE_KEY = "askalcf:v1";
 
   var CHAT_ICON =
