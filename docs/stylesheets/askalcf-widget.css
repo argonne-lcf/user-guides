@@ -54,15 +54,12 @@
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  /* The icon PNG has transparent padding around its circle. Scale and
-     shift the image so that the circle fills the round button. */
-  background: var(--aa-accent) url("../images/light-mode-chatbot-icon.png") 50% 58% / 123% no-repeat;
+  /* The robot's face is cut out, so the button's own color (blue or teal)
+     shows through, and one SVG serves both color schemes. */
+  background: var(--aa-accent) url("../images/askalcf-launcher.svg") center / 100% no-repeat;
   box-shadow: var(--aa-fab-shadow);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   z-index: 3;  /* above content and .md-top, below Material's header (4), drawer and consent (5) */
-}
-[data-md-color-scheme="slate"] #askalcf-fab {
-  background-image: url("../images/dark-mode-chatbot-icon.png");
 }
 #askalcf-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: var(--aa-fab-shadow-hover); }
 #askalcf-root.askalcf-open #askalcf-fab { display: none; }

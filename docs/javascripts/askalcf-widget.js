@@ -22,7 +22,7 @@
   // logo loads under any base path (PR previews, a site_url with a subpath).
   // document.currentScript is only set while the script first runs.
   var LOGO = window.ASKALCF_LOGO_URL ||
-    new URL("../images/icon-for-chat-window.png", document.currentScript.src).href;
+    new URL("../images/askalcf-welcome.svg", document.currentScript.src).href;
   var STORE_KEY = "askalcf:v1";
 
   var CHAT_ICON =
