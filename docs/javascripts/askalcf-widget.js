@@ -1,8 +1,8 @@
 /* AskALCF floating chat widget.
  *
  * A floating chat bubble that talks to the AskALCF conversational agent
- * (RAG over the ALCF docs + public HPC tools): tool-call display, source
- * citations, multi-turn conversation. Anonymous in v1 (no auth).
+ * (RAG over the ALCF docs + public HPC tools): tool-call display and
+ * multi-turn conversation. Anonymous in v1 (no auth).
  *
  * The API base URL comes from window.ASKALCF_API_BASE, set in
  * overrides/main.html; without it, the widget isn't built.
@@ -42,6 +42,19 @@
   var RESTORE_ICON = headerIcon("M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7");
   var CLEAR_ICON = headerIcon("M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8M21 3v5h-5");
   var CLOSE_ICON = headerIcon("M19 5L5 19M5 5l14 14");
+  // The launcher's robot, inline so CSS can paint its face (currentColor) per
+  // color scheme. The eyes and mouth are cut out, so the button color shows.
+  var LAUNCHER_ICON =
+    '<svg viewBox="108 126 1036 1036" aria-hidden="true" focusable="false">' +
+    '<mask id="askalcf-face-cutouts"><path fill="#fff" d="M522 282H730A210 210 0 0 1 940 ' +
+    '492V689A95 95 0 0 1 845 784H407A95 95 0 0 1 312 689V492A210 210 0 0 1 522 282Z"/>' +
+    '<g fill="#000"><circle cx="476" cy="553" r="68"/><circle cx="776" cy="553" r="68"/>' +
+    '<rect x="528" y="666" width="198" height="56" rx="28"/></g></mask>' +
+    '<rect x="312" y="282" width="628" height="502" fill="currentColor" mask="url(#askalcf-face-cutouts)"/>' +
+    '<g fill="currentColor"><rect x="220" y="454" width="68" height="200" rx="34"/>' +
+    '<rect x="964" y="454" width="68" height="200" rx="34"/>' +
+    '<path d="M266 936C266 924 266 814 626 814C986 814 986 924 986 936C986 1070 806 1058 ' +
+    '626 1058C446 1058 266 1070 266 936Z"/></g></svg>';
 
   var state = { messages: [], conversationId: null, open: false, max: false };
   var busy = false;
@@ -82,44 +95,7 @@
     return escapeHtml(text).replace(/\n/g, "<br>");
   }
 
-  // ---- sources & tool calls ---------------------------------------------
-  function titleFromSource(src) {
-    if (!src) return "";
-    var s = String(src).split(/[?#]/)[0].replace(/\/+$/, "");
-    var last = s.split("/").pop() || s;
-    return last.replace(/\.(md|html?|txt)$/i, "").replace(/[-_]/g, " ").trim();
-  }
-  // Only http(s) links, so a javascript: URL in the API's metadata can't become
-  // a clickable link. Relative URLs resolve against the current page.
-  function safeUrl(u) {
-    try {
-      var p = new URL(u, location.href).protocol;
-      return p === "http:" || p === "https:" ? u : "";
-    } catch (e) { return ""; }
-  }
-  function renderSources(contexts) {
-    if (!contexts || !contexts.length) return "";
-    var seen = {}, items = [];
-    contexts.forEach(function (c) {
-      var md = (c && c.metadata) || {};
-      var src = c.source || md.source || "";
-      var url = safeUrl(md.url || md.source_url || md.link || "");
-      if (!url && /^https?:\/\//i.test(src)) url = src;
-      var title = md.title || md.page_title || titleFromSource(url || src) || "Source";
-      var key = (url || title).toLowerCase();
-      if (seen[key]) return;
-      seen[key] = true;
-      if (url) {
-        items.push('<li><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">' +
-          escapeHtml(title) + "</a></li>");
-      } else {
-        items.push("<li>" + escapeHtml(title) + "</li>");
-      }
-    });
-    if (!items.length) return "";
-    return '<details class="askalcf-sources"><summary>Sources (' + items.length +
-      ")</summary><ol>" + items.join("") + "</ol></details>";
-  }
+  // ---- tool calls --------------------------------------------------------
   function renderToolCalls(toolCalls) {
     if (!toolCalls || !toolCalls.length) return "";
     return toolCalls.map(function (tc) {
@@ -157,9 +133,7 @@
         bubble.innerHTML = '<span class="askalcf-error">Sorry, something went wrong: ' +
           escapeHtml(m.error) + "</span>";
       } else {
-        bubble.innerHTML = renderToolCalls(m.tool_calls) +
-          renderMarkdown(m.content) +
-          renderSources(m.contexts);
+        bubble.innerHTML = renderToolCalls(m.tool_calls) + renderMarkdown(m.content);
       }
       row.appendChild(bubble);
       box.appendChild(row);
@@ -198,6 +172,8 @@
     autoSize();
     state.messages.push({ role: "user", content: text });
     setBusy(true);
+    // Disabling a focused Send button drops focus; keep it in the textarea.
+    els.input.focus();
     render();
     save();
 
@@ -222,8 +198,7 @@
       state.messages.push({
         role: "assistant",
         content: data.content || "",
-        tool_calls: data.tool_calls || [],
-        contexts: data.contexts || []
+        tool_calls: data.tool_calls || []
       });
     }).catch(function (err) {
       if (gen !== generation) return;
@@ -287,7 +262,7 @@
     fab.id = "askalcf-fab";
     fab.type = "button";
     fab.setAttribute("aria-label", "Open AskALCF chat");
-    // The robot icon is a CSS background, so it can follow the color scheme.
+    fab.innerHTML = LAUNCHER_ICON;
     fab.addEventListener("click", function () { setOpen(true); });
 
     var panel = document.createElement("div");

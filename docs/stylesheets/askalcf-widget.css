@@ -21,6 +21,7 @@
   --aa-link: var(--blue_dark, #1d1651);
   --aa-code-bg: rgba(7, 7, 18, 0.06);
   --aa-shadow: 0 12px 34px rgba(7, 7, 18, 0.24);
+  --aa-fab-face: #aedaf6;                            /* launcher robot: a pale tint of the accent */
   --aa-fab-shadow: 0 12px 34px rgba(7, 7, 18, 0.6);  /* launcher: stronger, so it stands out from the page */
   --aa-fab-shadow-hover: 0 16px 40px rgba(7, 7, 18, 0.7);
 
@@ -33,8 +34,11 @@
   --aa-accent-strong: var(--green_med-dark, #003a41);
   --aa-link: var(--green_med-dark, #003a41);
   --aa-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
-  --aa-fab-shadow: 0 6px 28px rgba(0, 170, 155, 0.7);  /* a dark shadow vanishes on the dark page: glow instead */
-  --aa-fab-shadow-hover: 0 8px 34px rgba(0, 170, 155, 0.9);
+  --aa-fab-face: var(--green_pale, #b8e2de);
+  /* A dark shadow vanishes on the dark page, so glow instead, in the button's
+     own teal: a brighter cyan read as neon. */
+  --aa-fab-shadow: 0 4px 18px rgba(0, 123, 112, 0.55);
+  --aa-fab-shadow-hover: 0 6px 24px rgba(0, 123, 112, 0.75);
 }
 
 #askalcf-root, #askalcf-root * {
@@ -54,13 +58,16 @@
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  /* The robot's face is cut out, so the button's own color (blue or teal)
-     shows through, and one SVG serves both color schemes. */
-  background: var(--aa-accent) url("../images/askalcf-launcher.svg") center / 100% no-repeat;
+  /* The button draws the circle. The inline robot SVG is painted in
+     currentColor, and its eyes and mouth are cut out to show the button. */
+  background: var(--aa-accent);
+  color: var(--aa-fab-face);
+  padding: 0;
   box-shadow: var(--aa-fab-shadow);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   z-index: 3;  /* above content and .md-top, below Material's header (4), drawer and consent (5) */
 }
+#askalcf-fab svg { display: block; width: 100%; height: 100%; }
 #askalcf-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: var(--aa-fab-shadow-hover); }
 #askalcf-root.askalcf-open #askalcf-fab { display: none; }
 
@@ -181,8 +188,8 @@
 .askalcf-bubble code { font-size: 0.85em; }
 .askalcf-bubble a { color: var(--aa-link); text-decoration: underline; }
 
-/* ---- Sources & tool calls (admonition-like) ---- */
-.askalcf-sources, .askalcf-tool {
+/* ---- Tool calls (admonition-like) ---- */
+.askalcf-tool {
   margin-top: 10px;
   font-size: 0.86em;
   border: 1px solid var(--aa-border);
@@ -191,14 +198,11 @@
   padding: 6px 10px;
   background: var(--aa-bot-bg);
 }
-.askalcf-sources summary, .askalcf-tool summary {
+.askalcf-tool summary {
   cursor: pointer;
   color: var(--aa-accent-strong);
   font-weight: 600;
 }
-.askalcf-sources ol { margin: 8px 0 4px 18px; padding: 0; }
-.askalcf-sources li { margin: 3px 0; }
-.askalcf-sources a { color: var(--aa-link); }
 .askalcf-tool pre {
   white-space: pre-wrap;
   margin: 8px 0 2px;
