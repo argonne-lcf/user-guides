@@ -17,7 +17,7 @@
 
   var API_BASE = window.ASKALCF_API_BASE.replace(/\/+$/, "");
   var ENDPOINT = API_BASE + "/v1/agent/chat";
-  // The full AskALCF app, linked from the panel's footer. Not API_BASE, which
+  // The full AskALCF app, linked from the panel's title. Not API_BASE, which
   // can point at a local API during development.
   var APP_URL = "https://ask.alcf.anl.gov/";
   // Resolve against this script's URL, so the logo loads under any base path
@@ -325,7 +325,8 @@
     header.className = "askalcf-header";
     header.innerHTML =
       '<div class="askalcf-head-title">' + CHAT_ICON +
-      '<div><div class="askalcf-title">AskALCF</div>' +
+      '<div><a class="askalcf-title" href="' + APP_URL + '" target="_blank" rel="noopener" ' +
+      'title="Open the AskALCF app in a new tab (starts a new conversation)">AskALCF</a>' +
       '<div class="askalcf-sub">ALCF User Guide assistant</div></div></div>' +
       '<div class="askalcf-spacer"></div>' +
       '<button class="askalcf-iconbtn" id="askalcf-max" title="Maximize" aria-label="Maximize" aria-pressed="false">' + MAX_ICON + '</button>' +
@@ -350,9 +351,7 @@
 
     var disclaimer = document.createElement("div");
     disclaimer.className = "askalcf-disclaimer";
-    // The full app starts its own conversation, so "Open", not "Continue in".
-    disclaimer.innerHTML = "AskALCF can make mistakes. Verify important details in the docs. · " +
-      '<a href="' + APP_URL + '" target="_blank" rel="noopener">Open AskALCF ↗</a>';
+    disclaimer.textContent = "AskALCF can make mistakes. Verify important details in the docs.";
 
     var live = document.createElement("div");
     live.className = "askalcf-sr-only";
