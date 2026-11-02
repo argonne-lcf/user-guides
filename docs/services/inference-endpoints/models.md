@@ -36,8 +36,8 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Sophia | Chat | Mistral AI | mistralai/Mixtral-8x22B-Instruct-v0.1 | chat_completions | 16384 | text | ✓ | — | — |
 | Sophia | Chat | NVIDIA | mgoin/Nemotron-4-340B-Instruct-hf | chat_completions | — | text | ✓ | — | — |
 | Sophia | Chat | NVIDIA | nvidia/nemotron-3-super-120b^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
-| Sophia | Chat | OpenAI | openai/gpt-oss-120b^BRTH^ | chat_completions | 65536 | text | ✓ | ✓ | ✓ |
-| Sophia | Chat | OpenAI | openai/gpt-oss-20b^BRTH^ | chat_completions | — | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-120b^BRTH^ | chat_completions | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-20b^BRTH^ | chat_completions | — | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
 | Sophia | Vision | Meta | meta-llama/Llama-3.2-90B-Vision-Instruct^T^ | chat_completions | 8192 | text, image | ✓ | — | ✓ |
 | Sophia | Embedding | Google | google/embeddinggemma-300m | — | — | — | — | — | — |
 | Sophia | Embedding | Mistral AI | mistralai/Mistral-7B-Instruct-v0.3-embed | — | — | — | — | — | — |
@@ -58,15 +58,18 @@ The table reports each endpoint's cluster, type, organization, API protocols, co
 | Sophia | Triton | — | amsc-d3 | KServe gRPC | — | — | — | — | — |
 | Metis | Chat | Google | gemma-4-31B-it^RTH^ | chat_completions, responses | 262144 | text, image, video | ✓ | ✓ | ✓ |
 | Metis | Chat | Mistral AI | Mistral-Large-3-675B-Instruct-2512^TH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
-| Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓ | ✓ |
-| Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
+| Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
 | Minerva | Chat | Mistral AI | mistral-large-4-nvfp4^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
-| Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
-| Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓ | ✓ |
-| Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions | 1048576 | text | ✓ | ✓ | ✓ |
+| Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓, separate (`minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `max`) | ✓ |
+| Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
+| Tara | Chat | Meta | muse-spark-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
+| Tara | Chat | Mistral AI | mistral-large-4^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
+| Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Tara | Chat | NVIDIA | nemotron-35-super-vl^RT^ | chat_completions, responses, messages | 1048576 | text, image, video | ✓ | ✓ | ✓ |
-| Tara | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓ | ✓ |
-| Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions | 1048576 | text, image, audio | ✓ | ✓ | ✓ |
+| Tara | Chat | OpenAI | openai/gpt-oss-120b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Tara | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image, audio | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 
 For Metis, endpoint and model status is on the [Metis status page](https://metis.alcf.anl.gov/status). See SambaNova's [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html) documentation for API details.
 
