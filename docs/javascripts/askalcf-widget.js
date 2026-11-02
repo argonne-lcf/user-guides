@@ -115,9 +115,18 @@
   }
 
   // ---- rendering ---------------------------------------------------------
+  // Append-only: rows already on screen stay, so an open tool-call block stays
+  // open, focus stays put, and only new bubbles animate. New chat empties
+  // state.messages, which redraws from the welcome screen.
   function render() {
     var box = els.messages;
-    box.innerHTML = "";
+    var thinking = box.querySelector(".askalcf-thinking");
+    if (thinking) box.removeChild(thinking.closest(".askalcf-msg"));
+    var shown = box.querySelectorAll(".askalcf-msg").length;
+    if (!state.messages.length || shown > state.messages.length) {
+      box.innerHTML = "";
+      shown = 0;
+    }
 
     if (!state.messages.length) {
       var w = document.createElement("div");
@@ -126,9 +135,12 @@
         "<strong>Welcome to AskALCF</strong>Ask about ALCF systems,<br>" +
         "software, jobs, and documentation.<br>Ask me anything to get started.";
       box.appendChild(w);
+    } else {
+      var welcome = box.querySelector(".askalcf-welcome");
+      if (welcome) box.removeChild(welcome);
     }
 
-    state.messages.forEach(function (m) {
+    state.messages.slice(shown).forEach(function (m) {
       var row = document.createElement("div");
       row.className = "askalcf-msg " + (m.role === "user" ? "user" : "assistant");
       var bubble = document.createElement("div");
@@ -169,7 +181,11 @@
   function announce(text) {
     clearTimeout(announceTimer);
     els.live.textContent = "";
-    announceTimer = setTimeout(function () { els.live.textContent = text; }, 50);
+    announceTimer = setTimeout(function () {
+      els.live.textContent = text;
+      // Clear it again, so the old status isn't found later while browsing.
+      announceTimer = setTimeout(function () { els.live.textContent = ""; }, 10000);
+    }, 50);
   }
 
   // ---- networking --------------------------------------------------------
@@ -198,8 +214,13 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
+      if (res.ok) return res.json();
+      // Show the API's reason (rate or size limit, outage) when it gives one.
+      return res.json().catch(function () { return null; }).then(function (d) {
+        var detail = d && d.detail;
+        var why = typeof detail === "string" ? detail : (detail && detail.message) || "";
+        throw new Error(why ? why + " (HTTP " + res.status + ")" : "HTTP " + res.status);
+      });
     }).then(function (data) {
       if (gen !== generation) return;
       state.conversationId = data.conversation_id || state.conversationId;
@@ -339,13 +360,16 @@
     });
     panel.addEventListener("keydown", function (e) {
       // Escape also cancels an IME conversion; only a plain Escape closes.
-      if (e.key === "Escape" && !e.isComposing && e.keyCode !== 229) setOpen(false);
+      if (e.key !== "Escape" || e.isComposing || e.keyCode === 229) return;
+      e.stopPropagation();  // or Material's search overlay, if open, closes too
+      setOpen(false);
     });
     input.addEventListener("input", autoSize);
     header.querySelector("#askalcf-close").addEventListener("click", function () { setOpen(false); });
     header.querySelector("#askalcf-clear").addEventListener("click", function () {
       generation++;
       clearTimeout(announceTimer);
+      els.live.textContent = "";
       setBusy(false);
       state.messages = [];
       state.conversationId = null;
