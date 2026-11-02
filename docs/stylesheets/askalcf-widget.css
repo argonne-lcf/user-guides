@@ -14,7 +14,7 @@
   --aa-accent-strong: var(--blue_med, #0061af);     /* user bubble, welcome text, summaries */
   --aa-on-accent: #ffffff;
   --aa-chat-bg: #e7f6fd;                             /* conversation area */
-  --aa-send-bg: var(--blue_pale, #badef5);           /* matches the robot face in the icons */
+  --aa-send-bg: var(--blue_pale, #badef5);           /* Send button, textarea focus ring */
   --aa-fg: var(--neutral_med-dark, #1e1f27);
   --aa-border: var(--neutral_med-light, #e1e1eb);
   --aa-bot-bg: #ffffff;
@@ -75,6 +75,7 @@
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: -1px;  /* or the live region adds 1px of page scroll */
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
@@ -176,7 +177,7 @@
   box-shadow: 0 1px 2px rgba(7, 7, 18, 0.05);
   animation: aa-in-left 0.25s ease;
 }
-.askalcf-bubble p:first-child { margin-top: 0; }
+.askalcf-bubble p:first-child, .askalcf-bubble > .askalcf-sr-only + p { margin-top: 0; }
 .askalcf-bubble p:last-child { margin-bottom: 0; }
 .askalcf-bubble pre {
   background: var(--aa-code-bg);

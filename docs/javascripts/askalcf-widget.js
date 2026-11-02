@@ -17,8 +17,8 @@
 
   var API_BASE = window.ASKALCF_API_BASE.replace(/\/+$/, "");
   var ENDPOINT = API_BASE + "/v1/agent/chat";
-  // Resolve against this script's URL, like the CSS's ../images/ paths, so the
-  // logo loads under any base path (PR previews, a site_url with a subpath).
+  // Resolve against this script's URL, so the logo loads under any base path
+  // (PR previews, a site_url with a subpath).
   // document.currentScript is only set while the script first runs.
   var LOGO = window.ASKALCF_LOGO_URL ||
     new URL("../images/askalcf-welcome.svg", document.currentScript.src).href;
@@ -99,11 +99,11 @@
         var html = window.marked.parse(String(text || ""), { breaks: true, renderer: mdRenderer });
         // A second layer, since answers come from a model: drop markup that
         // could restyle or cover the page, or pose as a form (DOMPurify keeps
-        // all of these by default).
+        // all of these by default), and ids and classes that could borrow the
+        // page's styles. Markdown's only inputs are task-list checkboxes.
         return window.DOMPurify.sanitize(html, {
-          ADD_ATTR: ["target", "rel"],
-          FORBID_TAGS: ["style", "form", "input", "button", "textarea", "select", "option"],
-          FORBID_ATTR: ["style"]
+          FORBID_TAGS: ["style", "form", "button", "textarea", "select", "option"],
+          FORBID_ATTR: ["style", "id", "class"]
         });
       } catch (e) { /* fall through */ }
     }
@@ -129,9 +129,10 @@
   // state.messages, which redraws from the welcome screen.
   function render() {
     var box = els.messages;
-    var thinking = box.querySelector(".askalcf-thinking");
-    if (thinking) box.removeChild(thinking.closest(".askalcf-msg"));
-    var shown = box.querySelectorAll(".askalcf-msg").length;
+    // Direct children only, so nothing inside an answer can pass for a row.
+    var thinking = box.querySelector(":scope > .askalcf-thinking-row");
+    if (thinking) box.removeChild(thinking);
+    var shown = box.querySelectorAll(":scope > .askalcf-msg").length;
     if (!state.messages.length || shown > state.messages.length) {
       box.innerHTML = "";
       shown = 0;
@@ -145,7 +146,7 @@
         "software, jobs, and documentation.<br>Ask me anything to get started.";
       box.appendChild(w);
     } else {
-      var welcome = box.querySelector(".askalcf-welcome");
+      var welcome = box.querySelector(":scope > .askalcf-welcome");
       if (welcome) box.removeChild(welcome);
     }
 
@@ -170,7 +171,7 @@
 
     if (busy) {
       var t = document.createElement("div");
-      t.className = "askalcf-msg assistant";
+      t.className = "askalcf-msg assistant askalcf-thinking-row";
       t.innerHTML = '<div class="askalcf-bubble"><div class="askalcf-thinking">' +
         "<span></span><span></span><span></span></div></div>";
       box.appendChild(t);
@@ -186,8 +187,8 @@
     // readOnly, not disabled: disabling the focused textarea drops focus.
     els.input.readOnly = v;
   }
-  // Screen readers aren't told about render()'s rebuilt transcript, so
-  // announce each reply in a separate live region.
+  // The transcript isn't a live region, so announce each reply in a separate
+  // one.
   var announceTimer;
   function announce(text) {
     clearTimeout(announceTimer);
@@ -272,8 +273,9 @@
     els.max.innerHTML = v ? RESTORE_ICON : MAX_ICON;
     save();
   }
-  // focus=false when the page load restores an open panel: moving focus then
-  // would take it from the page the reader just opened.
+  // focus=false when the page load restores the corner panel: moving focus
+  // then would take it from the page the reader just opened. A restored
+  // maximized panel covers the page, so it takes focus, and Escape works.
   function setOpen(v, focus) {
     state.open = v;
     els.root.classList.toggle("askalcf-open", v);
@@ -398,7 +400,7 @@
 
     render();
     if (state.max) setMax(true);
-    if (state.open) setOpen(true, false);
+    if (state.open) setOpen(true, state.max);
   }
 
   function init() {
