@@ -291,6 +291,8 @@ html:has(#__search:checked, #__drawer:checked, .dropdown.js-dropdown-visible) #a
   padding: 0 12px 10px;
   background: var(--aa-accent);
 }
+.askalcf-disclaimer a { color: inherit; text-decoration: underline; white-space: nowrap; }
+.askalcf-disclaimer a:hover { text-decoration-thickness: 2px; }
 
 /* ---- Animations ---- */
 @keyframes aa-in-right { from { transform: translateX(14px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }

@@ -17,6 +17,9 @@
 
   var API_BASE = window.ASKALCF_API_BASE.replace(/\/+$/, "");
   var ENDPOINT = API_BASE + "/v1/agent/chat";
+  // The full AskALCF app, linked from the panel's footer. Not API_BASE, which
+  // can point at a local API during development.
+  var APP_URL = "https://ask.alcf.anl.gov/";
   // Resolve against this script's URL, so the logo loads under any base path
   // (PR previews, a site_url with a subpath).
   // document.currentScript is only set while the script first runs.
@@ -347,7 +350,9 @@
 
     var disclaimer = document.createElement("div");
     disclaimer.className = "askalcf-disclaimer";
-    disclaimer.textContent = "AskALCF can make mistakes. Verify important details in the docs.";
+    // The full app starts its own conversation, so "Open", not "Continue in".
+    disclaimer.innerHTML = "AskALCF can make mistakes. Verify important details in the docs. · " +
+      '<a href="' + APP_URL + '" target="_blank" rel="noopener">Open AskALCF ↗</a>';
 
     var live = document.createElement("div");
     live.className = "askalcf-sr-only";
