@@ -146,7 +146,7 @@
       w.className = "askalcf-welcome";
       w.innerHTML = '<img src="' + LOGO + '" alt="AskALCF">' +
         "<strong>Welcome to AskALCF</strong>Ask about ALCF systems,<br>" +
-        "software, jobs, and documentation.<br>Ask me anything to get started.";
+        "software, jobs, and documentation.";
       box.appendChild(w);
     } else {
       var welcome = box.querySelector(":scope > .askalcf-welcome");
