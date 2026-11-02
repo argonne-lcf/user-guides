@@ -100,6 +100,12 @@
   box-shadow: var(--aa-shadow);
 }
 #askalcf-root.askalcf-open #askalcf-panel { display: flex; }
+/* Maximized: most of the window, still clear of the edges. */
+#askalcf-root.askalcf-max #askalcf-panel {
+  width: min(960px, calc(100% - 48px));
+  height: calc(100% - 48px);
+  max-height: none;
+}
 
 /* ---- Header: accent bar (blue in light, teal in dark) ---- */
 .askalcf-header {
@@ -126,6 +132,7 @@
   border-radius: 8px;
   opacity: 0.9;
 }
+#askalcf-max { font-size: 1.5rem; }  /* ⤢/⤡ are drawn smaller than ↻ and ✕ */
 .askalcf-iconbtn:hover { background: rgba(255, 255, 255, 0.18); opacity: 1; }
 
 /* ---- Conversation area ---- */
@@ -276,7 +283,10 @@
 
 /* ---- Mobile ---- */
 @media (max-width: 600px) {
-  /* max-width: none, or the desktop cap (100vw - 32px) leaves a 24px right margin */
+  /* max-width: none, or the desktop cap (100% - 48px) leaves a 24px right margin */
   #askalcf-panel { right: 8px; left: 8px; bottom: 8px; width: auto; max-width: none; height: 80vh; }
+  /* The panel already fills the screen: no maximize, even if it was set on a wider window */
+  #askalcf-max { display: none; }
+  #askalcf-root.askalcf-max #askalcf-panel { width: auto; height: 80vh; max-height: calc(100vh - 48px); }
   #askalcf-fab { right: 16px; bottom: 16px; width: 64px; height: 64px; }
 }

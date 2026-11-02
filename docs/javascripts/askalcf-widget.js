@@ -33,7 +33,7 @@
     '<circle cx="15.5" cy="12" r="1.1" fill="currentColor" stroke="none"/>' +
     "</svg>";
 
-  var state = { messages: [], conversationId: null, open: false };
+  var state = { messages: [], conversationId: null, open: false, max: false };
   var busy = false;
   // Bumped by "New chat", so a reply to a discarded conversation is dropped.
   var generation = 0;
@@ -48,6 +48,7 @@
         state.messages = Array.isArray(d.messages) ? d.messages : [];
         state.conversationId = d.conversationId || null;
         state.open = !!d.open;
+        state.max = !!d.max;
       }
     } catch (e) { /* ignore */ }
   }
@@ -235,6 +236,14 @@
   }
 
   // ---- open/close --------------------------------------------------------
+  function setMax(v) {
+    state.max = v;
+    els.root.classList.toggle("askalcf-max", v);
+    els.max.setAttribute("aria-pressed", String(v));
+    els.max.title = v ? "Restore size" : "Maximize";
+    els.max.textContent = v ? "⤡" : "⤢";
+    save();
+  }
   function setOpen(v) {
     state.open = v;
     els.root.classList.toggle("askalcf-open", v);
@@ -283,6 +292,7 @@
       '<div><div class="askalcf-title">AskALCF</div>' +
       '<div class="askalcf-sub">ALCF User Guide assistant</div></div></div>' +
       '<div class="askalcf-spacer"></div>' +
+      '<button class="askalcf-iconbtn" id="askalcf-max" title="Maximize" aria-label="Maximize" aria-pressed="false">⤢</button>' +
       '<button class="askalcf-iconbtn" id="askalcf-clear" title="New chat" aria-label="New chat">↻</button>' +
       '<button class="askalcf-iconbtn" id="askalcf-close" title="Close" aria-label="Close">✕</button>';
 
@@ -319,10 +329,12 @@
     root.appendChild(panel);
     document.body.appendChild(root);
 
-    els = { root: root, fab: fab, panel: panel, messages: messages, input: input, send: sendBtn, live: live };
+    els = { root: root, fab: fab, panel: panel, messages: messages, input: input, send: sendBtn, live: live,
+            max: header.querySelector("#askalcf-max") };
 
     // events
     sendBtn.addEventListener("click", send);
+    els.max.addEventListener("click", function () { setMax(!state.max); });
     input.addEventListener("keydown", function (e) {
       // Enter also confirms text in CJK input methods; Safari reports
       // isComposing false for that Enter, but keyCode 229.
@@ -348,6 +360,7 @@
     else placeLauncher();
 
     render();
+    if (state.max) setMax(true);
     if (state.open) setOpen(true);
   }
 
