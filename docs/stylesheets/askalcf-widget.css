@@ -86,7 +86,7 @@
   right: 24px;
   bottom: 24px;
   width: 560px;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100% - 48px);  /* 24px each side; unlike 100vw, 100% excludes the scrollbar */
   height: 660px;
   max-height: calc(100vh - 48px);
   z-index: 6;  /* the open panel stays above the sticky header and drawer */
@@ -276,6 +276,7 @@
 
 /* ---- Mobile ---- */
 @media (max-width: 600px) {
-  #askalcf-panel { right: 8px; left: 8px; bottom: 8px; width: auto; height: 80vh; }
+  /* max-width: none, or the desktop cap (100vw - 32px) leaves a 24px right margin */
+  #askalcf-panel { right: 8px; left: 8px; bottom: 8px; width: auto; max-width: none; height: 80vh; }
   #askalcf-fab { right: 16px; bottom: 16px; width: 64px; height: 64px; }
 }
