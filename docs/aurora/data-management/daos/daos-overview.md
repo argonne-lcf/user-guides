@@ -297,11 +297,13 @@ from io import BytesIO
 import numpy as np
 from pydaos.torch import Dataset as DaosDataset
 
-os.makedirs("/tmp/perftesting/pydaos_test/run_1", exist_ok=True)
+pool = os.environ["DAOS_POOL"]
+cont = os.environ["DAOS_CONT"]
+os.makedirs(f"/tmp/{pool}/{cont}/run_1", exist_ok=True)  # the dfuse mount
 
 for i in range(3):
     x = np.random.randint(0, 256, size=(32, 32), dtype=np.uint8)
-    with open(f"/tmp/perftesting/pydaos_test/run_1/sample_{i}.npz", "wb") as f:
+    with open(f"/tmp/{pool}/{cont}/run_1/sample_{i}.npz", "wb") as f:
         np.savez(f, x=x)
 
 
@@ -310,8 +312,8 @@ def transform(data):
 
 
 ds = DaosDataset(
-    pool="perftesting",
-    cont="pydaos_test",
+    pool=pool,
+    cont=cont,
     path="/run_1",
     transform_fn=transform,
 )
