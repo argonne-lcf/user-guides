@@ -1,22 +1,21 @@
 /* AskALCF floating chat widget.
  *
  * A floating chat bubble that talks to the AskALCF conversational agent
- * (RAG over the ALCF docs + public HPC tools). Mirrors the behavior of the
- * Streamlit app_convo_agent: tool-call display, source citations, multi-turn
- * conversation. Anonymous in v1 (no auth).
+ * (RAG over the ALCF docs + public HPC tools): tool-call display, source
+ * citations, multi-turn conversation. Anonymous in v1 (no auth).
  *
- * Endpoint is configurable via window.ASKALCF_API_BASE (set in
- * overrides/main.html). Falls back to localhost for local development.
+ * The API base URL comes from window.ASKALCF_API_BASE, set in
+ * overrides/main.html; without it, the widget isn't built.
  *
  * Built once and appended to <body>, so it survives Material's instant
  * navigation (the body element persists; only the content region is swapped).
  */
 (function () {
   "use strict";
-  if (window.__askalcfWidgetInit) return;
+  if (window.__askalcfWidgetInit || !window.ASKALCF_API_BASE) return;
   window.__askalcfWidgetInit = true;
 
-  var API_BASE = (window.ASKALCF_API_BASE || "http://localhost:8080").replace(/\/+$/, "");
+  var API_BASE = window.ASKALCF_API_BASE.replace(/\/+$/, "");
   var ENDPOINT = API_BASE + "/v1/agent/chat";
   // Resolve against this script's URL, like the CSS's ../images/ paths, so the
   // logo loads under any base path (PR previews, a site_url with a subpath).
