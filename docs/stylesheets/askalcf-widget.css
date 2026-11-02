@@ -64,6 +64,15 @@
 #askalcf-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: var(--aa-fab-shadow-hover); }
 #askalcf-root.askalcf-open #askalcf-fab { display: none; }
 
+#askalcf-root .askalcf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* The launcher sits in the TOC column (see placeLauncher): pad the end of the
    TOC by its bottom offset + height + a gap, so the last entries can scroll
    above it. */

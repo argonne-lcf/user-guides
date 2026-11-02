@@ -36,6 +36,8 @@
 
   var state = { messages: [], conversationId: null, open: false };
   var busy = false;
+  // Bumped by "New chat", so a reply to a discarded conversation is dropped.
+  var generation = 0;
   var els = {};
 
   // ---- persistence -------------------------------------------------------
@@ -168,7 +170,14 @@
   function setBusy(v) {
     busy = v;
     els.send.disabled = v;
-    els.input.disabled = v;
+    // readOnly, not disabled: disabling the focused textarea drops focus.
+    els.input.readOnly = v;
+  }
+  // Screen readers aren't told about render()'s rebuilt transcript, so
+  // announce each reply in a separate live region.
+  function announce(text) {
+    els.live.textContent = "";
+    setTimeout(function () { els.live.textContent = text; }, 50);
   }
 
   // ---- networking --------------------------------------------------------
@@ -189,6 +198,7 @@
       conversation_id: state.conversationId || null
     };
 
+    var gen = generation;
     fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -197,6 +207,7 @@
       if (!res.ok) throw new Error("HTTP " + res.status);
       return res.json();
     }).then(function (data) {
+      if (gen !== generation) return;
       state.conversationId = data.conversation_id || state.conversationId;
       state.messages.push({
         role: "assistant",
@@ -205,11 +216,15 @@
         contexts: data.contexts || []
       });
     }).catch(function (err) {
+      if (gen !== generation) return;
       state.messages.push({ role: "assistant", content: "", error: String(err.message || err) });
     }).then(function () {
+      if (gen !== generation) return;
+      var last = state.messages[state.messages.length - 1];
       setBusy(false);
       render();
       save();
+      announce(last.error ? "AskALCF error: " + last.error : "AskALCF replied.");
     });
   }
 
@@ -226,6 +241,7 @@
     els.root.classList.toggle("askalcf-open", v);
     save();
     if (v) setTimeout(function () { els.input.focus(); }, 50);
+    else els.fab.focus();  // back to the control that opened the panel
   }
 
   // ---- launcher placement ------------------------------------------------
@@ -291,24 +307,37 @@
     disclaimer.className = "askalcf-disclaimer";
     disclaimer.textContent = "AskALCF can make mistakes. Verify important details in the docs.";
 
+    var live = document.createElement("div");
+    live.className = "askalcf-sr-only";
+    live.setAttribute("aria-live", "polite");
+
     panel.appendChild(header);
     panel.appendChild(messages);
     panel.appendChild(inputRow);
     panel.appendChild(disclaimer);
+    panel.appendChild(live);
     root.appendChild(fab);
     root.appendChild(panel);
     document.body.appendChild(root);
 
-    els = { root: root, fab: fab, panel: panel, messages: messages, input: input, send: sendBtn };
+    els = { root: root, fab: fab, panel: panel, messages: messages, input: input, send: sendBtn, live: live };
 
     // events
     sendBtn.addEventListener("click", send);
     input.addEventListener("keydown", function (e) {
+      // Enter also confirms text in CJK input methods; Safari reports
+      // isComposing false for that Enter, but keyCode 229.
+      if (e.isComposing || e.keyCode === 229) return;
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+    });
+    panel.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
     });
     input.addEventListener("input", autoSize);
     header.querySelector("#askalcf-close").addEventListener("click", function () { setOpen(false); });
     header.querySelector("#askalcf-clear").addEventListener("click", function () {
+      generation++;
+      setBusy(false);
       state.messages = [];
       state.conversationId = null;
       save();
