@@ -239,6 +239,9 @@
     els.fab.style.left = visible ?
       Math.round(r.left + parseFloat(getComputedStyle(title).paddingLeft)) + "px" : "";
     els.fab.style.right = visible ? "auto" : "";
+    // The CSS pads the end of the TOC by the launcher's height, so its last
+    // entries can scroll out from under the button.
+    document.documentElement.classList.toggle("askalcf-in-toc", visible);
   }
 
   // ---- build DOM ---------------------------------------------------------
