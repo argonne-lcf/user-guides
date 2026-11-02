@@ -2,7 +2,7 @@
  *
  * A floating chat bubble that talks to the AskALCF conversational agent
  * (RAG over the ALCF docs + public HPC tools): tool-call display and
- * multi-turn conversation. Anonymous in v1 (no auth).
+ * multi-turn conversation. Anonymous: no sign-in, and no credentials are sent.
  *
  * The API base URL comes from window.ASKALCF_API_BASE, set in
  * overrides/main.html; without it, the widget isn't built.
@@ -89,7 +89,13 @@
     if (window.marked && window.DOMPurify) {
       try {
         var html = window.marked.parse(String(text || ""), { breaks: true });
-        return window.DOMPurify.sanitize(html, { ADD_ATTR: ["target", "rel"] });
+        // Answers come from a model: drop markup that could restyle or cover the
+        // page, or pose as a form (DOMPurify keeps all of these by default).
+        return window.DOMPurify.sanitize(html, {
+          ADD_ATTR: ["target", "rel"],
+          FORBID_TAGS: ["style", "form", "input", "button", "textarea", "select", "option"],
+          FORBID_ATTR: ["style"]
+        });
       } catch (e) { /* fall through */ }
     }
     return escapeHtml(text).replace(/\n/g, "<br>");
@@ -159,9 +165,11 @@
   }
   // Screen readers aren't told about render()'s rebuilt transcript, so
   // announce each reply in a separate live region.
+  var announceTimer;
   function announce(text) {
+    clearTimeout(announceTimer);
     els.live.textContent = "";
-    setTimeout(function () { els.live.textContent = text; }, 50);
+    announceTimer = setTimeout(function () { els.live.textContent = text; }, 50);
   }
 
   // ---- networking --------------------------------------------------------
@@ -229,10 +237,13 @@
     els.max.innerHTML = v ? RESTORE_ICON : MAX_ICON;
     save();
   }
-  function setOpen(v) {
+  // focus=false when the page load restores an open panel: moving focus then
+  // would take it from the page the reader just opened.
+  function setOpen(v, focus) {
     state.open = v;
     els.root.classList.toggle("askalcf-open", v);
     save();
+    if (focus === false) return;
     if (v) setTimeout(function () { els.input.focus(); }, 50);
     else els.fab.focus();  // back to the control that opened the panel
   }
@@ -309,9 +320,9 @@
     panel.appendChild(messages);
     panel.appendChild(inputRow);
     panel.appendChild(disclaimer);
-    panel.appendChild(live);
     root.appendChild(fab);
     root.appendChild(panel);
+    root.appendChild(live);  // outside the panel, so it still speaks when the panel is closed
     document.body.appendChild(root);
 
     els = { root: root, fab: fab, panel: panel, messages: messages, input: input, send: sendBtn, live: live,
@@ -327,12 +338,14 @@
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
     });
     panel.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") setOpen(false);
+      // Escape also cancels an IME conversion; only a plain Escape closes.
+      if (e.key === "Escape" && !e.isComposing && e.keyCode !== 229) setOpen(false);
     });
     input.addEventListener("input", autoSize);
     header.querySelector("#askalcf-close").addEventListener("click", function () { setOpen(false); });
     header.querySelector("#askalcf-clear").addEventListener("click", function () {
       generation++;
+      clearTimeout(announceTimer);
       setBusy(false);
       state.messages = [];
       state.conversationId = null;
@@ -346,7 +359,7 @@
 
     render();
     if (state.max) setMax(true);
-    if (state.open) setOpen(true);
+    if (state.open) setOpen(true, false);
   }
 
   function init() {

@@ -1,8 +1,8 @@
 /* AskALCF floating chat widget.
  * Blends into the ALCF User Guide (MkDocs Material): proxima-nova via
- * --md-text-font-family and the theme's ALCF brand colors. Follows the
- * AskALCF design: blue (light) or teal (dark) header and footer bars around
- * a light-blue conversation area that stays light in both schemes.
+ * --md-text-font-family and the theme's ALCF brand colors: blue (light) or
+ * teal (dark) header and footer bars around a light-blue conversation area
+ * that stays light in both schemes.
  * Scoped under #askalcf-root.
  */
 
@@ -126,7 +126,7 @@
 .askalcf-head-title { display: flex; align-items: center; gap: 9px; min-width: 0; }
 .askalcf-head-title svg { width: 22px; height: 22px; flex: none; }
 .askalcf-title { font-weight: 700; font-size: 1rem; line-height: 1.15; }
-.askalcf-sub { font-size: 0.72rem; opacity: 0.82; }
+.askalcf-sub { font-size: 0.72rem; }  /* full opacity: at 0.82 it fell below AA (4.0:1) on teal */
 .askalcf-spacer { flex: 1; }
 .askalcf-iconbtn {
   background: transparent;
@@ -293,4 +293,14 @@
   #askalcf-max { display: none; }
   #askalcf-root.askalcf-max #askalcf-panel { width: auto; height: 80vh; max-height: calc(100vh - 48px); }
   #askalcf-fab { right: 16px; bottom: 16px; width: 64px; height: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #askalcf-root * { animation: none !important; transition: none !important; }
+  #askalcf-fab:hover { transform: none; }
+}
+
+/* A floating chat button and panel would print over the page. */
+@media print {
+  #askalcf-root { display: none; }
 }
