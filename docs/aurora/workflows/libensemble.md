@@ -29,7 +29,7 @@ pip install libensemble
 See the ALCF docs for more details on using [Python on Aurora](../data-science/python.md).
 
 
-# Example
+## Example
 
 To run the [forces_gpu](https://libensemble.readthedocs.io/en/main/tutorials/forces_gpu_tutorial.html) tutorial on Aurora.
 
@@ -91,7 +91,7 @@ python run_libe_forces.py -n 7
 
 And you will see it runs with two cores (MPI ranks) and two GPUs are used per worker.
 
-## Live viewing GPU usage
+### Live viewing GPU usage
 
 To see GPU usage, SSH into a compute node you are on in another window and run:
 
@@ -100,7 +100,7 @@ module load xpu-smi
 watch -n 0.1 xpu-smi dump -d -1 -m 0 -n 1
 ```
 
-## Using Tiles as GPUs
+### Using Tiles as GPUs
 
 To treat each tile as its own GPU, add the `use_tiles_as_gpus=True` option to the `libE_specs` block in `run_libe_forces.py`:
 
@@ -123,7 +123,7 @@ The `forces` example will automatically use the GPUs available to each worker (o
 Also, see `forces_gpu_var_resources` and `forces_multi_app` examples for cases using varying processor/GPU counts per simulation.
 
 
-## Running generator on the manager
+### Running generator on the manager
 
 An alternative is to run the generator on a thread on the manager. The
 number of workers can then be set to the number of simulation workers.
@@ -144,7 +144,7 @@ then the first run we did will use 12 instead of 13 workers:
 python run_libe_forces.py -n 12
 ```
 
-## Dynamic resource assignment
+### Dynamic resource assignment
 
 In the forces directory you will also find:
 

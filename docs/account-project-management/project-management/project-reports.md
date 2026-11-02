@@ -34,7 +34,7 @@ If a quarterly report is more than **90 days late**:
 
 These penalties will be removed within three business days after the late quarterly or EOY report is submitted.
 
-#### ALCC Specific Penalties:
+### ALCC Specific Penalties:
 
 A similar penalty will also be applied to new ALCC projects with the same PI or co-PIs that have failed to submit the EOP report for a previous ALCC project. If the EOP report is more than 15 days late:
 
