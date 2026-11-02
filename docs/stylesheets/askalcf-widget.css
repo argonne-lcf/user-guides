@@ -132,7 +132,7 @@
   border-radius: 8px;
   opacity: 0.9;
 }
-#askalcf-max { font-size: 1.5rem; }  /* ⤢/⤡ are drawn smaller than ↻ and ✕ */
+.askalcf-iconbtn svg { display: block; width: 1em; height: 1em; }
 .askalcf-iconbtn:hover { background: rgba(255, 255, 255, 0.18); opacity: 1; }
 
 /* ---- Conversation area ---- */

@@ -32,6 +32,16 @@
     '<circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>' +
     '<circle cx="15.5" cy="12" r="1.1" fill="currentColor" stroke="none"/>' +
     "</svg>";
+  // Header button icons, drawn on one grid so they match in size and
+  // alignment (text glyphs such as ↻ ✕ ⤢ vary with the font).
+  function headerIcon(d) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>';
+  }
+  var MAX_ICON = headerIcon("M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7");
+  var RESTORE_ICON = headerIcon("M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7");
+  var CLEAR_ICON = headerIcon("M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8M21 3v5h-5");
+  var CLOSE_ICON = headerIcon("M19 5L5 19M5 5l14 14");
 
   var state = { messages: [], conversationId: null, open: false, max: false };
   var busy = false;
@@ -241,7 +251,7 @@
     els.root.classList.toggle("askalcf-max", v);
     els.max.setAttribute("aria-pressed", String(v));
     els.max.title = v ? "Restore size" : "Maximize";
-    els.max.textContent = v ? "⤡" : "⤢";
+    els.max.innerHTML = v ? RESTORE_ICON : MAX_ICON;
     save();
   }
   function setOpen(v) {
@@ -292,9 +302,9 @@
       '<div><div class="askalcf-title">AskALCF</div>' +
       '<div class="askalcf-sub">ALCF User Guide assistant</div></div></div>' +
       '<div class="askalcf-spacer"></div>' +
-      '<button class="askalcf-iconbtn" id="askalcf-max" title="Maximize" aria-label="Maximize" aria-pressed="false">⤢</button>' +
-      '<button class="askalcf-iconbtn" id="askalcf-clear" title="New chat" aria-label="New chat">↻</button>' +
-      '<button class="askalcf-iconbtn" id="askalcf-close" title="Close" aria-label="Close">✕</button>';
+      '<button class="askalcf-iconbtn" id="askalcf-max" title="Maximize" aria-label="Maximize" aria-pressed="false">' + MAX_ICON + '</button>' +
+      '<button class="askalcf-iconbtn" id="askalcf-clear" title="New chat" aria-label="New chat">' + CLEAR_ICON + '</button>' +
+      '<button class="askalcf-iconbtn" id="askalcf-close" title="Close" aria-label="Close">' + CLOSE_ICON + '</button>';
 
     var messages = document.createElement("div");
     messages.className = "askalcf-messages";
