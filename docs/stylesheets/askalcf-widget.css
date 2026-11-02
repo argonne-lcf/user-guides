@@ -186,7 +186,15 @@
   font-size: 0.82em;
 }
 .askalcf-bubble code { font-size: 0.85em; }
+/* #askalcf-root * sets the text font on everything, so give code its own. */
+#askalcf-root code, #askalcf-root pre, #askalcf-root kbd, #askalcf-root samp {
+  font-family: var(--md-code-font-family, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+}
 .askalcf-bubble a { color: var(--aa-link); text-decoration: underline; }
+.askalcf-bubble :is(h1, h2, h3, h4, h5, h6) { font-size: 1em; font-weight: 700; margin: 0.9em 0 0.4em; }
+.askalcf-bubble table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 0.6em 0; }
+.askalcf-bubble th, .askalcf-bubble td { border: 1px solid var(--aa-border); padding: 4px 8px; text-align: left; }
+.askalcf-bubble th { background: var(--aa-code-bg); }
 
 /* ---- Tool calls (admonition-like) ---- */
 .askalcf-tool {

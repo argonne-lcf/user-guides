@@ -85,12 +85,21 @@
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
+  // Raw HTML in an answer is shown as text, not parsed: a placeholder such as
+  // <project> stays visible, and an answer can't add markup to the page.
+  var mdRenderer;
   function renderMarkdown(text) {
     if (window.marked && window.DOMPurify) {
       try {
-        var html = window.marked.parse(String(text || ""), { breaks: true });
-        // Answers come from a model: drop markup that could restyle or cover the
-        // page, or pose as a form (DOMPurify keeps all of these by default).
+        if (!mdRenderer) {
+          mdRenderer = new window.marked.Renderer();
+          // marked 12 passes a string; later versions pass a token.
+          mdRenderer.html = function (h) { return escapeHtml(typeof h === "string" ? h : h.text); };
+        }
+        var html = window.marked.parse(String(text || ""), { breaks: true, renderer: mdRenderer });
+        // A second layer, since answers come from a model: drop markup that
+        // could restyle or cover the page, or pose as a form (DOMPurify keeps
+        // all of these by default).
         return window.DOMPurify.sanitize(html, {
           ADD_ATTR: ["target", "rel"],
           FORBID_TAGS: ["style", "form", "input", "button", "textarea", "select", "option"],
@@ -145,13 +154,15 @@
       row.className = "askalcf-msg " + (m.role === "user" ? "user" : "assistant");
       var bubble = document.createElement("div");
       bubble.className = "askalcf-bubble";
+      // Tell screen readers who wrote each bubble.
+      var who = '<span class="askalcf-sr-only">' + (m.role === "user" ? "You said:" : "AskALCF said:") + " </span>";
       if (m.role === "user") {
-        bubble.textContent = m.content;
+        bubble.innerHTML = who + escapeHtml(m.content);
       } else if (m.error) {
-        bubble.innerHTML = '<span class="askalcf-error">Sorry, something went wrong: ' +
+        bubble.innerHTML = who + '<span class="askalcf-error">Sorry, something went wrong: ' +
           escapeHtml(m.error) + "</span>";
       } else {
-        bubble.innerHTML = renderToolCalls(m.tool_calls) + renderMarkdown(m.content);
+        bubble.innerHTML = who + renderToolCalls(m.tool_calls) + renderMarkdown(m.content);
       }
       row.appendChild(bubble);
       box.appendChild(row);
@@ -219,7 +230,10 @@
       return res.json().catch(function () { return null; }).then(function (d) {
         var detail = d && d.detail;
         var why = typeof detail === "string" ? detail : (detail && detail.message) || "";
-        throw new Error(why ? why + " (HTTP " + res.status + ")" : "HTTP " + res.status);
+        // The API's 500 message asks users to quote its error_code, so show it.
+        var tail = [detail && detail.error_code && "error code " + detail.error_code,
+          "HTTP " + res.status].filter(Boolean).join(", ");
+        throw new Error(why ? why + " (" + tail + ")" : tail);
       });
     }).then(function (data) {
       if (gen !== generation) return;
@@ -359,10 +373,11 @@
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
     });
     panel.addEventListener("keydown", function (e) {
+      // Keys typed in the panel stay here: with Material's search open, its
+      // handler would move them to the search box, and Escape would close it.
+      e.stopPropagation();
       // Escape also cancels an IME conversion; only a plain Escape closes.
-      if (e.key !== "Escape" || e.isComposing || e.keyCode === 229) return;
-      e.stopPropagation();  // or Material's search overlay, if open, closes too
-      setOpen(false);
+      if (e.key === "Escape" && !e.isComposing && e.keyCode !== 229) setOpen(false);
     });
     input.addEventListener("input", autoSize);
     header.querySelector("#askalcf-close").addEventListener("click", function () { setOpen(false); });
