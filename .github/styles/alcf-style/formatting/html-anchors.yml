@@ -1,0 +1,18 @@
+extends: existence
+level: warning
+message: "Don't add an '<a name>' anchor. Link to the automatic heading ID, or set a fixed one with '## Heading {#id}'."
+scope: raw
+nonword: true
+tokens:
+  - '<a\s+(?:id|name)\s*='
+tests:
+  - name: flags a name anchor
+    input: "<a name=\"removing_blocks\"></a>"
+    want: |
+      1:1:ALCF_Style.formatting.html-anchors:Don't add an '<a name>' anchor. Link to the automatic heading ID, or set a fixed one with '## Heading {#id}'.
+  - name: allows attr_list heading ids
+    input: "## Removing blocks {#removing-blocks}"
+    want: ''
+  - name: allows an ordinary link
+    input: "See [the queue page](../running-jobs/index.md)."
+    want: ''
