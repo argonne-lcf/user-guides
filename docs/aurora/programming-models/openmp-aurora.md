@@ -134,3 +134,5 @@ $ mpiexec -n 1 ./f_test
 Number of devices:            6
 Hello world from accelerator
 ```
+
+More examples can be found [here](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/programmingModels/OpenMP/demo)
