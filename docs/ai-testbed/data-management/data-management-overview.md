@@ -9,10 +9,10 @@ The team project/campaign file system `/projects` is intended to facilitate proj
 Users can transfer data to and from the AI testbed using `Globus` or tools such as `scp` or `rsync`.
 
 ## Using Globus
-We have a Globus endpoint each to move data to and from the `/projects` and `/home` filesystem respectively.
+We have a Globus collection each to move data to and from the `/projects` and `/home` filesystem respectively.
 
-+ Use `alcf#ai_testbed_projects` for the `/projects` file system
-+ Use `alcf#ai_testbed_home` for the `/home` files system 
++ Use [`alcf#ai_testbed_projects`](https://app.globus.org/file-manager?origin_id=54b0a641-a1bf-4f51-af6e-4b6e7c97d28d&two_pane=false) for the `/projects` file system
++ Use [`alcf#ai_testbed_home`](https://app.globus.org/file-manager?origin_id=060f3154-422b-4db0-bae3-37b209e29753&two_pane=false) for the `/home` files system
 
 Relevant information regarding using globus can be found [here](https://www.alcf.anl.gov/support-center/theta-and-thetagpu/using-globus-theta)
 

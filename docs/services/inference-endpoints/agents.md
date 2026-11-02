@@ -1,4 +1,5 @@
 ---
+description: Configure OpenCode, Pi, Codex, and Claude Code to use ALCF inference models and published capabilities.
 tags:
   - AI Agents
 ---
@@ -13,10 +14,12 @@ Most agents have an installation script that you can run with one command to ins
 
 | Agent | Install Command |
 | --- | --- |
-| **[OpenCode](https://opencode.ai/) (recommended)** | `curl -fsSL https://opencode.ai/install | bash` |
-| **[Pi](https://pi.dev/) (recommended)** | `curl -fsSL https://pi.dev/install.sh | sh` |
+| **[OpenCode](https://opencode.ai/)**[^custom-provider] | `curl -fsSL https://opencode.ai/install | bash` |
+| **[Pi](https://pi.dev/)**[^custom-provider] | `curl -fsSL https://pi.dev/install.sh | sh` |
 | **[OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli)** | `curl -fsSL https://chatgpt.com/codex/install.sh | sh` |
 | **[Claude Code](https://code.claude.com/docs/en/quickstart)** | `curl -fsSL https://claude.ai/install.sh | bash` |
+
+[^custom-provider]: OpenCode and Pi explicitly support third-party/custom provider endpoints.
 
 Most scripts will require you to reload your environment with `source ~/.bashrc` before the agent will be in your `PATH`.
 
@@ -30,7 +33,7 @@ Codex removed support for the Chat Completions API in `0.95`. Use [`0.94`](https
 
 You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (installable with `pip install alcf-ai`). This also handles authentication and pulling an API key from the service. See [alcf-ai CLI and SDK](alcf-ai.md) for installation details and additional options.
 
-```sh
+```bash
 alcf-ai agent configure <agent>
 ```
 
@@ -44,12 +47,23 @@ Supported `agent`s include:
 | Option | Description |
 | ------ | ----------- |
 | `--include-experimental` | Also configure non-whitelisted (experimental) models. |
-| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `inkling-bf16`. |
+| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `muse-spark-bf16`. |
 | `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
 
 /// tip | Refreshing API Keys
 `alcf-ai agent configure <agent>` is *idempotent*, so you can re-run it to reconfigure an agent at any time. When a token helper (`alcf-tokens` or `alcf-ai`) is on your `PATH`, the generated configuration refreshes access tokens automatically. Otherwise, `alcf-ai` embeds the current access token and warns you to re-run the command when it expires.
 ///
+
+Configuration uses the [published model capabilities](models.md#model-capabilities), including context limits and supported input types. Update `alcf-ai` and re-run configuration when new models are added to its allowlist. OpenCode and Pi expose configured models in their model pickers; choose the appropriate cluster/provider, such as Minerva Direct API (`alcf-inference-service-minerva-api`).
+
+| Agent | API selection | Reasoning controls |
+| --- | --- | --- |
+| OpenCode | Chat Completions | Variants from the model's published effort levels. |
+| Pi | Responses when advertised; otherwise Chat Completions | Thinking levels mapped to the model's published effort levels. |
+| Codex | Responses with current Codex versions | Generated catalogs retain conservative settings: OpenAI-specific reasoning summaries and built-in tools are disabled, with no effort selector. |
+| Claude Code | Messages | Client-dependent effort controls; requests must use the model's accepted values. |
+
+Muse Spark remains the default. Codex preserves an existing model/provider selection and generates a separate `alcf-<cluster>-<model>` profile for each configured model. Select that profile to switch models, and regenerate its version-matched catalog after upgrading Codex. Claude Code's `--default-model` option sets its model and Opus/Sonnet/Haiku aliases; omitting it selects Muse. See [API reasoning fields](api.md#reasoning-and-api-protocols) for protocol-specific controls.
 
 ## Manual Configuration
 
@@ -86,7 +100,7 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 
 Before running `opencode`, a valid token needs to be stored in the `ALCF_AI_TOKEN` environment variable. You can either set a key manually (see [API Access](index.md#api-access)) or utilize `alcf-tokens`.
 
-```sh
+```bash
 alcf-tokens login inference # follow interactive instructions to login
 export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)" # pull a token and store
 
@@ -109,7 +123,26 @@ Add the following provider to your `~/.pi/agent/models.json`.
                     "supportsDeveloperRole": false,
                     "supportsReasoningEffort": false
                 },
-                "models": [{ "id": "inkling-bf16" }, {"id": "nemotron-3-ultra"}]
+                "models": [
+                    { "id": "muse-spark-bf16" },
+                    { "id": "inkling-bf16" },
+                    {
+                        "id": "mistral-large-4-nvfp4",
+                        "api": "openai-responses",
+                        "contextWindow": 1048576,
+                        "input": ["text", "image"],
+                        "reasoning": true,
+                        "thinkingLevelMap": {
+                            "minimal": null,
+                            "low": "low",
+                            "medium": "medium",
+                            "high": "high",
+                            "xhigh": null,
+                            "max": null
+                        },
+                        "compat": { "supportsReasoningEffort": true }
+                    }
+                ]
         }
     }
     ...
@@ -118,29 +151,37 @@ Add the following provider to your `~/.pi/agent/models.json`.
 
 ### Codex
 
-In your `~/.codex/config.toml`, add these configuration values.
+Choose a model and a Direct API cluster with Responses support from [Available Models](models.md), then set these variables in your terminal:
+
+```bash
+export model="<model>"
+export cluster="<cluster>"
+export ALCF_AI_TOKEN="$(alcf-tokens get-token inference)"
+```
+
+In your `~/.codex/config.toml`, merge the following template with your existing settings. Replace `<model>` and `<cluster>` with the values selected above; TOML does not substitute these placeholders. The cluster selects the URL, while the model ID is sent in requests, not appended to the URL.
 
 ```toml
-model = "<your model here>"
-model_provider = "alcf-inference-service-minerva-api"
+model = "<model>"
+model_provider = "alcf-inference-service-<cluster>-api"
 
-model_reasoning_effort = "ultra"
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
-
-[model_providers.alcf-inference-service-minerva-api]
-name = "ALCF Inference Service (Minerva)"
-base_url = "<your endpoint url here>"
+[model_providers."alcf-inference-service-<cluster>-api"]
+name = "ALCF Inference Service (<cluster>)"
+base_url = "https://inference-api.alcf.anl.gov/resource_server/<cluster>/api/v1"
 env_key = "ALCF_AI_TOKEN"
 wire_api = "responses"
 ```
 
-In addition, you need to add a `model_config_json` for Codex to understand the model's capabilities. You can use this shell script to create one for you.
+In addition, you need to add a `model_catalog_json` for Codex to understand the model's capabilities. This script uses the exported `model` and `cluster` variables and reads the context limit and input types from the selected model's published capabilities. Catalog filenames include the cluster, with `/` in model IDs replaced by `-`.
 
 /// details | Model Config Generation Script
-```sh
+```bash linenums="1"
 #!/usr/bin/env bash
 set -euo pipefail
+
+: "${model:?Set model to the served model ID}"
+: "${cluster:?Set cluster to the serving cluster}"
+: "${ALCF_AI_TOKEN:?Set ALCF_AI_TOKEN to a valid inference access token}"
 
 CODEX_VERSION="$(
   codex --version |
@@ -151,10 +192,23 @@ CODEX_VERSION="$(
 CATALOG_DIR="$HOME/.codex/catalogs"
 UPSTREAM_CATALOG="$CATALOG_DIR/models-${CODEX_VERSION}.upstream.json"
 UPSTREAM_PROMPT="$CATALOG_DIR/prompt-${CODEX_VERSION}.md"
-INKLING_CATALOG="$CATALOG_DIR/inkling.json"
+MODEL_CATALOG="$CATALOG_DIR/${cluster}-${model//\//-}.json"
 
-# Confirm this against the deployed serving configuration.
-CONTEXT_WINDOW=262144
+capabilities="$(
+  curl -fsS --get \
+    -H "Authorization: Bearer $ALCF_AI_TOKEN" \
+    --data-urlencode "model_id=$model" \
+    "https://inference-api.alcf.anl.gov/resource_server/${cluster}/models" |
+    jq -e --arg model "$model" '
+      .[] | select(.id == $model and .framework == "api")
+      | .capabilities | select(.api_protocols | index("responses"))
+    '
+)"
+CONTEXT_WINDOW="$(jq -er '.context_window_tokens' <<< "$capabilities")"
+INPUT_MODALITIES="$(jq -ce '
+  [.input_modalities[] | select(. == "text" or . == "image" or . == "audio")]
+  | select(length > 0)
+' <<< "$capabilities")"
 
 mkdir -p "$CATALOG_DIR"
 
@@ -167,13 +221,16 @@ curl -fsSL \
   -o "$UPSTREAM_PROMPT"
 
 jq \
+  --arg model "$model" \
+  --arg cluster "$cluster" \
   --arg version "$CODEX_VERSION" \
   --argjson context_window "$CONTEXT_WINDOW" \
+  --argjson input_modalities "$INPUT_MODALITIES" \
   --rawfile prompt "$UPSTREAM_PROMPT" '
     ([.models[] | select(.slug == "gpt-5.4")][0] // .models[0])
-    | .slug = "inkling-bf16"
-    | .display_name = "Inkling BF16"
-    | .description = "Inkling BF16 served through ALCF Minerva"
+    | .slug = $model
+    | .display_name = $model
+    | .description = ($model + " served through ALCF " + $cluster)
     | .visibility = "list"
     | .supported_in_api = true
     | .priority = 0
@@ -201,7 +258,7 @@ jq \
     | .supports_search_tool = false
     | .web_search_tool_type = "text"
     | .experimental_supported_tools = []
-    | .input_modalities = ["text"]
+    | .input_modalities = $input_modalities
     | .supports_image_detail_original = false
     | .prefer_websockets = false
     | .use_responses_lite = false
@@ -219,16 +276,16 @@ jq \
     | (if has("node_repl_disabled") then .node_repl_disabled = true else . end)
     | (if has("node_repl_auto_review_required") then .node_repl_auto_review_required = false else . end)
     | {models: [.]}
-  ' "$UPSTREAM_CATALOG" > "$INKLING_CATALOG"
+  ' "$UPSTREAM_CATALOG" > "$MODEL_CATALOG"
 
-jq -e '
+jq -e --arg model "$model" '
   .models
   | length == 1
-    and .[0].slug == "inkling-bf16"
-' "$INKLING_CATALOG" >/dev/null
+    and .[0].slug == $model
+' "$MODEL_CATALOG" >/dev/null
 
 printf 'Created %s for Codex %s\n' \
-  "$INKLING_CATALOG" \
+  "$MODEL_CATALOG" \
   "$CODEX_VERSION"
 ```
 
@@ -237,22 +294,22 @@ The catalog fields depend on your Codex version. If you upgrade Codex, re-run th
 ////
 ///
 
-Finally, add a profile (e.g. `alcf-inkling.config.toml`) for Codex to switch between models easily.
+Finally, add a profile named `alcf-<cluster>-<model>.config.toml` beside `config.toml`, replacing `/` in the model ID with `-` in the filename. Replace `<path>` below with the catalog's absolute path printed by the script, and replace the model and cluster placeholders as above.
 
 ```toml
-model_provider = "alcf_minerva"
-model = "inkling-bf16"
-model_catalog_json = "~/.codex/catalogs/inkling.json"
+model_provider = "alcf-inference-service-<cluster>-api"
+model = "<model>"
+model_catalog_json = "<path>"
 ```
 
-To run Codex, use the following parameters to ensure the correct model, provider, and profile is selected. You will need to set the `ALCF_AI_TOKEN` environment variable to your ALCF AI token before running `codex`.
+To run Codex, use the same `model` and `cluster` variables to select the profile. The manual configuration reads `ALCF_AI_TOKEN`; refresh that variable with `alcf-tokens get-token inference` when it expires. The automatic configuration above retains its token-helper refresh mechanism.
 
-```sh
-codex --disable apps --strict-config --profile alcf-inkling -c 'web_search="disabled"'
+```bash
+codex --disable apps --strict-config --profile "alcf-${cluster}-${model//\//-}" -c 'web_search="disabled"'
 ```
 
 /// note | Suggested Models
-`openai/gpt-oss-120b` is provided by both Sophia and Metis and is a good default model choice for Codex. Models which perform tool calls must conform to the OpenAI Harmony format for their outputs to be accepted by the agent.
+Muse Spark remains the default. Other models with published Responses and tool-calling support can be selected using their generated profiles. Direct API endpoints with native Responses support need no Harmony-format translation proxy. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model.
 ///
 
 ### Claude Code
@@ -262,17 +319,21 @@ Add the following to `~/.claude/settings.json`.
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api",
     "ANTHROPIC_AUTH_TOKEN": "<your-api-key-here>",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "inkling-bf16",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "inkling-bf16",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "inkling-bf16"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "muse-spark-bf16",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "muse-spark-bf16",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "muse-spark-bf16"
   }
 }
 ```
 
+/// note | Base URL
+`ANTHROPIC_BASE_URL` intentionally omits the trailing `/v1` used by the OpenAI-compatible endpoints. Claude Code automatically appends `/v1/messages` to the base URL.
+///
+
 /// note | Anthropic Messages Support
-You need to use a Direct API-backed endpoint that supports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva).
+You need to use a Direct API-backed endpoint that supports the Anthropic Messages API for Claude Code to function without shims or proxies (i.e. Minerva or Tara).
 ///
 
 ### Other 3rd-Party Agents
