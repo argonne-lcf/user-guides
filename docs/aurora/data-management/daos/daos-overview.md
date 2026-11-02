@@ -92,7 +92,7 @@ Currently, this must be done manually before use on each node where you are work
 ### Mount on a Login Node
 
 ```bash linenums="1"
-DAOS_POOL=datascience
+DAOS_POOL=<project>
 DAOS_CONT=thundersvm_exp1
 mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
 start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
@@ -155,7 +155,7 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 
 module use /soft/modulefiles
 module load daos
-DAOS_POOL=datascience
+DAOS_POOL=<project>
 DAOS_CONT=thundersvm_exp1
 daos container create --type=POSIX ${DAOS_POOL} ${DAOS_CONT}
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To mount on a compute node
@@ -173,7 +173,7 @@ export THUN_WS_PROB_SIZE=1024
 
  mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
                                             --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
-                                            -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
+                                            -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/${DAOS_POOL}/${DAOS_CONT}/real-sim_M100000_K25000_S0.836
 ```
 
 ### Share a Container
@@ -327,6 +327,7 @@ for i in range(len(ds)):
 
 
 ```python linenums="1" title="pydaos_torch_checkpoint.py"
+import os
 from io import BytesIO
 
 import numpy as np
@@ -340,7 +341,7 @@ def transform(data):
 
 
 ds = DaosDataset(
-    pool="datascience",
+    pool=os.environ["DAOS_POOL"],
     cont="my-dataset",
     transform_fn=transform,
 )
@@ -349,7 +350,7 @@ print("dataset size:", len(ds))
 print("first item shape:", ds[0].shape)
 
 
-ckpt = DaosCheckpoint("datascience", "my_container", "")
+ckpt = DaosCheckpoint(os.environ["DAOS_POOL"], "my_container", "")
 
 with ckpt.writer("/model.pt") as f:
     torch.save({"a": torch.ones(8)}, f)
