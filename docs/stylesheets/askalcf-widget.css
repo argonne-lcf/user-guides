@@ -114,6 +114,12 @@
   height: calc(100% - 48px);
   max-height: none;
 }
+/* The open panel is above the header, so hide it while search, the mobile
+   drawer, or a header menu is open, rather than cover them. It comes back,
+   with its conversation, when they close. */
+html:has(#__search:checked, #__drawer:checked, .dropdown.js-dropdown-visible) #askalcf-panel {
+  visibility: hidden;
+}
 
 /* ---- Header: accent bar (blue in light, teal in dark) ---- */
 .askalcf-header {
