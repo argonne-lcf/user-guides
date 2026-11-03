@@ -10,7 +10,7 @@ keywords:
 
 ## Using virtual Python environments
 
-#### To make a PyTorch virtual environment for Cerebras
+### To make a PyTorch virtual environment for Cerebras
 
 Clone the Cerebras modelzoo, if it is not already cloned. Check out the R 2.10.0 release.
 
@@ -46,10 +46,10 @@ pip install -e modelzoo
 ```
 
 <!--- No longer any TensorFlow wheel
-#### To make a TensorFlow virtual environment for Cerebras
+### To make a TensorFlow virtual environment for Cerebras
 --->
 
-#### Activation and deactivation
+### Activation and deactivation
 
 To activate a virtual environment
 

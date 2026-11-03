@@ -8,8 +8,11 @@ One of the first useful tasks with any new machine, scheduler, and job launcher 
 
 The application can be straightforwardly compiled using the Cray compiler wrappers.
 ```bash
+module unload darshan
 CC -fopenmp main.cpp -o hello_affinity
 ```
+
+Unloading `darshan` works around a [known issue](../known-issues.md#compiling-running-applications) with the current default modules.
 
 The executable `hello_affinity` can then be launched in a job script (or directly in the shell of an interactive job) using `mpiexec` as discussed here.
 

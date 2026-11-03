@@ -52,12 +52,15 @@
    theme blocks below, which come later and override it. Put a rule here
    unless its value differs between the themes, so they can't drift apart. */
 [data-md-color-scheme] {
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     text-decoration: underline;
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     text-decoration: none;
   }
 
@@ -316,13 +319,16 @@
     background-color: var(--blue_med);
   }
 
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     color: var(--blue_dark);
     text-decoration-color: var(--blue_med);
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     color: var(--green_med-dark);
   } 
 
@@ -553,13 +559,16 @@
     background-color: var(--neutral_dark);
   }
 
-  .md-typeset a {
+  .md-typeset a,
+  .md-typeset .alcf-page-status__link {
     color: var(--green_pale);
     text-decoration-color: var(--green_med);
   }
 
   .md-typeset a:focus,
-  .md-typeset a:hover {
+  .md-typeset a:hover,
+  .md-typeset .alcf-page-status__link:focus-visible,
+  .md-typeset .alcf-page-status__link:hover {
     color: var(--green_med-light);
   } 
 
@@ -1997,10 +2006,12 @@ pre .normal a {
   padding-top: 1.2rem;
 }
 
-/* Tag chips at the end of each page and on the Tags page: brand blue instead of
+/* Tag chips at the end of each page and on the Tags page (and span.md-tag, the
+   build date on the Page Status page): brand blue instead of
    Material's grey, and no underline from the scheme-nested .md-typeset a rules above
    (a.md-tag matches their specificity; being later in the file, it wins). */
-.md-typeset a.md-tag {
+.md-typeset a.md-tag,
+.md-typeset span.md-tag {
   background-color: var(--blue_tint);
   color: var(--blue_dark);
   text-decoration: none;
@@ -2013,7 +2024,8 @@ pre .normal a {
 }
 
 /* Same inversion as the tiles: a light tint is unreadable on dark. */
-[data-md-color-scheme="slate"] .md-typeset a.md-tag {
+[data-md-color-scheme="slate"] .md-typeset a.md-tag,
+[data-md-color-scheme="slate"] .md-typeset span.md-tag {
   background-color: color-mix(in srgb, var(--blue_med) 35%, transparent);
   color: var(--blue_pale);
 }
@@ -2048,4 +2060,150 @@ pre .normal a {
 }
 .md-source-file .alcf-page-history .md-source-file__fact {
   align-items: flex-start;
+}
+/* A stale Last verified date (hooks/page_metadata.py): Material's warning
+   admonition orange, which reads on both themes. */
+.md-source-file .alcf-page-history .alcf-page-history__stale {
+  color: #ff9100;
+  cursor: help;
+}
+.md-source-file .alcf-page-history .alcf-page-history__stale .md-icon svg {
+  fill: currentcolor;
+}
+
+/* Page status dashboard (docs/page-status.md, docs/javascripts/page-status.js). */
+.alcf-page-status__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 1.2em;
+  margin: 1em 0;
+}
+.alcf-page-status__summary span {
+  white-space: nowrap;
+}
+.alcf-page-status__summary strong {
+  font-size: 1.3em;
+  margin-right: 0.2em;
+}
+.md-typeset .alcf-page-status__note {
+  margin: 0 0 1em;
+  font-size: 0.7rem;
+  line-height: 2;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .alcf-page-status__note .md-tag {
+  margin-right: 0.6em;
+}
+.alcf-page-status__swatch {
+  white-space: nowrap;
+  margin-left: 0.8em;
+}
+.alcf-page-status__dot {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.3em;
+  border-radius: 50%;
+  background: currentcolor;
+}
+.alcf-page-status__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1em;
+  align-items: center;
+  margin: 1em 0;
+}
+.alcf-page-status__sections {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+.alcf-page-status__filters select,
+.alcf-page-status__filters input {
+  font: inherit;
+  padding: 0.2em 0.4em;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2em;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+/* Section path entries: buttons that filter the table. The .md-typeset a
+   rules in the theme blocks above give them the link colors. */
+.md-typeset .alcf-page-status__link {
+  all: unset;
+  font: inherit;
+  cursor: pointer;
+}
+.md-typeset .alcf-page-status table td,
+.md-typeset .alcf-page-status table th {
+  white-space: nowrap;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__page {
+  white-space: normal;
+  min-width: 14em;
+}
+/* The source path under each title links to GitHub's editor, but looks like
+   the plain text it replaced; the underline appears on hover. */
+.md-typeset .alcf-page-status table a.alcf-page-status__edit {
+  font-size: 0.8em;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+}
+.md-typeset .alcf-page-status table a.alcf-page-status__edit:hover,
+.md-typeset .alcf-page-status table a.alcf-page-status__edit:focus-visible {
+  text-decoration: underline;
+}
+/* Section paths wrap at their separators, and owners one handle per line
+   when there are several, to keep those columns narrow. */
+.md-typeset .alcf-page-status table td.alcf-page-status__section {
+  white-space: normal;
+  min-width: 15em;
+  max-width: 20em;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__owners {
+  white-space: normal;
+  max-width: 13em;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__owners a {
+  display: inline-block;
+}
+.md-typeset .alcf-page-status table td.alcf-page-status__check,
+.md-typeset .alcf-page-status table th.alcf-page-status__check {
+  text-align: center;
+}
+/* Material's inline sort-icon placeholder (th::after) would push the centered
+   header text left of the check marks; take it out of the text flow. */
+.md-typeset .alcf-page-status table th.alcf-page-status__check {
+  position: relative;
+}
+.md-typeset .alcf-page-status table th.alcf-page-status__check[role="columnheader"]::after {
+  position: absolute;
+  right: 0.2em;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 0;
+}
+.alcf-page-status__status--stale {
+  color: #ff9100;
+}
+.alcf-page-status__status--never,
+.alcf-page-status__status--missing {
+  color: var(--md-default-fg-color--light);
+}
+.alcf-page-status__status--ok {
+  color: #00c853;
+}
+/* Last updated, by age (AGE_BANDS in page-status.js): green within six
+   months, yellow within a year, orange within two, red beyond. */
+.alcf-page-status__age--fresh {
+  color: #00c853;
+}
+.alcf-page-status__age--aging {
+  color: #e0a800;
+}
+.alcf-page-status__age--old {
+  color: #ff9100;
+}
+.alcf-page-status__age--stale {
+  color: #ff1744;
 }

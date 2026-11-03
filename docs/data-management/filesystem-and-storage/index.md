@@ -1,13 +1,5 @@
 # ALCF File Systems and Storage
 
-<!-- ### Home
-A Lustre file system residing on a DDN AI-400X NVMe Flash platform. It has 24 NVMe drives with 7 TB each, providing 123 TB of usable space. It provides 8 Object Storage Targets and 4 Metadata Targets.
-
-### Eagle
-A Lustre file system residing on an HPE ClusterStor E1000 platform equipped with 100 Petabytes of usable capacity across 8,480 disk drives. This ClusterStor platform provides 160 Object Storage Targets and 40 Metadata Targets with an aggregate data transfer rate of 650 GB/s. The primary use of Eagle is data sharing with the research community. Eagle has community sharing capabilities which allow PIs to [share their project data with external collaborators](../acdc/eagle-data-sharing.md) using Globus. Eagle can also be used for compute campaign storage.
-
-Also see [ALCF Data Policies](../../policies/data-and-software-policies/data-policy.md) and [Data Transfer](../data-transfer/using-globus.md). -->
-
 ## Disk Storage
 
 Our HPC systems store project data in file systems called Eagle and Flare. Eagle and Flare are Lustre file systems mounted as `/eagle` and `/flare`, respectively. For more information on the Lustre file systems, consult this document on [Lustre File Striping Basics](https://www.alcf.anl.gov/support-center/training-assets/file-systems-and-io-performance).

@@ -11,16 +11,16 @@ PIs of INCITE, ALCC, and ADSP projects must complete quarterly reports and a fin
 - April 1, 2026 (CY2026 - Q1)
 - July 1, 2026 (CY2026 - Q2)
 - October 1, 2026 (CY2026 - Q3)
-- February 1, 2027 (CY2026 - EOY) or March 15, 2027 (entire allocation period - EOP)
+- March 1, 2027 (CY2026 - EOY) or April 15, 2027 (entire allocation period - EOP)
 
 ### 2025-2026 ALCC EOP report:
-- August 15, 2026 (CY2026)
+- December 15, 2026 (CY2026)
 
-### 2025-2026 ALCC quarterly and EOP reports:
-- October 1, 2025 (CY2025 - Q3)
-- January 1, 2026 (CY2025 - Q4)
-- April 1, 2026 (CY2026 - Q1)
-- August 15, 2026 (CY2026 - EOP)
+### 2026-2027 ALCC quarterly and EOP reports:
+- January 1, 2027 (CY2026 - Q4)
+- April 1, 2027 (CY2026 - Q1)
+- July 1, 2027 (CY2026 - Q2)
+- August 15, 2027 (CY2026 - EOP)
 
 ## Penalties
 
@@ -34,7 +34,7 @@ If a quarterly report is more than **90 days late**:
 
 These penalties will be removed within three business days after the late quarterly or EOY report is submitted.
 
-#### ALCC Specific Penalties:
+### ALCC Specific Penalties:
 
 A similar penalty will also be applied to new ALCC projects with the same PI or co-PIs that have failed to submit the EOP report for a previous ALCC project. If the EOP report is more than 15 days late:
 

@@ -111,9 +111,9 @@ launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # launched using clush on all compute 
 mount | grep dfuse # To confirm it is mounted
 
 ls /tmp/${DAOS_POOL}/${DAOS_CONT}/
-
-clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on all nodes; optional on compute nodes since PBS epilogue does this for you
 ```
+
+You don't need to unmount the container on compute nodes; the PBS epilogue unmounts it when the job ends.
 
 DAOS data mover instructions are provided [here](../moving_data_to_aurora/datamover.md).
 
@@ -178,9 +178,6 @@ export THUN_WS_PROB_SIZE=1024
  mpiexec --env LD_PRELOAD=/usr/lib64/libpil4dfs.so -np ${NRANKS} -ppn ${RANKS_PER_NODE} --cpu-bind ${CPU_BINDING1}  \
                                             --no-vni -genvall  thunder/svm_mpi/run/aurora/wrapper.sh thunder/svm_mpi/build_ws1024/bin/thundersvm-train \
                                             -s 0 -t 2 -g 1 -c 10 -o 1  /tmp/datascience/thunder_1/real-sim_M100000_K25000_S0.836
-
-clean-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To unmount on a compute node
-# fusermount3 -u /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} # To unmount on a login node
 ```
 
 ## MPI-IO Container Access

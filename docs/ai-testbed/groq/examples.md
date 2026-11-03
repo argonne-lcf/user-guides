@@ -1,18 +1,29 @@
+---
+description: "Run Llama-2 7B across all nine GroqRack nodes on the ALCF AI Testbed: checking that the rack is free, then running it."
+authors:
+  - William Arnold
+last_verified: 2026-10-20
+---
+
 # Examples
 
-## Running Llama-2 7B on the Groqrack
+## Running Llama-2 7B on the GroqRack
 
-Llama-2 7B requires all 9 nodes in a Groqrack.
+/// warning | Currently unavailable
+As of October 16, 2026, Llama-2 7B, which needs all 72 cards in the GroqRack, does not run because of a failed card. There is no ETA for a fix.
+///
+
+Llama-2 7B requires all 9 nodes in a GroqRack.
 
 ### Checking status
 
-First, verify that there are no other PBS jobs using the Groqrack. This can be done from either a Groqrack node or a login node.
+First, verify that there are no other PBS jobs using the GroqRack. This can be done from either a GroqRack node or a login node.
 ```console
 qstat -wa
 ```
 If `qstat -wa` shows any jobs active, do not attempt to start Llama2.
 
-Also, be sure to check if anyone else is connected to any of the nodes: This can be done from a either grokrack node or a login node. Logins on nodes just indicate a potential conflict; this would only be an actual conflict if the user starts a job during the attempt to run the full-rack llama job.
+Also, be sure to check if anyone else is connected to any of the nodes: This can be done from either a GroqRack node or a login node. Logins on nodes just indicate a potential conflict; this would only be an actual conflict if the user starts a job during the attempt to run the full-rack llama job.
 ```console
 for host in groq-r01-gn-0{1..9}; do echo $host; ssh $host /usr/bin/who; done
 ```
@@ -51,7 +62,7 @@ cd ~/groq_llama2-7b-kludge/
 Packages installed (including dependencies) in `~/.local/lib` will override those in your conda environments. If you have a `~/.local/lib/python3.10/site-packages/` directory, please remove it or rename it before continuing.
 ///
 
-Create and activate a `groqflow_for_llama2`conda environment.
+Create and activate a `groqflow_for_llama2` conda environment.
 ```console
 conda env remove -n groqflow_for_llama2
 export PYTHON_VERSION=3.10.12
