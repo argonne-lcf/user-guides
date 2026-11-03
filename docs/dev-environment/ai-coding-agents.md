@@ -1,5 +1,5 @@
 ---
-description: "Install AI coding agents (Claude Code, Codex, OpenCode, Pi) in your home directory and connect them to an ALCF-hosted or self-hosted model, or drive ALCF jobs remotely through the IRI API."
+description: "Install AI coding agents in your home directory and connect them to an ALCF-hosted or self-hosted model, or drive ALCF jobs remotely through the IRI API."
 tags:
   - AI Agents
 ---
@@ -8,9 +8,9 @@ tags:
 
 AI coding agents such as [Claude Code](https://code.claude.com/docs/en/quickstart), [OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli), [OpenCode](https://opencode.ai/), and [Pi](https://pi.dev/) are command-line tools that read your code, run commands, and edit files on your behalf. You can use them on ALCF systems, subject to the [AI Guidance](ai-guidance.md): they are allowed, but ALCF Support cannot help you set them up or debug them.
 
-## Can I install an agent in my home directory?
+## Installing an Agent in your Home Directory
 
-Yes. Under the [Software Policy](../policies/data-and-software-policies/software-policy.md), you may install and maintain software for your own use, and a single agent CLI fits easily in your [home directory quota](../data-management/filesystem-and-storage/index.md). The install scripts put the agent in `~/.local/bin` without root access:
+Under the [Software Policy](../policies/data-and-software-policies/software-policy.md), you may install and maintain software for your own use, and a single agent CLI fits easily in your [home directory quota](../data-management/filesystem-and-storage/index.md). The install scripts put the agent in `~/.local/bin` without root access:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash   # Claude Code
@@ -85,7 +85,7 @@ Ollama listens on `localhost` by default. Do not expose it on a network interfac
 
 ## Submitting jobs remotely with the IRI API
 
-An agent does not have to run on an ALCF system. It can run on your own machine and act on ALCF through the [ALCF IRI API](../services/iri-api.md): check system status, submit and monitor PBS jobs, and read their output, all over HTTPS with your ALCF credentials. This keeps the agent off the login nodes, and your local files stay on your machine unless you choose to stage them.
+An agent does not have to run on an ALCF system. It can run on your own machine and act on ALCF through the [ALCF IRI API](../services/iri-api.md). With your ALCF credentials, the agent can check system status, submit and monitor PBS jobs, and read their output.  This keeps the agent off the login nodes, and your local files stay on your machine unless you choose to stage them.
 
 There are two ways to give an agent this access:
 
