@@ -134,3 +134,7 @@ $ mpiexec -n 1 ./f_test
 Number of devices:            6
 Hello world from accelerator
 ```
+
+## More Examples
+
+The [OpenMP offload demos from the ALCF Hands-on HPC Workshop](https://github.com/argonne-lcf/ALCF_Hands_on_HPC_Workshop/tree/master/programmingModels/OpenMP/demo) cover offloading to the GPU, expressing parallelism, and mapping data, in C++ and Fortran. Their job commands use the workshop's queue and project; use your own `<queue>` and `<project>` instead.

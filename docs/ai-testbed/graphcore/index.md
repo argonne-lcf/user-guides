@@ -7,7 +7,7 @@ keywords:
   - graphcore ipu
 ---
 
-# System Overview
+# Graphcore Overview
 <!---
 ## Introduction
 
