@@ -9,7 +9,7 @@ keywords:
   - data parallel
 authors:
   - Sam Foreman
-last_verified: 2026-10-12
+last_verified: 2026-11-03
 ---
 
 # ezpz
@@ -22,11 +22,13 @@ last_verified: 2026-10-12
 module use /soft/modulefiles
 module load conda
 conda activate
-pip install "git+https://github.com/saforem2/ezpz"  # (1)!
+uv pip install --no-cache --link-mode=copy "git+https://github.com/saforem2/ezpz"  # (1)!
 ```
 
-1. Install from the repository. The name `ezpz` on PyPI belongs to an
-   unrelated package.
+1. Install from the repository. PyPI's `ezpz` is an unrelated package — always
+   use the `git+https://github.com/saforem2/ezpz` URL. If `uv` is not
+   available, `pip install` works but `uv pip install --no-cache --link-mode=copy`
+   is preferred.
 
 --8<-- "./docs/aurora/data-science/frameworks/ezpz.md:setup"
 
@@ -50,8 +52,7 @@ See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
 #PBS -l filesystems=home:eagle
 
 cd "${PBS_O_WORKDIR}"
-source <(curl -LsSf https://bit.ly/ezpz-utils)
-ezpz_setup_env
+source <(curl -fsSL https://ezpz.cool/utils.sh) && ezpz_setup_env
 
 ezpz launch python3 -m ezpz.examples.test --model small
 ```
