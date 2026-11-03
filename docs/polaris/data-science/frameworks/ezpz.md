@@ -7,6 +7,9 @@ keywords:
   - torchrun
   - multi-node
   - data parallel
+authors:
+  - Sam Foreman
+last_verified: 2026-10-12
 ---
 
 # ezpz

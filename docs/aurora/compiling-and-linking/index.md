@@ -17,7 +17,7 @@ If your build system does not require GPUs for the build process, the compilatio
 
 It is helpful to realize that the home filesystem is `gecko` and the `project` spaces reside on the Lustre filesystem called `Flare`. The filesystems are not backed up, and users should take care to retain copies of important files (e.g., local resources or ALCF's `eagle` filesystem).
 
-## OneAPI Programming Environment
+## oneAPI Programming Environment
 
 The oneAPI programming environment is currently the single environment for building and running software to maximally use the available hardware resources. The oneAPI environment is loaded by default for users and is principally defined by the following set of modules and related variants.
 

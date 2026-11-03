@@ -43,7 +43,7 @@ Below are the documents curated in the vector database used by AskALCF.
 | CUDA C Programming Guide    | Web           |
 | SYCL Documentation         | PDF           |
 | AMD HIP Documentation        | Web           |
-| Intel OneAPI Documentation  | Web           |
+| Intel oneAPI Documentation  | Web           |
 
 ---
 

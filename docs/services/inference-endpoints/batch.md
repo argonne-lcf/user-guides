@@ -17,7 +17,7 @@ For large-scale inference, the batch processing service allows you to submit a f
 /// details | Create Batch Request
 
 //// tab | cURL
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -48,7 +48,7 @@ curl -X POST "$base_url" \
 ////
 
 //// tab | Python
-```python
+```python linenums="1"
 import requests
 import json
 from alcf_tokens.auth import get_access_token
@@ -81,7 +81,7 @@ print(response.json())
 /// details | Retrieve Batch Metrics
 
 //// tab | cURL
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -95,7 +95,7 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches/${bat
 ////
 
 //// tab | Python
-```python
+```python linenums="1"
 import requests
 from alcf_tokens.auth import get_access_token
 
@@ -136,7 +136,7 @@ print(response.json())
 /// details | List All Batches
 
 //// tab | cURL
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -153,7 +153,7 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches?statu
 ////
 
 //// tab | Python
-```python
+```python linenums="1"
 import requests
 from alcf_tokens.auth import get_access_token
 
@@ -204,7 +204,7 @@ print(response.json())
 /// details | Get Batch Status
 
 //// tab | cURL
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -218,7 +218,7 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/v1/batches/${bat
 ////
 
 //// tab | Python
-```python
+```python linenums="1"
 import requests
 from alcf_tokens.auth import get_access_token
 

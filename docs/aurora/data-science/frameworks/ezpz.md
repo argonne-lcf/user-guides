@@ -7,6 +7,9 @@ keywords:
   - torchrun
   - multi-node
   - data parallel
+authors:
+  - Sam Foreman
+last_verified: 2026-10-12
 ---
 
 # ezpz
@@ -29,7 +32,7 @@ the model:
 
 | Concern | Aurora / Sunspot | Polaris / Sophia | Perlmutter |
 |---|---|---|---|
-| Scheduler | PBS Pro | PBS Pro | SLURM |
+| Scheduler | PBS Pro | PBS Pro | Slurm |
 | Launcher | `mpiexec` | `mpiexec` | `srun` |
 | Accelerator | Intel XPU | NVIDIA | NVIDIA |
 | Backend | `xccl` | `nccl` | `nccl` |
@@ -186,7 +189,7 @@ summary report.
 ## Other systems
 
 The same workflow applies on [Polaris](../../../polaris/data-science/frameworks/ezpz.md) and Sophia (PBS, `nccl`) and on
-Perlmutter (SLURM, `srun`); the NERSC specifics are in the
+Perlmutter (Slurm, `srun`); the NERSC specifics are in the
 [Perlmutter guide](https://ezpz.cool/guides/perlmutter/).
 
 <!-- --8<-- [start:help] -->

@@ -17,7 +17,7 @@ Higher-level programming models such as [Kokkos](../programming-models/kokkos-po
 
 A summary of available GPU programming models and relevant compiler flags is shown below for compilers that generate offloadable code. Users are encouraged to review the corresponding man pages and documentation.
 
-| Programming Model | GNU | NVHPC | LLVM | ONEAPI |
+| Programming Model | GNU | NVHPC | LLVM | oneAPI |
 | --- | --- | --- | --- | --- |
 | CUDA | -- | `-cuda [-gpu=cuda8.0,cc11.0]` | -- | -- |
 | HIP[^1] | `--gpu-architecture=compute_80 --gpu-code=sm_80` | -- | -- | -- |

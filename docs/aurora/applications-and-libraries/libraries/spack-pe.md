@@ -1,6 +1,6 @@
 # Spack PE
 
-The Spack PE is a software stack that provides various build tools, utilities, and libraries. The Spack PE consists of two parts: `spack-pe-gcc` and `spack-pe-oneapi`. `spack-pe-gcc` contains commonly used software packages compiled for CPU. `spack-pe-oneapi` is based on the [E4S Project](https://e4s-project.github.io/) and provides performant HPC libraries built with the OneAPI SDK. `spack-pe-oneapi` depends on both `spack-pe-gcc` and the OneAPI SDK; in combination, the Spack PE with the OneAPI SDK and MPICH constitute the Aurora PE.
+The Spack PE is a software stack that provides various build tools, utilities, and libraries. The Spack PE consists of two parts: `spack-pe-gcc` and `spack-pe-oneapi`. `spack-pe-gcc` contains commonly used software packages compiled for CPU. `spack-pe-oneapi` is based on the [E4S Project](https://e4s-project.github.io/) and provides performant HPC libraries built with the oneAPI SDK. `spack-pe-oneapi` depends on both `spack-pe-gcc` and the oneAPI SDK; in combination, the Spack PE with the oneAPI SDK and MPICH constitute the Aurora PE.
 
 ## Using software from the Spack PE
 
@@ -29,7 +29,7 @@ Software installed outside of the Spack PE tree, such as in `/soft`, will typica
 
 [Spack](https://spack.io/about/) is a powerful package manager designed for HPC. The Spack PE is installed and managed with Spack; users can also install Spack in their own home or project directory to manage their software builds. Spack has a steep learning curve, but it may benefit workflows involving frequent builds with complex dependencies.
 
-For users who wish to use Spack to install their own software, we provide configuration files corresponding to the Spack PE deployments. These configuration files can be found in `/opt/aurora/<AURORA_PE_VERSION>/spack` in `config` directories organized by Spack PE version. Not all of these settings will be useful for all builds, and it is not recommended to adopt these wholesale as global settings. The recommended method is to include these settings ad hoc in a Spack environment to control what information Spack uses for its builds. However, we do recommend using the provided configurations for the compilers, OneAPI SDK components, and MPICH, as these can be difficult to configure properly.
+For users who wish to use Spack to install their own software, we provide configuration files corresponding to the Spack PE deployments. These configuration files can be found in `/opt/aurora/<AURORA_PE_VERSION>/spack` in `config` directories organized by Spack PE version. Not all of these settings will be useful for all builds, and it is not recommended to adopt these wholesale as global settings. The recommended method is to include these settings ad hoc in a Spack environment to control what information Spack uses for its builds. However, we do recommend using the provided configurations for the compilers, oneAPI SDK components, and MPICH, as these can be difficult to configure properly.
 
 Support requests and feedback for ALCF-specific issues should be directed to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). For general Spack questions, users are encouraged to consult the following resources:
 

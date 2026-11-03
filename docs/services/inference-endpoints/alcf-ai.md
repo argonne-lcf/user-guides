@@ -25,7 +25,7 @@ See [Python Environments](../../dev-environment/python-environments.md) for the 
 
 ## Authentication
 
-`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI. Use this command to login to the inference service:
+`alcf-ai` reads the tokens cached by the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI which can be installed by ```pip install alcf-tokens```.   Use this command to login to the inference service:
 
 ```bash
 alcf-tokens login inference
@@ -165,7 +165,7 @@ alcf-ai dinov3 submit \
 
 The same functionality is available from Python through `alcf_ai.InferenceClient`, which reuses the tokens cached by `alcf-tokens login inference` and resolves the correct URL for each cluster:
 
-```python
+```python linenums="1"
 from alcf_ai import InferenceClient
 
 client = InferenceClient()
@@ -186,7 +186,7 @@ print(
 
 The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("sophia").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
 
-```python
+```python linenums="1"
 from pathlib import Path
 
 from alcf_ai import InferenceClient

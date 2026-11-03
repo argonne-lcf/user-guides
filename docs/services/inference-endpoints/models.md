@@ -1,3 +1,7 @@
+---
+description: Find ALCF inference models, supported APIs, context limits, input types, reasoning, and tool-calling capabilities.
+---
+
 # Available Models
 
 Models are organized by cluster and marked with the following capabilities:
@@ -7,117 +11,83 @@ Models are organized by cluster and marked with the following capabilities:
 - **R** - Reasoning Enabled
 - **H** - Always Hot Model
 
-## Sophia Cluster
+The table reports each endpoint's cluster, type, organization, API protocols, context window (in tokens), supported input modalities, streaming support, reasoning, and tool calling. A `—` indicates the value is not published for that endpoint.
 
-/// details | Chat Language Models (vLLM)
+| Cluster | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
+|---------|------|--------------|-------|---------------|----------------|------------------|-----------|-----------|--------------|
+| Sophia | Chat | Arcee AI | arcee-ai/Trinity-Large-Thinking-W4A16^RT^ | chat_completions | 131072 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-DPO-UFB-0225^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-IT-v4-0125^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-KTO-UFB-0325^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | Argonne | argonne/AuroraGPT-Tulu3-SFT-0125^B^ | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | AstroMLab | AstroMLab/AstroSage-70B-20251009^T^ | chat_completions | — | text | ✓ | — | ✓ |
+| Sophia | Chat | Google | google/gemma-3-27b-it^BT^ | chat_completions | 32768 | text, image | ✓ | — | ✓ |
+| Sophia | Chat | Google | google/gemma-4-26B-A4B-it^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | Google | google/gemma-4-31B-it^RTH^ | chat_completions | 128000 | text, image, video | ✓ | ✓ | ✓ |
+| Sophia | Chat | Google | google/gemma-4-E4B-it^RTH^ | chat_completions | — | text, image, video | ✓ | ✓ | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-3.3-70B-Instruct^BT^ | chat_completions | 32768 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^ | chat_completions | 16384 | text, image | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Llama-4-Scout-17B-16E-Instruct^BT^ | chat_completions | 32768 | text, image | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-405B-Instruct^BT^ | chat_completions | 24576 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^ | chat_completions | 16384 | text | ✓ | — | ✓ |
+| Sophia | Chat | Meta | meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
+| Sophia | Chat | Mistral AI | mistralai/Devstral-2-123B-Instruct-2512^T^ | chat_completions | 16384 | text | ✓ | — | ✓ |
+| Sophia | Chat | Mistral AI | mistralai/Mistral-Large-Instruct-2407 | chat_completions | 16384 | text | ✓ | — | — |
+| Sophia | Chat | Mistral AI | mistralai/Mixtral-8x22B-Instruct-v0.1 | chat_completions | 16384 | text | ✓ | — | — |
+| Sophia | Chat | NVIDIA | mgoin/Nemotron-4-340B-Instruct-hf | chat_completions | — | text | ✓ | — | — |
+| Sophia | Chat | NVIDIA | nvidia/nemotron-3-super-120b^RT^ | chat_completions | 262144 | text | ✓ | ✓ | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-120b^BRTH^ | chat_completions | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Sophia | Chat | OpenAI | openai/gpt-oss-20b^BRTH^ | chat_completions | — | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Sophia | Vision | Meta | meta-llama/Llama-3.2-90B-Vision-Instruct^T^ | chat_completions | 8192 | text, image | ✓ | — | ✓ |
+| Sophia | Embedding | Google | google/embeddinggemma-300m | — | — | — | — | — | — |
+| Sophia | Embedding | Mistral AI | mistralai/Mistral-7B-Instruct-v0.3-embed | — | — | — | — | — | — |
+| Sophia | Embedding | Salesforce | Salesforce/SFR-Embedding-Mistral | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-300M-aminoacid | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-300M-codon | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-300M-contrastive | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-300M-contrastive-2026-08 | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-300M-joint | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-aminoacid | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-codon | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-contrastive | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-contrastive-2026-08 | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-600M-joint | — | — | — | — | — | — |
+| Sophia | Genomics | genslm | genslm-test/genslm-esmc-6B-contrastive-2026-08 | — | — | — | — | — | — |
+| Sophia | Segmentation | Meta | dinov3 | — | — | — | — | — | — |
+| Sophia | Segmentation | Meta | facebook/sam3 | — | — | — | — | — | — |
+| Sophia | Triton | — | amsc-d3 | KServe gRPC | — | — | — | — | — |
+| Metis | Chat | Google | gemma-4-31B-it^RTH^ | chat_completions, responses | 262144 | text, image, video | ✓ | ✓ | ✓ |
+| Metis | Chat | Mistral AI | Mistral-Large-3-675B-Instruct-2512^TH^ | chat_completions | 32768 | text | ✓ | — | ✓ |
+| Metis | Chat | OpenAI | gpt-oss-120b^RTH^ | chat_completions, responses | 131072 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Minerva | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
+| Minerva | Chat | Mistral AI | mistral-large-4-nvfp4^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
+| Minerva | Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓, separate (`minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `max`) | ✓ |
+| Minerva | Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
+| Tara | Chat | Meta | muse-spark-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
+| Tara | Chat | Mistral AI | mistral-large-4^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
+| Tara | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
+| Tara | Chat | NVIDIA | nemotron-35-super-vl^RT^ | chat_completions, responses, messages | 1048576 | text, image, video | ✓ | ✓ | ✓ |
+| Tara | Chat | OpenAI | openai/gpt-oss-120b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Tara | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Tara | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image, audio | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 
-**Meta Llama Family**
+For Metis, endpoint and model status is on the [Metis status page](https://metis.alcf.anl.gov/status). See SambaNova's [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html) documentation for API details.
 
-- meta-llama/Meta-Llama-3.1-8B-Instruct^BTH^
-- meta-llama/Meta-Llama-3.1-70B-Instruct^BTH^
-- meta-llama/Meta-Llama-3.1-405B-Instruct^BT^
-- meta-llama/Llama-3.3-70B-Instruct^BT^
-- meta-llama/Llama-4-Scout-17B-16E-Instruct^BT^
-- meta-llama/Llama-4-Maverick-17B-128E-Instruct^T^
-
-**Mistral Family**
-
-- mistralai/Mistral-Large-Instruct-2407
-- mistralai/Mixtral-8x22B-Instruct-v0.1
-- mistralai/Devstral-2-123B-Instruct-2512
-
-**OpenAI Family**
-
-- openai/gpt-oss-20b^BRTH^
-- openai/gpt-oss-120b^BRTH^
-
-**Aurora GPT Family**
-
-- argonne/AuroraGPT-IT-v4-0125^B^
-- argonne/AuroraGPT-Tulu3-SFT-0125^B^
-- argonne/AuroraGPT-DPO-UFB-0225^B^
-- argonne/AuroraGPT-KTO-UFB-0325^B^
-
-**Google Family**
-
-- google/gemma-3-27b-it^BT^
-- google/gemma-4-26B-A4B-it^RT^
-- google/gemma-4-31B-it^RTH^
-- google/gemma-4-E4B-it^RTH^
-
-**Other Models**
-
-- arcee-ai/Trinity-Large-Thinking-W4A16^RT^
-- nvidia/nemotron-3-super-120b^RT^
-- AstroMLab/AstroSage-70B-20251009
+/// warning | Metis Tool Calling
+Tool calling is advertised by the API, but SambaNova's sanitization of tool calls has a known issue. See the Metis Tool Calling warning under [Shims/Proxies](agents.md#shimsproxies).
 ///
 
-/// details | Vision Language Models (vLLM)
-
-- meta-llama/Llama-3.2-90B-Vision-Instruct
-///
-
-/// details | Embedding Models (vLLM)
-
-- mistralai/Mistral-7B-Instruct-v0.3-embed
-- google/embeddinggemma-300m
-- Salesforce/SFR-Embedding-Mistral
-- genslm-test/genslm-esmc-300M-aminoacid
-- genslm-test/genslm-esmc-300M-codon
-- genslm-test/genslm-esmc-300M-contrastive-aminoacid
-- genslm-test/genslm-esmc-300M-contrastive-codon
-- genslm-test/genslm-esmc-300M-joint-aminoacid
-- genslm-test/genslm-esmc-300M-joint-codon
-- genslm-test/genslm-esmc-600M-aminoacid
-- genslm-test/genslm-esmc-600M-codon
-- genslm-test/genslm-esmc-600M-contrastive-aminoacid
-- genslm-test/genslm-esmc-600M-contrastive-codon
-- genslm-test/genslm-esmc-600M-joint-aminoacid
-- genslm-test/genslm-esmc-600M-joint-codon
-///
-
-/// details | Image Segmentation
-
-- sam3
-- dinov3
-
-//// info | Promptable Image Segmentation Models
+/// info | Promptable Image Segmentation Models
 The [SAM 3](https://huggingface.co/facebook/sam3) and [DINOv3](https://github.com/facebookresearch/dinov3) models are deployed on Sophia. Install the [alcf-ai](https://pypi.org/project/alcf-ai/) package for the command line and Python toolkit. See [alcf-ai CLI and SDK](alcf-ai.md) for worked examples, including batch and DINOv3 segmentation.
 
 If this is your first time using `alcf-ai`, run `alcf-tokens login inference` first. Without a valid token, `alcf-ai` exits with an authentication error naming that command.
-////
-///
-
-## Metis Cluster (SambaNova)
-
-Endpoint and model status is on the [Metis status page](https://metis.alcf.anl.gov/status). See SambaNova's [OpenAI compatible API](https://docs.sambanova.ai/sambastudio/latest/open-ai-api.html) documentation for API details.
-
-/// details | Chat Language Models
-
-- gpt-oss-120b^H^
-- Mistral-Large-3-675B-Instruct-2512^H^
-- gemma-4-31B-it^H^
-
-//// note | Metis Limitations
-- Batch processing is not currently supported on the Metis cluster.
-- Tool calling is advertised by the API, but SambaNova's sanitization of tool calls has a known issue. See the Metis Tool Calling warning under [Shims/Proxies](agents.md#shimsproxies).
-////
-///
-
-## Minerva Cluster (NVIDIA)
-
-/// details | Chat Language Models
-
-- nemotron-3-ultra^H^
-- inkling-bf16^H^
-- gpt-oss-120b
 ///
 
 ## Model Serving Configuration
 
 When available, model serving configuration details can be viewed for each cluster.
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -129,6 +99,14 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
 
 # Check serving configuration for a specific model (e.g., openai/gpt-oss-120b)
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models?model_id=openai/gpt-oss-120b" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for another cluster (e.g., Tara)
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/tara/models" \
+    -H "Authorization: Bearer ${access_token}"
+
+# Check serving configuration for Minerva
+curl --fail-with-body "https://inference-api.alcf.anl.gov/resource_server/minerva/models" \
     -H "Authorization: Bearer ${access_token}"
 ```
 
@@ -146,10 +124,12 @@ Each model includes a versioned `capabilities` object describing what the deploy
 | `reasoning.supported` | Whether the model supports reasoning. |
 | `reasoning.effort_levels` | Accepted reasoning effort values. |
 | `reasoning.default_effort` | Effort applied when a request omits one. |
-| `reasoning.separate_output` | Whether reasoning is returned separately as `reasoning_content` instead of inline. |
+| `reasoning.separate_output` | Whether reasoning is returned separately from final content; the field or block type depends on the API protocol. |
 | `tool_calling.supported` | Whether the model supports tool calling. |
 
 Optional fields are omitted when they do not apply, so clients should fall back to conservative defaults. Models served by vLLM also report `max_model_len`, `max_num_seqs`, `tool_call_parser`, and `enable_auto_tool_choice` alongside `capabilities`.
+
+Context limits include input and generated output; leave room for reasoning and the final answer. Accepted reasoning efforts are model-specific, not a universal set. See [API reasoning fields](api.md#reasoning-and-api-protocols) and [agent configuration](agents.md) for how clients use these capabilities.
 
 #### Possible Values
 
