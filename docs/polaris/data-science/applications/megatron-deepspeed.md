@@ -49,7 +49,7 @@ various training options.
 
     ```bash
     # install missing dependency
-    python3 -m pip install "git+https://github.com/saforem2/ezpz"
+    uv pip install --no-cache --link-mode=copy "git+https://github.com/saforem2/ezpz"  # PyPI's ezpz is unrelated — always use this URL
     ```
 
 1. Launch training:
