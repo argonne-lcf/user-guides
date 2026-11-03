@@ -6,4 +6,12 @@
 {%- endif %}
 <link rel="stylesheet" href="https://use.typekit.net/pxo0nvo.css">
 <link rel="apple-touch-icon" href="{{ 'images/apple-touch-icon.png' | url }}">
+<!-- AskALCF widget: base URL of the agent API, deployed at
+     https://ask.alcf.anl.gov (only /v1/agent/chat is public). Set on every
+     host; messages work only from origins the API's CORS settings allow.
+     To develop against a local API, point this at http://localhost:8080.
+     Without it, the widget isn't built. -->
+<script>
+  window.ASKALCF_API_BASE = "https://ask.alcf.anl.gov";
+</script>
 {% endblock %}
