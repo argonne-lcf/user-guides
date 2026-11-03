@@ -9,11 +9,11 @@ tests:
   - name: flags bare placeholder
     input: "Use <username>."
     want: |
-      1:5:ALCF_Style.placeholders.placeholder-backticks:Wrap '<username>' in backticks, unless it is already inside a code block.
+      1:5:alcf-style.placeholders.placeholder-backticks:Wrap '<username>' in backticks, unless it is already inside a code block.
   - name: flags unapproved bare placeholder
     input: "Use <my_var>."
     want: |
-      1:5:ALCF_Style.placeholders.placeholder-backticks:Wrap '<my_var>' in backticks, unless it is already inside a code block.
+      1:5:alcf-style.placeholders.placeholder-backticks:Wrap '<my_var>' in backticks, unless it is already inside a code block.
   - name: allows backticked placeholder
     input: "Use `<username>`."
     want: ''

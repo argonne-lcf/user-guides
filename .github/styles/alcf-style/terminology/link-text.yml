@@ -10,11 +10,11 @@ tests:
   - name: flags here as link text
     input: "The queue limits are [here](../running-jobs/index.md)."
     want: |
-      1:22:ALCF_Style.terminology.link-text:Use descriptive link text instead of '[here]('.
+      1:22:alcf-style.terminology.link-text:Use descriptive link text instead of '[here]('.
   - name: flags click here as link text
     input: "[Click here](../running-jobs/index.md) for the queue limits."
     want: |
-      1:1:ALCF_Style.terminology.link-text:Use descriptive link text instead of '[Click here]('.
+      1:1:alcf-style.terminology.link-text:Use descriptive link text instead of '[Click here]('.
   - name: allows descriptive link text
     input: "See [the queue limits](../running-jobs/index.md)."
     want: ''

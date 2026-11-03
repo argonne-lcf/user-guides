@@ -9,7 +9,7 @@ tests:
   - name: flags a name anchor
     input: "<a name=\"removing_blocks\"></a>"
     want: |
-      1:1:ALCF_Style.formatting.html-anchors:Don't add an '<a name>' anchor. Link to the automatic heading ID, or set a fixed one with '## Heading {#id}'.
+      1:1:alcf-style.formatting.html-anchors:Don't add an '<a name>' anchor. Link to the automatic heading ID, or set a fixed one with '## Heading {#id}'.
   - name: allows attr_list heading ids
     input: "## Removing blocks {#removing-blocks}"
     want: ''

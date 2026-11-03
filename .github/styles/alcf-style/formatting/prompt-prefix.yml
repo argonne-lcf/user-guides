@@ -9,7 +9,7 @@ tests:
   - name: flags prompt prefix
     input: "$ ls -l"
     want: |
-      1:1:ALCF_Style.formatting.prompt-prefix:Remove the '$ ' prompt from the start of the command; the copy button should not include it.
+      1:1:alcf-style.formatting.prompt-prefix:Remove the '$ ' prompt from the start of the command; the copy button should not include it.
   - name: allows normal text
     input: "The command is ls -l"
     want: ''

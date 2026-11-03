@@ -13,7 +13,7 @@ tests:
       file1
       ```
     want: |
-      1:1:ALCF_Style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
+      1:1:alcf-style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
   - name: allows output class
     input: |
       ```{.output .no-copy}
@@ -28,7 +28,7 @@ tests:
       file1
       ```
     want: |
-      1:1:ALCF_Style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
+      1:1:alcf-style.structure.output-block:Sample output should be in a separate block with the class '{ .output .no-copy }'.
   - name: ignores standard code block
     input: |
       ```bash

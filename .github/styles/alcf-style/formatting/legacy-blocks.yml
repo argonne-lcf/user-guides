@@ -11,11 +11,11 @@ tests:
   - name: flags legacy blocks
     input: "!!! note\nThis is a note."
     want: |
-      1:1:ALCF_Style.formatting.legacy-blocks:Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead.
+      1:1:alcf-style.formatting.legacy-blocks:Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead.
   - name: flags a legacy tab
     input: "=== \"Polaris\"\n    content"
     want: |
-      1:1:ALCF_Style.formatting.legacy-blocks:Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead.
+      1:1:alcf-style.formatting.legacy-blocks:Legacy block syntax (!!!, ???, ===) renders as plain text. Use '///' blocks instead.
   - name: allows new blocks
     input: "/// note\nThis is a note.\n///"
     want: ''

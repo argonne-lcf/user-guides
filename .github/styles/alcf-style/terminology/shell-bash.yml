@@ -9,7 +9,7 @@ tests:
   - name: flags sh
     input: "The shell script sh is used."
     want: |
-      1:18:ALCF_Style.terminology.shell-bash:Use 'bash' instead of 'sh'.
+      1:18:alcf-style.terminology.shell-bash:Use 'bash' instead of 'sh'.
   - name: allows shell
     input: "The shell script is used."
     want: ''

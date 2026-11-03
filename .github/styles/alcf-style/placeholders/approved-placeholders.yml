@@ -9,7 +9,7 @@ tests:
   - name: flags unapproved placeholder
     input: "Enter <my_var> here."
     want: |
-      1:7:ALCF_Style.placeholders.approved-placeholders:Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>.
+      1:7:alcf-style.placeholders.approved-placeholders:Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>.
   - name: allows approved placeholder
     input: "Enter <name> here."
     want: ''

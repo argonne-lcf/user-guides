@@ -11,7 +11,7 @@ tests:
       Some text
       # Second H1
     want: |
-      1:1:ALCF_Style.structure.single-h1:More than one # H1 heading present (a '# comment' in a fenced block also counts here)
+      1:1:alcf-style.structure.single-h1:More than one # H1 heading present (a '# comment' in a fenced block also counts here)
   - name: allows single H1
     input: |
       # Only H1
