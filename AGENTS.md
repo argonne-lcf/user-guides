@@ -25,6 +25,10 @@ make build-docs   # what CI runs: mkdocs build --strict, then the inbound-link c
 
 Preview with `make serve`, not a Markdown preview in an editor or on GitHub: this site uses Python-Markdown with many extensions, which renders differently from GitHub-flavored Markdown. There are no unit tests. `make build-docs` fails on broken relative links, missing anchors, pages missing from `nav`, and missing snippet files; run it after changes and before opening a PR.
 
+## Linting (Vale)
+
+Several of the rules below are also enforced mechanically by [Vale](https://vale.sh): `.vale.ini` enables the `alcf-style` package in `.github/styles/alcf-style/` (product/system name spellings, placeholders, `$ ` prompts, `sh` vs `bash`, legacy `!!!`/`???`/`===` blocks, raw `<details>`/`<strong>`/`<a name>`, heading space and single H1, sample-output blocks, `++key++` syntax, link text and relative links), and pre-commit runs it at `warning` level. If Vale is installed locally (`.venv` via `uv`; activate with `source .venv/bin/activate`), run it on your changed files — `source .venv/bin/activate && vale --config=.vale.ini <files>` or `pre-commit run vale --files <files>` — and fix what it reports. If it isn't installed, apply the same rules as written in this file ("Writing and style" and "Markdown pitfalls" below) by hand; the sections repeat them so the guidance works either way.
+
 ## Contributing rules
 
 - **Facts about ALCF systems must be verifiable.** Queue names and limits, hostnames, module names, paths, versions, and core/GPU counts come from the live system or the staff who own it, not from a model's memory or another system's page. Say in the PR how each factual change was checked. Copy-paste drift between systems is a recurring problem: Cobalt syntax (Theta's scheduler; all current systems use PBS), another system's hardware counts, or "Polaris" left on an Aurora page.
