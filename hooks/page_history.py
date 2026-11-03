@@ -24,6 +24,8 @@ hook replaces the plugin's dates and adds the names:
   "Edited by". Names under exclude_contributors, in mkdocs.yml's extra (every
   page) or the page's front matter (that page), are left out; their commits
   still count as updates.
+- The dates are also stored as dates in page.meta (page_created,
+  page_updated), for hooks/page_metadata.py.
 
 It reuses the plugin's date formatting, which is internal to the plugin, so
 the plugin is pinned; check this hook when upgrading it. Hooks run after
@@ -37,6 +39,7 @@ import subprocess
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from pymdownx.snippets import SnippetPreprocessor as Snippets
 
@@ -288,6 +291,10 @@ def on_page_markdown(markdown, page, config, **kwargs):
     listed = {a.casefold() for a in page.meta["authors"]}
     page.meta["page_contributors"] = contributors
     page.meta["page_editors"] = [n for n in contributors if n.casefold() not in listed]
+    # The dates as dates, in the plugin's timezone, for hooks/page_metadata.py.
+    tz = ZoneInfo(plugin.config["timezone"])
+    page.meta["page_created"] = datetime.datetime.fromtimestamp(own["created"], tz).date()
+    page.meta["page_updated"] = datetime.datetime.fromtimestamp(updated, tz).date() if updated else None
     locale = plugin._get_locale(page)
     for variable, timestamp in [("git_creation_date_localized", own["created"]),
                                 ("git_revision_date_localized", updated)]:

@@ -1,6 +1,6 @@
 # ALCF IRI API
 
-The ALCF Facility API (IRI API) provides programmatic access to ALCF compute and filesystem resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API). The OpenAPI specification can be found at [https://api.alcf.anl.gov/openapi.json](https://api.alcf.anl.gov/openapi.json).
+The ALCF Facility API (IRI API) provides programmatic access to ALCF resources. This page covers authentication setup and usage examples. For questions or support, please contact [ALCF Support](mailto:support@alcf.anl.gov?subject=Facility%20API). The OpenAPI specification for V1 and V2 can be found at [https://api.alcf.anl.gov/api/v1/openapi.json](https://api.alcf.anl.gov/api/v1/openapi.json) and [https://api.alcf.anl.gov/api/v2/openapi.json](https://api.alcf.anl.gov/api/v2/openapi.json), respectively.
 
 /// info | Access
 The ALCF IRI API is available to all users who can authenticate with their ALCF credentials.
@@ -99,6 +99,10 @@ This section provides simple examples on how to interface with the API as a star
 If available on your machine, you can add `| jq` at the end of your cURL commands to pretty-print the JSON output.
 ///
 
+/// info | API v1
+These examples use API v2. API v1 is still available: for the status, compute, task, and account examples, replace `/api/v2/` with `/api/v1/`. Filesystem requests changed more; see [Filesystem](#3-filesystem).
+///
+
 ### 1. Status
 
 /// details | 1.1. Resources
@@ -109,7 +113,7 @@ Query the status of all available resources.
 
 ```bash
 #!/bin/bash
-curl -X GET "https://api.alcf.anl.gov/api/v1/status/resources"
+curl -X GET "https://api.alcf.anl.gov/api/v2/status/resources"
 ```
 ////
 
@@ -117,7 +121,7 @@ curl -X GET "https://api.alcf.anl.gov/api/v1/status/resources"
 
 ```python
 import requests
-response = requests.get("https://api.alcf.anl.gov/api/v1/status/resources")
+response = requests.get("https://api.alcf.anl.gov/api/v2/status/resources")
 print(response.status_code)
 print(response.json())
 ```
@@ -132,7 +136,7 @@ Query a specific resource (e.g. Polaris) by specifying its resource ID.
 
 ```bash
 #!/bin/bash
-curl -X GET "https://api.alcf.anl.gov/api/v1/status/resources/55c1c993-1124-47f9-b823-514ba3849a9a"
+curl -X GET "https://api.alcf.anl.gov/api/v2/status/resources/55c1c993-1124-47f9-b823-514ba3849a9a"
 ```
 ////
 
@@ -140,7 +144,7 @@ curl -X GET "https://api.alcf.anl.gov/api/v1/status/resources/55c1c993-1124-47f9
 
 ```python
 import requests
-response = requests.get("https://api.alcf.anl.gov/api/v1/status/resources/55c1c993-1124-47f9-b823-514ba3849a9a")
+response = requests.get("https://api.alcf.anl.gov/api/v2/status/resources/55c1c993-1124-47f9-b823-514ba3849a9a")
 print(response.status_code)
 print(response.json())
 ```
@@ -155,7 +159,7 @@ Query the ALCF Facility metadata.
 
 ```bash
 #!/bin/bash
-curl -X GET "https://api.alcf.anl.gov/api/v1/facility"
+curl -X GET "https://api.alcf.anl.gov/api/v2/facility"
 ```
 ////
 
@@ -163,7 +167,7 @@ curl -X GET "https://api.alcf.anl.gov/api/v1/facility"
 
 ```python
 import requests
-response = requests.get("https://api.alcf.anl.gov/api/v1/facility")
+response = requests.get("https://api.alcf.anl.gov/api/v2/facility")
 print(response.status_code)
 print(response.json())
 ```
@@ -195,7 +199,7 @@ access_token=$(alcf-tokens get-token iri)
 # Polaris
 resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
 
-curl -X POST "https://api.alcf.anl.gov/api/v1/compute/job/${resource_id}" \
+curl -X POST "https://api.alcf.anl.gov/api/v2/compute/job/${resource_id}" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{
@@ -204,8 +208,10 @@ curl -X POST "https://api.alcf.anl.gov/api/v1/compute/job/${resource_id}" \
            "name": "my_job",
            "stdout_path": "/home/<username>/logs",
            "stderr_path": "/home/<username>/logs",
+           "environment": {"MY_ENV_NAME": "my environment value"},
            "resources": {
-               "node_count": 1
+               "node_count": 1,
+               "cpu_cores_per_process": 64
            },
            "attributes": {
                "duration": 300,
@@ -237,15 +243,17 @@ resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
 commands = "echo Start; sleep 10; echo End"
 
 response = requests.post(
-    f"https://api.alcf.anl.gov/api/v1/compute/job/{resource_id}",
+    f"https://api.alcf.anl.gov/api/v2/compute/job/{resource_id}",
     json={
         "executable": "/bin/bash",
         "arguments": ["-lc", commands],
         "name": "my_job",
         "stdout_path": "/home/<username>/logs",
         "stderr_path": "/home/<username>/logs",
+        "environment": {"MY_ENV_NAME": "my environment value"},
         "resources": {
-            "node_count": 1
+            "node_count": 1,
+            "cpu_cores_per_process": 64
         },
         "attributes": {
             "duration": 300,
@@ -261,6 +269,11 @@ print(response.status_code)
 print(response.json())
 ```
 ////
+
+//// note
+`cpu_cores_per_process` sets the number of CPU cores requested on each node (PBS `ncpus`). If omitted, each node gets all of its CPU cores.
+////
+
 ///
 
 /// details | 2.2. List Jobs
@@ -276,7 +289,7 @@ access_token=$(alcf-tokens get-token iri)
 # Polaris
 resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
 
-curl -X POST "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}?historical=false&limit=10&offset=0" \
+curl -X POST "https://api.alcf.anl.gov/api/v2/compute/status/${resource_id}?historical=false&limit=10&offset=0" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json"
 ```
@@ -299,7 +312,7 @@ headers = {
 resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
 
 response = requests.post(
-    f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}",
+    f"https://api.alcf.anl.gov/api/v2/compute/status/{resource_id}",
     params={
         "historical": "false",
         "limit": 10,
@@ -318,8 +331,8 @@ You can filter results by adding a JSON body (e.g., `{"states": ["active"]}`) to
 //// tab | cURL
 
 ```bash
-# Filter by job state (e.g., active, queued, completed)
-curl -X POST "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}?historical=true&limit=10&offset=0" \
+# Filter by job state
+curl -X POST "https://api.alcf.anl.gov/api/v2/compute/status/${resource_id}?historical=true&limit=10&offset=0" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{"states": ["active"]}'
@@ -331,7 +344,7 @@ curl -X POST "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}?hist
 ```python
 # Filter by job state
 response = requests.post(
-    f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}",
+    f"https://api.alcf.anl.gov/api/v2/compute/status/{resource_id}",
     params={"historical": "true", "limit": 10, "offset": 0},
     json={"states": ["active"]},
     headers=headers
@@ -373,7 +386,7 @@ access_token=$(alcf-tokens get-token iri)
 resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
 job_id="<jobid>"
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/compute/status/${resource_id}/${job_id}?historical=true" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/compute/status/${resource_id}/${job_id}?historical=true" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -396,7 +409,7 @@ resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
 job_id = "<jobid>"
 
 response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/compute/status/{resource_id}/{job_id}",
+    f"https://api.alcf.anl.gov/api/v2/compute/status/{resource_id}/{job_id}",
     params={"historical": "true"},
     headers=headers
 )
@@ -421,7 +434,7 @@ access_token=$(alcf-tokens get-token iri)
 resource_id="55c1c993-1124-47f9-b823-514ba3849a9a"
 job_id="<jobid>"
 
-curl -X DELETE "https://api.alcf.anl.gov/api/v1/compute/cancel/${resource_id}/${job_id}" \
+curl -X DELETE "https://api.alcf.anl.gov/api/v2/compute/cancel/${resource_id}/${job_id}" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -444,7 +457,7 @@ resource_id = "55c1c993-1124-47f9-b823-514ba3849a9a"
 job_id = "<jobid>"
 
 response = requests.delete(
-    f"https://api.alcf.anl.gov/api/v1/compute/cancel/{resource_id}/{job_id}",
+    f"https://api.alcf.anl.gov/api/v2/compute/cancel/{resource_id}/{job_id}",
     headers=headers
 )
 
@@ -456,8 +469,8 @@ print("Job canceled." if response.status_code == 204 else response.json())
 
 ### 3. Filesystem
 
-/// info | Restricted Access (temporary)
-Access to filesystem operations is currently restricted to Sophia and Aurora users. We are working on broadening the access to all ALCF users.
+/// info | Changes from API v1
+All filesystem operations in API v2 are `POST` requests with a JSON body. In v1, most of them used `GET`, `PUT`, or `DELETE`; expand **API v1** in an example to see its v1 request.
 ///
 
 /// info | Asynchronous Operations
@@ -468,6 +481,7 @@ All filesystem operations are asynchronous and return a task ID. See [Get a Task
 - Flare (All paths must start with `/flare` or `/lus/flare/projects`) 
 - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
 - Home (All paths must start with `/home`)
+- Grand (Please target Eagle with `/lus/eagle/clone/g2/projects/`)
 ///
 
 /// details | 3.1. List Directory Contents (`ls`)
@@ -483,9 +497,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/ls/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/ls/${resource_id}?path=/eagle/<project>" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -504,6 +533,30 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/ls/{resource_id}",
+    json={"path": "/eagle/<project>"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 response = requests.get(
     f"https://api.alcf.anl.gov/api/v1/filesystem/ls/{resource_id}",
     params={"path": "/eagle/<project>"},
@@ -513,6 +566,7 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+/////
 ////
 ///
 
@@ -529,7 +583,7 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-curl -X POST "https://api.alcf.anl.gov/api/v1/filesystem/mkdir/${resource_id}" \
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/mkdir/${resource_id}" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{"path": "/eagle/<project>/my_new_dir", "parent": false}'
@@ -553,7 +607,7 @@ headers = {
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
 response = requests.post(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/mkdir/{resource_id}",
+    f"https://api.alcf.anl.gov/api/v2/filesystem/mkdir/{resource_id}",
     json={
         "path": "/eagle/<project>/my_new_dir",
         "parent": False
@@ -580,9 +634,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/view/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt", "size": 10, "offset": 0}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/view/${resource_id}?path=/eagle/<project>/file.txt&size=10&offset=0" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -601,9 +670,9 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/view/{resource_id}",
-    params={
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/view/{resource_id}",
+    json={
         "path": "/eagle/<project>/file.txt",
         "size": 10,
         "offset": 0
@@ -614,6 +683,31 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+response = requests.get(
+    f"https://api.alcf.anl.gov/api/v1/filesystem/view/{resource_id}",
+    params={"path": "/eagle/<project>/file.txt", "size": 10, "offset": 0},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+/////
 ////
 ///
 
@@ -630,9 +724,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/head/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt", "lines": 3}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/head/${resource_id}?path=/eagle/<project>/file.txt&lines=3" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -651,9 +760,9 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/head/{resource_id}",
-    params={
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/head/{resource_id}",
+    json={
         "path": "/eagle/<project>/file.txt",
         "lines": 3
     },
@@ -663,6 +772,31 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+response = requests.get(
+    f"https://api.alcf.anl.gov/api/v1/filesystem/head/{resource_id}",
+    params={"path": "/eagle/<project>/file.txt", "lines": 3},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+/////
 ////
 ///
 
@@ -679,9 +813,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/tail/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt", "lines": 3}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/tail/${resource_id}?path=/eagle/<project>/file.txt&lines=3" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -700,9 +849,9 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/tail/{resource_id}",
-    params={
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/tail/{resource_id}",
+    json={
         "path": "/eagle/<project>/file.txt",
         "lines": 3
     },
@@ -712,6 +861,31 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+response = requests.get(
+    f"https://api.alcf.anl.gov/api/v1/filesystem/tail/{resource_id}",
+    params={"path": "/eagle/<project>/file.txt", "lines": 3},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+/////
 ////
 ///
 
@@ -728,9 +902,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/checksum/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/checksum/${resource_id}?path=/eagle/<project>/file.txt" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -749,6 +938,30 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/checksum/{resource_id}",
+    json={"path": "/eagle/<project>/file.txt"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 response = requests.get(
     f"https://api.alcf.anl.gov/api/v1/filesystem/checksum/{resource_id}",
     params={"path": "/eagle/<project>/file.txt"},
@@ -758,6 +971,7 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+/////
 ////
 ///
 
@@ -774,9 +988,24 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/file/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X GET "https://api.alcf.anl.gov/api/v1/filesystem/file/${resource_id}?path=/eagle/<project>/file.txt" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -795,6 +1024,30 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/file/{resource_id}",
+    json={"path": "/eagle/<project>/file.txt"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 response = requests.get(
     f"https://api.alcf.anl.gov/api/v1/filesystem/file/{resource_id}",
     params={"path": "/eagle/<project>/file.txt"},
@@ -804,6 +1057,7 @@ response = requests.get(
 print(response.status_code)
 print(response.json())
 ```
+/////
 ////
 ///
 
@@ -820,11 +1074,26 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/chown/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt", "owner": "<username>", "group": "<group>"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X PUT "https://api.alcf.anl.gov/api/v1/filesystem/chown/${resource_id}" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{"path": "/eagle/<project>/file.txt", "owner": "<username>", "group": "<group>"}'
 ```
+/////
 ////
 
 //// tab | Python
@@ -843,8 +1112,8 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-response = requests.put(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/chown/{resource_id}",
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/chown/{resource_id}",
     json={
         "path": "/eagle/<project>/file.txt",
         "owner": "<username>",
@@ -856,6 +1125,31 @@ response = requests.put(
 print(response.status_code)
 print(response.json())
 ```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+response = requests.put(
+    f"https://api.alcf.anl.gov/api/v1/filesystem/chown/{resource_id}",
+    json={"path": "/eagle/<project>/file.txt", "owner": "<username>", "group": "<group>"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+/////
 ////
 ///
 
@@ -872,11 +1166,26 @@ access_token=$(alcf-tokens get-token iri)
 # Eagle
 resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/chmod/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/eagle/<project>/file.txt", "mode": "700"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Eagle
+resource_id="1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
 curl -X PUT "https://api.alcf.anl.gov/api/v1/filesystem/chmod/${resource_id}" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{"path": "/eagle/<project>/file.txt", "mode": "700"}'
 ```
+/////
 ////
 
 //// tab | Python
@@ -895,8 +1204,8 @@ headers = {
 # Eagle
 resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
 
-response = requests.put(
-    f"https://api.alcf.anl.gov/api/v1/filesystem/chmod/{resource_id}",
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/chmod/{resource_id}",
     json={
         "path": "/eagle/<project>/file.txt",
         "mode": "700"
@@ -907,6 +1216,31 @@ response = requests.put(
 print(response.status_code)
 print(response.json())
 ```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"
+
+response = requests.put(
+    f"https://api.alcf.anl.gov/api/v1/filesystem/chmod/{resource_id}",
+    json={"path": "/eagle/<project>/file.txt", "mode": "700"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+/////
 ////
 ///
 
@@ -923,9 +1257,24 @@ access_token=$(alcf-tokens get-token iri)
 # Home
 resource_id="6115bd2c-957a-4543-abff-5fae52992ff2"
 
+curl -X POST "https://api.alcf.anl.gov/api/v2/filesystem/rm/${resource_id}" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{"path": "/home/<username>/my_dir"}'
+```
+
+///// details | API v1
+
+```bash
+access_token=$(alcf-tokens get-token iri)
+
+# Home
+resource_id="6115bd2c-957a-4543-abff-5fae52992ff2"
+
 curl -X DELETE "https://api.alcf.anl.gov/api/v1/filesystem/rm/${resource_id}?path=/home/<username>/my_dir" \
      -H "Authorization: Bearer ${access_token}"
 ```
+/////
 ////
 
 //// tab | Python
@@ -944,6 +1293,30 @@ headers = {
 # Home
 resource_id = "6115bd2c-957a-4543-abff-5fae52992ff2"
 
+response = requests.post(
+    f"https://api.alcf.anl.gov/api/v2/filesystem/rm/{resource_id}",
+    json={"path": "/home/<username>/my_dir"},
+    headers=headers
+)
+
+print(response.status_code)
+print(response.json())
+```
+
+///// details | API v1
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+access_token = get_access_token("iri")
+headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Content-Type": "application/json"
+}
+
+resource_id = "6115bd2c-957a-4543-abff-5fae52992ff2"
+
 response = requests.delete(
     f"https://api.alcf.anl.gov/api/v1/filesystem/rm/{resource_id}",
     params={"path": "/home/<username>/my_dir"},
@@ -953,6 +1326,7 @@ response = requests.delete(
 print(response.status_code)
 print(response.json())
 ```
+/////
 ////
 ///
 
@@ -970,7 +1344,7 @@ access_token=$(alcf-tokens get-token iri)
 
 task_id="<task_id>"
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/task/${task_id}" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/task/${task_id}" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -991,7 +1365,7 @@ headers = {
 task_id = "<task_id>"
 
 response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/task/{task_id}",
+    f"https://api.alcf.anl.gov/api/v2/task/{task_id}",
     headers=headers
 )
 
@@ -1013,7 +1387,7 @@ Returns the list of projects associated with your account.
 #!/bin/bash
 access_token=$(alcf-tokens get-token iri)
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/account/projects" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -1032,7 +1406,7 @@ headers = {
 }
 
 response = requests.get(
-    "https://api.alcf.anl.gov/api/v1/account/projects",
+    "https://api.alcf.anl.gov/api/v2/account/projects",
     headers=headers
 )
 
@@ -1054,7 +1428,7 @@ access_token=$(alcf-tokens get-token iri)
 
 project_id="<project_id>"
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/account/projects/${project_id}" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -1075,7 +1449,7 @@ headers = {
 project_id = "<project_id>"
 
 response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}",
+    f"https://api.alcf.anl.gov/api/v2/account/projects/{project_id}",
     headers=headers
 )
 
@@ -1097,7 +1471,7 @@ access_token=$(alcf-tokens get-token iri)
 
 project_id="<project_id>"
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}/project_allocations" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/account/projects/${project_id}/project_allocations" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -1118,7 +1492,7 @@ headers = {
 project_id = "<project_id>"
 
 response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}/project_allocations",
+    f"https://api.alcf.anl.gov/api/v2/account/projects/{project_id}/project_allocations",
     headers=headers
 )
 
@@ -1141,7 +1515,7 @@ access_token=$(alcf-tokens get-token iri)
 project_id="<project_id>"
 project_allocation_id="<allocation_id>"
 
-curl -X GET "https://api.alcf.anl.gov/api/v1/account/projects/${project_id}/project_allocations/${project_allocation_id}" \
+curl -X GET "https://api.alcf.anl.gov/api/v2/account/projects/${project_id}/project_allocations/${project_allocation_id}" \
      -H "Authorization: Bearer ${access_token}"
 ```
 ////
@@ -1163,7 +1537,7 @@ project_id = "<project_id>"
 project_allocation_id = "<allocation_id>"
 
 response = requests.get(
-    f"https://api.alcf.anl.gov/api/v1/account/projects/{project_id}/project_allocations/{project_allocation_id}",
+    f"https://api.alcf.anl.gov/api/v2/account/projects/{project_id}/project_allocations/{project_allocation_id}",
     headers=headers
 )
 

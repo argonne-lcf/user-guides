@@ -1,3 +1,7 @@
+---
+description: Call ALCF inference APIs for chat, Responses, Messages, streaming, reasoning, and image input.
+---
+
 # API Usage Examples
 
 ## Interactive API Reference
@@ -17,7 +21,7 @@ You can check the status of models on the cluster and list all available endpoin
 
 //// tab | Check Job/Model Status
 This endpoint provides information about what is currently live or queued.
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -34,16 +38,20 @@ curl -X GET "https://inference-api.alcf.anl.gov/resource_server/metis/jobs" \
 # Check Minerva cluster status
 curl -X GET "https://inference-api.alcf.anl.gov/resource_server/minerva/jobs" \
  -H "Authorization: Bearer ${access_token}"
+
+# Check Tara cluster status
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/tara/jobs" \
+ -H "Authorization: Bearer ${access_token}"
 ```
 
 ///// tip | Switching Between Clusters
-Replace `/sophia/` with `/metis/` or `/minerva/` in the URL.
+Replace `/sophia/` with `/metis/`, `/minerva/`, or `/tara/` in the URL.
 /////
 ////
 
 //// tab | List All Available Endpoints
 This provides a list of all available endpoints.
-```bash
+```bash linenums="1"
 #!/bin/bash
 
 # Get your access token
@@ -63,7 +71,7 @@ This endpoint is used for conversational AI.
 
 //// tab | cURL
 
-```bash
+```bash linenums="1"
 #!/bin/bash
 access_token=$(alcf-tokens get-token inference)
 
@@ -94,7 +102,19 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{
-            "model": "nemotron-3-ultra",
+            "model": "mistral-large-4-nvfp4",
+            "reasoning_effort": "low",
+            "temperature": 1.0,
+            "max_tokens": 1024,
+            "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+         }'
+
+# Tara cluster example
+curl -X POST "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/chat/completions" \
+     -H "Authorization: Bearer ${access_token}" \
+     -H "Content-Type: application/json" \
+     -d '{
+            "model": "openai/gpt-oss-20b",
             "temperature": 0.2,
             "max_tokens": 150,
             "messages":[{"role": "user", "content": "What are the symptoms of diabetes?"}]
@@ -104,7 +124,7 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 
@@ -141,7 +161,21 @@ client_minerva = OpenAI(
 )
 
 response = client_minerva.chat.completions.create(
-    model="nemotron-3-ultra",
+    model="mistral-large-4-nvfp4",
+    reasoning_effort="low",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
+)
+print(response.choices[0].message.content)
+
+# Tara cluster
+client_tara = OpenAI(
+    api_key=access_token,
+    base_url="https://inference-api.alcf.anl.gov/resource_server/tara/api/v1"
+)
+
+response = client_tara.chat.completions.create(
+    model="openai/gpt-oss-20b",
     messages=[{"role": "user", "content": "What are the symptoms of diabetes?"}]
 )
 print(response.choices[0].message.content)
@@ -154,8 +188,23 @@ To target a different cluster, simply replace the cluster/framework portion of t
 - **Sophia**: `/resource_server/sophia/vllm/v1`
 - **Metis**: `/resource_server/metis/api/v1`
 - **Minerva**: `/resource_server/minerva/api/v1`
+- **Tara**: `/resource_server/tara/api/v1`
 ////
 ///
+
+## Reasoning and API Protocols
+
+For Direct API models advertising all three protocols, use the appropriate native endpoint and request fields. Examples below use `low`; check the model's published [capabilities](models.md#model-capabilities) for accepted efforts and the default. Controls are model/backend-specific, so do not copy one protocol's payload unchanged to another.
+
+| Protocol | Minerva endpoint suffix | Effort request fields | Separate reasoning and final output |
+| --- | --- | --- | --- |
+| Chat Completions | `/minerva/api/v1/chat/completions` | `"reasoning_effort": "low"` | Reasoning alongside `choices[0].message.content`; streaming uses reasoning and content deltas. |
+| Responses | `/minerva/api/v1/responses` | `"reasoning": {"effort": "low"}` | Reasoning items and message items in `output`; final text blocks have type `output_text`. |
+| Messages | `/minerva/api/v1/messages` | `"thinking": {"type": "adaptive"}, "output_config": {"effort": "low"}` | `thinking` and `text` blocks in `content`. |
+
+When `reasoning.separate_output` is true, read final content separately from reasoning. The output-token budget includes reasoning; a very small budget can end before any final text appears. Responses uses `input` and `max_output_tokens`, rather than Chat Completions' `messages` and `max_tokens`. Messages requires `max_tokens` and uses its own message and tool schemas.
+
+Add `"stream": true` to request server-sent events when streaming is advertised, and use `curl --no-buffer` when inspecting them. Consume the protocol's completion event rather than stopping after the first text or reasoning chunk. For tool calling, use each API's native tool schema and return tool results using that same protocol. Model tool calling does not imply support for provider-specific built-in tools such as web search.
 
 ## Vision Language Models
 
@@ -165,7 +214,7 @@ Use this endpoint to analyze images with text prompts.
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 import base64
 from alcf_tokens.auth import get_access_token
@@ -205,11 +254,11 @@ print(response.choices[0].message.content)
 
 /// details | Embeddings
 
-This endpoint generates vector embeddings from text, currently supported by the `infinity` framework.
+This endpoint generates vector embeddings from text, currently supported by the `vLLM` framework.
 
 //// tab | Python (OpenAI SDK)
 
-```python
+```python linenums="1"
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 
@@ -228,5 +277,76 @@ print(response.data[0].embedding)
 ```
 ////
 ///
+
+## Rate Limits
+
+The service enforces two global request limits. Exceeding either of them returns `429 Too Many Requests`.
+
+| Limit | Value |
+| ----- | ----- |
+| Requests per second (per IP address) | 50 req/s |
+| Requests per second (per caller) | 20 req/s |
+
+The per-IP limit applies before the per-caller one, and each returns its own body:
+
+```json
+{
+  "error": "Rate limit exceeded",
+  "message": "Too many requests from your IP address. Please try again later.",
+  "retry_after": "1 second"
+}
+```
+
+```json
+{
+  "detail": "Too many requests."
+}
+```
+
+A request that exceeds a limit is rejected with `429` and a `Retry-After` header giving the number of seconds to wait.
+
+<!-- Per-model token limits are not currently enabled.
+
+Each model additionally applies tokens-per-minute limits, per model and per user, with a burst allowance and a cap on concurrent requests per user:
+
+| Cluster | Model | Tokens/minute | Requests/minute | Burst tokens | Burst requests | Concurrent requests per user |
+| ------- | ----- | -------------- | --------------- | ------------ | -------------- | --------------------------- |
+| Sophia | `openai/gpt-oss-120b` | 64,000 | 120 | 128,000 | 10 | 5 |
+| Metis | `openai/gpt-oss-120b` | 64,000 | 120 | 128,000 | 10 | 5 |
+| Tara | `nemotron-3-ultra` | 262,144 | 30 | 262,144 | 2 | 1 |
+| Tara | `inkling-bf16` | 262,144 | 30 | 262,144 | 2 | 1 |
+
+Models with no entry in the table above have no token or request limit of their own. However, the global limits still apply. Token limits count the actual prompt and completion tokens of each response.
+
+The values in effect are available per model:
+
+```bash linenums="1"
+#!/bin/bash
+
+# Get your access token
+access_token=$(alcf-tokens get-token inference)
+
+# Check the limits published for each Sophia model
+curl -X GET "https://inference-api.alcf.anl.gov/resource_server/sophia/models" \
+    -H "Authorization: Bearer ${access_token}"
+```
+
+A model reports `rate_limit_token_per_minute` and `rate_limit_token_per_minute_per_user` when that limit is enabled. Exceeding a token limit returns the current usage alongside the error:
+
+```json
+{
+  "error": {
+    "code": "too_many_requests",
+    "message": "Tokens/minute limit exceeded",
+    "info": {
+      "global_model_usage": 100000,
+      "user_model_usage": 60000
+    }
+  }
+}
+```
+
+Wait for the one-minute window to reset before retrying, and reduce the request size if a single request exceeds the per-user limit.
+-->
 
 For more examples, please see the [inference-endpoints GitHub repository](https://github.com/argonne-lcf/inference-endpoints).

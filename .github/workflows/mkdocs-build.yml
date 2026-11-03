@@ -35,3 +35,5 @@ jobs:
         run: make build-docs
       - name: Report page descriptions (warning only)
         run: make check-descriptions
+      - name: Report page verification (warning only)
+        run: make check-verified
