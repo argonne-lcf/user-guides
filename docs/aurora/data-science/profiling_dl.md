@@ -133,14 +133,14 @@ The resulting JSON files load in the [Perfetto trace viewer](https://ui.perfetto
 
 ```bash
 module load frameworks
-pip install "git+https://github.com/saforem2/ezpz"  # (1)!
+uv pip install --no-cache --link-mode=copy "git+https://github.com/saforem2/ezpz"  # (1)!
 
 ezpz launch python3 -m ezpz.examples.profiler --profile --rank-zero-only
 ```
 
-1. Install from the repository, not PyPI: the name `ezpz` on PyPI belongs to an unrelated package.
+1. Install from the repository — PyPI's `ezpz` is an unrelated package. Always use the `git+https://github.com/saforem2/ezpz` URL. `uv pip install --no-cache --link-mode=copy` is preferred; `pip install` works if `uv` is unavailable.
 
-That runs a small distributed training loop, writes a Chrome trace per completed profiling cycle, and logs a key-averages table. [`get_torch_profiler()`](https://saforem2.github.io/ezpz/python/Code-Reference/profile/) selects the activity set from what is available -- `XPU` on Aurora and Sunspot, `CUDA` on Polaris and Perlmutter -- so no Aurora-specific branch is needed in user code.
+That runs a small distributed training loop, writes a Chrome trace per completed profiling cycle, and logs a key-averages table. [`get_torch_profiler()`](https://ezpz.cool/python/Code-Reference/profile/) selects the activity set from what is available -- `XPU` on Aurora and Sunspot, `CUDA` on Polaris and Perlmutter -- so no Aurora-specific branch is needed in user code.
 
 The same `--profile` flag works on the full training examples:
 
@@ -164,7 +164,7 @@ ezpz launch python3 -m ezpz.examples.fsdp_tp --model small --tp 2 --profile --ra
     crash with a hang. See
     [saforem2/ezpz#275](https://github.com/saforem2/ezpz/issues/275).
 
-Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`. Note that **every rank profiles unless `--rank-zero-only` is passed**. Full details, including how to shrink large traces, are in the [ezpz profiling guide](https://saforem2.github.io/ezpz/examples/profiler/).
+Schedule shape is controlled by `--pytorch-profiler-{wait,warmup,active,repeat}`. Note that **every rank profiles unless `--rank-zero-only` is passed**. Full details, including how to shrink large traces, are in the [ezpz profiling guide](https://ezpz.cool/examples/profiler/).
 
 /// warning | Profiling `fsdp_tp` is not portable today
 
@@ -229,4 +229,6 @@ with get_torch_profiler(
             prof.step()
 ```
 
-Both are documented in the [`ezpz.profile` API reference](https://saforem2.github.io/ezpz/python/Code-Reference/profile/).
+Both are documented in the [`ezpz.profile` API reference](https://ezpz.cool/python/Code-Reference/profile/).
+
+For CLI usage, see [`ezpz launch`](https://ezpz.cool/cli/launch/) (scheduler-aware launch with `--auto-retry`) and the [CLI index](https://ezpz.cool/cli/) for the full command list. Remote profiling workflows benefit from [`ezpz fetch`](https://ezpz.cool/cli/fetch/) and [`ezpz logs`](https://ezpz.cool/cli/logs/) to inspect output without an interactive session — see [Remote submission](https://ezpz.cool/guides/remote-submission/).

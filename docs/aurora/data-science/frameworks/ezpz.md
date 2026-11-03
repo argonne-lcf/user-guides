@@ -9,7 +9,7 @@ keywords:
   - data parallel
 authors:
   - Sam Foreman
-last_verified: 2026-10-12
+last_verified: 2026-11-03
 ---
 
 # ezpz
@@ -22,7 +22,13 @@ detection, backend selection, hostfile parsing, and launcher invocation.
 The same script runs on Aurora, Polaris, and Perlmutter without an
 `if machine == ...` branch.
 
-Full documentation: [ezpz.cool](https://ezpz.cool).
+/// note | Where to read more
+
+- **Full docs (canonical):** [ezpz.cool](https://ezpz.cool) — install, CLI reference, examples, and guides.
+- **Source & issues:** [github.com/saforem2/ezpz](https://github.com/saforem2/ezpz)
+- **New in Nov 2026:** remote submission via the ALCF IRI API — [blog post](https://samf.sh/posts/2026/10/16/) with walkthrough and API details.
+
+///
 
 ## The problem it solves
 
@@ -59,19 +65,20 @@ It also sets the Aurora-specific environment that is easy to get wrong:
 
 ```bash
 module load frameworks
-pip install "git+https://github.com/saforem2/ezpz"  # (1)!
+uv pip install --no-cache --link-mode=copy "git+https://github.com/saforem2/ezpz"  # (1)!
 ```
 
-1. Install from the repository. The name `ezpz` on PyPI belongs to an
-   unrelated package.
+1. Install from the repository. PyPI's `ezpz` is an unrelated package — always
+   use the `git+https://github.com/saforem2/ezpz` URL. If `uv` is not
+   available, `pip install` works but `uv pip install --no-cache --link-mode=copy`
+   is preferred for reproducibility.
 
 <!-- --8<-- [start:setup] -->
 
 Then, inside a job script or an interactive allocation:
 
 ```bash
-source <(curl -LsSf https://bit.ly/ezpz-utils)
-ezpz_setup_env
+source <(curl -fsSL https://ezpz.cool/utils.sh) && ezpz_setup_env
 ```
 
 `ezpz_setup_env` loads the right modules for the current machine,
@@ -102,7 +109,8 @@ ezpz launch python3 -m ezpz.examples.test
 That command is unchanged across every supported machine; on Aurora it
 becomes a 12-rank-per-node `mpiexec --pmi=pmix`, on Perlmutter an `srun`.
 See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
-`--auto-retry` for resubmitting around node failures.
+`--auto-retry` for resubmitting around node failures. From your laptop you can
+also submit remotely — see [Remote jobs](#remote-jobs) below.
 
 /// example | Minimal PBS job on Aurora
 
@@ -115,13 +123,77 @@ See [`ezpz launch`](https://ezpz.cool/cli/launch/) for the flags, including
 #PBS -l filesystems=home:flare
 
 cd "${PBS_O_WORKDIR}"
-source <(curl -LsSf https://bit.ly/ezpz-utils)
-ezpz_setup_env
+source <(curl -fsSL https://ezpz.cool/utils.sh) && ezpz_setup_env
 
 ezpz launch python3 -m ezpz.examples.test --model small
 ```
 
 ///
+
+## Remote jobs
+
+`ezpz` can submit and manage jobs from outside ALCF via the
+[ALCF IRI API](https://docs.alcf.anl.gov/services/iri-api/) — no login-node SSH
+session required. The same `submit` / `status` / `cancel` surface also works
+over SSH for machines the IRI does not cover.
+
+Get a token once from an ALCF UAN (`uvx alcf-tokens login iri`), then:
+
+```bash
+# submit from your laptop — returns a job ID like 8936286.aurora-pbs-0001
+ezpz submit --remote aurora -N 2 -q debug -A <project> -- python3 train.py
+# 8936286.aurora-pbs-0001  (via iri)
+
+# check status (Rich table on a TTY, plain text when piped)
+ezpz status --remote aurora --limit 5
+ezpz status --remote aurora --states queued,active
+
+# live poll with desktop notifications on Q->R / R->F
+ezpz status --remote aurora --watch
+
+# fetch stdout without opening an interactive SSH session
+ezpz fetch 8936286 --remote aurora --lines 80 --no-dedupe
+
+# per-example benchmark logs (not the MPI-duplicated spool)
+ezpz logs 8936286 --remote aurora --example fsdp --lines 100
+
+# extend walltime or move queues without resubmitting
+ezpz extend 8936286 --remote aurora --time 06:00:00
+ezpz extend 8936286 --remote aurora --queue prod --account <project> --time 12:00:00
+
+# cancel
+ezpz cancel 8936286 --remote aurora
+
+# what machines exist and whether they're up
+ezpz resources
+ezpz incidents --resource aurora --limit 5
+
+# shell completions (bash / zsh / fish)
+ezpz completion bash
+```
+
+``` { .output .no-copy }
+# `ezpz status --remote aurora --limit 5` (TTY) renders as:
+#  JOBID     S  QUEUE     NODES  WALL   ELAP  JOBNAME          NOTE
+#  8936286   R  prod          2  06:00  01:23  train            —
+#  8936102   Q  debug         1  01:00  --    debug-run        —
+```
+
+All of `status` / `fetch` / `logs` / `extend` / `cancel` / `resources` /
+`incidents` support `--json` for scripting (`| jq`), and `--dry-run` where
+it matters. See [Remote submission](https://ezpz.cool/guides/remote-submission/)
+for the full `auto` fallback contract (IRI-first on Aurora / Polaris / Crux,
+SSH elsewhere), the shared-FS workdir rule, and the `--env` /
+`--env-setup-script` environment story. CLI reference:
+[`ezpz submit`](https://ezpz.cool/cli/submit/) ·
+[`ezpz status`](https://ezpz.cool/cli/status/) ·
+[`ezpz fetch`](https://ezpz.cool/cli/fetch/) ·
+[`ezpz logs`](https://ezpz.cool/cli/logs/) ·
+[`ezpz extend`](https://ezpz.cool/cli/extend/) ·
+[`ezpz cancel`](https://ezpz.cool/cli/cancel/) ·
+[`ezpz resources`](https://ezpz.cool/cli/resources/) ·
+[`ezpz incidents`](https://ezpz.cool/cli/incidents/) ·
+[`ezpz completion`](https://ezpz.cool/cli/completion/).
 
 <!-- --8<-- [start:api] -->
 
@@ -159,6 +231,7 @@ for the full API.
 | Metrics | `History` for per-iteration metrics, plots, and W&B / MLflow logging | [History](https://ezpz.cool/history/) |
 | Checkpointing | Distributed checkpoint save/restore, resumable after node failure | [Checkpoint & Restart](https://ezpz.cool/guides/checkpoint-restart/) |
 | Fault handling | Node-kill injection and automatic retry | [Fault Injection](https://ezpz.cool/guides/fault-injection/) |
+| Remote | Submit / status / fetch / logs / extend / cancel via IRI or SSH | [Remote submission](https://ezpz.cool/guides/remote-submission/) |
 | Diagnostics | `ezpz doctor`, `ezpz test` | [`ezpz test`](https://ezpz.cool/cli/test/) |
 
 ## Examples
@@ -196,8 +269,8 @@ Perlmutter (Slurm, `srun`); the NERSC specifics are in the
 
 ## Getting help
 
-Issues and questions: [saforem2/ezpz](https://github.com/saforem2/ezpz/issues).
-Common failure modes are collected in
-[Troubleshooting](https://ezpz.cool/troubleshooting/).
+- **Docs:** [ezpz.cool](https://ezpz.cool) — [CLI index](https://ezpz.cool/cli/), [examples](https://ezpz.cool/examples/), [troubleshooting](https://ezpz.cool/troubleshooting/)
+- **Source & issues:** [github.com/saforem2/ezpz](https://github.com/saforem2/ezpz/issues)
+- **Remote walkthrough:** [samf.sh/posts/2026/10/16/](https://samf.sh/posts/2026/10/16/)
 
 <!-- --8<-- [end:help] -->
