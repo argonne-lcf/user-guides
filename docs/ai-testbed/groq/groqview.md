@@ -44,8 +44,8 @@ export GN_HOSTNAME=groq-r01-gn-09
 # Modify the port number if GroqView has chosen a different port.
 # This might happen if another user is also using GroqView.
 # Also, another user may be using the port on the login host.
-# `groq-login-01.ai.alcf.anl.gov` can be used as well.
-ssh -L 8439:localhost:8439 arnoldw@groq-login-02.ai.alcf.anl.gov -t ssh -L 8439:localhost:8439 -N $GN_HOSTNAME
+# `groq-login-04.ai.alcf.anl.gov` can be used as well.
+ssh -L 8439:localhost:8439 arnoldw@groq-login-03.ai.alcf.anl.gov -t ssh -L 8439:localhost:8439 -N $GN_HOSTNAME
 # When complete, "ctrl-c" or equivalent in the console where the ssh tunnel
 # was started will terminate both parts of a ssh tunnel set up this way.
 ```

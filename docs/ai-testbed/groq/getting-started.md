@@ -30,7 +30,7 @@ Connect to a groq login node, editing this command line to use your ALCF user id
 ```bash
 ssh ALCFUserID@groq.ai.alcf.anl.gov
 ```
-This randomly selects one of the login nodes, namely `groq-login-01.ai.alcf.anl.gov` or `groq-login-02.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
+This randomly selects one of the login nodes, namely `groq-login-03.ai.alcf.anl.gov` or `groq-login-04.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
 
 
 ### Log in to a GroqRack node
