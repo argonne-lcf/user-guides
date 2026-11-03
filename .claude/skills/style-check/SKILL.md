@@ -14,10 +14,23 @@ would, including exceptions the guide itself calls out.
 Flag only what `STYLE_GUIDE.md` covers: voice, tone, audience fit, person/address, sentence-level
 conventions, terminology and word choice, and inclusive/plain-language issues.
 
-Do **not** flag Markdown syntax, admonition/tab syntax, placeholders, headings, front matter,
-links, acronyms, or anything else owned by `AGENTS.md` / `REVIEW.md` — that's `/code-review`'s
-territory. If `STYLE_GUIDE.md` has no rule covering something, don't invent one; note it's
-unaddressed rather than guessing at a preference.
+Do **not** flag Markdown syntax, admonition/tab syntax, placeholders, headings, links, or
+anything else Vale or `AGENTS.md` / `REVIEW.md` owns — that's the linter's and `/code-review`'s
+territory (see "Vale rules" below). Still out of scope here regardless: front matter, acronyms,
+and nav/build issues. If `STYLE_GUIDE.md` has no rule covering something, don't invent one;
+note it's unaddressed rather than guessing at a preference.
+
+## Vale rules
+
+The repo lints Markdown with [Vale](https://vale.sh): `.vale.ini` enables the `alcf-style`
+package in [`.github/styles/alcf-style/`](../../../.github/styles/alcf-style/) (rules under
+`formatting/`, `placeholders/`, `structure/`, `terminology/`; product-name swaps, placeholders,
+heading/link/code-block mechanics), and `.pre-commit-config.yaml` runs it at `warning` level.
+Run it on the target first (`source .venv/bin/activate && vale --config=.vale.ini <files>`) since `vale` is installed in the uv environment (`.venv`), and don't re-flag its hits as
+style findings — this skill covers only what Vale can't judge: voice, tone, and terminology
+beyond the fixed `terminology/keywords.yml` swap list. `BasedOnStyles = alcf-style` loads every
+rule in the package automatically, so new rules are enforced without updating this file; don't
+enumerate the individual rules here.
 
 ## Exempted pages
 
@@ -43,9 +56,10 @@ longer matches the voice of the paragraph it was inserted into).
 ## Running the check
 
 1. Read `STYLE_GUIDE.md` in full — don't rely on memory of past runs, it changes over time.
-2. Read the resolved target content.
-3. For each prose issue, identify the specific section/rule of `STYLE_GUIDE.md` it violates. Skip
+2. Run Vale on the changed Markdown files (see "Vale rules") so its alerts aren't re-reported.
+3. Read the resolved target content.
+4. For each prose issue, identify the specific section/rule of `STYLE_GUIDE.md` it violates. Skip
    anything the guide doesn't actually say — "I'd phrase it differently" is not a finding.
-4. Report with the `ReportFindings` tool, category `style-guide`, most-severe first. Each finding's
+5. Report with the `ReportFindings` tool, category `style-guide`, most-severe first. Each finding's
    `summary` should name the violated rule (e.g. "uses third person where the guide requires
    second-person instructions"), and `failure_scenario` should quote the offending text.
