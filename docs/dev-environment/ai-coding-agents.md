@@ -119,7 +119,7 @@ Jobs the agent submits run under your identity and are charged to your project. 
 
 ## Related pages
 
-- [AI Guidance](ai-guidance.md): ALCF's policy and best practices for AI agents
+- [AI Guidance](ai-guidance.md): ALCF's best practices for AI agents
 - [Inference Endpoints: Agents](../services/inference-endpoints/agents.md): configure agents for the ALCF Inference Service
 - [ALCF IRI API](../services/iri-api.md): tokens and REST examples for status, jobs, and files
 - [Service-Enabled Science workshop](https://github.com/argonne-lcf/Service_Enabled_Science): hands-on examples for the IRI API, Globus, the Inference Service, and agentic workflows
