@@ -23,7 +23,7 @@
 
 
 # Machine-specific documentation
-**/ai-testbed/                     @vksastry @wcarnold1010
+**/ai-testbed/                     @vksastry @wcarnold1010 @memani1
 #**/ai-testbed/cerebras/           @sraskar
 # aurora/
 # polaris/
@@ -130,7 +130,7 @@
 **/services/gitlab-ci.md            @peterupton
 **/services/globus-compute.md       @cms21
 **/services/iri-api.md              @bcote-anl
-**/services/inference-endpoints/**  @bcote-anl @vksastry @masalim2 @lowpolyneko
+**/services/inference-endpoints/**  @bcote-anl @vksastry @masalim2 @lowpolyneko @memani1
 **/dev-environment/python-environments.md  @bcote-anl @masalim2 @lowpolyneko
 
 # Workflows
