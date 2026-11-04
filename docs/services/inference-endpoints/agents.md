@@ -75,19 +75,19 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 {
     ...
     "provider": {
-        "alcf-inference-service-sophia": {
-            "name": "ALCF Inference Service (Sophia)",
+        "alcf-inference-service-minerva-api": {
+            "name": "ALCF Inference Service (Minerva)",
             "npm": "@ai-sdk/openai-compatible",
             "options": {
-                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/sophia/vllm/v1",
+                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
                 "apiKey": "{env:ALCF_AI_TOKEN}"
             },
             "models": {
-                "openai/gpt-oss-120b": {
-                    "name": "openai/gpt-oss-120b",
+                "muse-spark-bf16": {
+                    "name": "muse-spark-bf16",
                     "timeout": false,
                     "limit": {
-                        "context": 65536,
+                        "context": 1048576,
                         "output": 0
                     }
                 }
