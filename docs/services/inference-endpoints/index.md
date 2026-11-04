@@ -139,11 +139,11 @@ Once authenticated, you can make a test call using cURL or Python.
 # Get your access token
 access_token=$(alcf-tokens get-token inference)
 
-curl -X POST "https://inference-api.alcf.anl.gov/resource_server/metis/api/v1/chat/completions" \
+curl -X POST "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1/chat/completions" \
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{
-            "model": "gpt-oss-120b",
+            "model": "muse-spark-bf16",
             "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
          }'
 ```
@@ -160,11 +160,11 @@ access_token = get_access_token("inference")
 
 client = OpenAI(
     api_key=access_token,
-    base_url="https://inference-api.alcf.anl.gov/resource_server/metis/api/v1"
+    base_url="https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1"
 )
 
 response = client.chat.completions.create(
-    model="gpt-oss-120b",
+    model="muse-spark-bf16",
     messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
 )
 
