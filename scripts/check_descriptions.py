@@ -17,15 +17,40 @@ Usage: python3 scripts/check_descriptions.py [--max-length N] [--list-missing] [
 
 import argparse
 import os
+import re
 import sys
+import tomllib
 from collections import Counter
 from pathlib import Path
 
 import yaml
-from mkdocs.config import load_config
-from mkdocs.structure.files import get_files
-from mkdocs.structure.nav import get_navigation
-from mkdocs.utils.meta import get_data
+
+# Front matter at the top of a page, as MkDocs and Zensical parse it.
+FRONT_MATTER_RE = re.compile(r"^-{3}[ \t]*\n(.*?\n)(?:\.{3}|-{3})[ \t]*\n", re.DOTALL)
+
+
+def nav_pages(items):
+    """Markdown paths in the nav, in order, skipping external links."""
+    pages = []
+    for item in items:
+        value = next(iter(item.values())) if isinstance(item, dict) else item
+        if isinstance(value, list):
+            pages += nav_pages(value)
+        elif isinstance(value, str) and value.endswith(".md") and "://" not in value:
+            pages.append(value)
+    return pages
+
+
+def page_meta(path):
+    """The page's front matter as a dict, or {} if it has none."""
+    match = FRONT_MATTER_RE.match(path.read_text(encoding="utf-8"))
+    if not match:
+        return {}
+    try:
+        meta = yaml.safe_load(match.group(1))
+    except yaml.YAMLError:
+        return {}
+    return meta if isinstance(meta, dict) else {}
 
 
 def folder_description(docs_dir, src_uri):
@@ -51,19 +76,15 @@ def main():
                         help="exit 1 if any page is missing a description or is over the limit")
     args = parser.parse_args()
 
-    config = load_config("mkdocs.yml")
-    files = get_files(config)
-    nav = get_navigation(files, config)
-    docs_dir = config["docs_dir"]
+    with open("zensical.toml", "rb") as f:
+        config = tomllib.load(f)["project"]
+    docs_dir = config.get("docs_dir", "docs")
 
     missing, too_long = [], []
     total = 0
-    for page in nav.pages:
-        if page.file is None or not page.file.src_uri.endswith(".md"):
-            continue
+    for src in nav_pages(config["nav"]):
         total += 1
-        src = page.file.src_uri
-        _, meta = get_data(Path(page.file.abs_src_path).read_text(encoding="utf-8"))
+        meta = page_meta(Path(docs_dir) / src)
         description = meta.get("description") or folder_description(docs_dir, src)
         if not description:
             missing.append(src)
