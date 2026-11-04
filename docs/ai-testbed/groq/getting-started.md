@@ -26,11 +26,11 @@ The second, optional step is to ssh from a login node to a GroqRack node. Jobs m
 
 ### Log in to a login node
 
-Connect to a groq login node, editing this command line to use your ALCF user id. You will be prompted for a password; use the 8-digit passcode provided by MobilePASS+. 
+Connect to a Groq login node, replacing `<username>` with your ALCF username. You will be prompted for a password; use the 8-digit passcode provided by MobilePASS+.
 ```bash
-ssh ALCFUserID@groq.ai.alcf.anl.gov
+ssh <username>@groq.ai.alcf.anl.gov
 ```
-This randomly selects one of the login nodes, namely `groq-login-01.ai.alcf.anl.gov` or `groq-login-02.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
+This randomly selects one of the login nodes, namely `groq-login-03.ai.alcf.anl.gov` or `groq-login-04.ai.alcf.anl.gov`. You can alternatively ssh to the specific login nodes directly. 
 
 
 ### Log in to a GroqRack node
