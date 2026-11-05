@@ -45,7 +45,7 @@
 
 # Computational chemistry and molecular dynamics
 **/applications/namd.md             @cjknight
-**/applications/gromacs.md          @cjknight
+**/applications/gromacs.md          @weijiang73
 **/applications/lammps.md           @cjknight
 **/applications/amber.md            @cjknight
 **/applications/openmm.md           @cjknight
