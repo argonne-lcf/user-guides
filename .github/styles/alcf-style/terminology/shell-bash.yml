@@ -1,6 +1,6 @@
 extends: existence
 level: warning
-message: "Use 'bash' instead of 'sh'."
+message: "Please use 'bash' instead of 'sh'."
 scope: sentence
 nonword: false
 tokens:
@@ -9,7 +9,7 @@ tests:
   - name: flags sh
     input: "The shell script sh is used."
     want: |
-      1:18:alcf-style.terminology.shell-bash:Use 'bash' instead of 'sh'.
+      1:18:alcf-style.terminology.shell-bash:Please use 'bash' instead of 'sh'.
   - name: allows shell
     input: "The shell script is used."
     want: ''

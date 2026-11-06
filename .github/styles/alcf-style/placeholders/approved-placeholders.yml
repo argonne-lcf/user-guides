@@ -1,6 +1,6 @@
 extends: existence
 level: error
-message: "Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>."
+message: "Please use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>."
 nonword: true
 scope: raw
 tokens:
@@ -9,7 +9,7 @@ tests:
   - name: flags unapproved placeholder
     input: "Enter <my_var> here."
     want: |
-      1:7:alcf-style.placeholders.approved-placeholders:Use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>.
+      1:7:alcf-style.placeholders.approved-placeholders: Please use an approved placeholder: <username>, <project>, <jobid>, <queue>, <path>, or <name>.
   - name: allows approved placeholder
     input: "Enter <name> here."
     want: ''

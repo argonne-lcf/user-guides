@@ -14,7 +14,17 @@ a diff, PR, branch, or page against the rules in this file.
 
 ## Voice & tone
 
-_TODO_
+Write as neutral, direct reference prose — not a conversation. State facts and instructions
+plainly; don't editorialize or add asides about what the author personally recommends or finds
+notable ("this is really excellent," "can't be stressed enough"). Avoid promotional or marketing
+language (e.g. "innovative," "seamlessly") when describing tools or systems — describe what
+something does, not how impressive it is. Keep warnings matter-of-fact: state the consequence
+plainly rather than using alarmed language or emphasis like all-caps.
+
+Refer to ALCF in the third person ("ALCF provides...", "Users should...") rather than first person
+("we provide..."), so the voice stays consistent whether or not the author is ALCF staff. When
+providing instructions, you can use second person to instruct the user in a tone that's helpful
+and direct.
 
 ## Audience & assumed knowledge
 
@@ -65,10 +75,11 @@ person keeps the doc feeling like reference material rather than a personal walk
 - "Log in" is a verb ("Log in to Polaris"). "Login" is a noun or adjective ("your login node",
   "the login page"). Don't use "log in" as a noun or "login" as a verb.
 
-| Prefer | Avoid | Why |
-|---|---|---|
-| high performance computing | high-performance computing | |
-| walltime | wall time | |
+The definitive list of preferred-vs-avoid terms (product names, acronyms, and other fixed word
+choices) is [`.github/styles/alcf-style/terminology/keywords.yml`](.github/styles/alcf-style/terminology/keywords.yml),
+not a table here — it's enforced by Vale (see `AGENTS.md`/`REVIEW.md`), so keeping one list there
+avoids this guide drifting out of sync with what's actually checked. Add new terms to that file
+rather than to this section.
 
 ## Inclusive & plain language
 
@@ -96,4 +107,21 @@ precise, regulated language that may not fit the style guide's conventions.
 
 ## Examples
 
-_TODO_
+Passages already in the docs that illustrate the rules above.
+
+**Voice & tone**
+
+- Neutral, direct prose, no editorializing: "A virtual environment solves this by giving each project its own lightweight, isolated Python environment. The packages you install live in one self-contained folder, separate from the system libraries and from your other work." ([`docs/dev-environment/python-environments.md:12`](docs/dev-environment/python-environments.md))
+- Describes function, not hype: "ALCF provides a JupyterHub for running JupyterLab and Jupyter Notebook on Polaris and Sophia with minimal setup required from the user." ([`docs/aurora/data-science/jupyter.md:3`](docs/aurora/data-science/jupyter.md))
+- Matter-of-fact warning, consequence stated plainly: "omitting the target flag during the link step is only safe if every object was built with `-fno-sycl-rdc`. If any object still relies on RDC, the link will succeed without warnings, but that object's kernels will be silently omitted from the final binary and fail when launched." ([`docs/aurora/programming-models/sycl-aurora.md:62`](docs/aurora/programming-models/sycl-aurora.md))
+- ALCF referred to in the third person: "The tools on these pages are ones you install and run yourself, in your own space, on ALCF systems. ALCF provides best-practice guidance for them, but cannot provide support" ([`docs/dev-environment/index.md:7`](docs/dev-environment/index.md))
+
+**Inclusive & plain language**
+
+- Plain explanation of a non-trivial mechanism, no dismissive minimizer: "Darshan is a lightweight I/O profiling tool consisting of a shared library that your application preloads at runtime. It generates a binary log file at program termination, plus utilities to analyze that log." ([`docs/aurora/data-management/daos/daos-overview.md:331`](docs/aurora/data-management/daos/daos-overview.md))
+- Literal phrasing instead of an idiom ("at runtime" rather than "on the fly"): "Since NumPy 1.25, extensions built against a newer NumPy stay binary compatible with older 1.x releases at runtime, so these modules do not force you off `numpy` 1.x." ([`docs/aurora/system-updates.md:428`](docs/aurora/system-updates.md))
+
+**Person & address**
+
+- Second person for instructions: "To run DDT interactively from Aurora, start up an interactive PBS job. You'll need to load a module to access DDT:" ([`docs/aurora/debugging/ddt-aurora.md:43`](docs/aurora/debugging/ddt-aurora.md))
+- Third person for a general description: "Polaris is a 560-node HPE Apollo 6500 Gen 10+ based system. Each node has a single 2.8 GHz AMD EPYC Milan 7543P 32-core CPU with 512 GB of DDR4 RAM, four NVIDIA A100 GPUs connected via NVLink, a pair of local 1.6TB SSDs in RAID0 for user use, and a pair of Slingshot 11 network adapters." ([`docs/polaris/index.md:6`](docs/polaris/index.md))

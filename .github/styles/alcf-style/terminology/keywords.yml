@@ -1,6 +1,6 @@
 extends: substitution
 level: error
-message: "Use '%s' instead of '%s'."
+message: "Please use '%s' instead of '%s'."
 ignorecase: true
 scope: summary
 swap:
@@ -45,30 +45,30 @@ tests:
   - name: flags wrong keywords for CMake
     input: "Run cmake."
     want: |
-      1:5:alcf-style.terminology.keywords:Use 'CMake' instead of 'cmake'.
+      1:5:alcf-style.terminology.keywords:Please use 'CMake' instead of 'cmake'.
   - name: flags wrong keywords for HPC
     input: "This is hpc."
     want: |
-      1:9:alcf-style.terminology.keywords:Use 'HPC' instead of 'hpc'.
+      1:9:alcf-style.terminology.keywords:Please use 'HPC' instead of 'hpc'.
   - name: flags wrong keywords for SYCL
     input: "Using sycl."
     want: |
-      1:7:alcf-style.terminology.keywords:Use 'SYCL' instead of 'sycl'.
+      1:7:alcf-style.terminology.keywords:Please use 'SYCL' instead of 'sycl'.
   - name: flags wrong product name/keyword
     input: "Using Oneapi."
     want: |
-      1:7:alcf-style.terminology.keywords:Use 'oneAPI' instead of 'Oneapi'.
+      1:7:alcf-style.terminology.keywords:Please use 'oneAPI' instead of 'Oneapi'.
   - name: allows PBS and Slurm as their owners write them
     input: "Submit with PBS. We run Slurm elsewhere."
     want: ''
   - name: flags the SLURM spelling
     input: "Jobs run under SLURM."
     want: |
-      1:16:alcf-style.terminology.keywords:Use 'Slurm' instead of 'SLURM'.
+      1:16:alcf-style.terminology.keywords:Please use 'Slurm' instead of 'SLURM'.
   - name: allows conda in prose
     input: "Activate the conda environment."
     want: ''
   - name: flags Anaconda
     input: "Install Anaconda first."
     want: |
-      1:9:alcf-style.terminology.keywords:Use 'conda/Miniforge' instead of 'Anaconda'.
+      1:9:alcf-style.terminology.keywords:Please use 'conda/Miniforge' instead of 'Anaconda'.
