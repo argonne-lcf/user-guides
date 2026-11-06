@@ -57,7 +57,7 @@ In particular, it retains the core 4D parallelism[^4d] functionality of the [NVI
     1. 🍋 [saforem2 / `ezpz`](https://github.com/saforem2/ezpz):
 
        ```bash
-       python3 -m pip install -e "git+https://github.com/saforem2/ezpz#egg=ezpz" --require-virtualenv
+       uv pip install --no-cache --link-mode=copy "git+https://github.com/saforem2/ezpz"  # PyPI's ezpz is unrelated — always use this URL
        ```
 
     1. [microsoft / `DeepSpeed`](https://github.com/microsoft/DeepSpeed):

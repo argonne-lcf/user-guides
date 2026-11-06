@@ -99,8 +99,8 @@ The user message is built by joining, in order: piped stdin (if any), the conten
 
 ```bash
 cat report.md | alcf-ai chat \
-    --model openai/gpt-oss-120b \
-    --cluster sophia \
+    --model muse-spark-bf16 \
+    --cluster minerva \
     "Summarize this report in three bullets."
 ```
 
@@ -171,20 +171,20 @@ from alcf_ai import InferenceClient
 client = InferenceClient()
 
 # Discover endpoints and models:
-print(client.list_endpoints()["clusters"]["sophia"])
-print(client.list_models("sophia"))
+print(client.list_endpoints()["clusters"]["minerva"])
+print(client.list_models("minerva"))
 
 # Get an OpenAI client for a cluster:
-oai = client.clusters("sophia").openai
+oai = client.clusters("minerva").openai
 print(
     oai.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model="muse-spark-bf16",
         messages=[{"role": "user", "content": "Hello there!"}],
     )
 )
 ```
 
-The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("sophia").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
+The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("minerva").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
 
 ```python linenums="1"
 from pathlib import Path

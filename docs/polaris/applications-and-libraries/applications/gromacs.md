@@ -13,28 +13,28 @@ ALCF offers assistance with building binaries and compiling instructions for GRO
 
 ## Building Gromacs
 
-1. Download the latest source code: [GROMACS Download](http://manual.gromacs.org/documentation/2022.1/download.html)
-2. Extract the tarball: `tar -xzf gromacs-2022.1.tar.gz`
+1. Download the latest source code: [GROMACS Download](https://manual.gromacs.org/documentation/)
+2. Extract the tarball: `tar -xzf gromacs-2026.4.tar.gz`
 3. Swap programming environments: `module swap PrgEnv-nvidia PrgEnv-gnu`
-4. Load the CUDA toolkit: `module load cudatoolkit-standalone/11.2.2`
-5. Load GCC: `module load gcc/10.3.0`
-6. Load CMake: `module load cmake`
-7. Change directory: `cd gromacs-2022.1`
+4. Unload the Darshan environment module: `module unload darshan`
+5. Load a prerequisite environment module for Cmake: `module load spack-pe-base/0.10.1`
+6. Load CMake module: `module load cmake`
+7. Change directory: `cd gromacs-2026.4`
 8. Create a build directory: `mkdir build`
 9. Configure the build:
    ```
    cmake -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC \
          -DBUILD_SHARED_LIBS=OFF -DGMX_BUILD_OWN_FFTW=ON \
-         -DCMAKE_INSTALL_PREFIX=/path-to/gromacs-2022.1/build \
+         -DCMAKE_INSTALL_PREFIX=/path-to/gromacs-2026.4/build \
          -DGMX_MPI=ON -DGMX_OPENMP=ON -DGMX_GPU=CUDA \
-         -DCUDA_TOOLKIT_ROOT_DIR=/soft/compilers/cudatoolkit/cuda-11.2.2
+         -DCUDAToolkit_ROOT=/soft/compilers/cudatoolkit/cuda-13.0.1
    ```
 10. Compile the code: `make -j 8`
 11. Install the binaries: `make install`
 12. The installed binary is `build/bin/gmx_mpi`.
 
 ## Running Gromacs on Polaris
-Prebuilt GROMACS binaries can be found in the directory `/soft/applications/Gromacs/gromacs-2022.1`.
+Prebuilt GROMACS binaries can be found in the directory `/soft/applications/gromacs`.
 
 A sample PBS script follows that will run GROMACS on two nodes, using 4 MPI ranks per node, and each rank with four OpenMP threads. The PME kernel owns one MPI rank and one GPU per node, while the nonbonded kernel uses 3 MPI ranks and 3 GPUs per node.
 
@@ -50,11 +50,11 @@ A sample PBS script follows that will run GROMACS on two nodes, using 4 MPI rank
 cd ${PBS_O_WORKDIR}
 
 module swap PrgEnv-nvidia PrgEnv-gnu
-module load cudatoolkit-standalone/11.2.2
+module load cudatoolkit-standalone/13.0.1
 
 export OMP_NUM_THREADS=4
 
-mpirun --np 8 /soft/applications/Gromacs/gromacs-2022.1/gmx_mpi \
+mpirun --np 8 /path-to/gmx_mpi \
       mdrun -gputasks 0123 -nb gpu -pme gpu -npme 1 -ntomp 4 \
       -dlb yes -resethway -pin on -v deffnm step5_1 -g test.log
 ```

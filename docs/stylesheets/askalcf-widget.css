@@ -97,7 +97,7 @@
   max-width: calc(100% - 48px);  /* 24px each side; unlike 100vw, 100% excludes the scrollbar */
   height: 660px;
   max-height: calc(100vh - 48px);
-  z-index: 6;  /* the open panel stays above the sticky header and drawer */
+  z-index: 6;  /* above the sticky header and drawer; hidden while they're open (below) */
   display: none;
   flex-direction: column;
   overflow: hidden;
