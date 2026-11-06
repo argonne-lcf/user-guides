@@ -10,7 +10,7 @@ tests:
   - name: flags html tags
     input: "<details>Some info</details>"
     want: |
-      1:1:alcf-style.formatting.html-tags: Please use Material/pymdownx features instead of raw HTML. Please use '/// details' instead of '<details>' and '**bold**' instead of '<strong>'.
+      1:1:alcf-style.formatting.html-tags:Please use Material/pymdownx features instead of raw HTML. Please use '/// details' instead of '<details>' and '**bold**' instead of '<strong>'.
   - name: allows markdown
     input: "/// details\nSome info\n///"
     want: ''
