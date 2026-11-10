@@ -29,3 +29,4 @@ The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/
 - [Python Environments](python-environments.md)
 - [AI Guidance](ai-guidance.md)
 - [VS Code (Remote SSH)](vscode.md)
+- [Configure SSH and X11 Forwarding](ssh.md)
