@@ -379,6 +379,7 @@ nav:
             - Globus: aurora/data-management/moving_data_to_aurora/globus.md
         - Applications and Libraries:
           - Applications:
+            - GROMACS: aurora/applications-and-libraries/applications/gromacs.md
             - LAMMPS: aurora/applications-and-libraries/applications/lammps.md
             - nekRS: aurora/applications-and-libraries/applications/nekrs.md
             - VASP: aurora/applications-and-libraries/applications/vasp.md
