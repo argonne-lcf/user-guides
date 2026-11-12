@@ -278,12 +278,12 @@ The full code is available on the Aurora filesystem within `/soft/daos/examples/
 First, set up an interactive job on a compute node and initialize the environment as follows:
 
 ```bash linenums="1"
-qsub ... -l filesystems=flare:daos_perf_fs
+qsub ... -l filesystems=flare:daos_user_fs
 
 module use /soft/modulefiles
-module load daos_perf
+module load daos
 module load frameworks
-launch-dfuse_perf.sh ${DAOS_POOL}:${DAOS_CONT}
+launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT}
 
 export LD_LIBRARY_PATH=/lus/flare/projects/datasets/softwares/py_daos/daos_client_master_build_may2/lib64:$LD_LIBRARY_PATH
 export PYTHONPATH=/lus/flare/projects/datasets/softwares/py_daos/just_pydaos_new/:$PYTHONPATH
