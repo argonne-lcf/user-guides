@@ -45,7 +45,7 @@ module load daos
 A pool is a dedicated space allocated to your project. Once your pool has been allocated for your project space, confirm that you are able to query the pool:
 
 ```bash linenums="1"
-DAOS_POOL=<project>
+export DAOS_POOL=<project>
 daos pool query ${DAOS_POOL}
 ```
 
@@ -92,8 +92,8 @@ Currently, this must be done manually before use on each node where you are work
 ### Mount on a Login Node
 
 ```bash linenums="1"
-DAOS_POOL=<project>
-DAOS_CONT=thundersvm_exp1
+export DAOS_POOL=<project>
+export DAOS_CONT=thundersvm_exp1
 mkdir -p /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT}
 start-dfuse.sh -m /tmp/${USER}/${DAOS_POOL}/${DAOS_CONT} --pool ${DAOS_POOL} --cont ${DAOS_CONT} # To mount
 mount | grep dfuse # To confirm it is mounted
@@ -155,8 +155,8 @@ Currently, `--no-vni` is required in the `mpiexec` command to use DAOS.
 
 module use /soft/modulefiles
 module load daos
-DAOS_POOL=<project>
-DAOS_CONT=thundersvm_exp1
+export DAOS_POOL=<project>
+export DAOS_CONT=thundersvm_exp1
 daos container create --type=POSIX ${DAOS_POOL} ${DAOS_CONT}
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT} # To mount on a compute node
 ls /tmp/${DAOS_POOL}/${DAOS_CONT} # Optional for compute node
@@ -275,7 +275,7 @@ The full code is available on the Aurora filesystem within `/soft/daos/examples/
 
 ### PyDAOS for PyTorch
 
-First, set up an interactive job on a compute node and initialize the environment as follows:
+First, set up an interactive job on a compute node and initialize the environment as follows. Set `DAOS_CONT` to an existing POSIX container in your pool (see [Create and Delete Containers](#create-and-delete-containers)):
 
 ```bash linenums="1"
 qsub ... -l filesystems=flare:daos_user_fs
@@ -283,6 +283,8 @@ qsub ... -l filesystems=flare:daos_user_fs
 module use /soft/modulefiles
 module load daos
 module load frameworks
+export DAOS_POOL=<project>
+export DAOS_CONT=pytorch_exp1
 launch-dfuse.sh ${DAOS_POOL}:${DAOS_CONT}
 
 export LD_LIBRARY_PATH=/lus/flare/projects/datasets/softwares/py_daos/daos_client_master_build_may2/lib64:$LD_LIBRARY_PATH
