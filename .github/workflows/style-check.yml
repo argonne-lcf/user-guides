@@ -11,4 +11,4 @@ jobs:
       - uses: actions/checkout@v6
       - uses: vale-cli/vale-action@v3
         with:
-          reporter: github-pr-review
+          reporter: github-pr-annotations
