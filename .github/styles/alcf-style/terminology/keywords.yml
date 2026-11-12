@@ -2,7 +2,7 @@ extends: substitution
 level: error
 message: "Please use '%s' instead of '%s'."
 ignorecase: true
-scope: summary
+scope: text
 swap:
   anaconda: conda/Miniforge
   api: API
