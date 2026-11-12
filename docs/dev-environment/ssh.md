@@ -20,7 +20,7 @@ You do not need a VPN to SSH to ALCF login nodes. Connect directly from your loc
 ///
 
 /// tip | Do you need X11 forwarding?
-Many workflows have better alternatives: [VS Code Remote - SSH](vscode.md) for editing, Jupyter for notebooks, or VNC for persistent desktops. Use X11 forwarding for lightweight tools that require a display, such as `xterm`, quick ParaView tests, or graphical installers. For heavy visualization, launch ParaView or VisIt from a client as described in the system visualization pages.
+Many workflows have better alternatives: [VS Code Remote - SSH](vscode.md) for editing, Jupyter for notebooks, or VNC for persistent desktops. Use X11 forwarding for lightweight tools that require a display, such as `xterm`, quick ParaView tests, or graphical installers. For heavy visualization, launch ParaView or VisIt from a client — see [Aurora Visualization](../aurora/visualization/index.md), [Polaris Visualization](../polaris/visualization/index.md), and [Sophia Visualization](../sophia/visualization/index.md). For client-server setup, see [ParaView on Aurora](../aurora/visualization/paraview.md) and [ParaView on Polaris](../polaris/visualization/paraview.md); for remote desktops, see [VNC on Polaris](../polaris/visualization/vnc.md).
 ///
 
 ## Configure Your Local SSH Config File
@@ -143,19 +143,19 @@ The same pattern applies to other ALCF systems. Use the hostname listed in the s
 ```bash linenums="1" title="~/.ssh/config — additional systems"
 # ALCF SSH config — additional systems
 Host sophia crux
-  HostName %h.alcf.anl.gov              # %h expands to sophia or crux
-  User <username>                       # your ALCF username
-  ForwardX11 yes                        # enable X11 forwarding
-  ForwardX11Trusted yes                 # trusted forwarding (recommended for ALCF)
-  ControlMaster auto                    # reuse authenticated connection
-  ControlPersist 45m                    # keep the master open 45 minutes after the last session closes
-  ControlPath %d/.ssh/multiplex         # socket location for the shared connection; %d is your home directory
+  HostName %h.alcf.anl.gov               # %h expands to sophia or crux
+  User <username>                        # your ALCF username
+  ForwardX11 yes                         # enable X11 forwarding
+  ForwardX11Trusted yes                  # trusted forwarding (recommended for ALCF)
+  ControlMaster auto                     # reuse authenticated connection
+  ControlPersist 45m                     # keep the master open 45 minutes after the last session closes
+  ControlPath %d/.ssh/multiplex/%u@%h:%p # socket location for the shared connection
 ```
 ///
 
 ## X11 Forwarding
 
-X11 forwarding lets a graphical application started on an ALCF login node display on your local machine. It is optional — configure it only if you need lightweight X clients. For editors, notebooks, or persistent desktops, prefer [VS Code Remote - SSH](vscode.md), Jupyter, or VNC.
+X11 forwarding lets a graphical application started on an ALCF login node display on your local machine. It is optional — configure it only if you need lightweight X clients. For editors, notebooks, or persistent desktops, prefer [VS Code Remote - SSH](vscode.md), Jupyter, or VNC (see [VNC on Polaris](../polaris/visualization/vnc.md)). For visualization, prefer client-server ParaView/VisIt — see [Aurora Visualization](../aurora/visualization/index.md), [Polaris Visualization](../polaris/visualization/index.md), and [Sophia Visualization](../sophia/visualization/index.md).
 
 ### Prerequisites on Your Local Machine
 
@@ -168,7 +168,7 @@ Download the installer from [XQuartz](https://www.xquartz.org/) and run it, then
 brew install --cask xquartz
 ```
 
-After install, launch XQuartz, then in XQuartz go to **Settings > Security** and check **Allow connections from network clients** if an application requires trusted forwarding.
+After install, restart your local machine and verify that the display variable has been set.
 
 Verify `xauth` and `DISPLAY` locally before connecting:
 
@@ -265,7 +265,7 @@ If the `xterm` window appears on your local screen, forwarding works. Test again
 
 You cannot SSH directly from your local machine to a compute node. You must first SSH to a login node, then hop to the compute node from there while your allocation is active.
 
-Most visualization work should use a client-side launcher or VNC rather than X11 forwarding to a compute node. If you have an allocation and must test X11 on a compute node, request an interactive job from the login node, then SSH-hop to the assigned node from that login session with X11 forwarding:
+Most visualization work should use a client-side launcher ([ParaView on Aurora](../aurora/visualization/paraview.md), [ParaView on Polaris](../polaris/visualization/paraview.md), [VisIt on Aurora](../aurora/visualization/visit.md), [VisIt on Polaris](../polaris/visualization/visit.md)) or [VNC on Polaris](../polaris/visualization/vnc.md) rather than X11 forwarding to a compute node. If you have an allocation and must test X11 on a compute node, request an interactive job from the login node, then SSH-hop to the assigned node from that login session with X11 forwarding:
 
 ```bash
 # from your local machine to the login node (with X11 forwarding)

@@ -617,10 +617,10 @@ nav:
 
   - Development Environment & AI:
     - dev-environment/index.md
+    - Configure SSH and X11 Forwarding: dev-environment/ssh.md
     - Python Environments: dev-environment/python-environments.md
     - AI Guidance: dev-environment/ai-guidance.md
     - VS Code (Remote SSH): dev-environment/vscode.md
-    - Configure SSH and X11 Forwarding: dev-environment/ssh.md
 
   - Services:
     - services/index.md
