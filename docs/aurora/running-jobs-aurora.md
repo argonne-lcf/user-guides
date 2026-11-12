@@ -54,7 +54,7 @@ For example, a one-node interactive job requiring access to the `/flare` filesys
 qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <project> -q debug -I
 ```
 
-For DAOS access, users will need to include either `daos_user` or `daos_perf` (only for select teams approved by ALCF) as a filesystem option. More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
+For DAOS access, users will need to include `daos_user_fs` as a filesystem option (`-l filesystems=flare:daos_user_fs`). More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
 
 /// tip
 
