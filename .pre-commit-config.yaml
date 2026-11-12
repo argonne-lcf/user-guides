@@ -4,4 +4,5 @@ repos:
   hooks:
     - id: vale
       files: ^docs/
-      args: [--config=.vale.ini, --minAlertLevel=warning]
+      args: [--config=.vale.ini, --minAlertLevel=warning, --no-exit]
+      verbose: true

@@ -1,21 +1,23 @@
 extends: existence
 level: warning
-message: "Please use 'bash' instead of 'sh'."
-scope: sentence
-nonword: false
+message: "Please use 'bash' instead of 'sh' or 'shell' for shell-command code fences."
+scope: raw
+nonword: true
 tokens:
-  - sh
+  - '(?m)^[ \t]*(?:`{3,}|~{3,})[ \t]*(?:sh|shell)(?=[ \t\r\n]|$)'
 tests:
-  - name: flags sh
-    input: "The shell script sh is used."
+  - name: flags sh fence
+    input: "```sh\nls\n```"
     want: |
-      1:18:alcf-style.terminology.shell-bash:Please use 'bash' instead of 'sh'.
-  - name: allows shell
-    input: "The shell script is used."
-    want: ''
-  - name: allows bash
-    input: "Use bash for scripts."
-    want: ''
-  - name: ignores sh in code block
+      1:1:alcf-style.terminology.shell-bash:Please use 'bash' instead of 'sh' or 'shell' for shell-command code fences.
+  - name: flags shell fence
+    input: "```shell\nls\n```"
+    want: |
+      1:1:alcf-style.terminology.shell-bash:Please use 'bash' instead of 'sh' or 'shell' for shell-command code fences.
+  - name: allows bash fence and POSIX shebang
     input: "```bash\n#!/bin/sh\n```"
     want: ''
+  - name: allows interpreter names and script filenames in prose
+    input: "The sh interpreter runs rn50_pod16.sh."
+    want: ''
+

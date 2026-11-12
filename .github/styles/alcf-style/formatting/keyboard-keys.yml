@@ -4,7 +4,7 @@ message: "Please use '++key++' syntax for keyboard keys (e.g., '++ctrl+c++' inst
 scope: raw
 nonword: true
 tokens:
-  - '(?<!\+)(?i)(Ctrl|Alt|Shift|Cmd|Enter|Esc|Delete|Backspace)\s?[\+\-][A-Z0-9](?!\+)'
+  - '(?<![+\w])(?i:Ctrl|Alt|Shift|Cmd|Enter|Esc|Delete|Backspace)(?:[ \t]?\+[ \t]?|-)[A-Za-z0-9](?!\+)'
 tests:
   - name: flags old key syntax
     input: "Press Ctrl+C"
@@ -13,3 +13,10 @@ tests:
   - name: allows new key syntax
     input: "Press ++ctrl+c++"
     want: ''
+  - name: ignores key names inside other words
+    input: "See the data-center-gpu page and the XALT-related notes."
+    want: ''
+  - name: ignores command-line flags after enter
+    input: "To list fields, enter -f? or -w?."
+    want: ''
+

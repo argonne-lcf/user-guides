@@ -4,7 +4,7 @@ message: "Sample output should be in a separate block with the class '{ .output 
 scope: raw
 nonword: true
 tokens:
-  - '```(?!\s*\{.*\.output\})\n\s*[a-zA-Z0-9._\/-]+@[a-zA-Z0-9._\/-]+[:\s].*[$#]'
+  - '(?m)^[ \t]*`{3,}(?![^\r\n]*\.(?:output|no-copy)\b)[^\r\n]*\r?\n[ \t]*(?:[a-zA-Z0-9._/-]+@[a-zA-Z0-9._/-]+[: \t][^\r\n]*[$#]|\$[ \t]+)'
 tests:
   - name: flags missing output class
     input: |

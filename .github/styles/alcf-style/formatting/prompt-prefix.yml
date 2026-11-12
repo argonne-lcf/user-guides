@@ -2,14 +2,14 @@ extends: existence
 level: warning
 message: "Remove the '$ ' prompt from the start of the command; the copy button should not include it."
 nonword: true
-scope: raw
+scope: code
 tokens:
-  - '^\$\s'
+  - '^[ \t]*\$\s'
 tests:
   - name: flags prompt prefix
-    input: "$ ls -l"
+    input: "`$ ls -l`"
     want: |
-      1:1:alcf-style.formatting.prompt-prefix:Remove the '$ ' prompt from the start of the command; the copy button should not include it.
+      1:2:alcf-style.formatting.prompt-prefix:Remove the '$ ' prompt from the start of the command; the copy button should not include it.
   - name: allows normal text
     input: "The command is ls -l"
     want: ''

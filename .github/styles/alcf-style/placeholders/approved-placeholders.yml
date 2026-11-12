@@ -4,7 +4,7 @@ message: "Please use an approved placeholder: <username>, <project>, <jobid>, <q
 nonword: true
 scope: raw
 tokens:
-  - '<(?!(?:username|project|jobid|queue|path|name)>)[a-z][a-z0-9_-]*>'
+  - '<(?!(?:username|project|jobid|queue|path|name|a|abbr|address|area|article|aside|audio|b|base|bdi|bdo|blockquote|body|br|button|canvas|caption|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|div|dl|dt|em|embed|fieldset|figcaption|figure|footer|form|h1|h2|h3|h4|h5|h6|head|header|hgroup|hr|html|i|iframe|img|input|ins|kbd|label|legend|li|link|main|map|mark|menu|meta|meter|nav|noscript|object|ol|optgroup|option|output|p|picture|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|slot|small|source|span|strong|style|sub|summary|sup|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|u|ul|var|video|wbr|algorithm|any|array|atomic|bitset|charconv|chrono|cmath|complex|condition_variable|cstdio|cstdlib|cstring|deque|filesystem|fstream|functional|future|iostream|istream|iterator|limits|list|map|memory|mutex|numeric|optional|ostream|queue|random|regex|set|span|sstream|stack|string|thread|tuple|type_traits|unordered_map|unordered_set|utility|valarray|variant|vector)>)[a-z][a-z0-9_-]*>'
 tests:
   - name: flags unapproved placeholder
     input: "Enter <my_var> here."
@@ -13,3 +13,10 @@ tests:
   - name: allows approved placeholder
     input: "Enter <name> here."
     want: ''
+  - name: ignores html br tag
+    input: "Use <br> for line break."
+    want: ''
+  - name: ignores cpp header
+    input: "#include <iostream>"
+    want: ''
+
