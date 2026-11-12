@@ -6,15 +6,15 @@ tags:
 
 # AI Coding Agents
 
-AI coding agents such as [Claude Code](https://code.claude.com/docs/en/quickstart), [OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli), [OpenCode](https://opencode.ai/), and [Pi](https://pi.dev/) are command-line tools that read your code, run commands, and edit files on your behalf. **Start by running the agent on your own machine and accessing ALCF through the [IRI API](../services/iri-api.md).** This avoids using login-node resources for the agent itself. If the IRI API cannot support your workload, describe the missing capability and your intended workflow to [ALCF Support](mailto:support@alcf.anl.gov); see the alternatives below. ALCF cannot set up or debug third-party agent software; see [AI Guidance](ai-guidance.md).
+AI coding agents such as [Claude Code](https://code.claude.com/docs/en/quickstart), [OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli), [OpenCode](https://opencode.ai/), and [Pi](https://pi.dev/) are command-line tools that read your code, run commands, and edit files on your behalf. **Start by running the agent on your own machine and accessing ALCF through the [IRI API](../services/iri-api.md).** If IRI cannot support your workload, see [what to do next](#when-the-iri-api-cannot-support-your-workload).
 
 ## Submitting jobs remotely with the IRI API
 
-An agent does not have to run on an ALCF system. It can run on your own machine and act on ALCF through the [ALCF IRI API](../services/iri-api.md). With your ALCF credentials, the agent can check system status, submit and monitor PBS jobs, and read their output. This keeps the agent off the login nodes, and your local files stay on your machine unless you choose to stage them.
+With your ALCF credentials, a locally running agent can use the [ALCF IRI API](../services/iri-api.md) to check system status, submit and monitor PBS jobs, and read their output. This keeps the agent off the login nodes, and your local files stay on your machine unless you choose to stage them.
 
 There are two ways to give an agent this access:
 
-- **Let it call the REST API directly.** Get a token with [`alcf-tokens`](../services/iri-api.md#getting-your-api-token) and point the agent at the [API usage examples](../services/iri-api.md#2-compute). This works, but the agent writes a new request each time and nothing stops it from using the wrong account or asking for too many nodes.
+- **Let it call the REST API directly.** Get a token with [`alcf-tokens`](../services/iri-api.md#getting-your-api-token) and point the agent at the [API usage examples](../services/iri-api.md#2-compute). Without a tool layer enforcing limits, review its requests for the correct account and resource size.
 - **Expose the API as tools through an MCP server (recommended).** A small [Model Context Protocol](https://modelcontextprotocol.io/) server wraps each IRI call as a named tool, such as `submit_job` or `get_job_state`, and checks limits in code before any request is sent.
 
 The [Service-Enabled Science workshop materials](https://github.com/argonne-lcf/Service_Enabled_Science) include a working example in [`05_Agentic_Workflows`](https://github.com/argonne-lcf/Service_Enabled_Science/tree/main/05_Agentic_Workflows): one MCP server with tools for the ALCF documentation, Globus data transfer, and IRI job submission, already registered for Claude Code and OpenCode. To try it on your own machine:
@@ -42,9 +42,13 @@ The example is written for the workshop. Its guardrails in [`alcf_tools/common.p
 Jobs the agent submits run under your identity and are charged to your project. Keep the agent's confirmation prompts on, keep limits in the server rather than in the prompt, and treat your IRI token like a password: anyone who has it can submit jobs as you until it expires.
 ///
 
+## When the IRI API cannot support your workload
+
+If your workflow requires an operation that the [IRI API](../services/iri-api.md) does not provide, email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the system, the operation you need, and what prevents you from using IRI. Support can advise on ALCF capabilities and appropriate access paths, but cannot install or debug third-party agent software; see [AI Guidance](ai-guidance.md). Depending on the workflow, the alternatives below may be suitable.
+
 ## Running an agent locally over SSH
 
-If IRI does not support your workflow, you can run the agent on your own machine and have it issue limited commands on an ALCF login node over SSH. Set up a host entry in your local `~/.ssh/config` (see [SSH configuration](vscode.md#configuring-ssh-local-context)) and establish an authenticated master connection before starting the agent:
+As an alternative, you can run the agent on your own machine and have it issue limited commands on an ALCF login node over SSH. Set up a host entry in your local `~/.ssh/config` (see [SSH configuration](vscode.md#configuring-ssh-local-context)) and establish an authenticated master connection before starting the agent:
 
 ```sshconfig
 Host alcf-agent
@@ -62,7 +66,7 @@ ssh alcf-agent 'hostname'          # verify that subsequent commands reuse it
 ssh -O exit alcf-agent             # close the master connection when finished
 ```
 
-Replace the host and username with your own ALCF login host and account. SSH is **less stable than IRI** for agent workflows: connections can drop or require renewed authentication, interrupting long-running interactions. Prefer IRI when it supports your workload. The agent and its model requests run locally, but commands sent over SSH run on the shared login node. Keep command execution subject to your review; do not give the agent unattended, unbounded shell access or use SSH to bypass [login-node limits](index.md#login-node-limits). Avoid rapid connection retries that can trigger access blocks; see [AI Guidance](ai-guidance.md#best-practices). Run builds and compute-intensive tasks in allocated jobs.
+Replace the host and username with your own ALCF login host and account. SSH is **less stable than IRI** for agent workflows: connections can drop or require renewed authentication, interrupting long-running interactions. The agent and its model requests run locally, but commands sent over SSH run on the shared login node. Review those commands and respect [login-node limits](index.md#login-node-limits). Avoid rapid connection retries that can trigger access blocks; see [AI Guidance](ai-guidance.md#best-practices). Run builds and compute-intensive tasks in allocated jobs.
 
 ### SSH to an allocated compute node
 
@@ -74,10 +78,6 @@ ssh -J alcf-agent your_username@<compute_node_hostname> 'hostname'
 ```
 
 Use the `alcf-agent` host entry and master connection from above. Replace the username and compute-node hostname with your own; if SSH prompts for a key or fails, check the [compute-node SSH requirements](../running-jobs/known-issues.md#unable-to-ssh-to-compute-nodes). Compute-node access is available only while your job is running. Do not use SSH to reach unallocated nodes, and do not assume a command run this way has the same job-launch environment as a PBS-launched application. Keep long-running work in the allocated job and use the documented job launcher for MPI workloads.
-
-## When the IRI API cannot support your workload
-
-If your workflow requires an operation that the [IRI API](../services/iri-api.md) does not provide, email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the system, the operation you need, and what prevents you from using IRI. Support can advise on ALCF capabilities and appropriate access paths; this is not a request for support with installing or debugging a third-party agent. Depending on the workflow, the alternatives below may be suitable.
 
 ## Running agents on ALCF systems
 
@@ -95,15 +95,15 @@ Install commands for the other agents are listed in [Inference Endpoints: Agents
 
 ### Login-node use
 
-If IRI is not suitable, you can run an agent CLI from your home directory on a login node for **light, interactive work**. Prefer running the agent locally through [IRI](#submitting-jobs-remotely-with-the-iri-api) or [SSH](#running-an-agent-locally-over-ssh) when possible.
+You can run an agent CLI from your home directory on a login node for **light, interactive work** when the local options above are not suitable.
 
 /// warning | Keep heavy work off login nodes
-Login nodes are shared and have a hard per-user [task limit](index.md#login-node-limits). Agents, extensions, and tool calls can spawn many processes or threads. Keep login-node activity brief and low-concurrency; run builds, model servers, and compute-intensive tasks in an allocated [interactive or batch job](../running-jobs/index.md). Do not run autonomous loops or parallel agents on login nodes. If the agent makes repeated SSH connections, test the connection first and avoid rapid retries that can trigger access blocks; see [AI Guidance](ai-guidance.md#best-practices).
+Login nodes are shared and have a hard per-user [task limit](index.md#login-node-limits). Agents, extensions, and tool calls can spawn many processes or threads. Keep login-node activity brief and low-concurrency; run builds, model servers, and compute-intensive tasks in an allocated [interactive or batch job](../running-jobs/index.md). Do not run autonomous loops or parallel agents on login nodes.
 ///
 
 ## Choosing a model backend
 
-An agent needs a model to talk to. Pick one of the following:
+An agent running on an ALCF system needs a model to talk to. Pick one of the following:
 
 | Backend | When to use it | Setup |
 | --- | --- | --- |
