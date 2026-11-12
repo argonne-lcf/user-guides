@@ -64,6 +64,17 @@ ssh -O exit alcf-agent             # close the master connection when finished
 
 Replace the host and username with your own ALCF login host and account. SSH is **less stable than IRI** for agent workflows: connections can drop or require renewed authentication, interrupting long-running interactions. Prefer IRI when it supports your workload. The agent and its model requests run locally, but commands sent over SSH run on the shared login node. Keep command execution subject to your review; do not give the agent unattended, unbounded shell access or use SSH to bypass [login-node limits](index.md#login-node-limits). Avoid rapid connection retries that can trigger access blocks; see [AI Guidance](ai-guidance.md#best-practices). Run builds and compute-intensive tasks in allocated jobs.
 
+### SSH to an allocated compute node
+
+For commands that need compute-node resources, first start an [interactive job on Polaris](../polaris/running-jobs/index.md#interactive-jobs-on-compute-nodes) or [Aurora](../aurora/running-jobs-aurora.md#interactive-jobs-on-compute-nodes) using your allocation. Once the job is running, get the assigned hostname with `hostname` in the interactive shell. From your own machine, use the login host as a jump host to reach **that assigned node**:
+
+```bash
+ssh -J alcf-agent your_username@<compute_node_hostname> 'hostname'
+# Your local agent can issue reviewed commands using the same SSH route.
+```
+
+Use the `alcf-agent` host entry and master connection from above. Replace the username and compute-node hostname with your own; if SSH prompts for a key or fails, check the [compute-node SSH requirements](../running-jobs/known-issues.md#unable-to-ssh-to-compute-nodes). Compute-node access is available only while your job is running. Do not use SSH to reach unallocated nodes, and do not assume a command run this way has the same job-launch environment as a PBS-launched application. Keep long-running work in the allocated job and use the documented job launcher for MPI workloads.
+
 ## When the IRI API cannot support your workload
 
 If your workflow requires an operation that the [IRI API](../services/iri-api.md) does not provide, email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) with the system, the operation you need, and what prevents you from using IRI. Support can advise on ALCF capabilities and appropriate access paths; this is not a request for support with installing or debugging a third-party agent. Depending on the workflow, the alternatives below may be suitable.
