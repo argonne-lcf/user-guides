@@ -5,7 +5,8 @@
 <!-- For PRs from a branch in this repository (not a fork), a live preview is
      built on every push: a bot posts a single comment on this PR with the link
      (https://argonne-lcf.github.io/user-guides-previews/pr-preview/pr-<N>/)
-     and keeps it up to date. Add the no-preview label to skip it. -->
+     and keeps it up to date. Add the no-preview label to skip it. Drafts get a
+     preview when marked ready, or right away with the force-preview label. -->
 <details>
 <summary>Before</summary>
 
