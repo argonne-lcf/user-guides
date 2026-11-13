@@ -5,7 +5,7 @@ tags:
 
 # PyTorch on Aurora
 
-PyTorch is a popular, open-source deep learning framework developed and released by Facebook. The [PyTorch home page](https://pytorch.org/), has more information about PyTorch, which you can refer to. For troubleshooting on Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
+PyTorch is a popular, open-source deep learning framework originally developed by Meta and now part of the PyTorch Foundation. The [PyTorch home page](https://pytorch.org/) has more information about PyTorch, which you can refer to. For troubleshooting on Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
 ## Major changes in the frameworks module of Fall 2026 (`frameworks/2026.1.0`)
 
@@ -29,7 +29,8 @@ PyTorch is already installed on Aurora with GPU support and available through th
 module load frameworks
 ```
 
-Then, you can import PyTorch in Python as usual (below showing results from the `frameworks/2026.1.0`  module):
+Then, you can import PyTorch in Python as usual (below showing results from the `frameworks/2026.1.0` module):
+
 ``` { .python .no-copy }
 >>> import torch
 >>> torch.__version__
@@ -62,10 +63,9 @@ Device properties = _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550
 ```
 ///
 
-/// info | Tile-as-device setting for AI/ML worklaods
-Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, the `frameworks` module sets `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, meaning that the 12 PVC tiles are exposed as devices (see more details on the [Python](../python.md) page). This is the recommended setting for AI/ML workloads. 
+/// info | Tile-as-device setting for AI/ML workloads
+Each Aurora node has 6 GPUs (also called "Devices" or "cards") and each GPU is composed of two tiles (also called "Sub-device"). By default, the `frameworks` module sets `ZE_FLAT_DEVICE_HIERARCHY=FLAT`, meaning that the 12 PVC tiles are exposed as devices (see more details on the [Python](../python.md) page). This is the recommended setting for AI/ML workloads.
 ///
-
 
 /// details | Using the entire PVC GPU as PyTorch devices
     type: info
@@ -112,37 +112,38 @@ _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='In
 More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
 ///
 
-
-
 ## Code changes to run PyTorch on Aurora GPUs
 
-Here we list some common changes that you may need to do to your PyTorch code in order to use Intel GPUs.  
+Here we list some common changes that you may need to do to your PyTorch code in order to use Intel GPUs.
 
 1. All the `API` calls involving `torch.cuda`, should be replaced with `torch.xpu`. For example:
-   ```diff
-   - torch.cuda.device_count()
-   + torch.xpu.device_count()
-   ```
+
+    ```diff
+    - torch.cuda.device_count()
+    + torch.xpu.device_count()
+    ```
+
 1. When moving tensors and model to GPU, replace `"cuda"` with `"xpu"`. For example:
-   ```diff
-   - model = model.to("cuda")
-   + model = model.to("xpu")
-   ```
+
+    ```diff
+    - model = model.to("cuda")
+    + model = model.to("xpu")
+    ```
 
 /// tip
 
 A more portable solution to select the appropriate device is the following:
+
 ```python
 if torch.cuda.is_available():
     device = torch.device('cuda')
 elif torch.xpu.is_available():
     device = torch.device('xpu')
-else: 
+else:
     device = torch.device('cpu')
 model = model.to(device)
 ```
 ///
-
 
 ## Example: training a PyTorch model on a single GPU tile
 
@@ -207,28 +208,23 @@ for epoch in range(10):
         optimizer.step()
 ```
 
-
 ## PyTorch Best Practices on Aurora
 
 When running PyTorch applications, we have found the following practices to be generally, if not universally, useful and encourage you to try some of these techniques to boost performance of your own applications.
 
 1. Use Reduced Precision. Reduced Precision is available on Intel Max 1550 and is supported with PyTorch operations. In general, the way to do this is via the PyTorch Automatic Mixed Precision package (AMP), as described in the [mixed precision documentation](https://pytorch.org/docs/stable/amp.html). In PyTorch, users generally need to manage casting and loss scaling manually, though context managers and function decorators can provide easy tools to do this.
 
-2. PyTorch has a `JIT` module as well as backends to support op fusion, similar to TensorFlow's `tf.function` tools. See [TorchScript](https://pytorch.org/docs/stable/jit.html) for more information.
+2. `torch.compile` is available for Intel Max 1550 GPU and can be used to speed up training and inference, including through op fusion. See the [`torch.compile` tutorial](https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html) for more information.
 
-3. `torch.compile` is available for Intel Max 1550 GPU and can be used to speed up training and inference. See [PyTorch Docs](https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html) for more information.
-
-4. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. More info [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features.html#channels-last) and [here](https://intel.github.io/intel-extension-for-pytorch/xpu/latest/tutorials/features/nhwc.html)
+3. For convolutional neural networks, using `channels_last` (NHWC) memory format gives better performance. See the PyTorch [channels last memory format tutorial](https://docs.pytorch.org/tutorials/intermediate/memory_format_tutorial.html).
 
 <!---
 4. In order to run an application with `TF32` precision type, one must set the following environment parameter: `export IPEX_FP32_MATH_MODE=TF32`. This allows calculations using `TF32` as opposed to the default `FP32`, and done through `intel_extension_for_pytorch` module.
 --->
 
-
 ## Distributed Training on multiple GPUs
 
-Distributed training with PyTorch on Aurora is facilitated through both [Distributed Data Parallel (DDP)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html). Horovod is no longer supported in recent `frameworks` modules.
-
+Distributed training with PyTorch on Aurora is facilitated through [Distributed Data Parallel (DDP)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html). Horovod is no longer supported in recent `frameworks` modules.
 
 ### Distributed Data Parallel (DDP)
 
@@ -239,7 +235,7 @@ The key steps in performing distributed training are:
 1. Initialize PyTorch's `DistributedDataParallel` with `backend='xccl'`
 1. Use `DistributedSampler` to partition the training data among the ranks
 1. Pin each rank to a GPU
-1. Wrap the model in DDP to keep it in sync across the ranks 
+1. Wrap the model in DDP to keep it in sync across the ranks
 1. Rescale the learning rate
 1. Use `set_epoch` for shuffling data across epochs
 
@@ -312,7 +308,7 @@ torch.distributed.destroy_process_group()
 For good performance, it is important to set the appropriate [CPU affinity](../../running-jobs-aurora.md#mpi-rank-and-thread-binding-to-cores-and-gpus) when launching training scripts with mpiexec. When using all 12 PVC tiles on each of the nodes, the following setting is recommended
 
 ```bash
-export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)! 
+export CPU_BIND="verbose,list:4-7:8-11:12-15:16-19:20-23:24-27:56-59:60-63:64-67:68-71:72-75:76-79" # (1)!
 mpiexec ... --cpu-bind=${CPU_BIND} python pytorch_ddp.py
 ```
 
@@ -349,7 +345,7 @@ __Important__: This setup is a work in progress, and based on observed performan
 
 The Intel PVC GPUs contain 4 Compute Command Streamers (CCSs) on each tile, which can be used to group Execution Units (EUs) into common pools. These pools can then be accessed by separate processes thereby enabling distributed training with multiple MPI processes per tile. This feature on PVC is similar to MPS on NVIDIA GPUs and can be beneficial for increasing computational throughput when training or performing inference with smaller models which do not require the entire memory of a PVC tile. For more information, see the section on using multiple CCSs under the [Running Jobs on Aurora](../../running-jobs-aurora.md) page.
 
-For DDP distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
+For DDP, distributed training with multiple CCSs can be enabled programmatically within the user code by explicitly setting the `xpu` device in PyTorch, for example
 
 ```python linenums="1"
 import os
@@ -357,7 +353,7 @@ from argparse import ArgumentParser
 import torch
 
 parser = ArgumentParser(description='CCS Test')
-parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4], 
+parser.add_argument('--ppd', default=1, type=int, choices=[1,2,4],
                     help='Number of MPI processes per GPU device') # (1)!
 args = parser.parse_args()
 
@@ -369,7 +365,7 @@ if torch.xpu.is_available():
     torch.xpu.set_device(xpu_id)
 ```
 
-1. PVC GPU allow the use of 1, 2 or 4 CCSs on each tile
+1. PVC GPUs allow the use of 1, 2 or 4 CCSs on each tile
 
 and then adding the proper environment variables and `mpiexec` settings in the run script. For example, to run distributed training with 48 MPI processes per node exposing 4 CCSs per tile, set
 
@@ -396,13 +392,14 @@ exec "$@"
 1. Note that the script takes the number of CCSs exposed as a command line argument
 
 /// info | Checking PVC usage with `xpu-smi`
-Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing 
+Users are invited to check correct placement of the MPI ranks on the different tiles by connecting to the compute node being used and executing
+
 ```bash
 module load xpu-smi
 watch -n 0.1 xpu-smi stats -d <GPU_ID> # (1)!
 ```
 
-1. In this case, GPU_ID refers to the 6 GPU on each node, not an individual tile
+1. In this case, GPU_ID refers to one of the 6 GPUs on each node, not an individual tile
 
 and checking the GPU and memory utilization of both tiles.
 
@@ -414,7 +411,7 @@ Alternatively, execute
 
 1. `card0` refers to GPU 0, `card1` for GPU 1, etc.
 
-and press `1` on the keybord to see the utilization of the CCS on the selected GPU. 
+and press `1` on the keyboard to see the utilization of the CCS on the selected GPU.
 ///
 
 /// warning | Multiple CCSs and oneCCL
