@@ -13,9 +13,11 @@ keywords:
 ## Logging Into Crux
 
 To log into Crux:
+
 ```bash
 ssh <username>@crux.alcf.anl.gov
 ```
+
 Then, type in the passcode from your MobilePASS+ or physical hardware token. Once logged in, you land on one of the Crux login nodes (`crux-uan-0001`, `crux-uan-0002`).
 
 ## Hardware Overview
@@ -29,16 +31,20 @@ For all code building and development, please use Crux compute nodes, especially
 ## Accessing Additional Software
 
 ALCF installs additional software in `/soft`, which can be accessed via module commands by altering your `$MODULEPATH`:
+
 ```bash
 module use /soft/modulefiles
 ```
-The available software can then be queried with `module avail`. In particular, loading the `spack-pe-base` module provides access to additional software and build tools. For example, `cmake` is available via the following:
+
+The available software can then be queried with `module avail`. In particular, the `spack-pe-base` module provides access to additional build tools. For example, `cmake` is available via:
 
 ```bash
 module use /soft/modulefiles
 module load spack-pe-base
 module load cmake
 ```
+
+See `module avail cmake` after loading `spack-pe-base` for available versions (e.g. `cmake/3.30.5`).
 
 ## Submitting and Running Jobs
 
@@ -54,7 +60,7 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 ## Proxy
 
-If the node you are on doesn’t have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
+If the node you are on does not have outbound network connectivity, add the following to your `~/.bash_profile` to access the proxy host:
 
 ```bash
 # proxy settings
@@ -63,24 +69,11 @@ export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
 export http_proxy="http://proxy.alcf.anl.gov:3128"
 export https_proxy="http://proxy.alcf.anl.gov:3128"
 export ftp_proxy="http://proxy.alcf.anl.gov:3128"
+export no_proxy="admin,localhost,*.cm.crux.alcf.anl.gov,*.alcf.anl.gov"
 ```
-<!-- export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov" -->
 
-<!-- ## MPI -->
-<!-- ALCF provides a few MPI package built specifically for ThetaGPU -->
-<!-- – UCX is enabled -->
-
-<!-- ```module load openmpi``` -->
-
-<!-- – Default module is openmpi/openmpi-4.1.0 -->
-
-<!-- ```module av openmpi``` -->
-
-<!-- List of possible openmpi modules -->
+Compute nodes on Crux route outbound traffic through the proxy; the UANs have direct connectivity. Setting `no_proxy` avoids sending internal ALCF traffic through the proxy.
 
 ## Getting Assistance
 
 Please direct all questions, requests, and feedback to [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
-
----
----
