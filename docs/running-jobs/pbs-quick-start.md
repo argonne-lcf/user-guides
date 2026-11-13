@@ -1,5 +1,5 @@
 ---
-description: "Request and manage compute resources on ALCF systems with PBS's qsub, qstat, qalter, and qdel commands, key terms, and fakeroot container access."
+description: "Request and manage compute resources on ALCF systems with PBS's qsub, qstat, qalter, and qdel commands."
 ---
 
 # PBS Quick Start
