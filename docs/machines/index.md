@@ -15,5 +15,6 @@ ALCF resources include leadership-class supercomputers, visualization clusters, 
 - [Crux](../crux/index.md){ .alcf-tile-link }
 - [Polaris](../polaris/index.md){ .alcf-tile-link }
 - [Sophia](../sophia/index.md){ .alcf-tile-link }
+- [Inference Systems](../services/inference-endpoints/index.md#system-details){ .alcf-tile-link }
 
 </div>
