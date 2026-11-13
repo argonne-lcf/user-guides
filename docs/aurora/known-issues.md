@@ -6,20 +6,22 @@ last_verified: 2026-11-13
 
 # Known Issues
 
-## Working Reliably on Aurora
-
 Please check back here often for updates (indicated by the "Last Updated" timestamp at the bottom of this page). As users encounter new issues and find solutions or workarounds, we will update these notes.
+
+## Working Reliably on Aurora
 
 ### Outages and Downtime – Expectations
 
 On average, users should expect weekly preventative maintenance (PM) on the system (downtime most often scheduled for Mondays), although PMs will be deferred where possible. ALCF continues to pursue a number of stability and performance improvements in cooperation with HPE and Intel in order to improve the user experience. Users should continue to be proactive about verifying the correctness of their workloads, watching for hangs in their jobs, and otherwise adopting work methods that are mindful of and resilient to instability.
 
+Maintenance and outage notices go to the [aurora-notify@alcf.anl.gov](mailto:aurora-notify@alcf.anl.gov) mailing list. All users with access to Aurora are added to the list.
+
 ### Scheduling
 
-The current queue policy for Aurora is set up based on experiences to date to help maximize productive use of the machine by projects.
+Aurora's queue policy is set up to help projects make productive use of the machine. See [Running Jobs on Aurora](running-jobs-aurora.md) for queues and limits.
 
-- The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
-- Focus initially on making good use of the system with ≤2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results.
+- Start testing at small scales and ensure correct results (and performance) before ramping up to production campaigns.
+- Validate code and runtime behavior with jobs of ≤2048 nodes before generating science results.
 
 ### Storage
 
@@ -37,13 +39,13 @@ See the [DAOS](data-management/daos/daos-overview.md) page for how to use DAOS o
 
 #### Grand/Eagle
 
-These Lustre-based file systems are not currently mounted on Aurora. Similarly, Flare will not initially be mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
+These Lustre file systems are mounted on Polaris but not on Aurora, and Flare is not mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
 
 ### Scaling out of Flare (Lustre) and `/soft` (NFS)
 
-Applications which dynamically load libraries out of shared filesystems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
+Applications which dynamically load libraries out of shared file systems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
 
-- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared filesystems entirely.
+- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared file systems entirely.
 - Statically link application binaries, as this reduces the number of dynamically loaded files.
 - If loading many small (≲100MB) shared libraries or Python modules, use [Copper](data-management/copper/copper.md).
 
@@ -53,7 +55,7 @@ Checkpointing is absolutely essential. The mean time between application interru
 
 - If checkpointing has minimal overhead, consider checkpointing once every 15 minutes.
 - If checkpointing has substantial overhead, then consider checkpointing every 30-60 minutes.
-- It may be the case that the highest throughput initially will be with creating job dependency chains where scripts are able to 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
+- For the highest throughput, consider creating job dependency chains where scripts 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
 
 ### Troubleshooting Common Issues
 
@@ -92,13 +94,13 @@ To avoid a hung job running out all the requested wallclock time on all its node
 
 #### GPU Segfaults (a.k.a. "Page Faults")
 
-Memory errors on the GPUs are caught when illegal accesses exceed a page boundary. When you see an error message indicating `Unexpected page fault from GPU at <address>`
+Memory errors on the GPUs are caught when illegal accesses exceed a page boundary, and are reported with an error message like `Unexpected page fault from GPU at <address>`.
 
 The best tools for debugging these are `gdb-oneapi` and `DDT`, both of which allow debugging into GPU kernel threads and looking at GPU data structures. You may also dump and step through the PVC assembly code using the debuggers if helpful. It is possible that there remain bugs in the IGC compiler that produce invalid assembly code, though as always the most likely cause of segfaults is memory errors in application code. To use the debuggers effectively in GPU kernels, you should compile and link your application with `-g -O0`. Keep in mind that the IGC compilation of GPU kernels takes place during the link phase if you're using AoT compilation.
 
 ## Issues and Workarounds
 
-This is a collection of known issues that have been encountered during Aurora's early user phase. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
+This is a collection of known issues that have been encountered on Aurora. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
 
 A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/software resource account for access.
 
@@ -122,7 +124,7 @@ export FI_CXI_CQ_FILL_PERCENT=20
 
 The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues persist. This is directly impacted by the number of unexpected messages sent and so may need to be increased as the scale of the job increases.
 
-It may be useful to use other libfabric environment settings. In particular, the setting below may be useful to try. These are what Cray MPI sets by default [Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/24.03/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
+Other libfabric environment settings may also help, such as the defaults that Cray MPI sets: see [Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/24.03/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
 
 #### 2. `failed to convert GOTPCREL relocation`
 
@@ -190,7 +192,7 @@ mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 
 #### 8. Slow performance with ≥96 processes per node
 
-If you are running with 96 processes per node (i.e., `-ppn 96`) or more, you may see slowdowns or hanging (see https://github.com/pmodels/mpich/issues/7593 for example). To be clear, this is not total number of processes, but processes per node. A workaround for this is to set `export MPIR_CVAR_CH4_PROGRESS_THROTTLE=1`.
+If you are running with 96 processes per node (i.e., `-ppn 96`) or more, you may see slowdowns or hanging (see [pmodels/mpich#7593](https://github.com/pmodels/mpich/issues/7593) for an example). To be clear, this is not total number of processes, but processes per node. A workaround for this is to set `export MPIR_CVAR_CH4_PROGRESS_THROTTLE=1`.
 
 ### Submitting Jobs
 
