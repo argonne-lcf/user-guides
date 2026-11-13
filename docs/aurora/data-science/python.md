@@ -179,7 +179,7 @@ Result y is located on the device: Device(level_zero:gpu:0)
 All dpnp array creation routines and random number generators have additional optional keyword arguments (device, queue, and usm_type) which users can leverage to explicitly specify on which device or queue they want the data to be created along with the USM memory type to be used.
 
 /// info | Changes after version 0.15.0
-For dpnp version <= 0.15.0, all dpnp kernels are hard-coded to sync with the CPU after completion (i.e., `event.wait()` is inserted before returning). From dpnp version > 0.15.0, all kernels are run asynchronously, with linear ordering of groups of tasks (similar to CuPy). This results in faster runtime and better GPU utilization. To time kernels with dpnp > 0.15.0, insert `.sycl_queue.wait()` before measuring the end time, for example
+For dpnp version ≤0.15.0, all dpnp kernels are hard-coded to sync with the CPU after completion (i.e., `event.wait()` is inserted before returning). From dpnp version > 0.15.0, all kernels are run asynchronously, with linear ordering of groups of tasks (similar to CuPy). This results in faster runtime and better GPU utilization. To time kernels with dpnp > 0.15.0, insert `.sycl_queue.wait()` before measuring the end time, for example
 
 ```python linenums="1"
 import dpnp as np
