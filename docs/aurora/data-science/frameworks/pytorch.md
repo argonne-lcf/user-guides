@@ -105,7 +105,7 @@ Newest first. Full package lists and rollout details are in [Aurora System Updat
 | Release | Rolled out | PyTorch | Changes that may require code updates |
 | --- | --- | --- | --- |
 | [`frameworks/2026.1.0`](#frameworks-2026-09) | [2026-09-28](../../system-updates.md#major-update-2026-09) | 2.13 | IPEX removed; `CCL_OP_SYNC` and `ONEAPI_DEVICE_SELECTOR` no longer set by the module |
-| [`frameworks/2025.3.1`](#frameworks-2026-02) | [2026-03-10](../../system-updates.md#major-update-2026-02) | 2.10 | IPEX deprecated; `ONEAPI_DEVICE_SELECTOR` includes OpenCL |
+| [`frameworks/2025.3.1`](#frameworks-2026-02) | [2026-03-10](../../system-updates.md#major-update-2026-02) | 2.10 | First default module with the preview module's changes (below); IPEX deprecated; `ONEAPI_DEVICE_SELECTOR` includes OpenCL |
 | [`frameworks` (preview), PE 25.190.0](#frameworks-2025-09) | [2025-10-13](../../system-updates.md#major-update-2025-09) | 2.8 | `xccl` backend required; `oneccl_bindings_for_pytorch`, TensorFlow, and Horovod removed; NumPy 2 |
 
 ### `frameworks/2026.1.0` (Sep 2026) { #frameworks-2026-09 }
@@ -118,6 +118,7 @@ Newest first. Full package lists and rollout details are in [Aurora System Updat
 ### `frameworks/2025.3.1` (Feb-Mar 2026) { #frameworks-2026-02 }
 
 - PyTorch 2.10 with oneAPI 2025.3.1 (PE 26.26.0).
+- First default `frameworks` module to include the changes introduced in the [2025 preview module](#frameworks-2025-09): the `xccl` backend is required, and `oneccl_bindings_for_pytorch`, TensorFlow, and Horovod are removed. If you skipped the preview module, apply those changes when moving to this release.
 - `import intel_extension_for_pytorch as ipex` is deprecated. The vendor is upstreaming IPEX functionality to mainline PyTorch. If you see performance changes after removing the import, add it back.
 - `ONEAPI_DEVICE_SELECTOR` is set to `"opencl:gpu;level_zero:gpu"`. If this causes issues, use Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`.
 
