@@ -6,14 +6,20 @@ description: "How to get help from ALCF: support tickets, mailing lists, office 
 
 The ALCF Support team is available from 9 a.m. to 5 p.m. Central Time, Monday - Friday, except on holidays. 
 
-Click on the links below for more information:
+## Submit a Ticket
 
-- [Staying in Touch](./get-help/index.md)
-- [Mailing Lists](./get-help/mailing-lists.md)
-- [Submit a Ticket](./ticket.md)
-- [Request Software](./get-help/software-requests.md)
-- [ALCF Users Slack Workspace](./get-help/alcf-users-slack.md)
-- [AskALCF AI Chatbot](./get-help/askalcf.md)
-- [Contribute to User Guides](./docs-issues.md)
-- [Aurora Office Hours](./get-help/office-hours.md)
+ALCF manages user support issues through an email support ticketing system. Please read [Submitting a Ticket](./ticket.md) if you need to reach out for support.
+
+## Get Help and Connect
+
+<div class="alcf-tile-grid" markdown>
+
+- [:symbols-live_help:<span>Get Help</span>](./get-help/index.md){ .alcf-tile-link }
+- [:symbols-askalcf:<span>AskALCF AI Chatbot</span>](./get-help/askalcf.md){ .alcf-tile-link }
+- [:material-slack:<span>ALCF User Slack</span>](./get-help/alcf-users-slack.md){ .alcf-tile-link }
+- [:symbols-markunread_mailbox:<span>Mailing Lists</span>](./get-help/mailing-lists.md){ .alcf-tile-link }
+- [:symbols-apps_plus:<span>Request Software</span>](./get-help/software-requests.md){ .alcf-tile-link }
+- [:symbols-punch_clock:<span>Aurora Office Hours</span>](./get-help/office-hours.md){ .alcf-tile-link }
+
+</div>
 
