@@ -1,0 +1,23 @@
+extends: existence
+level: warning
+message: "Suggested change: descriptive link text instead of '%s'."
+scope: raw
+ignorecase: true
+nonword: true
+tokens:
+  - '\[(?:click here|here|this link|this page|read more|more|link)\]\('
+tests:
+  - name: flags here as link text
+    input: "The queue limits are [here](../running-jobs/index.md)."
+    want: |
+      1:22:alcf-style.terminology.link-text:Suggested change: descriptive link text instead of '[here]('.
+  - name: flags click here as link text
+    input: "[Click here](../running-jobs/index.md) for the queue limits."
+    want: |
+      1:1:alcf-style.terminology.link-text:Suggested change: descriptive link text instead of '[Click here]('.
+  - name: allows descriptive link text
+    input: "See [the queue limits](../running-jobs/index.md)."
+    want: ''
+  - name: allows here as an ordinary word
+    input: "The queue limits are listed here and on the policy page."
+    want: ''

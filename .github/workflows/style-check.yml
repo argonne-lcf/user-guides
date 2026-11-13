@@ -1,0 +1,14 @@
+name: Style Check
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: vale-cli/vale-action@v3
+        with:
+          reporter: github-pr-annotations
