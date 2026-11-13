@@ -29,9 +29,9 @@ There are four production queues you can target in your qsub (`-q <queue>`):
 | large           | 2000     | 10,624[^1] | 5 min    | 24 hrs   |                                                                                                                                                                                                                                                                       |
 | backfill-small  | 256      | 1024       | 5 min    | 12 hrs   | Low priority, negative project balance                                                                                                                                                                                                                                |
 | backfill-medium | 1025     | 1999       | 5 min    | 18 hrs   | Low priority, negative project balance.                                                                                                                                                                                                                               |
-| backfill-large  | 2000     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/index.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
+| backfill-large  | 2000     | 10,624[^1] | 5 min    | 24 hrs   | Low priority, negative project balance; theoretical max; stable max nodecount may vary; see [pbsnodes](../running-jobs/working-with-pbs.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current nodecount. |
 
-[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/index.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
+[^1]: Theoretical max node count. The stable max node count may vary; see [pbsnodes](../running-jobs/working-with-pbs.md#pbsnodes) and [pbs-tui](https://github.com/saforem2/pbs-tui) for current node count.
 
 /// warning
 

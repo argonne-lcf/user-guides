@@ -4,10 +4,14 @@ description: "ALCF services: inference endpoints, the IRI API, JupyterHub, conti
 
 # ALCF Services
 
-Below is a list of some of the services ALCF offers.
+See the following links for information on running inference against hosted models, the facility IRI API, and interactive computing with JupyterHub. Information on continuous integration and Globus Compute can also be found below.
 
-- [Inference Endpoints](inference-endpoints/index.md): API endpoints for running inference against LLM and non-LLM models hosted on ALCF systems.
-- [IRI API](iri-api.md): Facility IRI API for resource information, job submission, and filesystem operations.
-- [JupyterHub](jupyter-hub.md): An interactive computing environment for Python and other languages.
-- [Continuous Integration](ci/index.md): Automated processes to help build, test, package, and deploy on ALCF systems.
-- [Globus Compute](globus-compute.md): Globus Compute Platform
+<div class="alcf-tile-grid" markdown>
+
+- [Inference Endpoints](inference-endpoints/index.md){ .alcf-tile-link }
+- [IRI API](iri-api.md){ .alcf-tile-link }
+- [JupyterHub](jupyter-hub.md){ .alcf-tile-link }
+- [Continuous Integration](ci/index.md){ .alcf-tile-link }
+- [Globus Compute](globus-compute.md){ .alcf-tile-link }
+
+</div>
