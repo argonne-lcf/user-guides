@@ -7,20 +7,6 @@ tags:
 
 PyTorch is a popular, open-source deep learning framework originally developed by Meta and now part of the PyTorch Foundation. The [PyTorch home page](https://pytorch.org/) has more information about PyTorch, which you can refer to. For troubleshooting on Aurora, please contact [support@alcf.anl.gov](mailto:support@alcf.anl.gov).
 
-## Major changes in the frameworks module of Fall 2026 (`frameworks/2026.1.0`)
-
-- When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
-- `export CCL_OP_SYNC=1` is **not** set any more.
-- `ONEAPI_DEVICE_SELECTOR` is **not** set by the module any more. Defaults to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` as set by the `oneapi/release/2026.1.0`.
-
-## Major changes in the frameworks module of Spring 2026 (`frameworks/2025.3.1`)
-
-- The `torch_ccl` module has been removed. `import oneccl_bindings_for_pytorch as torch_ccl` is no longer needed.
-- When initializing `torch.distributed`, the `backend` must be changed to `xccl` from `ccl`.
-- `import intel_extension_for_pytorch as ipex` is now deprecated. The vendor is upstreaming all of the functionality from IPEX to the mainline PyTorch distribution. If you experience performance variations after removing the import, please switch back to importing it.
-- `horovod` support for PyTorch has been removed.
-- `ONEAPI_DEVICE_SELECTOR` has been set to `"opencl:gpu;level_zero:gpu"`, if this causes any issues, please revert to Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
-
 ## Provided Installation
 
 PyTorch is already installed on Aurora with GPU support and available through the [frameworks module](../python.md). To use it from a compute node, please load the following modules:
@@ -111,6 +97,39 @@ _XpuDeviceProperties(name='Intel(R) Data Center GPU Max 1550', platform_name='In
 
 More information and details are available through the [Level Zero Specification Documentation - Affinity Mask](https://oneapi-src.github.io/level-zero-spec/level-zero/latest/core/PROG.html?highlight=affinity#affinity-mask)
 ///
+
+## Changes by `frameworks` Release
+
+Newest first. Full package lists and rollout details are in [Aurora System Updates](../../system-updates.md).
+
+| Release | Rolled out | PyTorch | Changes that may require code updates |
+| --- | --- | --- | --- |
+| [`frameworks/2026.1.0`](#frameworks-2026-09) | [2026-09-28](../../system-updates.md#major-update-2026-09) | 2.13 | IPEX removed; `CCL_OP_SYNC` and `ONEAPI_DEVICE_SELECTOR` no longer set by the module |
+| [`frameworks/2025.3.1`](#frameworks-2026-02) | [2026-03-10](../../system-updates.md#major-update-2026-02) | 2.10 | IPEX deprecated; `ONEAPI_DEVICE_SELECTOR` includes OpenCL |
+| [`frameworks` (preview), PE 25.190.0](#frameworks-2025-09) | [2025-10-13](../../system-updates.md#major-update-2025-09) | 2.8 | `xccl` backend required; `oneccl_bindings_for_pytorch`, TensorFlow, and Horovod removed; NumPy 2 |
+
+### `frameworks/2026.1.0` (Sep 2026) { #frameworks-2026-09 }
+
+- PyTorch 2.13 with oneAPI 2026.1.0 (PE 26.181.0).
+- Intel Extension for PyTorch (IPEX) is no longer included. Remove `import intel_extension_for_pytorch`.
+- `CCL_OP_SYNC=1` is no longer set.
+- `ONEAPI_DEVICE_SELECTOR` is no longer set by the module. The `oneapi/release/2026.1.0` module sets it to `level_zero:gpu`.
+
+### `frameworks/2025.3.1` (Feb-Mar 2026) { #frameworks-2026-02 }
+
+- PyTorch 2.10 with oneAPI 2025.3.1 (PE 26.26.0).
+- `import intel_extension_for_pytorch as ipex` is deprecated. The vendor is upstreaming IPEX functionality to mainline PyTorch. If you see performance changes after removing the import, add it back.
+- `ONEAPI_DEVICE_SELECTOR` is set to `"opencl:gpu;level_zero:gpu"`. If this causes issues, use Level Zero only with `export ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`.
+
+### `frameworks` (preview) module, PE 25.190.0 (Sep-Oct 2025) { #frameworks-2025-09 }
+
+- PyTorch 2.8 with oneAPI 2025.2.0.
+- `oneccl_bindings_for_pytorch` (`torch_ccl`) is removed in favor of PyTorch's `xccl` backend. This is a breaking change:
+    - Initialize `torch.distributed` with `backend='xccl'` instead of `backend='ccl'`.
+    - Remove `import oneccl_bindings_for_pytorch`, which now raises `ModuleNotFoundError`.
+- TensorFlow and Horovod are no longer included.
+- The PyTorch ecosystem is built against `numpy==2.0.2`.
+- `CCL_OP_SYNC=1` is set by the module, as a workaround for oneCCL collectives that need an explicit synchronization step.
 
 ## Code changes to run PyTorch on Aurora GPUs
 
