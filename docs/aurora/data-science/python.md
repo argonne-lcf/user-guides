@@ -13,13 +13,13 @@ We have system-installed frameworks modules, which contain common AI/ML packages
 
 //// info
 
-If you only use packages from the system installed framework module, [Copper](../data-management/copper/copper.md) is not needed. 
+If you only use packages from the system installed framework module, [Copper](../data-management/copper/copper.md) is not needed.
 ////
 ///
 
 ## AI/ML Framework Modules
 
-For most Python users on Aurora, a good starting point are the AI/ML framework modules available on the system. For PyTorch users, we recommend 
+For most Python users on Aurora, a good starting point are the AI/ML framework modules available on the system. For PyTorch users, we recommend
 
 ```bash
 module load frameworks
@@ -27,18 +27,15 @@ module load frameworks
 
 Please note that:
 
-- The modules automatically load a `conda` environment with GPU-supported builds of the respective framework libraries along with other popular Python and ML packages. 
+- The module automatically loads a `conda` environment with GPU-supported builds of PyTorch along with other popular Python and ML packages.
 - The `frameworks` module may load a different oneAPI compiler SDK and additional libraries than the default module.
-- The `frameworks` module are updated approximately every quarter.
+- The `frameworks` module is updated approximately every quarter.
 
-For more information on PyTorch and TensorFlow on Aurora, please see the respective pages: 
-
-- [PyTorch](./frameworks/pytorch.md)
-- [TensorFlow](./frameworks/tensorflow.md)
+For more information on PyTorch on Aurora, see [PyTorch](./frameworks/pytorch.md). TensorFlow and Horovod are no longer included in the `frameworks` module; see [TensorFlow](./frameworks/tensorflow.md).
 
 ## Virtual environments via `venv`
 
-While the conda environment automatically loaded with the `frameworks` and `tensorflow` modules contains many of the most commonly used Python packages for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments. 
+While the conda environment automatically loaded with the `frameworks` module contains many of the most commonly used Python packages for our users, you may still encounter a scenario in which you need to extend the functionality of the environment (i.e. install additional packages). In this case, we suggest the use of Python virtual environments.
 
 /// warning
 
@@ -52,26 +49,30 @@ python3 -m venv /path/to/new/venv --system-site-packages
 source /path/to/new/venv/bin/activate
 ```
 
-The `--system-site-packages` flag will make sure that all the packages included in the `frameworks` or `tensorflow` modules are still available after sourcing the `venv`. If, however, you would like to create an empty `venv`, simply remove this flag. You can always retroactively change the `--system-site-packages` flag state for this virtual environment by editing `venv/pyvenv.cfg` and changing the value of `include-system-site-packages` to `true`.
+The `--system-site-packages` flag will make sure that all the packages included in the `frameworks` module are still available after sourcing the `venv`. If, however, you would like to create an empty `venv`, simply remove this flag. You can always retroactively change the `--system-site-packages` flag state for this virtual environment by editing `venv/pyvenv.cfg` and changing the value of `include-system-site-packages` to `true`.
 
 To install a different version of a package that is already installed in the base environment, you can use:
+
 ```bash
 pip install --ignore-installed ... # or -I
 ```
+
 The base environment is not writable, so it is not possible to remove or uninstall packages from it. The packages installed with the above `pip` command should shadow those installed in the base environment.
 
 Any time you wish to use this virtual environment in future shell sessions, be sure to first load the base AI/ML modules (e.g., `module load frameworks`) before `source /path/to/new/venv/bin/activate`.
 
 An alternative, although not recommended, approach to creating a `venv` is to install packages with
+
 ```bash
 pip install --user ...
 ```
+
 which will install packages in `$PYTHONUSERBASE/lib/pythonX.Y/site-packages`. Note that this approach may require the `PATH` environment variable to be modified with `export PATH=$PYTHONUSERBASE/bin:$PATH`. Cloning the conda environment provided with the `frameworks` module, or using `venv` are both more flexible and transparent methods compared to `--user` installs.
 
 ## Intel's Data Parallel Extensions for Python (DPEP)
 
 /// warning | Managing GPU and CPU devices on Aurora
-On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable. 
+On Aurora, you can manage which devices are visible by using the `ONEAPI_DEVICE_SELECTOR` environment variable.
 
 Additionally, by default the CPU is not exposed as a device (e.g., `dpctl.has_cpu_devices()` returns `False`). This setting allows dpnp and dpctl to use the GPU as the default SYCL device without needing to explicitly specify it. To access the CPU as a SYCL device, set `export ONEAPI_DEVICE_SELECTOR=opencl:cpu`, or to access both GPU and CPU set `export ONEAPI_DEVICE_SELECTOR="opencl:cpu;level_zero:gpu"`.
 
@@ -110,7 +111,7 @@ However, note that operating on arrays created on different devices will raise a
 
 ### Accessing the DPEP Packages
 
-Users can access the `dpnp` and `dpctl` packages by simply loading the latest AI/ML frameworks module with 
+Users can access the `dpnp` and `dpctl` packages by simply loading the latest AI/ML frameworks module with
 
 ```bash
 module load frameworks
@@ -162,7 +163,7 @@ y = np.sum(x) # (2)!
 print("Result y is located on the device:", y.device)
 ```
 
-1. `np.asarray()` creates an array on the default SYCL device, which is the Intal Max 1550 GPU on Aurora. The queue associated with this array is now carried with `x`, and the pre-compiled kernel for `np.sum(x)` is submitted to that queue. 
+1. `np.asarray()` creates an array on the default SYCL device, which is the Intel Max 1550 GPU on Aurora. The queue associated with this array is now carried with `x`, and the pre-compiled kernel for `np.sum(x)` is submitted to that queue.
 2. The result `y` is allocated on the device and is associated with the queue of `x`.
 
 /// details | Output
@@ -179,6 +180,7 @@ All dpnp array creation routines and random number generators have additional op
 
 /// info | Changes after version 0.15.0
 For dpnp version <= 0.15.0, all dpnp kernels are hard-coded to sync with the CPU after completion (i.e., `event.wait()` is inserted before returning). From dpnp version > 0.15.0, all kernels are run asynchronously, with linear ordering of groups of tasks (similar to CuPy). This results in faster runtime and better GPU utilization. To time kernels with dpnp > 0.15.0, insert `.sycl_queue.wait()` before measuring the end time, for example
+
 ```python linenums="1"
 import dpnp as np
 from time import perf_counter
@@ -191,7 +193,7 @@ print(f"Execution time: {perf_counter() - tic} sec")
 ```
 ///
 
-### dpctl 
+### dpctl
 
 The dpctl package lets users access devices supported by the DPC++ SYCL runtime. The package exposes features such as device introspection, execution queue creation, memory allocation, and kernel submission. Below are some of the basic device management functions, but more functionality is available on the [dpctl documentation](https://intelpython.github.io/dpctl/latest/index.html).
 
@@ -240,7 +242,7 @@ The `dpctl.tensor` module (a tensor library implemented using DPC++ that follows
 ///
 
 /// info | Changes after version 0.17.0
-Similarly to dpnp, dpctl version > 0.17.0 runs all kernels asynchronously, therefore `.sycl_queue.wait()` must be used to measure execution time on GPU. 
+Similarly to dpnp, dpctl version > 0.17.0 runs all kernels asynchronously, therefore `.sycl_queue.wait()` must be used to measure execution time on GPU.
 ///
 
 ### numba-dpex
@@ -271,17 +273,17 @@ print("Sum completed successfully")
 2. Get the work item
 3. Define the number of work items
 
-The `vecadd` function, when decorated as a dpex kernel, is compiled with numba-dpex into a data-parallel function to be executed individually by a set of work items (`#!python item.get_id(0)`). Numba-dpex follows the SPMD programming model, wherein each work item runs the function for a subset of the elements of the input arrays.  
+The `vecadd` function, when decorated as a dpex kernel, is compiled with numba-dpex into a data-parallel function to be executed individually by a set of work items (`#!python item.get_id(0)`). Numba-dpex follows the SPMD programming model, wherein each work item runs the function for a subset of the elements of the input arrays.
 The set of work items is defined by the `dpex.Range()` object and the `dpex.call_kernel()` call instructs every work item in the range to execute the `vecadd` kernel for a specific subset of the data. Numba-dpex also follows the compute-follows-data programming model, meaning that the kernel is run on the same device as the dpnp and dpctl arrays passed as inputs.
 
 Note that the numba-dpex kapi allows for more complex data parallel kernels (e.g., nd-range kernels) and the ability to create device callable functions. For these and more features, we refer the users to the [numba-dpex documentation](https://intelpython.github.io/numba-dpex/latest/user_guide/kernel_programming/index.html#).
-
 
 ### DLPack
 
 Thanks to dpctl supporting the Python Array API standard, both dpnp and dpctl provide interoperability with other Python libraries that follow the same standards, such as Numpy and PyTorch, through DLPack. This allows for zero-copy data access across the Python ecosystem.
 
-An example of using DLPack to pass arrays between dpnp and PyTorch is shown below 
+An example of using DLPack to pass arrays between dpnp and PyTorch is shown below
+
 ```python linenums="1"
 import dpnp as dp
 import torch
@@ -317,7 +319,6 @@ PyTorch view of dpnp array: tensor([-3,  1,  2,  3], device='xpu:0')
 /// info | DLPack notes on Aurora
 - `ZE_FLAT_DEVICE_HIERARCHY` must be set to `FLAT`
 - Zero-copy interoperability is supported between dpnp, dpctl, and PyTorch on CPU and GPU, and between Numpy as well on CPU only
-- Interoperability between TensorFlow and the other packages is limited on the GPU due to TensorFlow not being compatible with the latest DLPack rules and still requiring the use of `dlcapsules`
-- Numba-dpex does not directly support DLPack, however numba-dpex kernels take as inputs dpnp and dpctl arrays, thus inperoperability between PyTorch and numba-dpex is available through those packages 
+- Numba-dpex does not directly support DLPack, however numba-dpex kernels take as inputs dpnp and dpctl arrays, thus interoperability between PyTorch and numba-dpex is available through those packages
 ///
 
