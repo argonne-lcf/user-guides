@@ -103,6 +103,8 @@ jobs:
         env:
           CARDS: ${{ needs.gate.outputs.cards }}
         run: |
+          # The logo links (extra.homepage) stay in the preview.
+          export HOMEPAGE="$PREVIEW_URL"
           if [ "$CARDS" = true ]; then
             # preview-social-cards label: build the cards, and point og:image
             # (and canonical URLs) at the preview instead of production.
