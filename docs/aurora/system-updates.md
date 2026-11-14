@@ -204,7 +204,7 @@ The full changelog is in the [2026-02-23](#2026-02-23-available-in-the-next-eval
 
 ### 2026-02-23: Available in the `next-eval` test queue
 
-We have a **temporary** test queue `next-eval` (open to all users) with upto 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1.
+We have a **temporary** test queue `next-eval` (open to all users) with up to 2,600 nodes that has a new compute image. **UANs aurora-uan-0007 and aurora-uan-0008 have the new software image and can be used for compiling.** Please prioritize use of `next-eval` queue for testing and evaluation. See [Running jobs on Aurora](running-jobs-aurora.md) for queue policies. The new image includes updates to Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.40 / LTS release 2523.40), and oneAPI 2025.3.1.
 
 Details of the full changelog are below (**`next-eval` test queue only**):
 
@@ -268,10 +268,10 @@ Details of the full changelog are below (**`next-eval` test queue only**):
         - dpctl 0.21.1
     - Major change:
         - `ONEAPI_DEVICE_SELECTOR="opencl:gpu;level_zero:gpu"`
-            - Exposing both to ensure functionality of `torch` , `triton-xpu` , `vLLM`, `ray` and `dpctl`
-            - We warn the users to this change upon loading the module
+            - Exposing both to ensure functionality of `torch`, `triton-xpu`, `vLLM`, `ray`, and `dpctl`
+            - The module warns users about this change when it is loaded
             - Request switch to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"` and report unusual behaviors
-            - **Temporary**, with proposed fixes included `triton-xpu` release we will switch back to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
+            - **Temporary**: once a `triton-xpu` release includes the proposed fixes, we will switch back to `ONEAPI_DEVICE_SELECTOR="level_zero:gpu"`
 
 ## 2026-02-02: Flare upgrade and NEO 7.2-021 software update
 
@@ -304,7 +304,7 @@ Due to the updates to Aurora's GPU drivers and programming environment, users wi
 
 The compute image with Intel's User (UMD) and Kernel Mode Drivers (KMD) (Agama 1146.12 / rolling release 2523.12), and oneAPI 2025.2.0, which was previously available in the `next-eval` queue, is rolled out to the majority of nodes across Aurora.
 
-2,126 nodes have the old production image and are available in a queue called `legacy`, which will be available to all teams that are unable to run against the new image. Some teams will have higher priority to run in the legacy queue. Use `aurora-uan-000[7-8]` nodes for the `legacy` queue as they will have the same user environment. Users will not be able log in directly to `aurora-uan-000[7-8]` and will need to `ssh` to them after logging in to `aurora.alcf.anl.gov`.
+2,126 nodes have the old production image and are available in a queue called `legacy`, which will be available to all teams that are unable to run against the new image. Some teams will have higher priority to run in the legacy queue. Use `aurora-uan-000[7-8]` nodes for the `legacy` queue as they will have the same user environment. Users will not be able to log in directly to `aurora-uan-000[7-8]` and will need to `ssh` to them after logging in to `aurora.alcf.anl.gov`.
 
 See [Running jobs on Aurora](running-jobs-aurora.md).
 

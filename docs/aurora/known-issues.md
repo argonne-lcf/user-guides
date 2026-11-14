@@ -1,48 +1,51 @@
 ---
 tags:
   - Known Issues
+last_verified: 2026-11-13
 ---
 
-# Early User Notes and Known Issues
+# Known Issues
 
-_Last Updated: 2026-10-07_
+Please check back here often for updates (indicated by the "Last Updated" timestamp at the bottom of this page). As users encounter new issues and find solutions or workarounds, we will update these notes.
 
-## Early User Notes
-
-Please check back here often for updates (indicated by the "Last Updated" timestamp above). As early production users encounter new issues and find solutions or workarounds, we will update these notes. As Aurora matures and becomes more stable over the first year of production, this section should become obsolete.
+## Working Reliably on Aurora
 
 ### Outages and Downtime – Expectations
 
-Users should expect weekly preventative maintenance (PM) on the system, although  PMs will be deferred where possible. The stability of the Aurora system has improved significantly in the recent past, but there are still a number of improvement efforts ongoing in cooperation with HPE and Intel, to improve the user experience. Users need to be proactive about verifying correctness, watching for hangs, and otherwise adopting work methods that are mindful of and resilient to instability.
+On average, users should expect weekly preventative maintenance (PM) on the system (downtime most often scheduled for Mondays), although PMs will be deferred where possible. ALCF continues to pursue a number of stability and performance improvements in cooperation with HPE and Intel in order to improve the user experience. Users should continue to be proactive about verifying the correctness of their workloads, watching for hangs in their jobs, and otherwise adopting work methods that are mindful of and resilient to instability.
+
+Maintenance and outage notices go to the [aurora-notify@alcf.anl.gov](mailto:aurora-notify@alcf.anl.gov) mailing list. All users with access to Aurora are added to the list.
 
 ### Scheduling
 
-The current queue policy for Aurora is set up based on experiences to date to help maximize productive use of the machine by projects.
+Aurora's queue policy is set up to help projects make productive use of the machine. See [Running Jobs on Aurora](running-jobs-aurora.md) for queues and limits.
 
-- The initial goal for teams is to start testing at small scales, ensure correct results (and performance), and ramp up to generating scientific results in production campaigns.
-- Focus initially on making good use of the system with <=2048 nodes per job; the key is to validate code and runtime behavior, then start generating science results.
+- Start testing at small scales and ensure correct results (and performance) before ramping up to production campaigns.
+- Validate code and runtime behavior with jobs of ≤2048 nodes before generating science results.
 
 ### Storage
 
 #### Flare (Lustre File System)
 
-This is the primary and most stable storage filesystem for now. It is still possible that heavy use may trigger significant lags and performance degradations, and possibly lead to compute nodes crashing. We will continue to monitor filesystem stability as production use ramps up. We encourage teams to start out easy on I/O (both amount and job size), if possible, and report issues.
+Flare is the primary file system for project data on Aurora. Very heavy I/O can cause lags and performance degradation; increase I/O volume and job size gradually, and report problems to [support@alcf.anl.gov](mailto:support@alcf.anl.gov). See [Flare](data-management/lustre/flare.md) for striping and other I/O guidance.
 
 #### DAOS (Object Store)
 
-DAOS is the high performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md).  There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
+DAOS is the high-performance file system on Aurora which is currently in a stability testing pre-production period. Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](data-management/lustre/flare.md). There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
-DAOS is currently in its production configuration with 800 out of 1024 servers in use with approximately 200 PB of storage available to users.  Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
+DAOS is currently in its production configuration with 800 out of 1024 servers in use with approximately 200 PB of storage available to users. Please email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) if you are hitting limits and need your pool allocation size to be increased.
+
+See the [DAOS](data-management/daos/daos-overview.md) page for how to use DAOS on Aurora, including its [known issues and workarounds](data-management/daos/daos-overview.md#known-issues-and-workarounds).
 
 #### Grand/Eagle
 
-These won’t be mounted on Aurora initially, but they might be mounted around May 2025, depending on feasibility. Similarly, Flare will not initially be mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
+These Lustre file systems are mounted on Polaris but not on Aurora, and Flare is not mounted on Polaris. DTNs and [Globus](../data-management/data-transfer/using-globus.md) are the best means to transfer data between Polaris and Aurora.
 
 ### Scaling out of Flare (Lustre) and `/soft` (NFS)
 
-Applications which dynamically load libraries out of shared filesystems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
+Applications which dynamically load libraries out of shared file systems such as Flare or `/soft` may experience performance impacts when scaling to large numbers of nodes. These guidelines may mitigate some of these scaling impacts:
 
-- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared filesystems entirely.
+- Use software in the Aurora PE (`/opt/aurora`) whenever possible, as this avoids dependence on shared file systems entirely.
 - Statically link application binaries, as this reduces the number of dynamically loaded files.
 - If loading many small (≲100MB) shared libraries or Python modules, use [Copper](data-management/copper/copper.md).
 
@@ -52,7 +55,7 @@ Checkpointing is absolutely essential. The mean time between application interru
 
 - If checkpointing has minimal overhead, consider checkpointing once every 15 minutes.
 - If checkpointing has substantial overhead, then consider checkpointing every 30-60 minutes.
-- It may be the case that the highest throughput initially will be with creating job dependency chains where scripts are able to 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
+- For the highest throughput, consider creating job dependency chains where scripts 1) automatically restart from the latest available checkpoint file and 2) confirm that the prior run generated reasonable/correct results.
 
 ### Troubleshooting Common Issues
 
@@ -75,16 +78,13 @@ ping failed on x4304c1s6b0n0: No reply from x4307c2s6b0n0.hostmgmt2307.cm.aurora
 ```
 
 then most likely your application will crash or hang. If you see these, the best action is to kill the job and re-run it (from the last checkpoint, if there has been one). Potential issues can be discovered when the non-responsive node gets brought back online. Users may query PBS for more info.
+
 ```console
 $ pbsnodes x4307c2s6b0n0 |grep comment
      comment = StabilityDB 2025-02-24T04:38:14: hbm_controller_errors
 ```
 
 Email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to open a ticket if your application experiences ping failures, especially if these failures are frequent and/or involve the same problematic nodes. ALCF Operations may take such nodes offline.
-
-<!-- #### PBS failures -->
-
-<!-- Need to fill this in with examples and advice to set retry_count to something sane -->
 
 #### Hangs
 
@@ -94,15 +94,15 @@ To avoid a hung job running out all the requested wallclock time on all its node
 
 #### GPU Segfaults (a.k.a. "Page Faults")
 
-Memory errors on the GPUs are caught when illegal accesses exceed a page boundary. When you see an error message indicating `Unexpected page fault from GPU at <address>`
+Memory errors on the GPUs are caught when illegal accesses exceed a page boundary, and are reported with an error message like `Unexpected page fault from GPU at <address>`.
 
-The best tools for debugging these are `gdb-oneapi` and `DDT`, both of which allow debugging into GPU kernel threads and looking at GPU data structures. You may also dump and step through the PVC assembly code using the debuggers if helpful. It is possible that there remain bugs in the IGC compiler that produces invalid assembly code, though as always the most likely cause of segfaults is memory errors in application code. To use the debuggers effectively in GPU kernels, you should compile and link your application with `-g -O0`. Keep in mind that the IGC compilation of GPU kernels takes place during the link phase if you're using AoT compilation.
+The best tools for debugging these are `gdb-oneapi` and `DDT`, both of which allow debugging into GPU kernel threads and looking at GPU data structures. You may also dump and step through the PVC assembly code using the debuggers if helpful. It is possible that there remain bugs in the IGC compiler that produce invalid assembly code, though as always the most likely cause of segfaults is memory errors in application code. To use the debuggers effectively in GPU kernels, you should compile and link your application with `-g -O0`. Keep in mind that the IGC compilation of GPU kernels takes place during the link phase if you're using AoT compilation.
 
-## Known Issues
+## Issues and Workarounds
 
-This is a collection of known issues that have been encountered during Aurora's early user phase. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
+This is a collection of known issues that have been encountered on Aurora. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
 
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/softare resource account for access.
+A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/software resource account for access.
 
 ### Runtime and Compiler Issues
 
@@ -124,7 +124,7 @@ export FI_CXI_CQ_FILL_PERCENT=20
 
 The value of `FI_CXI_DEFAULT_CQ_SIZE` can be set to something larger if issues persist. This is directly impacted by the number of unexpected messages sent and so may need to be increased as the scale of the job increases.
 
-It may be useful to use other libfabric environment settings. In particular, the setting below may be useful to try. These are what Cray MPI sets by default [Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/24.03/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
+Other libfabric environment settings may also help, such as the defaults that Cray MPI sets: see [Cray MPI libfabric Settings](https://cpe.ext.hpe.com/docs/24.03/mpt/mpich/intro_mpi.html#libfabric-environment-variables-for-hpe-slingshot-nic-slingshot-11).
 
 #### 2. `failed to convert GOTPCREL relocation`
 
@@ -134,7 +134,7 @@ If you see
 _libm_template.c:(.text+0x7): failed to convert GOTPCREL relocation against '__libm_acos_chosen_core_func_x'; relink with --no-relax
 ```
 
-try linking with `-flink-huge-device-code`
+try linking with `-flink-huge-device-code`.
 
 #### 3. SYCL Device Free Memory Query Error
 
@@ -145,35 +145,38 @@ x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: The device does not have the e
 x1921c1s4b0n0.hostmgmt2000.cm.americas.sgi.com 0: terminate called after throwing an instance of 'sycl::_V1::invalid_object_error'
   what():  The device does not have the ext_intel_free_memory aspect -33 (PI_ERROR_INVALID_DEVICE)
 ```
+
 Applications are recommended to improve the error handling by checking `aspect::ext_intel_free_memory` SYCL device property before making a memory query.
 
 #### 4. `No VNIs available in internal allocator.`
 
-If you see an error like `start failed on x4102c5s2b0n0: No VNIs available in internal allocator`, pass `--no-vni` to `mpiexec`
+If you see an error like `start failed on x4102c5s2b0n0: No VNIs available in internal allocator`, pass `--no-vni` to `mpiexec`.
 
 #### 5. `PMIX ERROR: PMIX_ERR_NOT_FOUND` and `PMIX ERROR: PMIX_ERROR`
 
 When running on a single node, you may observe this error message:
 
 ```output
-PMIX ERROR: PMIX_ERR_NOT_FOUND in file dstore_base.c at line 1567 
+PMIX ERROR: PMIX_ERR_NOT_FOUND in file dstore_base.c at line 1567
 PMIX ERROR: PMIX_ERROR in file dstore_base.c at line 2334
 ```
 
 These errors can be safely ignored.
 
-#### 6. File too large for Clang to processs
+#### 6. File too large for Clang to process
 
 If you see a compile error similar to:
+
 ```console
 error: file '/var/tmp/icpx-85f5cf3735/wrapper-a0fbdc.bc' is too large for Clang to process
 1 error generated.
 ```
+
 when you are compiling with `-g`, you can decrease the size of the files by compiling with `-fno-system-debug -g`. See [Intel documentation](https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2025-2/fsystem-debug.html) for more details. If `-fno-system-debug -g` does not help, adding additionally `--offload-compress` may help as well.
 
 #### 7. Set `TMPDIR` to avoid `AF_UNIX path too long` error
 
-Software that relies on the setting of `TMPDIR` to create socket files may encouter the linux error `AF_UNIX path too long` when running in processes launched with `mpiexec` on a single node.  This issue has arisen in software using the `python` `multiprocessing` library for this purpose, including some use cases of `pytorch` and `parsl`.
+Software that relies on the setting of `TMPDIR` to create socket files may encounter the Linux error `AF_UNIX path too long` when running in processes launched with `mpiexec` on a single node. This issue has arisen in software using the `python` `multiprocessing` library for this purpose, including some use cases of `pytorch` and `parsl`.
 
 The solution for this error is to manually set `TMPDIR` before launching the application, e.g.
 
@@ -187,10 +190,9 @@ Alternatively, it can be set with the `mpiexec` command, e.g.
 mpiexec --env TMPDIR=/tmp -n 1 --ppn 1 ...
 ```
 
-#### 8. Slow performance with >= 96 processes per node
+#### 8. Slow performance with ≥96 processes per node
 
-If you are running with 96 processes per node (i.e. -ppn 96) or more, you may see slowdowns or hanging (see https://github.com/pmodels/mpich/issues/7593 for example). To be clear, this is not total number of processes, but processes per node. A workaround for this is to set `export MPIR_CVAR_CH4_PROGRESS_THROTTLE=1`.
-
+If you are running with 96 processes per node (i.e., `-ppn 96`) or more, you may see slowdowns or hanging (see [pmodels/mpich#7593](https://github.com/pmodels/mpich/issues/7593) for an example). To be clear, this is not total number of processes, but processes per node. A workaround for this is to set `export MPIR_CVAR_CH4_PROGRESS_THROTTLE=1`.
 
 ### Submitting Jobs
 
@@ -218,7 +220,7 @@ The job tried and failed to start. In this scenario, the user should find that t
 comment = Not Running: Node is in an ineligible state: down and terminated
 ```
 
-There are an insufficient number of nodes online and free for the job to start.
+There are not enough nodes online and free for the job to start.
 
 In the event of a node going down during a job, users may encounter messages such as `ping failed on x4616c0s4b0n0: Application 047a3c9f-fb41-4595-a2ad-4a4d0ec1b6c1 not found`. The node will likely have started a reboot and won't be included in jobs again until checks pass.
 
@@ -238,7 +240,6 @@ To increase the chances that a large job does not terminate due to a node failur
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
 * Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
 
-
 ### Known Issues on Other Pages
 
 Some pages keep known issues for a specific tool or library in their own section:
@@ -256,7 +257,7 @@ Some pages keep known issues for a specific tool or library in their own section
 
 The repository [argonne-lcf/AuroraBugTracking](https://github.com/argonne-lcf/AuroraBugTracking) is a public bug tracking system for known issues (and recently resolved bugs) that affect production science on ALCF Aurora. To report an issue, please reach out to [ALCF Support](../support/ticket.md).
 
-For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md)
+For convenience, nightly (sortable) copies of the summary tables are included here. For the latest versions, see [`bugs.md`](https://github.com/argonne-lcf/AuroraBugTracking/blob/main/bugs.md).
 
 ### [Wider View of Tables](./bugs-table.md)
 
