@@ -135,7 +135,7 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/cha
      -H "Authorization: Bearer ${access_token}" \
      -H "Content-Type: application/json" \
      -d '{
-            "model": "muse-spark-bf16",
+            "model": "mistral-large-4",
             "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
          }'
 ```
@@ -156,7 +156,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="muse-spark-bf16",
+    model="mistral-large-4",
     messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
 )
 
