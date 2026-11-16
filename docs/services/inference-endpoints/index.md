@@ -2,11 +2,7 @@
 
 Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://mailman.cels.anl.gov/mailman3/lists/inference-service-notify.lists.alcf.anl.gov/) to receive updates and maintenance notifications.
 
-## Quick Start
-
-This guide will walk you through the fastest ways to start using the ALCF Inference Endpoints.
-
-### Supported Identity Providers
+## Supported Identity Providers
 
 To access the ALCF Inference Endpoints via the Web UI or API, you can log in using credentials from any of these institutional identity providers:
 
@@ -20,58 +16,50 @@ To access the ALCF Inference Endpoints via the Web UI or API, you can log in usi
 
 ///
 
+## Quick Start
+
+This guide will walk you through the fastest ways to start using the ALCF Inference Endpoints. The service can be access from anywhere with an internet connection, including your local machine and ALCF systems.
+
 ### Web UI
 
-The easiest way to get started is through the web interface, accessible at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/)
-
-The UI is based on the popular Open WebUI platform. After logging in with your ANL or ALCF credentials, you can:
-
-1. Select a model from the dropdown menu at the top of the screen.
-2. Start a conversation directly in the chat interface.
-
-In the model selection dropdown, you can see the status of each model:
+Visit the web interface at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/) and login in with an approved identity provider. Once authenticated, select a model from the dropdown menu and start a conversation.
 
 ![Inference Endpoints Web UI](../files/openwebui.png)
 
-- **Live:** These models are "hot" and ready for immediate use.
-- **Starting:** A node has been acquired and the model is being loaded into memory.
-- **Queued:** The model is in a queue waiting for resources to become available.
-- **Offline:** The model is available but not currently loaded. It will be queued for loading when a user sends a request.
-- **All:** Lists all available models regardless of their status.
+In the model selection dropdown, you can see the status of each model:
+
+- **Live**: "hot" and ready for immediate use.
+- **Starting**: node(s) acquired, but model not loaded ready yet.
+- **Queued**: node(s) requested, but in the queue waiting for available resources.
+- **Offline**: will be queued if a user sends a request.
+- **All**: lists all available models regardless of their status.
 
 /// note | For Advanced UI Features
-For a full guide on advanced features like RAG (Retrieval-Augmented Generation), function calling, and more, please refer to the official [Open WebUI documentation](https://docs.openwebui.com/).
+For details on advanced features like RAG (Retrieval-Augmented Generation) and function calling, please refer to the [Open WebUI documentation](https://docs.openwebui.com/).
 ///
 
 ### API Access
 
-For programmatic access, you can use the API endpoints directly.
-
-/// note | Interactive API Documentation
-The service publishes a [Swagger UI](https://inference-api.alcf.anl.gov/resource_server/docs) generated from its OpenAPI schema. See [Interactive API Reference](api.md#interactive-api-reference).
-///
-
-/// tip | Using the alcf-ai CLI or SDK
-The [`alcf-ai`](https://pypi.org/project/alcf-ai/) package provides a CLI and an OpenAI-compatible Python client for the Inference Service, and uses the shared [`alcf-tokens`](https://pypi.org/project/alcf-tokens/) CLI for authentication. See [alcf-ai CLI and SDK](alcf-ai.md) for details.
-///
+For programmatic access, you can use the API endpoints directly (see [API Usage Examples](api.md) for more details). While we recommend to use the [alcf-ai](alcf-ai.md) package, which provides a CLI and a Python client for the Inference Service, other clients can be used.
 
 #### 1. Setup Your Environment
 
-You can run the following setup from anywhere (your local machine, or an ALCF machine).
-
---8<-- "includes/alcf-ai-install.md"
-
-See [Python Environments](../../dev-environment/python-environments.md) for the other supported package managers.
+Create a virtual environment and install the necessary packages (see [Python Environments](../../dev-environment/python-environments.md) for options including `uv`):
 
 /// tab | alcf-tokens
 
-Install `alcf-ai` and `alcf-tokens` as above. For the Python examples on this page, install the OpenAI SDK in the environment where you run Python:
-
 ```bash
-pip install openai
+pip install alcf-ai alcf-tokens
 ```
 
-With `uv`, `uv run --with openai --with alcf-tokens python` starts Python with both packages in a throwaway environment instead.
+///
+
+/// tab | OpenAI SDK
+
+```bash
+pip install openai alcf-tokens
+```
+
 ///
 
 /// tab | Auth script (Deprecated)
@@ -82,7 +70,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install necessary packages
-pip install openai globus-sdk
+pip install globus-sdk
 
 # Download the deprecated authentication helper script
 wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/heads/main/inference_auth_token.py
@@ -92,17 +80,18 @@ wget https://raw.githubusercontent.com/argonne-lcf/inference-endpoints/refs/head
 
 #### 2. Authenticate
 
-To access the endpoints, you need an authentication token.
+Authenticate with an authorized identity provider to generate an access token:
 
 /// tab | alcf-tokens
 
-Use this command to login to the inference service:
-
 ```bash
+# Authenticate with your Globus account
 alcf-tokens login inference
+
+# Print your token
+alcf-tokens get-token inference
 ```
 
-This requests the inference scopes only, so you are not asked to authorize IRI, Globus Compute, or Globus Flows. See [alcf-ai CLI and SDK](alcf-ai.md) for token verification, and for the `--authorize-transfer` collections that batch processing and data staging require.
 ///
 
 /// tab | Auth script (Deprecated)
@@ -111,29 +100,32 @@ This requests the inference scopes only, so you are not asked to authorize IRI, 
 # Authenticate with your Globus account
 python inference_auth_token.py authenticate
 
-# Retrieve a token, or check how long it is valid for
-# (`units` can be seconds, minutes, or hours)
-python inference_auth_token.py get_time_until_token_expiration --units seconds
+# Print your token
 python inference_auth_token.py get_access_token
 ```
 ///
 
-/// warning | Separate token caches
-`alcf-tokens`/`alcf-ai` and the `inference_auth_token.py` helper use **different** Globus token caches, so authenticating with one does not authenticate the other.
-///
-
-/// warning | Token Validity
+/// note | Token Validity
 - Access tokens are valid for 48 hours. Both `alcf-tokens get-token inference` and `python inference_auth_token.py get_access_token` will automatically refresh your token if it has expired.
-- An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login inference` (or `alcf-tokens login` to authorize all services).
+- An internal policy requires re-authentication every 30 days. If you encounter permission errors, logout from Globus at [app.globus.org/logout](https://app.globus.org/logout) and re-run `alcf-tokens login inference`.
 ///
 
 #### 3. Make a Test Call
 
-Once authenticated, you can make a test call using cURL or Python.
+Once authenticated, you can make a test call using `alcf-ai`, cURL, or Python:
+
+/// tab | alcf-ai
+
+```bash
+#!/bin/bash
+alcf-ai chat --model mistral-large-4 --cluster tara "Explain quantum computing in simple terms."
+```
+
+///
 
 /// tab | cURL
 
-```bash linenums="1"
+```bash
 #!/bin/bash
 
 # Get your access token
@@ -149,9 +141,9 @@ curl -X POST "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/cha
 ```
 ///
 
-/// tab | Python (OpenAI SDK)
+/// tab | OpenAI SDK
 
-```python linenums="1"
+```python
 from openai import OpenAI
 from alcf_tokens.auth import get_access_token
 
@@ -169,6 +161,33 @@ response = client.chat.completions.create(
 )
 
 print(response.choices[0].message.content)
+```
+///
+
+/// tab | Python
+
+```python
+import requests
+from alcf_tokens.auth import get_access_token
+
+# Get your access token
+access_token = get_access_token("inference")
+
+headers = {
+    'Authorization': f'Bearer {access_token}',
+    'Content-Type': 'application/json'
+}
+
+response = requests.post(
+    "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/chat/completions",
+    headers=headers,
+    json={
+        "model": "mistral-large-4",
+        "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
+    }
+)
+
+print(response.json())
 ```
 ///
 
