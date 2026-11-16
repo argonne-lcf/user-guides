@@ -17,29 +17,30 @@ Each table lists one system's models with their type, organization, API protocol
 Use the tables below to check each model's supported APIs, context window, input types, reasoning, and tool calling. The [ALCF Science Leaderboard](https://www.alcf.anl.gov/science-leaderboard) compares model accuracy and observed response times on scientific benchmarks, including scientific coding. Confirm that your chosen model supports your client's required API and features.
 ///
 
-/// details | Minerva (4 models)
+/// details | Minerva (3 models)
     open: True
 
 | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
 |------|--------------|-------|---------------|----------------|------------------|-----------|-----------|--------------|
 | Chat | Meta | muse-spark-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
 | Chat | Mistral AI | mistral-large-4-nvfp4^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
-| Chat | Reflection AI | beam-1.0-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓, separate (`minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `max`) | ✓ |
-| Chat | Thinking Machines | inkling-bf16^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
+| Chat | Thinking Machines | inkling-2-small^RTH^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 
 ///
 
-/// details | Tara (7 models)
+/// details | Tara (9 models)
     open: True
 
 | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
 |------|--------------|-------|---------------|----------------|------------------|-----------|-----------|--------------|
+| Chat | Google | google/gemma-4-31B-it-262k^RT^ | chat_completions, responses, messages | 262144 | text, image, video | ✓ | ✓ | ✓ |
 | Chat | Meta | muse-spark-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`, `xhigh`; default `xhigh`) | ✓ |
 | Chat | Mistral AI | mistral-large-4^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`low`, `medium`, `high`; default `high`) | ✓ |
 | Chat | NVIDIA | nemotron-3-ultra^RT^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Chat | NVIDIA | nemotron-35-super-vl^RT^ | chat_completions, responses, messages | 1048576 | text, image, video | ✓ | ✓ | ✓ |
-| Chat | OpenAI | openai/gpt-oss-120b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Chat | OpenAI | openai/gpt-oss-120b^RT^ | chat_completions, messages, responses | 131072 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
 | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
+| Chat | Reflection AI | beam-1.0-fp8^RT^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
 | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image, audio | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 
 ///
