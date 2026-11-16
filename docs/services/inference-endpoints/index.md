@@ -118,7 +118,7 @@ Once authenticated, you can make a test call using `alcf-ai`, cURL, or Python:
 
 ```bash
 #!/bin/bash
-alcf-ai chat --model muse-spark-bf16 --cluster tara "Explain quantum computing in simple terms."
+alcf-ai chat --model mistral-large-4 --cluster tara "Explain quantum computing in simple terms."
 ```
 
 ///
@@ -182,7 +182,7 @@ response = requests.post(
     "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1/chat/completions",
     headers=headers,
     json={
-        "model": "muse-spark-bf16",
+        "model": "mistral-large-4",
         "messages":[{"role": "user", "content": "Explain quantum computing in simple terms."}]
     }
 )
