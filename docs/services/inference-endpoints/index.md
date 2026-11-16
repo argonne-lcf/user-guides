@@ -28,10 +28,10 @@ Visit the web interface at [https://inference.alcf.anl.gov/](https://inference.a
 
 In the model selection dropdown, you can see the status of each model:
 
-- **Live**: "hot" and ready for immediate use,
-- **Starting**: node(s) acquired, but model not loaded ready yet,
-- **Queued**: node(s) requested, but in the queue waiting for available resources,
-- **Offline**: will be queued if a user sends a request,
+- **Live**: "hot" and ready for immediate use.
+- **Starting**: node(s) acquired, but model not loaded ready yet.
+- **Queued**: node(s) requested, but in the queue waiting for available resources.
+- **Offline**: will be queued if a user sends a request.
 - **All**: lists all available models regardless of their status.
 
 /// note | For Advanced UI Features
