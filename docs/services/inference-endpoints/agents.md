@@ -51,12 +51,12 @@ Supported `agent`s include:
 - `codex`
 - `aider`
 
-Select a different model and cluster with `--default-model` and `--default-cluster`. Arguments after `--` are forwarded to the agent:
+Specify the model and serving cluster with `--default-model` and `--default-cluster`. Arguments after `--` are forwarded to the agent:
 
 ```bash
 alcf-ai agent run claude \
-    --default-model muse-spark-bf16 \
-    --default-cluster minerva \
+    --default-model mistral-large-4 \
+    --default-cluster tara \
     -- --print "Hello"
 ```
 
@@ -135,16 +135,16 @@ After installing `opencode`, place the following in your `~/.config/opencode/ope
 {
     ...
     "provider": {
-        "alcf-inference-service-minerva-api": {
-            "name": "ALCF Inference Service (Minerva)",
+        "alcf-inference-service-tara-api": {
+            "name": "ALCF Inference Service (Tara)",
             "npm": "@ai-sdk/openai-compatible",
             "options": {
-                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+                "baseURL": "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1",
                 "apiKey": "{env:ALCF_AI_TOKEN}"
             },
             "models": {
-                "muse-spark-bf16": {
-                    "name": "muse-spark-bf16",
+                "mistral-large-4": {
+                    "name": "mistral-large-4",
                     "timeout": false,
                     "limit": {
                         "context": 1048576,
@@ -175,8 +175,8 @@ Add the following provider to your `~/.pi/agent/models.json`.
 {
     ...
     "providers": {
-        "alcf-minerva": {
-            "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/minerva/api/v1",
+        "alcf-tara": {
+            "baseUrl": "https://inference-api.alcf.anl.gov/resource_server/tara/api/v1",
                 "api": "openai-completions",
                 "apiKey": "!alcf-tokens get-token inference",
                 "compat": {
@@ -184,10 +184,9 @@ Add the following provider to your `~/.pi/agent/models.json`.
                     "supportsReasoningEffort": false
                 },
                 "models": [
-                    { "id": "muse-spark-bf16" },
                     { "id": "inkling-bf16" },
                     {
-                        "id": "mistral-large-4-nvfp4",
+                        "id": "mistral-large-4",
                         "api": "openai-responses",
                         "contextWindow": 1048576,
                         "input": ["text", "image"],
@@ -375,11 +374,11 @@ Add the following to `~/.claude/settings.json`.
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/minerva/api",
+    "ANTHROPIC_BASE_URL": "https://inference-api.alcf.anl.gov/resource_server/tara/api",
     "ANTHROPIC_AUTH_TOKEN": "<your-api-key-here>",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "muse-spark-bf16",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "muse-spark-bf16",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "muse-spark-bf16"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "mistral-large-4",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "mistral-large-4",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "mistral-large-4"
   }
 }
 ```
