@@ -13,6 +13,10 @@ Models are organized by cluster and marked with the following capabilities:
 
 Each table lists one system's models with their type, organization, API protocols, context window (in tokens), supported input modalities, streaming support, reasoning, and tool calling. A `—` indicates the value is not published for that endpoint.
 
+/// tip | Choosing a Model
+Use the tables below to check each model's supported APIs, context window, input types, reasoning, and tool calling. The [ALCF Science Leaderboard](https://www.alcf.anl.gov/science-leaderboard) compares model accuracy and observed response times on scientific benchmarks, including scientific coding. Confirm that your chosen model supports your client's required API and features.
+///
+
 /// details | Minerva (4 models)
     open: True
 

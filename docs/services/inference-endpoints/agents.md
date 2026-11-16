@@ -211,7 +211,7 @@ Add the following provider to your `~/.pi/agent/models.json`.
 
 ### Codex
 
-Choose a model and a Direct API cluster with Responses support from [Available Models](models.md), then set these variables in your terminal:
+Choose a model with Responses and tool-calling support, served by a Direct API cluster with Responses support, from [Available Models](models.md). Direct API endpoints with native Responses support need no Harmony-format translation proxy. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model. Then set these variables in your terminal:
 
 ```bash
 export model="<model>"
@@ -367,10 +367,6 @@ To run Codex, use the same `model` and `cluster` variables to select the profile
 ```bash
 codex --disable apps --strict-config --profile "alcf-${cluster}-${model//\//-}" -c 'web_search="disabled"'
 ```
-
-/// note | Suggested Models
-Muse Spark remains the default. Other models with published Responses and tool-calling support can be selected using their generated profiles. Direct API endpoints with native Responses support need no Harmony-format translation proxy. Do not assume that OpenAI-specific built-in tools or reasoning-summary controls are supported by every model.
-///
 
 ### Claude Code
 
