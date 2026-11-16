@@ -87,8 +87,8 @@ alcf-ai chat "How do I know Pi is irrational? Be concise."
 
 | Option | Description |
 | ------ | ----------- |
-| `-m`, `--model` | Model to use. Default: `meta-llama/Llama-4-Scout-17B-16E-Instruct`. |
-| `-c`, `--cluster` | Cluster serving the model. Default: `sophia`. |
+| `-m`, `--model` | Model to use. Takes precedence over `$ALCF_AI_MODEL`. Without either, it defaults to `mistral-large-4`. |
+| `-c`, `--cluster` | Cluster serving the model. Default: `tara`. |
 | `-s`, `--system` | System prompt to apply to the input. |
 | `--stream` / `--no-stream` | Stream the response as it is generated. Default: `--no-stream`. |
 | `-t`, `--temp` | Sampling temperature. |
@@ -105,7 +105,7 @@ cat report.md | alcf-ai chat \
 ```
 
 /// note | Cluster Selection
-The cluster selected with `--cluster` must serve the requested model. See [Available Models](models.md).
+Cluster selection is independent of model selection. `--cluster` defaults to `tara`. If `$ALCF_AI_MODEL` or `--model` names a model served elsewhere, set `--cluster` to its serving cluster. See [Available Models](models.md).
 ///
 
 ## Image Segmentation
