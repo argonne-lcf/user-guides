@@ -2,11 +2,7 @@
 
 Unlock Powerful AI Inference at Argonne Leadership Computing Facility (ALCF). This service provides API access to a variety of state-of-the-art open-source models running on dedicated ALCF hardware. Join our [mailing list](https://mailman.cels.anl.gov/mailman3/lists/inference-service-notify.lists.alcf.anl.gov/) to receive updates and maintenance notifications.
 
-## Quick Start
-
-This guide will walk you through the fastest ways to start using the ALCF Inference Endpoints.
-
-### Supported Identity Providers
+## Supported Identity Providers
 
 To access the ALCF Inference Endpoints via the Web UI or API, you can log in using credentials from any of these institutional identity providers:
 
@@ -20,27 +16,25 @@ To access the ALCF Inference Endpoints via the Web UI or API, you can log in usi
 
 ///
 
+## Quick Start
+
+This guide will walk you through the fastest ways to start using the ALCF Inference Endpoints.
+
 ### Web UI
 
-The easiest way to get started is through the web interface, accessible at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/)
-
-The UI is based on the popular Open WebUI platform. After logging in with your ANL or ALCF credentials, you can:
-
-1. Select a model from the dropdown menu at the top of the screen.
-2. Start a conversation directly in the chat interface.
-
-In the model selection dropdown, you can see the status of each model:
+Visit the web interface at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/) and loggin in with an approved identity provider. Once authenticated, select a model from the dropdown menu and start a conversation.
 
 ![Inference Endpoints Web UI](../files/openwebui.png)
 
-- **Live:** These models are "hot" and ready for immediate use.
-- **Starting:** A node has been acquired and the model is being loaded into memory.
-- **Queued:** The model is in a queue waiting for resources to become available.
-- **Offline:** The model is available but not currently loaded. It will be queued for loading when a user sends a request.
-- **All:** Lists all available models regardless of their status.
+In the model selection dropdown, you can see the status of each model:
+- **Live**: "hot" and ready for immediate use,
+- **Starting**: node(s) acquired, but model not loaded ready yet,
+- **Queued**: node(s) requested, but in the queue waiting for available resources,
+- **Offline**: will be queued if a user sends a request,
+- **All**: lists all available models regardless of their status.
 
 /// note | For Advanced UI Features
-For a full guide on advanced features like RAG (Retrieval-Augmented Generation), function calling, and more, please refer to the official [Open WebUI documentation](https://docs.openwebui.com/).
+For details on advanced features like RAG (Retrieval-Augmented Generation) and function calling, please refer to the [Open WebUI documentation](https://docs.openwebui.com/).
 ///
 
 ### API Access
