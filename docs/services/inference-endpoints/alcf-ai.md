@@ -1,6 +1,6 @@
 # alcf-ai CLI and SDK
 
-[`alcf-ai`](https://pypi.org/project/alcf-ai/) is the ALCF AI Inference Services SDK. It provides a command line interface for authentication, chat, endpoint discovery, image segmentation, and agent configuration, plus a Python client (`alcf_ai.InferenceClient`) that talks to the same endpoints using the same cached credentials.
+[`alcf-ai`](https://pypi.org/project/alcf-ai/) is the ALCF AI Inference Services SDK. Its command line interface supports authentication, chat, endpoint discovery, and image segmentation. It also configures and launches coding agents. The Python client (`alcf_ai.InferenceClient`) talks to the same endpoints using the same cached credentials.
 
 ## Installation
 
@@ -87,8 +87,8 @@ alcf-ai chat "How do I know Pi is irrational? Be concise."
 
 | Option | Description |
 | ------ | ----------- |
-| `-m`, `--model` | Model to use. Default: `meta-llama/Llama-4-Scout-17B-16E-Instruct`. |
-| `-c`, `--cluster` | Cluster serving the model. Default: `sophia`. |
+| `-m`, `--model` | Model to use. Takes precedence over `$ALCF_AI_MODEL`. Without either, it defaults to `mistral-large-4`. |
+| `-c`, `--cluster` | Cluster serving the model. Default: `tara`. |
 | `-s`, `--system` | System prompt to apply to the input. |
 | `--stream` / `--no-stream` | Stream the response as it is generated. Default: `--no-stream`. |
 | `-t`, `--temp` | Sampling temperature. |
@@ -99,13 +99,13 @@ The user message is built by joining, in order: piped stdin (if any), the conten
 
 ```bash
 cat report.md | alcf-ai chat \
-    --model muse-spark-bf16 \
-    --cluster minerva \
+    --model mistral-large-4 \
+    --cluster tara \
     "Summarize this report in three bullets."
 ```
 
 /// note | Cluster Selection
-The cluster selected with `--cluster` must serve the requested model. See [Available Models](models.md).
+Cluster selection is independent of model selection. `--cluster` defaults to `tara`. If `$ALCF_AI_MODEL` or `--model` names a model served elsewhere, set `--cluster` to its serving cluster. See [Available Models](models.md).
 ///
 
 ## Image Segmentation
@@ -171,20 +171,20 @@ from alcf_ai import InferenceClient
 client = InferenceClient()
 
 # Discover endpoints and models:
-print(client.list_endpoints()["clusters"]["minerva"])
-print(client.list_models("minerva"))
+print(client.list_endpoints()["clusters"]["tara"])
+print(client.list_models("tara"))
 
 # Get an OpenAI client for a cluster:
-oai = client.clusters("minerva").openai
+oai = client.clusters("tara").openai
 print(
     oai.chat.completions.create(
-        model="muse-spark-bf16",
+        model="mistral-large-4",
         messages=[{"role": "user", "content": "Hello there!"}],
     )
 )
 ```
 
-The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("minerva").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
+The client also exposes the segmentation services (`client.sam3`, `client.dinov3`), cluster job status (`client.clusters("tara").get_jobs()`), and Globus data staging. Staged data lives in an ephemeral subdirectory of the service's guest collection, with ACLs that grant only your Globus identity read/write access:
 
 ```python linenums="1"
 from pathlib import Path
