@@ -1,6 +1,6 @@
 # alcf-ai CLI and SDK
 
-[`alcf-ai`](https://pypi.org/project/alcf-ai/) is the ALCF AI Inference Services SDK. It provides a command line interface for authentication, chat, endpoint discovery, image segmentation, and agent configuration, plus a Python client (`alcf_ai.InferenceClient`) that talks to the same endpoints using the same cached credentials.
+[`alcf-ai`](https://pypi.org/project/alcf-ai/) is the ALCF AI Inference Services SDK. Its command line interface supports authentication, chat, endpoint discovery, and image segmentation. It also configures and launches coding agents. The Python client (`alcf_ai.InferenceClient`) talks to the same endpoints using the same cached credentials.
 
 ## Installation
 

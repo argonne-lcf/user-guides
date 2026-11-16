@@ -1,5 +1,5 @@
 ---
-description: Configure OpenCode, Pi, Codex, and Claude Code to use ALCF inference models and published capabilities.
+description: Configure OpenCode, Pi, Codex, Claude Code, and Aider with ALCF inference models and published model capabilities.
 tags:
   - AI Agents
 ---
@@ -18,6 +18,7 @@ Most agents have an installation script that you can run with one command to ins
 | **[Pi](https://pi.dev/)**[^custom-provider] | `curl -fsSL https://pi.dev/install.sh | sh` |
 | **[OpenAI Codex](https://learn.chatgpt.com/docs/codex/cli)** | `curl -fsSL https://chatgpt.com/codex/install.sh | sh` |
 | **[Claude Code](https://code.claude.com/docs/en/quickstart)** | `curl -fsSL https://claude.ai/install.sh | bash` |
+| **[Aider](https://aider.chat/docs/install.html)** | `curl -LsSf https://aider.chat/install.sh | sh` |
 
 [^custom-provider]: OpenCode and Pi explicitly support third-party/custom provider endpoints.
 
@@ -25,13 +26,45 @@ Most scripts will require you to reload your environment with `source ~/.bashrc`
 
 Alternatively, you can also install via your system package manager (i.e. `brew`, `apt`, etc.).
 
-/// warning | Codex Version Requirement
-Codex removed support for the Chat Completions API in `0.95`. Use [`0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0) or lower to utilize ALCF Inference Service endpoints without Responses API support. If you use Nix, you can use this command to pull the correct version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+/// warning | Codex Version Requirements
+Codex 0.95 and later require a model and endpoint with Responses API support. For Chat Completions-only endpoints, use [`0.94`](https://github.com/openai/codex/releases/tag/rust-v0.94.0) or lower. If you use Nix, you can use this command to pull that version into an ephemeral shell: `nix-shell -p codex -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/cc4bd5f859cdf01153d999995c20c9a457045bd6.tar.gz`.
+
+Helper-based token refresh requires Codex 0.118.0 or newer. Reusable external profiles require Codex 0.134.0 or newer. With older versions, use `alcf-ai agent run codex` for a one-off launch or `alcf-ai agent configure codex --no-profile` to update the base configuration.
 ///
 
 ## Automatic Configuration w/ alcf-ai
 
 You can quick-configure most agents to use the ALCF Inference Service endpoints with `alcf-ai` (installable with `pip install alcf-ai`). This also handles authentication and pulling an API key from the service. See [alcf-ai CLI and SDK](alcf-ai.md) for installation details and additional options.
+
+### Run Without Changing Configuration
+
+`alcf-ai agent run` launches an agent with temporary environment and command-line overrides using your cached ALCF credentials. It does not create or modify the agent's configuration files:
+
+```bash
+alcf-ai agent run <agent>
+```
+
+Supported `agent`s include:
+
+- `claude`
+- `opencode`
+- `codex`
+- `aider`
+
+Select a different model and cluster with `--default-model` and `--default-cluster`. Arguments after `--` are forwarded to the agent:
+
+```bash
+alcf-ai agent run claude \
+    --default-model muse-spark-bf16 \
+    --default-cluster minerva \
+    -- --print "Hello"
+```
+
+Model selection uses `--default-model`, then `$ALCF_AI_MODEL`, then `mistral-large-4`. Cluster selection is independent: `--default-cluster` defaults to `tara`, so set it to the selected model's serving cluster when overriding the default model. OpenCode receives an inline provider configuration, Codex receives one-off provider overrides, and Aider receives its model and credentials through environment variables.
+
+### Persistent Configuration
+
+To write a reusable configuration instead, run:
 
 ```bash
 alcf-ai agent configure <agent>
@@ -44,17 +77,44 @@ Supported `agent`s include:
 - `codex`
 - `claude`
 
+Codex and Claude Code create a reusable profile named `alcf` by default, without changing their normal base settings:
+
+```bash
+alcf-ai agent configure codex
+alcf-ai agent run codex --profile alcf
+
+alcf-ai agent configure claude
+alcf-ai agent run claude --profile alcf
+```
+
+After creating a profile, you can also launch it directly without `alcf-ai`:
+
+```bash
+codex --profile alcf
+claude --settings ~/.claude/profiles/alcf.json
+```
+
+Codex profiles are stored at `$CODEX_HOME/alcf.config.toml` (usually `~/.codex/alcf.config.toml`) and require Codex 0.134.0 or newer. Claude Code profiles are stored at `~/.claude/profiles/alcf.json` and loaded with Claude's `--settings` option. Unspecified settings continue to inherit from the normal configuration.
+
+Use `--profile <name>` with both `configure` and `run` to create and load another profile. Select the model and cluster with `agent configure`. `agent run --profile` cannot be combined with `--default-model` or `--default-cluster`. Use `agent configure --no-profile` to update `$CODEX_HOME/config.toml` or `~/.claude/settings.json` directly instead. OpenCode and Pi always update their normal configuration files and do not support profiles.
+
 | Option | Description |
 | ------ | ----------- |
-| `--include-experimental` | Also configure non-whitelisted (experimental) models. |
-| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Default: `muse-spark-bf16`. |
-| `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `minerva`. |
+| `-m`, `--default-model` | Default model for the agent configuration (`codex` and `claude`). Takes precedence over `$ALCF_AI_MODEL`. Without either, it defaults to `mistral-large-4`. |
+| `-c`, `--default-cluster` | Cluster serving the default model (`codex` and `claude`). Default: `tara`. |
+| `--profile <name>` | Settings profile for `codex` and `claude`. Default: `alcf`. |
+| `--no-profile` | Update the base configuration instead of creating a Codex or Claude Code profile. |
+| `-y`, `--yes` | Approve all configuration file overwrites without prompting. |
+
+/// note | Configuration Backups
+Before replacing an existing configuration file with different contents, `agent configure` asks for confirmation and creates a timestamped backup after approval. Creating a new file or writing identical content does not prompt. Use `-y` or `--yes` to approve all overwrites non-interactively.
+///
 
 /// tip | Refreshing API Keys
 `alcf-ai agent configure <agent>` is *idempotent*, so you can re-run it to reconfigure an agent at any time. When a token helper (`alcf-tokens` or `alcf-ai`) is on your `PATH`, the generated configuration refreshes access tokens automatically. Otherwise, `alcf-ai` embeds the current access token and warns you to re-run the command when it expires.
 ///
 
-Configuration uses the [published model capabilities](models.md#model-capabilities), including context limits and supported input types. Update `alcf-ai` and re-run configuration when new models are added to its allowlist. OpenCode and Pi expose configured models in their model pickers; choose the appropriate cluster/provider, such as Minerva Direct API (`alcf-inference-service-minerva-api`).
+Configuration discovers every authorized cluster and model exposed by the service and uses the [published model capabilities](models.md#model-capabilities), including context limits and supported input types. Re-run configuration to update the generated entries when model availability or permissions change. OpenCode and Pi expose configured models in their model pickers. Choose the appropriate cluster/provider, such as Tara Direct API (`alcf-inference-service-tara-api`).
 
 | Agent | API selection | Reasoning controls |
 | --- | --- | --- |
@@ -63,7 +123,7 @@ Configuration uses the [published model capabilities](models.md#model-capabiliti
 | Codex | Responses with current Codex versions | Generated catalogs retain conservative settings: OpenAI-specific reasoning summaries and built-in tools are disabled, with no effort selector. |
 | Claude Code | Messages | Client-dependent effort controls; requests must use the model's accepted values. |
 
-Muse Spark remains the default. Codex preserves an existing model/provider selection and generates a separate `alcf-<cluster>-<model>` profile for each configured model. Select that profile to switch models, and regenerate its version-matched catalog after upgrading Codex. Claude Code's `--default-model` option sets its model and Opus/Sonnet/Haiku aliases; omitting it selects Muse. See [API reasoning fields](api.md#reasoning-and-api-protocols) for protocol-specific controls.
+Mistral Large 4 on Tara is the CLI default. Codex preserves an existing model/provider selection in the target profile and generates a separate `alcf-<cluster>-<model>` profile for each configured model, replacing `/` in model IDs with `-` in the profile name. Select that profile with `alcf-ai agent run codex --profile <name>` to switch models, and regenerate its version-matched catalog after upgrading Codex. Claude Code's `--default-model` option sets its model and Opus/Sonnet/Haiku aliases. If the option is omitted, Claude Code uses `$ALCF_AI_MODEL`, if set, or Mistral Large 4. See [API reasoning fields](api.md#reasoning-and-api-protocols) for protocol-specific controls.
 
 ## Manual Configuration
 
@@ -330,6 +390,10 @@ Add the following to `~/.claude/settings.json`.
 
 /// note | Base URL
 `ANTHROPIC_BASE_URL` intentionally omits the trailing `/v1` used by the OpenAI-compatible endpoints. Claude Code automatically appends `/v1/messages` to the base URL.
+///
+
+/// note | Context Window with alcf-ai
+Both `alcf-ai agent run claude` and `alcf-ai agent configure claude` set `CLAUDE_CODE_MAX_CONTEXT_TOKENS` from the selected model's catalog metadata. Use Claude Code 2.1.193 or newer for this override.
 ///
 
 /// note | Anthropic Messages Support
