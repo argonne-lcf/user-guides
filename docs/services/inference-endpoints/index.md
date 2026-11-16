@@ -22,7 +22,7 @@ This guide will walk you through the fastest ways to start using the ALCF Infere
 
 ### Web UI
 
-Visit the web interface at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/) and loggin in with an approved identity provider. Once authenticated, select a model from the dropdown menu and start a conversation.
+Visit the web interface at [https://inference.alcf.anl.gov/](https://inference.alcf.anl.gov/) and login in with an approved identity provider. Once authenticated, select a model from the dropdown menu and start a conversation.
 
 ![Inference Endpoints Web UI](../files/openwebui.png)
 
