@@ -1,6 +1,6 @@
-# Moving data across filesystems
+# Moving data across storage systems
 
-This guide describes practical ways to move data between filesystems: Lustre, DAOS, VAST, Weka, and local storage locations such as `/tmp` or `tmpfs`.
+This guide describes practical ways to move data between storage systems: Lustre, DAOS, VAST, Weka, and local storage locations such as `/tmp` or `tmpfs`.
 
 The sections below describe which tools are best suited for different types of data transfers, such as Python packages, large tar files, datasets, and model checkpoints.
 

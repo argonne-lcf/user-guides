@@ -103,8 +103,9 @@ For striping and other Lustre I/O guidance, see [Flare](./data-management/lustre
 
 ### DAOS
 
-The primary storage system on Aurora is not a file system, but rather an
-object store called the Distributed Asynchronous Object Store. This is a
+DAOS (Distributed Asynchronous Object Storage) is a high-performance storage
+system on Aurora. It is fundamentally a distributed object store, with a file
+system interface provided by the DAOS File System (DFS) layer. It is a
 key-array based system embedded directly in the Slingshot fabric, which
 provides much faster I/O than conventional block-based parallel file systems
 such as Lustre (even those using non-spinning disk and/or burst
