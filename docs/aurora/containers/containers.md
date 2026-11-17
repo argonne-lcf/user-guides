@@ -56,7 +56,7 @@ export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
 export http_proxy="http://proxy.alcf.anl.gov:3128"
 export https_proxy="http://proxy.alcf.anl.gov:3128"
 export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,*.hostmgmt.cm.aurora.alcf.anl.gov,*.alcf.anl.gov,localhost"
+export no_proxy="admin,.hostmgmt.cm.aurora.alcf.anl.gov,localhost"
 
 # Load apptainer
 module load apptainer

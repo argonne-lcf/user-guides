@@ -1,6 +1,9 @@
 ---
 tags:
   - TensorFlow
+authors:
+  - Khalid Hossain
+last_verified: 2026-11-13
 ---
 
 # TensorFlow on Aurora

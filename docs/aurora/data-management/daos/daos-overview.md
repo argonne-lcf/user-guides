@@ -5,7 +5,7 @@ tags:
 
 # DAOS
 
-DAOS is a major file system on Aurora, with an aggregate of about 259 PB and over 30 TB/s write bandwidth (read bandwidth is slightly higher) from 1024 DAOS server storage nodes. DAOS is an open-source, software-defined object store designed for massively distributed non-volatile memory (NVM) and NVMe SSDs. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.  DAOS is currently in a stability testing pre-production period but in its production configuration with 800 out of the total 1024 nodes with approximately 200 PB of storage available to users at a peak write bandwidth of over 24 TB/s.  Although now very rare, data loss events are possible so important data should be backed up periodically to a more reliable file system such as [Flare](../../data-management/lustre/flare.md). There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
+DAOS is a major storage system on Aurora, with an aggregate of about 259 PB and over 30 TB/s write bandwidth (read bandwidth is slightly higher) from 1024 DAOS server storage nodes. DAOS is fundamentally an open-source, software-defined distributed object store designed for non-volatile memory (NVM) and NVMe SSDs, with a file system interface provided by the DAOS File System (DFS) layer. DAOS presents a unified storage model with a native key-array value interface supporting POSIX, MPI-IO, DFS, and HDF5. Users can use DAOS for I/O and checkpointing on Aurora. DAOS is fully integrated with the wider Aurora compute fabric.  DAOS is currently in a stability testing pre-production period but in its production configuration with 800 out of the total 1024 nodes with approximately 200 PB of storage available to users at a peak write bandwidth of over 24 TB/s.  Although now very rare, data loss events are possible so important data should be backed up periodically to a Lustre file system such as [Flare](../../data-management/lustre/flare.md). There also are relatively infrequent periods of unavailability or extremely slow performance usually due to network events or loss of SSDs.
 
 This guide covers:
 
@@ -85,7 +85,7 @@ daos cont list ${DAOS_POOL}
 
 ## Mounting Containers with DFUSE
 
-DAOS POSIX container access can be done with no application code changes through DAOS filesystem (DFS) `dfuse` mount points on both compute and login nodes. Once mounted, you can access files in the container as you normally would with POSIX or Lustre commands.
+DAOS POSIX container access can be done with no application code changes through DAOS File System (DFS) `dfuse` mount points on both compute and login nodes. Once mounted, you can access files in the container as you normally would with POSIX or Lustre commands.
 
 Currently, this must be done manually before use on each node where you are working. In the future, this may be automated through additional `qsub` options.
 
@@ -682,7 +682,7 @@ This `UNCLEAN` status indicates that DAOS had a temporary loss of redundancy, wh
 daos cont set-prop ${DAOS_POOL} ${DAOS_CONT} status:HEALTHY
 ```
 
-To check metadata corruption, run this DAOS filesystem command:
+To check metadata corruption, run this `daos fs` command:
 
 ```bash linenums="1"
 daos fs check --flags=evict ${DAOS_POOL} ${DAOS_CONT}
