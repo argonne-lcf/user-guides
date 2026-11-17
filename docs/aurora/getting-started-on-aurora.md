@@ -76,9 +76,11 @@ if [[ ! "${HOSTNAME}" =~ aurora-uan ]]; then
   export http_proxy="http://proxy.alcf.anl.gov:3128"
   export https_proxy="http://proxy.alcf.anl.gov:3128"
   export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-  export no_proxy="admin,*.hostmgmt.cm.aurora.alcf.anl.gov,*.alcf.anl.gov,localhost"
+  export no_proxy="admin,.hostmgmt.cm.aurora.alcf.anl.gov,localhost"
 fi
 ```
+
+Entries in `no_proxy` match a domain suffix with a leading `.`; curl, wget, and Python don't support `*` wildcards. Don't add `.alcf.anl.gov`: compute nodes reach ALCF websites only through the proxy.
 
 For `ssh` connections to GitHub, add the following to your `~/.ssh/config`:
 
