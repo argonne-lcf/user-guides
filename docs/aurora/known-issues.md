@@ -102,8 +102,6 @@ The best tools for debugging these are `gdb-oneapi` and `DDT`, both of which all
 
 This is a collection of known issues that have been encountered on Aurora. Documentation will be updated as issues are resolved. Users are encouraged to email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) to report issues.
 
-A known issues [page](https://apps.cels.anl.gov/confluence/display/inteldga/Known+Issues) can be found in the CELS Wiki space used for NDA content. Note that this page requires a JLSE Aurora early hardware/software resource account for access.
-
 ### Runtime and Compiler Issues
 
 #### 1. `Cassini Event Queue overflow detected`
@@ -238,7 +236,6 @@ To increase the chances that a large job does not terminate due to a node failur
 
 * A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
 * HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
-* Application failures at the single-node level are tracked in the [JLSE Wiki/Confluence page](https://apps.cels.anl.gov/confluence/pages/viewpage.action?pageId=4784336)
 
 ### Known Issues on Other Pages
 
