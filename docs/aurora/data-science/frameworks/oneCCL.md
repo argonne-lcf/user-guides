@@ -86,7 +86,6 @@ export FI_CXI_CQ_FILL_PERCENT=30
 export INTELGT_AUTO_ATTACH_DISABLE=1
 export PALS_PING_PERIOD=240
 export PALS_RPC_TIMEOUT=240
-export MPIR_CVAR_GATHERV_INTER_SSEND_MIN_PROCS=-1
 export CCL_ATL_SYNC_COLL=1 # to avoid potential hang at large scale
 export CCL_OP_SYNC=1 # to avoid potential hang at large scale
 ```
