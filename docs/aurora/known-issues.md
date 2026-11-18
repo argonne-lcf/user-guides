@@ -232,11 +232,6 @@ indicates such a failure. It is recommended to instead use `-v` (note: lower-cas
 
 To increase the chances that a large job does not terminate due to a node failure, you may choose to interactively route your MPI job around nodes that fail during your run. See this page on [Working Around Node Failures](./running-jobs-aurora.md#working-around-node-failures) for more information.
 
-### Other Issues
-
-* A large number of Machine Check Events from the PVC, which causes nodes to panic and reboot.
-* HBM mode is not automatically validated. Jobs requiring flat memory mode should test by looking at `numactl -H` for 4 NUMA memory nodes instead of 16 on the nodes.
-
 ### Known Issues on Other Pages
 
 Some pages keep known issues for a specific tool or library in their own section:

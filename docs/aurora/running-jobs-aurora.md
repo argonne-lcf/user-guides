@@ -689,7 +689,7 @@ Users will likely find it beneficial to launch processes across CPU cores in bot
 
 ## Using the HBM on the Sapphire Rapids CPUs
 
-As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions.
+As mentioned above, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions. ALCF checks that nodes are in flat mode, so jobs don't need to verify it.
 
 This configuration can be seen from running `numactl -H` on an Aurora node:
 
