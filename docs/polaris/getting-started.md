@@ -48,7 +48,7 @@ In addition to the content above, here is a document on Lustre File Striping Bas
 
 ## Proxy
 
-If the node you are on doesn't have outbound network connectivity, add the following to your `~/.bash_profile` file to access the proxy host:
+Compute nodes don't have outbound network connectivity. Add the following to your `~/.bash_profile` file to access the proxy host:
 
 ```bash
 # proxy settings
@@ -57,8 +57,10 @@ export HTTPS_PROXY="http://proxy.alcf.anl.gov:3128"
 export http_proxy="http://proxy.alcf.anl.gov:3128"
 export https_proxy="http://proxy.alcf.anl.gov:3128"
 export ftp_proxy="http://proxy.alcf.anl.gov:3128"
-export no_proxy="admin,polaris-adminvm-01,localhost,*.cm.polaris.alcf.anl.gov,polaris-*,*.polaris.alcf.anl.gov,*.alcf.anl.gov"
+export no_proxy="admin,polaris-adminvm-01,localhost,.polaris.alcf.anl.gov"
 ```
+
+Entries in `no_proxy` match a domain suffix with a leading `.`; curl, wget, and Python don't support `*` wildcards. Don't add `.alcf.anl.gov`: compute nodes reach ALCF websites only through the proxy.
 
 ## Getting Assistance
 

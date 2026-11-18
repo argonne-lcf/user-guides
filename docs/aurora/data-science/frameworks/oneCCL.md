@@ -11,8 +11,7 @@ oneAPI Collective Communications Library (oneCCL) provides an efficient implemen
 oneCCL can be used through:
 
 1. Native C++ SYCL mode
-2. Horovod
-3. PyTorch Distributed Data Parallel (DDP)
+2. PyTorch Distributed Data Parallel (DDP)
 
 ## Aurora oneCCL environment
 
@@ -49,7 +48,7 @@ export CCL_KVS_MODE=mpi
 ```
 With `CCL_KVS_MODE=mpi`, you may need to initialize `MPI` manually; see [`MPI_Init` error with `CCL_KVS_MODE=mpi`](index.md#mpi_init-error-with-ccl_kvs_modempi).
 
-The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see [Hangs with `CCL_OP_SYNC=0`](index.md#hangs-with-ccl_op_sync0).
+The `frameworks` module no longer sets `CCL_OP_SYNC=1`; see [Hangs with `CCL_OP_SYNC` unset](index.md#hangs-with-ccl_op_sync-unset).
 
 A user using oneCCL without `module load frameworks` may need to set `export CCL_PROCESS_LAUNCHER=pmix` manually.
 
@@ -87,7 +86,6 @@ export FI_CXI_CQ_FILL_PERCENT=30
 export INTELGT_AUTO_ATTACH_DISABLE=1
 export PALS_PING_PERIOD=240
 export PALS_RPC_TIMEOUT=240
-export MPIR_CVAR_GATHERV_INTER_SSEND_MIN_PROCS=-1 # to solve the sync send issue in Horovod seg fault
 export CCL_ATL_SYNC_COLL=1 # to avoid potential hang at large scale
 export CCL_OP_SYNC=1 # to avoid potential hang at large scale
 ```

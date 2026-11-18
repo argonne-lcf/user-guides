@@ -9,8 +9,9 @@ on:
 # group, and a no-op run would otherwise replace a pending deploy or removal.
 # No-ops are labels on a closed PR and, except adding no-preview (which also
 # removes the preview a PR keeps when converted back to draft), pushes to a
-# draft, other labels, and anything on a PR with no-preview.
-concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.state != 'open' || (!(github.event.action == 'labeled' && github.event.label.name == 'no-preview') && (github.event.pull_request.draft || contains(github.event.pull_request.labels.*.name, 'no-preview') || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards' && github.event.label.name != 'no-preview')))) && '-noop' || '' }}
+# draft without force-preview, other labels (force-preview counts only on a
+# draft), and anything on a PR with no-preview.
+concurrency: preview-${{ github.event.pull_request.number }}${{ github.event.action != 'closed' && (github.event.pull_request.state != 'open' || (!(github.event.action == 'labeled' && github.event.label.name == 'no-preview') && ((github.event.pull_request.draft && !contains(github.event.pull_request.labels.*.name, 'force-preview')) || contains(github.event.pull_request.labels.*.name, 'no-preview') || ((github.event.action == 'labeled' || github.event.action == 'unlabeled') && github.event.label.name != 'preview-social-cards' && github.event.label.name != 'no-preview' && !(github.event.label.name == 'force-preview' && github.event.pull_request.draft))))) && '-noop' || '' }}
 
 # This repo's Pages site serves only the production artifact (update-livesite),
 # so previews are pushed to the gh-pages branch of a separate repo. Only the
@@ -42,12 +43,16 @@ jobs:
           LABEL: ${{ github.event.label.name }}
           CARDS: ${{ contains(github.event.pull_request.labels.*.name, 'preview-social-cards') }}
           NO_PREVIEW: ${{ contains(github.event.pull_request.labels.*.name, 'no-preview') }}
+          FORCE: ${{ contains(github.event.pull_request.labels.*.name, 'force-preview') }}
         run: |
           # Same-repo branch PRs only (fork PRs get no secrets); drafts get a
-          # preview once marked ready; the no-preview label skips previews,
-          # and adding it removes an existing one (also from a PR converted
-          # back to draft, which keeps its preview); of label changes, only
-          # preview-social-cards and no-preview rebuild, and not on a closed PR.
+          # preview once marked ready, or right away with the force-preview
+          # label; the no-preview label skips previews (it wins over
+          # force-preview), and adding it removes an existing one (also from
+          # a PR converted back to draft, which keeps its preview); of label
+          # changes, only preview-social-cards, no-preview, and force-preview
+          # on a draft rebuild, and not on a closed PR. Removing force-preview
+          # from a draft keeps its preview, as converting to draft does.
           build=false remove=false
           if [ "$SAME_REPO" = true ]; then
             if [ "$EVENT" = closed ]; then
@@ -56,10 +61,13 @@ jobs:
               :
             elif [ "$NO_PREVIEW" = true ]; then
               [ "$EVENT" = labeled ] && [ "$LABEL" = no-preview ] && remove=true
-            elif [ "$DRAFT" = true ]; then
+            elif [ "$DRAFT" = true ] && [ "$FORCE" != true ]; then
               :
             elif [ "$EVENT" = labeled ] || [ "$EVENT" = unlabeled ]; then
-              case "$LABEL" in preview-social-cards|no-preview) build=true ;; esac
+              case "$LABEL" in
+                preview-social-cards|no-preview) build=true ;;
+                force-preview) [ "$DRAFT" = true ] && build=true ;;  # a ready PR has its preview already
+              esac
             else
               build=true
             fi
@@ -103,6 +111,8 @@ jobs:
         env:
           CARDS: ${{ needs.gate.outputs.cards }}
         run: |
+          # The logo links (extra.homepage) stay in the preview.
+          export HOMEPAGE="$PREVIEW_URL"
           if [ "$CARDS" = true ]; then
             # preview-social-cards label: build the cards, and point og:image
             # (and canonical URLs) at the preview instead of production.

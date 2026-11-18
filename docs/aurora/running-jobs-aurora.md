@@ -54,7 +54,7 @@ For example, a one-node interactive job requiring access to the `/flare` filesys
 qsub -l select=1 -l walltime=30:00 -l filesystems=flare -A <project> -q debug -I
 ```
 
-For DAOS access, users will need to include `daos_user_fs` as a filesystem option (`-l filesystems=flare:daos_user_fs`). More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
+For DAOS access, users will need to include `daos_user_fs` in the `filesystems` resource (`-l filesystems=flare:daos_user_fs`). More information can be found on the [DAOS](./data-management/daos/daos-overview.md) page.
 
 /// tip
 
@@ -689,7 +689,7 @@ Users will likely find it beneficial to launch processes across CPU cores in bot
 
 ## Using the HBM on the Sapphire Rapids CPUs
 
-As mentioned about, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions.
+As mentioned above, each node on Aurora has 2 CPUs, each with 52 physical cores. Each CPU has 512 GB DDR memory and 64 GB HBM memory.  Since the CPUs on Aurora are configured in "flat" mode, the DDR and HBM are treated as separate memory regions. ALCF checks that nodes are in flat mode, so jobs don't need to verify it.
 
 This configuration can be seen from running `numactl -H` on an Aurora node:
 

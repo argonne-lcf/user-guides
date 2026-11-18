@@ -191,7 +191,7 @@ validation:
   not_found: warn
 
 extra:
-  homepage: 'https://docs.alcf.anl.gov'
+  homepage: !ENV [HOMEPAGE, 'https://docs.alcf.anl.gov']  # pr-preview.yml points it at the preview
   # Left out of the contributor names at the bottom of every page
   # (hooks/page_history.py), as `git log --format=%aN` shows them. Their
   # commits still count toward Last Updated. A page's own

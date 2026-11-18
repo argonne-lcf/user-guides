@@ -52,9 +52,9 @@
 #askalcf-fab {
   position: fixed;
   right: 24px;
-  bottom: 24px;
-  width: 96px;
-  height: 96px;
+  bottom: 56px;  /* raised off the window edge, where it was easy to miss */
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -85,7 +85,7 @@
    TOC by its bottom offset + height + a gap, so the last entries can scroll
    above it. */
 .askalcf-in-toc .md-sidebar--secondary .md-sidebar__inner {
-  padding-bottom: 128px;  /* 24px + 96px + 8px */
+  padding-bottom: 176px;  /* 56px + 112px + 8px */
 }
 
 /* ---- Panel (wider) ---- */
@@ -311,7 +311,7 @@ a.askalcf-title:focus-visible { outline: 2px solid currentColor; outline-offset:
   /* The panel already fills the screen: no maximize, even if it was set on a wider window */
   #askalcf-max { display: none; }
   #askalcf-root.askalcf-max #askalcf-panel { width: auto; height: 80vh; max-height: calc(100vh - 48px); }
-  #askalcf-fab { right: 16px; bottom: 16px; width: 64px; height: 64px; }
+  #askalcf-fab { right: 16px; bottom: 32px; width: 72px; height: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
