@@ -35,5 +35,7 @@ jobs:
         run: make build-docs
       - name: Report page descriptions (warning only)
         run: make check-descriptions
-      - name: Report page verification (warning only)
-        run: make check-verified
+      # Disabled: it reads site/page-metadata.json, written by
+      # hooks/page_metadata.py, and Zensical doesn't run MkDocs hooks.
+      # - name: Report page verification (warning only)
+      #   run: make check-verified
