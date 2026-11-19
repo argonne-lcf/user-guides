@@ -28,4 +28,5 @@ The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/
 
 - [Python Environments](python-environments.md)
 - [AI Guidance](ai-guidance.md)
+- [AI Coding Agents](ai-coding-agents.md)
 - [VS Code (Remote SSH)](vscode.md)
