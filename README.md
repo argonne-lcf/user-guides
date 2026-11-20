@@ -131,6 +131,12 @@ git push origin YOURBRANCH         # push the changes from local branch up to yo
 ```
 * Create merge request from https://github.com/argonne-lcf/user-guides from `YOURBRANCH` to `main` branch.
 
+### Style guide
+
+[`STYLE_GUIDE.md`](STYLE_GUIDE.md) covers voice, tone, audience, and word choice for prose on the
+site — Markdown syntax and formatting conventions are in `AGENTS.md` instead. If you use Claude
+Code, the `/style-check` skill checks a diff, PR, branch, or page against it.
+
 ### Using AI tools
 
 [`AGENTS.md`](AGENTS.md) gives AI coding agents the project context they would otherwise have to rediscover: what content edits may touch, the site's writing and formatting conventions, Markdown pitfalls, how to add or move pages, page front matter, and contributing rules. Build and theme details are in a separate section at the end. Codex, the Copilot coding agent, Cursor, and others read it automatically, and [`CLAUDE.md`](CLAUDE.md) imports it for Claude Code. [`REVIEW.md`](REVIEW.md) is the short list of rules that Copilot code review applies to pull requests.
