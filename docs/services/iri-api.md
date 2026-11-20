@@ -473,16 +473,14 @@ print("Job canceled." if response.status_code == 204 else response.json())
 All filesystem operations in API v2 are `POST` requests with a JSON body. In v1, most of them used `GET`, `PUT`, or `DELETE`; expand **API v1** in an example to see its v1 request.
 ///
 
-/// info | Asynchronous Operations
-All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results.
-///
-
 /// info | Currently Supported Filesystems
 - Flare (All paths must start with `/flare` or `/lus/flare/projects`) 
 - Eagle (All paths must start with `/eagle` or `/lus/eagle`) 
 - Home (All paths must start with `/home`)
 - Grand (Please target Eagle with `/lus/eagle/clone/g2/projects/`)
 ///
+
+All filesystem operations are asynchronous and return a task ID. See [Get a Task](#4-tasks) for how to retrieve your results. The output size of each task is limited to 9.5Mb.
 
 /// details | 3.1. List Directory Contents (`ls`)
 
