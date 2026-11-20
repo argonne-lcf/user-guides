@@ -28,7 +28,7 @@ An active project allocation on the dashboard provides an overview of allocation
 
 ## Active Allocations Through Command Line
 
-To determine if there is an active allocation, check [Job Submission](../../running-jobs/index.md#qsub).
+To determine if there is an active allocation, check [Job Submission](../../running-jobs/working-with-pbs.md#qsub).
 
 For information on how to run the query, look at our documentation on our [sbank Allocations Accounting System](sbank-allocation-accounting-system.md) or email [support@alcf.anl.gov](mailto:support@alcf.anl.gov) and ask for all active allocations.
 

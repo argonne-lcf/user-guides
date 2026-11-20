@@ -33,6 +33,10 @@ these theme-aware in both light and dark palettes.
 Note these use a `0 -960 960 960` viewBox where MDI uses `0 0 24 24`. Both scale to
 the CSS box, but optical weights can differ slightly when the two sit side by side.
 
+`tips_and_updates.svg` is an intentional exception: it's from the legacy **Material
+Icons** set (`0 0 24 24` viewBox), not Material Symbols, because Material Symbols has
+no equivalent icon. Same rule applies — no hardcoded `fill`.
+
 **A wrong icon name fails silently** — `pymdownx.emoji` leaves an unmatched shortcode
 as literal text and `mkdocs build --strict` still passes. Check with
 `grep -c ':symbols-' site/index.html` after building.
