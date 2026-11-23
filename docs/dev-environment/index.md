@@ -8,6 +8,14 @@ The tools on these pages are ones you install and run yourself, in your own spac
 
 What ALCF does provide and support is the software stack on each system. For the module-provided Python, Conda, and framework installations, and for the curated Conda environments, see [Python on Aurora](../aurora/data-science/python.md), [Python on Polaris](../polaris/data-science/python.md), [Python on Sophia](../sophia/data-science/python.md), or [Python on Crux](../crux/data-science/python.md).
 
+<div class="alcf-tile-grid" markdown>
+
+- [:symbols-terminal_2:<span>Python Environments</span>](python-environments.md){ .alcf-tile-link }
+- [:symbols-tips_and_updates:<span>AI Guidance</span>](ai-guidance.md){ .alcf-tile-link }
+- [:symbols-terminal:<span>VS Code (Remote SSH)</span>](vscode.md){ .alcf-tile-link }
+
+</div>
+
 ## Login Node Limits
 
 The system login nodes have a hard per-user task limit that cannot be raised.
@@ -23,9 +31,3 @@ Remote GUI editors like VS Code are especially susceptible to hitting this limit
 
 A user can query their current usage PID via `cat /sys/fs/cgroup/users/$USER/pids.current`.
 The number of times the limit has been exceeded is given in `cat /sys/fs/cgroup/users/$USER/pids.events`.
-
-## Pages
-
-- [Python Environments](python-environments.md)
-- [AI Guidance](ai-guidance.md)
-- [VS Code (Remote SSH)](vscode.md)

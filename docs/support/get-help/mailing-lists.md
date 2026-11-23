@@ -1,5 +1,9 @@
 # Mailing Lists
 
+As a facility user, you will be added to our system notification mailing list. The mailing list will keep you up-to-date on machine maintenance, outages, and opportunities. Users are auto-subscribed to the relevant system mailing list(s) when they first gain access to that resource. You can unsubscribe from these notifications, although we recommend against doing so. 
+
+We send users a weekly newsletter on Fridays at 10 a.m. CT and a monthly facility newsletter. 
+
 All notifications regarding system outages and preventative maintenance schedules are sent to appropriate system mailing lists. 
 
 Users are auto-subscribed to the relevant system mailing list(s) when they **first** gain access to that system. The user's primary email is subscribed to the list(s).
