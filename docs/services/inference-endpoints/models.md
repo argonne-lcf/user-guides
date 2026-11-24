@@ -28,7 +28,7 @@ Use the tables below to check each model's supported APIs, context window, input
 
 ///
 
-/// details | Tara (9 models)
+/// details | Tara (10 models)
     open: True
 
 | Type | Organization | Model | API Protocols | Context Window | Input Modalities | Streaming | Reasoning | Tool Calling |
@@ -41,6 +41,7 @@ Use the tables below to check each model's supported APIs, context window, input
 | Chat | OpenAI | openai/gpt-oss-120b^RT^ | chat_completions, messages, responses | 131072 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
 | Chat | OpenAI | openai/gpt-oss-20b^RT^ | chat_completions, messages, responses | 65536 | text | ✓ | ✓, separate (`low`, `medium`, `high`; default `medium`) | ✓ |
 | Chat | Reflection AI | beam-1.0-fp8^RT^ | chat_completions, responses, messages | 1048576 | text | ✓ | ✓ | ✓ |
+| Chat | Thinking Machines | inkling-2-small^RT^ | chat_completions, responses, messages | 1048576 | text, image | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 | Chat | Thinking Machines | inkling-bf16^RT^ | chat_completions, responses, messages | 1048576 | text, image, audio | ✓ | ✓, separate (`none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`; default `high`) | ✓ |
 
 ///
