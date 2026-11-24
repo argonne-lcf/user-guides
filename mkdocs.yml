@@ -620,6 +620,7 @@ nav:
     - dev-environment/index.md
     - Python Environments: dev-environment/python-environments.md
     - AI Guidance: dev-environment/ai-guidance.md
+    - AI Coding Agents: dev-environment/ai-coding-agents.md
     - VS Code (Remote SSH): dev-environment/vscode.md
 
   - Services:
