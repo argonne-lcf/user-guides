@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for AI coding agents (Codex, Copilot, Cursor, Claude Code, and others) and for human contributors working in this repository. `CLAUDE.md` imports this file. `REVIEW.md` is a short list of review rules for code-review tools (Copilot code review reads it), kept under about 4,000 characters; update it when a rule here changes what reviewers should flag.
+Guidance for AI coding agents (Codex, Copilot, Cursor, Claude Code, and others) and for human contributors working in this repository. `CLAUDE.md` imports this file. `REVIEW.md` is a short list of review rules for code-review tools (Copilot code review reads it), kept under about 4,000 characters; update it when a rule here changes what reviewers should flag. `STYLE_GUIDE.md` covers prose voice, tone, and terminology, not covered here; Claude Code can check a diff against it with the `style-check` skill.
 
 Source for the ALCF User Guides (https://docs.alcf.anl.gov/), an MkDocs site using the Material theme. Content is Markdown under `docs/`; the sidebar and site configuration are in `mkdocs.yml`.
 
@@ -24,6 +24,10 @@ make build-docs   # what CI runs: mkdocs build --strict, then the inbound-link c
 ```
 
 Preview with `make serve`, not a Markdown preview in an editor or on GitHub: this site uses Python-Markdown with many extensions, which renders differently from GitHub-flavored Markdown. There are no unit tests. `make build-docs` fails on broken relative links, missing anchors, pages missing from `nav`, and missing snippet files; run it after changes and before opening a PR.
+
+## Linting (Vale)
+
+Several of the rules below are also enforced mechanically by [Vale](https://vale.sh): `.vale.ini` enables the `alcf-style` package in `.github/styles/alcf-style/` (product/system name spellings, placeholders, `$ ` prompts, `sh` vs `bash`, legacy `!!!`/`???`/`===` blocks, raw `<details>`/`<strong>`/`<a name>`, heading space and single H1, sample-output blocks, `++key++` syntax, link text and relative links), and pre-commit runs it at `warning` level. If Vale is installed locally (`.venv` via `uv`; activate with `source .venv/bin/activate`), run it on your changed files — `source .venv/bin/activate && vale --config=.vale.ini <files>` or `pre-commit run vale --files <files>` — and fix what it reports. If it isn't installed, apply the same rules as written in this file ("Writing and style" and "Markdown pitfalls" below) by hand; the sections repeat them so the guidance works either way.
 
 ## Contributing rules
 
