@@ -183,7 +183,7 @@ A typical submission script looks like this:
 ```bash linenums="1" title="script.sh"
 #!/bin/bash -l
 #PBS -N AFFINITY
-#PBS -l select=4
+#PBS -l select=1 # Number of nodes
 #PBS -l place=scatter
 #PBS -l walltime=0:10:00
 #PBS -l filesystems=<fs1:fs2>
